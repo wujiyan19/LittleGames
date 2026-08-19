@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "小游戏合集 - 经典休闲与益智解谜"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "小游戏合集主入口"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "小游戏合集"
+    }
+  ]
+}
