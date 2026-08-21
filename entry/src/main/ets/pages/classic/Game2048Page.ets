@@ -44,6 +44,7 @@ struct Game2048Page {
   private tileIdCounter: number = 0;
 
   aboutToAppear(): void {
+    this.highScore = GameDataManager.getGameById('2048')?.highScore ?? 0;
     this.initBoardSize();
     this.start();
   }

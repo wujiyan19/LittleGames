@@ -50,6 +50,7 @@ struct TetrisGamePage {
   private colIdx: number[] = [0,1,2,3,4,5,6,7,8,9];
 
   aboutToAppear(): void {
+    this.highScore = GameDataManager.getGameById('tetris')?.highScore ?? 0;
     this.initCellSize();
     GameDataManager.incrementPlayCount('tetris');
     this.init(); this.spawn(); this.loop();

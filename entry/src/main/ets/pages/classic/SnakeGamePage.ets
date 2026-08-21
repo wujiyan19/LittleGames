@@ -32,6 +32,7 @@ struct SnakeGamePage {
   private idx20: number[] = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19];
 
   aboutToAppear(): void {
+    this.highScore = GameDataManager.getGameById('snake')?.highScore ?? 0;
     this.initCellSize();
     this.startGame();
   }

@@ -5,6 +5,7 @@ import { router, display } from '@kit.ArkUI';
 import { DarkColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
 import { GameHeader } from '../../components/GameHeader';
 import { GameDifficulty } from '../../common/GameConstants';
+import { GameDataManager } from '../../model/GameData';
 
 interface CardInfo { id: number; emoji: string; flipped: boolean; matched: boolean; }
 
@@ -26,6 +27,8 @@ struct MemoryCardPage {
   private idx4: number[] = [0, 1, 2, 3];
 
   aboutToAppear(): void {
+    const hs = GameDataManager.getGameById('memorycard')?.highScore ?? 0;
+    this.bestScore = hs > 0 ? Math.max(1, 1000 - hs) : 999;
     this.initCardSize();
     this.startGame();
   }
@@ -112,6 +115,7 @@ struct MemoryCardPage {
           if (this.matchedCount === this.getPairCount()) {
             this.isWin = true;
             if (this.attempts < this.bestScore) { this.bestScore = this.attempts; }
+            GameDataManager.updateHighScore('memorycard', Math.max(1, 1000 - this.attempts));
           }
         }, 500);
       } else {

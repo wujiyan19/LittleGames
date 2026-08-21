@@ -26,6 +26,8 @@ struct KlotskiPage {
   private colArray: number[] = [0,1,2,3];
 
   aboutToAppear(): void {
+    const hs = GameDataManager.getGameById('klotski')?.highScore ?? 0;
+    this.best = hs > 0 ? Math.max(1, 1000 - hs) : 999;
     this.initCellSize();
     this.startGame();
   }

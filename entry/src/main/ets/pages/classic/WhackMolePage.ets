@@ -22,7 +22,10 @@ struct WhackMolePage {
   private ctimer: number = -1;
   private idx3: number[] = [0, 1, 2];
 
-  aboutToAppear(): void { this.startGame(); }
+  aboutToAppear(): void {
+    this.highScore = GameDataManager.getGameById('whackmole')?.highScore ?? 0;
+    this.startGame();
+  }
   aboutToDisappear(): void { clearInterval(this.mtimer); clearInterval(this.ctimer); }
 
   startGame(): void {

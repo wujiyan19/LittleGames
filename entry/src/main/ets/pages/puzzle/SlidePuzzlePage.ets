@@ -19,6 +19,8 @@ struct SlidePuzzlePage {
   private idxN: number[] = [0, 1, 2];
 
   aboutToAppear(): void {
+    const hs = GameDataManager.getGameById('slidepuzzle')?.highScore ?? 0;
+    this.best = hs > 0 ? Math.max(1, 1000 - hs) : 999;
     this.initCellSize();
     this.startGame();
   }
