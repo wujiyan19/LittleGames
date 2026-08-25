@@ -24,6 +24,7 @@ struct MinesweeperPage {
   @Local cellSize: number = 32;
   private timer: number = -1;
   private startTime: number = 0;
+  private minesPlaced: boolean = false;
   private idx9: number[] = [0,1,2,3,4,5,6,7,8];
 
   aboutToAppear(): void {
@@ -66,10 +67,18 @@ struct MinesweeperPage {
     this.isPlaying = true;
     this.flagCount = 0;
     this.elapsed = 0;
+    // 雷与计时都推迟到首次点击，保证首点安全
+    this.minesPlaced = false;
+    clearInterval(this.timer);
+  }
+
+  placeMines(safeR: number, safeC: number): void {
     let mp = 0;
     while (mp < this.getMineCount()) {
       const r = Math.floor(Math.random() * ROWS);
       const c = Math.floor(Math.random() * COLS);
+      // 排除首点格及其 3×3 邻域：首点必为 0，可直接展开一片
+      if (Math.abs(r - safeR) <= 1 && Math.abs(c - safeC) <= 1) { continue; }
       if (this.board[r][c] !== -1) { this.board[r][c] = -1; mp++; }
     }
     for (let r = 0; r < ROWS; r++) {
@@ -77,6 +86,9 @@ struct MinesweeperPage {
         if (this.board[r][c] !== -1) { this.board[r][c] = this.countMines(r, c); }
       }
     }
+  }
+
+  startTimer(): void {
     clearInterval(this.timer);
     this.startTime = Date.now();
     this.timer = setInterval(() => {
@@ -112,6 +124,11 @@ struct MinesweeperPage {
 
   reveal(r: number, c: number): void {
     if (!this.isPlaying || this.revealed[r][c] || this.flagged[r][c]) { return; }
+    if (!this.minesPlaced) {
+      this.placeMines(r, c);
+      this.minesPlaced = true;
+      this.startTimer();
+    }
     const nr = this.copyBoolBoard(this.revealed);
     nr[r][c] = true;
     if (this.board[r][c] === -1) { this.revealed = nr; this.gameOver(false); return; }

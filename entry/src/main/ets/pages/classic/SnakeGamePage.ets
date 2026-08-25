@@ -92,9 +92,9 @@ struct SnakeGamePage {
     if (selfHit) { this.gameOver(); return; }
     const ns = [nh];
     for (let i = 0; i < this.snake.length; i++) { ns.push(this.snake[i]); }
-    if (willEat) { this.score += 10; this.spawnFood(); }
-    else { ns.pop(); }
+    if (!willEat) { ns.pop(); }
     this.snake = ns;
+    if (willEat) { this.score += 10; this.spawnFood(); }
   }
 
   spawnFood(): void {

@@ -26,8 +26,6 @@ struct KlotskiPage {
   private colArray: number[] = [0,1,2,3];
 
   aboutToAppear(): void {
-    const hs = GameDataManager.getGameById('klotski')?.highScore ?? 0;
-    this.best = hs > 0 ? Math.max(1, 1000 - hs) : 999;
     this.initCellSize();
     this.startGame();
   }
@@ -205,7 +203,7 @@ struct KlotskiPage {
                         Text(this.getBlockLabel(this.findBlockById(this.grid[row][col]!)!))
                           .fontSize(Math.max(16, this.cell * 0.28)).fontWeight(FontWeight.Bold).fontColor('#FFFFFF')
                       }
-                    } else if (row === 3 && col === 0) {
+                    } else if (row === 4 && col === 1) {
                       Text('出口').fontSize(Math.max(10, this.cell * 0.16)).fontColor(DarkColors.textTertiary)
                     }
                   }.width(this.cell).height(this.cell).margin(2)

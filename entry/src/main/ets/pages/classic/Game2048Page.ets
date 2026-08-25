@@ -259,6 +259,7 @@ struct Game2048Page {
   }
 
   swipe(dir: string): void {
+    if (!this.isPlaying) { return; }
     const old = JSON.stringify(this.board);
     const nb = this.initBoard();
 

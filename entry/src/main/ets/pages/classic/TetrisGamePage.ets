@@ -189,14 +189,17 @@ struct TetrisGamePage {
     else { this.lock(); }
   }
   moveLeft(): void {
+    if (!this.isPlaying || this.isPaused) { return; }
     if (!this.block) { return; }
     if (this.canPlace(-1, 0)) { this.block.x--; this.commitBlock(); }
   }
   moveRight(): void {
+    if (!this.isPlaying || this.isPaused) { return; }
     if (!this.block) { return; }
     if (this.canPlace(1, 0)) { this.block.x++; this.commitBlock(); }
   }
   rotateBlock(): void {
+    if (!this.isPlaying || this.isPaused) { return; }
     if (!this.block) { return; }
     const shapes = SHAPES[this.block.idx];
     if (shapes.length <= 1) { return; }
@@ -216,6 +219,7 @@ struct TetrisGamePage {
     this.block.rot = oldRot;
   }
   hardDrop(): void {
+    if (!this.isPlaying || this.isPaused) { return; }
     while (this.canPlace(0, 1) && this.block) { this.block.y++; }
     this.lock();
   }

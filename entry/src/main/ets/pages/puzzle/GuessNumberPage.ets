@@ -55,13 +55,16 @@ struct GuessNumberPage {
   }
 
   pushDigit(d: string): void {
-    if (this.isWin || this.input.length >= this.getSecretLength()) { return; }
+    if (!this.isPlaying || this.isWin || this.input.length >= this.getSecretLength()) { return; }
     if (this.input.indexOf(d) >= 0) { return; }
     this.input += d;
   }
-  deleteDigit(): void { this.input = this.input.substring(0, this.input.length - 1); }
+  deleteDigit(): void {
+    if (!this.isPlaying) { return; }
+    this.input = this.input.substring(0, this.input.length - 1);
+  }
   submit(): void {
-    if (this.input.length !== this.getSecretLength() || this.isWin) { return; }
+    if (!this.isPlaying || this.input.length !== this.getSecretLength() || this.isWin) { return; }
     this.tries++;
     let a = 0;
     let b = 0;

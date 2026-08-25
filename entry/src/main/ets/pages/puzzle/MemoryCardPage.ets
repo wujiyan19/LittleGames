@@ -24,6 +24,7 @@ struct MemoryCardPage {
   @Local difficulty: GameDifficulty = GameDifficulty.NORMAL;
   @Local rowIdx: number[] = [0, 1, 2, 3];
   private locked: boolean = false;
+  private flipTimer: number = -1;
   private idx4: number[] = [0, 1, 2, 3];
 
   aboutToAppear(): void {
@@ -32,6 +33,7 @@ struct MemoryCardPage {
     this.initCardSize();
     this.startGame();
   }
+  aboutToDisappear(): void { clearTimeout(this.flipTimer); }
 
   initCardSize(): void {
     const d = display.getDefaultDisplaySync();
@@ -58,6 +60,8 @@ struct MemoryCardPage {
   }
 
   startGame(): void {
+    GameDataManager.incrementPlayCount('memorycard');
+    clearTimeout(this.flipTimer);
     let emojiPool: string[] = [];
     for (let i = 0; i < ALL_EMOJIS.length; i++) { emojiPool.push(ALL_EMOJIS[i]); }
     // shuffle
@@ -106,7 +110,7 @@ struct MemoryCardPage {
       const a = this.flippedIdxs[0];
       const b = this.flippedIdxs[1];
       if (this.cards[a].emoji === this.cards[b].emoji) {
-        setTimeout(() => {
+        this.flipTimer = setTimeout(() => {
           this.cards[a].matched = true;
           this.cards[b].matched = true;
           this.flippedIdxs = [];
@@ -119,7 +123,7 @@ struct MemoryCardPage {
           }
         }, 500);
       } else {
-        setTimeout(() => {
+        this.flipTimer = setTimeout(() => {
           this.cards[a].flipped = false;
           this.cards[b].flipped = false;
           this.flippedIdxs = [];
