@@ -1,7 +1,6 @@
 /**
  * 闪屏页 — 宇宙蓝 × 雪域灰
  */
-import { router } from '@kit.ArkUI';
 import { BrandColors, FontTokens, RadiusTokens, ShadowTokens, SpacingTokens } from '../common/DesignTokens';
 
 @Entry
@@ -18,7 +17,7 @@ struct SplashPage {
   }
 
   startAnimation(): void {
-    animateTo({
+    this.getUIContext().animateTo({
       duration: 600,
       curve: Curve.FastOutSlowIn
     }, () => {
@@ -27,21 +26,21 @@ struct SplashPage {
       this.iconAnimTranslateY = 0;
     });
     setTimeout(() => {
-      animateTo({
+      this.getUIContext().animateTo({
         duration: 400,
         curve: Curve.EaseOut
       }, () => {
         this.titleAnimOpacity = 1;
       });
       setTimeout(() => {
-        animateTo({
+        this.getUIContext().animateTo({
           duration: 300,
           curve: Curve.EaseOut
         }, () => {
           this.subtitleAnimOpacity = 1;
         });
         setTimeout(() => {
-          router.replaceUrl({ url: 'pages/Index' });
+          this.getUIContext().getRouter().replaceUrl({ url: 'pages/Index' });
         }, 800);
       }, 300);
     }, 600);

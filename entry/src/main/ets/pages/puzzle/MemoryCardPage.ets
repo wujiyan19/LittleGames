@@ -1,7 +1,7 @@
 /**
  * 记忆翻牌 - HarmonyOS 设计风格
  */
-import { router, display } from '@kit.ArkUI';
+import { display } from '@kit.ArkUI';
 import { DarkColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
 import { GameHeader } from '../../components/GameHeader';
 import { GameDifficulty } from '../../common/GameConstants';
@@ -37,7 +37,7 @@ struct MemoryCardPage {
 
   initCardSize(): void {
     const d = display.getDefaultDisplaySync();
-    const wVp = px2vp(d.width);
+    const wVp = this.getUIContext().px2vp(d.width);
     this.cardW = Math.max(56, Math.floor((Math.min(wVp, 520) - 48) / 4));
     if (this.getRowCount() >= 6) { this.cardW = Math.floor(this.cardW * 0.8); }
   }
@@ -145,7 +145,7 @@ struct MemoryCardPage {
           subtitle: '已配对 ' + this.matchedCount + ' / ' + this.getPairCount(),
           difficulty: this.difficulty,
           onDifficultyChange: (d: GameDifficulty) => { this.changeDifficulty(d); },
-          onBack: () => { router.back(); },
+          onBack: () => { this.getUIContext().getRouter().back(); },
           onPauseToggle: () => {},
           onRestart: () => { this.startGame(); }
         })

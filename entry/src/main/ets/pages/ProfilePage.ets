@@ -1,7 +1,6 @@
 /**
  * 我的页面 — 宇宙蓝 × 雪域灰
  */
-import { router } from '@kit.ArkUI';
 import { GameDataManager } from '../model/GameData';
 import { GameInfo } from '../common/GameConstants';
 import {
@@ -36,7 +35,7 @@ struct ProfilePage {
         .width(40).height(40)
         .backgroundColor(LightColors.surface)
         .shadow(ShadowTokens.button)
-        .onClick(() => router.back())
+        .onClick(() => this.getUIContext().getRouter().back())
 
         Text('我的')
           .fontFamily(FontTokens.family)

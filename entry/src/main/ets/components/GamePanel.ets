@@ -3,7 +3,6 @@
  * 背景使用品牌渐变资源，深浅色模式自动适配
  */
 import { DarkColors, SpacingTokens, ShadowTokens } from '../common/DesignTokens';
-import { router } from '@kit.ArkUI';
 
 @ComponentV2
 export struct GamePanel {
@@ -41,7 +40,7 @@ export struct GamePanel {
             .width(40).height(40)
             .backgroundColor(DarkColors.surface)
             .shadow(ShadowTokens.button)
-            .onClick(() => router.back())
+            .onClick(() => this.getUIContext().getRouter().back())
             Blank()
           }
           .width('100%')

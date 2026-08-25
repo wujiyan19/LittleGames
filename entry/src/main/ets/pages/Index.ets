@@ -2,7 +2,7 @@
  * 主页 — 宇宙蓝 × 雪域灰
  * 使用 GridRow 断点布局 + 媒体查询适配不同屏幕
  */
-import { router, mediaquery } from '@kit.ArkUI';
+import { mediaquery } from '@kit.ArkUI';
 import { intl } from '@kit.LocalizationKit';
 import { GameDataManager } from '../model/GameData';
 import { GameInfo, GameCategory } from '../common/GameConstants';
@@ -104,7 +104,7 @@ struct Index {
     else if (game.id === 'klotski') { route = 'pages/puzzle/KlotskiPage'; }
     else if (game.id === 'guessnumber') { route = 'pages/puzzle/GuessNumberPage'; }
     else { route = 'pages/puzzle/MemoryCardPage'; }
-    router.pushUrl({ url: route });
+    this.getUIContext().getRouter().pushUrl({ url: route });
   }
 
   build() {

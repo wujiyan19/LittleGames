@@ -153,11 +153,11 @@ struct Game2048Page {
     };
 
     updateTile(1.2, true);
-    animateTo({
+    this.getUIContext().animateTo({
       duration: 100,
       curve: Curve.EaseOut,
       onFinish: () => {
-        animateTo({
+        this.getUIContext().animateTo({
           duration: 100,
           curve: curves.springCurve(0.5, 1.0, 0.5, 2.0),
           onFinish: () => {
@@ -182,11 +182,11 @@ struct Game2048Page {
     };
 
     updateTile(0.5, true);
-    animateTo({
+    this.getUIContext().animateTo({
       duration: 150,
       curve: curves.springCurve(0.5, 1.0, 0.5, 2.0),
       onFinish: () => {
-        animateTo({
+        this.getUIContext().animateTo({
           duration: 100,
           curve: Curve.EaseOut,
           onFinish: () => {

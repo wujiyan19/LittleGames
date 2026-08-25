@@ -1,7 +1,6 @@
 /**
  * 猜数字 - HarmonyOS 设计风格
  */
-import { router } from '@kit.ArkUI';
 import { DarkColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
 import { GameHeader } from '../../components/GameHeader';
 import { GameDifficulty } from '../../common/GameConstants';
@@ -91,7 +90,7 @@ struct GuessNumberPage {
           subtitle: '尝试 ' + this.tries + ' / ' + this.getMaxTries(),
           difficulty: this.difficulty,
           onDifficultyChange: (d: GameDifficulty) => { this.changeDifficulty(d); },
-          onBack: () => { router.back(); },
+          onBack: () => { this.getUIContext().getRouter().back(); },
           onPauseToggle: () => {},
           onRestart: () => { this.startGame(); } })
 
