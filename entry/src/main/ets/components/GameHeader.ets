@@ -25,6 +25,11 @@ export struct GameHeader {
   @Param enableNewGame: boolean = false;
   @Local showRefreshMenu: boolean = false;
 
+  getPauseSymbol(): Resource {
+    if (this.isPaused) { return $r('sys.symbol.play'); }
+    return $r('sys.symbol.pause');
+  }
+
   build() {
     Row({ space: SpacingTokens.md }) {
       // 返回（40×40 热区）
@@ -80,7 +85,7 @@ export struct GameHeader {
         // 暂停 / 继续
         if (this.showPause) {
           Button() {
-            SymbolGlyph(this.isPaused ? $r('sys.symbol.play') : $r('sys.symbol.pause'))
+            SymbolGlyph(this.getPauseSymbol())
               .fontSize(18)
               .fontColor([DarkColors.textPrimary])
           }

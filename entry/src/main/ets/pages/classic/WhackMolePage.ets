@@ -73,6 +73,11 @@ struct WhackMolePage {
     return 800;
   }
 
+  getTimeColor(): ResourceColor {
+    if (this.timeLeft <= 5) { return DarkColors.error; }
+    return DarkColors.success;
+  }
+
   changeDifficulty(d: GameDifficulty): void {
     if (this.difficulty === d) { return; }
     this.difficulty = d;
@@ -123,7 +128,7 @@ struct WhackMolePage {
           Column() {
             Text('时间').fontSize(FontTokens.sizeCaption).fontColor(DarkColors.textTertiary)
             Text(this.timeLeft + 's').fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold)
-              .fontColor(this.timeLeft <= 5 ? DarkColors.error : DarkColors.success)
+              .fontColor(this.getTimeColor())
           }.layoutWeight(1).padding(8).backgroundColor(DarkColors.surface).borderRadius(RadiusTokens.base)
           .alignItems(HorizontalAlign.Center).margin({ left: 8, right: 16 })
         }.margin({ top: 12, bottom: 12 })
@@ -133,9 +138,9 @@ struct WhackMolePage {
             Row() {
               ForEach(this.idx3, (col: number) => {
                 this.MoleHole(row * 3 + col)
-              })
+              }, (col: number) => col.toString())
             }
-          })
+          }, (row: number) => row.toString())
         }.layoutWeight(1).justifyContent(FlexAlign.Center)
       }.width('100%').height('100%')
 

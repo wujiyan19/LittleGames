@@ -310,6 +310,19 @@ struct Game2048Page {
     }
   }
 
+  getTileFontColor(v: number): ResourceColor {
+    if (v <= 4) { return '#776E65'; }
+    return '#FFFFFF';
+  }
+
+  getTileAnimation(isNew: boolean): AnimateParam {
+    return {
+      duration: isNew ? 200 : this.animationDuration,
+      curve: isNew ? curves.springCurve(0.5, 1.0, 0.5, 2.0) : Curve.EaseOut,
+      playMode: PlayMode.Normal
+    };
+  }
+
   isGameOver(): boolean {
     for (let r = 0; r < SIZE; r++) {
       for (let c = 0; c < SIZE; c++) {
@@ -352,21 +365,17 @@ struct Game2048Page {
                     if (this.tiles[row][col].value > 0) {
                       Text('' + this.tiles[row][col].value)
                         .fontSize(Math.max(18, this.cell * 0.36)).fontWeight(FontWeight.Bold)
-                        .fontColor(this.tiles[row][col].value <= 4 ? '#776E65' : '#FFFFFF')
+                        .fontColor(this.getTileFontColor(this.tiles[row][col].value))
                     }
                   }.width(this.cell).height(this.cell).margin(3).borderRadius(RadiusTokens.md)
                   .backgroundColor(this.getCellBg(this.tiles[row][col].value))
                   .justifyContent(FlexAlign.Center)
                   .offset({ x: this.tiles[row][col].offsetX, y: this.tiles[row][col].offsetY })
                   .scale({ x: this.tiles[row][col].scale, y: this.tiles[row][col].scale })
-                  .animation({
-                    duration: this.tiles[row][col].isNew ? 200 : this.animationDuration,
-                    curve: this.tiles[row][col].isNew ? curves.springCurve(0.5, 1.0, 0.5, 2.0) : Curve.EaseOut,
-                    playMode: PlayMode.Normal
-                  })
-                })
+                  .animation(this.getTileAnimation(this.tiles[row][col].isNew))
+                }, (col: number) => col.toString())
               }
-            })
+            }, (row: number) => row.toString())
           }.width(this.boardSize).height(this.boardSize)
           .backgroundColor(DarkColors.boardBg)
           .border({ width: 2, color: DarkColors.boardBorder, radius: RadiusTokens.base })

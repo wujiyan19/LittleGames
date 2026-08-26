@@ -133,6 +133,23 @@ struct MemoryCardPage {
     }
   }
 
+  getCardBg(idx: number): ResourceColor {
+    const card = this.cards[idx];
+    if (card.matched) { return DarkColors.success; }
+    if (card.flipped) { return DarkColors.accent; }
+    return DarkColors.surface;
+  }
+
+  getCardOpacity(idx: number): number {
+    if (this.cards[idx].matched) { return 0.72; }
+    return 1;
+  }
+
+  getBestText(): string {
+    if (this.bestScore === 999) { return '--'; }
+    return '' + this.bestScore;
+  }
+
   build() {
     Stack() {
       Column().width('100%').height('100%')
@@ -158,7 +175,7 @@ struct MemoryCardPage {
           .alignItems(HorizontalAlign.Center).margin({ left: 16 })
           Column() {
             Text('最佳').fontSize(FontTokens.sizeCaption).fontColor(DarkColors.textTertiary)
-            Text(this.bestScore === 999 ? '--' : '' + this.bestScore).fontSize(FontTokens.sizeHeadline)
+            Text(this.getBestText()).fontSize(FontTokens.sizeHeadline)
               .fontWeight(FontTokens.weightBold).fontColor(DarkColors.textPrimary)
           }.layoutWeight(1).padding(8).backgroundColor(DarkColors.surface).borderRadius(RadiusTokens.base)
           .alignItems(HorizontalAlign.Center).margin({ left: 8, right: 16 })
@@ -177,15 +194,14 @@ struct MemoryCardPage {
                       .fontColor([DarkColors.textTertiary])
                   }
                 }.width(this.cardW).height(this.cardW * 1.15).margin(3)
-                .backgroundColor(this.cards[r * 4 + c].matched ? DarkColors.success :
-                  this.cards[r * 4 + c].flipped ? DarkColors.accent : DarkColors.surface)
+                .backgroundColor(this.getCardBg(r * 4 + c))
                 .borderRadius(RadiusTokens.base)
                 .shadow(ShadowTokens.button)
-                .opacity(this.cards[r * 4 + c].matched ? 0.72 : 1)
+                .opacity(this.getCardOpacity(r * 4 + c))
                 .onClick(() => this.flipCard(r * 4 + c))
-              })
+              }, (c: number) => c.toString())
             }
-          })
+          }, (r: number) => r.toString())
         }.layoutWeight(1).justifyContent(FlexAlign.Center)
       }.width('100%').height('100%')
 

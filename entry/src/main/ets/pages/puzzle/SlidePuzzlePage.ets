@@ -142,6 +142,22 @@ struct SlidePuzzlePage {
     }
   }
 
+  getCellBg(r: number, c: number): ResourceColor {
+    if (this.board[r][c] === 0) { return DarkColors.boardBg; }
+    if (this.board[r][c] === r * this.getSize() + c + 1) { return DarkColors.success; }
+    return DarkColors.accent;
+  }
+
+  getCellOpacity(r: number, c: number): number {
+    if (this.board[r][c] === 0) { return 0; }
+    return 1;
+  }
+
+  getBestText(): string {
+    if (this.best === 999) { return '--'; }
+    return '' + this.best;
+  }
+
   build() {
     Stack() {
       Column().width('100%').height('100%')
@@ -166,7 +182,7 @@ struct SlidePuzzlePage {
           .alignItems(HorizontalAlign.Center).margin({ left: 16 })
           Column() {
             Text('最佳').fontSize(FontTokens.sizeCaption).fontColor(DarkColors.textTertiary)
-            Text(this.best === 999 ? '--' : '' + this.best).fontSize(FontTokens.sizeHeadline)
+            Text(this.getBestText()).fontSize(FontTokens.sizeHeadline)
               .fontWeight(FontTokens.weightBold).fontColor(DarkColors.textPrimary)
           }.layoutWeight(1).padding(8).backgroundColor(DarkColors.surface).borderRadius(RadiusTokens.base)
           .alignItems(HorizontalAlign.Center).margin({ left: 8, right: 16 })
@@ -183,15 +199,14 @@ struct SlidePuzzlePage {
                         .fontWeight(FontWeight.Bold).fontColor('#FFFFFF')
                     }
                   }.width(this.cell).height(this.cell).margin(2)
-                  .backgroundColor(this.board[r][c] === 0 ? DarkColors.boardBg :
-                    this.board[r][c] === r * this.getSize() + c + 1 ? DarkColors.success : DarkColors.accent)
+                  .backgroundColor(this.getCellBg(r, c))
                   .borderRadius(RadiusTokens.base)
                   .shadow(ShadowTokens.button)
-                  .opacity(this.board[r][c] === 0 ? 0 : 1)
+                  .opacity(this.getCellOpacity(r, c))
                   .onClick(() => this.tapCell(r, c))
-                })
+                }, (c: number) => c.toString())
               }
-            })
+            }, (r: number) => r.toString())
           }.backgroundColor(DarkColors.boardBg).borderRadius(RadiusTokens.base).padding(4)
         }.layoutWeight(1).justifyContent(FlexAlign.Center)
       }.width('100%').height('100%')

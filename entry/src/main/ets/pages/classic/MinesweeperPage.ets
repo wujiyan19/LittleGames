@@ -208,6 +208,30 @@ struct MinesweeperPage {
     return colors[v];
   }
 
+  getCellBg(row: number, col: number): ResourceColor {
+    if (this.flagged[row][col]) { return DarkColors.accentLight; }
+    if (this.revealed[row][col]) {
+      if (this.board[row][col] === -1) { return DarkColors.error; }
+      return DarkColors.cellRevealed;
+    }
+    return DarkColors.cellHidden;
+  }
+
+  getResultSymbol(): Resource {
+    if (this.gameResult) { return $r('sys.symbol.checkmark_circle'); }
+    return $r('sys.symbol.xmark_circle');
+  }
+
+  getResultColor(): Resource {
+    if (this.gameResult) { return DarkColors.success; }
+    return DarkColors.error;
+  }
+
+  getResultText(): string {
+    if (this.gameResult) { return '扫雷成功!'; }
+    return '踩到雷了';
+  }
+
   build() {
     Stack() {
       Column().width('100%').height('100%')
@@ -267,14 +291,13 @@ struct MinesweeperPage {
                       Text('🚩').fontSize(Math.max(14, this.cellSize * 0.5))
                     }
                   }.width(this.cellSize).height(this.cellSize)
-                  .backgroundColor(this.flagged[row][col] ? DarkColors.accentLight :
-                    this.revealed[row][col] ? (this.board[row][col] === -1 ? DarkColors.error : DarkColors.cellRevealed) : DarkColors.cellHidden)
+                  .backgroundColor(this.getCellBg(row, col))
                   .border({ width: 1, color: DarkColors.boardBorder }).borderRadius(RadiusTokens.xs)
                   .onClick(() => { if (!this.flagged[row][col]) { this.reveal(row, col); } })
                   .gesture(LongPressGesture().onAction(() => this.toggleFlag(row, col)))
-                })
+                }, (col: number) => col.toString())
               }
-            })
+            }, (row: number) => row.toString())
           }.padding(2)
           .backgroundColor(DarkColors.boardBg).border({ width: 2, color: DarkColors.boardBorder, radius: RadiusTokens.md })
         }.layoutWeight(1).justifyContent(FlexAlign.Center)
@@ -288,17 +311,17 @@ struct MinesweeperPage {
       if (!this.isPlaying) {
         Column() {
           Column() {
-            SymbolGlyph(this.gameResult ? $r('sys.symbol.checkmark_circle') : $r('sys.symbol.xmark_circle'))
+            SymbolGlyph(this.getResultSymbol())
               .fontSize(44)
               .fontWeight(FontWeight.Medium)
-              .fontColor([this.gameResult ? DarkColors.success : DarkColors.error])
+              .fontColor([this.getResultColor()])
           }
           .width(76).height(76)
           .borderRadius(RadiusTokens.full)
           .backgroundColor(DarkColors.primaryLight)
           .justifyContent(FlexAlign.Center)
 
-          Text(this.gameResult ? '扫雷成功!' : '踩到雷了')
+          Text(this.getResultText())
             .fontFamily(FontTokens.family)
             .fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold)
             .fontColor(DarkColors.textPrimary).margin({ top: SpacingTokens.md, bottom: SpacingTokens.xs })

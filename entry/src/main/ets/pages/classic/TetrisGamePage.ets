@@ -292,9 +292,9 @@ struct TetrisGamePage {
                   Column() {}.width(this.cell).height(this.cell)
                     .backgroundColor(this.getCellColor(row, col))
                     .border({ width: 0.5, color: DarkColors.divider })
-                })
+                }, (col: number) => col.toString())
               }
-            })
+            }, (row: number) => row.toString())
           }.width(this.cell * COLS).height(this.cell * ROWS)
           .border({ width: 2, color: DarkColors.boardBorder, radius: RadiusTokens.sm })
           .backgroundColor(DarkColors.boardBg)

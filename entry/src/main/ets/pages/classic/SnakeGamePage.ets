@@ -144,6 +144,18 @@ struct SnakeGamePage {
     return false;
   }
 
+  getCellColor(col: number, row: number): ResourceColor {
+    if (this.food.x === col && this.food.y === row) { return DarkColors.error; }
+    if (this.isSnakeCell(col, row)) { return DarkColors.success; }
+    if ((row + col) % 2 === 0) { return DarkColors.cellHidden; }
+    return DarkColors.cellRevealed;
+  }
+
+  getCellRadius(col: number, row: number): number {
+    if (this.food.x === col && this.food.y === row) { return RadiusTokens.md; }
+    return 3;
+  }
+
   build() {
     Stack() {
       Column().width('100%').height('100%')
@@ -178,14 +190,11 @@ struct SnakeGamePage {
               Row() {
                 ForEach(this.idx20, (col: number) => {
                   Column() {}.width(this.cell).height(this.cell)
-                    .backgroundColor(
-                      this.food.x === col && this.food.y === row ? DarkColors.error :
-                      this.isSnakeCell(col, row) ? DarkColors.success :
-                      (row + col) % 2 === 0 ? DarkColors.cellHidden : DarkColors.cellRevealed)
-                    .borderRadius(this.food.x === col && this.food.y === row ? RadiusTokens.md : 3)
-                })
+                    .backgroundColor(this.getCellColor(col, row))
+                    .borderRadius(this.getCellRadius(col, row))
+                }, (col: number) => col.toString())
               }
-            })
+            }, (row: number) => row.toString())
           }.width(this.cell * COLS).height(this.cell * ROWS)
           .border({ width: 2, color: DarkColors.boardBorder, radius: RadiusTokens.sm })
           .backgroundColor(DarkColors.boardBg)

@@ -170,6 +170,11 @@ struct KlotskiPage {
     return b ? this.getBlockBg(b) : DarkColors.boardBg;
   }
 
+  getBorderWidth(row: number, col: number): number {
+    if (this.selId && this.grid[row][col] === this.selId) { return 2; }
+    return 0;
+  }
+
   isBlockTopLeft(block: BlockInfo, r: number, c: number): boolean {
     return block.x === c && block.y === r;
   }
@@ -210,13 +215,13 @@ struct KlotskiPage {
                   .backgroundColor(this.getCellBg(row, col))
                   .borderRadius(RadiusTokens.base)
                   .border({
-                    width: this.selId && this.grid[row][col] === this.selId ? 2 : 0,
+                    width: this.getBorderWidth(row, col),
                     color: DarkColors.borderStrong
                   })
                   .onClick(() => { if (this.grid[row][col]) { this.selectBlock(this.grid[row][col]!); } })
-                })
+                }, (col: number) => col.toString())
               }
-            })
+            }, (row: number) => row.toString())
           }.width(this.cell * BW + 30).height(this.cell * BH + 34)
           .backgroundColor(DarkColors.boardBg)
           .border({ width: 3, color: DarkColors.boardBorder, radius: RadiusTokens.base }).padding(4)

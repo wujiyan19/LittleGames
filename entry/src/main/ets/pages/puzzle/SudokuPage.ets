@@ -326,6 +326,31 @@ struct SudokuPage {
     return true;
   }
 
+  getNumberColor(row: number, col: number): ResourceColor {
+    if (this.fixed[row][col]) { return DarkColors.warning; }
+    return DarkColors.textPrimary;
+  }
+
+  getNumberWeight(row: number, col: number): FontWeight {
+    if (this.fixed[row][col]) { return FontWeight.Bold; }
+    return FontWeight.Regular;
+  }
+
+  getCellBg(row: number, col: number): ResourceColor {
+    if (this.selectedRow === row && this.selectedCol === col) { return DarkColors.accent; }
+    if ((Math.floor(row / 3) + Math.floor(col / 3)) % 2 === 0) { return DarkColors.cellHidden; }
+    return DarkColors.cellRevealed;
+  }
+
+  getCellBorderWidth(row: number, col: number): EdgeWidths {
+    return {
+      top: row % 3 === 0 ? 2 : 0.5,
+      left: col % 3 === 0 ? 2 : 0.5,
+      right: 0.5,
+      bottom: 0.5
+    };
+  }
+
   build() {
     Stack() {
       Column().width('100%').height('100%')
@@ -356,22 +381,20 @@ struct SudokuPage {
                   Column() {
                     if (this.board[row][col] > 0) {
                       Text('' + this.board[row][col]).fontSize(Math.max(14, this.getCellSize() * 0.5))
-                        .fontColor(this.fixed[row][col] ? DarkColors.warning : DarkColors.textPrimary)
-                        .fontWeight(this.fixed[row][col] ? FontWeight.Bold : FontWeight.Regular)
+                        .fontColor(this.getNumberColor(row, col))
+                        .fontWeight(this.getNumberWeight(row, col))
                     }
                   }.width(this.getCellSize()).height(this.getCellSize())
-                  .backgroundColor(
-                    this.selectedRow === row && this.selectedCol === col ? DarkColors.accent :
-                    (Math.floor(row / 3) + Math.floor(col / 3)) % 2 === 0 ? DarkColors.cellHidden : DarkColors.cellRevealed)
+                  .backgroundColor(this.getCellBg(row, col))
                   .border({
-                    width: { top: row % 3 === 0 ? 2 : 0.5, left: col % 3 === 0 ? 2 : 0.5, right: 0.5, bottom: 0.5 },
+                    width: this.getCellBorderWidth(row, col),
                     color: DarkColors.boardBorder
                   })
                   .justifyContent(FlexAlign.Center)
                   .onClick(() => { this.selectedRow = row; this.selectedCol = col; })
-                })
+                }, (col: number) => col.toString())
               }
-            })
+            }, (row: number) => row.toString())
           }
           .scale({ x: this.scaleFactor, y: this.scaleFactor })
           .offset({ x: this.offsetX, y: this.offsetY })
@@ -417,7 +440,7 @@ struct SudokuPage {
             .backgroundColor(DarkColors.surface).borderRadius(RadiusTokens.base)
             .shadow(ShadowTokens.button)
             .onClick(() => this.setNumber(n))
-          })
+          }, (n: number) => n.toString())
           Button() {
             SymbolGlyph($r('sys.symbol.xmark'))
               .fontSize(18).fontColor([DarkColors.textOnPrimary])

@@ -16,6 +16,11 @@ export struct ControlPad {
   @Param onCenter: () => void = () => {};
   @BuilderParam actionButtons?: () => void;
 
+  getCenterOpacity(): number {
+    if (this.showCenter) { return 1; }
+    return 0.3;
+  }
+
   build() {
     Column({ space: SpacingTokens.sm }) {
       if (this.actionButtons) {
@@ -61,7 +66,7 @@ export struct ControlPad {
         .width(this.buttonSize).height(48)
         .backgroundColor(DarkColors.surface)
         .borderRadius(RadiusTokens.base)
-        .opacity(this.showCenter ? 1 : 0.3)
+        .opacity(this.getCenterOpacity())
         .shadow(ShadowTokens.button)
         .onClick(() => { this.onCenter(); })
 

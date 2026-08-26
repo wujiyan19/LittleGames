@@ -28,6 +28,7 @@ struct Index {
   @Local featuredGames: GameInfo[] = [];
   @Local classicGames: GameInfo[] = [];
   @Local puzzleGames: GameInfo[] = [];
+  @Local rankedGames: GameInfo[] = [];
   @Local isTablet: boolean = false;
   // 全部游戏按拼音排序（非 UI 状态）
   private allGamesPinyin: GameInfo[] = [];
@@ -60,6 +61,7 @@ struct Index {
     this.classicGames = GameDataManager.getGamesByCategory(GameCategory.CLASSIC);
     this.puzzleGames = GameDataManager.getGamesByCategory(GameCategory.PUZZLE);
     this.allGamesPinyin = this.sortByPinyin(GameDataManager.getAllGames());
+    this.rankedGames = GameDataManager.getTopGames(6);
     this.refreshCategoryGames();
   }
 
@@ -165,19 +167,70 @@ struct Index {
     })
   }
 
+  getTabSymbol(index: number): Resource {
+    if (index === 0) { return $r('sys.symbol.star_fill'); }
+    if (index === 1) { return $r('sys.symbol.square_grid_2x2'); }
+    return $r('sys.symbol.person_fill');
+  }
+
+  getTabColor(index: number): Resource {
+    if (this.currentTab === index) { return LightColors.primary; }
+    return LightColors.textTertiary;
+  }
+
+  getTabWeight(index: number): number {
+    if (this.currentTab === index) { return FontTokens.weightMedium; }
+    return FontTokens.weightRegular;
+  }
+
+  getCategorySymbol(index: number): Resource {
+    if (index === -1) { return $r('sys.symbol.star_fill'); }
+    if (index === 0) { return $r('sys.symbol.gamecontroller'); }
+    return $r('sys.symbol.square_grid_2x2');
+  }
+
+  getCategoryTextColor(index: number): Resource {
+    if (this.currentCategory === index) { return LightColors.textOnPrimary; }
+    return LightColors.primary;
+  }
+
+  getCategoryWeight(index: number): number {
+    if (this.currentCategory === index) { return FontTokens.weightMedium; }
+    return FontTokens.weightRegular;
+  }
+
+  getCategoryBgColor(index: number): Resource {
+    if (this.currentCategory === index) { return LightColors.primary; }
+    return DarkColors.primaryLight;
+  }
+
+  getRankColor(index: number): Resource {
+    if (index < 3) { return DarkColors.warning; }
+    return LightColors.textTertiary;
+  }
+
+  getHighScoreText(game: GameInfo): string {
+    if (game.highScore > 0) { return '' + game.highScore; }
+    return '--';
+  }
+
+  getHighScoreColor(game: GameInfo): Resource {
+    if (game.highScore > 0) { return LightColors.primary; }
+    return LightColors.textDisabled;
+  }
+
   @Builder
   TabBuilder(index: number, title: string) {
     Column() {
-      SymbolGlyph(index === 0 ? $r('sys.symbol.star_fill') :
-        (index === 1 ? $r('sys.symbol.square_grid_2x2') : $r('sys.symbol.person_fill')))
+      SymbolGlyph(this.getTabSymbol(index))
         .fontSize(22)
         .fontWeight(FontWeight.Regular)
-        .fontColor([this.currentTab === index ? LightColors.primary : LightColors.textTertiary])
+        .fontColor([this.getTabColor(index)])
       Text(title)
         .fontFamily(FontTokens.family)
         .fontSize(FontTokens.sizeCaption)
-        .fontWeight(this.currentTab === index ? FontTokens.weightMedium : FontTokens.weightRegular)
-        .fontColor(this.currentTab === index ? LightColors.primary : LightColors.textTertiary)
+        .fontWeight(this.getTabWeight(index))
+        .fontColor(this.getTabColor(index))
         .margin({ top: 2 })
     }
     .width('100%').height('100%')
@@ -412,20 +465,19 @@ struct Index {
   @Builder
   CategoryChip(index: number, title: string) {
     Row({ space: SpacingTokens.xs }) {
-      SymbolGlyph(index === -1 ? $r('sys.symbol.star_fill') :
-        (index === 0 ? $r('sys.symbol.gamecontroller') : $r('sys.symbol.square_grid_2x2')))
+      SymbolGlyph(this.getCategorySymbol(index))
         .fontSize(16)
         .fontWeight(FontWeight.Medium)
-        .fontColor([this.currentCategory === index ? LightColors.textOnPrimary : LightColors.primary])
+        .fontColor([this.getCategoryTextColor(index)])
       Text(title)
         .fontFamily(FontTokens.family)
         .fontSize(FontTokens.sizeBody)
-        .fontWeight(this.currentCategory === index ? FontTokens.weightMedium : FontTokens.weightRegular)
-        .fontColor(this.currentCategory === index ? LightColors.textOnPrimary : LightColors.primary)
+        .fontWeight(this.getCategoryWeight(index))
+        .fontColor(this.getCategoryTextColor(index))
     }
     .padding({ left: SpacingTokens.base, right: SpacingTokens.base, top: SpacingTokens.sm, bottom: SpacingTokens.sm })
     .borderRadius(RadiusTokens.full)
-    .backgroundColor(this.currentCategory === index ? LightColors.primary : DarkColors.primaryLight)
+    .backgroundColor(this.getCategoryBgColor(index))
     .margin({ right: SpacingTokens.md })
     .onClick(() => {
       this.currentCategory = index;
@@ -529,7 +581,7 @@ struct Index {
         .padding({ left: SpacingTokens.pageHorizontal, top: SpacingTokens.lg, bottom: SpacingTokens.sm })
 
         List() {
-          ForEach([...this.allGames()].sort((a: GameInfo, b: GameInfo) => b.highScore - a.highScore).slice(0, 6),
+          ForEach(this.rankedGames,
             (game: GameInfo, index: number) => {
               ListItem() {
                 Row() {
@@ -537,7 +589,7 @@ struct Index {
                     .fontFamily(FontTokens.family)
                     .fontSize(FontTokens.sizeBody)
                     .fontWeight(FontTokens.weightBold)
-                    .fontColor(index < 3 ? DarkColors.warning : LightColors.textTertiary)
+                    .fontColor(this.getRankColor(index))
                     .width(28)
                   Text(game.icon)
                     .fontSize(20)
@@ -548,11 +600,11 @@ struct Index {
                     .fontColor(LightColors.textPrimary)
                     .layoutWeight(1)
                     .margin({ left: SpacingTokens.sm })
-                  Text(game.highScore > 0 ? '' + game.highScore : '--')
+                  Text(this.getHighScoreText(game))
                     .fontFamily(FontTokens.family)
                     .fontSize(FontTokens.sizeBody)
                     .fontWeight(FontTokens.weightBold)
-                    .fontColor(game.highScore > 0 ? LightColors.primary : LightColors.textDisabled)
+                    .fontColor(this.getHighScoreColor(game))
                 }
                 .width('100%')
                 .padding({ left: SpacingTokens.base, right: SpacingTokens.base })

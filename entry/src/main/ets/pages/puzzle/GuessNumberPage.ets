@@ -5,7 +5,7 @@ import { DarkColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } fro
 import { GameHeader } from '../../components/GameHeader';
 import { GameDifficulty } from '../../common/GameConstants';
 
-interface RecordItem { guess: string; a: number; b: number; }
+interface RecordItem { guess: string; a: number; b: number; seq: number; }
 
 @Entry
 @ComponentV2
@@ -17,6 +17,7 @@ struct GuessNumberPage {
   @Local isPlaying: boolean = true;
   @Local tries: number = 0;
   @Local difficulty: GameDifficulty = GameDifficulty.NORMAL;
+  private recordSeq: number = 0;
 
   aboutToAppear(): void { this.startGame(); }
 
@@ -71,13 +72,53 @@ struct GuessNumberPage {
       if (this.input[i] === this.secret[i]) { a++; }
       else if (this.secret.indexOf(this.input[i]) >= 0) { b++; }
     }
-    const rec: RecordItem = { guess: this.input, a: a, b: b };
+    this.recordSeq++;
+    const rec: RecordItem = { guess: this.input, a: a, b: b, seq: this.recordSeq };
     const newRecs: RecordItem[] = [rec];
     for (let i = 0; i < this.records.length; i++) { newRecs.push(this.records[i]); }
     this.records = newRecs;
     if (a === this.getSecretLength()) { this.isWin = true; this.isPlaying = false; }
     if (this.tries >= this.getMaxTries()) { this.isPlaying = false; }
     this.input = '';
+  }
+
+  getResultColor(a: number): ResourceColor {
+    if (a === this.getSecretLength()) { return DarkColors.success; }
+    return DarkColors.warning;
+  }
+
+  getInputColor(): ResourceColor {
+    if (this.input.length === this.getSecretLength()) { return DarkColors.success; }
+    return DarkColors.textPrimary;
+  }
+
+  getKeyFontSize(key: string): number {
+    if (key === '确定') { return FontTokens.sizeBody; }
+    return 24;
+  }
+
+  getKeyFontColor(key: string): ResourceColor {
+    if (key === '确定') {
+      if (this.input.length === this.getSecretLength()) { return DarkColors.textOnPrimary; }
+      return DarkColors.textTertiary;
+    }
+    return DarkColors.textPrimary;
+  }
+
+  getKeyBgColor(key: string): ResourceColor {
+    if (key === '确定') {
+      if (this.input.length === this.getSecretLength()) { return DarkColors.primary; }
+      return DarkColors.surfaceHover;
+    }
+    if (key === '⌫') { return DarkColors.error; }
+    return DarkColors.surface;
+  }
+
+  getKeyShadow(key: string): ShadowOptions | undefined {
+    if (key === '确定' && this.input.length === this.getSecretLength()) {
+      return ShadowTokens.button;
+    }
+    return undefined;
   }
 
   build() {
@@ -125,12 +166,12 @@ struct GuessNumberPage {
                   Text(rec.guess).fontWeight(FontWeight.Bold)
                     .fontColor(DarkColors.textPrimary).margin({ left: SpacingTokens.sm }).fontSize(FontTokens.sizeSubtitle)
                   Text(rec.a + 'A' + rec.b + 'B').fontWeight(FontWeight.Bold)
-                    .fontColor(rec.a === this.getSecretLength() ? DarkColors.success : DarkColors.warning)
+                    .fontColor(this.getResultColor(rec.a))
                     .margin({ left: SpacingTokens.md }).fontSize(FontTokens.sizeBodyLarge)
                   Blank()
                 }.width('100%').padding({ left: SpacingTokens.sm, right: SpacingTokens.sm })
               }.height(40)
-            })
+            }, (rec: RecordItem) => rec.seq.toString())
           }.height(Math.min(this.records.length * 40, 240))
           .backgroundColor(DarkColors.surface).borderRadius(RadiusTokens.base)
           .margin({ left: SpacingTokens.base, right: SpacingTokens.base })
@@ -140,7 +181,7 @@ struct GuessNumberPage {
           Text(this.input + '_'.repeat(this.getSecretLength() - this.input.length))
             .fontFamily(FontTokens.family)
             .fontSize(32).fontWeight(FontWeight.Bold)
-            .fontColor(this.input.length === this.getSecretLength() ? DarkColors.success : DarkColors.textPrimary)
+            .fontColor(this.getInputColor())
             .margin({ bottom: SpacingTokens.base })
 
           this.KeyRow(['1', '2', '3'])
@@ -219,22 +260,20 @@ struct GuessNumberPage {
           } else {
             Text(key)
               .fontFamily(FontTokens.family)
-              .fontSize(key === '确定' ? FontTokens.sizeBody : 24)
-              .fontColor(key === '确定' ? (this.input.length === this.getSecretLength() ? DarkColors.textOnPrimary : DarkColors.textTertiary) : DarkColors.textPrimary)
+              .fontSize(this.getKeyFontSize(key))
+              .fontColor(this.getKeyFontColor(key))
           }
         }
         .layoutWeight(1).height(52)
-        .backgroundColor(key === '确定' ?
-          (this.input.length === this.getSecretLength() ? DarkColors.primary : DarkColors.surfaceHover) :
-          (key === '⌫' ? DarkColors.error : DarkColors.surface))
+        .backgroundColor(this.getKeyBgColor(key))
         .borderRadius(RadiusTokens.base)
-        .shadow(key === '确定' && this.input.length === this.getSecretLength() ? ShadowTokens.button : undefined)
+        .shadow(this.getKeyShadow(key))
         .onClick(() => {
           if (key === '⌫') { this.deleteDigit(); }
           else if (key === '确定') { this.submit(); }
           else { this.pushDigit(key); }
         })
-      })
+      }, (key: string) => key)
     }
     .width('100%')
     .margin({ bottom: SpacingTokens.sm })
