@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LittleGames 项目分析与优化建议</title>
+<style>
+  :root{
+    --bg:#F4F6FB; --surface:#FFFFFF; --surface-hover:#EBF0FA;
+    --primary:#2D6CE8; --primary-light:#E4EDFF;
+    --accent:#7A5AF8;
+    --p0:#F2524B; --p0-bg:#FDECEB;
+    --p1:#F5A623; --p1-bg:#FEF6E7;
+    --p2:#2D6CE8; --p2-bg:#EAF1FE;
+    --ok:#2FB97B; --ok-bg:#E8F7F0;
+    --text:#12203A; --text-2:#52617E; --text-3:#8B97AE;
+    --border:#E4E9F3; --border-strong:#C7D2E6;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"HarmonyOS Sans","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+    background:var(--bg); color:var(--text); line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px 80px}
+
+  /* Header */
+  header{
+    background:linear-gradient(135deg,#2D6CE8 0%,#7A5AF8 100%);
+    color:#fff; padding:52px 24px 44px; margin-bottom:36px;
+  }
+  header .inner{max-width:1080px;margin:0 auto}
+  header h1{font-size:32px;font-weight:700;letter-spacing:.5px}
+  header p{opacity:.85;margin-top:8px;font-size:15px}
+  .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+  .meta span{
+    background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.24);
+    padding:4px 12px;border-radius:999px;font-size:12.5px;
+  }
+
+  /* Metrics */
+  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:36px}
+  .metric{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px}
+  .metric .n{font-size:28px;font-weight:700;color:var(--primary);line-height:1.2}
+  .metric .n.warn{color:var(--p0)}
+  .metric .n.ok{color:var(--ok)}
+  .metric .l{font-size:12.5px;color:var(--text-3);margin-top:2px}
+
+  /* Section */
+  section{margin-bottom:40px}
+  h2{
+    font-size:20px;font-weight:700;margin-bottom:16px;
+    padding-left:12px;border-left:4px solid var(--primary);
+  }
+  h3{font-size:16px;font-weight:600;margin:22px 0 10px;color:var(--text)}
+
+  /* Architecture */
+  .arch{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+  .layer{display:flex;align-items:stretch;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+  .layer-label{
+    width:78px;flex-shrink:0;font-size:12px;color:var(--text-3);font-weight:600;
+    display:flex;align-items:center;justify-content:flex-end;padding-right:6px;
+  }
+  .nodes{display:flex;gap:10px;flex-wrap:wrap;flex:1}
+  .node{
+    background:var(--surface-hover);border:1px solid var(--border-strong);
+    border-radius:10px;padding:9px 14px;font-size:13px;font-weight:500;
+  }
+  .node.brand{background:var(--primary-light);border-color:#B9D0FF;color:#1B4DB8}
+  .node.accent{background:#ECE7FF;border-color:#CFC2FF;color:#5B3FD6}
+  .node.games{background:var(--surface-hover);font-size:12.5px;padding:7px 11px}
+  .node.dead{background:#FDECEB;border-color:#F8C9C6;color:#B8322C;text-decoration:line-through}
+  .arrow{text-align:center;color:var(--text-3);font-size:16px;margin:2px 0 10px}
+
+  /* Strengths */
+  .strengths{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+  .strength{background:var(--ok-bg);border:1px solid #BEE9D3;border-radius:var(--radius);padding:16px 18px}
+  .strength b{display:block;font-size:14px;margin-bottom:4px;color:#1D7A54}
+  .strength span{font-size:13px;color:var(--text-2)}
+
+  /* Issues */
+  .issue{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+    margin-bottom:14px;overflow:hidden;
+  }
+  .issue-head{display:flex;align-items:flex-start;gap:12px;padding:14px 18px;border-bottom:1px solid var(--border)}
+  .badge{
+    flex-shrink:0;font-size:11px;font-weight:700;padding:3px 9px;border-radius:6px;
+    font-family:ui-monospace,Consolas,monospace;letter-spacing:.3px;
+  }
+  .badge.p0{background:var(--p0-bg);color:var(--p0)}
+  .badge.p1{background:var(--p1-bg);color:#B8790B}
+  .badge.p2{background:var(--p2-bg);color:var(--p2)}
+  .issue-title{font-size:15px;font-weight:600;flex:1}
+  .issue-body{padding:14px 18px;font-size:13.5px}
+  .issue-body dl{display:grid;grid-template-columns:64px 1fr;row-gap:8px;column-gap:12px}
+  .issue-body dt{color:var(--text-3);font-size:12.5px;font-weight:600;padding-top:1px}
+  .issue-body dd{color:var(--text-2)}
+  .issue-body dd.loc{font-family:ui-monospace,Consolas,monospace;font-size:12px;color:var(--text-3);word-break:break-all}
+  .issue-body dd.fix{color:var(--text)}
+  code{
+    background:var(--surface-hover);border:1px solid var(--border);
+    padding:1px 5px;border-radius:4px;font-size:12px;
+    font-family:ui-monospace,Consolas,monospace;color:#1B4DB8;
+  }
+  pre{
+    background:#F8FAFE;border:1px solid var(--border);border-radius:8px;
+    padding:12px 14px;overflow-x:auto;margin-top:8px;
+    font-family:ui-monospace,Consolas,monospace;font-size:12px;line-height:1.65;color:var(--text-2);
+  }
+  pre .c{color:var(--text-3)}
+  pre .k{color:#7A5AF8}
+  pre .s{color:#2FB97B}
+
+  /* Roadmap */
+  .road{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+  .phase{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px;border-top:3px solid var(--primary)}
+  .phase.s1{border-top-color:var(--p0)}
+  .phase.s2{border-top-color:var(--p1)}
+  .phase.s3{border-top-color:var(--p2)}
+  .phase h4{font-size:14.5px;margin-bottom:3px}
+  .phase .sub{font-size:12px;color:var(--text-3);margin-bottom:10px}
+  .phase ul{list-style:none;font-size:13px;color:var(--text-2)}
+  .phase li{padding-left:14px;position:relative;margin-bottom:5px}
+  .phase li::before{content:"";position:absolute;left:0;top:9px;width:5px;height:5px;border-radius:50%;background:var(--border-strong)}
+
+  /* Table */
+  table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;font-size:13px}
+  th{background:var(--surface-hover);text-align:left;padding:10px 14px;font-weight:600;font-size:12.5px;color:var(--text-2)}
+  td{padding:9px 14px;border-top:1px solid var(--border);color:var(--text-2);font-family:ui-monospace,Consolas,monospace;font-size:12px}
+  td:last-child{text-align:right;color:var(--text-3)}
+
+  footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-size:12.5px;color:var(--text-3);text-align:center}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="inner">
+    <h1>LittleGames · 项目分析与优化建议</h1>
+    <p>HarmonyOS / ArkTS 小游戏合集 — 代码审查、架构评估与改进路线</p>
+    <div class="meta">
+      <span>HarmonyOS 6.1.1 (API 24)</span>
+      <span>ArkTS 严格模式 · Stage 模型</span>
+      <span>@ComponentV2 + Navigation</span>
+      <span>19 个 .ets · 约 5,100 行</span>
+      <span>2026-09-01</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="metrics">
+    <div class="metric"><div class="n">10</div><div class="l">游戏数量</div></div>
+    <div class="metric"><div class="n">5,121</div><div class="l">代码总行数</div></div>
+    <div class="metric"><div class="n warn">10</div><div class="l">P0 正确性缺陷</div></div>
+    <div class="metric"><div class="n" style="color:var(--p1)">9</div><div class="l">P1 架构问题</div></div>
+    <div class="metric"><div class="n" style="color:var(--p2)">11</div><div class="l">P2 性能体验</div></div>
+    <div class="metric"><div class="n ok">5</div><div class="l">架构亮点</div></div>
+  </div>
+
+  <!-- ============ 架构 ============ -->
+  <section>
+    <h2>一、架构总览</h2>
+    <div class="arch">
+      <div class="layer">
+        <div class="layer-label">入口</div>
+        <div class="nodes">
+          <div class="node brand">EntryAbility</div>
+          <div class="node">windowStage.loadContent → pages/Index</div>
+          <div class="node">GameDataManager.init(context)</div>
+        </div>
+      </div>
+      <div class="arrow">↓</div>
+
+      <div class="layer">
+        <div class="layer-label">壳层</div>
+        <div class="nodes">
+          <div class="node brand">Index.ets（844 行）</div>
+          <div class="node">Navigation + NavPathStack</div>
+          <div class="node">Tabs：精选 / 分类 / 我的</div>
+          <div class="node accent">SplashLayer 启动闪屏</div>
+        </div>
+      </div>
+      <div class="arrow">↓ pushPathByName</div>
+
+      <div class="layer">
+        <div class="layer-label">游戏页</div>
+        <div class="nodes">
+          <div class="node games">SnakeGamePage</div>
+          <div class="node games">TetrisGamePage</div>
+          <div class="node games">Game2048Page</div>
+          <div class="node games">WhackMolePage</div>
+          <div class="node games">MinesweeperPage</div>
+          <div class="node games">SudokuPage</div>
+          <div class="node games">SlidePuzzlePage</div>
+          <div class="node games">KlotskiPage</div>
+          <div class="node games">GuessNumberPage</div>
+          <div class="node games">MemoryCardPage</div>
+        </div>
+      </div>
+      <div class="arrow">↑ 依赖</div>
+
+      <div class="layer">
+        <div class="layer-label">复用层</div>
+        <div class="nodes">
+          <div class="node">GameHeader</div>
+          <div class="node">ControlPad</div>
+          <div class="node dead">GamePanel（未被引用）</div>
+        </div>
+      </div>
+
+      <div class="layer">
+        <div class="layer-label">基础层</div>
+        <div class="nodes">
+          <div class="node">DesignTokens（品牌/语义/间距/圆角/字体/阴影）</div>
+          <div class="node">GameDataManager（静态仓库 + Preferences）</div>
+          <div class="node">GameConstants（枚举 + GameInfo）</div>
+          <div class="node">resources/base + dark（双主题）</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 亮点 ============ -->
+  <section>
+    <h2>二、做得好的地方</h2>
+    <div class="strengths">
+      <div class="strength">
+        <b>设计令牌体系完整</b>
+        <span><code>DesignTokens.ets</code> 拆出品牌色 / 语义色 / 间距 / 圆角 / 字体 / 阴影六组，40 项语义色同时提供 base 与 dark 两份资源，主题切换由系统自动完成。</span>
+      </div>
+      <div class="strength">
+        <b>ArkTS 严格模式合规</b>
+        <span>全量使用 <code>let</code>、显式类型标注、箭头函数、常规 <code>for</code> 循环，未出现 <code>any</code>/<code>unknown</code>、解构、<code>for..in</code>、<code>Function.bind</code> 等被禁语法。</span>
+      </div>
+      <div class="strength">
+        <b>路由现代化</b>
+        <span>采用 <code>Navigation + NavPathStack</code> 而非旧 router，配合 <code>navDestination</code> 做页面映射，符合 HarmonyOS 推荐范式。</span>
+      </div>
+      <div class="strength">
+        <b>响应式布局到位</b>
+        <span>首页使用 <code>GridRow</code> 三档断点（320/600/840vp）+ <code>GridCol span</code>，并额外注册媒体查询，手机到平板都有合理密度。</span>
+      </div>
+      <div class="strength">
+        <b>已修复过一轮隐蔽 Bug</b>
+        <span>代码注释中记录了俄罗斯方块旋转态缺失、华容道判定、滑动拼图可解性奇偶写反、扫雷获胜条件过严等问题，说明项目经过实际调试打磨。</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ P0 ============ -->
+  <section>
+    <h2>三、P0 — 正确性与功能缺陷（10 项）</h2>
+
+    <div class="issue">
+      <div class="issue-head"><span class="badge p0">P0-1</span><span class="issue-title">状态深层修改不触发 UI 刷新，多游戏依赖「隐式兜底」</span><span class="badge done">已修复</span></div>
+      <div class="issue-body"><dl>
+        <dt>位置</dt><dd class="loc">SudokuPage.setNumber / KlotskiPage.moveBlock / SlidePuzzlePage.tapCell / MemoryCardPage.flipCard</dd>
+        <dt>现象</dt><dd><code>@Local</code> 对数组只建立<b>一层代理</b>。<code>this.board[r][c] = n</code>（二维数组内层）、<code>block.x = nx</code>（数组内对象字段）、<code>cards[idx].flipped = true</code> 都<b>不会</b>被观测到。数独填入数字后界面完全无反应；其余三处之所以「看着正常」，只是因为同一函数里恰好有 <code>stepCount++</code>、<code>flippedIdxs = [...]</code> 等顶层赋值顺带触发了重渲染——属于脆弱的隐式依赖，任何一次重构都会让它静默失效。</dd>
+        <dt>建议</dt><dd class="fix">① 用 <code>@ObservedV2</code> + <code>@Trace</code> 装饰数据类（<code>Cell</code>/<code>Block</code>/<code>Card</code>），让深层字段可观测；② 或统一「重建数组」模式并封装工具方法，杜绝原地改：
+        <pre><span class="c">// 推荐：不可变更新，@Local 一定能观测到</span>
+<span class="k">private</span> updateCell(r: <span class="k">number</span>, c: <span class="k">number</span>, v: <span class="k">number</span>): <span class="k">void</span> {
+  <span class="k">const</span> next = <span class="k">this</span>.board.map((row: <span class="k">number</span>[], i: <span class="k">number</span>) =>
+    i === r ? row.map((x: <span class="k">number</span>, j: <span class="k">number</span>) => j === c ? v : x) : row);
+  <span class="k">this</span>.board = next;
+}</pre></dd>
+      </dl></div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head"><span class="badge p0">P0-2</span><span class="issue-title">数独生成器在主线程做逐格扫描回溯，困难档长尾卡顿</span><span class="badge done">已修复</span></div>
+      <div class="issue-body"><dl>
+        <dt>位置</dt><dd class="loc">SudokuPage.generatePuzzle() / countSolutions() / solveCount()</dd>
+        <dt>现象</dt><dd><code>generatePuzzle()</code> 在 <code>aboutToAppear</code> 中<b>同步</b>调用。困难难度需挖掉 58 个格子，每挖一格调一次 <code>countSolutions()</code>；而候选集计算走的是 <code>canPlaceAt()</code> 逐格扫描（每格 27 次读），MRV 选格又要对全部空格各算一遍候选，成本被放大约 20000 倍。<br>实测（桌面 Node，60 次采样）：困难档 p50 25ms、<b>p99 111ms</b>；普通档 p50 4.5ms、p99 20ms。按移动端相对桌面慢一个量级折算，困难档长尾约为 <b>1.5 秒</b>级的主线程冻结，期间 UI 不响应。</dd>
+        <dt>已实施</dt><dd class="fix">改用<b>位掩码约束</b>：行/列/宫各维护一个 9 位占用掩码，候选集由三次按位或 + 取反一次得到（<code>~(row|col|box) &amp; 0x1FF</code>），MRV 选格用查表的 popcount。配 <code>boxOf</code>（下标→宫）与 <code>bitToVal</code> 两张查找表。<br>实测提速：困难档 20×（p99 111ms → 5.5ms，折算真机约 1.5s → 82ms）、普通档 15.6×、简单档 8.7×。<b>已用独立朴素求解器对 120 个题面做交叉校验</b>：唯一解、题面合法性、完整解合法性全部通过。<br>提速后长尾已降到百毫秒内，无需引入 <code>taskpool</code>／<code>Worker</code>，架构复杂度不变。</dd>
+        <dt>可选后续</dt><dd>① 缓存题面池，冷启动直接取用；② 若仍嫌慢，把生成移入 <code>taskpool</code> 并显示 loading；③ 困难档线索数 23 → 26 可再降一个量级（当前挖洞算法常停在 23~26，实际已有余量）。</dd>
+      </dl></div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head"><span class="badge p0">P0-3</span><span class="issue-title">数独兜底题面的去重指纹记录错位</span><span class="badge done">已修复</span></div>
+      <div class="issue-body"><dl>
+        <dt>位置</dt><dd class="loc">SudokuPage.generatePuzzle() 第 250-251 行</dd>
+        <dt>现象</dt><dd class="fix"><code>this.previousKey = this.boardKey(last); return this.fallbackPuzzle();</code> — 记录的指纹来自变量 <code>last</code>，实际返回的却是 fallback 题面。<b>指纹与实际题面不一致</b>，去重机制失效，下次仍可能重复生成同一 fallback。</dd>
+        <dt>建议</dt><dd class="fix">改为对真正返回的对象取指纹：<code>const fb = this.fallbackPuzzle(); this.previousKey = this.boardKey(fb); return fb;</code>。另外三个 fallback 题面未经唯一解校验，困难档 23 线索题面可能存在多解，建议校验后固化。</dd>
+      </dl></div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head"><span class="badge p0">P0-4</span><span class="issue-title">LightColors 与 DarkColors 内容完全重复，90 行冗余 + 语义倒挂</span><span class="badge done">已修复</span></div>
+      <div class="issue-body"><dl>
+        <dt>位置</dt><dd class="loc">DesignTokens.ets 第 38-128 行</dd>
+        <dt>现象</dt><dd>两个类的 <b>40 个字段逐一引用同一批 <code>$r('app.color.*')</code> 资源</b>，取值完全相同。主题适配实际由资源目录（<code>base/</code> 与 <code>dark/</code>）完成，这两个类只是同一批资源的两个别名。后果：① 新增一个语义色要改两处；② 语义严重倒挂——<code>Index.ets</code> 的亮色页面写着 <code>DarkColors.surfaceTranslucent</code>，游戏页又混用 <code>LightColors</code>，代码读起来完全无法判断当前处于哪套主题。</dd>
+        <dt>建议</dt><dd class="fix">合并为单一 <code>SemanticColors</code>（语义令牌本就不分明暗，明暗由资源决定）：
+        <pre><span class="k">export class</span> SemanticColors {
+  <span class="k">static</span> bg: Resource = $r(<span class="s">'app.color.bg'</span>);
+  <span class="k">static</span> surface: Resource = $r(<span class="s">'app.color.surface'</span>);
+  <span class="c">// …其余 38 项</span>
+}</pre>
+        全局替换引用（约 300 处，可脚本化），删除 <code>DarkColors</code>。若确实需要「强制深色」场景（如启动闪屏），单独建 <code>BrandColors</code> 常量类即可，当前已存在。</dd>
+      </dl></div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head"><span class="badge p0">P0-5</span><span class="issue-title">40+ 处硬编码颜色，深色模式下多处对比度失效</span><span class="badge done">已修复</span></div>
+      <div class="issue-body"><dl>
+        <dt>位置</dt><dd class="loc">Game2048Page.getCellBg/getTileFontColor（14 处）、TetrisGamePage.SHAPE_COLORS（7 处）、MinesweeperPage.getNumColor（9 处）、KlotskiPage.getBlockBg（4 处）、Index.SplashLayer（6 处）等</dd>
+        <dt>现象</dt><dd>违反项目 <code>AGENTS.md</code> 中「UI 引用的常量应定义为 resources 资源值并用 <code>$r(...)</code> 引用」。最严重的是 2048：<code>2</code>/<code>4</code> 用浅米色底 <code>#EEE4DA</code> 配深字 <code>#776E65</code>，<code>8</code> 以上用亮色底配 <code>#FFFFFF</code>——这套配色<b>只在亮色下成立</b>，切到深色模式后浅底格子与深色棋盘割裂，且白色数字在 <code>#F2B179</code> 等浅橙底上几乎不可读。SplashLayer 的深色渐变（<code>#16205F</code>/<code>#2A2B7E</code>）则反过来在亮色下没有适配。</dd>
+        <dt>建议</dt><dd class="fix">① 把 2048 色板、俄罗斯方块色板、扫雷数字色、棋子色全部抽到 <code>color.json</code>，并在 <code>dark/</code> 下提供对应值；② 至少做到「文字色跟随主题」——浅底配深字、深底配浅字，可用一个 <code>getOnColor(bg)</code> 亮度判断函数兜底；③ SplashLayer 固定深色是合理的（品牌页），但应显式注释说明这是刻意为之，避免后续被「修」掉。</dd>
+      </dl></div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head"><span class="badge p0">P0-6</span><span class="issue-title">10 个游戏页全部未做安全区适配，底部控件被手势条遮挡</span><span class="badge done">已修复</span></div>
+      <div class="issue-body"><dl>
+        <dt>位置</dt><dd class="loc">全项目 <code>expandSafeArea</code> 仅 Index.ets 第 305 行 1 处</dd>
+        <dt>现象</dt><dd>除首页外，所有游戏页的根容器都没有安全区处理。在全面屏（手势导航）设备上，俄罗斯方块的「加速下落」按钮、贪吃蛇与华容道的 <code>ControlPad</code> 方向键、猜数字的九宫格键盘都会落在底部手势区内，导致误触或点不到。</dd>
+        <dt>建议</dt><dd class="fix">给每个游戏页根容器补：<code>.expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.BOTTOM, SafeAreaEdge.TOP])</code>；或更稳妥的是给底部操作区加动态 padding（通过 <code>window.getWindowAvoidArea()</code> 取避让区高度）。建议前者，改动最小。</dd>
+        <dt>订正</dt><dd class="fix"><b>原建议方向有误，实施时已改用动态 padding。</b>核查后发现：<code>expandSafeArea</code> 的语义是让组件<b>突破</b>安全区向外延伸，而本应用<b>未</b>开启全屏（EntryAbility 未调 <code>setWindowLayoutFullScreen</code>），页面本就位于安全区内——此时再加 <code>expandSafeArea</code> 反而会把内容顶到手势条下面。另外 Index.ets 第 305 行那处 <code>expandSafeArea</code> 挂在 Navigation <b>内部</b>的首页容器上，只影响首页 Tabs，与游戏页无关。</dd>
+        <dt>实际方案</dt><dd class="fix">① 新增 <code>common/SafeAreaInsets.ets</code>，在 <code>EntryAbility.onWindowStageCreate</code> 中通过 <code>getWindowAvoidArea(AvoidAreaType.TYPE_NAVIGATION_INDICATOR)</code> 取底部避让高度，<b>px 转 vp</b> 后存入静态字段，并监听 <code>avoidAreaChange</code> 实时更新；② 10 个游戏页在<b>内容层 Column</b>（非背景层，背景仍铺满）追加 <code>.padding({ bottom: this.safeBottom })</code>，页面持 <code>@Local safeBottom</code>。该值在手势导航下为手势条高度、三键导航下为 0，<b>不会与系统避让重复计算</b>；读取失败时退化为 0，无副作用。</dd>
+      </dl></div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head"><span class="badge p0">P0-7</span><span class="issue-title">切后台时游戏不暂停，计时器持续运行</span><span class="badge done">已修复</span></div>
+      <div class="issue-body"><dl>
+        <dt>位置</dt><dd class="loc">SnakeGamePage / TetrisGamePage / WhackMolePage / MinesweeperPage</dd>
+        <dt>现象</dt><dd><code>isPaused</code> 仅在用户手动点击暂停时被设置。应用切到后台（<code>onPageHide</code>）时没有任何处理，<code>setInterval</code> 仍在跑：贪吃蛇会一直撞墙直到 game over，打地鼠 30 秒直接耗尽，扫雷计时器虚增。用户切回来的第一眼是「游戏结束」。</dd>
+        <dt>建议</dt><dd class="fix">在各游戏页补充生命周期钩子：<code>onPageHide()</code> 中记录并置 <code>isPaused = true</code>、<code>clearInterval</code>；<code>onPageShow()</code> 中恢复。可抽一个 <code>GameLifecycleMixin</code> 或在 <code>GameHeader</code> 层面统一处理，避免 10 处重复。</dd>
+      </dl></div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head"><span class="badge p0">P0-8</span><span class="issue-title">GamePanel 是死代码，且内部混用了与 Navigation 冲突的 router API</span><span class="badge done">已修复</span></div>
+      <div class="issue-body"><dl>
+        <dt>位置</dt><dd class="loc">components/GamePanel.ets（69 行，全项目零引用）</dd>
+        <dt>现象</dt><dd>组件从未被任何页面使用，却在第 43 行写了 <code>this.getUIContext().getRouter().back()</code>。项目路由体系是 <code>NavPathStack</code>，<code>router</code> 是<b>另一套独立栈</b>——一旦有人图省事引用了这个「现成组件」，返回按钮会静默失效（router 栈为空，pop 无效果）。这是一颗埋好的雷。</dd>
+        <dt>建议</dt><dd class="fix">直接删除。若想保留这个「标准化外框」抽象，先改造成 <code>@Param pathStack: NavPathStack</code> + <code>pathStack.pop()</code>，并把 10 个游戏页统一迁移过去（可一并解决 P1-3 的结构重复）。</dd>
+      </dl></div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head"><span class="badge p0">P0-9</span><span class="issue-title">持久化重复全量写入，flush 未防抖</span><span class="badge done">已修复</span></div>
+      <div class="issue-body"><dl>
+        <dt>位置</dt><dd class="loc">GameDataManager.persist() / updateHighScore() / incrementPlayCount()</dd>
+        <dt>现象</dt><dd><code>startGame()</code> 里常连续调用 <code>updateHighScore()</code> 和 <code>incrementPlayCount()</code>，两者各自触发一次 <code>persist()</code>：每次都<b>全量遍历 10 个游戏 → 构造两个 Record → 两次 JSON.stringify → 两次 putSync → 一次 flush</b>。等于一次开局做了 2 遍完整序列化 + 2 次磁盘 IO。且 <code>flush()</code> 返回 Promise 却未 await、也未做防抖，高频操作下存在写入丢失风险。</dd>
+        <dt>建议</dt><dd class="fix">① 抽出 <code>markDirty()</code>，合并同帧内的多次变更，用 200ms 防抖统一落盘；② <code>flush()</code> 改为 <code>await store.flush()</code> 或至少挂 <code>.catch()</code> 记录错误；③ 所有空 <code>catch</code> 补上 <code>hilog.error</code>——当前初始化失败会让 <code>store = null</code>，之后所有最高分静默丢失，用户与开发者都无从察觉。</dd>
+      </dl></div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head"><span class="badge p0">P0-10</span><span class="issue-title">猜数字是唯一未接入数据层的游戏</span><span class="badge done">已修复</span></div>
+      <div class="issue-body"><dl>
+        <dt>位置</dt><dd class="loc">pages/puzzle/GuessNumberPage.ets（全文无 GameDataManager 引用）</dd>
+        <dt>现象</dt><dd>其余 9 款游戏都记录最高分与游玩次数，只有猜数字不记录。首页「最高分排行」里它永远显示 <code>--</code>，且该玩法的天然指标是「最少猜测次数」，比分数更有意义，目前完全没有沉淀。</dd>
+        <dt>建议</dt><dd class="fix">在 <code>submit()</code> 胜利分支补 <code>GameDataManager.updateHighScore('guessnumber', 分数)</code>，分数可设计为 <code>基础分 × 难度系数 − 尝试次数</code>。同时建议给 <code>GameInfo</code> 增加一个 <code>scoreLabel</code> 字段（「分」/「步」/「次」/「秒」），让首页排行对每款游戏显示正确单位——当前排行把华容道的「步数换算分」和贪吃蛇的「得分」混在一起排序，语义上其实是错位的。</dd>
+      </dl></div>
+    </div>
+  </section>
+
+  <!-- ============ P1 ============ -->
+  <section>
+    <h2>四、P1 — 架构与可维护性（9 项）</h2>
+
+    <div class="issue">
+      <div class="issue-head"><span class="badge p1">P1-1</span><span class="issue-title">Index.ets 单文件 844 行，承担 6 类职责</span></div>
+      <div class="issue-body"><dl>
+        <dt>位置</dt><dd class="loc">pages/Index.ets</dd>
+        <dt>现象</dt><dd>同时包含：路由映射表（PageMap）、启动闪屏（SplashLayer + 四段动画状态）、Tab 容器、精选页、分类页（搜索 + 筛选 + 空态）、我的页。是第二长游戏页（494 行）的 1.7 倍，任何一处改动都要在这个巨型文件里翻找。</dd>
+        <dt>建议</dt><dd class="fix">按职责拆分：<code>pages/Index.ets</code>（仅壳 + 路由）→ 抽出 <code>SplashLayer.ets</code>、<code>FeaturedTab.ets</code>、<code>CategoryTab.ets</code>、<code>ProfileTab.ets</code>、<code>components/GameCard.ets</code>、<code>router/GameRoutes.ets</code>。目标：Index 压到 150 行以内，每个 Tab 独立可测。</dd>
+      </dl></div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head"><span class="badge p1">P1-2</span><span class="issue-title">路由用 10 层 if-else 硬编码，新增游戏要改 3 处</span></div>
+      <div class="issue-body"><dl>
+        <dt>位置</dt><dd class="loc">Index.navigateToGame() 第 117-130 行、Index.PageMap() 第 162-220 行</dd>
+        <dt>现象</dt><dd>游戏 ID → 页面名的映射写成了两条并列的 if-else 链，且 <code>PageMap</code> 里每个分支重复一遍 <code>NavDestination(){...}.hideTitleBar(true)</code>。新增第 11 款游戏需要：① 在 GameData 里加数据，② 在 navigateToGame 加分支，③ 在 PageMap 加分支——三处不同步就是运行时白屏。更糟的是 <code>navigateToGame</code> 的 <code>else</code> 兜底是 <code>MemoryCardPage</code>，ID 写错会静默跳到错误页面。</dd>
+        <dt>建议</dt><dd class="fix">① 短期：改成数据表驱动，一举消除两条 if-else 链：
+        <pre><span class="c">// router/GameRoutes.ets</span>
+<span class="k">export class</span> GameRoutes {
+  <span class="k">private static</span> routes: Record&lt;string, string&gt; = {
+    <span class="s">'snake'</span>: <span class="s">'SnakeGamePage'</span>, <span class="s">'tetris'</span>: <span class="s">'TetrisGamePage'</span>, <span class="c">/* … */</span>
+  };
+  <span class="k">static</span> pageNameOf(id: string): string { <span class="k">return</span> GameRoutes.routes[id] ?? <span class="s">''</span>; }
+}</pre>
+        ② 长期：迁移到系统路由表 <code>resources/base/profile/router_map.json5</code> + <code>@Builder</code> 导出函数，彻底删掉 <code>PageMap</code>，并支持按需加载（也能顺带缓解 P0-2 的首包压力）。</dd>
+      </dl></div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head"><span class="badge p1">P1-3</span><span class="issue-title">「结算弹窗」在 10 个页面重复约 120 行</span></div>
+      <div class="issue-body"><dl>
+        <dt>位置</dt><dd class="loc">Snake / Tetris / 2048 / WhackMole / Minesweeper / Sudoku / Klotski / SlidePuzzle / MemoryCard / GuessNumber</dd>
+        <dt>现象</dt><dd>每个游戏页末尾都有一段结构完全一致的代码：72vp 圆形图标底 + SymbolGlyph + 主标题 + 副标题 + 「再来一局」主按钮 + 「返回」次按钮，外加 <code>.backgroundColor(scrim).backdropBlur(20).justifyContent(Center)</code> 三件套。差异只在图标、文案和按钮回调。同样的还有「得分 / 最高分」双卡片 Row（重复 8 次）。粗算重复代码 1000+ 行，占总量 20%。</dd>
+        <dt>建议</dt><dd class="fix">抽 <code>components/GameResultDialog.ets</code>：
+        <pre>GameResultDialog({
+  symbol: $r(<span class="s">'sys.symbol.star_fill'</span>), tint: SemanticColors.warning,
+  title: <span class="s">'游戏结束'</span>, detail: <span class="s">'得分 '</span> + <span class="k">this</span>.score,
+  primaryText: <span class="s">'再来一局'</span>, onPrimary: () =&gt; <span class="k">this</span>.startGame(),
+  secondaryText: <span class="s">'返回'</span>,   onSecondary: () =&gt; <span class="k">this</span>.pathStack.pop()
+})</pre>
+        同理抽 <code>StatTile</code>（标签 + 数值小卡）。预计可净减 800~1000 行。</dd>
+      </dl></div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head"><span class="badge p1">P1-4</span><span class="issue-title">initCellSize 重复实现 7 次，且用的是屏幕宽而非可用宽</span></div>
+      <div class="issue-body"><dl>
+        <dt>位置</dt><dd class="loc">Snake / Tetris / 2048 / Minesweeper / Sudoku / Klotski / SlidePuzzle / MemoryCard（8 处）</dd>
+        <dt>现象</dt><dd>每个页面都写一遍：<code>display.getDefaultDisplaySync()</code> → <code>px2vp(d.width)</code> → <code>Math.max(min, Math.floor((Math.min(wVp, max) - pad) / N))</code>，只有魔数不同。更关键的是 <code>getDefaultDisplaySync()</code> 取的是<b>整个屏幕</b>的物理宽度，<b>不是页面可用宽度</b>——在分屏、自由窗口、折叠屏展开态下算出的格子尺寸会偏大，棋盘溢出屏幕。</dd>
+        <dt>建议</dt><dd class="fix">① 抽 <code>common/ScreenUtils.ets</code>：<code>calcCell(count, maxWidth, padding, minSize)</code>；② 宽度来源改为 <code>this.getUIContext().getWindowWidth()</code>（跟随窗口）或在棋盘容器上加 <code>.onAreaChange()</code> 取实际布局宽度——后者最准确，也天然支持旋转与分屏。</dd>
+      </dl></div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head"><span class="badge p1">P1-5</span><span class="issue-title">8 处手写索引数组，且记忆翻牌的行列不对称</span></div>
+      <div class="issue-body"><dl>
+        <dt>位置</dt><dd class="loc">Snake.idx20 / Tetris.rowIdx,colIdx / 2048.idx4 / Minesweeper.idx9 / Sudoku.idx9 / Klotski.rowArray,colArray / SlidePuzzle.idxN / MemoryCard.rowIdx,idx4</dd>
+        <dt>现象</dt><dd>为绕过「ArkTS 的 ForEach 不支持数字范围」，到处手写 <code>[0,1,2,…,19]</code>。其中 <code>MemoryCardPage</code> 把 <code>rowIdx</code> 声明为 <code>@Local</code>（难度切换时重建）而 <code>idx4</code> 是 <code>private</code>（写死 4 列）——目前 3×4 / 4×4 / 6×4 恰好都能整除所以不出错，但<b>列数被硬编码在两处</b>，一旦调整列数就会出现越界。</dd>
+        <dt>建议</dt><dd class="fix">① 统一提供 <code>common/Range.ets</code> 的 <code>range(n: number): number[]</code> 工具并全局替换；② MemoryCard 的列数改为由 <code>pairCount</code> 推导的单一常量，或改用 <code>Grid</code> 的 <code>columnsTemplate</code> / <code>List</code> 的 <code>lanes</code>，彻底摆脱手写行列嵌套 ForEach。</dd>
+      </dl></div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head"><span class="badge p1">P1-6</span><span class="issue-title">游戏逻辑与 UI 强耦合，无法单测、无法复用</span></div>
+      <div class="issue-body"><dl>
+        <dt>位置</dt><dd class="loc">全部 10 个游戏页</dd>
+        <dt>现象</dt><dd>2048 的合并算法、扫雷的连锁展开、数独的求解器、华容道的碰撞检测、滑动拼图的可解性判定，全部以方法形式写在 <code>@ComponentV2 struct</code> 内部，只能通过操作 UI 来验证。这既无法写单元测试（P0-1 那类响应式陷阱本可以被测试拦住），也无法把规则逻辑复用到其他端。</dd>
+        <dt>建议</dt><dd class="fix">建立 <code>entry/src/main/ets/games/</code> 层，用<b>纯 TS class</b> 承载规则（ArkTS 完全支持），页面只负责渲染与事件转发：<br>
+        <code>SudokuSolver.ts</code> / <code>Board2048.ts</code> / <code>MinesweeperBoard.ts</code> / <code>KlotskiBoard.ts</code> / <code>SlidePuzzleBoard.ts</code> / <code>TetrisEngine.ts</code>…<br>
+        这套拆分同时为 P0-1 提供了干净的解法：逻辑层返回不可变的新棋盘，页面层只做一次整体赋值。</dd>
+      </dl></div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head"><span class="badge p1">P1-7</span><span class="issue-title">GameStatus 枚举已定义但从未使用，状态由三个布尔拼出</span></div>
+      <div class="issue-body"><dl>
+        <dt>位置</dt><dd class="loc">common/GameConstants.ets 第 34-39 行</dd>
+        <dt>现象</dt><dd><code>GameStatus { IDLE, PLAYING, PAUSED, OVER }</code> 是死代码。各页面实际用 <code>isPlaying</code> + <code>isPaused</code> + <code>isWin</code>/<code>isComplete</code> 三个布尔的组合表达状态，理论上有 8 种组合，其中 <code>isPlaying=false && isPaused=true</code>、<code>isPlaying=false && isWin=true && isPaused=true</code> 等都是无意义的非法态，代码里没有防御。</dd>
+        <dt>建议</dt><dd class="fix">统一改为单字段 <code>@Local status: GameStatus = GameStatus.IDLE</code>，用 <code>status === GameStatus.PLAYING</code> 替代 <code>isPlaying && !isPaused</code>。配合 P1-6 的逻辑层拆分，可让状态迁移集中在一处，非法态在编译期就无法表达。</dd>
+      </dl></div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head"><span class="badge p1">P1-8</span><span class="issue-title">「我的」有两套实现，内容高度重复</span></div>
+      <div class="issue-body"><dl>
+        <dt>位置</dt><dd class="loc">Index.ProfileTab() 第 691-810 行 与 pages/ProfilePage.ets（210 行）</dd>
+        <dt>现象</dt><dd>两处都实现了「用户卡片 + 数据卡片 + 最高分排行 + 关于」，约 100 行 × 2 的重复。实现还不一致：Tab 内用 <code>List</code> + <code>.height(312)</code> 硬编码高度、排行只取 Top6；独立页用 <code>Column</code> + ForEach、显示全部 10 款。改一处忘一处是必然的。</dd>
+        <dt>建议</dt><dd class="fix">二选一：① 推荐——Tab 内「我的」直接 <code>pushPathByName('ProfilePage')</code> 复用独立页，删掉 <code>ProfileTab</code>；② 若坚持 Tab 内联（少一次跳转），则把「用户卡片 / 排行 / 关于」抽成三个共享 Builder 组件，两处共同引用，并去掉 <code>height(312)</code> 硬编码（改用 <code>layoutWeight</code> + 内容自适应）。</dd>
+      </dl></div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head"><span class="badge p1">P1-9</span><span class="issue-title">国际化缺失，全部文案硬编码在代码中</span></div>
+      <div class="issue-body"><dl>
+        <dt>位置</dt><dd class="loc">resources/base/element/string.json（仅 3 条）、全部 .ets 文件</dd>
+        <dt>现象</dt><dd><code>string.json</code> 里只有 <code>module_desc</code>、<code>EntryAbility_desc</code>、<code>EntryAbility_label</code> 三条配置字段。10 款游戏的名称、描述、全部 UI 文案（「游戏结束」「再来一局」「返回」「热门推荐」「未找到相关游戏」…）都以字面量散落在代码中，约 150+ 处。项目 <code>AGENTS.md</code> 明确要求「新增国际化字符串时，在每种语言下都添加值」。</dd>
+        <dt>建议</dt><dd class="fix">① 建立 <code>element/string.json</code> 的文案清单，至少补齐 <code>zh_CN</code> 与 <code>en_US</code> 两个限定目录；② UI 文案全部改为 <code>$r('app.string.xxx')</code>；③ 游戏名与描述移入 <code>GameData</code> 时改用资源引用（<code>name: $r('app.string.game_snake_name')</code>，<code>GameInfo.name</code> 类型改为 <code>Resource | string</code>）。</dd>
+      </dl></div>
+    </div>
+  </section>
+
+  <!-- ============ P2 ============ -->
+  <section>
+    <h2>五、P2 — 性能与体验（11 项）</h2>
+
+    <div class="issue">
+      <div class="issue-head"><span class="badge p2">P2-1</span><span class="issue-title">全项目 0 处 renderGroup，违反工程自身规范</span></div>
+      <div class="issue-body"><dl>
+        <dt>位置</dt><dd class="loc">全项目（grep <code>renderGroup</code> 零命中）</dd>
+        <dt>现象</dt><dd><code>AGENTS.md</code> 第三节明确要求「含复杂子组件的动画，将其设为 <code>renderGroup(true)</code>，减少渲染批次」，但全项目一处都没用。2048 的缩放动画、数独的双指缩放、启动闪屏的渐显，都涉及大量子节点的合成，缺少离屏缓存会明显掉帧。</dd>
+        <dt>建议</dt><dd class="fix">给以下容器补 <code>.renderGroup(true)</code>：2048 的棋盘容器、数独的缩放棋盘、SplashLayer 的图标块、以及各游戏的结算弹窗卡片。</dd>
+      </dl></div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head"><span class="badge p2">P2-2</span><span class="issue-title">贪吃蛇每 tick 的渲染是 O(n²)，满屏时约 16 万次比较</span></div>
+      <div class="issue-body"><dl>
+        <dt>位置</dt><dd class="loc">SnakeGamePage.getCellColor() / isSnakeCell()</dd>
+        <dt>现象</dt><dd>渲染 400 个格子，每格调一次 <code>isSnakeCell()</code>，后者<b>线性遍历整个蛇身</b>。蛇长接近 400 时，单帧需要 400 × 400 = 约 16 万次坐标比较，每 180ms 执行一次（困难难度 120ms）。中低端机上会明显卡顿。</dd>
+        <dt>建议</dt><dd class="fix">维护一张 <code>occupied: boolean[][]</code>（或 <code>Set&lt;number&gt;</code>，key 用 <code>r * COLS + c</code>）占用表，随蛇移动增量更新，查询降为 O(1)。单帧比较次数从 16 万降到 400。</dd>
+      </dl></div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head"><span class="badge p2">P2-3</span><span class="issue-title">棋盘用 ForEach 全量重建，未使用复用或 Canvas</span></div>
+      <div class="issue-body"><dl>
+        <dt>位置</dt><dd class="loc">Snake(400) / Tetris(200) / Sudoku(81) / Minesweeper(81) / 2048(16) / 华容道(20) 等</dd>
+        <dt>现象</dt><dd>每个格子是一个 <code>Column</code> 节点，棋盘状态一变就触发全量 diff。贪吃蛇 400 个节点每 180ms 全量重建一次；俄罗斯方块每下落一格重建 200 个节点，且 <code>drop()</code> 每次都 <code>commitBlock()</code> 新建对象（60fps 下 GC 压力显著）。</dd>
+        <dt>建议</dt><dd class="fix">① 格子抽成 <code>@Reusable</code> 组件并配合稳定的 key，让 ArkUI 复用节点；② 对高频重绘的贪吃蛇/俄罗斯方块，改用 <code>Canvas</code> + <code>CanvasRenderingContext2D</code> 直接绘制，把 400 个节点压成 1 个；③ 俄罗斯方块的 <code>commitBlock()</code> 改为只更新 <code>x</code>/<code>y</code> 两个 <code>@Trace</code> 字段，不再整体重建对象。</dd>
+      </dl></div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head"><span class="badge p2">P2-4</span><span class="issue-title">2048 的动画机制混乱，位移从未实现</span></div>
+      <div class="issue-body"><dl>
+        <dt>位置</dt><dd class="loc">Game2048Page.syncTilesFromBoard() / animateMergedTile() / animateNewTile() / getTileAnimation()</dd>
+        <dt>现象</dt><dd>三处问题叠加：① <code>TileData</code> 里的 <code>offsetX</code>/<code>offsetY</code> <b>从未被赋过非零值</b>——没有实现格子从旧位置滑到新位置的位移动画，所谓「带滑动动画」实际只有原地缩放；② 同时混用 <code>.animation()</code> 属性动画与 <code>animateTo()</code> 命令式动画，两套机制会互相打断；③ <code>animateMergedTile</code> / <code>animateNewTile</code> 内部有 <b>3 层嵌套 <code>animateTo</code> + onFinish 回调链</b>，<code>isNew</code> 标志被反复翻转，是 ArkUI 明确不推荐的写法。</dd>
+        <dt>建议</dt><dd class="fix">统一到一种机制（推荐保留 <code>.animation()</code> 属性动画，配合状态驱动）。为 Tile 增加 <code>fromRow/fromCol</code> 与 <code>toRow/toCol</code>，在一次状态变更中同时设置 offset（起始位移）与目标位置（0），让系统自动插值出滑动效果。删除所有嵌套 <code>animateTo</code>。</dd>
+      </dl></div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head"><span class="badge p2">P2-5</span><span class="issue-title">启动闪屏 2.3 秒且不可跳过</span></div>
+      <div class="issue-body"><dl>
+        <dt>位置</dt><dd class="loc">Index.startSplash() 第 132-160 行</dd>
+        <dt>现象</dt><dd>三层嵌套 <code>setTimeout</code>，总时长 600+600+300+800 ≈ <b>2300ms</b>。期间主页内容已在下层完成渲染但被完全遮挡，用户只能干等，且没有任何跳过入口。对一个小游戏合集而言，这个启动成本过高。</dd>
+        <dt>建议</dt><dd class="fix">① 总时长压到 1000~1200ms；② 用单个 <code>animateTo</code> + <code>delay</code> 或 <code>curve</code> 编排替代嵌套 setTimeout，可读性更好也更易调整；③ 闪屏层加「点击跳过」；④ 考虑用 <code>startWindowIcon</code> 承接首帧，把闪屏做成纯内容淡出而非独立等待期。</dd>
+      </dl></div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head"><span class="badge p2">P2-6</span><span class="issue-title">冷启动重复加载数据两次，Collator 反复构造</span></div>
+      <div class="issue-body"><dl>
+        <dt>位置</dt><dd class="loc">Index.aboutToAppear() 第 60-61 行 与 onPageShow() 第 75-77 行</dd>
+        <dt>现象</dt><dd>两个生命周期都调用 <code>loadData()</code>，冷启动时执行两遍完整加载（5 次 <code>GameDataManager</code> 查询 + 一次拼音排序）。而 <code>sortByPinyin()</code> 每次都 <code>new intl.Collator('zh-CN', {collation:'pinyin'})</code>——<b>Collator 构造是重操作</b>，每次进出游戏页返回首页都要重建一遍。</dd>
+        <dt>建议</dt><dd class="fix">① <code>aboutToAppear</code> 做完整初始化，<code>onPageShow</code> 只刷新受最高分影响的部分（<code>featuredGames</code> / <code>rankedGames</code>），或加 <code>hasLoaded</code> 标志；② Collator 提升为模块级 <code>const</code> 单例；③ 更进一步：拼音排序结果在 <code>GameDataManager</code> 初始化时算一次并缓存。</dd>
+      </dl></div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head"><span class="badge p2">P2-7</span><span class="issue-title">isTablet 是死状态，却会触发全局重渲染</span></div>
+      <div class="issue-body"><dl>
+        <dt>位置</dt><dd class="loc">Index.ets 第 51 行（定义）、第 57 行（赋值）、build 中零引用</dd>
+        <dt>现象</dt><dd><code>@Local isTablet</code> 注册了媒体查询监听，每次断点跨越都会改变并触发整个 Index 重渲染，但 <code>build()</code> 里<b>从未读取过它</b>——响应式布局实际由 <code>GridRow</code> 的 <code>breakpoints</code> 独立完成。纯粹的无谓开销。</dd>
+        <dt>建议</dt><dd class="fix">删除 <code>isTablet</code>、<code>mq</code>、<code>mqCallback</code> 及 <code>aboutToDisappear</code> 中的解绑逻辑（约 15 行）。若确实需要 JS 侧感知断点，改为监听后真正参与布局计算（比如调整 <code>columns</code> / <code>span</code>），否则不如交给 GridRow。</dd>
+      </dl></div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head"><span class="badge p2">P2-8</span><span class="issue-title">getTopGames(6) 被调用两次，结果完全相同</span></div>
+      <div class="issue-body"><dl>
+        <dt>位置</dt><dd class="loc">Index.loadData() 第 80 行 与 第 84 行</dd>
+        <dt>现象</dt><dd><code>featuredGames</code> 与 <code>rankedGames</code> 都取自 <code>GameDataManager.getTopGames(6)</code>，内容一模一样，却各做了一次「复制 10 项 + 排序 + 切片」。命名上「精选」与「排行」也确实指向同一份数据，语义冗余。</dd>
+        <dt>建议</dt><dd class="fix">合并为一个状态字段。若产品上「精选」应有别于「排行」（例如精选按游玩次数、排行按最高分），那就应实现两套取数逻辑（<code>getMostPlayed(6)</code> / <code>getTopGames(6)</code>），让首页两个区块真正产生差异。</dd>
+      </dl></div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head"><span class="badge p2">P2-9</span><span class="issue-title">2048 用 JSON.stringify 比较棋盘是否变化</span></div>
+      <div class="issue-body"><dl>
+        <dt>位置</dt><dd class="loc">Game2048Page.swipe() 第 263 行、第 283 行</dd>
+        <dt>现象</dt><dd>每次滑动做两次 <code>JSON.stringify(4×4 数组)</code> 再比较字符串，用于判断「本次滑动是否有效」。虽然 16 个数字的量级下开销不大，但这是用序列化做相等性判断，既低效也不易读。</dd>
+        <dt>建议</dt><dd class="fix">改为逐格比较（16 次整数比较即可短路），或让 <code>mergeRow()</code> 直接返回 <code>changed: boolean</code>——合并过程中天然知道是否发生了移动。</dd>
+      </dl></div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head"><span class="badge p2">P2-10</span><span class="issue-title">扫雷连锁展开的 BFS 使用 Array.shift()</span></div>
+      <div class="issue-body"><dl>
+        <dt>位置</dt><dd class="loc">MinesweeperPage.reveal() 第 136-151 行</dd>
+        <dt>现象</dt><dd><code>const p = q.shift()!</code> — <code>Array.shift()</code> 会移动后续所有元素，是 <b>O(n)</b> 操作。81 格的棋盘影响有限，但在困难难度大面积连锁展开时仍是无谓开销，且写法不如索引指针清晰。</dd>
+        <dt>建议</dt><dd class="fix">改用头指针：<code>let head = 0; while (head &lt; q.length) { const p = q[head++]; … }</code>，把 BFS 降为严格 O(n)。另外 <code>q</code> 存的是 <code>[r, c]</code> 数组，可改为存单个整数 <code>r * COLS + c</code>，减少对象分配。</dd>
+      </dl></div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head"><span class="badge p2">P2-11</span><span class="issue-title">兼容版本过高 + 无障碍属性缺失</span></div>
+      <div class="issue-body"><dl>
+        <dt>位置</dt><dd class="loc">build-profile.json5 第 8-10 行；全部交互组件</dd>
+        <dt>现象</dt><dd>① <code>compileSdkVersion</code> / <code>compatibleSdkVersion</code> / <code>targetSdkVersion</code> 三者都是 <code>6.1.1(24)</code>，意味着<b>只有 HarmonyOS 6.1.1 及以上设备能安装</b>，覆盖面过窄。当前代码用到的 API（Navigation、SymbolGlyph、animateTo、preferences、intl）大多在 API 12 就已稳定。② 所有可点击组件都没有 <code>.accessibilityText()</code> / <code>.accessibilityGroup()</code>，方向键、地鼠洞、卡片等对读屏软件完全不可辨识。</dd>
+        <dt>建议</dt><dd class="fix">① 把 <code>compatibleSdkVersion</code> 下调到 12 或 15（需逐一核对 API 支持级别），保留 <code>compileSdkVersion</code> 为 24；② 为方向键、地鼠洞、游戏卡片、格子补充 <code>accessibilityText</code>（如「向上移动」「第 3 行第 5 列，未揭开」）；③ 顺带移除 <code>module.json5</code> 中未使用的 <code>continuable: true</code>（没有实现接续逻辑）。</dd>
+      </dl></div>
+    </div>
+  </section>
+
+  <!-- ============ 路线图 ============ -->
+  <section>
+    <h2>六、优化路线图</h2>
+    <div class="road">
+      <div class="phase s1">
+        <h4>第一阶段 · 止血</h4>
+        <div class="sub">1~2 天 · 修掉影响可用性的缺陷</div>
+        <ul>
+          <li class="done-item">✓ P0-1 深层状态刷新（数独）</li>
+          <li class="done-item">✓ P0-2 数独生成移出主线程</li>
+          <li class="done-item">✓ P0-6 游戏页安全区适配</li>
+          <li class="done-item">✓ P0-7 切后台自动暂停</li>
+          <li class="done-item">✓ P0-8 删除 GamePanel</li>
+          <li class="done-item">✓ P0-10 猜数字接入数据层</li>
+        </ul>
+      </div>
+      <div class="phase s2">
+        <h4>第二阶段 · 正名</h4>
+        <div class="sub">2~3 天 · 统一设计令牌与主题</div>
+        <ul>
+          <li class="done-item">✓ P0-4 合并 Light/DarkColors</li>
+          <li class="done-item">✓ P0-5 硬编码色收编进资源</li>
+          <li class="done-item">✓ P0-3 数独 fallback 指纹修复</li>
+          <li class="done-item">✓ P0-9 持久化防抖合并</li>
+          <li>P1-9 文案国际化起步</li>
+        </ul>
+      </div>
+      <div class="phase s3">
+        <h4>第三阶段 · 瘦身</h4>
+        <div class="sub">3~5 天 · 消除重复，拆分巨型文件</div>
+        <ul>
+          <li>P1-1 拆分 Index.ets</li>
+          <li>P1-2 路由表数据驱动</li>
+          <li>P1-3 抽 GameResultDialog</li>
+          <li>P1-4 ScreenUtils</li>
+          <li>P1-5 range() 工具</li>
+          <li>P1-8 合并两套「我的」</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <h4>第四阶段 · 提效</h4>
+        <div class="sub">5~8 天 · 性能与长期可维护性</div>
+        <ul>
+          <li>P1-6 抽离游戏逻辑层 + 单测</li>
+          <li>P1-7 统一 GameStatus 状态机</li>
+          <li>P2-1/2/3 renderGroup 与渲染优化</li>
+          <li>P2-4 重写 2048 动画</li>
+          <li>P2-5~P2-10 逐项性能清理</li>
+          <li>P2-11 降兼容版本 + 无障碍</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 附录 ============ -->
+  <section>
+    <h2>七、附录：源文件清单</h2>
+    <table>
+      <thead><tr><th>文件</th><th>职责</th><th style="text-align:right">行数</th></tr></thead>
+      <tbody>
+        <tr><td>pages/Index.ets</td><td>首页壳 + 路由 + 三个 Tab + 闪屏</td><td>844</td></tr>
+        <tr><td>pages/puzzle/SudokuPage.ets</td><td>数独（含生成器与求解器）</td><td>494</td></tr>
+        <tr><td>pages/classic/TetrisGamePage.ets</td><td>俄罗斯方块</td><td>388</td></tr>
+        <tr><td>pages/classic/Game2048Page.ets</td><td>2048</td><td>451</td></tr>
+        <tr><td>pages/classic/MinesweeperPage.ets</td><td>扫雷</td><td>360</td></tr>
+        <tr><td>pages/puzzle/KlotskiPage.ets</td><td>华容道</td><td>283</td></tr>
+        <tr><td>pages/puzzle/GuessNumberPage.ets</td><td>猜数字（未接数据层）</td><td>298</td></tr>
+        <tr><td>pages/classic/SnakeGamePage.ets</td><td>贪吃蛇</td><td>263</td></tr>
+        <tr><td>pages/puzzle/SlidePuzzlePage.ets</td><td>滑动拼图</td><td>257</td></tr>
+        <tr><td>pages/puzzle/MemoryCardPage.ets</td><td>记忆翻牌</td><td>250</td></tr>
+        <tr><td>pages/classic/WhackMolePage.ets</td><td>打地鼠</td><td>215</td></tr>
+        <tr><td>pages/ProfilePage.ets</td><td>我的（与 ProfileTab 重复）</td><td>210</td></tr>
+        <tr><td>common/DesignTokens.ets</td><td>设计令牌（含 90 行重复）</td><td>193</td></tr>
+        <tr><td>model/GameData.ets</td><td>数据仓库 + Preferences 持久化</td><td>188</td></tr>
+        <tr><td>components/GameHeader.ets</td><td>统一游戏头部</td><td>185</td></tr>
+        <tr><td>components/ControlPad.ets</td><td>方向控制面板</td><td>98</td></tr>
+        <tr><td>components/GamePanel.ets</td><td>外框组件（未被引用）</td><td>69</td></tr>
+        <tr><td>common/GameConstants.ets</td><td>枚举与接口（含未用的 GameStatus）</td><td>39</td></tr>
+        <tr><td>entryability/EntryAbility.ets</td><td>应用入口</td><td>36</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer>本报告基于静态代码审查生成 · 共识别 30 项改进点（P0 10 / P1 9 / P2 11）</footer>
+</div>
+
+</body>
+</html>

@@ -2,19 +2,21 @@
  * 华容道 - HarmonyOS 设计风格
  */
 import { display } from '@kit.ArkUI';
-import { DarkColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
+import { SemanticColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
 import { ControlPad } from '../../components/ControlPad';
 import { GameHeader } from '../../components/GameHeader';
 import { GameDifficulty } from '../../common/GameConstants';
 import { GameDataManager } from '../../model/GameData';
+import { SafeAreaInsets } from '../../common/SafeAreaInsets';
 
 interface BlockInfo { id: string; w: number; h: number; x: number; y: number; target: boolean; }
 const BW = 4;
 const BH = 5;
 
-@Entry
 @ComponentV2
-struct KlotskiPage {
+export struct KlotskiPage {
+  @Param pathStack: NavPathStack = new NavPathStack();
+  @Local safeBottom: number = SafeAreaInsets.bottom;
   @Local blocks: BlockInfo[] = [];
   @Local selId: string = '';
   @Local stepCount: number = 0;
@@ -116,37 +118,58 @@ struct KlotskiPage {
     if (!this.isWin) { this.selId = this.selId === id ? '' : id; }
   }
 
+  // copy-on-write 重建棋子数组：blocks 是 @Local，直接改 blocks[i].x 这种
+  // 「数组内对象的字段赋值」观测不到，必须整体替换数组才会触发重渲染
+  rebuildBlocks(movedIdx: number, nx: number, ny: number): void {
+    const next: BlockInfo[] = [];
+    for (let i = 0; i < this.blocks.length; i++) {
+      const cur = this.blocks[i];
+      if (i === movedIdx) {
+        next[i] = { id: cur.id, w: cur.w, h: cur.h, x: nx, y: ny, target: cur.target };
+      } else {
+        next[i] = { id: cur.id, w: cur.w, h: cur.h, x: cur.x, y: cur.y, target: cur.target };
+      }
+    }
+    this.blocks = next;
+  }
+
   moveBlock(dx: number, dy: number): void {
     if (!this.selId || this.isWin) { return; }
-    let block: BlockInfo | undefined;
+    let idx = -1;
     for (let i = 0; i < this.blocks.length; i++) {
-      if (this.blocks[i].id === this.selId) { block = this.blocks[i]; break; }
+      if (this.blocks[i].id === this.selId) { idx = i; break; }
     }
-    if (!block) { return; }
+    if (idx < 0) { return; }
+    const block = this.blocks[idx];
     const nx = block.x + dx;
     const ny = block.y + dy;
     if (nx < 0 || nx + block.w > BW || ny < 0 || ny + block.h > BH) { return; }
     for (let r = ny; r < ny + block.h; r++) {
       for (let c = nx; c < nx + block.w; c++) {
-        if (this.grid[r][c] && this.grid[r][c] !== block.id) { return; }
+        const occupied: string | null = this.grid[r][c];
+        if (occupied !== null && occupied !== block.id) { return; }
       }
     }
-    block.x = nx;
-    block.y = ny;
+    this.rebuildBlocks(idx, nx, ny);
     this.stepCount++;
     this.buildGrid();
-    if (block.target && block.x === 1 && block.y === 3) {
+    const moved = this.blocks[idx];
+    if (moved.target && moved.x === 1 && moved.y === 3) {
       this.isWin = true;
       // 步数越少得分越高
       GameDataManager.updateHighScore('klotski', Math.max(1, 1000 - this.stepCount));
     }
   }
 
-  getBlockBg(block: BlockInfo): string {
-    if (block.target) { return '#FF6666'; }
-    if (block.w === 2 && block.h === 1) { return '#FFAA33'; }
-    if (block.w === 1 && block.h === 2) { return '#3399FF'; }
-    return '#2DD482';
+  /**
+   * 棋子配色。原为字面量，已收编为资源（深色模式在 dark/ 下提供提亮版本）。
+   * 棋子上的文字恒为白色——这些底色的明度在两套主题下都足以承托白字。
+   */
+  getBlockBg(block: BlockInfo): ResourceColor {
+    if (block.target) { return $r('app.color.klotski_target'); }
+    if (block.w === 2 && block.h === 1) { return $r('app.color.klotski_horizontal'); }
+    if (block.w === 1 && block.h === 2) { return $r('app.color.klotski_vertical'); }
+    return $r('app.color.klotski_normal');
   }
 
   getBlockLabel(block: BlockInfo): string {
@@ -165,9 +188,9 @@ struct KlotskiPage {
 
   getCellBg(row: number, col: number): ResourceColor {
     const bid = this.grid[row][col];
-    if (!bid) { return DarkColors.boardBg; }
+    if (!bid) { return SemanticColors.boardBg; }
     const b = this.findBlockById(bid);
-    return b ? this.getBlockBg(b) : DarkColors.boardBg;
+    return b ? this.getBlockBg(b) : SemanticColors.boardBg;
   }
 
   getBorderWidth(row: number, col: number): number {
@@ -182,7 +205,7 @@ struct KlotskiPage {
   build() {
     Stack() {
       Column().width('100%').height('100%')
-        .linearGradient({ angle: 180, colors: [[DarkColors.gradientScreen[0], 0], [DarkColors.gradientScreen[1], 0.5], [DarkColors.gradientScreen[2], 1]] })
+        .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
 
       Column() {
         GameHeader({
@@ -192,7 +215,7 @@ struct KlotskiPage {
           subtitle: '步数 ' + this.stepCount,
           difficulty: this.difficulty,
           onDifficultyChange: (d: GameDifficulty) => { this.changeDifficulty(d); },
-          onBack: () => { this.getUIContext().getRouter().back(); },
+          onBack: () => { this.pathStack.pop(); },
           onPauseToggle: () => {},
           onRestart: () => { this.startGame(); }
         })
@@ -206,25 +229,27 @@ struct KlotskiPage {
                     if (this.grid[row][col]) {
                       if (this.findBlockById(this.grid[row][col]!) && this.isBlockTopLeft(this.findBlockById(this.grid[row][col]!)!, row, col)) {
                         Text(this.getBlockLabel(this.findBlockById(this.grid[row][col]!)!))
-                          .fontSize(Math.max(16, this.cell * 0.28)).fontWeight(FontWeight.Bold).fontColor('#FFFFFF')
+                          .fontSize(Math.max(16, this.cell * 0.28)).fontWeight(FontWeight.Bold)
+                          // 棋子底色为彩色（见 getBlockBg），白字在两套主题下均可读
+                          .fontColor('#FFFFFF')
                       }
                     } else if (row === 4 && col === 1) {
-                      Text('出口').fontSize(Math.max(10, this.cell * 0.16)).fontColor(DarkColors.textTertiary)
+                      Text('出口').fontSize(Math.max(10, this.cell * 0.16)).fontColor(SemanticColors.textTertiary)
                     }
                   }.width(this.cell).height(this.cell).margin(2)
                   .backgroundColor(this.getCellBg(row, col))
                   .borderRadius(RadiusTokens.base)
                   .border({
                     width: this.getBorderWidth(row, col),
-                    color: DarkColors.borderStrong
+                    color: SemanticColors.borderStrong
                   })
                   .onClick(() => { if (this.grid[row][col]) { this.selectBlock(this.grid[row][col]!); } })
                 }, (col: number) => col.toString())
               }
             }, (row: number) => row.toString())
           }.width(this.cell * BW + 30).height(this.cell * BH + 34)
-          .backgroundColor(DarkColors.boardBg)
-          .border({ width: 3, color: DarkColors.boardBorder, radius: RadiusTokens.base }).padding(4)
+          .backgroundColor(SemanticColors.boardBg)
+          .border({ width: 3, color: SemanticColors.boardBorder, radius: RadiusTokens.base }).padding(4)
         }.layoutWeight(1).justifyContent(FlexAlign.Center)
 
         ControlPad({
@@ -235,7 +260,7 @@ struct KlotskiPage {
           onCenter: () => {},
           centerLabel: '移'
         })
-      }.width('100%').height('100%')
+      }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
       // 胜利弹窗作为全屏遮罩层（原先内嵌在内容列中会撑破布局、超出屏幕）
       if (this.isWin) {
@@ -244,37 +269,37 @@ struct KlotskiPage {
             SymbolGlyph($r('sys.symbol.checkmark_circle'))
               .fontSize(40)
               .fontWeight(FontWeight.Medium)
-              .fontColor([DarkColors.success])
+              .fontColor([SemanticColors.success])
           }
           .width(72).height(72)
           .borderRadius(RadiusTokens.full)
-          .backgroundColor(DarkColors.primaryLight)
+          .backgroundColor(SemanticColors.primaryLight)
           .justifyContent(FlexAlign.Center)
 
           Text('曹操出逃成功!')
             .fontFamily(FontTokens.family)
             .fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold)
-            .fontColor(DarkColors.textPrimary).margin({ top: SpacingTokens.md, bottom: SpacingTokens.xs })
+            .fontColor(SemanticColors.textPrimary).margin({ top: SpacingTokens.md, bottom: SpacingTokens.xs })
           Text('' + this.stepCount + ' 步完成')
             .fontFamily(FontTokens.family)
-            .fontSize(FontTokens.sizeSubtitle).fontColor(DarkColors.warning)
+            .fontSize(FontTokens.sizeSubtitle).fontColor(SemanticColors.warning)
             .margin({ bottom: SpacingTokens.base })
           Button() {
             Row({ space: SpacingTokens.xs }) {
               SymbolGlyph($r('sys.symbol.arrow_clockwise'))
-                .fontSize(16).fontColor([DarkColors.textOnPrimary])
+                .fontSize(16).fontColor([SemanticColors.textOnPrimary])
               Text('再来一局')
                 .fontFamily(FontTokens.family)
-                .fontSize(FontTokens.sizeBody).fontColor(DarkColors.textOnPrimary)
+                .fontSize(FontTokens.sizeBody).fontColor(SemanticColors.textOnPrimary)
             }
           }
           .height(44).padding({ left: SpacingTokens.lg, right: SpacingTokens.lg })
-          .backgroundColor(DarkColors.primary).borderRadius(RadiusTokens.full)
+          .backgroundColor(SemanticColors.primary).borderRadius(RadiusTokens.full)
           .shadow(ShadowTokens.button)
           .onClick(() => this.startGame())
         }
         .width('100%').height('100%')
-        .backgroundColor(DarkColors.scrim)
+        .backgroundColor(SemanticColors.scrim)
         .backdropBlur(20)
         .justifyContent(FlexAlign.Center)
       }

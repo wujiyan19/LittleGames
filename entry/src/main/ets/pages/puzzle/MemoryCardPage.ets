@@ -2,18 +2,20 @@
  * 记忆翻牌 - HarmonyOS 设计风格
  */
 import { display } from '@kit.ArkUI';
-import { DarkColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
+import { SemanticColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
 import { GameHeader } from '../../components/GameHeader';
 import { GameDifficulty } from '../../common/GameConstants';
 import { GameDataManager } from '../../model/GameData';
+import { SafeAreaInsets } from '../../common/SafeAreaInsets';
 
 interface CardInfo { id: number; emoji: string; flipped: boolean; matched: boolean; }
 
 const ALL_EMOJIS: string[] = ['🎮','🎯','🎲','🎸','🎨','🚀','🌈','⭐','🍎','🌺','🐶','🐱'];
 
-@Entry
 @ComponentV2
-struct MemoryCardPage {
+export struct MemoryCardPage {
+  @Param pathStack: NavPathStack = new NavPathStack();
+  @Local safeBottom: number = SafeAreaInsets.bottom;
   @Local cards: CardInfo[] = [];
   @Local flippedIdxs: number[] = [];
   @Local matchedCount: number = 0;
@@ -90,6 +92,37 @@ struct MemoryCardPage {
     this.locked = false;
   }
 
+  // copy-on-write 更新卡牌状态：cards 是 @Local，直接改 cards[i].flipped 这种
+  // 「数组内对象的字段赋值」观测不到，必须整体替换数组才会触发重渲染
+  cloneCards(): CardInfo[] {
+    const next: CardInfo[] = [];
+    for (let i = 0; i < this.cards.length; i++) {
+      const cur = this.cards[i];
+      next[i] = { id: cur.id, emoji: cur.emoji, flipped: cur.flipped, matched: cur.matched };
+    }
+    return next;
+  }
+
+  setCardFlipped(idx: number, flipped: boolean): void {
+    const next = this.cloneCards();
+    next[idx].flipped = flipped;
+    this.cards = next;
+  }
+
+  setPairFlipped(a: number, b: number, flipped: boolean): void {
+    const next = this.cloneCards();
+    next[a].flipped = flipped;
+    next[b].flipped = flipped;
+    this.cards = next;
+  }
+
+  setPairMatched(a: number, b: number): void {
+    const next = this.cloneCards();
+    next[a].matched = true;
+    next[b].matched = true;
+    this.cards = next;
+  }
+
   flipCard(idx: number): void {
     if (this.locked || this.isWin) { return; }
     if (this.flippedIdxs.length >= 2) { return; }
@@ -99,7 +132,7 @@ struct MemoryCardPage {
       if (this.flippedIdxs[i] === idx) { alreadyFlipped = true; break; }
     }
     if (alreadyFlipped) { return; }
-    this.cards[idx].flipped = true;
+    this.setCardFlipped(idx, true);
     let newFlipped: number[] = [];
     for (let i = 0; i < this.flippedIdxs.length; i++) { newFlipped.push(this.flippedIdxs[i]); }
     newFlipped.push(idx);
@@ -111,8 +144,7 @@ struct MemoryCardPage {
       const b = this.flippedIdxs[1];
       if (this.cards[a].emoji === this.cards[b].emoji) {
         this.flipTimer = setTimeout(() => {
-          this.cards[a].matched = true;
-          this.cards[b].matched = true;
+          this.setPairMatched(a, b);
           this.flippedIdxs = [];
           this.matchedCount++;
           this.locked = false;
@@ -124,8 +156,7 @@ struct MemoryCardPage {
         }, 500);
       } else {
         this.flipTimer = setTimeout(() => {
-          this.cards[a].flipped = false;
-          this.cards[b].flipped = false;
+          this.setPairFlipped(a, b, false);
           this.flippedIdxs = [];
           this.locked = false;
         }, 800);
@@ -135,9 +166,9 @@ struct MemoryCardPage {
 
   getCardBg(idx: number): ResourceColor {
     const card = this.cards[idx];
-    if (card.matched) { return DarkColors.success; }
-    if (card.flipped) { return DarkColors.accent; }
-    return DarkColors.surface;
+    if (card.matched) { return SemanticColors.success; }
+    if (card.flipped) { return SemanticColors.accent; }
+    return SemanticColors.surface;
   }
 
   getCardOpacity(idx: number): number {
@@ -153,7 +184,7 @@ struct MemoryCardPage {
   build() {
     Stack() {
       Column().width('100%').height('100%')
-        .linearGradient({ angle: 180, colors: [[DarkColors.gradientScreen[0], 0], [DarkColors.gradientScreen[1], 0.5], [DarkColors.gradientScreen[2], 1]] })
+        .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
 
       Column() {
         GameHeader({
@@ -162,22 +193,22 @@ struct MemoryCardPage {
           subtitle: '已配对 ' + this.matchedCount + ' / ' + this.getPairCount(),
           difficulty: this.difficulty,
           onDifficultyChange: (d: GameDifficulty) => { this.changeDifficulty(d); },
-          onBack: () => { this.getUIContext().getRouter().back(); },
+          onBack: () => { this.pathStack.pop(); },
           onPauseToggle: () => {},
           onRestart: () => { this.startGame(); }
         })
 
         Row() {
           Column() {
-            Text('尝试').fontSize(FontTokens.sizeCaption).fontColor(DarkColors.textTertiary)
-            Text('' + this.attempts).fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold).fontColor(DarkColors.accent)
-          }.layoutWeight(1).padding(8).backgroundColor(DarkColors.surface).borderRadius(RadiusTokens.base)
+            Text('尝试').fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
+            Text('' + this.attempts).fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold).fontColor(SemanticColors.accent)
+          }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
           .alignItems(HorizontalAlign.Center).margin({ left: 16 })
           Column() {
-            Text('最佳').fontSize(FontTokens.sizeCaption).fontColor(DarkColors.textTertiary)
+            Text('最佳').fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
             Text(this.getBestText()).fontSize(FontTokens.sizeHeadline)
-              .fontWeight(FontTokens.weightBold).fontColor(DarkColors.textPrimary)
-          }.layoutWeight(1).padding(8).backgroundColor(DarkColors.surface).borderRadius(RadiusTokens.base)
+              .fontWeight(FontTokens.weightBold).fontColor(SemanticColors.textPrimary)
+          }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
           .alignItems(HorizontalAlign.Center).margin({ left: 8, right: 16 })
         }.margin({ top: 12, bottom: 12 })
 
@@ -191,7 +222,7 @@ struct MemoryCardPage {
                   } else {
                     SymbolGlyph($r('sys.symbol.star'))
                       .fontSize(Math.max(16, this.cardW * 0.3))
-                      .fontColor([DarkColors.textTertiary])
+                      .fontColor([SemanticColors.textTertiary])
                   }
                 }.width(this.cardW).height(this.cardW * 1.15).margin(3)
                 .backgroundColor(this.getCardBg(r * 4 + c))
@@ -203,7 +234,7 @@ struct MemoryCardPage {
             }
           }, (r: number) => r.toString())
         }.layoutWeight(1).justifyContent(FlexAlign.Center)
-      }.width('100%').height('100%')
+      }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
       if (this.isWin) {
         Column() {
@@ -211,37 +242,37 @@ struct MemoryCardPage {
             SymbolGlyph($r('sys.symbol.star_fill'))
               .fontSize(40)
               .fontWeight(FontWeight.Medium)
-              .fontColor([DarkColors.warning])
+              .fontColor([SemanticColors.warning])
           }
           .width(72).height(72)
           .borderRadius(RadiusTokens.full)
-          .backgroundColor(DarkColors.primaryLight)
+          .backgroundColor(SemanticColors.primaryLight)
           .justifyContent(FlexAlign.Center)
 
           Text('全部找到!')
             .fontFamily(FontTokens.family)
             .fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold)
-            .fontColor(DarkColors.textPrimary).margin({ top: SpacingTokens.md, bottom: SpacingTokens.xs })
+            .fontColor(SemanticColors.textPrimary).margin({ top: SpacingTokens.md, bottom: SpacingTokens.xs })
           Text('尝试: ' + this.attempts + '  ·  最佳: ' + this.bestScore)
             .fontFamily(FontTokens.family)
-            .fontSize(FontTokens.sizeSubtitle).fontColor(DarkColors.warning)
+            .fontSize(FontTokens.sizeSubtitle).fontColor(SemanticColors.warning)
             .margin({ bottom: SpacingTokens.base })
           Button() {
             Row({ space: SpacingTokens.xs }) {
               SymbolGlyph($r('sys.symbol.arrow_clockwise'))
-                .fontSize(16).fontColor([DarkColors.textOnPrimary])
+                .fontSize(16).fontColor([SemanticColors.textOnPrimary])
               Text('再来一局')
                 .fontFamily(FontTokens.family)
-                .fontSize(FontTokens.sizeBody).fontColor(DarkColors.textOnPrimary)
+                .fontSize(FontTokens.sizeBody).fontColor(SemanticColors.textOnPrimary)
             }
           }
           .height(44).padding({ left: SpacingTokens.lg, right: SpacingTokens.lg })
-          .backgroundColor(DarkColors.primary).borderRadius(RadiusTokens.full)
+          .backgroundColor(SemanticColors.primary).borderRadius(RadiusTokens.full)
           .shadow(ShadowTokens.button)
           .onClick(() => this.startGame())
         }.width('86%').padding(SpacingTokens.lg)
         .borderRadius(RadiusTokens.xl)
-        .backgroundColor(DarkColors.surfaceTranslucent)
+        .backgroundColor(SemanticColors.surfaceTranslucent)
         .backdropBlur(24)
         .shadow(ShadowTokens.float)
       }

@@ -1,16 +1,18 @@
 /**
  * 打地鼠 - HarmonyOS 设计风格
  */
-import { DarkColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
+import { SemanticColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
 import { GameHeader } from '../../components/GameHeader';
 import { GameDifficulty } from '../../common/GameConstants';
 import { GameDataManager } from '../../model/GameData';
+import { SafeAreaInsets } from '../../common/SafeAreaInsets';
 
 const HOLE_COUNT = 9;
 
-@Entry
 @ComponentV2
-struct WhackMolePage {
+export struct WhackMolePage {
+  @Param pathStack: NavPathStack = new NavPathStack();
+  @Local safeBottom: number = SafeAreaInsets.bottom;
   @Local holes: boolean[] = [false, false, false, false, false, false, false, false, false];
   @Local score: number = 0;
   @Local highScore: number = 0;
@@ -20,6 +22,8 @@ struct WhackMolePage {
   @Local isPaused: boolean = false;
   private mtimer: number = -1;
   private ctimer: number = -1;
+  /** 本次暂停是否由「切后台」自动触发——决定回到前台时是否需要自动恢复 */
+  private autoPaused: boolean = false;
   private idx3: number[] = [0, 1, 2];
 
   aboutToAppear(): void {
@@ -27,6 +31,25 @@ struct WhackMolePage {
     this.startGame();
   }
   aboutToDisappear(): void { clearInterval(this.mtimer); clearInterval(this.ctimer); }
+
+  /**
+   * 切后台自动暂停。
+   * 本局限时只有 30 秒，若不处理，倒计时会在后台一路归零直接结算。
+   * 两个定时回调（倒计时 / 地鼠出现）都已有 isPaused 守卫，置位即可。
+   */
+  onPageHide(): void {
+    if (this.isPlaying && !this.isPaused) {
+      this.autoPaused = true;
+      this.isPaused = true;
+    }
+  }
+
+  onPageShow(): void {
+    if (this.autoPaused) {
+      this.autoPaused = false;
+      this.isPaused = false;
+    }
+  }
 
   startGame(): void {
     if (this.score > 0) { GameDataManager.updateHighScore('whackmole', this.score); }
@@ -74,8 +97,8 @@ struct WhackMolePage {
   }
 
   getTimeColor(): ResourceColor {
-    if (this.timeLeft <= 5) { return DarkColors.error; }
-    return DarkColors.success;
+    if (this.timeLeft <= 5) { return SemanticColors.error; }
+    return SemanticColors.success;
   }
 
   changeDifficulty(d: GameDifficulty): void {
@@ -107,29 +130,29 @@ struct WhackMolePage {
   build() {
     Stack() {
       Column().width('100%').height('100%')
-        .linearGradient({ angle: 180, colors: [[DarkColors.gradientScreen[0], 0], [DarkColors.gradientScreen[1], 0.5], [DarkColors.gradientScreen[2], 1]] })
+        .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
 
       Column() {
         GameHeader({ gameTitle: '打地鼠', scoreValue: this.score, highScoreValue: this.highScore,
           isPaused: this.isPaused,
           difficulty: this.difficulty,
           onDifficultyChange: (d: GameDifficulty) => { this.changeDifficulty(d); },
-          onBack: () => { this.getUIContext().getRouter().back(); },
+          onBack: () => { this.pathStack.pop(); },
           onPauseToggle: () => { this.isPaused = !this.isPaused; },
           onRestart: () => { this.startGame(); } })
 
         Row() {
           Column() {
-            Text('得分').fontSize(FontTokens.sizeCaption).fontColor(DarkColors.textTertiary)
-            Text('' + this.score).fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold).fontColor(DarkColors.accent)
-          }.layoutWeight(1).padding(8).backgroundColor(DarkColors.surface).borderRadius(RadiusTokens.base)
+            Text('得分').fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
+            Text('' + this.score).fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold).fontColor(SemanticColors.accent)
+          }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
           .alignItems(HorizontalAlign.Center).margin({ left: 16 })
 
           Column() {
-            Text('时间').fontSize(FontTokens.sizeCaption).fontColor(DarkColors.textTertiary)
+            Text('时间').fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
             Text(this.timeLeft + 's').fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold)
               .fontColor(this.getTimeColor())
-          }.layoutWeight(1).padding(8).backgroundColor(DarkColors.surface).borderRadius(RadiusTokens.base)
+          }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
           .alignItems(HorizontalAlign.Center).margin({ left: 8, right: 16 })
         }.margin({ top: 12, bottom: 12 })
 
@@ -142,7 +165,7 @@ struct WhackMolePage {
             }
           }, (row: number) => row.toString())
         }.layoutWeight(1).justifyContent(FlexAlign.Center)
-      }.width('100%').height('100%')
+      }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
       if (!this.isPlaying) {
         Column() {
@@ -150,43 +173,43 @@ struct WhackMolePage {
             SymbolGlyph($r('sys.symbol.star_fill'))
               .fontSize(40)
               .fontWeight(FontWeight.Medium)
-              .fontColor([DarkColors.warning])
+              .fontColor([SemanticColors.warning])
           }
           .width(72).height(72)
           .borderRadius(RadiusTokens.full)
-          .backgroundColor(DarkColors.primaryLight)
+          .backgroundColor(SemanticColors.primaryLight)
           .justifyContent(FlexAlign.Center)
 
           Text('时间到！')
             .fontFamily(FontTokens.family)
             .fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold)
-            .fontColor(DarkColors.textPrimary).margin({ top: SpacingTokens.md, bottom: SpacingTokens.xs })
+            .fontColor(SemanticColors.textPrimary).margin({ top: SpacingTokens.md, bottom: SpacingTokens.xs })
           Text('得分 ' + this.score)
             .fontFamily(FontTokens.family)
-            .fontSize(FontTokens.sizeSubtitle).fontColor(DarkColors.accent)
+            .fontSize(FontTokens.sizeSubtitle).fontColor(SemanticColors.accent)
             .margin({ bottom: SpacingTokens.lg })
           Row({ space: SpacingTokens.base }) {
             Button() {
               Row({ space: SpacingTokens.xs }) {
                 SymbolGlyph($r('sys.symbol.arrow_clockwise'))
-                  .fontSize(16).fontColor([DarkColors.textOnPrimary])
+                  .fontSize(16).fontColor([SemanticColors.textOnPrimary])
                 Text('再来一局')
                   .fontFamily(FontTokens.family)
-                  .fontSize(FontTokens.sizeBody).fontColor(DarkColors.textOnPrimary)
+                  .fontSize(FontTokens.sizeBody).fontColor(SemanticColors.textOnPrimary)
               }
             }
             .height(44).padding({ left: SpacingTokens.lg, right: SpacingTokens.lg })
-            .backgroundColor(DarkColors.primary).borderRadius(RadiusTokens.full)
+            .backgroundColor(SemanticColors.primary).borderRadius(RadiusTokens.full)
             .shadow(ShadowTokens.button)
             .onClick(() => this.startGame())
             Button('返回')
               .height(44).padding({ left: SpacingTokens.lg, right: SpacingTokens.lg })
               .fontFamily(FontTokens.family)
-              .fontColor(DarkColors.textPrimary).backgroundColor(DarkColors.surface)
+              .fontColor(SemanticColors.textPrimary).backgroundColor(SemanticColors.surface)
               .borderRadius(RadiusTokens.full).shadow(ShadowTokens.button)
-              .onClick(() => this.getUIContext().getRouter().back())
+              .onClick(() => this.pathStack.pop())
           }
-        }.width('100%').height('100%').backgroundColor(DarkColors.scrim)
+        }.width('100%').height('100%').backgroundColor(SemanticColors.scrim)
         .backdropBlur(20).justifyContent(FlexAlign.Center)
       }
     }.width('100%').height('100%')
@@ -203,7 +226,8 @@ struct WhackMolePage {
         Column() {}
           .width('72%').aspectRatio(1.4)
           .borderRadius(RadiusTokens.full)
-          .backgroundColor(DarkColors.surface)
+          .backgroundColor(SemanticColors.surface)
+          // 阴影恒为半透明黑：投影在深浅两种底色上都应压暗，不随主题反转
           .shadow({ radius: 10, color: 'rgba(0,0,0,0.25)', offsetY: 4 })
           .margin({ bottom: 8 })
       }

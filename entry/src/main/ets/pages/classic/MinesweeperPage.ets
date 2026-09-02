@@ -2,17 +2,19 @@
  * 扫雷 - HarmonyOS 设计风格
  */
 import { display } from '@kit.ArkUI';
-import { DarkColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
+import { SemanticColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
 import { GameHeader } from '../../components/GameHeader';
 import { GameDifficulty } from '../../common/GameConstants';
 import { GameDataManager } from '../../model/GameData';
+import { SafeAreaInsets } from '../../common/SafeAreaInsets';
 
 const ROWS = 9;
 const COLS = 9;
 
-@Entry
 @ComponentV2
-struct MinesweeperPage {
+export struct MinesweeperPage {
+  @Param pathStack: NavPathStack = new NavPathStack();
+  @Local safeBottom: number = SafeAreaInsets.bottom;
   @Local board: number[][] = [];
   @Local revealed: boolean[][] = [];
   @Local flagged: boolean[][] = [];
@@ -24,6 +26,8 @@ struct MinesweeperPage {
   @Local cellSize: number = 32;
   private timer: number = -1;
   private startTime: number = 0;
+  /** 计时是否已启动且尚未结束（用于区分「未开始计时」与「计时中被切后台暂停」） */
+  private timerRunning: boolean = false;
   private minesPlaced: boolean = false;
   private idx9: number[] = [0,1,2,3,4,5,6,7,8];
 
@@ -32,6 +36,32 @@ struct MinesweeperPage {
     this.startGame();
   }
   aboutToDisappear(): void { clearInterval(this.timer); }
+
+  /**
+   * 切后台：暂停计时并清理定时器。
+   * 扫雷没有暂停按钮，若不处理则 setInterval 在后台持续累加，
+   * 切回来时用时已虚增，且「用时越短分越高」的计分会失真。
+   */
+  onPageHide(): void { this.pauseTimer(); }
+
+  /** 回到前台：以已计时秒数为基准恢复计时 */
+  onPageShow(): void { this.resumeTimer(); }
+
+  pauseTimer(): void {
+    if (!this.timerRunning) { return; }
+    this.elapsed = Math.floor((Date.now() - this.startTime) / 1000);
+    clearInterval(this.timer);
+    this.timer = -1;
+  }
+
+  resumeTimer(): void {
+    if (!this.timerRunning || this.timer !== -1) { return; }
+    // 回拨起始时间，使恢复后接着已计时秒数继续，而非重新开始
+    this.startTime = Date.now() - this.elapsed * 1000;
+    this.timer = setInterval(() => {
+      if (this.isPlaying) { this.elapsed = Math.floor((Date.now() - this.startTime) / 1000); }
+    }, 1000);
+  }
 
   initCellSize(): void {
     const d = display.getDefaultDisplaySync();
@@ -69,7 +99,9 @@ struct MinesweeperPage {
     this.elapsed = 0;
     // 雷与计时都推迟到首次点击，保证首点安全
     this.minesPlaced = false;
+    this.timerRunning = false;
     clearInterval(this.timer);
+    this.timer = -1;
   }
 
   placeMines(safeR: number, safeC: number): void {
@@ -91,6 +123,7 @@ struct MinesweeperPage {
   startTimer(): void {
     clearInterval(this.timer);
     this.startTime = Date.now();
+    this.timerRunning = true;
     this.timer = setInterval(() => {
       if (this.isPlaying) { this.elapsed = Math.floor((Date.now() - this.startTime) / 1000); }
     }, 1000);
@@ -193,7 +226,9 @@ struct MinesweeperPage {
 
   gameOver(won: boolean): void {
     this.isPlaying = false;
+    this.timerRunning = false;
     clearInterval(this.timer);
+    this.timer = -1;
     this.gameResult = won;
     if (won) {
       // 用时越短得分越高
@@ -202,19 +237,35 @@ struct MinesweeperPage {
     }
   }
 
-  getNumColor(v: number): string {
-    if (v < 0 || v > 8) { return '#000000'; }
-    const colors: string[] = ['#6B7280', '#3399FF', '#2DD482', '#FF6666', '#8675F8', '#FF6B6B', '#00D4B4', '#FFFFFF', '#6B7280'];
+  /**
+   * 雷数提示色。原为字面量数组，其中数字 7 用的是纯白（#FFFFFF）——
+   * 亮色模式下格子底色是浅蓝白（cell_revealed #F2F6FD），白字完全不可见。
+   * 已收编为资源，两套主题各自给出可读的配色；越界值也由黑色改为 error 色，
+   * 避免在深色底上「黑字配深底」同样看不见。
+   */
+  getNumColor(v: number): ResourceColor {
+    if (v < 0 || v > 8) { return $r('app.color.mine_num_invalid'); }
+    const colors: ResourceColor[] = [
+      $r('app.color.mine_num_0'),
+      $r('app.color.mine_num_1'),
+      $r('app.color.mine_num_2'),
+      $r('app.color.mine_num_3'),
+      $r('app.color.mine_num_4'),
+      $r('app.color.mine_num_5'),
+      $r('app.color.mine_num_6'),
+      $r('app.color.mine_num_7'),
+      $r('app.color.mine_num_8')
+    ];
     return colors[v];
   }
 
   getCellBg(row: number, col: number): ResourceColor {
-    if (this.flagged[row][col]) { return DarkColors.accentLight; }
+    if (this.flagged[row][col]) { return SemanticColors.accentLight; }
     if (this.revealed[row][col]) {
-      if (this.board[row][col] === -1) { return DarkColors.error; }
-      return DarkColors.cellRevealed;
+      if (this.board[row][col] === -1) { return SemanticColors.error; }
+      return SemanticColors.cellRevealed;
     }
-    return DarkColors.cellHidden;
+    return SemanticColors.cellHidden;
   }
 
   getResultSymbol(): Resource {
@@ -223,8 +274,8 @@ struct MinesweeperPage {
   }
 
   getResultColor(): Resource {
-    if (this.gameResult) { return DarkColors.success; }
-    return DarkColors.error;
+    if (this.gameResult) { return SemanticColors.success; }
+    return SemanticColors.error;
   }
 
   getResultText(): string {
@@ -235,7 +286,7 @@ struct MinesweeperPage {
   build() {
     Stack() {
       Column().width('100%').height('100%')
-        .linearGradient({ angle: 180, colors: [[DarkColors.gradientScreen[0], 0], [DarkColors.gradientScreen[1], 0.5], [DarkColors.gradientScreen[2], 1]] })
+        .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
 
       Column() {
         GameHeader({
@@ -245,7 +296,7 @@ struct MinesweeperPage {
           subtitle: '长按插旗 · 点击揭开',
           difficulty: this.difficulty,
           onDifficultyChange: (d: GameDifficulty) => { this.changeDifficulty(d); },
-          onBack: () => { this.getUIContext().getRouter().back(); },
+          onBack: () => { this.pathStack.pop(); },
           onPauseToggle: () => {},
           onRestart: () => { this.startGame(); }
         })
@@ -254,23 +305,23 @@ struct MinesweeperPage {
           Column() {
             Row({ space: SpacingTokens.xs }) {
               SymbolGlyph($r('sys.symbol.flag_fill'))
-                .fontSize(12).fontColor([DarkColors.warning])
-              Text('旗帜').fontSize(FontTokens.sizeCaption).fontColor(DarkColors.textTertiary)
+                .fontSize(12).fontColor([SemanticColors.warning])
+              Text('旗帜').fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
             }
             Text(this.flagCount + '/' + this.getMineCount()).fontSize(FontTokens.sizeHeadline)
-              .fontWeight(FontTokens.weightBold).fontColor(DarkColors.warning)
-          }.layoutWeight(1).padding(8).backgroundColor(DarkColors.surface)
+              .fontWeight(FontTokens.weightBold).fontColor(SemanticColors.warning)
+          }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface)
           .borderRadius(RadiusTokens.base).alignItems(HorizontalAlign.Center).margin({ left: 16 })
 
           Column() {
             Row({ space: SpacingTokens.xs }) {
               SymbolGlyph($r('sys.symbol.clock'))
-                .fontSize(12).fontColor([DarkColors.accent])
-              Text('时间').fontSize(FontTokens.sizeCaption).fontColor(DarkColors.textTertiary)
+                .fontSize(12).fontColor([SemanticColors.accent])
+              Text('时间').fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
             }
             Text(this.elapsed + 's').fontSize(FontTokens.sizeHeadline)
-              .fontWeight(FontTokens.weightBold).fontColor(DarkColors.accent)
-          }.layoutWeight(1).padding(8).backgroundColor(DarkColors.surface)
+              .fontWeight(FontTokens.weightBold).fontColor(SemanticColors.accent)
+          }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface)
           .borderRadius(RadiusTokens.base).alignItems(HorizontalAlign.Center).margin({ left: 8, right: 16 })
         }.margin({ top: 12, bottom: 12 })
 
@@ -292,21 +343,21 @@ struct MinesweeperPage {
                     }
                   }.width(this.cellSize).height(this.cellSize)
                   .backgroundColor(this.getCellBg(row, col))
-                  .border({ width: 1, color: DarkColors.boardBorder }).borderRadius(RadiusTokens.xs)
+                  .border({ width: 1, color: SemanticColors.boardBorder }).borderRadius(RadiusTokens.xs)
                   .onClick(() => { if (!this.flagged[row][col]) { this.reveal(row, col); } })
                   .gesture(LongPressGesture().onAction(() => this.toggleFlag(row, col)))
                 }, (col: number) => col.toString())
               }
             }, (row: number) => row.toString())
           }.padding(2)
-          .backgroundColor(DarkColors.boardBg).border({ width: 2, color: DarkColors.boardBorder, radius: RadiusTokens.md })
+          .backgroundColor(SemanticColors.boardBg).border({ width: 2, color: SemanticColors.boardBorder, radius: RadiusTokens.md })
         }.layoutWeight(1).justifyContent(FlexAlign.Center)
 
         Text('长按插旗 · 点击揭开')
           .fontFamily(FontTokens.family)
-          .fontSize(FontTokens.sizeBodySmall).fontColor(DarkColors.textTertiary)
+          .fontSize(FontTokens.sizeBodySmall).fontColor(SemanticColors.textTertiary)
           .padding({ bottom: SpacingTokens.lg, top: SpacingTokens.xs })
-      }.width('100%').height('100%')
+      }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
       if (!this.isPlaying) {
         Column() {
@@ -318,40 +369,40 @@ struct MinesweeperPage {
           }
           .width(76).height(76)
           .borderRadius(RadiusTokens.full)
-          .backgroundColor(DarkColors.primaryLight)
+          .backgroundColor(SemanticColors.primaryLight)
           .justifyContent(FlexAlign.Center)
 
           Text(this.getResultText())
             .fontFamily(FontTokens.family)
             .fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold)
-            .fontColor(DarkColors.textPrimary).margin({ top: SpacingTokens.md, bottom: SpacingTokens.xs })
+            .fontColor(SemanticColors.textPrimary).margin({ top: SpacingTokens.md, bottom: SpacingTokens.xs })
           Text(this.elapsed + ' 秒完成')
             .fontFamily(FontTokens.family)
             .fontSize(FontTokens.sizeSubtitle)
-            .fontColor(DarkColors.accent).margin({ bottom: SpacingTokens.lg })
+            .fontColor(SemanticColors.accent).margin({ bottom: SpacingTokens.lg })
           Row({ space: SpacingTokens.base }) {
             Button() {
               Row({ space: SpacingTokens.xs }) {
                 SymbolGlyph($r('sys.symbol.arrow_clockwise'))
-                  .fontSize(16).fontColor([DarkColors.textOnPrimary])
+                  .fontSize(16).fontColor([SemanticColors.textOnPrimary])
                 Text('再来一局')
                   .fontFamily(FontTokens.family)
-                  .fontSize(FontTokens.sizeBody).fontColor(DarkColors.textOnPrimary)
+                  .fontSize(FontTokens.sizeBody).fontColor(SemanticColors.textOnPrimary)
               }
             }
             .height(44).padding({ left: SpacingTokens.lg, right: SpacingTokens.lg })
-            .backgroundColor(DarkColors.primary).borderRadius(RadiusTokens.full)
+            .backgroundColor(SemanticColors.primary).borderRadius(RadiusTokens.full)
             .shadow(ShadowTokens.button)
             .onClick(() => this.startGame())
             Button('返回')
               .height(44).padding({ left: SpacingTokens.lg, right: SpacingTokens.lg })
               .fontFamily(FontTokens.family)
-              .fontColor(DarkColors.textPrimary).backgroundColor(DarkColors.surface)
+              .fontColor(SemanticColors.textPrimary).backgroundColor(SemanticColors.surface)
               .borderRadius(RadiusTokens.full).shadow(ShadowTokens.button)
-              .onClick(() => this.getUIContext().getRouter().back())
+              .onClick(() => this.pathStack.pop())
           }
         }.width('100%').height('100%')
-        .backgroundColor(DarkColors.scrim)
+        .backgroundColor(SemanticColors.scrim)
         .backdropBlur(20)
         .justifyContent(FlexAlign.Center)
       }

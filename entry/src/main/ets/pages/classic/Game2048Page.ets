@@ -2,10 +2,11 @@
  * 2048 - HarmonyOS 设计风格（带滑动动画）
  */
 import { display, curves } from '@kit.ArkUI';
-import { DarkColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
+import { SemanticColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
 import { GameHeader } from '../../components/GameHeader';
 import { GameDifficulty } from '../../common/GameConstants';
 import { GameDataManager } from '../../model/GameData';
+import { SafeAreaInsets } from '../../common/SafeAreaInsets';
 
 const SIZE = 4;
 const CELL_SIZE = 64;
@@ -26,9 +27,10 @@ interface TileData {
   isMerged: boolean;
 }
 
-@Entry
 @ComponentV2
-struct Game2048Page {
+export struct Game2048Page {
+  @Param pathStack: NavPathStack = new NavPathStack();
+  @Local safeBottom: number = SafeAreaInsets.bottom;
   @Local board: number[][] = [];
   @Local tiles: TileData[][] = [];
   @Local score: number = 0;
@@ -292,27 +294,36 @@ struct Game2048Page {
     }
   }
 
+  /**
+   * 方块底色。原实现直接写字面量，而这套配色只在亮色下成立：
+   * 深色模式下浅米色格子与深色棋盘割裂，且白色数字在浅橙底上几乎不可读。
+   * 已收编为资源，深色模式在 dark/element/color.json 中提供另一套值。
+   */
   getCellBg(v: number): ResourceColor {
     switch (v) {
-      case 0: return DarkColors.cellHidden;
-      case 2: return '#EEE4DA';
-      case 4: return '#EDE0C8';
-      case 8: return '#F2B179';
-      case 16: return '#F59563';
-      case 32: return '#F67C5F';
-      case 64: return '#F65E3B';
-      case 128: return '#EDCF72';
-      case 256: return '#EDCC61';
-      case 512: return '#EDC850';
-      case 1024: return '#EDC53F';
-      case 2048: return '#EDC22E';
-      default: return '#3C3A32';
+      case 0: return SemanticColors.cellHidden;
+      case 2: return $r('app.color.tile_2');
+      case 4: return $r('app.color.tile_4');
+      case 8: return $r('app.color.tile_8');
+      case 16: return $r('app.color.tile_16');
+      case 32: return $r('app.color.tile_32');
+      case 64: return $r('app.color.tile_64');
+      case 128: return $r('app.color.tile_128');
+      case 256: return $r('app.color.tile_256');
+      case 512: return $r('app.color.tile_512');
+      case 1024: return $r('app.color.tile_1024');
+      case 2048: return $r('app.color.tile_2048');
+      default: return $r('app.color.tile_large');
     }
   }
 
+  /**
+   * 方块数字色：2/4 为浅底配深字，8 以上为彩底配白字。
+   * 深色模式下 2/4 的底已被换成深色，因此这里的「深字」也随主题变为浅字。
+   */
   getTileFontColor(v: number): ResourceColor {
-    if (v <= 4) { return '#776E65'; }
-    return '#FFFFFF';
+    if (v <= 4) { return $r('app.color.tile_text_low'); }
+    return $r('app.color.tile_text_high');
   }
 
   getTileAnimation(isNew: boolean): AnimateParam {
@@ -337,22 +348,22 @@ struct Game2048Page {
   build() {
     Stack() {
       Column().width('100%').height('100%')
-        .linearGradient({ angle: 180, colors: [[DarkColors.gradientScreen[0], 0], [DarkColors.gradientScreen[1], 0.5], [DarkColors.gradientScreen[2], 1]] })
+        .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
 
       Column() {
         GameHeader({ gameTitle: '2048', scoreValue: this.score, highScoreValue: this.highScore,
           difficulty: this.difficulty,
           showPause: false,
           onDifficultyChange: (d: GameDifficulty) => { this.changeDifficulty(d); },
-          onBack: () => { this.getUIContext().getRouter().back(); },
+          onBack: () => { this.pathStack.pop(); },
           onPauseToggle: () => {},
           onRestart: () => { this.start(); } })
 
         Row() {
           Column() {
-            Text('最高').fontSize(FontTokens.sizeCaption).fontColor(DarkColors.textTertiary)
-            Text('' + this.highScore).fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold).fontColor(DarkColors.textPrimary)
-          }.layoutWeight(1).padding(8).backgroundColor(DarkColors.surface).borderRadius(RadiusTokens.base)
+            Text('最高').fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
+            Text('' + this.highScore).fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold).fontColor(SemanticColors.textPrimary)
+          }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
           .alignItems(HorizontalAlign.Center).margin({ left: 8, right: 16 })
         }.margin({ top: 12, bottom: 12 })
 
@@ -377,8 +388,8 @@ struct Game2048Page {
               }
             }, (row: number) => row.toString())
           }.width(this.boardSize).height(this.boardSize)
-          .backgroundColor(DarkColors.boardBg)
-          .border({ width: 2, color: DarkColors.boardBorder, radius: RadiusTokens.base })
+          .backgroundColor(SemanticColors.boardBg)
+          .border({ width: 2, color: SemanticColors.boardBorder, radius: RadiusTokens.base })
           .padding(4)
           .gesture(PanGesture({ direction: PanDirection.All })
             .onActionStart((e: GestureEvent) => { this.sx = e.offsetX; this.sy = e.offsetY; })
@@ -395,9 +406,9 @@ struct Game2048Page {
 
         Text('上下左右滑动操作')
           .fontFamily(FontTokens.family)
-          .fontSize(FontTokens.sizeBodySmall).fontColor(DarkColors.textTertiary)
+          .fontSize(FontTokens.sizeBodySmall).fontColor(SemanticColors.textTertiary)
           .padding({ bottom: SpacingTokens.lg })
-      }.width('100%').height('100%')
+      }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
       if (!this.isPlaying) {
         Column() {
@@ -405,44 +416,44 @@ struct Game2048Page {
             SymbolGlyph($r('sys.symbol.star_fill'))
               .fontSize(40)
               .fontWeight(FontWeight.Medium)
-              .fontColor([DarkColors.warning])
+              .fontColor([SemanticColors.warning])
           }
           .width(72).height(72)
           .borderRadius(RadiusTokens.full)
-          .backgroundColor(DarkColors.primaryLight)
+          .backgroundColor(SemanticColors.primaryLight)
           .justifyContent(FlexAlign.Center)
 
           Text('游戏结束')
             .fontFamily(FontTokens.family)
             .fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold)
-            .fontColor(DarkColors.textPrimary).margin({ top: SpacingTokens.md, bottom: SpacingTokens.xs })
+            .fontColor(SemanticColors.textPrimary).margin({ top: SpacingTokens.md, bottom: SpacingTokens.xs })
           Text('得分 ' + this.score)
             .fontFamily(FontTokens.family)
-            .fontSize(FontTokens.sizeSubtitle).fontColor(DarkColors.accent)
+            .fontSize(FontTokens.sizeSubtitle).fontColor(SemanticColors.accent)
             .margin({ bottom: SpacingTokens.lg })
           Row({ space: SpacingTokens.base }) {
             Button() {
               Row({ space: SpacingTokens.xs }) {
                 SymbolGlyph($r('sys.symbol.arrow_clockwise'))
-                  .fontSize(16).fontColor([DarkColors.textOnPrimary])
+                  .fontSize(16).fontColor([SemanticColors.textOnPrimary])
                 Text('再来一局')
                   .fontFamily(FontTokens.family)
-                  .fontSize(FontTokens.sizeBody).fontColor(DarkColors.textOnPrimary)
+                  .fontSize(FontTokens.sizeBody).fontColor(SemanticColors.textOnPrimary)
               }
             }
             .height(44).padding({ left: SpacingTokens.lg, right: SpacingTokens.lg })
-            .backgroundColor(DarkColors.primary).borderRadius(RadiusTokens.full)
+            .backgroundColor(SemanticColors.primary).borderRadius(RadiusTokens.full)
             .shadow(ShadowTokens.button)
             .onClick(() => this.start())
             Button('返回')
               .height(44).padding({ left: SpacingTokens.lg, right: SpacingTokens.lg })
               .fontFamily(FontTokens.family)
-              .fontColor(DarkColors.textPrimary).backgroundColor(DarkColors.surface)
+              .fontColor(SemanticColors.textPrimary).backgroundColor(SemanticColors.surface)
               .borderRadius(RadiusTokens.full).shadow(ShadowTokens.button)
-              .onClick(() => this.getUIContext().getRouter().back())
+              .onClick(() => this.pathStack.pop())
           }
         }.width('100%').height('100%')
-        .backgroundColor(DarkColors.scrim)
+        .backgroundColor(SemanticColors.scrim)
         .backdropBlur(20)
         .justifyContent(FlexAlign.Center)
       }

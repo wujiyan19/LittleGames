@@ -1,10 +1,14 @@
 import { GameCategory, GameInfo } from '../common/GameConstants';
 import { preferences } from '@kit.ArkData';
 import { Context } from '@kit.AbilityKit';
+import { BusinessError } from '@kit.BasicServicesKit';
+import { hilog } from '@kit.PerformanceAnalysisKit';
 
 const STORE_NAME = 'little_games_data';
 const KEY_HIGH_SCORES = 'highScores';
 const KEY_PLAY_COUNTS = 'playCounts';
+/** 落盘防抖窗口（ms）：合并同窗口期内的多次变更，避免重复全量序列化 */
+const PERSIST_DEBOUNCE_MS = 200;
 
 /**
  * 游戏数据管理类 - 提供所有游戏的静态信息和运行时数据
@@ -12,6 +16,8 @@ const KEY_PLAY_COUNTS = 'playCounts';
  */
 export class GameDataManager {
   private static store: preferences.Preferences | null = null;
+  /** 防抖定时器句柄，-1 表示无待落盘任务 */
+  private static flushTimer: number = -1;
   private static games: GameInfo[] = [
     {
       id: 'snake',
@@ -21,6 +27,7 @@ export class GameDataManager {
       description: '经典贪吃蛇游戏，控制小蛇吃食物不断变长',
       highScore: 0,
       playCount: 0,
+      scoreLabel: '分',
     },
     {
       id: 'tetris',
@@ -30,6 +37,7 @@ export class GameDataManager {
       description: '经典俄罗斯方块，消除行数得分',
       highScore: 0,
       playCount: 0,
+      scoreLabel: '分',
     },
     {
       id: '2048',
@@ -39,6 +47,7 @@ export class GameDataManager {
       description: '滑动合并数字方块，挑战2048',
       highScore: 0,
       playCount: 0,
+      scoreLabel: '分',
     },
     {
       id: 'whackmole',
@@ -48,6 +57,7 @@ export class GameDataManager {
       description: '快速反应，点击冒出的地鼠',
       highScore: 0,
       playCount: 0,
+      scoreLabel: '分',
     },
     {
       id: 'minesweeper',
@@ -57,6 +67,7 @@ export class GameDataManager {
       description: '经典扫雷游戏，找出所有地雷',
       highScore: 0,
       playCount: 0,
+      scoreLabel: '分·用时换算',
     },
     {
       id: 'sudoku',
@@ -66,6 +77,7 @@ export class GameDataManager {
       description: '经典数独游戏，填满数字格',
       highScore: 0,
       playCount: 0,
+      scoreLabel: '分',
     },
     {
       id: 'slidepuzzle',
@@ -75,6 +87,7 @@ export class GameDataManager {
       description: '移动方块还原完整图片',
       highScore: 0,
       playCount: 0,
+      scoreLabel: '分',
     },
     {
       id: 'klotski',
@@ -84,6 +97,7 @@ export class GameDataManager {
       description: '经典华容道，移动方块让曹操出逃',
       highScore: 0,
       playCount: 0,
+      scoreLabel: '分·步数换算',
     },
     {
       id: 'guessnumber',
@@ -93,6 +107,7 @@ export class GameDataManager {
       description: '通过提示猜测4位数字密码',
       highScore: 0,
       playCount: 0,
+      scoreLabel: '分·次数换算',
     },
     {
       id: 'memorycard',
@@ -102,6 +117,7 @@ export class GameDataManager {
       description: '翻开卡片找到相同的配对',
       highScore: 0,
       playCount: 0,
+      scoreLabel: '分',
     }
   ];
 
@@ -110,6 +126,8 @@ export class GameDataManager {
       GameDataManager.store = preferences.getPreferencesSync(context, { name: STORE_NAME });
       GameDataManager.restore();
     } catch (e) {
+      // 初始化失败后 store 为 null，此后所有最高分都会静默丢失，必须留痕
+      hilog.error(0x0000, 'LittleGames', 'Failed to init preferences, high scores will NOT persist');
       GameDataManager.store = null;
     }
   }
@@ -132,10 +150,28 @@ export class GameDataManager {
         if (game && typeof map[keys[i]] === 'number') { apply(game, map[keys[i]]); }
       }
     } catch (e) {
-      // 数据损坏时忽略，使用默认值
+      // 数据损坏时回退到默认值，但要留痕便于排查
+      hilog.error(0x0000, 'LittleGames', 'Failed to parse persisted game data, fallback to defaults');
     }
   }
 
+  /**
+   * 标记数据变更，合并防抖窗口内的多次写入后统一落盘。
+   * startGame() 常连续调用 updateHighScore + incrementPlayCount，
+   * 若各自立即落盘，等于一次开局做两遍全量序列化 + 两次磁盘 IO。
+   */
+  private static markDirty(): void {
+    if (!GameDataManager.store) { return; }
+    if (GameDataManager.flushTimer !== -1) {
+      clearTimeout(GameDataManager.flushTimer);
+    }
+    GameDataManager.flushTimer = setTimeout(() => {
+      GameDataManager.flushTimer = -1;
+      GameDataManager.persist();
+    }, PERSIST_DEBOUNCE_MS);
+  }
+
+  /** 实际落盘：全量序列化 10 个游戏的最高分与游玩次数 */
   private static persist(): void {
     if (!GameDataManager.store) { return; }
     const scores: Record<string, number> = {};
@@ -148,10 +184,26 @@ export class GameDataManager {
     try {
       GameDataManager.store.putSync(KEY_HIGH_SCORES, JSON.stringify(scores));
       GameDataManager.store.putSync(KEY_PLAY_COUNTS, JSON.stringify(counts));
-      GameDataManager.store.flush();
+      // flush 是异步的，原实现直接丢弃 Promise，写入失败无从察觉
+      GameDataManager.store.flush().catch((err: BusinessError) => {
+        hilog.error(0x0000, 'LittleGames', 'Failed to flush preferences: %{public}d', err.code);
+      });
     } catch (e) {
       // 写入失败不影响游戏流程
+      hilog.error(0x0000, 'LittleGames', 'Failed to persist game data');
     }
+  }
+
+  /**
+   * 立即落盘（取消防抖待执行的任务）。
+   * 应用退到后台时应调用，否则防抖窗口内的变更可能因进程被杀而丢失。
+   */
+  static flushNow(): void {
+    if (GameDataManager.flushTimer !== -1) {
+      clearTimeout(GameDataManager.flushTimer);
+      GameDataManager.flushTimer = -1;
+    }
+    GameDataManager.persist();
   }
 
   static getAllGames(): GameInfo[] {
@@ -170,7 +222,7 @@ export class GameDataManager {
     const game = GameDataManager.games.find(g => g.id === id);
     if (game && score > game.highScore) {
       game.highScore = score;
-      GameDataManager.persist();
+      GameDataManager.markDirty();
     }
   }
 
@@ -178,7 +230,7 @@ export class GameDataManager {
     const game = GameDataManager.games.find(g => g.id === id);
     if (game) {
       game.playCount++;
-      GameDataManager.persist();
+      GameDataManager.markDirty();
     }
   }
 

@@ -1,17 +1,5 @@
 {
   "src": [
-    "pages/Index",
-    "pages/SplashPage",
-    "pages/ProfilePage",
-    "pages/classic/SnakeGamePage",
-    "pages/classic/TetrisGamePage",
-    "pages/classic/Game2048Page",
-    "pages/classic/WhackMolePage",
-    "pages/classic/MinesweeperPage",
-    "pages/puzzle/SudokuPage",
-    "pages/puzzle/SlidePuzzlePage",
-    "pages/puzzle/KlotskiPage",
-    "pages/puzzle/GuessNumberPage",
-    "pages/puzzle/MemoryCardPage"
+    "pages/Index"
   ]
 }

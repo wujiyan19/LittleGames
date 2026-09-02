@@ -33,9 +33,14 @@ export class BrandColors {
 }
 
 /**
- * 亮色语义令牌 —— 引用资源，随主题自动适配
+ * 语义色令牌 —— 引用 resources，随系统深浅色模式自动适配
+ *
+ * 明暗不在这里区分：深浅由资源目录（base/ = 亮色，dark/ = 深色）决定，
+ * 因此「亮色令牌」「深色令牌」两个类是同一批资源的两份别名——
+ * 新增一个语义色要改两处，且容易造成语义倒挂（亮色页面里写着 DarkColors.xxx）。
+ * 已合并为单一语义类；确实需要「固定深色」的场景（如启动闪屏）请用 BrandColors。
  */
-export class LightColors {
+export class SemanticColors {
   static bg: Resource = $r('app.color.bg');
   static bgElevated: Resource = $r('app.color.bg_elevated');
   static surface: Resource = $r('app.color.surface');
@@ -74,53 +79,6 @@ export class LightColors {
     $r('app.color.gradient_brand_end')
   ];
   /** 游戏棋盘/格子系统色 */
-  static cellHidden: Resource = $r('app.color.cell_hidden');
-  static cellRevealed: Resource = $r('app.color.cell_revealed');
-  static boardBg: Resource = $r('app.color.board_bg');
-  static boardBorder: Resource = $r('app.color.board_border');
-}
-
-/**
- * 深色语义令牌 —— 与亮色令牌引用同一组语义资源，由系统自动选择深浅值
- */
-export class DarkColors {
-  static bg: Resource = $r('app.color.bg');
-  static bgElevated: Resource = $r('app.color.bg_elevated');
-  static surface: Resource = $r('app.color.surface');
-  static surfaceHover: Resource = $r('app.color.surface_hover');
-  static surfaceTranslucent: Resource = $r('app.color.surface_translucent');
-  static scrim: Resource = $r('app.color.scrim');
-  static primary: Resource = $r('app.color.primary');
-  static primaryHover: Resource = $r('app.color.primary_hover');
-  static primaryActive: Resource = $r('app.color.primary_active');
-  static primaryLight: Resource = $r('app.color.primary_light');
-  static accent: Resource = $r('app.color.accent');
-  static accentLight: Resource = $r('app.color.accent_light');
-  static success: Resource = $r('app.color.success');
-  static warning: Resource = $r('app.color.warning');
-  static error: Resource = $r('app.color.error');
-  static textPrimary: Resource = $r('app.color.text_primary');
-  static textSecondary: Resource = $r('app.color.text_secondary');
-  static textTertiary: Resource = $r('app.color.text_tertiary');
-  static textDisabled: Resource = $r('app.color.text_disabled');
-  static textOnPrimary: Resource = $r('app.color.text_on_primary');
-  static divider: Resource = $r('app.color.divider');
-  static border: Resource = $r('app.color.border');
-  static borderStrong: Resource = $r('app.color.border_strong');
-  static gradientScreen: Resource[] = [
-    $r('app.color.gradient_screen_start'),
-    $r('app.color.gradient_screen_mid'),
-    $r('app.color.gradient_screen_end')
-  ];
-  static gradientHero: Resource[] = [
-    $r('app.color.gradient_hero_start'),
-    $r('app.color.gradient_hero_mid'),
-    $r('app.color.gradient_hero_end')
-  ];
-  static gradientBrand: Resource[] = [
-    $r('app.color.gradient_brand_start'),
-    $r('app.color.gradient_brand_end')
-  ];
   static cellHidden: Resource = $r('app.color.cell_hidden');
   static cellRevealed: Resource = $r('app.color.cell_revealed');
   static boardBg: Resource = $r('app.color.board_bg');

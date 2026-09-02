@@ -2,7 +2,7 @@
  * 统一方向控制面板 — 宇宙蓝 × 雪域灰
  * 方向键使用系统 Symbol 图标，按键高度 ≥ 48vp（热区 ≥ 40vp）
  */
-import { DarkColors, FontTokens, RadiusTokens, ShadowTokens, SpacingTokens } from '../common/DesignTokens';
+import { SemanticColors, FontTokens, RadiusTokens, ShadowTokens, SpacingTokens } from '../common/DesignTokens';
 
 @ComponentV2
 export struct ControlPad {
@@ -31,10 +31,10 @@ export struct ControlPad {
       Button() {
         SymbolGlyph($r('sys.symbol.arrow_up'))
           .fontSize(18)
-          .fontColor([DarkColors.textPrimary])
+          .fontColor([SemanticColors.textPrimary])
       }
       .width(this.buttonSize).height(48)
-      .backgroundColor(DarkColors.surface)
+      .backgroundColor(SemanticColors.surface)
       .borderRadius(RadiusTokens.base)
       .shadow(ShadowTokens.button)
       .onClick(() => { this.onUp(); })
@@ -44,10 +44,10 @@ export struct ControlPad {
         Button() {
           SymbolGlyph($r('sys.symbol.arrow_left'))
             .fontSize(18)
-            .fontColor([DarkColors.textPrimary])
+            .fontColor([SemanticColors.textPrimary])
         }
         .width(this.buttonSize).height(48)
-        .backgroundColor(DarkColors.surface)
+        .backgroundColor(SemanticColors.surface)
         .borderRadius(RadiusTokens.base)
         .shadow(ShadowTokens.button)
         .onClick(() => { this.onLeft(); })
@@ -58,13 +58,13 @@ export struct ControlPad {
               .fontFamily(FontTokens.family)
               .fontSize(14)
               .fontWeight(FontTokens.weightMedium)
-              .fontColor(DarkColors.textPrimary)
+              .fontColor(SemanticColors.textPrimary)
           } else {
-            Circle({ width: 10, height: 10 }).fill(DarkColors.textPrimary)
+            Circle({ width: 10, height: 10 }).fill(SemanticColors.textPrimary)
           }
         }
         .width(this.buttonSize).height(48)
-        .backgroundColor(DarkColors.surface)
+        .backgroundColor(SemanticColors.surface)
         .borderRadius(RadiusTokens.base)
         .opacity(this.getCenterOpacity())
         .shadow(ShadowTokens.button)
@@ -73,10 +73,10 @@ export struct ControlPad {
         Button() {
           SymbolGlyph($r('sys.symbol.arrow_right'))
             .fontSize(18)
-            .fontColor([DarkColors.textPrimary])
+            .fontColor([SemanticColors.textPrimary])
         }
         .width(this.buttonSize).height(48)
-        .backgroundColor(DarkColors.surface)
+        .backgroundColor(SemanticColors.surface)
         .borderRadius(RadiusTokens.base)
         .shadow(ShadowTokens.button)
         .onClick(() => { this.onRight(); })
@@ -86,10 +86,10 @@ export struct ControlPad {
       Button() {
         SymbolGlyph($r('sys.symbol.arrow_down'))
           .fontSize(18)
-          .fontColor([DarkColors.textPrimary])
+          .fontColor([SemanticColors.textPrimary])
       }
       .width(this.buttonSize).height(48)
-      .backgroundColor(DarkColors.surface)
+      .backgroundColor(SemanticColors.surface)
       .borderRadius(RadiusTokens.base)
       .shadow(ShadowTokens.button)
       .onClick(() => { this.onDown(); })

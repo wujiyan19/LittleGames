@@ -37,6 +37,45 @@
     { "name": "cell_hidden", "value": "#C9D6EC" },
     { "name": "cell_revealed", "value": "#F2F6FD" },
     { "name": "board_bg", "value": "#DCE5F4" },
-    { "name": "board_border", "value": "#9DB2D9" }
+    { "name": "board_border", "value": "#9DB2D9" },
+
+    { "name": "tile_2", "value": "#EEE4DA" },
+    { "name": "tile_4", "value": "#EDE0C8" },
+    { "name": "tile_8", "value": "#F2B179" },
+    { "name": "tile_16", "value": "#F59563" },
+    { "name": "tile_32", "value": "#F67C5F" },
+    { "name": "tile_64", "value": "#F65E3B" },
+    { "name": "tile_128", "value": "#EDCF72" },
+    { "name": "tile_256", "value": "#EDCC61" },
+    { "name": "tile_512", "value": "#EDC850" },
+    { "name": "tile_1024", "value": "#EDC53F" },
+    { "name": "tile_2048", "value": "#EDC22E" },
+    { "name": "tile_large", "value": "#3C3A32" },
+    { "name": "tile_text_low", "value": "#776E65" },
+    { "name": "tile_text_high", "value": "#FFFFFF" },
+
+    { "name": "shape_1", "value": "#FF6B6B" },
+    { "name": "shape_2", "value": "#FFAA33" },
+    { "name": "shape_3", "value": "#2DD482" },
+    { "name": "shape_4", "value": "#3399FF" },
+    { "name": "shape_5", "value": "#8675F8" },
+    { "name": "shape_6", "value": "#FF6B9D" },
+    { "name": "shape_7", "value": "#00D4B4" },
+
+    { "name": "klotski_target", "value": "#FF6666" },
+    { "name": "klotski_horizontal", "value": "#FFAA33" },
+    { "name": "klotski_vertical", "value": "#3399FF" },
+    { "name": "klotski_normal", "value": "#2DD482" },
+
+    { "name": "mine_num_0", "value": "#6B7280" },
+    { "name": "mine_num_1", "value": "#3399FF" },
+    { "name": "mine_num_2", "value": "#2DD482" },
+    { "name": "mine_num_3", "value": "#FF6666" },
+    { "name": "mine_num_4", "value": "#8675F8" },
+    { "name": "mine_num_5", "value": "#FF6B6B" },
+    { "name": "mine_num_6", "value": "#00D4B4" },
+    { "name": "mine_num_7", "value": "#2A3550" },
+    { "name": "mine_num_8", "value": "#6B7280" },
+    { "name": "mine_num_invalid", "value": "#F2524B" }
   ]
 }

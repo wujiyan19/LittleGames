@@ -75,7 +75,7 @@
 - 自研 **Design Tokens** 体系：色彩 / 间距 / 圆角 / 阴影 / 字体全量令牌化
 - 「宇宙蓝（`#2D6CE8`）× 极光紫（`#7A5AF8`）」品牌渐变 + 雪域灰底色
 - 语义色资源定义于 `base`（亮色）/ `dark`（深色），**随系统深浅色模式自动适配**
-- 通用游戏组件复用：`GameHeader`（对局信息栏）、`ControlPad`（虚拟方向盘）、`GameOverDialog`（结算弹窗）、`GamePanel`、`NumberKeyboard`
+- 通用游戏组件复用：`GameHeader`（对局信息栏）、`ControlPad`（虚拟方向盘）、`GameOverDialog`（结算弹窗）、`NumberKeyboard`（数字键盘）
 
 ## 🛠️ 技术栈
 
@@ -84,7 +84,7 @@
 | 平台 | HarmonyOS NEXT（runtimeOS: HarmonyOS） |
 | 语言 | ArkTS（严格模式） |
 | UI 框架 | ArkUI 声明式开发范式（`@ComponentV2` / `@Local` 状态管理） |
-| 路由 | `router` 页面导航 |
+| 路由 | `Navigation` + `NavPathStack` 组件导航 |
 | 数据 | `@kit.ArkData` Preferences 轻量持久化 |
 | 国际化 | `@kit.LocalizationKit` intl.Collator 中文拼音排序 |
 | 布局 | GridRow 断点栅格 + MediaQuery 媒体查询 |
@@ -109,11 +109,9 @@ LittleGames
     │   │   ├── GameHeader.ets       #   对局信息栏
     │   │   ├── ControlPad.ets       #   虚拟方向盘
     │   │   ├── GameOverDialog.ets   #   结算弹窗
-    │   │   ├── GamePanel.ets        #   游戏面板
     │   │   └── NumberKeyboard.ets   #   数字键盘
     │   └── pages/
-    │       ├── SplashPage.ets       # 动效闪屏页
-    │       ├── Index.ets            # 主页（精选/分类/我的）
+    │       ├── Index.ets            # 主页（精选/分类/我的，含启动闪屏层）
     │       ├── ProfilePage.ets      # 我的页面
     │       ├── classic/             # 经典休闲：贪吃蛇/俄罗斯方块/2048/打地鼠/扫雷
     │       └── puzzle/              # 益智解谜：数独/滑动拼图/华容道/猜数字/记忆翻牌
@@ -135,7 +133,10 @@ LittleGames
 1. 使用 DevEco Studio 打开项目根目录
 2. 等待 IDE 自动同步依赖（`hvigor` 构建体系，无第三方依赖）
 3. 连接真机或启动模拟器
-4. 点击 **Run ▶**（或 `hvigorw assembleHap`）即可安装运行
+4. 点击 **Run ▶** 即可安装运行
+
+> 命令行构建：`node "C:/Program Files/Huawei/DevEco Studio/tools/hvigor/bin/hvigorw.js" assembleHap --mode module -p product=default --no-daemon`
+> （需先设置 `DEVECO_SDK_HOME`，详见 `AGENTS.md`）
 
 > 💡 也可在 IDE 中使用 Previewer 预览各页面 UI。
 

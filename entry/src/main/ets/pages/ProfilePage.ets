@@ -4,8 +4,7 @@
 import { GameDataManager } from '../model/GameData';
 import { GameInfo } from '../common/GameConstants';
 import {
-  LightColors,
-  DarkColors,
+  SemanticColors,
   SpacingTokens,
   FontTokens,
   RadiusTokens,
@@ -13,9 +12,9 @@ import {
   BrandColors
 } from '../common/DesignTokens';
 
-@Entry
 @ComponentV2
-struct ProfilePage {
+export struct ProfilePage {
+  @Param pathStack: NavPathStack = new NavPathStack();
   @Local allGames: GameInfo[] = [];
 
   aboutToAppear(): void {
@@ -29,19 +28,19 @@ struct ProfilePage {
         Button() {
           SymbolGlyph($r('sys.symbol.arrow_left'))
             .fontSize(20)
-            .fontColor([DarkColors.textPrimary])
+            .fontColor([SemanticColors.textPrimary])
         }
         .type(ButtonType.Circle)
         .width(40).height(40)
-        .backgroundColor(LightColors.surface)
+        .backgroundColor(SemanticColors.surface)
         .shadow(ShadowTokens.button)
-        .onClick(() => this.getUIContext().getRouter().back())
+        .onClick(() => this.pathStack.pop())
 
         Text('我的')
           .fontFamily(FontTokens.family)
           .fontSize(FontTokens.sizeSubtitle)
           .fontWeight(FontTokens.weightSemibold)
-          .fontColor(LightColors.textPrimary)
+          .fontColor(SemanticColors.textPrimary)
           .layoutWeight(1)
           .margin({ left: SpacingTokens.md })
       }
@@ -52,7 +51,7 @@ struct ProfilePage {
         top: SpacingTokens.sm,
         bottom: SpacingTokens.sm
       })
-      .backgroundColor(LightColors.surface)
+      .backgroundColor(SemanticColors.surface)
       .shadow(ShadowTokens.card)
 
       Scroll() {
@@ -63,6 +62,7 @@ struct ProfilePage {
               SymbolGlyph($r('sys.symbol.person_fill'))
                 .fontSize(36)
                 .fontWeight(FontWeight.Medium)
+                // 头像底色为品牌渐变（cosmicBlue→auroraPurple），白图标恒可读
                 .fontColor(['#FFFFFF'])
             }
             .width(64).height(64)
@@ -78,11 +78,11 @@ struct ProfilePage {
                 .fontFamily(FontTokens.family)
                 .fontSize(FontTokens.sizeBodyLarge)
                 .fontWeight(FontTokens.weightSemibold)
-                .fontColor(LightColors.textPrimary)
+                .fontColor(SemanticColors.textPrimary)
               Text('享受游戏的乐趣！')
                 .fontFamily(FontTokens.family)
                 .fontSize(FontTokens.sizeBodySmall)
-                .fontColor(LightColors.textTertiary)
+                .fontColor(SemanticColors.textTertiary)
                 .margin({ top: 2 })
             }
             .alignItems(HorizontalAlign.Start)
@@ -92,7 +92,7 @@ struct ProfilePage {
           .width('100%')
           .padding(SpacingTokens.base)
           .borderRadius(RadiusTokens.lg)
-          .backgroundColor(LightColors.surface)
+          .backgroundColor(SemanticColors.surface)
           .shadow(ShadowTokens.card)
           .margin({
             left: SpacingTokens.pageHorizontal,
@@ -104,12 +104,12 @@ struct ProfilePage {
           Row() {
             SymbolGlyph($r('sys.symbol.star_fill'))
               .fontSize(18)
-              .fontColor([DarkColors.warning])
+              .fontColor([SemanticColors.warning])
             Text('最高分排行')
               .fontFamily(FontTokens.family)
               .fontSize(FontTokens.sizeBodyLarge)
               .fontWeight(FontTokens.weightSemibold)
-              .fontColor(LightColors.textPrimary)
+              .fontColor(SemanticColors.textPrimary)
               .margin({ left: SpacingTokens.sm })
           }
           .width('100%')
@@ -123,7 +123,7 @@ struct ProfilePage {
                     .fontFamily(FontTokens.family)
                     .fontSize(FontTokens.sizeBody)
                     .fontWeight(FontTokens.weightBold)
-                    .fontColor(index < 3 ? DarkColors.warning : LightColors.textTertiary)
+                    .fontColor(index < 3 ? SemanticColors.warning : SemanticColors.textTertiary)
                     .width(28)
                   Text(game.icon)
                     .fontSize(20)
@@ -131,14 +131,14 @@ struct ProfilePage {
                   Text(game.name)
                     .fontFamily(FontTokens.family)
                     .fontSize(FontTokens.sizeBody)
-                    .fontColor(LightColors.textPrimary)
+                    .fontColor(SemanticColors.textPrimary)
                     .layoutWeight(1)
                     .margin({ left: SpacingTokens.sm })
                   Text(game.highScore > 0 ? '' + game.highScore : '--')
                     .fontFamily(FontTokens.family)
                     .fontSize(FontTokens.sizeBody)
                     .fontWeight(FontTokens.weightBold)
-                    .fontColor(game.highScore > 0 ? LightColors.primary : LightColors.textDisabled)
+                    .fontColor(game.highScore > 0 ? SemanticColors.primary : SemanticColors.textDisabled)
                 }
                 .width('100%')
                 .height(48)
@@ -146,7 +146,7 @@ struct ProfilePage {
               }, (game: GameInfo) => game.id)
           }
           .width('100%')
-          .backgroundColor(LightColors.surface)
+          .backgroundColor(SemanticColors.surface)
           .borderRadius(RadiusTokens.lg)
           .shadow(ShadowTokens.card)
           .margin({ left: SpacingTokens.pageHorizontal, right: SpacingTokens.pageHorizontal })
@@ -155,12 +155,12 @@ struct ProfilePage {
           Row() {
             SymbolGlyph($r('sys.symbol.info_circle'))
               .fontSize(18)
-              .fontColor([LightColors.primary])
+              .fontColor([SemanticColors.primary])
             Text('关于')
               .fontFamily(FontTokens.family)
               .fontSize(FontTokens.sizeBodyLarge)
               .fontWeight(FontTokens.weightSemibold)
-              .fontColor(LightColors.textPrimary)
+              .fontColor(SemanticColors.textPrimary)
               .margin({ left: SpacingTokens.sm })
           }
           .width('100%')
@@ -173,7 +173,7 @@ struct ProfilePage {
             this.InfoRow('分类', '经典休闲 / 益智解谜')
           }
           .width('100%')
-          .backgroundColor(LightColors.surface)
+          .backgroundColor(SemanticColors.surface)
           .borderRadius(RadiusTokens.lg)
           .shadow(ShadowTokens.card)
           .margin({ left: SpacingTokens.pageHorizontal, right: SpacingTokens.pageHorizontal, bottom: SpacingTokens.xxl })
@@ -186,7 +186,7 @@ struct ProfilePage {
       .edgeEffect(EdgeEffect.Spring)
     }
     .width('100%').height('100%')
-    .backgroundColor(LightColors.bg)
+    .backgroundColor(SemanticColors.bg)
   }
 
   @Builder
@@ -195,16 +195,16 @@ struct ProfilePage {
       Text(label)
         .fontFamily(FontTokens.family)
         .fontSize(FontTokens.sizeBody)
-        .fontColor(LightColors.textSecondary)
+        .fontColor(SemanticColors.textSecondary)
         .layoutWeight(1)
       Text(value)
         .fontFamily(FontTokens.family)
         .fontSize(FontTokens.sizeBody)
-        .fontColor(LightColors.textPrimary)
+        .fontColor(SemanticColors.textPrimary)
     }
     .width('100%')
     .height(44)
     .padding({ left: SpacingTokens.base, right: SpacingTokens.base })
-    .border({ width: { bottom: 0.5 }, color: LightColors.divider })
+    .border({ width: { bottom: 0.5 }, color: SemanticColors.divider })
   }
 }

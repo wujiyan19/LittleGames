@@ -1,15 +1,18 @@
 /**
  * 猜数字 - HarmonyOS 设计风格
  */
-import { DarkColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
+import { SemanticColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
 import { GameHeader } from '../../components/GameHeader';
 import { GameDifficulty } from '../../common/GameConstants';
+import { GameDataManager } from '../../model/GameData';
+import { SafeAreaInsets } from '../../common/SafeAreaInsets';
 
 interface RecordItem { guess: string; a: number; b: number; seq: number; }
 
-@Entry
 @ComponentV2
-struct GuessNumberPage {
+export struct GuessNumberPage {
+  @Param pathStack: NavPathStack = new NavPathStack();
+  @Local safeBottom: number = SafeAreaInsets.bottom;
   @Local secret: string = '';
   @Local input: string = '';
   @Local records: RecordItem[] = [];
@@ -22,6 +25,7 @@ struct GuessNumberPage {
   aboutToAppear(): void { this.startGame(); }
 
   startGame(): void {
+    GameDataManager.incrementPlayCount('guessnumber');
     const digits: number[] = [0,1,2,3,4,5,6,7,8,9];
     let s = '';
     for (let i = 0; i < this.getSecretLength(); i++) {
@@ -77,19 +81,35 @@ struct GuessNumberPage {
     const newRecs: RecordItem[] = [rec];
     for (let i = 0; i < this.records.length; i++) { newRecs.push(this.records[i]); }
     this.records = newRecs;
-    if (a === this.getSecretLength()) { this.isWin = true; this.isPlaying = false; }
+    if (a === this.getSecretLength()) {
+      this.isWin = true;
+      this.isPlaying = false;
+      GameDataManager.updateHighScore('guessnumber', this.getScore());
+    }
     if (this.tries >= this.getMaxTries()) { this.isPlaying = false; }
     this.input = '';
   }
 
+  /**
+   * 本局得分：难度越高基数越高，尝试次数越多扣分越多。
+   * 与扫雷（用时）、华容道（步数）保持同一口径——「越优越高分」，
+   * 因此三者都标注为换算分（见 GameInfo.scoreLabel）。
+   */
+  getScore(): number {
+    let bonus = 0;
+    if (this.difficulty === GameDifficulty.NORMAL) { bonus = 200; }
+    if (this.difficulty === GameDifficulty.HARD) { bonus = 400; }
+    return Math.max(1, 1000 + bonus - this.tries * 30);
+  }
+
   getResultColor(a: number): ResourceColor {
-    if (a === this.getSecretLength()) { return DarkColors.success; }
-    return DarkColors.warning;
+    if (a === this.getSecretLength()) { return SemanticColors.success; }
+    return SemanticColors.warning;
   }
 
   getInputColor(): ResourceColor {
-    if (this.input.length === this.getSecretLength()) { return DarkColors.success; }
-    return DarkColors.textPrimary;
+    if (this.input.length === this.getSecretLength()) { return SemanticColors.success; }
+    return SemanticColors.textPrimary;
   }
 
   getKeyFontSize(key: string): number {
@@ -99,19 +119,19 @@ struct GuessNumberPage {
 
   getKeyFontColor(key: string): ResourceColor {
     if (key === '确定') {
-      if (this.input.length === this.getSecretLength()) { return DarkColors.textOnPrimary; }
-      return DarkColors.textTertiary;
+      if (this.input.length === this.getSecretLength()) { return SemanticColors.textOnPrimary; }
+      return SemanticColors.textTertiary;
     }
-    return DarkColors.textPrimary;
+    return SemanticColors.textPrimary;
   }
 
   getKeyBgColor(key: string): ResourceColor {
     if (key === '确定') {
-      if (this.input.length === this.getSecretLength()) { return DarkColors.primary; }
-      return DarkColors.surfaceHover;
+      if (this.input.length === this.getSecretLength()) { return SemanticColors.primary; }
+      return SemanticColors.surfaceHover;
     }
-    if (key === '⌫') { return DarkColors.error; }
-    return DarkColors.surface;
+    if (key === '⌫') { return SemanticColors.error; }
+    return SemanticColors.surface;
   }
 
   getKeyShadow(key: string): ShadowOptions | undefined {
@@ -124,36 +144,36 @@ struct GuessNumberPage {
   build() {
     Stack() {
       Column().width('100%').height('100%')
-        .linearGradient({ angle: 180, colors: [[DarkColors.gradientScreen[0], 0], [DarkColors.gradientScreen[1], 0.5], [DarkColors.gradientScreen[2], 1]] })
+        .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
 
       Column() {
         GameHeader({ gameTitle: '猜数字', scoreValue: this.tries, highScoreValue: this.getMaxTries(),
           subtitle: '尝试 ' + this.tries + ' / ' + this.getMaxTries(),
           difficulty: this.difficulty,
           onDifficultyChange: (d: GameDifficulty) => { this.changeDifficulty(d); },
-          onBack: () => { this.getUIContext().getRouter().back(); },
+          onBack: () => { this.pathStack.pop(); },
           onPauseToggle: () => {},
           onRestart: () => { this.startGame(); } })
 
         Column() {
           Text('猜一个由' + this.getSecretLength() + '个不重复数字组成的密码')
             .fontFamily(FontTokens.family).fontSize(FontTokens.sizeBodySmall)
-            .fontColor(DarkColors.textTertiary).margin({ top: SpacingTokens.sm })
+            .fontColor(SemanticColors.textTertiary).margin({ top: SpacingTokens.sm })
           Text('输入' + this.getSecretLength() + '位数字后提交')
             .fontFamily(FontTokens.family).fontSize(FontTokens.sizeBodySmall)
-            .fontColor(DarkColors.textTertiary)
+            .fontColor(SemanticColors.textTertiary)
           Text('已尝试: ' + this.tries + '/' + this.getMaxTries())
             .fontFamily(FontTokens.family).fontSize(FontTokens.sizeBodySmall)
-            .fontColor(DarkColors.warning).margin({ top: SpacingTokens.xs })
+            .fontColor(SemanticColors.warning).margin({ top: SpacingTokens.xs })
         }.alignItems(HorizontalAlign.Center).margin({ bottom: SpacingTokens.md })
 
         Column() {
           Row({ space: SpacingTokens.xs }) {
             SymbolGlyph($r('sys.symbol.list_bullet'))
-              .fontSize(12).fontColor([DarkColors.accent])
+              .fontSize(12).fontColor([SemanticColors.accent])
             Text('猜测记录')
               .fontFamily(FontTokens.family).fontSize(FontTokens.sizeBodySmall)
-              .fontColor(DarkColors.textTertiary).margin({ bottom: 0 })
+              .fontColor(SemanticColors.textTertiary).margin({ bottom: 0 })
           }.width('100%').margin({ left: SpacingTokens.base, right: SpacingTokens.base, bottom: 4 })
 
           List() {
@@ -162,9 +182,9 @@ struct GuessNumberPage {
                 Row() {
                   Text('#' + (this.records.length - index))
                     .fontFamily(FontTokens.family).fontSize(FontTokens.sizeBodySmall)
-                    .fontColor(DarkColors.textTertiary).width(28)
+                    .fontColor(SemanticColors.textTertiary).width(28)
                   Text(rec.guess).fontWeight(FontWeight.Bold)
-                    .fontColor(DarkColors.textPrimary).margin({ left: SpacingTokens.sm }).fontSize(FontTokens.sizeSubtitle)
+                    .fontColor(SemanticColors.textPrimary).margin({ left: SpacingTokens.sm }).fontSize(FontTokens.sizeSubtitle)
                   Text(rec.a + 'A' + rec.b + 'B').fontWeight(FontWeight.Bold)
                     .fontColor(this.getResultColor(rec.a))
                     .margin({ left: SpacingTokens.md }).fontSize(FontTokens.sizeBodyLarge)
@@ -173,7 +193,7 @@ struct GuessNumberPage {
               }.height(40)
             }, (rec: RecordItem) => rec.seq.toString())
           }.height(Math.min(this.records.length * 40, 240))
-          .backgroundColor(DarkColors.surface).borderRadius(RadiusTokens.base)
+          .backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
           .margin({ left: SpacingTokens.base, right: SpacingTokens.base })
         }.layoutWeight(1)
 
@@ -189,7 +209,7 @@ struct GuessNumberPage {
           this.KeyRow(['7', '8', '9'])
           this.KeyRow(['⌫', '0', '确定'])
         }.padding({ bottom: SpacingTokens.lg })
-      }.width('100%').height('100%')
+      }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
       if (this.isWin) {
         Column() {
@@ -197,25 +217,25 @@ struct GuessNumberPage {
             SymbolGlyph($r('sys.symbol.checkmark_circle'))
               .fontSize(40)
               .fontWeight(FontWeight.Medium)
-              .fontColor([DarkColors.success])
+              .fontColor([SemanticColors.success])
           }
           .width(72).height(72)
           .borderRadius(RadiusTokens.full)
-          .backgroundColor(DarkColors.primaryLight)
+          .backgroundColor(SemanticColors.primaryLight)
           .justifyContent(FlexAlign.Center)
 
           Text('恭喜猜中!')
             .fontFamily(FontTokens.family)
             .fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold)
-            .fontColor(DarkColors.textPrimary).margin({ top: SpacingTokens.md, bottom: SpacingTokens.xs })
+            .fontColor(SemanticColors.textPrimary).margin({ top: SpacingTokens.md, bottom: SpacingTokens.xs })
           Text('密码: ' + this.secret + '  ·  ' + this.tries + ' 次')
             .fontFamily(FontTokens.family)
-            .fontSize(FontTokens.sizeSubtitle).fontColor(DarkColors.warning)
+            .fontSize(FontTokens.sizeSubtitle).fontColor(SemanticColors.warning)
             .margin({ bottom: SpacingTokens.base })
           this.RestartButton()
         }.width('86%').padding(SpacingTokens.lg)
         .borderRadius(RadiusTokens.xl)
-        .backgroundColor(DarkColors.surfaceTranslucent)
+        .backgroundColor(SemanticColors.surfaceTranslucent)
         .backdropBlur(24)
         .shadow(ShadowTokens.float)
       } else if (!this.isPlaying) {
@@ -224,25 +244,25 @@ struct GuessNumberPage {
             SymbolGlyph($r('sys.symbol.xmark_circle'))
               .fontSize(40)
               .fontWeight(FontWeight.Medium)
-              .fontColor([DarkColors.error])
+              .fontColor([SemanticColors.error])
           }
           .width(72).height(72)
           .borderRadius(RadiusTokens.full)
-          .backgroundColor(DarkColors.primaryLight)
+          .backgroundColor(SemanticColors.primaryLight)
           .justifyContent(FlexAlign.Center)
 
           Text(this.getMaxTries() + '次用完了')
             .fontFamily(FontTokens.family)
             .fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold)
-            .fontColor(DarkColors.textPrimary).margin({ top: SpacingTokens.md, bottom: SpacingTokens.xs })
+            .fontColor(SemanticColors.textPrimary).margin({ top: SpacingTokens.md, bottom: SpacingTokens.xs })
           Text('密码: ' + this.secret)
             .fontFamily(FontTokens.family)
-            .fontSize(FontTokens.sizeSubtitle).fontColor(DarkColors.error)
+            .fontSize(FontTokens.sizeSubtitle).fontColor(SemanticColors.error)
             .margin({ bottom: SpacingTokens.base })
           this.RestartButton()
         }.width('86%').padding(SpacingTokens.lg)
         .borderRadius(RadiusTokens.xl)
-        .backgroundColor(DarkColors.surfaceTranslucent)
+        .backgroundColor(SemanticColors.surfaceTranslucent)
         .backdropBlur(24)
         .shadow(ShadowTokens.float)
       }
@@ -256,7 +276,7 @@ struct GuessNumberPage {
         Button() {
           if (key === '⌫') {
             SymbolGlyph($r('sys.symbol.delete_left'))
-              .fontSize(20).fontColor([DarkColors.textOnPrimary])
+              .fontSize(20).fontColor([SemanticColors.textOnPrimary])
           } else {
             Text(key)
               .fontFamily(FontTokens.family)
@@ -284,14 +304,14 @@ struct GuessNumberPage {
     Button() {
       Row({ space: SpacingTokens.xs }) {
         SymbolGlyph($r('sys.symbol.arrow_clockwise'))
-          .fontSize(16).fontColor([DarkColors.textOnPrimary])
+          .fontSize(16).fontColor([SemanticColors.textOnPrimary])
         Text('再来一局')
           .fontFamily(FontTokens.family)
-          .fontSize(FontTokens.sizeBody).fontColor(DarkColors.textOnPrimary)
+          .fontSize(FontTokens.sizeBody).fontColor(SemanticColors.textOnPrimary)
       }
     }
     .height(44).padding({ left: SpacingTokens.lg, right: SpacingTokens.lg })
-    .backgroundColor(DarkColors.primary).borderRadius(RadiusTokens.full)
+    .backgroundColor(SemanticColors.primary).borderRadius(RadiusTokens.full)
     .shadow(ShadowTokens.button)
     .onClick(() => this.startGame())
   }

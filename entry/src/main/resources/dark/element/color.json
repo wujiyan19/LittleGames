@@ -37,6 +37,45 @@
     { "name": "cell_hidden", "value": "#1B2660" },
     { "name": "cell_revealed", "value": "#131D52" },
     { "name": "board_bg", "value": "#0E1640" },
-    { "name": "board_border", "value": "#31407F" }
+    { "name": "board_border", "value": "#31407F" },
+
+    { "name": "tile_2", "value": "#3C3B47" },
+    { "name": "tile_4", "value": "#454455" },
+    { "name": "tile_8", "value": "#C8783C" },
+    { "name": "tile_16", "value": "#D2693A" },
+    { "name": "tile_32", "value": "#D55A38" },
+    { "name": "tile_64", "value": "#D8451F" },
+    { "name": "tile_128", "value": "#C5A33A" },
+    { "name": "tile_256", "value": "#C7A12B" },
+    { "name": "tile_512", "value": "#C99E1C" },
+    { "name": "tile_1024", "value": "#CB9B0B" },
+    { "name": "tile_2048", "value": "#CD9900" },
+    { "name": "tile_large", "value": "#1E1C19" },
+    { "name": "tile_text_low", "value": "#EDE6DA" },
+    { "name": "tile_text_high", "value": "#FFFFFF" },
+
+    { "name": "shape_1", "value": "#FF8080" },
+    { "name": "shape_2", "value": "#FFB84D" },
+    { "name": "shape_3", "value": "#4FDE9B" },
+    { "name": "shape_4", "value": "#5CABFF" },
+    { "name": "shape_5", "value": "#A08FFA" },
+    { "name": "shape_6", "value": "#FF85B0" },
+    { "name": "shape_7", "value": "#26DEC4" },
+
+    { "name": "klotski_target", "value": "#FF8080" },
+    { "name": "klotski_horizontal", "value": "#FFB84D" },
+    { "name": "klotski_vertical", "value": "#5CABFF" },
+    { "name": "klotski_normal", "value": "#4FDE9B" },
+
+    { "name": "mine_num_0", "value": "#98A2B8" },
+    { "name": "mine_num_1", "value": "#5CABFF" },
+    { "name": "mine_num_2", "value": "#4FDE9B" },
+    { "name": "mine_num_3", "value": "#FF8A8A" },
+    { "name": "mine_num_4", "value": "#A895FF" },
+    { "name": "mine_num_5", "value": "#FF8F8F" },
+    { "name": "mine_num_6", "value": "#33E0C8" },
+    { "name": "mine_num_7", "value": "#FFFFFF" },
+    { "name": "mine_num_8", "value": "#98A2B8" },
+    { "name": "mine_num_invalid", "value": "#FF6B6B" }
   ]
 }

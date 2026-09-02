@@ -26,6 +26,11 @@ export interface GameInfo {
   description: string;
   highScore: number;
   playCount: number;
+  /**
+   * 最高分的计分口径。各游戏分数量纲不同（有的是原始得分，有的由步数/用时/次数换算），
+   * 排行页需显示对应口径，避免把不同含义的分数混为一谈。
+   */
+  scoreLabel: string;
 }
 
 /**

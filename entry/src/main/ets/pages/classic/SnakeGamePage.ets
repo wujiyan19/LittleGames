@@ -2,11 +2,12 @@
  * 贪吃蛇 - HarmonyOS 设计风格
  */
 import { display } from '@kit.ArkUI';
-import { DarkColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
+import { SemanticColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
 import { GameHeader } from '../../components/GameHeader';
 import { ControlPad } from '../../components/ControlPad';
 import { GameDifficulty } from '../../common/GameConstants';
 import { GameDataManager } from '../../model/GameData';
+import { SafeAreaInsets } from '../../common/SafeAreaInsets';
 
 const COLS = 20;
 const ROWS = 20;
@@ -14,9 +15,10 @@ const ROWS = 20;
 enum Direction { UP, DOWN, LEFT, RIGHT }
 interface Point { x: number; y: number }
 
-@Entry
 @ComponentV2
-struct SnakeGamePage {
+export struct SnakeGamePage {
+  @Param pathStack: NavPathStack = new NavPathStack();
+  @Local safeBottom: number = SafeAreaInsets.bottom;
   @Local snake: Point[] = [{ x: 10, y: 10 }];
   @Local food: Point = { x: 15, y: 10 };
   @Local snakeDirection: Direction = Direction.RIGHT;
@@ -27,6 +29,8 @@ struct SnakeGamePage {
   @Local cell: number = 16;
   @Local difficulty: GameDifficulty = GameDifficulty.NORMAL;
   private timer: number = -1;
+  /** 本次暂停是否由「切后台」自动触发——决定回到前台时是否需要自动恢复 */
+  private autoPaused: boolean = false;
   // 方向输入缓冲：每个 tick 只应用一次转向，防止一个 tick 内连按两键造成 180° 反向自杀
   private pendingTurn: Direction | null = null;
   private idx20: number[] = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19];
@@ -37,6 +41,26 @@ struct SnakeGamePage {
     this.startGame();
   }
   aboutToDisappear(): void { clearInterval(this.timer); }
+
+  /**
+   * 切后台自动暂停。
+   * 定时回调里已有 isPaused 守卫，这里只需置位即可停住蛇；
+   * 否则蛇会在后台一路撞墙直到 game over，用户切回来第一眼就是「游戏结束」。
+   * 注意只处理「正在游戏中」的情况：用户手动暂停或已结束时不动，避免回前台被强行恢复。
+   */
+  onPageHide(): void {
+    if (this.isPlaying && !this.isPaused) {
+      this.autoPaused = true;
+      this.isPaused = true;
+    }
+  }
+
+  onPageShow(): void {
+    if (this.autoPaused) {
+      this.autoPaused = false;
+      this.isPaused = false;
+    }
+  }
 
   initCellSize(): void {
     const d = display.getDefaultDisplaySync();
@@ -145,10 +169,10 @@ struct SnakeGamePage {
   }
 
   getCellColor(col: number, row: number): ResourceColor {
-    if (this.food.x === col && this.food.y === row) { return DarkColors.error; }
-    if (this.isSnakeCell(col, row)) { return DarkColors.success; }
-    if ((row + col) % 2 === 0) { return DarkColors.cellHidden; }
-    return DarkColors.cellRevealed;
+    if (this.food.x === col && this.food.y === row) { return SemanticColors.error; }
+    if (this.isSnakeCell(col, row)) { return SemanticColors.success; }
+    if ((row + col) % 2 === 0) { return SemanticColors.cellHidden; }
+    return SemanticColors.cellRevealed;
   }
 
   getCellRadius(col: number, row: number): number {
@@ -159,28 +183,28 @@ struct SnakeGamePage {
   build() {
     Stack() {
       Column().width('100%').height('100%')
-        .linearGradient({ angle: 180, colors: [[DarkColors.gradientScreen[0], 0], [DarkColors.gradientScreen[1], 0.5], [DarkColors.gradientScreen[2], 1]] })
+        .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
 
       Column() {
         GameHeader({ gameTitle: '贪吃蛇', scoreValue: this.score, highScoreValue: this.highScore,
           isPaused: this.isPaused,
           difficulty: this.difficulty,
           onDifficultyChange: (d: GameDifficulty) => { this.changeDifficulty(d); },
-          onBack: () => { this.getUIContext().getRouter().back(); },
+          onBack: () => { this.pathStack.pop(); },
           onPauseToggle: () => { this.isPaused = !this.isPaused; },
           onRestart: () => { this.startGame(); } })
 
         Row() {
           Column() {
-            Text('得分').fontSize(FontTokens.sizeCaption).fontColor(DarkColors.textTertiary)
-            Text('' + this.score).fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold).fontColor(DarkColors.accent)
-          }.layoutWeight(1).padding(8).backgroundColor(DarkColors.surface).borderRadius(RadiusTokens.base)
+            Text('得分').fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
+            Text('' + this.score).fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold).fontColor(SemanticColors.accent)
+          }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
           .alignItems(HorizontalAlign.Center).margin({ left: 16 })
 
           Column() {
-            Text('最高').fontSize(FontTokens.sizeCaption).fontColor(DarkColors.textTertiary)
-            Text('' + this.highScore).fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold).fontColor(DarkColors.textPrimary)
-          }.layoutWeight(1).padding(8).backgroundColor(DarkColors.surface).borderRadius(RadiusTokens.base)
+            Text('最高').fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
+            Text('' + this.highScore).fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold).fontColor(SemanticColors.textPrimary)
+          }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
           .alignItems(HorizontalAlign.Center).margin({ left: 8, right: 16 })
         }.margin({ top: 12, bottom: 12 })
 
@@ -196,8 +220,8 @@ struct SnakeGamePage {
               }
             }, (row: number) => row.toString())
           }.width(this.cell * COLS).height(this.cell * ROWS)
-          .border({ width: 2, color: DarkColors.boardBorder, radius: RadiusTokens.sm })
-          .backgroundColor(DarkColors.boardBg)
+          .border({ width: 2, color: SemanticColors.boardBorder, radius: RadiusTokens.sm })
+          .backgroundColor(SemanticColors.boardBg)
         }.layoutWeight(1).justifyContent(FlexAlign.Center)
 
         ControlPad({
@@ -208,7 +232,7 @@ struct SnakeGamePage {
           onCenter: () => {},
           showCenter: true, centerLabel: '✨'
         })
-      }.width('100%').height('100%')
+      }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
       if (!this.isPlaying) {
         Column() {
@@ -216,45 +240,45 @@ struct SnakeGamePage {
             SymbolGlyph($r('sys.symbol.star_fill'))
               .fontSize(40)
               .fontWeight(FontWeight.Medium)
-              .fontColor([DarkColors.warning])
+              .fontColor([SemanticColors.warning])
           }
           .width(72).height(72)
           .borderRadius(RadiusTokens.full)
-          .backgroundColor(DarkColors.primaryLight)
+          .backgroundColor(SemanticColors.primaryLight)
           .justifyContent(FlexAlign.Center)
 
           Text('游戏结束')
             .fontFamily(FontTokens.family)
             .fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold)
-            .fontColor(DarkColors.textPrimary).margin({ top: SpacingTokens.md, bottom: SpacingTokens.xs })
+            .fontColor(SemanticColors.textPrimary).margin({ top: SpacingTokens.md, bottom: SpacingTokens.xs })
           Text('得分 ' + this.score)
             .fontFamily(FontTokens.family)
-            .fontSize(FontTokens.sizeSubtitle).fontColor(DarkColors.accent)
+            .fontSize(FontTokens.sizeSubtitle).fontColor(SemanticColors.accent)
             .margin({ bottom: SpacingTokens.lg })
           Row({ space: SpacingTokens.base }) {
             Button() {
               Row({ space: SpacingTokens.xs }) {
                 SymbolGlyph($r('sys.symbol.arrow_clockwise'))
-                  .fontSize(16).fontColor([DarkColors.textOnPrimary])
+                  .fontSize(16).fontColor([SemanticColors.textOnPrimary])
                 Text('再来一局')
                   .fontFamily(FontTokens.family)
-                  .fontSize(FontTokens.sizeBody).fontColor(DarkColors.textOnPrimary)
+                  .fontSize(FontTokens.sizeBody).fontColor(SemanticColors.textOnPrimary)
               }
             }
             .height(44).padding({ left: SpacingTokens.lg, right: SpacingTokens.lg })
-            .backgroundColor(DarkColors.primary).borderRadius(RadiusTokens.full)
+            .backgroundColor(SemanticColors.primary).borderRadius(RadiusTokens.full)
             .shadow(ShadowTokens.button)
             .onClick(() => this.startGame())
             Button('返回')
               .height(44).padding({ left: SpacingTokens.lg, right: SpacingTokens.lg })
               .fontFamily(FontTokens.family)
-              .fontColor(DarkColors.textPrimary).backgroundColor(DarkColors.surface)
+              .fontColor(SemanticColors.textPrimary).backgroundColor(SemanticColors.surface)
               .borderRadius(RadiusTokens.full).shadow(ShadowTokens.button)
-              .onClick(() => this.getUIContext().getRouter().back())
+              .onClick(() => this.pathStack.pop())
           }
         }
         .width('100%').height('100%')
-        .backgroundColor(DarkColors.scrim)
+        .backgroundColor(SemanticColors.scrim)
         .backdropBlur(20)
         .justifyContent(FlexAlign.Center)
       }

@@ -2,7 +2,7 @@
  * 统一游戏头部组件 — 宇宙蓝 × 雪域灰
  * 使用系统 Symbol 图标，交互热区 ≥ 40vp
  */
-import { DarkColors, FontTokens, RadiusTokens, ShadowTokens, SpacingTokens } from '../common/DesignTokens';
+import { SemanticColors, FontTokens, RadiusTokens, ShadowTokens, SpacingTokens } from '../common/DesignTokens';
 import { GameDifficulty } from '../common/GameConstants';
 
 @ComponentV2
@@ -36,11 +36,11 @@ export struct GameHeader {
       Button() {
         SymbolGlyph($r('sys.symbol.arrow_left'))
           .fontSize(20)
-          .fontColor([DarkColors.textPrimary])
+          .fontColor([SemanticColors.textPrimary])
       }
       .type(ButtonType.Circle)
       .width(40).height(40)
-      .backgroundColor(DarkColors.surface)
+      .backgroundColor(SemanticColors.surface)
       .shadow(ShadowTokens.button)
       .onClick(() => {
         this.onBack();
@@ -51,18 +51,18 @@ export struct GameHeader {
           .fontFamily(FontTokens.family)
           .fontSize(FontTokens.sizeSubtitle)
           .fontWeight(FontTokens.weightBold)
-          .fontColor(DarkColors.textPrimary)
+          .fontColor(SemanticColors.textPrimary)
         if (this.showScore) {
           Text('得分 ' + this.scoreValue + ' · 最高 ' + this.highScoreValue)
             .fontFamily(FontTokens.family)
             .fontSize(FontTokens.sizeCaption)
-            .fontColor(DarkColors.textTertiary)
+            .fontColor(SemanticColors.textTertiary)
             .margin({ top: 2 })
         } else if (this.subtitle.length > 0) {
           Text(this.subtitle)
             .fontFamily(FontTokens.family)
             .fontSize(FontTokens.sizeCaption)
-            .fontColor(DarkColors.textTertiary)
+            .fontColor(SemanticColors.textTertiary)
             .margin({ top: 2 })
         }
       }
@@ -74,11 +74,11 @@ export struct GameHeader {
         Button() {
           SymbolGlyph($r('sys.symbol.gearshape'))
             .fontSize(18)
-            .fontColor([DarkColors.textPrimary])
+            .fontColor([SemanticColors.textPrimary])
         }
         .type(ButtonType.Circle)
         .width(40).height(40)
-        .backgroundColor(DarkColors.surface)
+        .backgroundColor(SemanticColors.surface)
         .shadow(ShadowTokens.button)
         .bindMenu(this.difficultyMenu)
 
@@ -87,11 +87,11 @@ export struct GameHeader {
           Button() {
             SymbolGlyph(this.getPauseSymbol())
               .fontSize(18)
-              .fontColor([DarkColors.textPrimary])
+              .fontColor([SemanticColors.textPrimary])
           }
           .type(ButtonType.Circle)
           .width(40).height(40)
-          .backgroundColor(DarkColors.surface)
+          .backgroundColor(SemanticColors.surface)
           .shadow(ShadowTokens.button)
           .onClick(() => { this.onPauseToggle(); })
         }
@@ -100,11 +100,11 @@ export struct GameHeader {
         Button() {
           SymbolGlyph($r('sys.symbol.arrow_clockwise'))
             .fontSize(18)
-            .fontColor([DarkColors.textPrimary])
+            .fontColor([SemanticColors.textPrimary])
         }
         .type(ButtonType.Circle)
         .width(40).height(40)
-        .backgroundColor(DarkColors.surface)
+        .backgroundColor(SemanticColors.surface)
         .shadow(ShadowTokens.button)
         .onClick(() => {
           if (this.enableNewGame) {
@@ -125,7 +125,7 @@ export struct GameHeader {
       top: SpacingTokens.sm,
       bottom: SpacingTokens.sm
     })
-    .backgroundColor(DarkColors.surfaceTranslucent)
+    .backgroundColor(SemanticColors.surfaceTranslucent)
     .backdropBlur(20)
   }
 
@@ -136,7 +136,7 @@ export struct GameHeader {
         Text('简单')
           .fontFamily(FontTokens.family)
           .fontSize(FontTokens.sizeBody)
-          .fontColor(DarkColors.textPrimary)
+          .fontColor(SemanticColors.textPrimary)
       }
       .selected(this.difficulty === GameDifficulty.EASY)
       .onClick(() => { this.onDifficultyChange(GameDifficulty.EASY); })
@@ -144,7 +144,7 @@ export struct GameHeader {
         Text('普通')
           .fontFamily(FontTokens.family)
           .fontSize(FontTokens.sizeBody)
-          .fontColor(DarkColors.textPrimary)
+          .fontColor(SemanticColors.textPrimary)
       }
       .selected(this.difficulty === GameDifficulty.NORMAL)
       .onClick(() => { this.onDifficultyChange(GameDifficulty.NORMAL); })
@@ -152,12 +152,12 @@ export struct GameHeader {
         Text('困难')
           .fontFamily(FontTokens.family)
           .fontSize(FontTokens.sizeBody)
-          .fontColor(DarkColors.textPrimary)
+          .fontColor(SemanticColors.textPrimary)
       }
       .selected(this.difficulty === GameDifficulty.HARD)
       .onClick(() => { this.onDifficultyChange(GameDifficulty.HARD); })
     }
-    .backgroundColor(DarkColors.surface)
+    .backgroundColor(SemanticColors.surface)
     .radius(RadiusTokens.base)
   }
 
@@ -168,18 +168,18 @@ export struct GameHeader {
         Text('重新开始')
           .fontFamily(FontTokens.family)
           .fontSize(FontTokens.sizeBody)
-          .fontColor(DarkColors.textPrimary)
+          .fontColor(SemanticColors.textPrimary)
       }
       .onClick(() => { this.onRestart(); })
       MenuItem() {
         Text('新游戏')
           .fontFamily(FontTokens.family)
           .fontSize(FontTokens.sizeBody)
-          .fontColor(DarkColors.textPrimary)
+          .fontColor(SemanticColors.textPrimary)
       }
       .onClick(() => { this.onNewGame(); })
     }
-    .backgroundColor(DarkColors.surface)
+    .backgroundColor(SemanticColors.surface)
     .radius(RadiusTokens.base)
   }
 }

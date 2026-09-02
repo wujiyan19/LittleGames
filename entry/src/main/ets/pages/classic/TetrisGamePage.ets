@@ -2,10 +2,11 @@
  * 俄罗斯方块 - HarmonyOS 设计风格
  */
 import { display } from '@kit.ArkUI';
-import { DarkColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
+import { SemanticColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
 import { GameHeader } from '../../components/GameHeader';
 import { GameDifficulty } from '../../common/GameConstants';
 import { GameDataManager } from '../../model/GameData';
+import { SafeAreaInsets } from '../../common/SafeAreaInsets';
 
 const COLS = 10;
 const ROWS = 20;
@@ -27,14 +28,33 @@ const SHAPES: number[][][][] = [
   // J
   [[[0,0,1],[1,1,1]], [[1,0],[1,0],[1,1]], [[1,1,1],[1,0,0]], [[1,1],[0,1],[0,1]]]
 ];
-const SHAPE_COLORS: string[] = ['#FF6B6B', '#FFAA33', '#2DD482', '#3399FF', '#8675F8', '#FF6B9D', '#00D4B4'];
+/**
+ * 方块配色。原为字面量数组，违反「UI 常量应定义为 resources 资源值」的约定，
+ * 已收编为资源；深色模式在 dark/element/color.json 中提供提亮后的版本。
+ */
+const SHAPE_COLORS: ResourceColor[] = [
+  $r('app.color.shape_1'),
+  $r('app.color.shape_2'),
+  $r('app.color.shape_3'),
+  $r('app.color.shape_4'),
+  $r('app.color.shape_5'),
+  $r('app.color.shape_6'),
+  $r('app.color.shape_7')
+];
 
-interface Block { shape: number[][]; color: string; x: number; y: number; idx: number; rot: number; }
+/**
+ * 当前下落方块。
+ * 注意：颜色不再随对象存储——它与形状索引一一对应（SHAPES[idx] ↔ SHAPE_COLORS[idx]），
+ * 存两份容易不同步。board 也改为存「形状索引 + 1」而非颜色本身，0 表示空格。
+ */
+interface Block { shape: number[][]; x: number; y: number; idx: number; rot: number; }
 
-@Entry
 @ComponentV2
-struct TetrisGamePage {
-  @Local board: string[][] = [];
+export struct TetrisGamePage {
+  @Param pathStack: NavPathStack = new NavPathStack();
+  @Local safeBottom: number = SafeAreaInsets.bottom;
+  // 棋盘只存数据：0 = 空格，n = 第 (n-1) 号形状占据；颜色由 SHAPE_COLORS 在渲染时查表
+  @Local board: number[][] = [];
   @Local score: number = 0;
   @Local highScore: number = 0;
   @Local level: number = 1;
@@ -46,6 +66,8 @@ struct TetrisGamePage {
   // 导致方块下落过程不可见、只在锁定瞬间突然出现
   @Local block: Block | null = null;
   private timer: number = -1;
+  /** 本次暂停是否由「切后台」自动触发——决定回到前台时是否需要自动恢复 */
+  private autoPaused: boolean = false;
   private rowIdx: number[] = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19];
   private colIdx: number[] = [0,1,2,3,4,5,6,7,8,9];
 
@@ -57,6 +79,21 @@ struct TetrisGamePage {
   }
   aboutToDisappear(): void { clearInterval(this.timer); }
 
+  /** 切后台自动暂停，避免方块在后台持续下落堆满棋盘（定时回调已有 isPaused 守卫） */
+  onPageHide(): void {
+    if (this.isPlaying && !this.isPaused) {
+      this.autoPaused = true;
+      this.isPaused = true;
+    }
+  }
+
+  onPageShow(): void {
+    if (this.autoPaused) {
+      this.autoPaused = false;
+      this.isPaused = false;
+    }
+  }
+
   initCellSize(): void {
     const d = display.getDefaultDisplaySync();
     const wVp = this.getUIContext().px2vp(d.width);
@@ -67,14 +104,14 @@ struct TetrisGamePage {
   commitBlock(): void {
     const b = this.block;
     if (!b) { return; }
-    this.block = { shape: b.shape, color: b.color, x: b.x, y: b.y, idx: b.idx, rot: b.rot };
+    this.block = { shape: b.shape, x: b.x, y: b.y, idx: b.idx, rot: b.rot };
   }
 
-  makeBoard(): string[][] {
-    const arr: string[][] = [];
+  makeBoard(): number[][] {
+    const arr: number[][] = [];
     for (let i = 0; i < ROWS; i++) {
-      const row: string[] = [];
-      for (let j = 0; j < COLS; j++) { row[j] = ''; }
+      const row: number[] = [];
+      for (let j = 0; j < COLS; j++) { row[j] = 0; }
       arr[i] = row;
     }
     return arr;
@@ -90,7 +127,6 @@ struct TetrisGamePage {
     const idx = Math.floor(Math.random() * SHAPES.length);
     this.block = {
       shape: SHAPES[idx][0],
-      color: SHAPE_COLORS[idx],
       x: Math.floor((COLS - SHAPES[idx][0][0].length) / 2),
       y: 0,
       idx: idx,
@@ -110,7 +146,7 @@ struct TetrisGamePage {
           const nx = x + c + dx;
           const ny = y + r + dy;
           if (nx < 0 || nx >= COLS || ny >= ROWS) { return false; }
-          if (ny >= 0 && this.board[ny][nx]) { return false; }
+          if (ny >= 0 && this.board[ny][nx] !== 0) { return false; }
         }
       }
     }
@@ -120,13 +156,14 @@ struct TetrisGamePage {
   lock(): void {
     if (!this.block) { return; }
     const shape = this.block.shape;
-    const color = this.block.color;
     const x = this.block.x;
     const y = this.block.y;
+    // 落格记「形状索引 + 1」，颜色在渲染时查 SHAPE_COLORS，棋盘只存数据
+    const mark = this.block.idx + 1;
     for (let r = 0; r < shape.length; r++) {
       for (let c = 0; c < shape[r].length; c++) {
         if (shape[r][c] && y + r >= 0) {
-          this.board[y + r][x + c] = color;
+          this.board[y + r][x + c] = mark;
         }
       }
     }
@@ -136,11 +173,11 @@ struct TetrisGamePage {
 
   clearRows(): void {
     let lines = 0;
-    let newBoard: string[][] = [];
+    let newBoard: number[][] = [];
     for (let i = 0; i < this.board.length; i++) {
       let full = true;
       for (let j = 0; j < this.board[i].length; j++) {
-        if (!this.board[i][j]) { full = false; break; }
+        if (this.board[i][j] === 0) { full = false; break; }
       }
       if (full) {
         lines++;
@@ -149,8 +186,8 @@ struct TetrisGamePage {
       }
     }
     while (newBoard.length < ROWS) {
-      let row: string[] = [];
-      for (let j = 0; j < COLS; j++) { row[j] = ''; }
+      let row: number[] = [];
+      for (let j = 0; j < COLS; j++) { row[j] = 0; }
       newBoard.splice(0, 0, row);
     }
     this.board = newBoard;
@@ -241,46 +278,46 @@ struct TetrisGamePage {
   }
 
   getCellColor(r: number, c: number): ResourceColor {
-    if (this.board[r][c]) { return this.board[r][c]; }
+    // 已落定的格子：由索引查回颜色
+    if (this.board[r][c] !== 0) { return SHAPE_COLORS[this.board[r][c] - 1]; }
     if (this.block) {
       const shape = this.block.shape;
       const x = this.block.x;
       const y = this.block.y;
-      const color = this.block.color;
       const cr = r - y;
       const cc = c - x;
       if (cr >= 0 && cr < shape.length && cc >= 0 && cc < shape[0].length && shape[cr][cc]) {
-        return color;
+        return SHAPE_COLORS[this.block.idx];
       }
     }
-    return DarkColors.cellRevealed;
+    return SemanticColors.cellRevealed;
   }
 
   build() {
     Stack() {
       Column().width('100%').height('100%')
-        .linearGradient({ angle: 180, colors: [[DarkColors.gradientScreen[0], 0], [DarkColors.gradientScreen[1], 0.5], [DarkColors.gradientScreen[2], 1]] })
+        .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
 
       Column() {
         GameHeader({ gameTitle: '俄罗斯方块', scoreValue: this.score, highScoreValue: this.highScore,
           isPaused: this.isPaused,
           difficulty: this.difficulty,
           onDifficultyChange: (d: GameDifficulty) => { this.changeDifficulty(d); },
-          onBack: () => { this.getUIContext().getRouter().back(); },
+          onBack: () => { this.pathStack.pop(); },
           onPauseToggle: () => { this.isPaused = !this.isPaused; },
           onRestart: () => { this.restart(); } })
 
         Row() {
           Column() {
-            Text('级别').fontSize(FontTokens.sizeCaption).fontColor(DarkColors.textTertiary)
-            Text('' + this.level).fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold).fontColor(DarkColors.warning)
-          }.layoutWeight(1).padding(8).backgroundColor(DarkColors.surface).borderRadius(RadiusTokens.base)
+            Text('级别').fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
+            Text('' + this.level).fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold).fontColor(SemanticColors.warning)
+          }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
           .alignItems(HorizontalAlign.Center).margin({ left: 16 })
 
           Column() {
-            Text('得分').fontSize(FontTokens.sizeCaption).fontColor(DarkColors.textTertiary)
-            Text('' + this.score).fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold).fontColor(DarkColors.accent)
-          }.layoutWeight(1).padding(8).backgroundColor(DarkColors.surface).borderRadius(RadiusTokens.base)
+            Text('得分').fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
+            Text('' + this.score).fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold).fontColor(SemanticColors.accent)
+          }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
           .alignItems(HorizontalAlign.Center).margin({ left: 8, right: 16 })
         }.margin({ top: 12, bottom: 12 })
 
@@ -291,50 +328,50 @@ struct TetrisGamePage {
                 ForEach(this.colIdx, (col: number) => {
                   Column() {}.width(this.cell).height(this.cell)
                     .backgroundColor(this.getCellColor(row, col))
-                    .border({ width: 0.5, color: DarkColors.divider })
+                    .border({ width: 0.5, color: SemanticColors.divider })
                 }, (col: number) => col.toString())
               }
             }, (row: number) => row.toString())
           }.width(this.cell * COLS).height(this.cell * ROWS)
-          .border({ width: 2, color: DarkColors.boardBorder, radius: RadiusTokens.sm })
-          .backgroundColor(DarkColors.boardBg)
+          .border({ width: 2, color: SemanticColors.boardBorder, radius: RadiusTokens.sm })
+          .backgroundColor(SemanticColors.boardBg)
         }.layoutWeight(1).justifyContent(FlexAlign.Center)
 
         Column({ space: SpacingTokens.sm }) {
           Row({ space: SpacingTokens.sm }) {
             Button() {
               SymbolGlyph($r('sys.symbol.arrow_left'))
-                .fontSize(18).fontColor([DarkColors.textPrimary])
+                .fontSize(18).fontColor([SemanticColors.textPrimary])
             }
-            .layoutWeight(1).height(48).backgroundColor(DarkColors.surface)
+            .layoutWeight(1).height(48).backgroundColor(SemanticColors.surface)
             .borderRadius(RadiusTokens.base).shadow(ShadowTokens.button).onClick(() => this.moveLeft())
             Button() {
               SymbolGlyph($r('sys.symbol.arrow_clockwise'))
-                .fontSize(18).fontColor([DarkColors.textPrimary])
+                .fontSize(18).fontColor([SemanticColors.textPrimary])
             }
-            .layoutWeight(1).height(48).backgroundColor(DarkColors.surface)
+            .layoutWeight(1).height(48).backgroundColor(SemanticColors.surface)
             .borderRadius(RadiusTokens.base).shadow(ShadowTokens.button).onClick(() => this.rotateBlock())
             Button() {
               SymbolGlyph($r('sys.symbol.arrow_right'))
-                .fontSize(18).fontColor([DarkColors.textPrimary])
+                .fontSize(18).fontColor([SemanticColors.textPrimary])
             }
-            .layoutWeight(1).height(48).backgroundColor(DarkColors.surface)
+            .layoutWeight(1).height(48).backgroundColor(SemanticColors.surface)
             .borderRadius(RadiusTokens.base).shadow(ShadowTokens.button).onClick(() => this.moveRight())
           }
           .width('100%').padding({ left: SpacingTokens.base, right: SpacingTokens.base })
           Button() {
             Row({ space: SpacingTokens.xs }) {
               SymbolGlyph($r('sys.symbol.arrow_down'))
-                .fontSize(16).fontColor([DarkColors.textOnPrimary])
+                .fontSize(16).fontColor([SemanticColors.textOnPrimary])
               Text('加速下落')
                 .fontFamily(FontTokens.family)
-                .fontSize(FontTokens.sizeBody).fontColor(DarkColors.textOnPrimary)
+                .fontSize(FontTokens.sizeBody).fontColor(SemanticColors.textOnPrimary)
             }
           }
-          .width('80%').height(48).backgroundColor(DarkColors.primary)
+          .width('80%').height(48).backgroundColor(SemanticColors.primary)
           .borderRadius(RadiusTokens.full).shadow(ShadowTokens.button).onClick(() => this.hardDrop())
         }.padding({ bottom: SpacingTokens.lg })
-      }.width('100%').height('100%')
+      }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
       if (!this.isPlaying) {
         Column() {
@@ -342,44 +379,44 @@ struct TetrisGamePage {
             SymbolGlyph($r('sys.symbol.star_fill'))
               .fontSize(40)
               .fontWeight(FontWeight.Medium)
-              .fontColor([DarkColors.warning])
+              .fontColor([SemanticColors.warning])
           }
           .width(72).height(72)
           .borderRadius(RadiusTokens.full)
-          .backgroundColor(DarkColors.primaryLight)
+          .backgroundColor(SemanticColors.primaryLight)
           .justifyContent(FlexAlign.Center)
 
           Text('游戏结束')
             .fontFamily(FontTokens.family)
             .fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold)
-            .fontColor(DarkColors.textPrimary).margin({ top: SpacingTokens.md, bottom: SpacingTokens.xs })
+            .fontColor(SemanticColors.textPrimary).margin({ top: SpacingTokens.md, bottom: SpacingTokens.xs })
           Text('得分 ' + this.score)
             .fontFamily(FontTokens.family)
-            .fontSize(FontTokens.sizeSubtitle).fontColor(DarkColors.accent).margin({ bottom: SpacingTokens.lg })
+            .fontSize(FontTokens.sizeSubtitle).fontColor(SemanticColors.accent).margin({ bottom: SpacingTokens.lg })
           Row({ space: SpacingTokens.base }) {
             Button() {
               Row({ space: SpacingTokens.xs }) {
                 SymbolGlyph($r('sys.symbol.arrow_clockwise'))
-                  .fontSize(16).fontColor([DarkColors.textOnPrimary])
+                  .fontSize(16).fontColor([SemanticColors.textOnPrimary])
                 Text('再来一局')
                   .fontFamily(FontTokens.family)
-                  .fontSize(FontTokens.sizeBody).fontColor(DarkColors.textOnPrimary)
+                  .fontSize(FontTokens.sizeBody).fontColor(SemanticColors.textOnPrimary)
               }
             }
             .height(44).padding({ left: SpacingTokens.lg, right: SpacingTokens.lg })
-            .backgroundColor(DarkColors.primary).borderRadius(RadiusTokens.full)
+            .backgroundColor(SemanticColors.primary).borderRadius(RadiusTokens.full)
             .shadow(ShadowTokens.button)
             .onClick(() => this.restart())
             Button('返回')
               .height(44).padding({ left: SpacingTokens.lg, right: SpacingTokens.lg })
               .fontFamily(FontTokens.family)
-              .fontColor(DarkColors.textPrimary).backgroundColor(DarkColors.surface)
+              .fontColor(SemanticColors.textPrimary).backgroundColor(SemanticColors.surface)
               .borderRadius(RadiusTokens.full).shadow(ShadowTokens.button)
-              .onClick(() => this.getUIContext().getRouter().back())
+              .onClick(() => this.pathStack.pop())
           }
         }
         .width('100%').height('100%')
-        .backgroundColor(DarkColors.scrim)
+        .backgroundColor(SemanticColors.scrim)
         .backdropBlur(20)
         .justifyContent(FlexAlign.Center)
       }

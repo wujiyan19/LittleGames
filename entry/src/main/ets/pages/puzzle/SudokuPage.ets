@@ -2,15 +2,19 @@
  * 数独 - HarmonyOS 设计风格（带双指缩放）
  */
 import { display } from '@kit.ArkUI';
-import { DarkColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
+import { SemanticColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
 import { GameHeader } from '../../components/GameHeader';
 import { GameDifficulty } from '../../common/GameConstants';
 import { GameDataManager } from '../../model/GameData';
+import { SafeAreaInsets } from '../../common/SafeAreaInsets';
 
-@Entry
 @ComponentV2
-struct SudokuPage {
-  @Local board: number[][] = [];
+export struct SudokuPage {
+  @Param pathStack: NavPathStack = new NavPathStack();
+  @Local safeBottom: number = SafeAreaInsets.bottom;
+  // 棋盘用「长度为 81 的一维数组」保存：二维数组的 board[r][c] = n 内层赋值无法被状态管理观测到，
+  // 改了数据但界面不刷新。一维数组配合整体赋值（copy-on-write）可稳定触发重渲染。
+  @Local board: number[] = [];
   @Local selectedRow: number = -1;
   @Local selectedCol: number = -1;
   @Local isComplete: boolean = false;
@@ -19,21 +23,47 @@ struct SudokuPage {
   @Local offsetY: number = 0;
   @Local boardPixelSize: number = 302;
   @Local difficulty: GameDifficulty = GameDifficulty.NORMAL;
-  private fixed: boolean[][] = [];
+  // 题面固定格（Given），整局不变，无需参与渲染观测
+  private fixed: boolean[] = [];
   private idx9: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8];
   private startScale: number = 1;
   private startOffsetX: number = 0;
   private startOffsetY: number = 0;
   // 当前题面（用于「重新开始」还原）
-  private puzzle: number[][] = [];
+  private puzzle: number[] = [];
   // 上一把题面指纹，保证「新游戏」不与上一把相同
   private previousKey: string = '';
   // 唯一解校验计数
   private solutionCount: number = 0;
+  // ── 位掩码求解器状态 ──
+  // 第 v-1 位为 1 表示该行/列/宫已经用过数字 v，候选集可由三次按位或一次取反得到。
+  // 原实现每个候选都要扫 27 格（canPlaceAt），困难档生成要跑上万次，是卡顿的根因。
+  private rowMask: Int32Array = new Int32Array(9);
+  private colMask: Int32Array = new Int32Array(9);
+  private boxMask: Int32Array = new Int32Array(9);
+  // 掩码 → 数字（下标为 1<<(v-1)）
+  private bitToVal: Int8Array = new Int8Array(512);
+  // 掩码 → 其中 1 的个数
+  private popCount: Int8Array = new Int8Array(512);
+  // 格子下标 → 所属宫
+  private boxOf: Int8Array = new Int8Array(81);
 
   aboutToAppear(): void {
+    this.initLookupTables();
     this.initBoardSize();
     this.newGame();
+  }
+
+  initLookupTables(): void {
+    for (let i = 0; i < 81; i++) {
+      this.boxOf[i] = Math.floor(i / 27) * 3 + Math.floor((i % 9) / 3);
+    }
+    for (let m = 1; m < 512; m++) {
+      this.popCount[m] = this.popCount[m >> 1] + (m & 1);
+    }
+    for (let v = 1; v <= 9; v++) {
+      this.bitToVal[1 << (v - 1)] = v;
+    }
   }
 
   initBoardSize(): void {
@@ -47,24 +77,28 @@ struct SudokuPage {
     return (this.boardPixelSize - 8) / 9;
   }
 
-  makeBoard(val: number): number[][] {
-    const arr: number[][] = [];
-    for (let i = 0; i < 9; i++) {
-      const row: number[] = [];
-      for (let j = 0; j < 9; j++) { row[j] = val; }
-      arr[i] = row;
-    }
+  makeBoard(val: number): number[] {
+    const arr: number[] = [];
+    for (let i = 0; i < 81; i++) { arr[i] = val; }
     return arr;
   }
 
-  makeBoolBoard(): boolean[][] {
-    const arr: boolean[][] = [];
-    for (let i = 0; i < 9; i++) {
-      const row: boolean[] = [];
-      for (let j = 0; j < 9; j++) { row[j] = false; }
-      arr[i] = row;
-    }
+  makeBoolBoard(): boolean[] {
+    const arr: boolean[] = [];
+    for (let i = 0; i < 81; i++) { arr[i] = false; }
     return arr;
+  }
+
+  cellIndex(row: number, col: number): number {
+    return row * 9 + col;
+  }
+
+  cellValue(row: number, col: number): number {
+    return this.board[this.cellIndex(row, col)];
+  }
+
+  isCellFixed(row: number, col: number): boolean {
+    return this.fixed[this.cellIndex(row, col)];
   }
 
   newGame(): void {
@@ -75,17 +109,18 @@ struct SudokuPage {
     this.startGame(this.puzzle);
   }
 
-  startGame(puzzle: number[][]): void {
+  startGame(puzzle: number[]): void {
     GameDataManager.incrementPlayCount('sudoku');
-    this.board = this.makeBoard(0);
-    this.fixed = this.makeBoolBoard();
-    this.puzzle = this.copyBoard(puzzle);
-    for (let r = 0; r < 9; r++) {
-      for (let c = 0; c < 9; c++) {
-        this.board[r][c] = puzzle[r][c];
-        this.fixed[r][c] = puzzle[r][c] !== 0;
-      }
+    const flatBoard: number[] = this.makeBoard(0);
+    const flatFixed: boolean[] = this.makeBoolBoard();
+    for (let i = 0; i < 81; i++) {
+      flatBoard[i] = puzzle[i];
+      flatFixed[i] = puzzle[i] !== 0;
     }
+    // 先在本地填好再整体赋值，只触发一次重渲染
+    this.board = flatBoard;
+    this.fixed = flatFixed;
+    this.puzzle = this.copyBoard(puzzle);
     this.isComplete = false;
     this.selectedRow = -1;
     this.selectedCol = -1;
@@ -95,13 +130,9 @@ struct SudokuPage {
     this.offsetY = 0;
   }
 
-  copyBoard(src: number[][]): number[][] {
-    const dst: number[][] = [];
-    for (let i = 0; i < 9; i++) {
-      const row: number[] = [];
-      for (let j = 0; j < 9; j++) { row[j] = src[i][j]; }
-      dst[i] = row;
-    }
+  copyBoard(src: number[]): number[] {
+    const dst: number[] = [];
+    for (let i = 0; i < 81; i++) { dst[i] = src[i]; }
     return dst;
   }
 
@@ -114,88 +145,119 @@ struct SudokuPage {
     return arr;
   }
 
-  canPlaceAt(grid: number[][], r: number, c: number, v: number): boolean {
+  // 依据当前棋盘重建行/列/宫占用掩码
+  buildMasks(grid: number[]): void {
     for (let i = 0; i < 9; i++) {
-      if (grid[r][i] === v || grid[i][c] === v) { return false; }
+      this.rowMask[i] = 0;
+      this.colMask[i] = 0;
+      this.boxMask[i] = 0;
     }
-    const br = Math.floor(r / 3) * 3;
-    const bc = Math.floor(c / 3) * 3;
-    for (let i = br; i < br + 3; i++) {
-      for (let j = bc; j < bc + 3; j++) {
-        if (grid[i][j] === v) { return false; }
-      }
+    for (let i = 0; i < 81; i++) {
+      const v = grid[i];
+      if (v === 0) { continue; }
+      const bit = 1 << (v - 1);
+      const b = this.boxOf[i];
+      this.rowMask[Math.floor(i / 9)] = this.rowMask[Math.floor(i / 9)] | bit;
+      this.colMask[i % 9] = this.colMask[i % 9] | bit;
+      this.boxMask[b] = this.boxMask[b] | bit;
     }
-    return true;
   }
 
-  fillSolution(board: number[][]): boolean {
-    let r = -1;
-    let c = -1;
-    for (let i = 0; i < 9 && r === -1; i++) {
-      for (let j = 0; j < 9 && r === -1; j++) {
-        if (board[i][j] === 0) { r = i; c = j; }
+  // 某格的候选集掩码：三个方向已占用位的并集取反，低 9 位有效
+  candidateMask(idx: number): number {
+    return (~(this.rowMask[Math.floor(idx / 9)] | this.colMask[idx % 9] | this.boxMask[this.boxOf[idx]])) & 0x1FF;
+  }
+
+  // 回溯填满一个完整解（MRV 选格）。成功返回时掩码保留终局状态，调用方需自行重建
+  fillSolutionBit(grid: number[]): boolean {
+    let idx = -1;
+    let bestMask = 0;
+    let bestLen = 10;
+    for (let i = 0; i < 81; i++) {
+      if (grid[i] !== 0) { continue; }
+      const mask = this.candidateMask(i);
+      if (mask === 0) { return false; }
+      const len = this.popCount[mask];
+      if (len < bestLen) {
+        bestLen = len; idx = i; bestMask = mask;
+        if (len === 1) { break; }
       }
     }
-    if (r === -1) { return true; }
+    if (idx === -1) { return true; }
+    const r = Math.floor(idx / 9);
+    const c = idx % 9;
+    const b = this.boxOf[idx];
     const order = this.shuffled9();
     for (let k = 0; k < order.length; k++) {
       const v = order[k];
-      if (this.canPlaceAt(board, r, c, v)) {
-        board[r][c] = v;
-        if (this.fillSolution(board)) { return true; }
-      }
+      const bit = 1 << (v - 1);
+      if ((bestMask & bit) === 0) { continue; }
+      grid[idx] = v;
+      this.rowMask[r] = this.rowMask[r] | bit;
+      this.colMask[c] = this.colMask[c] | bit;
+      this.boxMask[b] = this.boxMask[b] | bit;
+      if (this.fillSolutionBit(grid)) { return true; }
+      grid[idx] = 0;
+      this.rowMask[r] = this.rowMask[r] ^ bit;
+      this.colMask[c] = this.colMask[c] ^ bit;
+      this.boxMask[b] = this.boxMask[b] ^ bit;
     }
-    board[r][c] = 0;
     return false;
   }
 
-  generateSolution(): number[][] {
+  generateSolution(): number[] {
     const board = this.makeBoard(0);
-    this.fillSolution(board);
+    this.buildMasks(board);
+    this.fillSolutionBit(board);
     return board;
   }
 
-  candidatesAt(grid: number[][], r: number, c: number): number[] {
-    const res: number[] = [];
-    for (let v = 1; v <= 9; v++) {
-      if (this.canPlaceAt(grid, r, c, v)) { res.push(v); }
-    }
-    return res;
-  }
-
-  solveCount(board: number[][]): void {
+  // 数解的个数，找到 2 个就提前退出（唯一解校验只需知道是否 > 1）
+  solveCountBit(grid: number[]): void {
     if (this.solutionCount > 1) { return; }
-    let bestR = -1;
-    let bestC = -1;
+    let bestIdx = -1;
+    let bestMask = 0;
     let bestLen = 10;
-    for (let r = 0; r < 9; r++) {
-      for (let c = 0; c < 9; c++) {
-        if (board[r][c] !== 0) { continue; }
-        const cand = this.candidatesAt(board, r, c);
-        if (cand.length === 0) { return; }
-        if (cand.length < bestLen) {
-          bestLen = cand.length;
-          bestR = r;
-          bestC = c;
-        }
+    for (let i = 0; i < 81; i++) {
+      if (grid[i] !== 0) { continue; }
+      const mask = this.candidateMask(i);
+      if (mask === 0) { return; }
+      const len = this.popCount[mask];
+      if (len < bestLen) {
+        bestLen = len; bestIdx = i; bestMask = mask;
+        if (len === 1) { break; }
       }
     }
-    if (bestR === -1) {
+    if (bestIdx === -1) {
       this.solutionCount++;
       return;
     }
-    const cand = this.candidatesAt(board, bestR, bestC);
-    for (let k = 0; k < cand.length; k++) {
-      board[bestR][bestC] = cand[k];
-      this.solveCount(board);
-      board[bestR][bestC] = 0;
+    const r = Math.floor(bestIdx / 9);
+    const c = bestIdx % 9;
+    const b = this.boxOf[bestIdx];
+    let m = bestMask;
+    while (m !== 0) {
+      const bit = m & (-m);
+      m = m ^ bit;
+      const v = this.bitToVal[bit];
+      grid[bestIdx] = v;
+      this.rowMask[r] = this.rowMask[r] | bit;
+      this.colMask[c] = this.colMask[c] | bit;
+      this.boxMask[b] = this.boxMask[b] | bit;
+      this.solveCountBit(grid);
+      grid[bestIdx] = 0;
+      this.rowMask[r] = this.rowMask[r] ^ bit;
+      this.colMask[c] = this.colMask[c] ^ bit;
+      this.boxMask[b] = this.boxMask[b] ^ bit;
       if (this.solutionCount > 1) { return; }
     }
   }
 
-  countSolutions(grid: number[][]): number {
+  countSolutions(grid: number[]): number {
     this.solutionCount = 0;
-    this.solveCount(this.copyBoard(grid));
+    const work = this.copyBoard(grid);
+    this.buildMasks(work);
+    this.solveCountBit(work);
     return this.solutionCount;
   }
 
@@ -205,19 +267,17 @@ struct SudokuPage {
     return 29;
   }
 
-  boardKey(grid: number[][]): string {
+  boardKey(grid: number[]): string {
     let key = '';
-    for (let r = 0; r < 9; r++) {
-      for (let c = 0; c < 9; c++) {
-        key += grid[r][c].toString();
-      }
+    for (let i = 0; i < 81; i++) {
+      key += grid[i].toString();
     }
     return key;
   }
 
-  generatePuzzle(): number[][] {
+  generatePuzzle(): number[] {
     const targetClues = this.getTargetClues();
-    let last: number[][] = [];
+    let last: number[] = [];
     for (let attempt = 0; attempt < 30; attempt++) {
       const solution = this.generateSolution();
       const candidate = this.copyBoard(solution);
@@ -229,12 +289,11 @@ struct SudokuPage {
       }
       let clues = 81;
       for (let k = 0; k < cells.length && clues > targetClues; k++) {
-        const r = Math.floor(cells[k] / 9);
-        const c = cells[k] % 9;
-        const saved = candidate[r][c];
-        candidate[r][c] = 0;
+        const idx = cells[k];
+        const saved = candidate[idx];
+        candidate[idx] = 0;
         if (this.countSolutions(candidate) !== 1) {
-          candidate[r][c] = saved;
+          candidate[idx] = saved;
         } else {
           clues--;
         }
@@ -247,32 +306,35 @@ struct SudokuPage {
       }
     }
     // 极端兜底（连续 30 次生成同一题面几乎不可能）
-    this.previousKey = this.boardKey(last);
-    return this.fallbackPuzzle();
+    // 指纹必须取自真正返回的题面：此前记的是 last（最后一次候选），
+    // 与实际返回的 fallback 不一致，导致去重失效、下一把仍可能重复。
+    const fb: number[] = this.fallbackPuzzle();
+    this.previousKey = this.boardKey(fb);
+    return fb;
   }
 
-  fallbackPuzzle(): number[][] {
+  fallbackPuzzle(): number[] {
     if (this.difficulty === GameDifficulty.EASY) {
-      // 简单：45 个提示
+      // 简单：45 个提示（按行展开的一维棋盘）
       return [
-        [5, 3, 4, 6, 7, 8, 9, 1, 2], [6, 7, 2, 1, 9, 5, 3, 4, 8], [1, 9, 8, 3, 4, 2, 5, 6, 7],
-        [8, 5, 9, 7, 6, 1, 4, 2, 3], [0, 0, 6, 0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 0, 0, 0, 6],
-        [0, 0, 1, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 9, 0, 0, 5], [0, 0, 0, 0, 8, 0, 0, 7, 9]
+        5, 3, 4, 6, 7, 8, 9, 1, 2, 6, 7, 2, 1, 9, 5, 3, 4, 8, 1, 9, 8, 3, 4, 2, 5, 6, 7,
+        8, 5, 9, 7, 6, 1, 4, 2, 3, 0, 0, 6, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 6,
+        0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 5, 0, 0, 0, 0, 8, 0, 0, 7, 9
       ];
     }
     if (this.difficulty === GameDifficulty.HARD) {
       // 困难：23 个提示
       return [
-        [0, 0, 0, 0, 7, 0, 0, 0, 0], [6, 0, 0, 1, 0, 5, 0, 0, 0], [0, 0, 8, 0, 0, 0, 0, 6, 0],
-        [8, 0, 0, 0, 0, 0, 0, 0, 3], [4, 0, 0, 8, 0, 3, 0, 0, 1], [7, 0, 0, 0, 2, 0, 0, 0, 6],
-        [0, 6, 0, 0, 0, 0, 2, 0, 0], [0, 0, 0, 4, 1, 9, 0, 0, 5], [0, 0, 0, 0, 0, 0, 0, 7, 9]
+        0, 0, 0, 0, 7, 0, 0, 0, 0, 6, 0, 0, 1, 0, 5, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 6, 0,
+        8, 0, 0, 0, 0, 0, 0, 0, 3, 4, 0, 0, 8, 0, 3, 0, 0, 1, 7, 0, 0, 0, 2, 0, 0, 0, 6,
+        0, 6, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 4, 1, 9, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 7, 9
       ];
     }
-    // 普通：29 个提示（原有题面）
+    // 普通：30 个提示（原有题面）
     return [
-      [5, 3, 0, 0, 7, 0, 0, 0, 0], [6, 0, 0, 1, 9, 5, 0, 0, 0], [0, 9, 8, 0, 0, 0, 0, 6, 0],
-      [8, 0, 0, 0, 6, 0, 0, 0, 3], [4, 0, 0, 8, 0, 3, 0, 0, 1], [7, 0, 0, 0, 2, 0, 0, 0, 6],
-      [0, 6, 0, 0, 0, 0, 2, 8, 0], [0, 0, 0, 4, 1, 9, 0, 0, 5], [0, 0, 0, 0, 8, 0, 0, 7, 9]
+      5, 3, 0, 0, 7, 0, 0, 0, 0, 6, 0, 0, 1, 9, 5, 0, 0, 0, 0, 9, 8, 0, 0, 0, 0, 6, 0,
+      8, 0, 0, 0, 6, 0, 0, 0, 3, 4, 0, 0, 8, 0, 3, 0, 0, 1, 7, 0, 0, 0, 2, 0, 0, 0, 6,
+      0, 6, 0, 0, 0, 0, 2, 8, 0, 0, 0, 0, 4, 1, 9, 0, 0, 5, 0, 0, 0, 0, 8, 0, 0, 7, 9
     ];
   }
 
@@ -282,25 +344,38 @@ struct SudokuPage {
     this.newGame();
   }
 
+  // copy-on-write 更新单个格子：整体赋值必定被 @Local 观测到
+  setCellValue(index: number, value: number): void {
+    const next: number[] = [];
+    for (let i = 0; i < 81; i++) { next[i] = this.board[i]; }
+    next[index] = value;
+    this.board = next;
+  }
+
   setNumber(n: number): void {
     const r = this.selectedRow;
     const c = this.selectedCol;
-    if (r < 0 || c < 0 || this.fixed[r][c] || this.isComplete) { return; }
-    this.board[r][c] = n;
+    if (r < 0 || c < 0 || this.isComplete) { return; }
+    const idx = this.cellIndex(r, c);
+    if (this.fixed[idx]) { return; }
+    this.setCellValue(idx, n);
     this.checkComplete();
   }
 
   erase(): void {
     const r = this.selectedRow;
     const c = this.selectedCol;
-    if (r < 0 || c < 0 || this.fixed[r][c]) { return; }
-    this.board[r][c] = 0;
+    if (r < 0 || c < 0) { return; }
+    const idx = this.cellIndex(r, c);
+    if (this.fixed[idx]) { return; }
+    this.setCellValue(idx, 0);
   }
 
   checkComplete(): void {
     for (let r = 0; r < 9; r++) {
       for (let c = 0; c < 9; c++) {
-        if (this.board[r][c] === 0 || !this.isValid(r, c, this.board[r][c])) { return; }
+        const v = this.cellValue(r, c);
+        if (v === 0 || !this.isValid(r, c, v)) { return; }
       }
     }
     this.isComplete = true;
@@ -313,33 +388,33 @@ struct SudokuPage {
 
   isValid(r: number, c: number, v: number): boolean {
     for (let i = 0; i < 9; i++) {
-      if (i !== c && this.board[r][i] === v) { return false; }
-      if (i !== r && this.board[i][c] === v) { return false; }
+      if (i !== c && this.cellValue(r, i) === v) { return false; }
+      if (i !== r && this.cellValue(i, c) === v) { return false; }
     }
     const br = Math.floor(r / 3) * 3;
     const bc = Math.floor(c / 3) * 3;
     for (let i = br; i < br + 3; i++) {
       for (let j = bc; j < bc + 3; j++) {
-        if ((i !== r || j !== c) && this.board[i][j] === v) { return false; }
+        if ((i !== r || j !== c) && this.cellValue(i, j) === v) { return false; }
       }
     }
     return true;
   }
 
   getNumberColor(row: number, col: number): ResourceColor {
-    if (this.fixed[row][col]) { return DarkColors.warning; }
-    return DarkColors.textPrimary;
+    if (this.isCellFixed(row, col)) { return SemanticColors.warning; }
+    return SemanticColors.textPrimary;
   }
 
   getNumberWeight(row: number, col: number): FontWeight {
-    if (this.fixed[row][col]) { return FontWeight.Bold; }
+    if (this.isCellFixed(row, col)) { return FontWeight.Bold; }
     return FontWeight.Regular;
   }
 
   getCellBg(row: number, col: number): ResourceColor {
-    if (this.selectedRow === row && this.selectedCol === col) { return DarkColors.accent; }
-    if ((Math.floor(row / 3) + Math.floor(col / 3)) % 2 === 0) { return DarkColors.cellHidden; }
-    return DarkColors.cellRevealed;
+    if (this.selectedRow === row && this.selectedCol === col) { return SemanticColors.accent; }
+    if ((Math.floor(row / 3) + Math.floor(col / 3)) % 2 === 0) { return SemanticColors.cellHidden; }
+    return SemanticColors.cellRevealed;
   }
 
   getCellBorderWidth(row: number, col: number): EdgeWidths {
@@ -354,7 +429,7 @@ struct SudokuPage {
   build() {
     Stack() {
       Column().width('100%').height('100%')
-        .linearGradient({ angle: 180, colors: [[DarkColors.gradientScreen[0], 0], [DarkColors.gradientScreen[1], 0.5], [DarkColors.gradientScreen[2], 1]] })
+        .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
 
       Column() {
         GameHeader({
@@ -364,7 +439,7 @@ struct SudokuPage {
           subtitle: '点击格子 · 填入数字',
           difficulty: this.difficulty,
           onDifficultyChange: (d: GameDifficulty) => { this.changeDifficulty(d); },
-          onBack: () => { this.getUIContext().getRouter().back(); },
+          onBack: () => { this.pathStack.pop(); },
           onPauseToggle: () => {},
           onRestart: () => { this.restartGame(); },
           onNewGame: () => { this.newGame(); },
@@ -379,8 +454,8 @@ struct SudokuPage {
               Row() {
                 ForEach(this.idx9, (col: number) => {
                   Column() {
-                    if (this.board[row][col] > 0) {
-                      Text('' + this.board[row][col]).fontSize(Math.max(14, this.getCellSize() * 0.5))
+                    if (this.cellValue(row, col) > 0) {
+                      Text('' + this.cellValue(row, col)).fontSize(Math.max(14, this.getCellSize() * 0.5))
                         .fontColor(this.getNumberColor(row, col))
                         .fontWeight(this.getNumberWeight(row, col))
                     }
@@ -388,7 +463,7 @@ struct SudokuPage {
                   .backgroundColor(this.getCellBg(row, col))
                   .border({
                     width: this.getCellBorderWidth(row, col),
-                    color: DarkColors.boardBorder
+                    color: SemanticColors.boardBorder
                   })
                   .justifyContent(FlexAlign.Center)
                   .onClick(() => { this.selectedRow = row; this.selectedCol = col; })
@@ -434,23 +509,23 @@ struct SudokuPage {
                 .fontFamily(FontTokens.family)
                 .fontSize(18)
                 .fontWeight(FontTokens.weightMedium)
-                .fontColor(DarkColors.textPrimary)
+                .fontColor(SemanticColors.textPrimary)
             }
             .layoutWeight(1).height(46)
-            .backgroundColor(DarkColors.surface).borderRadius(RadiusTokens.base)
+            .backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
             .shadow(ShadowTokens.button)
             .onClick(() => this.setNumber(n))
           }, (n: number) => n.toString())
           Button() {
             SymbolGlyph($r('sys.symbol.xmark'))
-              .fontSize(18).fontColor([DarkColors.textOnPrimary])
+              .fontSize(18).fontColor([SemanticColors.textOnPrimary])
           }
           .width(46).height(46)
-          .backgroundColor(DarkColors.error).borderRadius(RadiusTokens.base)
+          .backgroundColor(SemanticColors.error).borderRadius(RadiusTokens.base)
           .shadow(ShadowTokens.button)
           .onClick(() => this.erase())
         }.width('100%').padding({ left: SpacingTokens.base, right: SpacingTokens.base, bottom: SpacingTokens.lg })
-      }.width('100%').height('100%')
+      }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
       // 完成弹窗作为全屏遮罩层（原先内嵌在内容列中会撑破布局、超出屏幕）
       if (this.isComplete) {
@@ -459,33 +534,33 @@ struct SudokuPage {
             SymbolGlyph($r('sys.symbol.checkmark_circle'))
               .fontSize(40)
               .fontWeight(FontWeight.Medium)
-              .fontColor([DarkColors.success])
+              .fontColor([SemanticColors.success])
           }
           .width(72).height(72)
           .borderRadius(RadiusTokens.full)
-          .backgroundColor(DarkColors.primaryLight)
+          .backgroundColor(SemanticColors.primaryLight)
           .justifyContent(FlexAlign.Center)
 
           Text('恭喜完成!')
             .fontFamily(FontTokens.family)
             .fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold)
-            .fontColor(DarkColors.textPrimary).margin({ top: SpacingTokens.md, bottom: SpacingTokens.base })
+            .fontColor(SemanticColors.textPrimary).margin({ top: SpacingTokens.md, bottom: SpacingTokens.base })
           Button() {
             Row({ space: SpacingTokens.xs }) {
               SymbolGlyph($r('sys.symbol.arrow_clockwise'))
-                .fontSize(16).fontColor([DarkColors.textOnPrimary])
+                .fontSize(16).fontColor([SemanticColors.textOnPrimary])
               Text('新游戏')
                 .fontFamily(FontTokens.family)
-                .fontSize(FontTokens.sizeBody).fontColor(DarkColors.textOnPrimary)
+                .fontSize(FontTokens.sizeBody).fontColor(SemanticColors.textOnPrimary)
             }
           }
           .height(44).padding({ left: SpacingTokens.lg, right: SpacingTokens.lg })
-          .backgroundColor(DarkColors.primary).borderRadius(RadiusTokens.full)
+          .backgroundColor(SemanticColors.primary).borderRadius(RadiusTokens.full)
           .shadow(ShadowTokens.button)
           .onClick(() => this.newGame())
         }
         .width('100%').height('100%')
-        .backgroundColor(DarkColors.scrim)
+        .backgroundColor(SemanticColors.scrim)
         .backdropBlur(20)
         .justifyContent(FlexAlign.Center)
       }

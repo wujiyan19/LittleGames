@@ -7,18 +7,36 @@ import { intl } from '@kit.LocalizationKit';
 import { GameDataManager } from '../model/GameData';
 import { GameInfo, GameCategory } from '../common/GameConstants';
 import {
-  LightColors,
-  DarkColors,
+  SemanticColors,
   SpacingTokens,
   FontTokens,
   RadiusTokens,
   ShadowTokens,
   BrandColors
 } from '../common/DesignTokens';
+import { SnakeGamePage } from './classic/SnakeGamePage';
+import { TetrisGamePage } from './classic/TetrisGamePage';
+import { Game2048Page } from './classic/Game2048Page';
+import { WhackMolePage } from './classic/WhackMolePage';
+import { MinesweeperPage } from './classic/MinesweeperPage';
+import { SudokuPage } from './puzzle/SudokuPage';
+import { SlidePuzzlePage } from './puzzle/SlidePuzzlePage';
+import { KlotskiPage } from './puzzle/KlotskiPage';
+import { GuessNumberPage } from './puzzle/GuessNumberPage';
+import { MemoryCardPage } from './puzzle/MemoryCardPage';
+import { ProfilePage } from './ProfilePage';
 
 @Entry
 @ComponentV2
 struct Index {
+  pathStack: NavPathStack = new NavPathStack();
+  // 启动闪屏（原 SplashPage 折叠为首页内覆盖层）
+  @Local showSplash: boolean = true;
+  @Local iconAnimOpacity: number = 0;
+  @Local iconAnimScale: number = 0.6;
+  @Local iconAnimTranslateY: number = 20;
+  @Local titleAnimOpacity: number = 0;
+  @Local subtitleAnimOpacity: number = 0;
   @Local currentTab: number = 0;
   // -1=全部 0=经典休闲 1=益智解谜
   @Local currentCategory: number = -1;
@@ -40,6 +58,7 @@ struct Index {
 
   aboutToAppear(): void {
     this.loadData();
+    this.startSplash();
     // 媒体查询：≥840vp 视为宽屏（平板），调整版式密度
     this.mq = this.getUIContext().getMediaQuery().matchMediaSync('(width >= 840vp)');
     this.mq.on('change', this.mqCallback);
@@ -95,23 +114,182 @@ struct Index {
   }
 
   navigateToGame(game: GameInfo): void {
-    let route = '';
-    if (game.id === 'snake') { route = 'pages/classic/SnakeGamePage'; }
-    else if (game.id === 'tetris') { route = 'pages/classic/TetrisGamePage'; }
-    else if (game.id === '2048') { route = 'pages/classic/Game2048Page'; }
-    else if (game.id === 'whackmole') { route = 'pages/classic/WhackMolePage'; }
-    else if (game.id === 'minesweeper') { route = 'pages/classic/MinesweeperPage'; }
-    else if (game.id === 'sudoku') { route = 'pages/puzzle/SudokuPage'; }
-    else if (game.id === 'slidepuzzle') { route = 'pages/puzzle/SlidePuzzlePage'; }
-    else if (game.id === 'klotski') { route = 'pages/puzzle/KlotskiPage'; }
-    else if (game.id === 'guessnumber') { route = 'pages/puzzle/GuessNumberPage'; }
-    else { route = 'pages/puzzle/MemoryCardPage'; }
-    this.getUIContext().getRouter().pushUrl({ url: route });
+    let name = '';
+    if (game.id === 'snake') { name = 'SnakeGamePage'; }
+    else if (game.id === 'tetris') { name = 'TetrisGamePage'; }
+    else if (game.id === '2048') { name = 'Game2048Page'; }
+    else if (game.id === 'whackmole') { name = 'WhackMolePage'; }
+    else if (game.id === 'minesweeper') { name = 'MinesweeperPage'; }
+    else if (game.id === 'sudoku') { name = 'SudokuPage'; }
+    else if (game.id === 'slidepuzzle') { name = 'SlidePuzzlePage'; }
+    else if (game.id === 'klotski') { name = 'KlotskiPage'; }
+    else if (game.id === 'guessnumber') { name = 'GuessNumberPage'; }
+    else { name = 'MemoryCardPage'; }
+    this.pathStack.pushPathByName(name, null);
+  }
+
+  startSplash(): void {
+    this.getUIContext().animateTo({
+      duration: 600,
+      curve: Curve.FastOutSlowIn
+    }, () => {
+      this.iconAnimOpacity = 1;
+      this.iconAnimScale = 1;
+      this.iconAnimTranslateY = 0;
+    });
+    setTimeout(() => {
+      this.getUIContext().animateTo({
+        duration: 400,
+        curve: Curve.EaseOut
+      }, () => {
+        this.titleAnimOpacity = 1;
+      });
+      setTimeout(() => {
+        this.getUIContext().animateTo({
+          duration: 300,
+          curve: Curve.EaseOut
+        }, () => {
+          this.subtitleAnimOpacity = 1;
+        });
+        setTimeout(() => {
+          this.showSplash = false;
+        }, 800);
+      }, 300);
+    }, 600);
+  }
+
+  @Builder
+  PageMap(name: string) {
+    if (name === 'SnakeGamePage') {
+      NavDestination() {
+        SnakeGamePage({ pathStack: this.pathStack })
+      }
+      .hideTitleBar(true)
+    } else if (name === 'TetrisGamePage') {
+      NavDestination() {
+        TetrisGamePage({ pathStack: this.pathStack })
+      }
+      .hideTitleBar(true)
+    } else if (name === 'Game2048Page') {
+      NavDestination() {
+        Game2048Page({ pathStack: this.pathStack })
+      }
+      .hideTitleBar(true)
+    } else if (name === 'WhackMolePage') {
+      NavDestination() {
+        WhackMolePage({ pathStack: this.pathStack })
+      }
+      .hideTitleBar(true)
+    } else if (name === 'MinesweeperPage') {
+      NavDestination() {
+        MinesweeperPage({ pathStack: this.pathStack })
+      }
+      .hideTitleBar(true)
+    } else if (name === 'SudokuPage') {
+      NavDestination() {
+        SudokuPage({ pathStack: this.pathStack })
+      }
+      .hideTitleBar(true)
+    } else if (name === 'SlidePuzzlePage') {
+      NavDestination() {
+        SlidePuzzlePage({ pathStack: this.pathStack })
+      }
+      .hideTitleBar(true)
+    } else if (name === 'KlotskiPage') {
+      NavDestination() {
+        KlotskiPage({ pathStack: this.pathStack })
+      }
+      .hideTitleBar(true)
+    } else if (name === 'GuessNumberPage') {
+      NavDestination() {
+        GuessNumberPage({ pathStack: this.pathStack })
+      }
+      .hideTitleBar(true)
+    } else if (name === 'MemoryCardPage') {
+      NavDestination() {
+        MemoryCardPage({ pathStack: this.pathStack })
+      }
+      .hideTitleBar(true)
+    } else if (name === 'ProfilePage') {
+      NavDestination() {
+        ProfilePage({ pathStack: this.pathStack })
+      }
+      .hideTitleBar(true)
+    }
+  }
+
+  /**
+   * 启动闪屏层。
+   * 注意：这里的深空渐变、光晕与白色文字均为**品牌固定配色**（deepSpace 系），
+   * 不随系统深浅色模式变化——闪屏是品牌展示页，两套主题下都应呈现同一张「宇宙蓝星空」。
+   * 因此本方法内的 #16205F / #2A2B7E / rgba(...) / #FFFFFF 是刻意为之，请勿替换为语义色。
+   */
+  @Builder
+  SplashLayer() {
+    Stack() {
+      Column()
+        .width('100%').height('100%')
+        .linearGradient({
+          angle: 160,
+          colors: [
+            [BrandColors.deepSpace, 0],
+            ['#16205F', 0.5],
+            ['#2A2B7E', 1]
+          ]
+        })
+
+      Circle({ width: 260, height: 260 })
+        .fill('rgba(93, 134, 255, 0.25)')
+        .blur(60)
+        .position({ x: -80, y: -40 })
+      Circle({ width: 220, height: 220 })
+        .fill('rgba(122, 90, 248, 0.22)')
+        .blur(60)
+        .position({ x: '72%', y: '68%' })
+
+      Column() {
+        Column() {
+          SymbolGlyph($r('sys.symbol.gamecontroller'))
+            .fontSize(72)
+            .fontWeight(FontWeight.Medium)
+            .fontColor([BrandColors.cosmicBlueBright, BrandColors.auroraPurpleBright])
+        }
+        .width(152).height(152)
+        .borderRadius(RadiusTokens.full)
+        .backgroundColor('rgba(255, 255, 255, 0.10)')
+        .border({ width: 1, color: 'rgba(255, 255, 255, 0.22)', radius: RadiusTokens.full })
+        .backdropBlur(20)
+        .shadow(ShadowTokens.float)
+        .opacity(this.iconAnimOpacity)
+        .scale({ x: this.iconAnimScale, y: this.iconAnimScale })
+        .translate({ y: this.iconAnimTranslateY })
+
+        Text('小游戏合集')
+          .fontFamily(FontTokens.family)
+          .fontSize(FontTokens.sizeDisplay)
+          .fontWeight(FontTokens.weightBold)
+          .fontColor('#FFFFFF')
+          .opacity(this.titleAnimOpacity)
+          .margin({ top: 28 })
+
+        Text('宇宙蓝 × 雪域灰 · 轻拟物设计')
+          .fontFamily(FontTokens.family)
+          .fontSize(FontTokens.sizeBody)
+          .fontColor('rgba(255, 255, 255, 0.72)')
+          .opacity(this.subtitleAnimOpacity)
+          .margin({ top: SpacingTokens.sm })
+      }
+      .width('100%')
+      .justifyContent(FlexAlign.Center)
+    }
+    .width('100%').height('100%')
   }
 
   build() {
-    Column() {
-      this.TopBar()
+    Stack() {
+      Navigation(this.pathStack) {
+        Column() {
+          this.TopBar()
       Tabs({ barPosition: BarPosition.End, index: this.currentTab }) {
         TabContent() { this.FeaturedTab() }
           .tabBar(this.TabBuilder(0, '精选'))
@@ -122,16 +300,29 @@ struct Index {
       }
       .barHeight(56)
       .barMode(BarMode.Fixed)
-      .barBackgroundColor(DarkColors.surfaceTranslucent)
+      .barBackgroundColor(SemanticColors.surfaceTranslucent)
       .barBackgroundBlurStyle(BlurStyle.Thin)
       .onChange((index: number) => { this.currentTab = index; })
       .layoutWeight(1)
+        }
+        .width('100%').height('100%')
+        .backgroundColor(SemanticColors.bg)
+        .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.BOTTOM])
+      }
+      .mode(NavigationMode.Stack)
+      .hideTitleBar(true)
+      .navDestination(this.PageMap)
+
+      if (this.showSplash) {
+        this.SplashLayer()
+      }
     }
-    .width('100%').height('100%')
-    .backgroundColor(LightColors.bg)
-    .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.BOTTOM])
   }
 
+  /**
+   * 顶部品牌栏。背景为品牌渐变（gradientBrand，不随主题变化），
+   * 因此其上的白色文字与半透明白图标是固定配色，非疏漏。
+   */
   @Builder
   TopBar() {
     Row() {
@@ -174,8 +365,8 @@ struct Index {
   }
 
   getTabColor(index: number): Resource {
-    if (this.currentTab === index) { return LightColors.primary; }
-    return LightColors.textTertiary;
+    if (this.currentTab === index) { return SemanticColors.primary; }
+    return SemanticColors.textTertiary;
   }
 
   getTabWeight(index: number): number {
@@ -190,8 +381,8 @@ struct Index {
   }
 
   getCategoryTextColor(index: number): Resource {
-    if (this.currentCategory === index) { return LightColors.textOnPrimary; }
-    return LightColors.primary;
+    if (this.currentCategory === index) { return SemanticColors.textOnPrimary; }
+    return SemanticColors.primary;
   }
 
   getCategoryWeight(index: number): number {
@@ -200,13 +391,13 @@ struct Index {
   }
 
   getCategoryBgColor(index: number): Resource {
-    if (this.currentCategory === index) { return LightColors.primary; }
-    return DarkColors.primaryLight;
+    if (this.currentCategory === index) { return SemanticColors.primary; }
+    return SemanticColors.primaryLight;
   }
 
   getRankColor(index: number): Resource {
-    if (index < 3) { return DarkColors.warning; }
-    return LightColors.textTertiary;
+    if (index < 3) { return SemanticColors.warning; }
+    return SemanticColors.textTertiary;
   }
 
   getHighScoreText(game: GameInfo): string {
@@ -215,8 +406,8 @@ struct Index {
   }
 
   getHighScoreColor(game: GameInfo): Resource {
-    if (game.highScore > 0) { return LightColors.primary; }
-    return LightColors.textDisabled;
+    if (game.highScore > 0) { return SemanticColors.primary; }
+    return SemanticColors.textDisabled;
   }
 
   @Builder
@@ -247,11 +438,11 @@ struct Index {
             .fontFamily(FontTokens.family)
             .fontSize(FontTokens.sizeBodyLarge)
             .fontWeight(FontTokens.weightSemibold)
-            .fontColor(LightColors.textPrimary)
+            .fontColor(SemanticColors.textPrimary)
           Text('为你精选')
             .fontFamily(FontTokens.family)
             .fontSize(FontTokens.sizeBodySmall)
-            .fontColor(LightColors.textTertiary)
+            .fontColor(SemanticColors.textTertiary)
             .margin({ left: SpacingTokens.sm })
         }
         .width('100%')
@@ -282,6 +473,7 @@ struct Index {
   }
 
   @Builder
+  /** 横幅：背景为品牌渐变（gradientHero），故其上文字恒为白色，不随主题变化 */
   Banner() {
     Row() {
       Column() {
@@ -332,20 +524,20 @@ struct Index {
       }
       .width(54).height(54)
       .borderRadius(RadiusTokens.base)
-      .backgroundColor(DarkColors.primaryLight)
+      .backgroundColor(SemanticColors.primaryLight)
       .justifyContent(FlexAlign.Center)
 
       Text(game.name)
         .fontFamily(FontTokens.family)
         .fontSize(FontTokens.sizeBodyLarge)
         .fontWeight(FontTokens.weightMedium)
-        .fontColor(LightColors.textPrimary)
+        .fontColor(SemanticColors.textPrimary)
         .margin({ top: SpacingTokens.sm })
 
       Text(game.description)
         .fontFamily(FontTokens.family)
         .fontSize(FontTokens.sizeBodySmall)
-        .fontColor(LightColors.textTertiary)
+        .fontColor(SemanticColors.textTertiary)
         .maxLines(2)
         .textOverflow({ overflow: TextOverflow.Ellipsis })
         .margin({ top: SpacingTokens.xs })
@@ -353,7 +545,7 @@ struct Index {
     .width('100%')
     .padding(SpacingTokens.base)
     .borderRadius(RadiusTokens.lg)
-    .backgroundColor(LightColors.surface)
+    .backgroundColor(SemanticColors.surface)
     .shadow(ShadowTokens.card)
     .alignItems(HorizontalAlign.Start)
     .onClick(() => { this.navigateToGame(game); })
@@ -372,18 +564,18 @@ struct Index {
         SymbolGlyph($r('sys.symbol.magnifyingglass'))
           .fontSize(18)
           .fontWeight(FontWeight.Regular)
-          .fontColor([LightColors.textTertiary])
+          .fontColor([SemanticColors.textTertiary])
           .margin({ left: SpacingTokens.md })
         TextInput({ text: this.searchText, placeholder: '搜索游戏名称或描述' })
           .layoutWeight(1)
           .height(40)
           .fontFamily(FontTokens.family)
           .fontSize(FontTokens.sizeBody)
-          .fontColor(LightColors.textPrimary)
-          .placeholderColor(LightColors.textTertiary)
+          .fontColor(SemanticColors.textPrimary)
+          .placeholderColor(SemanticColors.textTertiary)
           .placeholderFont({ size: FontTokens.sizeBody })
           .backgroundColor(Color.Transparent)
-          .caretColor(LightColors.primary)
+          .caretColor(SemanticColors.primary)
           .enterKeyType(EnterKeyType.Search)
           .onChange((value: string) => {
             this.searchText = value;
@@ -393,7 +585,7 @@ struct Index {
           Button() {
             SymbolGlyph($r('sys.symbol.xmark_circle'))
               .fontSize(16)
-              .fontColor([LightColors.textTertiary])
+              .fontColor([SemanticColors.textTertiary])
           }
           .type(ButtonType.Circle)
           .width(32).height(32)
@@ -409,7 +601,7 @@ struct Index {
         right: SpacingTokens.pageHorizontal,
         top: SpacingTokens.base
       })
-      .backgroundColor(LightColors.surface)
+      .backgroundColor(SemanticColors.surface)
       .borderRadius(RadiusTokens.full)
       .shadow(ShadowTokens.card)
 
@@ -430,16 +622,16 @@ struct Index {
               SymbolGlyph($r('sys.symbol.magnifyingglass'))
                 .fontSize(44)
                 .fontWeight(FontWeight.Regular)
-                .fontColor([LightColors.textDisabled])
+                .fontColor([SemanticColors.textDisabled])
               Text('未找到「' + this.searchText.trim() + '」相关游戏')
                 .fontFamily(FontTokens.family)
                 .fontSize(FontTokens.sizeBodyLarge)
                 .fontWeight(FontTokens.weightMedium)
-                .fontColor(LightColors.textTertiary)
+                .fontColor(SemanticColors.textTertiary)
               Text('换个关键词试试，或看看其他分类')
                 .fontFamily(FontTokens.family)
                 .fontSize(FontTokens.sizeBodySmall)
-                .fontColor(LightColors.textDisabled)
+                .fontColor(SemanticColors.textDisabled)
             }
             .width('100%')
             .padding({
@@ -459,7 +651,7 @@ struct Index {
       .align(Alignment.Top)
     }
     .width('100%').height('100%')
-    .backgroundColor(LightColors.bg)
+    .backgroundColor(SemanticColors.bg)
   }
 
   @Builder
@@ -516,6 +708,7 @@ struct Index {
             SymbolGlyph($r('sys.symbol.person_fill'))
               .fontSize(36)
               .fontWeight(FontWeight.Medium)
+              // 头像底色是品牌渐变（cosmicBlue→auroraPurple），白图标恒可读
               .fontColor(['#FFFFFF'])
           }
           .width(64).height(64)
@@ -531,11 +724,11 @@ struct Index {
               .fontFamily(FontTokens.family)
               .fontSize(FontTokens.sizeBodyLarge)
               .fontWeight(FontTokens.weightSemibold)
-              .fontColor(LightColors.textPrimary)
+              .fontColor(SemanticColors.textPrimary)
             Text('享受游戏的乐趣！')
               .fontFamily(FontTokens.family)
               .fontSize(FontTokens.sizeBodySmall)
-              .fontColor(LightColors.textTertiary)
+              .fontColor(SemanticColors.textTertiary)
               .margin({ top: 2 })
           }
           .alignItems(HorizontalAlign.Start)
@@ -545,7 +738,7 @@ struct Index {
         .width('100%')
         .padding(SpacingTokens.base)
         .borderRadius(RadiusTokens.lg)
-        .backgroundColor(LightColors.surface)
+        .backgroundColor(SemanticColors.surface)
         .shadow(ShadowTokens.card)
         .margin({
           left: SpacingTokens.pageHorizontal,
@@ -569,12 +762,12 @@ struct Index {
         Row() {
           SymbolGlyph($r('sys.symbol.star_fill'))
             .fontSize(18)
-            .fontColor([DarkColors.warning])
+            .fontColor([SemanticColors.warning])
           Text('最高分排行')
             .fontFamily(FontTokens.family)
             .fontSize(FontTokens.sizeBodyLarge)
             .fontWeight(FontTokens.weightSemibold)
-            .fontColor(LightColors.textPrimary)
+            .fontColor(SemanticColors.textPrimary)
             .margin({ left: SpacingTokens.sm })
         }
         .width('100%')
@@ -597,7 +790,7 @@ struct Index {
                   Text(game.name)
                     .fontFamily(FontTokens.family)
                     .fontSize(FontTokens.sizeBody)
-                    .fontColor(LightColors.textPrimary)
+                    .fontColor(SemanticColors.textPrimary)
                     .layoutWeight(1)
                     .margin({ left: SpacingTokens.sm })
                   Text(this.getHighScoreText(game))
@@ -614,7 +807,7 @@ struct Index {
         }
         .width('100%')
         .padding({ left: SpacingTokens.pageHorizontal, right: SpacingTokens.pageHorizontal })
-        .backgroundColor(LightColors.surface)
+        .backgroundColor(SemanticColors.surface)
         .borderRadius(RadiusTokens.lg)
         .margin({ left: SpacingTokens.pageHorizontal, right: SpacingTokens.pageHorizontal })
         .height(312)
@@ -624,7 +817,7 @@ struct Index {
     }
     .scrollBar(BarState.Off)
     .edgeEffect(EdgeEffect.Spring)
-    .backgroundColor(LightColors.bg)
+    .backgroundColor(SemanticColors.bg)
   }
 
   allGames(): GameInfo[] {
@@ -646,17 +839,17 @@ struct Index {
         .fontFamily(FontTokens.family)
         .fontSize(FontTokens.sizeTitle)
         .fontWeight(FontTokens.weightBold)
-        .fontColor(LightColors.textPrimary)
+        .fontColor(SemanticColors.textPrimary)
       Text(title)
         .fontFamily(FontTokens.family)
         .fontSize(FontTokens.sizeBodySmall)
-        .fontColor(LightColors.textTertiary)
+        .fontColor(SemanticColors.textTertiary)
         .margin({ top: SpacingTokens.xs })
     }
     .layoutWeight(1)
     .padding({ top: SpacingTokens.base, bottom: SpacingTokens.base })
     .borderRadius(RadiusTokens.base)
-    .backgroundColor(LightColors.surface)
+    .backgroundColor(SemanticColors.surface)
     .shadow(ShadowTokens.card)
   }
 }
