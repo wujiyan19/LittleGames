@@ -34,7 +34,13 @@ export interface GameInfo {
 }
 
 /**
- * 游戏状态
+ * 对局状态
+ *
+ * 各游戏页用单字段 @Local status: GameStatus 表达，取代原先
+ * isPlaying + isPaused 双布尔组合（会产生「已结束但仍暂停」这类非法态）。
+ * 胜负「结果」不在此枚举内——那是游戏数据，与「状态」是两回事
+ * （如扫雷的 gameResult、猜数字的 isWin，由各自页面另行持有）。
+ * IDLE 预留给「开局前」的页面形态，当前尚未使用。
  */
 export enum GameStatus {
   IDLE = 'idle',

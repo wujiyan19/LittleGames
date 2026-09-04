@@ -1,14 +1,15 @@
 /**
  * 贪吃蛇 - HarmonyOS 设计风格
  */
-import { display } from '@kit.ArkUI';
 import { SemanticColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
 import { GameHeader } from '../../components/GameHeader';
 import { ControlPad } from '../../components/ControlPad';
 import { GameResultDialog } from '../../components/GameResultDialog';
-import { GameDifficulty } from '../../common/GameConstants';
+import { GameDifficulty, GameStatus } from '../../common/GameConstants';
 import { GameDataManager } from '../../model/GameData';
 import { SafeAreaInsets } from '../../common/SafeAreaInsets';
+import { ScreenUtils } from '../../common/ScreenUtils';
+import { range } from '../../common/Range';
 
 const COLS = 20;
 const ROWS = 20;
@@ -25,8 +26,12 @@ export struct SnakeGamePage {
   @Local snakeDirection: Direction = Direction.RIGHT;
   @Local score: number = 0;
   @Local highScore: number = 0;
-  @Local isPlaying: boolean = true;
-  @Local isPaused: boolean = false;
+  /**
+   * 对局状态。原先由 isPlaying + isPaused 两个布尔拼出，理论上有 4 种组合，
+   * 其中「已结束但仍处于暂停」是无意义的非法态，代码里也没有防御。
+   * 改为单一枚举后，非法态在类型层面就无法表达。
+   */
+  @Local status: GameStatus = GameStatus.PLAYING;
   @Local cell: number = 16;
   @Local difficulty: GameDifficulty = GameDifficulty.NORMAL;
   private timer: number = -1;
@@ -34,7 +39,7 @@ export struct SnakeGamePage {
   private autoPaused: boolean = false;
   // 方向输入缓冲：每个 tick 只应用一次转向，防止一个 tick 内连按两键造成 180° 反向自杀
   private pendingTurn: Direction | null = null;
-  private idx20: number[] = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19];
+  private idx20: number[] = range(COLS);
 
   aboutToAppear(): void {
     this.highScore = GameDataManager.getGameById('snake')?.highScore ?? 0;
@@ -45,28 +50,26 @@ export struct SnakeGamePage {
 
   /**
    * 切后台自动暂停。
-   * 定时回调里已有 isPaused 守卫，这里只需置位即可停住蛇；
+   * 状态迁移到 GameStatus 后，这里只需把 PLAYING 置为 PAUSED 即可停住蛇；
    * 否则蛇会在后台一路撞墙直到 game over，用户切回来第一眼就是「游戏结束」。
    * 注意只处理「正在游戏中」的情况：用户手动暂停或已结束时不动，避免回前台被强行恢复。
    */
   onPageHide(): void {
-    if (this.isPlaying && !this.isPaused) {
+    if (this.status === GameStatus.PLAYING) {
       this.autoPaused = true;
-      this.isPaused = true;
+      this.status = GameStatus.PAUSED;
     }
   }
 
   onPageShow(): void {
     if (this.autoPaused) {
       this.autoPaused = false;
-      this.isPaused = false;
+      this.status = GameStatus.PLAYING;
     }
   }
 
   initCellSize(): void {
-    const d = display.getDefaultDisplaySync();
-    const wVp = this.getUIContext().px2vp(d.width);
-    this.cell = Math.max(8, Math.floor((Math.min(wVp, 560) - 24) / COLS));
+    this.cell = ScreenUtils.calcCell(COLS, 560, 24, 8);
   }
 
   startGame(): void {
@@ -76,11 +79,19 @@ export struct SnakeGamePage {
     this.snakeDirection = Direction.RIGHT;
     this.pendingTurn = null;
     this.score = 0;
-    this.isPlaying = true;
-    this.isPaused = false;
+    this.status = GameStatus.PLAYING;
     this.spawnFood();
     clearInterval(this.timer);
-    this.timer = setInterval(() => { if (!this.isPaused && this.isPlaying) { this.move(); } }, this.getMoveInterval());
+    this.timer = setInterval(() => { if (this.status === GameStatus.PLAYING) { this.move(); } }, this.getMoveInterval());
+  }
+
+  /** 手动暂停/恢复。只在「进行中 ⇄ 暂停」间切换，已结束的对局不会被误切换 */
+  togglePause(): void {
+    if (this.status === GameStatus.PLAYING) {
+      this.status = GameStatus.PAUSED;
+    } else if (this.status === GameStatus.PAUSED) {
+      this.status = GameStatus.PLAYING;
+    }
   }
 
   getMoveInterval(): number {
@@ -143,7 +154,7 @@ export struct SnakeGamePage {
   }
 
   turn(dir: Direction): void {
-    if (!this.isPlaying || this.isPaused) { return; }
+    if (this.status !== GameStatus.PLAYING) { return; }
     // 本 tick 已有待应用转向时忽略新输入，避免连按两键合成 180° 反向
     if (this.pendingTurn !== null) { return; }
     const cur = this.snakeDirection;
@@ -156,7 +167,7 @@ export struct SnakeGamePage {
   }
 
   gameOver(): void {
-    this.isPlaying = false;
+    this.status = GameStatus.OVER;
     clearInterval(this.timer);
     if (this.score > this.highScore) { this.highScore = this.score; }
     GameDataManager.updateHighScore('snake', this.score);
@@ -189,11 +200,11 @@ export struct SnakeGamePage {
       Column() {
         GameHeader({ gameTitle: '贪吃蛇', // 得分/最高分已由下方大字指标卡展示，关闭标题栏的小字重复显示
           showScore: false,
-          isPaused: this.isPaused,
+          isPaused: this.status === GameStatus.PAUSED,
           difficulty: this.difficulty,
           onDifficultyChange: (d: GameDifficulty) => { this.changeDifficulty(d); },
           onBack: () => { this.pathStack.pop(); },
-          onPauseToggle: () => { this.isPaused = !this.isPaused; },
+          onPauseToggle: () => { this.togglePause(); },
           onRestart: () => { this.startGame(); } })
 
         Row() {
@@ -236,7 +247,7 @@ export struct SnakeGamePage {
         })
       }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
-      if (!this.isPlaying) {
+      if (this.status === GameStatus.OVER) {
         GameResultDialog({
           symbol: $r('sys.symbol.star_fill'),
           symbolColor: SemanticColors.warning,

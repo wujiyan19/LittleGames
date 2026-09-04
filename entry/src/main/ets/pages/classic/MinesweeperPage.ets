@@ -1,13 +1,14 @@
 /**
  * 扫雷 - HarmonyOS 设计风格
  */
-import { display } from '@kit.ArkUI';
 import { SemanticColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
 import { GameHeader } from '../../components/GameHeader';
-import { GameDifficulty } from '../../common/GameConstants';
+import { GameDifficulty, GameStatus } from '../../common/GameConstants';
 import { GameDataManager } from '../../model/GameData';
 import { SafeAreaInsets } from '../../common/SafeAreaInsets';
 import { GameResultDialog } from '../../components/GameResultDialog';
+import { ScreenUtils } from '../../common/ScreenUtils';
+import { range } from '../../common/Range';
 
 const ROWS = 9;
 const COLS = 9;
@@ -19,7 +20,8 @@ export struct MinesweeperPage {
   @Local board: number[][] = [];
   @Local revealed: boolean[][] = [];
   @Local flagged: boolean[][] = [];
-  @Local isPlaying: boolean = true;
+    /** 对局状态。本游戏无暂停玩法，只有 进行中 ⇄ 已结束 两态 */
+@Local status: GameStatus = GameStatus.PLAYING;
   @Local flagCount: number = 0;
   @Local difficulty: GameDifficulty = GameDifficulty.NORMAL;
   @Local elapsed: number = 0;
@@ -30,7 +32,7 @@ export struct MinesweeperPage {
   /** 计时是否已启动且尚未结束（用于区分「未开始计时」与「计时中被切后台暂停」） */
   private timerRunning: boolean = false;
   private minesPlaced: boolean = false;
-  private idx9: number[] = [0,1,2,3,4,5,6,7,8];
+  private idx9: number[] = range(COLS);
 
   aboutToAppear(): void {
     this.initCellSize();
@@ -60,14 +62,12 @@ export struct MinesweeperPage {
     // 回拨起始时间，使恢复后接着已计时秒数继续，而非重新开始
     this.startTime = Date.now() - this.elapsed * 1000;
     this.timer = setInterval(() => {
-      if (this.isPlaying) { this.elapsed = Math.floor((Date.now() - this.startTime) / 1000); }
+      if (this.status === GameStatus.PLAYING) { this.elapsed = Math.floor((Date.now() - this.startTime) / 1000); }
     }, 1000);
   }
 
   initCellSize(): void {
-    const d = display.getDefaultDisplaySync();
-    const wVp = this.getUIContext().px2vp(d.width);
-    this.cellSize = Math.max(24, Math.floor((Math.min(wVp, 520) - 20) / COLS));
+    this.cellSize = ScreenUtils.calcCell(COLS, 520, 20, 24);
   }
 
   makeNumBoard(val: number): number[][] {
@@ -95,7 +95,7 @@ export struct MinesweeperPage {
     this.board = this.makeNumBoard(0);
     this.revealed = this.makeBoolBoard();
     this.flagged = this.makeBoolBoard();
-    this.isPlaying = true;
+    this.status = GameStatus.PLAYING;
     this.flagCount = 0;
     this.elapsed = 0;
     // 雷与计时都推迟到首次点击，保证首点安全
@@ -126,7 +126,7 @@ export struct MinesweeperPage {
     this.startTime = Date.now();
     this.timerRunning = true;
     this.timer = setInterval(() => {
-      if (this.isPlaying) { this.elapsed = Math.floor((Date.now() - this.startTime) / 1000); }
+      if (this.status === GameStatus.PLAYING) { this.elapsed = Math.floor((Date.now() - this.startTime) / 1000); }
     }, 1000);
   }
 
@@ -157,7 +157,7 @@ export struct MinesweeperPage {
   }
 
   reveal(r: number, c: number): void {
-    if (!this.isPlaying || this.revealed[r][c] || this.flagged[r][c]) { return; }
+    if (this.status !== GameStatus.PLAYING || this.revealed[r][c] || this.flagged[r][c]) { return; }
     if (!this.minesPlaced) {
       this.placeMines(r, c);
       this.minesPlaced = true;
@@ -199,7 +199,7 @@ export struct MinesweeperPage {
   }
 
   toggleFlag(r: number, c: number): void {
-    if (!this.isPlaying || this.revealed[r][c]) { return; }
+    if (this.status !== GameStatus.PLAYING || this.revealed[r][c]) { return; }
     const nf = this.copyBoolBoard(this.flagged);
     nf[r][c] = !nf[r][c];
     this.flagged = nf;
@@ -226,7 +226,7 @@ export struct MinesweeperPage {
   }
 
   gameOver(won: boolean): void {
-    this.isPlaying = false;
+    this.status = GameStatus.OVER;
     this.timerRunning = false;
     clearInterval(this.timer);
     this.timer = -1;
@@ -360,7 +360,7 @@ export struct MinesweeperPage {
           .padding({ bottom: SpacingTokens.lg, top: SpacingTokens.xs })
       }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
-      if (!this.isPlaying) {
+      if (this.status !== GameStatus.PLAYING) {
         GameResultDialog({
           symbol: this.getResultSymbol(),
           symbolColor: this.getResultColor(),

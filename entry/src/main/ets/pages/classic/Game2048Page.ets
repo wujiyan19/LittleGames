@@ -1,13 +1,15 @@
 /**
  * 2048 - HarmonyOS 设计风格（带滑动动画）
  */
-import { display, curves } from '@kit.ArkUI';
+import { curves } from '@kit.ArkUI';
 import { SemanticColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
 import { GameHeader } from '../../components/GameHeader';
-import { GameDifficulty } from '../../common/GameConstants';
+import { GameDifficulty, GameStatus } from '../../common/GameConstants';
 import { GameDataManager } from '../../model/GameData';
 import { SafeAreaInsets } from '../../common/SafeAreaInsets';
 import { GameResultDialog } from '../../components/GameResultDialog';
+import { ScreenUtils } from '../../common/ScreenUtils';
+import { range } from '../../common/Range';
 
 const SIZE = 4;
 const CELL_SIZE = 64;
@@ -37,13 +39,14 @@ export struct Game2048Page {
   @Local score: number = 0;
   @Local highScore: number = 0;
   @Local difficulty: GameDifficulty = GameDifficulty.NORMAL;
-  @Local isPlaying: boolean = true;
+    /** 对局状态。本游戏无暂停玩法，只有 进行中 ⇄ 已结束 两态 */
+@Local status: GameStatus = GameStatus.PLAYING;
   @Local animationDuration: number = 150;
   @Local cell: number = 64;
   @Local boardSize: number = 286;
   private sx: number = 0;
   private sy: number = 0;
-  private idx4: number[] = [0, 1, 2, 3];
+  private idx4: number[] = range(SIZE);
   private tileIdCounter: number = 0;
 
   aboutToAppear(): void {
@@ -65,9 +68,7 @@ export struct Game2048Page {
   }
 
   initBoardSize(): void {
-    const d = display.getDefaultDisplaySync();
-    const wVp = this.getUIContext().px2vp(d.width);
-    this.cell = Math.max(40, Math.floor((Math.min(wVp, 520) - 32) / SIZE));
+    this.cell = ScreenUtils.calcCell(SIZE, 520, 32, 40);
     this.boardSize = this.cell * SIZE + SIZE * 6 + 8;
   }
 
@@ -210,7 +211,7 @@ export struct Game2048Page {
     this.board = this.initBoard();
     this.tiles = this.initTiles();
     this.score = 0;
-    this.isPlaying = true;
+    this.status = GameStatus.PLAYING;
     this.tileIdCounter = 0;
     this.addRandom();
     this.addRandom();
@@ -262,7 +263,7 @@ export struct Game2048Page {
   }
 
   swipe(dir: string): void {
-    if (!this.isPlaying) { return; }
+    if (this.status !== GameStatus.PLAYING) { return; }
     const old = JSON.stringify(this.board);
     const nb = this.initBoard();
 
@@ -289,7 +290,7 @@ export struct Game2048Page {
       this.addRandom();
       if (this.score > this.highScore) { this.highScore = this.score; }
       if (this.isGameOver()) {
-        this.isPlaying = false;
+        this.status = GameStatus.OVER;
         GameDataManager.updateHighScore('2048', this.score);
       }
     }
@@ -420,7 +421,7 @@ export struct Game2048Page {
           .padding({ bottom: SpacingTokens.lg })
       }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
-      if (!this.isPlaying) {
+      if (this.status !== GameStatus.PLAYING) {
         GameResultDialog({
           symbol: $r('sys.symbol.star_fill'),
           symbolColor: SemanticColors.warning,

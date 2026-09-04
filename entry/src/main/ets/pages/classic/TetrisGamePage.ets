@@ -1,13 +1,14 @@
 /**
  * 俄罗斯方块 - HarmonyOS 设计风格
  */
-import { display } from '@kit.ArkUI';
 import { SemanticColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
 import { GameHeader } from '../../components/GameHeader';
-import { GameDifficulty } from '../../common/GameConstants';
+import { GameDifficulty, GameStatus } from '../../common/GameConstants';
 import { GameDataManager } from '../../model/GameData';
 import { SafeAreaInsets } from '../../common/SafeAreaInsets';
 import { GameResultDialog } from '../../components/GameResultDialog';
+import { ScreenUtils } from '../../common/ScreenUtils';
+import { range } from '../../common/Range';
 
 const COLS = 10;
 const ROWS = 20;
@@ -60,8 +61,11 @@ export struct TetrisGamePage {
   @Local highScore: number = 0;
   @Local level: number = 1;
   @Local difficulty: GameDifficulty = GameDifficulty.NORMAL;
-  @Local isPlaying: boolean = true;
-  @Local isPaused: boolean = false;
+  /**
+   * 对局状态。原先由 isPlaying + isPaused 两个布尔拼出，其中「已结束但仍处于暂停」
+   * 是无意义的非法态。改为单一枚举后，非法态在类型层面就无法表达。
+   */
+  @Local status: GameStatus = GameStatus.PLAYING;
   @Local cell: number = 18;
   // 改为 @Local：下落方块此前是普通私有字段，坐标变化不触发 UI 刷新，
   // 导致方块下落过程不可见、只在锁定瞬间突然出现
@@ -69,8 +73,8 @@ export struct TetrisGamePage {
   private timer: number = -1;
   /** 本次暂停是否由「切后台」自动触发——决定回到前台时是否需要自动恢复 */
   private autoPaused: boolean = false;
-  private rowIdx: number[] = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19];
-  private colIdx: number[] = [0,1,2,3,4,5,6,7,8,9];
+  private rowIdx: number[] = range(ROWS);
+  private colIdx: number[] = range(COLS);
 
   aboutToAppear(): void {
     this.highScore = GameDataManager.getGameById('tetris')?.highScore ?? 0;
@@ -80,25 +84,23 @@ export struct TetrisGamePage {
   }
   aboutToDisappear(): void { clearInterval(this.timer); }
 
-  /** 切后台自动暂停，避免方块在后台持续下落堆满棋盘（定时回调已有 isPaused 守卫） */
+  /** 切后台自动暂停，避免方块在后台持续下落堆满棋盘（定时回调只放行 PLAYING 状态） */
   onPageHide(): void {
-    if (this.isPlaying && !this.isPaused) {
+    if (this.status === GameStatus.PLAYING) {
       this.autoPaused = true;
-      this.isPaused = true;
+      this.status = GameStatus.PAUSED;
     }
   }
 
   onPageShow(): void {
     if (this.autoPaused) {
       this.autoPaused = false;
-      this.isPaused = false;
+      this.status = GameStatus.PLAYING;
     }
   }
 
   initCellSize(): void {
-    const d = display.getDefaultDisplaySync();
-    const wVp = this.getUIContext().px2vp(d.width);
-    this.cell = Math.max(8, Math.floor((Math.min(wVp, 560) - 16) / COLS));
+    this.cell = ScreenUtils.calcCell(COLS, 560, 16, 8);
   }
 
   // 重新赋值 block 对象，确保 @Local 观察到变化并刷新 UI
@@ -205,7 +207,7 @@ export struct TetrisGamePage {
   loop(): void {
     clearInterval(this.timer);
     this.timer = setInterval(() => {
-      if (!this.isPaused && this.isPlaying) { this.drop(); }
+      if (this.status === GameStatus.PLAYING) { this.drop(); }
     }, Math.max(80, this.getBaseFallInterval() - (this.level - 1) * 40));
   }
 
@@ -227,17 +229,17 @@ export struct TetrisGamePage {
     else { this.lock(); }
   }
   moveLeft(): void {
-    if (!this.isPlaying || this.isPaused) { return; }
+    if (this.status !== GameStatus.PLAYING) { return; }
     if (!this.block) { return; }
     if (this.canPlace(-1, 0)) { this.block.x--; this.commitBlock(); }
   }
   moveRight(): void {
-    if (!this.isPlaying || this.isPaused) { return; }
+    if (this.status !== GameStatus.PLAYING) { return; }
     if (!this.block) { return; }
     if (this.canPlace(1, 0)) { this.block.x++; this.commitBlock(); }
   }
   rotateBlock(): void {
-    if (!this.isPlaying || this.isPaused) { return; }
+    if (this.status !== GameStatus.PLAYING) { return; }
     if (!this.block) { return; }
     const shapes = SHAPES[this.block.idx];
     if (shapes.length <= 1) { return; }
@@ -257,13 +259,13 @@ export struct TetrisGamePage {
     this.block.rot = oldRot;
   }
   hardDrop(): void {
-    if (!this.isPlaying || this.isPaused) { return; }
+    if (this.status !== GameStatus.PLAYING) { return; }
     while (this.canPlace(0, 1) && this.block) { this.block.y++; }
     this.lock();
   }
 
   gameOver(): void {
-    this.isPlaying = false;
+    this.status = GameStatus.OVER;
     clearInterval(this.timer);
     if (this.score > this.highScore) { this.highScore = this.score; }
     GameDataManager.updateHighScore('tetris', this.score);
@@ -273,9 +275,16 @@ export struct TetrisGamePage {
     GameDataManager.incrementPlayCount('tetris');
     this.init();
     this.spawn();
-    this.isPlaying = true;
-    this.isPaused = false;
+    this.status = GameStatus.PLAYING;
     this.loop();
+  }
+  /** 手动暂停/恢复。只在「进行中 ⇄ 暂停」间切换，已结束的对局不会被误切换 */
+  togglePause(): void {
+    if (this.status === GameStatus.PLAYING) {
+      this.status = GameStatus.PAUSED;
+    } else if (this.status === GameStatus.PAUSED) {
+      this.status = GameStatus.PLAYING;
+    }
   }
 
   getCellColor(r: number, c: number): ResourceColor {
@@ -302,11 +311,11 @@ export struct TetrisGamePage {
       Column() {
         GameHeader({ gameTitle: '俄罗斯方块', // 得分/最高分已由下方大字指标卡展示，关闭标题栏的小字重复显示
           showScore: false,
-          isPaused: this.isPaused,
+          isPaused: this.status === GameStatus.PAUSED,
           difficulty: this.difficulty,
           onDifficultyChange: (d: GameDifficulty) => { this.changeDifficulty(d); },
           onBack: () => { this.pathStack.pop(); },
-          onPauseToggle: () => { this.isPaused = !this.isPaused; },
+          onPauseToggle: () => { this.togglePause(); },
           onRestart: () => { this.restart(); } })
 
         Row() {
@@ -375,7 +384,7 @@ export struct TetrisGamePage {
         }.padding({ bottom: SpacingTokens.lg })
       }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
-      if (!this.isPlaying) {
+      if (this.status === GameStatus.OVER) {
         GameResultDialog({
           symbol: $r('sys.symbol.star_fill'),
           symbolColor: SemanticColors.warning,

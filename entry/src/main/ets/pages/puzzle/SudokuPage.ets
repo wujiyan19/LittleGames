@@ -1,13 +1,14 @@
 /**
  * 数独 - HarmonyOS 设计风格（带双指缩放）
  */
-import { display } from '@kit.ArkUI';
 import { SemanticColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
 import { GameHeader } from '../../components/GameHeader';
-import { GameDifficulty } from '../../common/GameConstants';
+import { GameDifficulty, GameStatus } from '../../common/GameConstants';
 import { GameDataManager } from '../../model/GameData';
 import { SafeAreaInsets } from '../../common/SafeAreaInsets';
 import { GameResultDialog } from '../../components/GameResultDialog';
+import { ScreenUtils } from '../../common/ScreenUtils';
+import { range } from '../../common/Range';
 
 @ComponentV2
 export struct SudokuPage {
@@ -18,7 +19,8 @@ export struct SudokuPage {
   @Local board: number[] = [];
   @Local selectedRow: number = -1;
   @Local selectedCol: number = -1;
-  @Local isComplete: boolean = false;
+    /** 对局状态。本游戏无暂停玩法，只有 进行中 ⇄ 已结束 两态 */
+@Local status: GameStatus = GameStatus.PLAYING;
   @Local scaleFactor: number = 1;
   @Local offsetX: number = 0;
   @Local offsetY: number = 0;
@@ -26,7 +28,7 @@ export struct SudokuPage {
   @Local difficulty: GameDifficulty = GameDifficulty.NORMAL;
   // 题面固定格（Given），整局不变，无需参与渲染观测
   private fixed: boolean[] = [];
-  private idx9: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+  private idx9: number[] = range(9);
   private startScale: number = 1;
   private startOffsetX: number = 0;
   private startOffsetY: number = 0;
@@ -68,9 +70,7 @@ export struct SudokuPage {
   }
 
   initBoardSize(): void {
-    const d = display.getDefaultDisplaySync();
-    const wVp = this.getUIContext().px2vp(d.width);
-    const cell = Math.max(28, Math.floor((Math.min(wVp, 520) - 24) / 9));
+    const cell = ScreenUtils.calcCell(9, 520, 24, 28);
     this.boardPixelSize = cell * 9 + 8;
   }
 
@@ -122,7 +122,7 @@ export struct SudokuPage {
     this.board = flatBoard;
     this.fixed = flatFixed;
     this.puzzle = this.copyBoard(puzzle);
-    this.isComplete = false;
+    this.status = GameStatus.PLAYING;
     this.selectedRow = -1;
     this.selectedCol = -1;
     // 重置缩放
@@ -356,7 +356,7 @@ export struct SudokuPage {
   setNumber(n: number): void {
     const r = this.selectedRow;
     const c = this.selectedCol;
-    if (r < 0 || c < 0 || this.isComplete) { return; }
+    if (r < 0 || c < 0 || this.status === GameStatus.OVER) { return; }
     const idx = this.cellIndex(r, c);
     if (this.fixed[idx]) { return; }
     this.setCellValue(idx, n);
@@ -379,7 +379,7 @@ export struct SudokuPage {
         if (v === 0 || !this.isValid(r, c, v)) { return; }
       }
     }
-    this.isComplete = true;
+    this.status = GameStatus.OVER;
     // 难度越高完成得分越高
     let score = 100;
     if (this.difficulty === GameDifficulty.NORMAL) { score = 200; }
@@ -529,7 +529,7 @@ export struct SudokuPage {
       }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
       // 完成弹窗作为全屏遮罩层（原先内嵌在内容列中会撑破布局、超出屏幕）
-      if (this.isComplete) {
+      if (this.status === GameStatus.OVER) {
         GameResultDialog({
           symbol: $r('sys.symbol.checkmark_circle'),
           symbolColor: SemanticColors.success,

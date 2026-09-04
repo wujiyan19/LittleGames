@@ -3,6 +3,7 @@ import { window } from '@kit.ArkUI';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { GameDataManager } from '../model/GameData';
 import { SafeAreaInsets } from '../common/SafeAreaInsets';
+import { ScreenUtils } from '../common/ScreenUtils';
 
 export default class EntryAbility extends UIAbility {
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
@@ -21,25 +22,31 @@ export default class EntryAbility extends UIAbility {
         hilog.error(0x0000, 'LittleGames', 'Failed to load content: %{public}s', err.message);
         return;
       }
-      this.initSafeArea(windowStage);
+      this.initWindowMetrics(windowStage);
     });
   }
 
   /**
-   * 初始化底部安全区避让高度，并监听其变化（如三键导航 ⇄ 手势导航切换）。
-   * 失败时 SafeAreaInsets.bottom 保持 0，退化为「不额外避让」，无副作用。
+   * 初始化与窗口相关的度量值（底部安全区避让、窗口宽度），并监听其变化。
+   * 失败时保持默认值 0，退化为「不额外避让 / 回退到屏幕宽度」，无副作用。
    */
-  private initSafeArea(windowStage: window.WindowStage): void {
+  private initWindowMetrics(windowStage: window.WindowStage): void {
     try {
       const win: window.Window = windowStage.getMainWindowSync();
       SafeAreaInsets.updateFromWindow(win);
+      ScreenUtils.updateFromWindow(win);
       win.on('avoidAreaChange', (options: window.AvoidAreaOptions) => {
         if (options.type === window.AvoidAreaType.TYPE_NAVIGATION_INDICATOR) {
           SafeAreaInsets.updateFromWindow(win);
         }
       });
+      // 分屏 / 自由窗口 / 折叠屏展开与旋转都会触发，保持宽度最新
+      win.on('windowSizeChange', () => {
+        SafeAreaInsets.updateFromWindow(win);
+        ScreenUtils.updateFromWindow(win);
+      });
     } catch (e) {
-      hilog.error(0x0000, 'LittleGames', 'Failed to init safe area insets');
+      hilog.error(0x0000, 'LittleGames', 'Failed to init window metrics');
     }
   }
 

@@ -1,14 +1,15 @@
 /**
  * 华容道 - HarmonyOS 设计风格
  */
-import { display } from '@kit.ArkUI';
 import { SemanticColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
 import { ControlPad } from '../../components/ControlPad';
 import { GameHeader } from '../../components/GameHeader';
-import { GameDifficulty } from '../../common/GameConstants';
+import { GameDifficulty, GameStatus } from '../../common/GameConstants';
 import { GameDataManager } from '../../model/GameData';
 import { SafeAreaInsets } from '../../common/SafeAreaInsets';
 import { GameResultDialog } from '../../components/GameResultDialog';
+import { ScreenUtils } from '../../common/ScreenUtils';
+import { range } from '../../common/Range';
 
 interface BlockInfo { id: string; w: number; h: number; x: number; y: number; target: boolean; }
 const BW = 4;
@@ -21,12 +22,13 @@ export struct KlotskiPage {
   @Local blocks: BlockInfo[] = [];
   @Local selId: string = '';
   @Local stepCount: number = 0;
-  @Local isWin: boolean = false;
+    /** 对局状态。本游戏无暂停玩法，只有 进行中 ⇄ 已结束 两态 */
+@Local status: GameStatus = GameStatus.PLAYING;
   @Local cell: number = 65;
   @Local difficulty: GameDifficulty = GameDifficulty.NORMAL;
   private grid: (string | null)[][] = [];
-  private rowArray: number[] = [0,1,2,3,4];
-  private colArray: number[] = [0,1,2,3];
+  private rowArray: number[] = range(BH);
+  private colArray: number[] = range(BW);
 
   aboutToAppear(): void {
     this.initCellSize();
@@ -34,9 +36,7 @@ export struct KlotskiPage {
   }
 
   initCellSize(): void {
-    const d = display.getDefaultDisplaySync();
-    const wVp = this.getUIContext().px2vp(d.width);
-    this.cell = Math.max(48, Math.floor((Math.min(wVp, 560) - 28) / BW));
+    this.cell = ScreenUtils.calcCell(BW, 560, 28, 48);
   }
 
   makeNullGrid(): (string | null)[][] {
@@ -53,7 +53,7 @@ export struct KlotskiPage {
     GameDataManager.incrementPlayCount('klotski');
     this.blocks = this.getLayout();
     this.stepCount = 0;
-    this.isWin = false;
+    this.status = GameStatus.PLAYING;
     this.selId = '';
     this.buildGrid();
   }
@@ -116,7 +116,7 @@ export struct KlotskiPage {
   }
 
   selectBlock(id: string): void {
-    if (!this.isWin) { this.selId = this.selId === id ? '' : id; }
+    if (this.status === GameStatus.PLAYING) { this.selId = this.selId === id ? '' : id; }
   }
 
   // copy-on-write 重建棋子数组：blocks 是 @Local，直接改 blocks[i].x 这种
@@ -135,7 +135,7 @@ export struct KlotskiPage {
   }
 
   moveBlock(dx: number, dy: number): void {
-    if (!this.selId || this.isWin) { return; }
+    if (!this.selId || this.status === GameStatus.OVER) { return; }
     let idx = -1;
     for (let i = 0; i < this.blocks.length; i++) {
       if (this.blocks[i].id === this.selId) { idx = i; break; }
@@ -156,7 +156,7 @@ export struct KlotskiPage {
     this.buildGrid();
     const moved = this.blocks[idx];
     if (moved.target && moved.x === 1 && moved.y === 3) {
-      this.isWin = true;
+      this.status = GameStatus.OVER;
       // 步数越少得分越高
       GameDataManager.updateHighScore('klotski', Math.max(1, 1000 - this.stepCount));
     }
@@ -264,7 +264,7 @@ export struct KlotskiPage {
       }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
       // 胜利弹窗作为全屏遮罩层（原先内嵌在内容列中会撑破布局、超出屏幕）
-      if (this.isWin) {
+      if (this.status === GameStatus.OVER) {
         GameResultDialog({
           symbol: $r('sys.symbol.checkmark_circle'),
           symbolColor: SemanticColors.success,

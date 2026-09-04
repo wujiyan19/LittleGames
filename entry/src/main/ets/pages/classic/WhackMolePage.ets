@@ -3,10 +3,11 @@
  */
 import { SemanticColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
 import { GameHeader } from '../../components/GameHeader';
-import { GameDifficulty } from '../../common/GameConstants';
+import { GameDifficulty, GameStatus } from '../../common/GameConstants';
 import { GameDataManager } from '../../model/GameData';
 import { SafeAreaInsets } from '../../common/SafeAreaInsets';
 import { GameResultDialog } from '../../components/GameResultDialog';
+import { range } from '../../common/Range';
 
 const HOLE_COUNT = 9;
 
@@ -19,13 +20,16 @@ export struct WhackMolePage {
   @Local highScore: number = 0;
   @Local timeLeft: number = 30;
   @Local difficulty: GameDifficulty = GameDifficulty.NORMAL;
-  @Local isPlaying: boolean = true;
-  @Local isPaused: boolean = false;
+  /**
+   * 对局状态。原先由 isPlaying + isPaused 两个布尔拼出，其中「已结束但仍处于暂停」
+   * 是无意义的非法态。改为单一枚举后，非法态在类型层面就无法表达。
+   */
+  @Local status: GameStatus = GameStatus.PLAYING;
   private mtimer: number = -1;
   private ctimer: number = -1;
   /** 本次暂停是否由「切后台」自动触发——决定回到前台时是否需要自动恢复 */
   private autoPaused: boolean = false;
-  private idx3: number[] = [0, 1, 2];
+  private idx3: number[] = range(3);
 
   aboutToAppear(): void {
     this.highScore = GameDataManager.getGameById('whackmole')?.highScore ?? 0;
@@ -36,19 +40,19 @@ export struct WhackMolePage {
   /**
    * 切后台自动暂停。
    * 本局限时只有 30 秒，若不处理，倒计时会在后台一路归零直接结算。
-   * 两个定时回调（倒计时 / 地鼠出现）都已有 isPaused 守卫，置位即可。
+   * 两个定时回调（倒计时 / 地鼠出现）都只放行 PLAYING 状态，置位即可。
    */
   onPageHide(): void {
-    if (this.isPlaying && !this.isPaused) {
+    if (this.status === GameStatus.PLAYING) {
       this.autoPaused = true;
-      this.isPaused = true;
+      this.status = GameStatus.PAUSED;
     }
   }
 
   onPageShow(): void {
     if (this.autoPaused) {
       this.autoPaused = false;
-      this.isPaused = false;
+      this.status = GameStatus.PLAYING;
     }
   }
 
@@ -57,23 +61,30 @@ export struct WhackMolePage {
     GameDataManager.incrementPlayCount('whackmole');
     this.score = 0;
     this.timeLeft = this.getGameTime();
-    this.isPlaying = true;
-    this.isPaused = false;
+    this.status = GameStatus.PLAYING;
     this.holes = [false, false, false, false, false, false, false, false, false];
     clearInterval(this.ctimer);
     this.ctimer = setInterval(() => {
-      if (!this.isPaused && this.isPlaying) {
+      if (this.status === GameStatus.PLAYING) {
         this.timeLeft--;
         if (this.timeLeft <= 0) { this.gameOver(); }
       }
     }, 1000);
     this.spawnMole();
   }
+  /** 手动暂停/恢复。只在「进行中 ⇄ 暂停」间切换，已结束的对局不会被误切换 */
+  togglePause(): void {
+    if (this.status === GameStatus.PLAYING) {
+      this.status = GameStatus.PAUSED;
+    } else if (this.status === GameStatus.PAUSED) {
+      this.status = GameStatus.PLAYING;
+    }
+  }
 
   spawnMole(): void {
     clearInterval(this.mtimer);
     this.mtimer = setInterval(() => {
-      if (this.isPaused || !this.isPlaying) { return; }
+      if (this.status !== GameStatus.PLAYING) { return; }
       let nh = [false, false, false, false, false, false, false, false, false];
       let count = Math.random() < 0.3 ? 2 : 1;
       let placed = 0;
@@ -109,7 +120,7 @@ export struct WhackMolePage {
   }
 
   whack(index: number): void {
-    if (!this.isPlaying || this.isPaused) { return; }
+    if (this.status !== GameStatus.PLAYING) { return; }
     if (this.holes[index]) {
       this.score += 10;
       let nh = this.holes.slice();
@@ -121,7 +132,7 @@ export struct WhackMolePage {
   }
 
   gameOver(): void {
-    this.isPlaying = false;
+    this.status = GameStatus.OVER;
     clearInterval(this.ctimer);
     clearInterval(this.mtimer);
     if (this.score > this.highScore) { this.highScore = this.score; }
@@ -136,11 +147,11 @@ export struct WhackMolePage {
       Column() {
         GameHeader({ gameTitle: '打地鼠', // 得分/最高分已由下方大字指标卡展示，关闭标题栏的小字重复显示
           showScore: false,
-          isPaused: this.isPaused,
+          isPaused: this.status === GameStatus.PAUSED,
           difficulty: this.difficulty,
           onDifficultyChange: (d: GameDifficulty) => { this.changeDifficulty(d); },
           onBack: () => { this.pathStack.pop(); },
-          onPauseToggle: () => { this.isPaused = !this.isPaused; },
+          onPauseToggle: () => { this.togglePause(); },
           onRestart: () => { this.startGame(); } })
 
         Row() {
@@ -169,7 +180,7 @@ export struct WhackMolePage {
         }.layoutWeight(1).justifyContent(FlexAlign.Center)
       }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
-      if (!this.isPlaying) {
+      if (this.status === GameStatus.OVER) {
         GameResultDialog({
           symbol: $r('sys.symbol.star_fill'),
           symbolColor: SemanticColors.warning,

@@ -1,13 +1,14 @@
 /**
  * 滑动拼图 - HarmonyOS 设计风格
  */
-import { display } from '@kit.ArkUI';
 import { SemanticColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
 import { GameHeader } from '../../components/GameHeader';
-import { GameDifficulty } from '../../common/GameConstants';
+import { GameDifficulty, GameStatus } from '../../common/GameConstants';
 import { GameDataManager } from '../../model/GameData';
 import { SafeAreaInsets } from '../../common/SafeAreaInsets';
 import { GameResultDialog } from '../../components/GameResultDialog';
+import { ScreenUtils } from '../../common/ScreenUtils';
+import { range } from '../../common/Range';
 
 @ComponentV2
 export struct SlidePuzzlePage {
@@ -17,11 +18,12 @@ export struct SlidePuzzlePage {
   // 会导致移动后方块位置不刷新
   @Local board: number[] = [];
   @Local steps: number = 0;
-  @Local isComplete: boolean = false;
+    /** 对局状态。本游戏无暂停玩法，只有 进行中 ⇄ 已结束 两态 */
+@Local status: GameStatus = GameStatus.PLAYING;
   @Local best: number = 999;
   @Local cell: number = 85;
   @Local difficulty: GameDifficulty = GameDifficulty.EASY;
-  private idxN: number[] = [0, 1, 2];
+  private idxN: number[] = range(3);
 
   aboutToAppear(): void {
     const hs = GameDataManager.getGameById('slidepuzzle')?.highScore ?? 0;
@@ -31,9 +33,7 @@ export struct SlidePuzzlePage {
   }
 
   initCellSize(): void {
-    const d = display.getDefaultDisplaySync();
-    const wVp = this.getUIContext().px2vp(d.width);
-    this.cell = Math.max(40, Math.floor((Math.min(wVp, 520) - 40) / this.getSize()));
+    this.cell = ScreenUtils.calcCell(this.getSize(), 520, 40, 40);
   }
 
   getSize(): number {
@@ -52,8 +52,7 @@ export struct SlidePuzzlePage {
   startGame(): void {
     GameDataManager.incrementPlayCount('slidepuzzle');
     const n = this.getSize();
-    this.idxN = [];
-    for (let i = 0; i < n; i++) { this.idxN.push(i); }
+    this.idxN = range(n);
     const nums: number[] = [];
     for (let i = 1; i < n * n; i++) { nums.push(i); }
     nums.push(0);
@@ -72,7 +71,7 @@ export struct SlidePuzzlePage {
     for (let i = 0; i < n * n; i++) { flat.push(nums[i]); }
     this.board = flat;
     this.steps = 0;
-    this.isComplete = false;
+    this.status = GameStatus.PLAYING;
   }
 
   cellAt(r: number, c: number): number {
@@ -106,7 +105,7 @@ export struct SlidePuzzlePage {
   }
 
   tapCell(r: number, c: number): void {
-    if (this.isComplete) { return; }
+    if (this.status === GameStatus.OVER) { return; }
     const n = this.getSize();
     const zi = this.findZeroIndex();
     if (zi < 0) { return; }
@@ -141,7 +140,7 @@ export struct SlidePuzzlePage {
       }
     }
     if (ok) {
-      this.isComplete = true;
+      this.status = GameStatus.OVER;
       if (this.steps < this.best) { this.best = this.steps; }
       // 步数越少得分越高
       GameDataManager.updateHighScore('slidepuzzle', Math.max(1, 1000 - this.steps));
@@ -221,7 +220,7 @@ export struct SlidePuzzlePage {
       }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
       // 完成弹窗作为全屏遮罩层（原先内嵌在内容列中会撑破布局、超出屏幕）
-      if (this.isComplete) {
+      if (this.status === GameStatus.OVER) {
         GameResultDialog({
           symbol: $r('sys.symbol.checkmark_circle'),
           symbolColor: SemanticColors.success,

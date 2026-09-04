@@ -3,7 +3,7 @@
  */
 import { SemanticColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
 import { GameHeader } from '../../components/GameHeader';
-import { GameDifficulty } from '../../common/GameConstants';
+import { GameDifficulty, GameStatus } from '../../common/GameConstants';
 import { GameDataManager } from '../../model/GameData';
 import { SafeAreaInsets } from '../../common/SafeAreaInsets';
 import { GameResultDialog } from '../../components/GameResultDialog';
@@ -18,7 +18,8 @@ export struct GuessNumberPage {
   @Local input: string = '';
   @Local records: RecordItem[] = [];
   @Local isWin: boolean = false;
-  @Local isPlaying: boolean = true;
+  /** 对局是否仍在进行。胜负由 isWin 表达——那是「结果」，与「状态」是两回事 */
+  @Local status: GameStatus = GameStatus.PLAYING;
   @Local tries: number = 0;
   @Local difficulty: GameDifficulty = GameDifficulty.NORMAL;
   private recordSeq: number = 0;
@@ -37,7 +38,7 @@ export struct GuessNumberPage {
     this.input = '';
     this.records = [];
     this.isWin = false;
-    this.isPlaying = true;
+    this.status = GameStatus.PLAYING;
     this.tries = 0;
   }
 
@@ -60,16 +61,16 @@ export struct GuessNumberPage {
   }
 
   pushDigit(d: string): void {
-    if (!this.isPlaying || this.isWin || this.input.length >= this.getSecretLength()) { return; }
+    if (this.status !== GameStatus.PLAYING || this.isWin || this.input.length >= this.getSecretLength()) { return; }
     if (this.input.indexOf(d) >= 0) { return; }
     this.input += d;
   }
   deleteDigit(): void {
-    if (!this.isPlaying) { return; }
+    if (this.status !== GameStatus.PLAYING) { return; }
     this.input = this.input.substring(0, this.input.length - 1);
   }
   submit(): void {
-    if (!this.isPlaying || this.input.length !== this.getSecretLength() || this.isWin) { return; }
+    if (this.status !== GameStatus.PLAYING || this.input.length !== this.getSecretLength() || this.isWin) { return; }
     this.tries++;
     let a = 0;
     let b = 0;
@@ -84,10 +85,10 @@ export struct GuessNumberPage {
     this.records = newRecs;
     if (a === this.getSecretLength()) {
       this.isWin = true;
-      this.isPlaying = false;
+      this.status = GameStatus.OVER;
       GameDataManager.updateHighScore('guessnumber', this.getScore());
     }
-    if (this.tries >= this.getMaxTries()) { this.isPlaying = false; }
+    if (this.tries >= this.getMaxTries()) { this.status = GameStatus.OVER; }
     this.input = '';
   }
 
@@ -226,7 +227,7 @@ export struct GuessNumberPage {
           onPrimary: () => { this.startGame(); },
           cardStyle: true
         })
-      } else if (!this.isPlaying) {
+      } else if (this.status === GameStatus.OVER) {
         GameResultDialog({
           symbol: $r('sys.symbol.xmark_circle'),
           symbolColor: SemanticColors.error,

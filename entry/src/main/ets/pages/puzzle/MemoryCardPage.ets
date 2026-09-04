@@ -1,17 +1,20 @@
 /**
  * 记忆翻牌 - HarmonyOS 设计风格
  */
-import { display } from '@kit.ArkUI';
 import { SemanticColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
 import { GameHeader } from '../../components/GameHeader';
-import { GameDifficulty } from '../../common/GameConstants';
+import { GameDifficulty, GameStatus } from '../../common/GameConstants';
 import { GameDataManager } from '../../model/GameData';
 import { SafeAreaInsets } from '../../common/SafeAreaInsets';
 import { GameResultDialog } from '../../components/GameResultDialog';
+import { ScreenUtils } from '../../common/ScreenUtils';
+import { range } from '../../common/Range';
 
 interface CardInfo { id: number; emoji: string; flipped: boolean; matched: boolean; }
 
 const ALL_EMOJIS: string[] = ['🎮','🎯','🎲','🎸','🎨','🚀','🌈','⭐','🍎','🌺','🐶','🐱'];
+// 棋盘列数固定为 4；行数随难度变化（见 getRowCount）
+const COLS = 4;
 
 @ComponentV2
 export struct MemoryCardPage {
@@ -22,13 +25,14 @@ export struct MemoryCardPage {
   @Local matchedCount: number = 0;
   @Local attempts: number = 0;
   @Local bestScore: number = 999;
-  @Local isWin: boolean = false;
+    /** 对局状态。本游戏无暂停玩法，只有 进行中 ⇄ 已结束 两态 */
+@Local status: GameStatus = GameStatus.PLAYING;
   @Local cardW: number = 78;
   @Local difficulty: GameDifficulty = GameDifficulty.NORMAL;
-  @Local rowIdx: number[] = [0, 1, 2, 3];
+  @Local rowIdx: number[] = range(4);
   private locked: boolean = false;
   private flipTimer: number = -1;
-  private idx4: number[] = [0, 1, 2, 3];
+  private colIdx: number[] = range(COLS);
 
   aboutToAppear(): void {
     const hs = GameDataManager.getGameById('memorycard')?.highScore ?? 0;
@@ -39,9 +43,7 @@ export struct MemoryCardPage {
   aboutToDisappear(): void { clearTimeout(this.flipTimer); }
 
   initCardSize(): void {
-    const d = display.getDefaultDisplaySync();
-    const wVp = this.getUIContext().px2vp(d.width);
-    this.cardW = Math.max(56, Math.floor((Math.min(wVp, 520) - 48) / 4));
+    this.cardW = ScreenUtils.calcCell(COLS, 520, 48, 56);
     if (this.getRowCount() >= 6) { this.cardW = Math.floor(this.cardW * 0.8); }
   }
 
@@ -84,12 +86,11 @@ export struct MemoryCardPage {
       const tmp = cs[i]; cs[i] = cs[j]; cs[j] = tmp;
     }
     this.cards = cs;
-    this.rowIdx = [];
-    for (let i = 0; i < this.getRowCount(); i++) { this.rowIdx.push(i); }
+    this.rowIdx = range(this.getRowCount());
     this.flippedIdxs = [];
     this.matchedCount = 0;
     this.attempts = 0;
-    this.isWin = false;
+    this.status = GameStatus.PLAYING;
     this.locked = false;
   }
 
@@ -125,7 +126,7 @@ export struct MemoryCardPage {
   }
 
   flipCard(idx: number): void {
-    if (this.locked || this.isWin) { return; }
+    if (this.locked || this.status === GameStatus.OVER) { return; }
     if (this.flippedIdxs.length >= 2) { return; }
     if (this.cards[idx].matched) { return; }
     let alreadyFlipped = false;
@@ -150,7 +151,7 @@ export struct MemoryCardPage {
           this.matchedCount++;
           this.locked = false;
           if (this.matchedCount === this.getPairCount()) {
-            this.isWin = true;
+            this.status = GameStatus.OVER;
             if (this.attempts < this.bestScore) { this.bestScore = this.attempts; }
             GameDataManager.updateHighScore('memorycard', Math.max(1, 1000 - this.attempts));
           }
@@ -216,28 +217,28 @@ export struct MemoryCardPage {
         Column() {
           ForEach(this.rowIdx, (r: number) => {
             Row() {
-              ForEach(this.idx4, (c: number) => {
+              ForEach(this.colIdx, (c: number) => {
                 Column() {
-                  if (this.cards[r * 4 + c].flipped || this.cards[r * 4 + c].matched) {
-                    Text(this.cards[r * 4 + c].emoji).fontSize(Math.max(24, this.cardW * 0.45))
+                  if (this.cards[r * COLS + c].flipped || this.cards[r * COLS + c].matched) {
+                    Text(this.cards[r * COLS + c].emoji).fontSize(Math.max(24, this.cardW * 0.45))
                   } else {
                     SymbolGlyph($r('sys.symbol.star'))
                       .fontSize(Math.max(16, this.cardW * 0.3))
                       .fontColor([SemanticColors.textTertiary])
                   }
                 }.width(this.cardW).height(this.cardW * 1.15).margin(3)
-                .backgroundColor(this.getCardBg(r * 4 + c))
+                .backgroundColor(this.getCardBg(r * COLS + c))
                 .borderRadius(RadiusTokens.base)
                 .shadow(ShadowTokens.button)
-                .opacity(this.getCardOpacity(r * 4 + c))
-                .onClick(() => this.flipCard(r * 4 + c))
+                .opacity(this.getCardOpacity(r * COLS + c))
+                .onClick(() => this.flipCard(r * COLS + c))
               }, (c: number) => c.toString())
             }
           }, (r: number) => r.toString())
         }.layoutWeight(1).justifyContent(FlexAlign.Center)
       }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
-      if (this.isWin) {
+      if (this.status === GameStatus.OVER) {
         GameResultDialog({
           symbol: $r('sys.symbol.star_fill'),
           symbolColor: SemanticColors.warning,
