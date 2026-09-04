@@ -80,6 +80,17 @@ struct Index {
     this.pathStack.pushPathByName(name, null);
   }
 
+  /**
+   * 路由入口。
+   * 注意：不能写成 .navDestination(GamePageMap)——navDestination 只会给回调传
+   * 一个 name 参数，多出来的参数拿不到值，游戏页的 pathStack 会变成空，
+   * 点「返回」调 pop() 即崩溃。必须由本组件这层薄包装把 this.pathStack 带进去。
+   */
+  @Builder
+  PageMap(name: string) {
+    GamePageMap(name, this.pathStack)
+  }
+
   build() {
     Stack() {
       Navigation(this.pathStack) {
@@ -124,7 +135,7 @@ struct Index {
       }
       .mode(NavigationMode.Stack)
       .hideTitleBar(true)
-      .navDestination(GamePageMap)
+      .navDestination(this.PageMap)
 
       if (this.showSplash) {
         SplashLayer({ onFinish: () => { this.showSplash = false; } })

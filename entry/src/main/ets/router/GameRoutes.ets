@@ -2,6 +2,16 @@
  * 路由映射 — Navigation 的 navDestination
  * 原先内嵌在 Index.ets 的 @Builder PageMap，抽成模块级函数后，
  * Index 只剩壳，新增游戏页只需在这里登记（配合 P1-2 后续改为路由表）。
+ *
+ * ⚠️ 调用约定：本函数**不能**被 navDestination 直接引用。
+ *    Navigation 只给回调传一个 name 参数，写成 .navDestination(GamePageMap)
+ *    的话 pathStack 拿不到值（编译不报错，是运行时陷阱），游戏页点「返回」
+ *    调 pop() 会直接崩溃。必须由持有 pathStack 的组件包一层：
+ *
+ *      @Builder
+ *      PageMap(name: string) { GamePageMap(name, this.pathStack) }
+ *      // ...
+ *      .navDestination(this.PageMap)
  */
 import { SnakeGamePage } from '../pages/classic/SnakeGamePage';
 import { TetrisGamePage } from '../pages/classic/TetrisGamePage';
