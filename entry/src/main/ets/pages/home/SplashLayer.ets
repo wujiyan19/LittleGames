@@ -84,6 +84,10 @@ export struct SplashLayer {
             .fontColor([BrandColors.cosmicBlueBright, BrandColors.auroraPurpleBright])
         }
         .width(152).height(152)
+        // 图标居中：alignItems 默认已是 Center，但 justifyContent 默认是 Start，
+        // 漏写就会让图标贴在圆圈顶部（原实现即缺此项）
+        .justifyContent(FlexAlign.Center)
+        .alignItems(HorizontalAlign.Center)
         .borderRadius(RadiusTokens.full)
         .backgroundColor('rgba(255, 255, 255, 0.10)')
         .border({ width: 1, color: 'rgba(255, 255, 255, 0.22)', radius: RadiusTokens.full })
