@@ -366,11 +366,15 @@
     <h2>四、P1 — 架构与可维护性（9 项）</h2>
 
     <div class="issue">
-      <div class="issue-head"><span class="badge p1">P1-1</span><span class="issue-title">Index.ets 单文件 844 行，承担 6 类职责</span></div>
+      <div class="issue-head"><span class="badge p1">P1-1</span><span class="issue-title">Index.ets 单文件 844 行，承担 6 类职责</span><span class="badge done">已修复</span></div>
       <div class="issue-body"><dl>
         <dt>位置</dt><dd class="loc">pages/Index.ets</dd>
         <dt>现象</dt><dd>同时包含：路由映射表（PageMap）、启动闪屏（SplashLayer + 四段动画状态）、Tab 容器、精选页、分类页（搜索 + 筛选 + 空态）、我的页。是第二长游戏页（494 行）的 1.7 倍，任何一处改动都要在这个巨型文件里翻找。</dd>
         <dt>建议</dt><dd class="fix">按职责拆分：<code>pages/Index.ets</code>（仅壳 + 路由）→ 抽出 <code>SplashLayer.ets</code>、<code>FeaturedTab.ets</code>、<code>CategoryTab.ets</code>、<code>ProfileTab.ets</code>、<code>components/GameCard.ets</code>、<code>router/GameRoutes.ets</code>。目标：Index 压到 150 行以内，每个 Tab 独立可测。</dd>
+        <dt>实际处理</dt><dd class="fix">按建议拆分完成，<b>Index.ets 855 → 206 行</b>（壳：Navigation + Tabs + 数据装配 + TopBar/TabBuilder + 导航回调）。
+        <br>新建：<code>router/GameRoutes.ets</code>（路由映射，76 行）、<code>components/GameCard.ets</code>（精选/分类共用卡片）、<code>pages/home/</code> 下 <code>SplashLayer</code>（116）/ <code>FeaturedTab</code>（102）/ <code>CategoryTab</code>（202）/ <code>ProfileTab</code>（175）。
+        <br>三个设计决策：① 各 Tab 通过 <code>@Param</code> 接数据、回调透点击，不感知 NavPathStack 与数据层；② 分类页的「筛选条件（@Local）× 数据源（@Param）」用 <code>@Computed</code> 自动推导展示列表，替代手动 <code>refreshCategoryGames()</code>，杜绝「改了条件忘了刷新」的错位；③ 闪屏的动画状态与播放时序整体移入 <code>SplashLayer</code>，播完经 <code>onFinish</code> 通知 Index 隐藏。
+        <br>顺带修复 <b>P2-7</b>：<code>isTablet</code> 是死状态（mediaquery 监听赋值后从未在 UI 使用），随拆分删除。确认 <b>P1-8</b> 的一半：<code>ProfilePage.ets</code>（210 行）已注册路由但<b>从未被导航到</b>，是「我的」双实现中的僵尸分支，待删。</dd>
       </dl></div>
     </div>
 
@@ -416,20 +420,22 @@
     </div>
 
     <div class="issue">
-      <div class="issue-head"><span class="badge p1">P1-4</span><span class="issue-title">initCellSize 重复实现 7 次，且用的是屏幕宽而非可用宽</span></div>
+      <div class="issue-head"><span class="badge p1">P1-4</span><span class="issue-title">initCellSize 重复实现 7 次，且用的是屏幕宽而非可用宽</span><span class="badge done">已修复</span></div>
       <div class="issue-body"><dl>
         <dt>位置</dt><dd class="loc">Snake / Tetris / 2048 / Minesweeper / Sudoku / Klotski / SlidePuzzle / MemoryCard（8 处）</dd>
         <dt>现象</dt><dd>每个页面都写一遍：<code>display.getDefaultDisplaySync()</code> → <code>px2vp(d.width)</code> → <code>Math.max(min, Math.floor((Math.min(wVp, max) - pad) / N))</code>，只有魔数不同。更关键的是 <code>getDefaultDisplaySync()</code> 取的是<b>整个屏幕</b>的物理宽度，<b>不是页面可用宽度</b>——在分屏、自由窗口、折叠屏展开态下算出的格子尺寸会偏大，棋盘溢出屏幕。</dd>
         <dt>建议</dt><dd class="fix">① 抽 <code>common/ScreenUtils.ets</code>：<code>calcCell(count, maxWidth, padding, minSize)</code>；② 宽度来源改为 <code>this.getUIContext().getWindowWidth()</code>（跟随窗口）或在棋盘容器上加 <code>.onAreaChange()</code> 取实际布局宽度——后者最准确，也天然支持旋转与分屏。</dd>
+        <dt>实际处理</dt><dd class="fix">新增 <code>common/ScreenUtils.ets</code>（<code>calcCell(count, maxWidth, padding, minSize)</code>），8 处重复实现收敛为一行调用（各自魔数保留）。<b>原建议的 <code>getUIContext().getWindowWidth()</code> 在 SDK 类型定义中不存在</b>（grep 全 SDK 的 .d.ts 无此 API，照写会编译失败）——已改用 <code>window.getWindowProperties().windowRect.width</code>（px，官方 FAQ 同款写法），由 EntryAbility 初始化并监听 <code>windowSizeChange</code>（分屏/自由窗口/折叠屏/旋转都会触发）保持最新；未初始化时回退到屏幕宽度，不劣化。顺带：原先 6 条 <code>getDefaultDisplaySync</code> 固有告警随之消失。</dd>
       </dl></div>
     </div>
 
     <div class="issue">
-      <div class="issue-head"><span class="badge p1">P1-5</span><span class="issue-title">8 处手写索引数组，且记忆翻牌的行列不对称</span></div>
+      <div class="issue-head"><span class="badge p1">P1-5</span><span class="issue-title">8 处手写索引数组，且记忆翻牌的行列不对称</span><span class="badge done">已修复</span></div>
       <div class="issue-body"><dl>
         <dt>位置</dt><dd class="loc">Snake.idx20 / Tetris.rowIdx,colIdx / 2048.idx4 / Minesweeper.idx9 / Sudoku.idx9 / Klotski.rowArray,colArray / SlidePuzzle.idxN / MemoryCard.rowIdx,idx4</dd>
         <dt>现象</dt><dd>为绕过「ArkTS 的 ForEach 不支持数字范围」，到处手写 <code>[0,1,2,…,19]</code>。其中 <code>MemoryCardPage</code> 把 <code>rowIdx</code> 声明为 <code>@Local</code>（难度切换时重建）而 <code>idx4</code> 是 <code>private</code>（写死 4 列）——目前 3×4 / 4×4 / 6×4 恰好都能整除所以不出错，但<b>列数被硬编码在两处</b>，一旦调整列数就会出现越界。</dd>
         <dt>建议</dt><dd class="fix">① 统一提供 <code>common/Range.ets</code> 的 <code>range(n: number): number[]</code> 工具并全局替换；② MemoryCard 的列数改为由 <code>pairCount</code> 推导的单一常量，或改用 <code>Grid</code> 的 <code>columnsTemplate</code> / <code>List</code> 的 <code>lanes</code>，彻底摆脱手写行列嵌套 ForEach。</dd>
+        <dt>实际处理</dt><dd class="fix">新增 <code>common/Range.ets</code> 的 <code>range(n)</code>，11 处手写数组全部替换，静态数组直接绑定棋盘常量（<code>range(ROWS)</code> / <code>range(COLS)</code> / <code>range(SIZE)</code> / <code>range(BW)</code>），动态重建改为一行。<b>记忆翻牌列数已彻底收敛</b>：新增 <code>const COLS = 4</code>，<code>idx4</code> 改名 <code>colIdx = range(COLS)</code>，连同 <code>cards[r * 4 + c]</code> 的 5 处索引表达式与 <code>calcCell(4,…)</code> 一起改用常量——现在调整列数只需改一处。猜数字里的 <code>digits</code> 数组不是索引表（是待抽取的数字池），有意保留。</dd>
       </dl></div>
     </div>
 
@@ -445,11 +451,12 @@
     </div>
 
     <div class="issue">
-      <div class="issue-head"><span class="badge p1">P1-7</span><span class="issue-title">GameStatus 枚举已定义但从未使用，状态由三个布尔拼出</span></div>
+      <div class="issue-head"><span class="badge p1">P1-7</span><span class="issue-title">GameStatus 枚举已定义但从未使用，状态由三个布尔拼出</span><span class="badge done">已修复</span></div>
       <div class="issue-body"><dl>
         <dt>位置</dt><dd class="loc">common/GameConstants.ets 第 34-39 行</dd>
         <dt>现象</dt><dd><code>GameStatus { IDLE, PLAYING, PAUSED, OVER }</code> 是死代码。各页面实际用 <code>isPlaying</code> + <code>isPaused</code> + <code>isWin</code>/<code>isComplete</code> 三个布尔的组合表达状态，理论上有 8 种组合，其中 <code>isPlaying=false && isPaused=true</code>、<code>isPlaying=false && isWin=true && isPaused=true</code> 等都是无意义的非法态，代码里没有防御。</dd>
         <dt>建议</dt><dd class="fix">统一改为单字段 <code>@Local status: GameStatus = GameStatus.IDLE</code>，用 <code>status === GameStatus.PLAYING</code> 替代 <code>isPlaying && !isPaused</code>。配合 P1-6 的逻辑层拆分，可让状态迁移集中在一处，非法态在编译期就无法表达。</dd>
+        <dt>实际处理</dt><dd class="fix">10 个页面全部改为单字段 <code>@Local status: GameStatus</code>（共替换约 110 处引用）。三个要点：① <code>isPlaying &amp;&amp; !isPaused</code> 一类组合判断收敛为 <code>status === PLAYING</code>；② 有暂停的三页新增 <code>togglePause()</code>——只在「进行中 ⇄ 暂停」间切换，原写法 <code>isPaused = !isPaused</code> 在对局已结束时会产生非法态；③ <b>胜负是「结果」不是「状态」</b>：扫雷的 <code>gameResult</code>、猜数字的 <code>isWin</code> 保留为独立字段，与 status 正交。华容道/记忆翻牌/拼图/数独只有「胜利即结束」一种终局，status 足以表达。GameStatus.IDLE 预留未用。</dd>
       </dl></div>
     </div>
 
@@ -607,11 +614,11 @@
         <h4>第三阶段 · 瘦身</h4>
         <div class="sub">3~5 天 · 消除重复，拆分巨型文件</div>
         <ul>
-          <li>P1-1 拆分 Index.ets</li>
+          <li class="done-item">✓ P1-1 拆分 Index.ets</li>
           <li>P1-2 路由表数据驱动</li>
           <li>P1-3 抽 GameResultDialog</li>
-          <li>P1-4 ScreenUtils</li>
-          <li>P1-5 range() 工具</li>
+          <li class="done-item">✓ P1-4 ScreenUtils</li>
+          <li class="done-item">✓ P1-5 range() 工具</li>
           <li>P1-8 合并两套「我的」</li>
         </ul>
       </div>
@@ -620,7 +627,7 @@
         <div class="sub">5~8 天 · 性能与长期可维护性</div>
         <ul>
           <li>P1-6 抽离游戏逻辑层 + 单测</li>
-          <li>P1-7 统一 GameStatus 状态机</li>
+          <li class="done-item">✓ P1-7 统一 GameStatus 状态机</li>
           <li>P2-1/2/3 renderGroup 与渲染优化</li>
           <li>P2-4 重写 2048 动画</li>
           <li>P2-5~P2-10 逐项性能清理</li>
