@@ -7,6 +7,7 @@ import { GameHeader } from '../../components/GameHeader';
 import { GameDifficulty } from '../../common/GameConstants';
 import { GameDataManager } from '../../model/GameData';
 import { SafeAreaInsets } from '../../common/SafeAreaInsets';
+import { GameResultDialog } from '../../components/GameResultDialog';
 
 interface CardInfo { id: number; emoji: string; flipped: boolean; matched: boolean; }
 
@@ -237,44 +238,16 @@ export struct MemoryCardPage {
       }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
       if (this.isWin) {
-        Column() {
-          Column() {
-            SymbolGlyph($r('sys.symbol.star_fill'))
-              .fontSize(40)
-              .fontWeight(FontWeight.Medium)
-              .fontColor([SemanticColors.warning])
-          }
-          .width(72).height(72)
-          .borderRadius(RadiusTokens.full)
-          .backgroundColor(SemanticColors.primaryLight)
-          .justifyContent(FlexAlign.Center)
-
-          Text('全部找到!')
-            .fontFamily(FontTokens.family)
-            .fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold)
-            .fontColor(SemanticColors.textPrimary).margin({ top: SpacingTokens.md, bottom: SpacingTokens.xs })
-          Text('尝试: ' + this.attempts + '  ·  最佳: ' + this.bestScore)
-            .fontFamily(FontTokens.family)
-            .fontSize(FontTokens.sizeSubtitle).fontColor(SemanticColors.warning)
-            .margin({ bottom: SpacingTokens.base })
-          Button() {
-            Row({ space: SpacingTokens.xs }) {
-              SymbolGlyph($r('sys.symbol.arrow_clockwise'))
-                .fontSize(16).fontColor([SemanticColors.textOnPrimary])
-              Text('再来一局')
-                .fontFamily(FontTokens.family)
-                .fontSize(FontTokens.sizeBody).fontColor(SemanticColors.textOnPrimary)
-            }
-          }
-          .height(44).padding({ left: SpacingTokens.lg, right: SpacingTokens.lg })
-          .backgroundColor(SemanticColors.primary).borderRadius(RadiusTokens.full)
-          .shadow(ShadowTokens.button)
-          .onClick(() => this.startGame())
-        }.width('86%').padding(SpacingTokens.lg)
-        .borderRadius(RadiusTokens.xl)
-        .backgroundColor(SemanticColors.surfaceTranslucent)
-        .backdropBlur(24)
-        .shadow(ShadowTokens.float)
+        GameResultDialog({
+          symbol: $r('sys.symbol.star_fill'),
+          symbolColor: SemanticColors.warning,
+          title: '全部找到!',
+          detail: '尝试: ' + this.attempts + '  ·  最佳: ' + this.bestScore,
+          detailColor: SemanticColors.warning,
+          primaryText: '再来一局',
+          onPrimary: () => { this.startGame(); },
+          cardStyle: true
+        })
       }
     }.width('100%').height('100%')
   }

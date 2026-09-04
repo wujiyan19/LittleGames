@@ -7,6 +7,7 @@ import { GameHeader } from '../../components/GameHeader';
 import { GameDifficulty } from '../../common/GameConstants';
 import { GameDataManager } from '../../model/GameData';
 import { SafeAreaInsets } from '../../common/SafeAreaInsets';
+import { GameResultDialog } from '../../components/GameResultDialog';
 
 @ComponentV2
 export struct SlidePuzzlePage {
@@ -221,44 +222,15 @@ export struct SlidePuzzlePage {
 
       // 完成弹窗作为全屏遮罩层（原先内嵌在内容列中会撑破布局、超出屏幕）
       if (this.isComplete) {
-        Column() {
-          Column() {
-            SymbolGlyph($r('sys.symbol.checkmark_circle'))
-              .fontSize(40)
-              .fontWeight(FontWeight.Medium)
-              .fontColor([SemanticColors.success])
-          }
-          .width(72).height(72)
-          .borderRadius(RadiusTokens.full)
-          .backgroundColor(SemanticColors.primaryLight)
-          .justifyContent(FlexAlign.Center)
-
-          Text('拼图完成!')
-            .fontFamily(FontTokens.family)
-            .fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold)
-            .fontColor(SemanticColors.textPrimary).margin({ top: SpacingTokens.md, bottom: SpacingTokens.xs })
-          Text('步数: ' + this.steps)
-            .fontFamily(FontTokens.family)
-            .fontSize(FontTokens.sizeSubtitle).fontColor(SemanticColors.accent)
-            .margin({ bottom: SpacingTokens.base })
-          Button() {
-            Row({ space: SpacingTokens.xs }) {
-              SymbolGlyph($r('sys.symbol.arrow_clockwise'))
-                .fontSize(16).fontColor([SemanticColors.textOnPrimary])
-              Text('再来一局')
-                .fontFamily(FontTokens.family)
-                .fontSize(FontTokens.sizeBody).fontColor(SemanticColors.textOnPrimary)
-            }
-          }
-          .height(44).padding({ left: SpacingTokens.lg, right: SpacingTokens.lg })
-          .backgroundColor(SemanticColors.primary).borderRadius(RadiusTokens.full)
-          .shadow(ShadowTokens.button)
-          .onClick(() => this.startGame())
-        }
-        .width('100%').height('100%')
-        .backgroundColor(SemanticColors.scrim)
-        .backdropBlur(20)
-        .justifyContent(FlexAlign.Center)
+        GameResultDialog({
+          symbol: $r('sys.symbol.checkmark_circle'),
+          symbolColor: SemanticColors.success,
+          title: '拼图完成!',
+          detail: '步数: ' + this.steps,
+          detailColor: SemanticColors.accent,
+          primaryText: '再来一局',
+          onPrimary: () => { this.startGame(); }
+        })
       }
     }.width('100%').height('100%')
   }

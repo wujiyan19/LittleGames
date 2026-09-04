@@ -7,6 +7,7 @@ import { GameHeader } from '../../components/GameHeader';
 import { GameDifficulty } from '../../common/GameConstants';
 import { GameDataManager } from '../../model/GameData';
 import { SafeAreaInsets } from '../../common/SafeAreaInsets';
+import { GameResultDialog } from '../../components/GameResultDialog';
 
 const COLS = 10;
 const ROWS = 20;
@@ -299,7 +300,8 @@ export struct TetrisGamePage {
         .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
 
       Column() {
-        GameHeader({ gameTitle: '俄罗斯方块', scoreValue: this.score, highScoreValue: this.highScore,
+        GameHeader({ gameTitle: '俄罗斯方块', // 得分/最高分已由下方大字指标卡展示，关闭标题栏的小字重复显示
+          showScore: false,
           isPaused: this.isPaused,
           difficulty: this.difficulty,
           onDifficultyChange: (d: GameDifficulty) => { this.changeDifficulty(d); },
@@ -374,51 +376,17 @@ export struct TetrisGamePage {
       }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
       if (!this.isPlaying) {
-        Column() {
-          Column() {
-            SymbolGlyph($r('sys.symbol.star_fill'))
-              .fontSize(40)
-              .fontWeight(FontWeight.Medium)
-              .fontColor([SemanticColors.warning])
-          }
-          .width(72).height(72)
-          .borderRadius(RadiusTokens.full)
-          .backgroundColor(SemanticColors.primaryLight)
-          .justifyContent(FlexAlign.Center)
-
-          Text('游戏结束')
-            .fontFamily(FontTokens.family)
-            .fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold)
-            .fontColor(SemanticColors.textPrimary).margin({ top: SpacingTokens.md, bottom: SpacingTokens.xs })
-          Text('得分 ' + this.score)
-            .fontFamily(FontTokens.family)
-            .fontSize(FontTokens.sizeSubtitle).fontColor(SemanticColors.accent).margin({ bottom: SpacingTokens.lg })
-          Row({ space: SpacingTokens.base }) {
-            Button() {
-              Row({ space: SpacingTokens.xs }) {
-                SymbolGlyph($r('sys.symbol.arrow_clockwise'))
-                  .fontSize(16).fontColor([SemanticColors.textOnPrimary])
-                Text('再来一局')
-                  .fontFamily(FontTokens.family)
-                  .fontSize(FontTokens.sizeBody).fontColor(SemanticColors.textOnPrimary)
-              }
-            }
-            .height(44).padding({ left: SpacingTokens.lg, right: SpacingTokens.lg })
-            .backgroundColor(SemanticColors.primary).borderRadius(RadiusTokens.full)
-            .shadow(ShadowTokens.button)
-            .onClick(() => this.restart())
-            Button('返回')
-              .height(44).padding({ left: SpacingTokens.lg, right: SpacingTokens.lg })
-              .fontFamily(FontTokens.family)
-              .fontColor(SemanticColors.textPrimary).backgroundColor(SemanticColors.surface)
-              .borderRadius(RadiusTokens.full).shadow(ShadowTokens.button)
-              .onClick(() => this.pathStack.pop())
-          }
-        }
-        .width('100%').height('100%')
-        .backgroundColor(SemanticColors.scrim)
-        .backdropBlur(20)
-        .justifyContent(FlexAlign.Center)
+        GameResultDialog({
+          symbol: $r('sys.symbol.star_fill'),
+          symbolColor: SemanticColors.warning,
+          title: '游戏结束',
+          detail: '得分 ' + this.score,
+          detailColor: SemanticColors.accent,
+          primaryText: '再来一局',
+          onPrimary: () => { this.restart(); },
+          secondaryText: '返回',
+          onSecondary: () => { this.pathStack.pop(); }
+        })
       }
     }.width('100%').height('100%')
   }

@@ -7,6 +7,7 @@ import { GameHeader } from '../../components/GameHeader';
 import { GameDifficulty } from '../../common/GameConstants';
 import { GameDataManager } from '../../model/GameData';
 import { SafeAreaInsets } from '../../common/SafeAreaInsets';
+import { GameResultDialog } from '../../components/GameResultDialog';
 
 @ComponentV2
 export struct SudokuPage {
@@ -529,40 +530,13 @@ export struct SudokuPage {
 
       // 完成弹窗作为全屏遮罩层（原先内嵌在内容列中会撑破布局、超出屏幕）
       if (this.isComplete) {
-        Column() {
-          Column() {
-            SymbolGlyph($r('sys.symbol.checkmark_circle'))
-              .fontSize(40)
-              .fontWeight(FontWeight.Medium)
-              .fontColor([SemanticColors.success])
-          }
-          .width(72).height(72)
-          .borderRadius(RadiusTokens.full)
-          .backgroundColor(SemanticColors.primaryLight)
-          .justifyContent(FlexAlign.Center)
-
-          Text('恭喜完成!')
-            .fontFamily(FontTokens.family)
-            .fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold)
-            .fontColor(SemanticColors.textPrimary).margin({ top: SpacingTokens.md, bottom: SpacingTokens.base })
-          Button() {
-            Row({ space: SpacingTokens.xs }) {
-              SymbolGlyph($r('sys.symbol.arrow_clockwise'))
-                .fontSize(16).fontColor([SemanticColors.textOnPrimary])
-              Text('新游戏')
-                .fontFamily(FontTokens.family)
-                .fontSize(FontTokens.sizeBody).fontColor(SemanticColors.textOnPrimary)
-            }
-          }
-          .height(44).padding({ left: SpacingTokens.lg, right: SpacingTokens.lg })
-          .backgroundColor(SemanticColors.primary).borderRadius(RadiusTokens.full)
-          .shadow(ShadowTokens.button)
-          .onClick(() => this.newGame())
-        }
-        .width('100%').height('100%')
-        .backgroundColor(SemanticColors.scrim)
-        .backdropBlur(20)
-        .justifyContent(FlexAlign.Center)
+        GameResultDialog({
+          symbol: $r('sys.symbol.checkmark_circle'),
+          symbolColor: SemanticColors.success,
+          title: '恭喜完成!',
+          primaryText: '新游戏',
+          onPrimary: () => { this.newGame(); }
+        })
       }
     }.width('100%').height('100%')
   }

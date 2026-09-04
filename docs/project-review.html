@@ -392,10 +392,18 @@
     </div>
 
     <div class="issue">
-      <div class="issue-head"><span class="badge p1">P1-3</span><span class="issue-title">「结算弹窗」在 10 个页面重复约 120 行</span></div>
+      <div class="issue-head"><span class="badge p1">P1-3</span><span class="issue-title">「结算弹窗」在 10 个页面重复约 120 行</span><span class="badge done">已修复</span></div>
       <div class="issue-body"><dl>
         <dt>位置</dt><dd class="loc">Snake / Tetris / 2048 / WhackMole / Minesweeper / Sudoku / Klotski / SlidePuzzle / MemoryCard / GuessNumber</dd>
         <dt>现象</dt><dd>每个游戏页末尾都有一段结构完全一致的代码：72vp 圆形图标底 + SymbolGlyph + 主标题 + 副标题 + 「再来一局」主按钮 + 「返回」次按钮，外加 <code>.backgroundColor(scrim).backdropBlur(20).justifyContent(Center)</code> 三件套。差异只在图标、文案和按钮回调。同样的还有「得分 / 最高分」双卡片 Row（重复 8 次）。粗算重复代码 1000+ 行，占总量 20%。</dd>
+                <dt>实际处理</dt><dd class="fix">新增 <code>components/GameResultDialog.ets</code>，10 个页面全部接入（猜数字的胜/负两处各一次，共 11 处调用），<b>净减约 320 行</b>。
+        组件暴露：图标 symbol 与配色、标题、副标题与配色、主按钮文案/回调、次按钮文案/回调（留空即不渲染）、以及 <code>cardStyle</code> 形态开关。
+        <br><b>两种形态必须都保留</b>——原以为 10 处结构一致，实际分为：全屏遮罩式（scrim + backdropBlur 20，8 处，用于棋盘无需再看）与居中卡片式（86% 宽圆角 + surfaceTranslucent + backdropBlur 24 + 投影，3 处，用于让用户回看最终盘面，如记忆翻牌 / 猜数字）。
+        副标题配色不统一（5 处 accent、4 处 warning、1 处 error），已作为 <code>detailColor</code> 参数暴露而非写死。</dd>
+        <dt>连带处理</dt><dd class="fix">Snake / 2048 / Tetris / WhackMole 四个页面原本<b>同一信息显示两次</b>：<code>GameHeader</code> 的「得分 X · 最高 Y」与下方指标卡重复。
+        处理为<b>保留指标卡、关闭标题栏小字</b>（<code>showScore: false</code>），理由：指标卡是 24vp 加粗彩色大字，而 GameHeader 那行是 10vp 三级灰——后者本就是次要显示，删它不影响可读性；且四个页面的指标卡并非全是「得分/最高」，方块是<b>级别</b>+得分、打地鼠是得分+<b>倒计时</b>，这两项是 GameHeader 提供不了的，卡片整体不可删。
+        <br>补漏：2048 原本只有「最高」一张卡，得分<b>仅</b>存在于标题栏小字中，直接关闭会导致得分无处可看——已为其补一张「得分」卡，与其余三款保持一致。</dd>
+        <dt>顺带修复</dt><dd class="fix"><code>GameHeader</code> 中 <code>subtitle</code> 只在 <code>showScore</code> 为 false 时才渲染。猜数字是唯一既传了 <code>scoreValue</code>（tries）又传了 <code>subtitle</code> 的页面，导致「尝试 N / M」<b>从未显示</b>，标题栏显示的却是语义错误的「得分 3 · 最高 10」（那其实是尝试次数与上限）。已改为 <code>showScore: false</code> + 保留 subtitle。</dd>
         <dt>建议</dt><dd class="fix">抽 <code>components/GameResultDialog.ets</code>：
         <pre>GameResultDialog({
   symbol: $r(<span class="s">'sys.symbol.star_fill'</span>), tint: SemanticColors.warning,

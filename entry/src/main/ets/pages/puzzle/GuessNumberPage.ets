@@ -6,6 +6,7 @@ import { GameHeader } from '../../components/GameHeader';
 import { GameDifficulty } from '../../common/GameConstants';
 import { GameDataManager } from '../../model/GameData';
 import { SafeAreaInsets } from '../../common/SafeAreaInsets';
+import { GameResultDialog } from '../../components/GameResultDialog';
 
 interface RecordItem { guess: string; a: number; b: number; seq: number; }
 
@@ -147,7 +148,10 @@ export struct GuessNumberPage {
         .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
 
       Column() {
-        GameHeader({ gameTitle: '猜数字', scoreValue: this.tries, highScoreValue: this.getMaxTries(),
+        GameHeader({ gameTitle: '猜数字',
+          // 这里原本传的是 tries / 上限，标题栏却按「得分 / 最高」渲染，语义不对；
+          // 且 subtitle 仅在 showScore 为 false 时显示，不关掉的话「尝试 N / M」永远被吃掉
+          showScore: false,
           subtitle: '尝试 ' + this.tries + ' / ' + this.getMaxTries(),
           difficulty: this.difficulty,
           onDifficultyChange: (d: GameDifficulty) => { this.changeDifficulty(d); },
@@ -212,59 +216,27 @@ export struct GuessNumberPage {
       }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
       if (this.isWin) {
-        Column() {
-          Column() {
-            SymbolGlyph($r('sys.symbol.checkmark_circle'))
-              .fontSize(40)
-              .fontWeight(FontWeight.Medium)
-              .fontColor([SemanticColors.success])
-          }
-          .width(72).height(72)
-          .borderRadius(RadiusTokens.full)
-          .backgroundColor(SemanticColors.primaryLight)
-          .justifyContent(FlexAlign.Center)
-
-          Text('恭喜猜中!')
-            .fontFamily(FontTokens.family)
-            .fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold)
-            .fontColor(SemanticColors.textPrimary).margin({ top: SpacingTokens.md, bottom: SpacingTokens.xs })
-          Text('密码: ' + this.secret + '  ·  ' + this.tries + ' 次')
-            .fontFamily(FontTokens.family)
-            .fontSize(FontTokens.sizeSubtitle).fontColor(SemanticColors.warning)
-            .margin({ bottom: SpacingTokens.base })
-          this.RestartButton()
-        }.width('86%').padding(SpacingTokens.lg)
-        .borderRadius(RadiusTokens.xl)
-        .backgroundColor(SemanticColors.surfaceTranslucent)
-        .backdropBlur(24)
-        .shadow(ShadowTokens.float)
+        GameResultDialog({
+          symbol: $r('sys.symbol.checkmark_circle'),
+          symbolColor: SemanticColors.success,
+          title: '恭喜猜中!',
+          detail: '密码: ' + this.secret + '  ·  ' + this.tries + ' 次',
+          detailColor: SemanticColors.warning,
+          primaryText: '再来一局',
+          onPrimary: () => { this.startGame(); },
+          cardStyle: true
+        })
       } else if (!this.isPlaying) {
-        Column() {
-          Column() {
-            SymbolGlyph($r('sys.symbol.xmark_circle'))
-              .fontSize(40)
-              .fontWeight(FontWeight.Medium)
-              .fontColor([SemanticColors.error])
-          }
-          .width(72).height(72)
-          .borderRadius(RadiusTokens.full)
-          .backgroundColor(SemanticColors.primaryLight)
-          .justifyContent(FlexAlign.Center)
-
-          Text(this.getMaxTries() + '次用完了')
-            .fontFamily(FontTokens.family)
-            .fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold)
-            .fontColor(SemanticColors.textPrimary).margin({ top: SpacingTokens.md, bottom: SpacingTokens.xs })
-          Text('密码: ' + this.secret)
-            .fontFamily(FontTokens.family)
-            .fontSize(FontTokens.sizeSubtitle).fontColor(SemanticColors.error)
-            .margin({ bottom: SpacingTokens.base })
-          this.RestartButton()
-        }.width('86%').padding(SpacingTokens.lg)
-        .borderRadius(RadiusTokens.xl)
-        .backgroundColor(SemanticColors.surfaceTranslucent)
-        .backdropBlur(24)
-        .shadow(ShadowTokens.float)
+        GameResultDialog({
+          symbol: $r('sys.symbol.xmark_circle'),
+          symbolColor: SemanticColors.error,
+          title: this.getMaxTries() + '次用完了',
+          detail: '密码: ' + this.secret,
+          detailColor: SemanticColors.error,
+          primaryText: '再来一局',
+          onPrimary: () => { this.startGame(); },
+          cardStyle: true
+        })
       }
     }.width('100%').height('100%')
   }
@@ -299,20 +271,4 @@ export struct GuessNumberPage {
     .margin({ bottom: SpacingTokens.sm })
   }
 
-  @Builder
-  RestartButton() {
-    Button() {
-      Row({ space: SpacingTokens.xs }) {
-        SymbolGlyph($r('sys.symbol.arrow_clockwise'))
-          .fontSize(16).fontColor([SemanticColors.textOnPrimary])
-        Text('再来一局')
-          .fontFamily(FontTokens.family)
-          .fontSize(FontTokens.sizeBody).fontColor(SemanticColors.textOnPrimary)
-      }
-    }
-    .height(44).padding({ left: SpacingTokens.lg, right: SpacingTokens.lg })
-    .backgroundColor(SemanticColors.primary).borderRadius(RadiusTokens.full)
-    .shadow(ShadowTokens.button)
-    .onClick(() => this.startGame())
-  }
 }
