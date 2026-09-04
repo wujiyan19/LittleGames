@@ -379,7 +379,7 @@
     </div>
 
     <div class="issue">
-      <div class="issue-head"><span class="badge p1">P1-2</span><span class="issue-title">路由用 10 层 if-else 硬编码，新增游戏要改 3 处</span></div>
+      <div class="issue-head"><span class="badge p1">P1-2</span><span class="issue-title">路由用 10 层 if-else 硬编码，新增游戏要改 3 处</span><span class="badge done">已修复</span></div>
       <div class="issue-body"><dl>
         <dt>位置</dt><dd class="loc">Index.navigateToGame() 第 117-130 行、Index.PageMap() 第 162-220 行</dd>
         <dt>现象</dt><dd>游戏 ID → 页面名的映射写成了两条并列的 if-else 链，且 <code>PageMap</code> 里每个分支重复一遍 <code>NavDestination(){...}.hideTitleBar(true)</code>。新增第 11 款游戏需要：① 在 GameData 里加数据，② 在 navigateToGame 加分支，③ 在 PageMap 加分支——三处不同步就是运行时白屏。更糟的是 <code>navigateToGame</code> 的 <code>else</code> 兜底是 <code>MemoryCardPage</code>，ID 写错会静默跳到错误页面。</dd>
@@ -392,6 +392,7 @@
   <span class="k">static</span> pageNameOf(id: string): string { <span class="k">return</span> GameRoutes.routes[id] ?? <span class="s">''</span>; }
 }</pre>
         ② 长期：迁移到系统路由表 <code>resources/base/profile/router_map.json5</code> + <code>@Builder</code> 导出函数，彻底删掉 <code>PageMap</code>，并支持按需加载（也能顺带缓解 P0-2 的首包压力）。</dd>
+        <dt>实际处理</dt><dd class="fix">① <code>GameRoutes.PATHS</code> 数据表（ID → 路由名）+ <code>routeName()</code> 查询方法，<code>navigateToGame</code> 改为查表；<b>同时消除了原 else 兜底跳 MemoryCardPage 的隐患</b>——未登记的 ID 现在直接拒绝导航，不再静默跳进错误的页面。② PageMap 的 11 处重复 <code>NavDestination(){...}.hideTitleBar(true)</code> 包装提取到外层，只写一次。③ if-else 组件选择链<b>保留</b>：ArkTS 不支持把组件当值存表，这条链是语言限制无法消除，已收窄到一行一分支并在注释中说明。新增游戏现在只需 3 处登记（数据 / PATHS / 组件分支），首页卡片由数据驱动无需改动。</dd>
       </dl></div>
     </div>
 
@@ -461,11 +462,12 @@
     </div>
 
     <div class="issue">
-      <div class="issue-head"><span class="badge p1">P1-8</span><span class="issue-title">「我的」有两套实现，内容高度重复</span></div>
+      <div class="issue-head"><span class="badge p1">P1-8</span><span class="issue-title">「我的」有两套实现，内容高度重复</span><span class="badge done">已修复</span></div>
       <div class="issue-body"><dl>
         <dt>位置</dt><dd class="loc">Index.ProfileTab() 第 691-810 行 与 pages/ProfilePage.ets（210 行）</dd>
         <dt>现象</dt><dd>两处都实现了「用户卡片 + 数据卡片 + 最高分排行 + 关于」，约 100 行 × 2 的重复。实现还不一致：Tab 内用 <code>List</code> + <code>.height(312)</code> 硬编码高度、排行只取 Top6；独立页用 <code>Column</code> + ForEach、显示全部 10 款。改一处忘一处是必然的。</dd>
         <dt>建议</dt><dd class="fix">二选一：① 推荐——Tab 内「我的」直接 <code>pushPathByName('ProfilePage')</code> 复用独立页，删掉 <code>ProfileTab</code>；② 若坚持 Tab 内联（少一次跳转），则把「用户卡片 / 排行 / 关于」抽成三个共享 Builder 组件，两处共同引用，并去掉 <code>height(312)</code> 硬编码（改用 <code>layoutWeight</code> + 内容自适应）。</dd>
+        <dt>实际处理</dt><dd class="fix">选择<b>删除 ProfilePage</b>（与报告推荐相反，理由如下）：ProfileTab 是实际在用的实现（底部 Tab 直达，无需跳转），而 ProfilePage 注册了路由却<b>全项目从未被导航到</b>（P1-1 时已确认），其独有的「关于」段也从未被任何用户消费。删除后只剩一套实现，重复即消除；ProfileTab 已经是独立组件（P1-1 拆分产物），形态上已达到报告方案②的目标。已删 <code>pages/ProfilePage.ets</code>（210 行）及 GameRoutes 中的注册分支。若日后需要「关于」，git 历史中可取回（含版本号 InfoRow 的写法）。</dd>
       </dl></div>
     </div>
 
@@ -615,11 +617,11 @@
         <div class="sub">3~5 天 · 消除重复，拆分巨型文件</div>
         <ul>
           <li class="done-item">✓ P1-1 拆分 Index.ets</li>
-          <li>P1-2 路由表数据驱动</li>
+          <li class="done-item">✓ P1-2 路由表数据驱动</li>
           <li>P1-3 抽 GameResultDialog</li>
           <li class="done-item">✓ P1-4 ScreenUtils</li>
           <li class="done-item">✓ P1-5 range() 工具</li>
-          <li>P1-8 合并两套「我的」</li>
+          <li class="done-item">✓ P1-8 合并两套「我的」</li>
         </ul>
       </div>
       <div class="phase">

@@ -17,7 +17,7 @@ import { intl } from '@kit.LocalizationKit';
 import { GameDataManager } from '../model/GameData';
 import { GameInfo, GameCategory } from '../common/GameConstants';
 import { SemanticColors, SpacingTokens, FontTokens, BrandColors } from '../common/DesignTokens';
-import { GamePageMap } from '../router/GameRoutes';
+import { GamePageMap, GameRoutes } from '../router/GameRoutes';
 import { SplashLayer } from './home/SplashLayer';
 import { FeaturedTab } from './home/FeaturedTab';
 import { CategoryTab } from './home/CategoryTab';
@@ -65,18 +65,16 @@ struct Index {
     return copy;
   }
 
+  /**
+   * 跳转到指定游戏。路由名查 GameRoutes.PATHS 表；
+   * 未登记的 ID 直接忽略——原实现的 else 兜底是 MemoryCardPage，
+   * ID 写错会静默跳进错误的页面，比白屏更难排查。
+   */
   navigateToGame(game: GameInfo): void {
-    let name = '';
-    if (game.id === 'snake') { name = 'SnakeGamePage'; }
-    else if (game.id === 'tetris') { name = 'TetrisGamePage'; }
-    else if (game.id === '2048') { name = 'Game2048Page'; }
-    else if (game.id === 'whackmole') { name = 'WhackMolePage'; }
-    else if (game.id === 'minesweeper') { name = 'MinesweeperPage'; }
-    else if (game.id === 'sudoku') { name = 'SudokuPage'; }
-    else if (game.id === 'slidepuzzle') { name = 'SlidePuzzlePage'; }
-    else if (game.id === 'klotski') { name = 'KlotskiPage'; }
-    else if (game.id === 'guessnumber') { name = 'GuessNumberPage'; }
-    else { name = 'MemoryCardPage'; }
+    const name: string = GameRoutes.routeName(game.id);
+    if (name.length === 0) {
+      return;
+    }
     this.pathStack.pushPathByName(name, null);
   }
 
