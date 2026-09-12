@@ -35,6 +35,12 @@ export class WhackMoleViewModel {
   getGameTime(): number { return this.rules.getGameTime(this.difficulty); }
   getSpawnInterval(): number { return this.rules.getSpawnInterval(this.difficulty); }
 
+  changeDifficulty(d: GameDifficulty): void {
+    if (this.difficulty === d) { return; }
+    this.difficulty = d;
+    this.startGame();
+  }
+
   startGame(): void {
     if (this.score > 0) { GameDataManager.updateHighScore(GAME_ID, this.score); }
     GameDataManager.incrementPlayCount(GAME_ID);
