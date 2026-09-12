@@ -12,7 +12,6 @@ function board4(rows: number[][]): number[][] {
 export default function game2048ModelTest() {
   describe('Game2048Rules', () => {
     const rules = new Game2048Rules(4);
-    const emptyRow: number[] = [0, 0, 0, 0];
 
     it('swipe_left_merges_pairs', 0, () => {
       const b = board4([[2, 2, 2, 2], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]);
@@ -78,6 +77,30 @@ export default function game2048ModelTest() {
       expect(rules.isGameOver(mergable)).assertFalse();
       const withEmpty = board4([[2, 4, 2, 4], [4, 2, 4, 2], [2, 4, 2, 4], [4, 2, 4, 0]]);
       expect(rules.isGameOver(withEmpty)).assertFalse();
+    });
+
+    it('swipe_left_reports_source_of_each_tile', 0, () => {
+      // 第 0 行：索引 0..3 = [0,2,0,2]；左滑后 4 落在格 0，来源应为格 1（合并取第一个源）
+      const b = board4([[0, 2, 0, 2], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]);
+      const r = rules.swipe(b, SwipeDir.LEFT);
+      expect(r.board[0][0]).assertEqual(4);
+      expect(r.sources[0]).assertEqual(1); // 目标格(0,0) 来源 = (0,1)
+    });
+
+    it('swipe_right_reports_source_position', 0, () => {
+      // 第 0 行 [2,0,0,0] 右滑 → 2 落到格 3，来源应为格 0
+      const b = board4([[2, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]);
+      const r = rules.swipe(b, SwipeDir.RIGHT);
+      expect(r.board[0][3]).assertEqual(2);
+      expect(r.sources[3]).assertEqual(0); // 目标格(0,3) 来源 = (0,0)
+    });
+
+    it('swipe_down_reports_source_position', 0, () => {
+      // 第 0 列 [2;0;0;0] 下滑 → 2 落到 (3,0)，来源应为 (0,0)
+      const b = board4([[2, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]);
+      const r = rules.swipe(b, SwipeDir.DOWN);
+      expect(r.board[3][0]).assertEqual(2);
+      expect(r.sources[12]).assertEqual(0); // 目标(3,0)=索引12 来源=索引0
     });
   });
 }

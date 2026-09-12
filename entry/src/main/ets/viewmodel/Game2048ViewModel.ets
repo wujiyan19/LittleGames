@@ -26,6 +26,8 @@ export class Game2048ViewModel {
 
   private rules: Game2048Rules = new Game2048Rules(SIZE);
   private rng: RandomSource;
+  /** 最近一次滑动「每格来源」（供 View 计算位移动画），非 UI 状态 */
+  private lastSources: number[] = [];
 
   constructor(rng?: RandomSource) {
     this.rng = rng ?? new RealRandom();
@@ -52,6 +54,7 @@ export class Game2048ViewModel {
     this.board = this.rules.emptyBoard();
     this.score = 0;
     this.status = GameStatus.PLAYING;
+    this.lastSources = [];
     this.spawnRow = -1;
     this.spawnCol = -1;
     this.spawnTile();
@@ -70,15 +73,17 @@ export class Game2048ViewModel {
     this.spawnCol = res.col;
   }
 
-  swipeLeft(): void { this.swipe(SwipeDir.LEFT); }
-  swipeRight(): void { this.swipe(SwipeDir.RIGHT); }
-  swipeUp(): void { this.swipe(SwipeDir.UP); }
-  swipeDown(): void { this.swipe(SwipeDir.DOWN); }
+  swipeLeft(): boolean { return this.swipe(SwipeDir.LEFT); }
+  swipeRight(): boolean { return this.swipe(SwipeDir.RIGHT); }
+  swipeUp(): boolean { return this.swipe(SwipeDir.UP); }
+  swipeDown(): boolean { return this.swipe(SwipeDir.DOWN); }
 
-  private swipe(dir: SwipeDir): void {
-    if (this.status !== GameStatus.PLAYING) { return; }
+  /** 执行滑动，返回棋盘是否变化；View 据此决定是否重排方块 */
+  private swipe(dir: SwipeDir): boolean {
+    if (this.status !== GameStatus.PLAYING) { return false; }
     const result: SwipeResult = this.rules.swipe(this.board, dir);
-    if (!result.changed) { return; }
+    if (!result.changed) { return false; }
+    this.lastSources = result.sources;
     this.board = result.board;
     this.score += result.gained;
     this.spawnTile();
@@ -87,6 +92,13 @@ export class Game2048ViewModel {
       this.status = GameStatus.OVER;
       GameDataManager.updateHighScore(GAME_ID, this.score);
     }
+    return true;
+  }
+
+  /** 目标格(索引)在滑动前的来源格索引，-1 表示空格/无效 */
+  sourceAt(index: number): number {
+    if (index < 0 || index >= this.lastSources.length) { return -1; }
+    return this.lastSources[index];
   }
 
   cellValue(r: number, c: number): number {

@@ -23,26 +23,35 @@ export class SpawnResult {
   }
 }
 
-/** 滑动结果：新棋盘 + 是否变化 + 本次合并得分 */
+/** 滑动结果：新棋盘 + 是否变化 + 本次合并得分 + 每格来源（供位移动画） */
 export class SwipeResult {
   board: number[][];
   changed: boolean;
   gained: number;
+  /**
+   * 长度 size*size，sources[目标格索引] = 源格索引（swipe 前的棋盘），-1 表示空格。
+   * 合并格取两个源中的第一个。供 View 计算方块「从哪一格滑过来」（P2-4）。
+   */
+  sources: number[];
 
-  constructor(board: number[][], changed: boolean, gained: number) {
+  constructor(board: number[][], changed: boolean, gained: number, sources: number[]) {
     this.board = board;
     this.changed = changed;
     this.gained = gained;
+    this.sources = sources;
   }
 }
 
 class MergeLineResult {
   values: number[];
   gained: number;
+  /** 每个输出槽位的来源（行内下标），-1 为空 */
+  sources: number[];
 
-  constructor(values: number[], gained: number) {
+  constructor(values: number[], gained: number, sources: number[]) {
     this.values = values;
     this.gained = gained;
+    this.sources = sources;
   }
 }
 
@@ -87,31 +96,37 @@ export class Game2048Rules {
     return new SpawnResult(next, row, col, value);
   }
 
-  /** 单行左对齐合并（纯函数） */
+  /** 单行左对齐合并（纯函数），同时产出每个输出槽位的来源下标 */
   private mergeLine(line: number[]): MergeLineResult {
     const filtered: number[] = [];
+    const filteredSrc: number[] = [];
     for (let i = 0; i < line.length; i++) {
-      if (line[i] > 0) { filtered.push(line[i]); }
+      if (line[i] > 0) { filtered.push(line[i]); filteredSrc.push(i); }
     }
     const values: number[] = [];
+    const sources: number[] = [];
     let gained = 0;
     let k = 0;
     while (k < filtered.length) {
       if (k + 1 < filtered.length && filtered[k] === filtered[k + 1]) {
         values.push(filtered[k] * 2);
+        sources.push(filteredSrc[k]); // 合并：取第一个源（渲染一个方块滑入后弹动）
         gained += filtered[k] * 2;
         k += 2;
       } else {
         values.push(filtered[k]);
+        sources.push(filteredSrc[k]);
         k += 1;
       }
     }
-    while (values.length < this.size) { values.push(0); }
-    return new MergeLineResult(values, gained);
+    while (values.length < this.size) { values.push(0); sources.push(-1); }
+    return new MergeLineResult(values, gained, sources);
   }
 
   swipe(board: number[][], dir: SwipeDir): SwipeResult {
     const next = this.emptyBoard();
+    const outSources: number[] = [];
+    for (let i = 0; i < this.size * this.size; i++) { outSources.push(-1); }
     let gained = 0;
     for (let i = 0; i < this.size; i++) {
       const line: number[] = [];
@@ -124,10 +139,26 @@ export class Game2048Rules {
       const merged = this.mergeLine(line);
       gained += merged.gained;
       for (let j = 0; j < this.size; j++) {
-        if (dir === SwipeDir.LEFT) { next[i][j] = merged.values[j]; }
-        else if (dir === SwipeDir.RIGHT) { next[i][this.size - 1 - j] = merged.values[j]; }
-        else if (dir === SwipeDir.UP) { next[j][i] = merged.values[j]; }
-        else { next[this.size - 1 - j][i] = merged.values[j]; }
+        // 目标格坐标
+        let tr = 0;
+        let tc = 0;
+        if (dir === SwipeDir.LEFT) { tr = i; tc = j; }
+        else if (dir === SwipeDir.RIGHT) { tr = i; tc = this.size - 1 - j; }
+        else if (dir === SwipeDir.UP) { tr = j; tc = i; }
+        else { tr = this.size - 1 - j; tc = i; }
+        next[tr][tc] = merged.values[j];
+
+        // 来源格坐标（swipe 前的棋盘）
+        const srcLine = merged.sources[j];
+        if (srcLine >= 0) {
+          let sr = 0;
+          let sc = 0;
+          if (dir === SwipeDir.LEFT) { sr = i; sc = srcLine; }
+          else if (dir === SwipeDir.RIGHT) { sr = i; sc = this.size - 1 - srcLine; }
+          else if (dir === SwipeDir.UP) { sr = srcLine; sc = i; }
+          else { sr = this.size - 1 - srcLine; sc = i; }
+          outSources[tr * this.size + tc] = sr * this.size + sc;
+        }
       }
     }
     let changed = false;
@@ -136,7 +167,7 @@ export class Game2048Rules {
         if (board[r][c] !== next[r][c]) { changed = true; break; }
       }
     }
-    return new SwipeResult(next, changed, gained);
+    return new SwipeResult(next, changed, gained, outSources);
   }
 
   isGameOver(board: number[][]): boolean {

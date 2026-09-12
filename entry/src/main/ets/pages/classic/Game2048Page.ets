@@ -1,10 +1,13 @@
 /**
  * 2048 —— View 层（展示与动画）
  *
- * 规则/状态在 Model/ViewModel；本层只负责：方块身份(id)与弹入/合并动画、配色、布局。
- * 不 import Model 类型。
+ * 动画机制统一为「状态驱动 + .animation() 隐式动画」：
+ * - 每个方块有稳定 id，渲染在 Stack 中按 row/col 用 offset 定位；
+ * - 移动时沿用旧方块 id、只改 row/col → .animation() 自动把 offset 从旧位置插值到新位置（滑动）；
+ * - 新块初始 scale=0.5、合并块先 scale=1.15，随后统一回落 1（弹动）。
+ * 已删除原先 .animation() 与嵌套 animateTo 混用的实现（P2-4）。
+ * 规则/状态在 Model/ViewModel；本层不 import Model 类型。
  */
-import { curves } from '@kit.ArkUI';
 import { SemanticColors, RadiusTokens, FontTokens, SpacingTokens } from '../../common/DesignTokens';
 import { GameHeader } from '../../components/GameHeader';
 import { GameDifficulty, GameStatus } from '../../common/GameConstants';
@@ -15,15 +18,15 @@ import { range } from '../../common/Range';
 import { Game2048ViewModel } from '../../viewmodel/Game2048ViewModel';
 
 const SIZE = 4;
+/** 格间距（每格 margin 3 → 相邻两格共 6） */
+const GAP = 6;
 
 interface TileData {
-  value: number;
   id: number;
-  offsetX: number;
-  offsetY: number;
+  value: number;
+  row: number;
+  col: number;
   scale: number;
-  isNew: boolean;
-  isMerged: boolean;
 }
 
 @ComponentV2
@@ -31,7 +34,8 @@ export struct Game2048Page {
   @Param pathStack: NavPathStack = new NavPathStack();
   @Local safeBottom: number = SafeAreaInsets.bottom;
   @Local viewModel: Game2048ViewModel = new Game2048ViewModel();
-  @Local tiles: TileData[][] = [];
+  // 方块列表（稳定 id），非按格存储——这样移动时组件身份不变，offset 才会被插值
+  @Local tiles: TileData[] = [];
   @Local cell: number = 64;
   @Local boardSize: number = 286;
   private sx: number = 0;
@@ -39,139 +43,106 @@ export struct Game2048Page {
   private idx4: number[] = range(SIZE);
   private tileIdCounter: number = 0;
   private animationDuration: number = 150;
+  /** 弹动回落定时器（新块/合并块缩放回 1） */
+  private settleTimer: number = -1;
 
   aboutToAppear(): void {
     this.initBoardSize();
     this.startGame();
   }
 
+  aboutToDisappear(): void { this.clearSettleTimer(); }
+
   initBoardSize(): void {
     this.cell = ScreenUtils.calcCell(SIZE, 520, 32, 40);
-    this.boardSize = this.cell * SIZE + SIZE * 6 + 8;
+    this.boardSize = this.innerSize() + 8;
   }
 
-  initTiles(): TileData[][] {
-    const arr: TileData[][] = [];
-    for (let i = 0; i < SIZE; i++) {
-      const row: TileData[] = [];
-      for (let j = 0; j < SIZE; j++) {
-        row[j] = { value: 0, id: 0, offsetX: 0, offsetY: 0, scale: 1, isNew: false, isMerged: false };
-      }
-      arr[i] = row;
-    }
-    return arr;
-  }
+  private step(): number { return this.cell + GAP; }
+  private innerSize(): number { return this.cell * SIZE + SIZE * GAP; }
 
-  copyRow(r: number): TileData[] {
-    const row: TileData[] = [];
-    for (let i = 0; i < SIZE; i++) {
-      const src = this.tiles[r][i];
-      row[i] = { value: src.value, id: src.id, offsetX: src.offsetX, offsetY: src.offsetY,
-                 scale: src.scale, isNew: src.isNew, isMerged: src.isMerged };
+  private clearSettleTimer(): void {
+    if (this.settleTimer !== -1) {
+      clearTimeout(this.settleTimer);
+      this.settleTimer = -1;
     }
-    return row;
   }
 
   startGame(): void {
+    this.clearSettleTimer();
     this.viewModel.startGame();
     this.tileIdCounter = 0;
-    this.tiles = this.initTiles();
-    this.syncTiles(true);
+    // 开局两个块都做弹入
+    this.rebuildTiles(true);
   }
 
-  swipe(handler: () => void): void {
-    handler();
-    this.syncTiles(false);
+  swipe(handler: () => boolean): void {
+    const changed = handler();
+    if (changed) { this.rebuildTiles(false); }
   }
 
   /**
-   * 根据 viewModel.board 重建 tiles，保留方块 id 以驱动动画。
-   * animateAllNew=true（开局）时所有非空格视为新块；否则只有 viewModel 的 spawn 格算新块。
+   * 依据 viewModel.board 重建方块列表。
+   * animateAllNew=true（开局）时所有非空格视为新块；否则只有 spawn 格算新块。
+   * 非空格优先沿用「来源格」的旧方块 id —— 保持身份不变，offset 变化即产生滑动。
    */
-  syncTiles(animateAllNew: boolean): void {
-    const newTiles: TileData[][] = [];
-    const newCells: number[] = [];
-    const mergedCells: number[] = [];
+  rebuildTiles(animateAllNew: boolean): void {
+    this.clearSettleTimer();
+    // 旧方块按格索引归档
+    const oldAt: (TileData | null)[] = [];
+    for (let i = 0; i < SIZE * SIZE; i++) { oldAt.push(null); }
+    for (let i = 0; i < this.tiles.length; i++) {
+      const t = this.tiles[i];
+      oldAt[t.row * SIZE + t.col] = t;
+    }
+
+    const next: TileData[] = [];
+    const settleIds: number[] = [];
     for (let r = 0; r < SIZE; r++) {
-      const row: TileData[] = [];
       for (let c = 0; c < SIZE; c++) {
         const value = this.viewModel.cellValue(r, c);
-        const old = this.tiles[r][c];
-        if (value !== 0) {
-          if (old.value !== 0 && value !== old.value) {
-            // 合并：值变了
-            row[c] = { value: value, id: old.id, offsetX: 0, offsetY: 0, scale: 1, isNew: false, isMerged: true };
-            mergedCells.push(r * SIZE + c);
-          } else if (old.value === 0) {
-            const isSpawn = animateAllNew ||
-              (r === this.viewModel.spawnRow && c === this.viewModel.spawnCol);
-            row[c] = { value: value, id: ++this.tileIdCounter, offsetX: 0, offsetY: 0,
-                       scale: 1, isNew: isSpawn, isMerged: false };
-            if (isSpawn) { newCells.push(r * SIZE + c); }
-          } else {
-            // 原地不动
-            row[c] = { value: value, id: old.id, offsetX: 0, offsetY: 0, scale: 1, isNew: false, isMerged: false };
-          }
-        } else {
-          row[c] = { value: 0, id: 0, offsetX: 0, offsetY: 0, scale: 1, isNew: false, isMerged: false };
+        if (value === 0) { continue; }
+
+        const isSpawn = animateAllNew ||
+          (r === this.viewModel.spawnRow && c === this.viewModel.spawnCol);
+        if (isSpawn) {
+          const id = ++this.tileIdCounter;
+          next.push({ id: id, value: value, row: r, col: c, scale: 0.5 });
+          settleIds.push(id);
+          continue;
         }
-      }
-      newTiles[r] = row;
-    }
-    this.tiles = newTiles;
 
-    for (let i = 0; i < mergedCells.length; i++) {
-      this.animateMergedTile(Math.floor(mergedCells[i] / SIZE), mergedCells[i] % SIZE);
+        const srcIdx = this.viewModel.sourceAt(r * SIZE + c);
+        const old = (srcIdx >= 0) ? oldAt[srcIdx] : null;
+        const id = (old !== null) ? old.id : ++this.tileIdCounter;
+        // 合并判定：目标值 = 来源值 * 2
+        const merged = (old !== null) && old.value > 0 && old.value * 2 === value;
+        next.push({ id: id, value: value, row: r, col: c, scale: merged ? 1.15 : 1 });
+        if (merged) { settleIds.push(id); }
+      }
     }
-    for (let i = 0; i < newCells.length; i++) {
-      this.animateNewTile(Math.floor(newCells[i] / SIZE), newCells[i] % SIZE);
+    this.tiles = next;
+
+    if (settleIds.length > 0) {
+      this.settleTimer = setTimeout(() => {
+        this.settleTimer = -1;
+        this.settleScales(settleIds);
+      }, this.animationDuration);
     }
   }
 
-  animateMergedTile(r: number, c: number): void {
-    const updateTile = (scale: number, isMerged: boolean) => {
-      const row = this.copyRow(r);
-      const t = row[c];
-      row[c] = { value: t.value, id: t.id, offsetX: t.offsetX, offsetY: t.offsetY,
-                 scale: scale, isNew: t.isNew, isMerged: isMerged };
-      this.tiles[r] = row;
-    };
-
-    updateTile(1.2, true);
-    this.getUIContext().animateTo({
-      duration: 100,
-      curve: Curve.EaseOut,
-      onFinish: () => {
-        this.getUIContext().animateTo({
-          duration: 100,
-          curve: curves.springCurve(0.5, 1.0, 0.5, 2.0),
-          onFinish: () => { updateTile(1, false); }
-        }, () => { updateTile(1, true); });
+  /** 弹动回落：把指定方块 scale 归 1（由 .animation() 插值） */
+  private settleScales(ids: number[]): void {
+    const updated: TileData[] = [];
+    for (let i = 0; i < this.tiles.length; i++) {
+      const t = this.tiles[i];
+      let scale = t.scale;
+      for (let k = 0; k < ids.length; k++) {
+        if (ids[k] === t.id) { scale = 1; break; }
       }
-    }, () => { updateTile(1.2, true); });
-  }
-
-  animateNewTile(r: number, c: number): void {
-    const updateTile = (scale: number, isNew: boolean) => {
-      const row = this.copyRow(r);
-      const t = row[c];
-      row[c] = { value: t.value, id: t.id, offsetX: t.offsetX, offsetY: t.offsetY,
-                 scale: scale, isNew: isNew, isMerged: t.isMerged };
-      this.tiles[r] = row;
-    };
-
-    updateTile(0.5, true);
-    this.getUIContext().animateTo({
-      duration: 150,
-      curve: curves.springCurve(0.5, 1.0, 0.5, 2.0),
-      onFinish: () => {
-        this.getUIContext().animateTo({
-          duration: 100,
-          curve: Curve.EaseOut,
-          onFinish: () => { updateTile(1, false); }
-        }, () => { updateTile(1, true); });
-      }
-    }, () => { updateTile(1.2, true); });
+      updated.push({ id: t.id, value: t.value, row: t.row, col: t.col, scale: scale });
+    }
+    this.tiles = updated;
   }
 
   /**
@@ -201,10 +172,11 @@ export struct Game2048Page {
     return $r('app.color.tile_text_high');
   }
 
-  getTileAnimation(isNew: boolean): AnimateParam {
+  /** 方块隐式动画参数：位移/缩放/底色变化都由它插值 */
+  getTileAnimation(): AnimateParam {
     return {
-      duration: isNew ? 200 : this.animationDuration,
-      curve: isNew ? curves.springCurve(0.5, 1.0, 0.5, 2.0) : Curve.EaseOut,
+      duration: this.animationDuration,
+      curve: Curve.EaseOut,
       playMode: PlayMode.Normal
     };
   }
@@ -239,43 +211,55 @@ export struct Game2048Page {
         }.margin({ top: 12, bottom: 12 })
 
         Column() {
-          Column() {
+          Stack({ alignContent: Alignment.TopStart }) {
+            // 底色格
             ForEach(this.idx4, (row: number) => {
               Row() {
                 ForEach(this.idx4, (col: number) => {
-                  Column() {
-                    if (this.tiles[row][col].value > 0) {
-                      Text('' + this.tiles[row][col].value)
-                        .fontSize(Math.max(18, this.cell * 0.36)).fontWeight(FontWeight.Bold)
-                        .fontColor(this.getTileFontColor(this.tiles[row][col].value))
-                    }
-                  }.width(this.cell).height(this.cell).margin(3).borderRadius(RadiusTokens.md)
-                  .backgroundColor(this.getCellBg(this.tiles[row][col].value))
-                  .justifyContent(FlexAlign.Center)
-                  .offset({ x: this.tiles[row][col].offsetX, y: this.tiles[row][col].offsetY })
-                  .scale({ x: this.tiles[row][col].scale, y: this.tiles[row][col].scale })
-                  .animation(this.getTileAnimation(this.tiles[row][col].isNew))
+                  Column()
+                    .width(this.cell).height(this.cell).margin(3)
+                    .borderRadius(RadiusTokens.md)
+                    .backgroundColor(SemanticColors.cellHidden)
                 }, (col: number) => col.toString())
               }
             }, (row: number) => row.toString())
-          }.width(this.boardSize).height(this.boardSize)
-          .backgroundColor(SemanticColors.boardBg)
-          .border({ width: 2, color: SemanticColors.boardBorder, radius: RadiusTokens.base })
-          .padding(4)
-          // 16 个棋格同时做缩放/位移，整体缓存为一张位图，减少渲染批次（P2-1）
-          .renderGroup(true)
-          .gesture(PanGesture({ direction: PanDirection.All })
-            .onActionStart((e: GestureEvent) => { this.sx = e.offsetX; this.sy = e.offsetY; })
-            .onActionEnd((e: GestureEvent) => {
-              const dx = e.offsetX - this.sx;
-              const dy = e.offsetY - this.sy;
-              if (Math.abs(dx) > Math.abs(dy)) {
-                this.swipe(() => { if (dx > 0) { this.viewModel.swipeRight(); } else { this.viewModel.swipeLeft(); } });
-              } else {
-                this.swipe(() => { if (dy > 0) { this.viewModel.swipeDown(); } else { this.viewModel.swipeUp(); } });
+
+            // 方块层：稳定 id，按 row/col 偏移定位
+            ForEach(this.tiles, (tile: TileData) => {
+              Column() {
+                Text('' + tile.value)
+                  .fontSize(Math.max(18, this.cell * 0.36)).fontWeight(FontWeight.Bold)
+                  .fontColor(this.getTileFontColor(tile.value))
               }
-            }))
-        }.layoutWeight(1).justifyContent(FlexAlign.Center)
+              .width(this.cell).height(this.cell)
+              .borderRadius(RadiusTokens.md)
+              .backgroundColor(this.getCellBg(tile.value))
+              .justifyContent(FlexAlign.Center)
+              .offset({ x: tile.col * this.step() + 3, y: tile.row * this.step() + 3 })
+              .scale({ x: tile.scale, y: tile.scale })
+              // 放在最后：对它之前的 offset/scale/backgroundColor 做隐式插值
+              .animation(this.getTileAnimation())
+            }, (tile: TileData) => tile.id.toString())
+          }
+          .width(this.innerSize()).height(this.innerSize())
+          // 多个方块同时滑动/缩放，整体缓存为一张位图，减少渲染批次（P2-1）
+          .renderGroup(true)
+        }.width(this.boardSize).height(this.boardSize)
+        .backgroundColor(SemanticColors.boardBg)
+        .border({ width: 2, color: SemanticColors.boardBorder, radius: RadiusTokens.base })
+        .padding(4)
+        .gesture(PanGesture({ direction: PanDirection.All })
+          .onActionStart((e: GestureEvent) => { this.sx = e.offsetX; this.sy = e.offsetY; })
+          .onActionEnd((e: GestureEvent) => {
+            const dx = e.offsetX - this.sx;
+            const dy = e.offsetY - this.sy;
+            if (Math.abs(dx) > Math.abs(dy)) {
+              this.swipe(() => { return dx > 0 ? this.viewModel.swipeRight() : this.viewModel.swipeLeft(); });
+            } else {
+              this.swipe(() => { return dy > 0 ? this.viewModel.swipeDown() : this.viewModel.swipeUp(); });
+            }
+          }))
+        .layoutWeight(1).justifyContent(FlexAlign.Center)
 
         Text('上下左右滑动操作')
           .fontFamily(FontTokens.family)
