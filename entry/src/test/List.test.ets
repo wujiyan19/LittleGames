@@ -9,6 +9,7 @@ import guessNumberModelTest from './GuessNumberModel.test';
 import slidePuzzleModelTest from './SlidePuzzleModel.test';
 import klotskiModelTest from './KlotskiModel.test';
 import whackMoleModelTest from './WhackMoleModel.test';
+import memoryCardModelTest from './MemoryCardModel.test';
 
 export default function testsuite() {
   snakeModelTest();
@@ -19,4 +20,5 @@ export default function testsuite() {
   slidePuzzleModelTest();
   klotskiModelTest();
   whackMoleModelTest();
+  memoryCardModelTest();
 }
