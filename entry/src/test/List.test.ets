@@ -3,8 +3,10 @@
  */
 import snakeModelTest from './SnakeModel.test';
 import tetrisModelTest from './TetrisModel.test';
+import minesweeperModelTest from './MinesweeperModel.test';
 
 export default function testsuite() {
   snakeModelTest();
   tetrisModelTest();
+  minesweeperModelTest();
 }
