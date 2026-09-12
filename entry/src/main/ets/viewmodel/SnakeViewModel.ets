@@ -9,7 +9,8 @@
  */
 import { GameDifficulty, GameStatus } from '../common/GameConstants';
 import { GameDataManager } from '../model/GameData';
-import { Direction, Point, RandomSource, RealRandom, SnakeRules } from '../model/game/SnakeModel';
+import { Direction, Point, SnakeRules } from '../model/game/SnakeModel';
+import { RandomSource, RealRandom } from '../model/game/RandomSource';
 
 const COLS = 20;
 const ROWS = 20;

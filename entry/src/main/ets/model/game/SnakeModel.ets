@@ -5,6 +5,7 @@
  * 因此可以脱离 ArkUI 运行时直接单测。
  * 规则类设计为无状态（除棋盘尺寸外），调用方持有状态，便于断言与回放。
  */
+import { RandomSource } from './RandomSource';
 
 export enum Direction { UP, DOWN, LEFT, RIGHT }
 
@@ -15,31 +16,6 @@ export class Point {
   constructor(x: number, y: number) {
     this.x = x;
     this.y = y;
-  }
-}
-
-/** 随机源抽象：生产用 RealRandom，测试注入 SeededRandom 以获得确定性 */
-export interface RandomSource {
-  next(): number;
-}
-
-export class RealRandom implements RandomSource {
-  next(): number {
-    return Math.random();
-  }
-}
-
-export class SeededRandom implements RandomSource {
-  private seed: number;
-
-  constructor(seed: number) {
-    this.seed = seed;
-  }
-
-  next(): number {
-    // 线性同余，够测试用；不追求统计质量
-    this.seed = (this.seed * 1103515245 + 12345) % 2147483648;
-    return this.seed / 2147483648;
   }
 }
 

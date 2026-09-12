@@ -5,7 +5,8 @@
  * 随机用 SeededRandom 保证确定性。
  */
 import { describe, it, expect } from '@ohos/hypium';
-import { Direction, Point, SeededRandom, SnakeRules } from '../main/ets/model/game/SnakeModel';
+import { Direction, Point, SnakeRules } from '../main/ets/model/game/SnakeModel';
+import { SeededRandom } from '../main/ets/model/game/RandomSource';
 
 export default function snakeModelTest() {
   describe('SnakeRules', () => {
