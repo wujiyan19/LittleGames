@@ -19,39 +19,55 @@ export struct SplashLayer {
   @Local iconAnimTranslateY: number = 20;
   @Local titleAnimOpacity: number = 0;
   @Local subtitleAnimOpacity: number = 0;
+  /** 收起闪屏的定时器句柄，组件销毁时清理，避免回调落在已卸载的层上 */
+  private finishTimer: number = -1;
 
   aboutToAppear(): void {
     this.startSplash();
   }
+  aboutToDisappear(): void {
+    if (this.finishTimer !== -1) {
+      clearTimeout(this.finishTimer);
+      this.finishTimer = -1;
+    }
+  }
 
+  /**
+   * 品牌动效编排：图标 → 标题 → 副标题依次淡入，约 1s 后通知父组件收起。
+   * 原实现为三层嵌套 setTimeout，总时长 600+600+300+800 ≈ 2.3s，且纯干等；
+   * 改为多个 animateTo + delay 并行编排，总时长压到 ~1s，可读性也更好。
+   */
   startSplash(): void {
+    // 图标：淡入 + 放大上移
     this.getUIContext().animateTo({
-      duration: 600,
+      duration: 420,
       curve: Curve.FastOutSlowIn
     }, () => {
       this.iconAnimOpacity = 1;
       this.iconAnimScale = 1;
       this.iconAnimTranslateY = 0;
     });
-    setTimeout(() => {
-      this.getUIContext().animateTo({
-        duration: 400,
-        curve: Curve.EaseOut
-      }, () => {
-        this.titleAnimOpacity = 1;
-      });
-      setTimeout(() => {
-        this.getUIContext().animateTo({
-          duration: 300,
-          curve: Curve.EaseOut
-        }, () => {
-          this.subtitleAnimOpacity = 1;
-        });
-        setTimeout(() => {
-          this.onFinish();
-        }, 800);
-      }, 300);
-    }, 600);
+    // 标题：延后淡入
+    this.getUIContext().animateTo({
+      duration: 300,
+      delay: 220,
+      curve: Curve.EaseOut
+    }, () => {
+      this.titleAnimOpacity = 1;
+    });
+    // 副标题：再延后淡入
+    this.getUIContext().animateTo({
+      duration: 260,
+      delay: 400,
+      curve: Curve.EaseOut
+    }, () => {
+      this.subtitleAnimOpacity = 1;
+    });
+    // 总体约 1s 后收起（覆盖最后一段副标题淡入）
+    this.finishTimer = setTimeout(() => {
+      this.finishTimer = -1;
+      this.onFinish();
+    }, 1000);
   }
 
   build() {
