@@ -6,6 +6,7 @@ import tetrisModelTest from './TetrisModel.test';
 import minesweeperModelTest from './MinesweeperModel.test';
 import game2048ModelTest from './Game2048Model.test';
 import guessNumberModelTest from './GuessNumberModel.test';
+import slidePuzzleModelTest from './SlidePuzzleModel.test';
 
 export default function testsuite() {
   snakeModelTest();
@@ -13,4 +14,5 @@ export default function testsuite() {
   minesweeperModelTest();
   game2048ModelTest();
   guessNumberModelTest();
+  slidePuzzleModelTest();
 }
