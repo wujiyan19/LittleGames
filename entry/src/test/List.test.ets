@@ -10,6 +10,7 @@ import slidePuzzleModelTest from './SlidePuzzleModel.test';
 import klotskiModelTest from './KlotskiModel.test';
 import whackMoleModelTest from './WhackMoleModel.test';
 import memoryCardModelTest from './MemoryCardModel.test';
+import sudokuModelTest from './SudokuModel.test';
 
 export default function testsuite() {
   snakeModelTest();
@@ -21,4 +22,5 @@ export default function testsuite() {
   klotskiModelTest();
   whackMoleModelTest();
   memoryCardModelTest();
+  sudokuModelTest();
 }
