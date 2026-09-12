@@ -4,9 +4,11 @@
 import snakeModelTest from './SnakeModel.test';
 import tetrisModelTest from './TetrisModel.test';
 import minesweeperModelTest from './MinesweeperModel.test';
+import game2048ModelTest from './Game2048Model.test';
 
 export default function testsuite() {
   snakeModelTest();
   tetrisModelTest();
   minesweeperModelTest();
+  game2048ModelTest();
 }
