@@ -8,6 +8,7 @@ import game2048ModelTest from './Game2048Model.test';
 import guessNumberModelTest from './GuessNumberModel.test';
 import slidePuzzleModelTest from './SlidePuzzleModel.test';
 import klotskiModelTest from './KlotskiModel.test';
+import whackMoleModelTest from './WhackMoleModel.test';
 
 export default function testsuite() {
   snakeModelTest();
@@ -17,4 +18,5 @@ export default function testsuite() {
   guessNumberModelTest();
   slidePuzzleModelTest();
   klotskiModelTest();
+  whackMoleModelTest();
 }
