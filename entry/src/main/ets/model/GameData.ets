@@ -237,4 +237,9 @@ export class GameDataManager {
   static getTopGames(limit: number = 5): GameInfo[] {
     return [...GameDataManager.games].sort((a, b) => b.highScore - a.highScore).slice(0, limit);
   }
+
+  /** 按游玩次数排序——「热门/精选」口径，与「最高分排行」区分（P2-8） */
+  static getMostPlayed(limit: number = 5): GameInfo[] {
+    return [...GameDataManager.games].sort((a, b) => b.playCount - a.playCount).slice(0, limit);
+  }
 }

@@ -23,6 +23,9 @@ import { FeaturedTab } from './home/FeaturedTab';
 import { CategoryTab } from './home/CategoryTab';
 import { ProfileTab } from './home/ProfileTab';
 
+/** 拼音排序器：构造是重操作，模块级单例，避免每次排序都新建（P2-6） */
+const PINYIN_COLLATOR: intl.Collator = new intl.Collator('zh-CN', { usage: 'sort', collation: 'pinyin' });
+
 @Entry
 @ComponentV2
 struct Index {
@@ -37,31 +40,46 @@ struct Index {
   @Local bestScoreText: string = '--';
   // 全部游戏按拼音排序（非 UI 状态，传给分类页的「全部」）
   private allGamesPinyin: GameInfo[] = [];
+  /** 冷启动时 aboutToAppear 已完整加载，跳过紧随其后的首次 onPageShow */
+  private firstShow: boolean = true;
 
   aboutToAppear(): void {
-    this.loadData();
+    this.loadAll();
   }
 
   onPageShow(): void {
-    this.loadData();
+    if (this.firstShow) {
+      this.firstShow = false;
+      return;
+    }
+    // 从游戏页返回时最高分/游玩次数可能变化，只刷新受其影响的两块 + 概要
+    this.refreshScores();
   }
 
-  loadData(): void {
-    this.featuredGames = GameDataManager.getTopGames(6);
+  /** 完整加载：分类、拼音排序、排行榜与概要（冷启动一次） */
+  loadAll(): void {
     this.classicGames = GameDataManager.getGamesByCategory(GameCategory.CLASSIC);
     this.puzzleGames = GameDataManager.getGamesByCategory(GameCategory.PUZZLE);
     this.allGamesPinyin = this.sortByPinyin(GameDataManager.getAllGames());
-    this.rankedGames = GameDataManager.getTopGames(6);
     this.totalGames = this.classicGames.length + this.puzzleGames.length;
+    this.refreshScores();
+  }
+
+  /**
+   * 刷新受最高分/游玩次数影响的部分。
+   * 精选 = 最常玩（热门），排行 = 最高分——两者口径不同，各有意义（P2-8）。
+   */
+  refreshScores(): void {
+    this.featuredGames = GameDataManager.getMostPlayed(6);
+    this.rankedGames = GameDataManager.getTopGames(6);
     const top: GameInfo[] = GameDataManager.getTopGames(1);
     this.bestScoreText = (top.length > 0 && top[0].highScore > 0) ? top[0].highScore.toString() : '--';
   }
 
   // 中文按拼音排序（系统 Locale 习惯排序）
   sortByPinyin(list: GameInfo[]): GameInfo[] {
-    const collator = new intl.Collator('zh-CN', { usage: 'sort', collation: 'pinyin' });
     const copy = list.slice();
-    copy.sort((a: GameInfo, b: GameInfo) => collator.compare(a.name, b.name));
+    copy.sort((a: GameInfo, b: GameInfo) => PINYIN_COLLATOR.compare(a.name, b.name));
     return copy;
   }
 

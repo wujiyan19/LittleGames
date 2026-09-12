@@ -109,6 +109,8 @@ export struct SudokuPage {
           }
           .scale({ x: this.scaleFactor, y: this.scaleFactor })
           .offset({ x: this.offsetX, y: this.offsetY })
+          // 81 格随双指缩放/位移，整体缓存为一张位图，减少渲染批次（P2-1）
+          .renderGroup(true)
           .gesture(
             GestureGroup(GestureMode.Parallel,
               PinchGesture({ fingers: 2 })

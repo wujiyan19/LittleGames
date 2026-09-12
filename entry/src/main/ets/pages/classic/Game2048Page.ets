@@ -262,6 +262,8 @@ export struct Game2048Page {
           .backgroundColor(SemanticColors.boardBg)
           .border({ width: 2, color: SemanticColors.boardBorder, radius: RadiusTokens.base })
           .padding(4)
+          // 16 个棋格同时做缩放/位移，整体缓存为一张位图，减少渲染批次（P2-1）
+          .renderGroup(true)
           .gesture(PanGesture({ direction: PanDirection.All })
             .onActionStart((e: GestureEvent) => { this.sx = e.offsetX; this.sy = e.offsetY; })
             .onActionEnd((e: GestureEvent) => {

@@ -112,6 +112,8 @@ export struct SplashLayer {
         .opacity(this.iconAnimOpacity)
         .scale({ x: this.iconAnimScale, y: this.iconAnimScale })
         .translate({ y: this.iconAnimTranslateY })
+        // 图标块含 backdropBlur/阴影等重合成，动画期间整体缓存为一张位图，减少渲染批次
+        .renderGroup(true)
 
         Text('小游戏合集')
           .fontFamily(FontTokens.family)

@@ -44,12 +44,14 @@ export struct GameResultDialog {
         .backgroundColor(SemanticColors.surfaceTranslucent)
         .backdropBlur(24)
         .shadow(ShadowTokens.float)
+        .renderGroup(true)
     } else {
       Column() { this.DialogContent() }
         .width('100%').height('100%')
         .backgroundColor(SemanticColors.scrim)
         .backdropBlur(20)
         .justifyContent(FlexAlign.Center)
+        .renderGroup(true)
     }
   }
 
