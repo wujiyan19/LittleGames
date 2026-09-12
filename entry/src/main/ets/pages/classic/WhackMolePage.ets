@@ -106,6 +106,8 @@ export struct WhackMolePage {
     }
     .layoutWeight(1).aspectRatio(0.92)
     .justifyContent(FlexAlign.End)
+    // 无障碍:读屏念出洞号与当前是否有地鼠
+    .accessibilityText('第' + (index + 1) + '个地鼠洞' + (this.viewModel.holes[index] ? '，有地鼠' : '，空'))
     .onClick(() => this.viewModel.whack(index))
   }
 }

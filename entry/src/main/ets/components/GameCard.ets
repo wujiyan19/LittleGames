@@ -55,6 +55,9 @@ export struct GameCard {
     .backgroundColor(SemanticColors.surface)
     .shadow(ShadowTokens.card)
     .alignItems(HorizontalAlign.Start)
+    // 卡片整体作为一个无障碍节点，读屏一次念出「游戏名，描述」（子文本不再各自朗读）
+    .accessibilityGroup(true)
+    .accessibilityText(this.game.name + '，' + this.game.description)
     .onClick(() => { this.onTap(); })
   }
 }

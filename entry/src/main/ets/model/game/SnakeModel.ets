@@ -115,4 +115,22 @@ export class SnakeRules {
     }
     return false;
   }
+
+  /**
+   * 蛇身占用集合，key = y * cols + x。
+   * 渲染时每格查询从「线性扫描整条蛇」降为 O(1)：满屏 400 格由 ~16 万次比较降到 400 次（P2-2）。
+   */
+  occupancy(snake: Point[]): Set<number> {
+    const set = new Set<number>();
+    const cols = this.cols;
+    for (let i = 0; i < snake.length; i++) {
+      set.add(snake[i].y * cols + snake[i].x);
+    }
+    return set;
+  }
+
+  /** 占用集合查询：x=列，y=行 */
+  isOccupied(occupied: Set<number>, x: number, y: number): boolean {
+    return occupied.has(y * this.cols + x);
+  }
 }

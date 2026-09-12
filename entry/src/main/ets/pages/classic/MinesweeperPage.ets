@@ -80,6 +80,17 @@ export struct MinesweeperPage {
     return '踩到雷了';
   }
 
+  /** 无障碍描述：行/列 + 当前状态（未揭开/插旗/数字/地雷） */
+  cellA11y(row: number, col: number): string {
+    const pos = '第' + (row + 1) + '行第' + (col + 1) + '列';
+    if (!this.viewModel.isRevealed(row, col)) {
+      return this.viewModel.isFlagged(row, col) ? pos + '，已插旗' : pos + '，未揭开';
+    }
+    if (this.viewModel.isMine(row, col)) { return pos + '，地雷'; }
+    const v = this.viewModel.cellValue(row, col);
+    return v > 0 ? pos + '，周围' + v + '个雷' : pos + '，空白';
+  }
+
   build() {
     Stack() {
       Column().width('100%').height('100%')
@@ -141,6 +152,7 @@ export struct MinesweeperPage {
                   }.width(this.cellSize).height(this.cellSize)
                   .backgroundColor(this.getCellBg(row, col))
                   .border({ width: 1, color: SemanticColors.boardBorder }).borderRadius(RadiusTokens.xs)
+                  .accessibilityText(this.cellA11y(row, col))
                   .onClick(() => { if (!this.viewModel.isFlagged(row, col)) { this.viewModel.reveal(row, col); } })
                   .gesture(LongPressGesture().onAction(() => this.viewModel.toggleFlag(row, col)))
                 }, (col: number) => col.toString())

@@ -62,6 +62,14 @@ export struct SudokuPage {
     };
   }
 
+  /** 无障碍描述：行/列 + 是否题面固定格 + 当前数字 */
+  cellA11y(row: number, col: number): string {
+    const pos = '第' + (row + 1) + '行第' + (col + 1) + '列';
+    const v = this.viewModel.cellValue(row, col);
+    const fixed = this.viewModel.isFixed(row, col) ? '，题面固定' : '';
+    return v > 0 ? pos + '，数字' + v + fixed : pos + '，空白' + fixed;
+  }
+
   build() {
     Stack() {
       Column().width('100%').height('100%')
@@ -102,6 +110,7 @@ export struct SudokuPage {
                     color: SemanticColors.boardBorder
                   })
                   .justifyContent(FlexAlign.Center)
+                  .accessibilityText(this.cellA11y(row, col))
                   .onClick(() => { this.viewModel.selectCell(row, col); })
                 }, (col: number) => col.toString())
               }

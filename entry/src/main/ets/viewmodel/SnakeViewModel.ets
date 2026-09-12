@@ -28,6 +28,8 @@ export class SnakeViewModel {
 
   private rules: SnakeRules = new SnakeRules(COLS, ROWS);
   private rng: RandomSource;
+  /** 蛇身占用集合（非 UI 状态），随蛇变动重建；供渲染 O(1) 查询（P2-2） */
+  private occupied: Set<number> = new Set<number>();
   private direction: Direction = Direction.RIGHT;
   // 方向输入缓冲：每个 tick 只应用一次转向，防止一个 tick 内连按两键造成 180° 反向自杀
   private pendingTurn: Direction | null = null;
@@ -59,6 +61,7 @@ export class SnakeViewModel {
   newGame(): void {
     GameDataManager.incrementPlayCount(GAME_ID);
     this.snake = this.rules.initialSnake();
+    this.occupied = this.rules.occupancy(this.snake);
     this.food = this.rules.spawnFood(this.snake, this.rng);
     this.direction = Direction.RIGHT;
     this.pendingTurn = null;
@@ -95,6 +98,7 @@ export class SnakeViewModel {
     const outcome = this.rules.step(this.snake, this.direction, this.food, this.score);
     if (outcome.dead) { this.gameOver(); return; }
     this.snake = outcome.snake;
+    this.occupied = this.rules.occupancy(this.snake);
     this.score = outcome.score;
     if (outcome.ate) {
       this.food = this.rules.spawnFood(this.snake, this.rng);
@@ -124,8 +128,9 @@ export class SnakeViewModel {
     this.pendingTurn = dir;
   }
 
+  /** 渲染热路径：O(1) 查询占用集合（P2-2） */
   isSnakeCell(x: number, y: number): boolean {
-    return this.rules.contains(this.snake, x, y);
+    return this.rules.isOccupied(this.occupied, x, y);
   }
 
   isFood(x: number, y: number): boolean {

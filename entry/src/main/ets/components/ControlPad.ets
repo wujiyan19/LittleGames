@@ -37,6 +37,7 @@ export struct ControlPad {
       .backgroundColor(SemanticColors.surface)
       .borderRadius(RadiusTokens.base)
       .shadow(ShadowTokens.button)
+      .accessibilityText('向上')
       .onClick(() => { this.onUp(); })
 
       // 左 / 中 / 右
@@ -50,6 +51,7 @@ export struct ControlPad {
         .backgroundColor(SemanticColors.surface)
         .borderRadius(RadiusTokens.base)
         .shadow(ShadowTokens.button)
+        .accessibilityText('向左')
         .onClick(() => { this.onLeft(); })
 
         Button() {
@@ -68,6 +70,7 @@ export struct ControlPad {
         .borderRadius(RadiusTokens.base)
         .opacity(this.getCenterOpacity())
         .shadow(ShadowTokens.button)
+        .accessibilityText(this.centerLabel.length > 0 ? this.centerLabel : '中央操作')
         .onClick(() => { this.onCenter(); })
 
         Button() {
@@ -79,6 +82,7 @@ export struct ControlPad {
         .backgroundColor(SemanticColors.surface)
         .borderRadius(RadiusTokens.base)
         .shadow(ShadowTokens.button)
+        .accessibilityText('向右')
         .onClick(() => { this.onRight(); })
       }
 
@@ -92,6 +96,7 @@ export struct ControlPad {
       .backgroundColor(SemanticColors.surface)
       .borderRadius(RadiusTokens.base)
       .shadow(ShadowTokens.button)
+      .accessibilityText('向下')
       .onClick(() => { this.onDown(); })
     }
   }
