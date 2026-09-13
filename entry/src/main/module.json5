@@ -21,7 +21,6 @@
         "startWindowIcon": "$media:layered_image",
         "startWindowBackground": "$color:start_window_background",
         "exported": true,
-        "continuable": true,
         "skills": [
           {
             "entities": [
