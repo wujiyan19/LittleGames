@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 本地单元测试入口（hypium 约定：聚合各 *.test.ets）
  */
 import snakeModelTest from './SnakeModel.test';
@@ -11,6 +11,9 @@ import klotskiModelTest from './KlotskiModel.test';
 import whackMoleModelTest from './WhackMoleModel.test';
 import memoryCardModelTest from './MemoryCardModel.test';
 import sudokuModelTest from './SudokuModel.test';
+import viewModelClassicTest from './ViewModelClassic.test';
+import viewModelPuzzleTest from './ViewModelPuzzle.test';
+import gameDataManagerTest from './GameDataManager.test';
 
 export default function testsuite() {
   snakeModelTest();
@@ -23,4 +26,7 @@ export default function testsuite() {
   whackMoleModelTest();
   memoryCardModelTest();
   sudokuModelTest();
+  viewModelClassicTest();
+  viewModelPuzzleTest();
+  gameDataManagerTest();
 }
