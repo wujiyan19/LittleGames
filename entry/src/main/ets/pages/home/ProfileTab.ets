@@ -52,12 +52,12 @@ export struct ProfileTab {
           .justifyContent(FlexAlign.Center)
 
           Column() {
-            Text('游戏玩家')
+            Text($r('app.string.profile_player_name'))
               .fontFamily(FontTokens.family)
               .fontSize(FontTokens.sizeBodyLarge)
               .fontWeight(FontTokens.weightSemibold)
               .fontColor(SemanticColors.textPrimary)
-            Text('享受游戏的乐趣！')
+            Text($r('app.string.profile_player_desc'))
               .fontFamily(FontTokens.family)
               .fontSize(FontTokens.sizeBodySmall)
               .fontColor(SemanticColors.textTertiary)
@@ -80,9 +80,9 @@ export struct ProfileTab {
 
         // 数据卡片
         Row({ space: SpacingTokens.base }) {
-          this.StatsCard('游戏总数', '' + this.totalGames)
-          this.StatsCard('已收录', '10')
-          this.StatsCard('最高分', this.bestScoreText)
+          this.StatsCard($r('app.string.profile_stat_total'), '' + this.totalGames)
+          this.StatsCard($r('app.string.profile_stat_collected'), '10')
+          this.StatsCard($r('app.string.profile_stat_best'), this.bestScoreText)
         }
         .width('100%')
         .padding({
@@ -95,7 +95,7 @@ export struct ProfileTab {
           SymbolGlyph($r('sys.symbol.star_fill'))
             .fontSize(18)
             .fontColor([SemanticColors.warning])
-          Text('最高分排行')
+          Text($r('app.string.profile_ranking_title'))
             .fontFamily(FontTokens.family)
             .fontSize(FontTokens.sizeBodyLarge)
             .fontWeight(FontTokens.weightSemibold)
@@ -153,7 +153,7 @@ export struct ProfileTab {
   }
 
   @Builder
-  StatsCard(title: string, value: string) {
+  StatsCard(title: Resource | string, value: string) {
     Column() {
       Text(value)
         .fontFamily(FontTokens.family)

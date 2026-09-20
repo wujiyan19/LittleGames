@@ -23,8 +23,24 @@ export struct MinesweeperPage {
   @Local viewModel: MinesweeperViewModel = new MinesweeperViewModel();
   @Local cellSize: number = 32;
   private idx9: number[] = range(COLS);
+  // 无障碍字符串缓存（在 aboutToAppear 中预解析，避免渲染热路径中反复调用 getStringSync）
+  @Local a11yRowColFormat: string = '';
+  @Local a11yFlagged: string = '';
+  @Local a11yHidden: string = '';
+  @Local a11yIsMine: string = '';
+  @Local a11yAroundFormat: string = '';
+  @Local a11yBlank: string = '';
 
   aboutToAppear(): void {
+    const context = this.getUIContext().getHostContext();
+    if (context) {
+      this.a11yRowColFormat = context.resourceManager.getStringSync($r('app.string.a11y_mine_row_col_format'));
+      this.a11yFlagged = context.resourceManager.getStringSync($r('app.string.a11y_mine_flagged'));
+      this.a11yHidden = context.resourceManager.getStringSync($r('app.string.a11y_mine_hidden'));
+      this.a11yIsMine = context.resourceManager.getStringSync($r('app.string.a11y_mine_is_mine'));
+      this.a11yAroundFormat = context.resourceManager.getStringSync($r('app.string.a11y_mine_around_format'));
+      this.a11yBlank = context.resourceManager.getStringSync($r('app.string.a11y_mine_blank'));
+    }
     this.cellSize = ScreenUtils.calcCell(COLS, 520, 20, 24);
     this.viewModel.startGame();
   }
@@ -75,20 +91,20 @@ export struct MinesweeperPage {
     return SemanticColors.error;
   }
 
-  getResultText(): string {
-    if (this.viewModel.gameResult) { return '扫雷成功!'; }
-    return '踩到雷了';
+  getResultText(): Resource {
+    if (this.viewModel.gameResult) { return $r('app.string.result_minesweeper_win'); }
+    return $r('app.string.result_minesweeper_lose');
   }
 
   /** 无障碍描述：行/列 + 当前状态（未揭开/插旗/数字/地雷） */
   cellA11y(row: number, col: number): string {
-    const pos = '第' + (row + 1) + '行第' + (col + 1) + '列';
+    const pos = this.a11yRowColFormat.replace('%1$d', '' + (row + 1)).replace('%2$d', '' + (col + 1));
     if (!this.viewModel.isRevealed(row, col)) {
-      return this.viewModel.isFlagged(row, col) ? pos + '，已插旗' : pos + '，未揭开';
+      return this.viewModel.isFlagged(row, col) ? pos + this.a11yFlagged : pos + this.a11yHidden;
     }
-    if (this.viewModel.isMine(row, col)) { return pos + '，地雷'; }
+    if (this.viewModel.isMine(row, col)) { return pos + this.a11yIsMine; }
     const v = this.viewModel.cellValue(row, col);
-    return v > 0 ? pos + '，周围' + v + '个雷' : pos + '，空白';
+    return v > 0 ? pos + this.a11yAroundFormat.replace('%1$d', '' + v) : pos + this.a11yBlank;
   }
 
   build() {
@@ -98,10 +114,10 @@ export struct MinesweeperPage {
 
       Column() {
         GameHeader({
-          gameTitle: '扫雷',
+          gameTitle: $r('app.string.game_minesweeper_name'),
           showScore: false,
           showPause: false,
-          subtitle: '长按插旗 · 点击揭开',
+          subtitle: $r('app.string.game_minesweeper_subtitle'),
           difficulty: this.viewModel.difficulty,
           onDifficultyChange: (d: GameDifficulty) => { this.viewModel.changeDifficulty(d); },
           onBack: () => { this.pathStack.pop(); },
@@ -114,7 +130,7 @@ export struct MinesweeperPage {
             Row({ space: SpacingTokens.xs }) {
               SymbolGlyph($r('sys.symbol.flag_fill'))
                 .fontSize(12).fontColor([SemanticColors.warning])
-              Text('旗帜').fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
+              Text($r('app.string.flags_label')).fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
             }
             Text(this.viewModel.flagCount + '/' + this.viewModel.getMineCount()).fontSize(FontTokens.sizeHeadline)
               .fontWeight(FontTokens.weightBold).fontColor(SemanticColors.warning)
@@ -125,7 +141,7 @@ export struct MinesweeperPage {
             Row({ space: SpacingTokens.xs }) {
               SymbolGlyph($r('sys.symbol.clock'))
                 .fontSize(12).fontColor([SemanticColors.accent])
-              Text('时间').fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
+              Text($r('app.string.time_label')).fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
             }
             Text(this.viewModel.elapsed + 's').fontSize(FontTokens.sizeHeadline)
               .fontWeight(FontTokens.weightBold).fontColor(SemanticColors.accent)
@@ -162,7 +178,7 @@ export struct MinesweeperPage {
           .backgroundColor(SemanticColors.boardBg).border({ width: 2, color: SemanticColors.boardBorder, radius: RadiusTokens.md })
         }.layoutWeight(1).justifyContent(FlexAlign.Center)
 
-        Text('长按插旗 · 点击揭开')
+        Text($r('app.string.game_minesweeper_subtitle'))
           .fontFamily(FontTokens.family)
           .fontSize(FontTokens.sizeBodySmall).fontColor(SemanticColors.textTertiary)
           .padding({ bottom: SpacingTokens.lg, top: SpacingTokens.xs })
@@ -173,11 +189,13 @@ export struct MinesweeperPage {
           symbol: this.getResultSymbol(),
           symbolColor: this.getResultColor(),
           title: this.getResultText(),
-          detail: this.viewModel.elapsed + ' 秒完成',
+          detail: $r('app.string.result_detail_time_format', this.viewModel.elapsed),
           detailColor: SemanticColors.accent,
-          primaryText: '再来一局',
+          showDetail: true,
+          primaryText: $r('app.string.result_play_again'),
           onPrimary: () => { this.viewModel.startGame(); },
-          secondaryText: '返回',
+          secondaryText: $r('app.string.action_back'),
+          showSecondary: true,
           onSecondary: () => { this.pathStack.pop(); }
         })
       }

@@ -56,10 +56,10 @@ export struct SlidePuzzlePage {
         .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
 
       Column() {
-        GameHeader({ gameTitle: '滑动拼图',
+        GameHeader({ gameTitle: $r('app.string.game_slidepuzzle_name'),
           showScore: false,
           showPause: false,
-          subtitle: '移动方块还原顺序',
+          subtitle: $r('app.string.game_slidepuzzle_subtitle'),
           difficulty: this.viewModel.difficulty,
           onDifficultyChange: (d: GameDifficulty) => { this.changeDifficulty(d); },
           onBack: () => { this.pathStack.pop(); },
@@ -68,12 +68,12 @@ export struct SlidePuzzlePage {
 
         Row() {
           Column() {
-            Text('步数').fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
+            Text($r('app.string.steps_label')).fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
             Text('' + this.viewModel.steps).fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold).fontColor(SemanticColors.accent)
           }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
           .alignItems(HorizontalAlign.Center).margin({ left: 16 })
           Column() {
-            Text('最佳').fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
+            Text($r('app.string.best_label')).fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
             Text(this.viewModel.getBestText()).fontSize(FontTokens.sizeHeadline)
               .fontWeight(FontTokens.weightBold).fontColor(SemanticColors.textPrimary)
           }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
@@ -109,10 +109,11 @@ export struct SlidePuzzlePage {
         GameResultDialog({
           symbol: $r('sys.symbol.checkmark_circle'),
           symbolColor: SemanticColors.success,
-          title: '拼图完成!',
-          detail: '步数: ' + this.viewModel.steps,
+          title: $r('app.string.result_puzzle_complete'),
+          detail: $r('app.string.result_detail_steps_format', this.viewModel.steps),
           detailColor: SemanticColors.accent,
-          primaryText: '再来一局',
+          showDetail: true,
+          primaryText: $r('app.string.result_play_again'),
           onPrimary: () => { this.viewModel.startGame(); }
         })
       }

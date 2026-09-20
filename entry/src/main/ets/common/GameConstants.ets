@@ -1,36 +1,68 @@
 /**
  * 游戏分类枚举
+ *
+ * 枚举值为英文逻辑标识，UI 显示文案通过 getCategoryLabel() 获取 $r() 资源引用。
+ * 所有使用枚举成员（如 GameCategory.CLASSIC）做逻辑判断的代码不受影响。
  */
 export enum GameCategory {
-  CLASSIC = '经典休闲',
-  PUZZLE = '益智解谜'
+  CLASSIC = 'classic',
+  PUZZLE = 'puzzle'
 }
 
 /**
  * 游戏难度
+ *
+ * 枚举值为英文逻辑标识，UI 显示文案通过 getDifficultyLabel() 获取 $r() 资源引用。
  */
 export enum GameDifficulty {
-  EASY = '简单',
-  NORMAL = '普通',
-  HARD = '困难'
+  EASY = 'easy',
+  NORMAL = 'normal',
+  HARD = 'hard'
 }
 
 /**
  * 游戏信息接口
+ *
+ * name/description/scoreLabel 支持 Resource | string，以支持国际化资源引用。
+ * ArkUI 的 Text() 组件原生接受 Resource | string，无需额外转换。
+ * 非组件代码中需通过 I18nUtils.resolveString() 将 Resource 解析为 string。
  */
 export interface GameInfo {
   id: string;
-  name: string;
+  name: Resource | string;
   category: GameCategory;
   icon: string;
-  description: string;
+  description: Resource | string;
   highScore: number;
   playCount: number;
   /**
    * 最高分的计分口径。各游戏分数量纲不同（有的是原始得分，有的由步数/用时/次数换算），
    * 排行页需显示对应口径，避免把不同含义的分数混为一谈。
    */
-  scoreLabel: string;
+  scoreLabel: Resource | string;
+}
+
+/**
+ * 将 GameCategory 枚举映射到国际化资源引用
+ */
+export function getCategoryLabel(category: GameCategory): Resource {
+  if (category === GameCategory.CLASSIC) {
+    return $r('app.string.cat_classic');
+  }
+  return $r('app.string.cat_puzzle');
+}
+
+/**
+ * 将 GameDifficulty 枚举映射到国际化资源引用
+ */
+export function getDifficultyLabel(difficulty: GameDifficulty): Resource {
+  if (difficulty === GameDifficulty.EASY) {
+    return $r('app.string.diff_easy');
+  }
+  if (difficulty === GameDifficulty.NORMAL) {
+    return $r('app.string.diff_normal');
+  }
+  return $r('app.string.diff_hard');
 }
 
 /**

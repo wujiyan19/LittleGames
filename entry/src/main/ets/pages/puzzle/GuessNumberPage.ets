@@ -30,12 +30,12 @@ export struct GuessNumberPage {
   }
 
   getKeyFontSize(key: string): number {
-    if (key === '确定') { return FontTokens.sizeBody; }
+    if (key === 'submit') { return FontTokens.sizeBody; }
     return 24;
   }
 
   getKeyFontColor(key: string): ResourceColor {
-    if (key === '确定') {
+    if (key === 'submit') {
       if (this.viewModel.isInputComplete()) { return SemanticColors.textOnPrimary; }
       return SemanticColors.textTertiary;
     }
@@ -43,7 +43,7 @@ export struct GuessNumberPage {
   }
 
   getKeyBgColor(key: string): ResourceColor {
-    if (key === '确定') {
+    if (key === 'submit') {
       if (this.viewModel.isInputComplete()) { return SemanticColors.primary; }
       return SemanticColors.surfaceHover;
     }
@@ -52,7 +52,7 @@ export struct GuessNumberPage {
   }
 
   getKeyShadow(key: string): ShadowOptions | undefined {
-    if (key === '确定' && this.viewModel.isInputComplete()) {
+    if (key === 'submit' && this.viewModel.isInputComplete()) {
       return ShadowTokens.button;
     }
     return undefined;
@@ -64,10 +64,10 @@ export struct GuessNumberPage {
         .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
 
       Column() {
-        GameHeader({ gameTitle: '猜数字',
+        GameHeader({ gameTitle: $r('app.string.game_guessnumber_name'),
           // subtitle 仅在 showScore 为 false 时显示，不关掉的话「尝试 N / M」永远被吃掉
           showScore: false,
-          subtitle: '尝试 ' + this.viewModel.tries + ' / ' + this.viewModel.getMaxTries(),
+          subtitle: $r('app.string.game_guessnumber_subtitle_format', this.viewModel.tries, this.viewModel.getMaxTries()),
           difficulty: this.viewModel.difficulty,
           onDifficultyChange: (d: GameDifficulty) => { this.viewModel.changeDifficulty(d); },
           onBack: () => { this.pathStack.pop(); },
@@ -75,13 +75,13 @@ export struct GuessNumberPage {
           onRestart: () => { this.viewModel.startGame(); } })
 
         Column() {
-          Text('猜一个由' + this.viewModel.getSecretLength() + '个不重复数字组成的密码')
+          Text($r('app.string.guess_hint_length_format', this.viewModel.getSecretLength()))
             .fontFamily(FontTokens.family).fontSize(FontTokens.sizeBodySmall)
             .fontColor(SemanticColors.textTertiary).margin({ top: SpacingTokens.sm })
-          Text('输入' + this.viewModel.getSecretLength() + '位数字后提交')
+          Text($r('app.string.guess_hint_submit_format', this.viewModel.getSecretLength()))
             .fontFamily(FontTokens.family).fontSize(FontTokens.sizeBodySmall)
             .fontColor(SemanticColors.textTertiary)
-          Text('已尝试: ' + this.viewModel.tries + '/' + this.viewModel.getMaxTries())
+          Text($r('app.string.guess_tries_format', this.viewModel.tries, this.viewModel.getMaxTries()))
             .fontFamily(FontTokens.family).fontSize(FontTokens.sizeBodySmall)
             .fontColor(SemanticColors.warning).margin({ top: SpacingTokens.xs })
         }.alignItems(HorizontalAlign.Center).margin({ bottom: SpacingTokens.md })
@@ -90,7 +90,7 @@ export struct GuessNumberPage {
           Row({ space: SpacingTokens.xs }) {
             SymbolGlyph($r('sys.symbol.list_bullet'))
               .fontSize(12).fontColor([SemanticColors.accent])
-            Text('猜测记录')
+            Text($r('app.string.guess_records_title'))
               .fontFamily(FontTokens.family).fontSize(FontTokens.sizeBodySmall)
               .fontColor(SemanticColors.textTertiary).margin({ bottom: 0 })
           }.width('100%').margin({ left: SpacingTokens.base, right: SpacingTokens.base, bottom: 4 })
@@ -126,7 +126,7 @@ export struct GuessNumberPage {
           this.KeyRow(['1', '2', '3'])
           this.KeyRow(['4', '5', '6'])
           this.KeyRow(['7', '8', '9'])
-          this.KeyRow(['⌫', '0', '确定'])
+          this.KeyRow(['⌫', '0', 'submit'])
         }.padding({ bottom: SpacingTokens.lg })
       }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
@@ -134,10 +134,11 @@ export struct GuessNumberPage {
         GameResultDialog({
           symbol: $r('sys.symbol.checkmark_circle'),
           symbolColor: SemanticColors.success,
-          title: '恭喜猜中!',
-          detail: '密码: ' + this.viewModel.secret + '  ·  ' + this.viewModel.tries + ' 次',
+          title: $r('app.string.result_guess_win'),
+          detail: $r('app.string.result_detail_guess_win_format', this.viewModel.secret, this.viewModel.tries),
           detailColor: SemanticColors.warning,
-          primaryText: '再来一局',
+          showDetail: true,
+          primaryText: $r('app.string.result_play_again'),
           onPrimary: () => { this.viewModel.startGame(); },
           cardStyle: true
         })
@@ -145,10 +146,11 @@ export struct GuessNumberPage {
         GameResultDialog({
           symbol: $r('sys.symbol.xmark_circle'),
           symbolColor: SemanticColors.error,
-          title: this.viewModel.getMaxTries() + '次用完了',
-          detail: '密码: ' + this.viewModel.secret,
+          title: $r('app.string.result_guess_fail_format', this.viewModel.getMaxTries()),
+          detail: $r('app.string.result_detail_guess_fail_format', this.viewModel.secret),
           detailColor: SemanticColors.error,
-          primaryText: '再来一局',
+          showDetail: true,
+          primaryText: $r('app.string.result_play_again'),
           onPrimary: () => { this.viewModel.startGame(); },
           cardStyle: true
         })
@@ -164,6 +166,11 @@ export struct GuessNumberPage {
           if (key === '⌫') {
             SymbolGlyph($r('sys.symbol.delete_left'))
               .fontSize(20).fontColor([SemanticColors.textOnPrimary])
+          } else if (key === 'submit') {
+            Text($r('app.string.guess_confirm'))
+              .fontFamily(FontTokens.family)
+              .fontSize(this.getKeyFontSize(key))
+              .fontColor(this.getKeyFontColor(key))
           } else {
             Text(key)
               .fontFamily(FontTokens.family)
@@ -177,7 +184,7 @@ export struct GuessNumberPage {
         .shadow(this.getKeyShadow(key))
         .onClick(() => {
           if (key === '⌫') { this.viewModel.deleteDigit(); }
-          else if (key === '确定') { this.viewModel.submit(); }
+          else if (key === 'submit') { this.viewModel.submit(); }
           else { this.viewModel.pushDigit(key); }
         })
       }, (key: string) => key)

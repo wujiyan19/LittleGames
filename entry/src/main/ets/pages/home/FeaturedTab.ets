@@ -19,12 +19,12 @@ export struct FeaturedTab {
         this.Banner()
 
         Row() {
-          Text('热门推荐')
+          Text($r('app.string.home_hot_title'))
             .fontFamily(FontTokens.family)
             .fontSize(FontTokens.sizeBodyLarge)
             .fontWeight(FontTokens.weightSemibold)
             .fontColor(SemanticColors.textPrimary)
-          Text('为你精选')
+          Text($r('app.string.home_featured_subtitle'))
             .fontFamily(FontTokens.family)
             .fontSize(FontTokens.sizeBodySmall)
             .fontColor(SemanticColors.textTertiary)
@@ -63,12 +63,12 @@ export struct FeaturedTab {
   Banner() {
     Row() {
       Column() {
-        Text('今天也要加油哦！')
+        Text($r('app.string.home_banner_title'))
           .fontFamily(FontTokens.family)
           .fontSize(FontTokens.sizeSubtitle)
           .fontColor('#FFFFFF')
           .fontWeight(FontWeight.Bold)
-        Text('10 款精选小游戏等你来挑战')
+        Text($r('app.string.home_banner_subtitle'))
           .fontFamily(FontTokens.family)
           .fontSize(FontTokens.sizeBody)
           .fontColor('rgba(255, 255, 255, 0.78)')

@@ -3,12 +3,12 @@
  * 使用系统 Symbol 图标，交互热区 ≥ 40vp
  */
 import { SemanticColors, FontTokens, RadiusTokens, ShadowTokens, SpacingTokens } from '../common/DesignTokens';
-import { GameDifficulty } from '../common/GameConstants';
+import { GameDifficulty, getDifficultyLabel } from '../common/GameConstants';
 
 @ComponentV2
 export struct GameHeader {
-  @Param gameTitle: string = '';
-  @Param subtitle: string = '';
+  @Param gameTitle: Resource | string = '';
+  @Param subtitle: Resource | string = '';
   @Param isPaused: boolean = false;
   @Param showScore: boolean = true;
   @Param scoreValue: number = 0;
@@ -53,7 +53,7 @@ export struct GameHeader {
           .fontWeight(FontTokens.weightBold)
           .fontColor(SemanticColors.textPrimary)
         if (this.showScore) {
-          Text('得分 ' + this.scoreValue + ' · 最高 ' + this.highScoreValue)
+          Text($r('app.string.header_score_format', this.scoreValue, this.highScoreValue))
             .fontFamily(FontTokens.family)
             .fontSize(FontTokens.sizeCaption)
             .fontColor(SemanticColors.textTertiary)
@@ -133,7 +133,7 @@ export struct GameHeader {
   difficultyMenu() {
     Menu() {
       MenuItem() {
-        Text('简单')
+        Text(getDifficultyLabel(GameDifficulty.EASY))
           .fontFamily(FontTokens.family)
           .fontSize(FontTokens.sizeBody)
           .fontColor(SemanticColors.textPrimary)
@@ -141,7 +141,7 @@ export struct GameHeader {
       .selected(this.difficulty === GameDifficulty.EASY)
       .onClick(() => { this.onDifficultyChange(GameDifficulty.EASY); })
       MenuItem() {
-        Text('普通')
+        Text(getDifficultyLabel(GameDifficulty.NORMAL))
           .fontFamily(FontTokens.family)
           .fontSize(FontTokens.sizeBody)
           .fontColor(SemanticColors.textPrimary)
@@ -149,7 +149,7 @@ export struct GameHeader {
       .selected(this.difficulty === GameDifficulty.NORMAL)
       .onClick(() => { this.onDifficultyChange(GameDifficulty.NORMAL); })
       MenuItem() {
-        Text('困难')
+        Text(getDifficultyLabel(GameDifficulty.HARD))
           .fontFamily(FontTokens.family)
           .fontSize(FontTokens.sizeBody)
           .fontColor(SemanticColors.textPrimary)
@@ -165,14 +165,14 @@ export struct GameHeader {
   refreshMenu() {
     Menu() {
       MenuItem() {
-        Text('重新开始')
+        Text($r('app.string.header_restart'))
           .fontFamily(FontTokens.family)
           .fontSize(FontTokens.sizeBody)
           .fontColor(SemanticColors.textPrimary)
       }
       .onClick(() => { this.onRestart(); })
       MenuItem() {
-        Text('新游戏')
+        Text($r('app.string.header_new_game'))
           .fontFamily(FontTokens.family)
           .fontSize(FontTokens.sizeBody)
           .fontColor(SemanticColors.textPrimary)

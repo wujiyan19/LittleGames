@@ -62,9 +62,9 @@ export struct MemoryCardPage {
 
       Column() {
         GameHeader({
-          gameTitle: '记忆翻牌',
+          gameTitle: $r('app.string.game_memorycard_name'),
           showScore: false,
-          subtitle: '已配对 ' + this.viewModel.matchedCount + ' / ' + this.viewModel.getPairCount(),
+          subtitle: $r('app.string.game_memorycard_subtitle_format', this.viewModel.matchedCount, this.viewModel.getPairCount()),
           difficulty: this.viewModel.difficulty,
           onDifficultyChange: (d: GameDifficulty) => { this.changeDifficulty(d); },
           onBack: () => { this.pathStack.pop(); },
@@ -74,12 +74,12 @@ export struct MemoryCardPage {
 
         Row() {
           Column() {
-            Text('尝试').fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
+            Text($r('app.string.attempts_label')).fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
             Text('' + this.viewModel.attempts).fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold).fontColor(SemanticColors.accent)
           }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
           .alignItems(HorizontalAlign.Center).margin({ left: 16 })
           Column() {
-            Text('最佳').fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
+            Text($r('app.string.best_label')).fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
             Text(this.viewModel.getBestText()).fontSize(FontTokens.sizeHeadline)
               .fontWeight(FontTokens.weightBold).fontColor(SemanticColors.textPrimary)
           }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
@@ -114,10 +114,11 @@ export struct MemoryCardPage {
         GameResultDialog({
           symbol: $r('sys.symbol.star_fill'),
           symbolColor: SemanticColors.warning,
-          title: '全部找到!',
-          detail: '尝试: ' + this.viewModel.attempts + '  ·  最佳: ' + this.viewModel.bestScore,
+          title: $r('app.string.result_all_found'),
+          detail: $r('app.string.result_detail_memory_format', this.viewModel.attempts, this.viewModel.bestScore),
           detailColor: SemanticColors.warning,
-          primaryText: '再来一局',
+          showDetail: true,
+          primaryText: $r('app.string.result_play_again'),
           onPrimary: () => { this.viewModel.startGame(); },
           cardStyle: true
         })

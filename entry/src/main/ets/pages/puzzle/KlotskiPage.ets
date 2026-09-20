@@ -23,12 +23,14 @@ export struct KlotskiPage {
   @Local safeBottom: number = SafeAreaInsets.bottom;
   @Local viewModel: KlotskiViewModel = new KlotskiViewModel();
   @Local cell: number = 65;
+  @Local centerLabel: string = '';
   private rowArray: number[] = range(BH);
   private colArray: number[] = range(BW);
 
   aboutToAppear(): void {
     this.cell = ScreenUtils.calcCell(BW, 560, 28, 48);
     this.viewModel.startGame();
+    this.centerLabel = getStringSync($r('app.string.klotski_move'));
   }
 
   /** 棋子配色（种类由 ViewModel 给出，颜色资源在 View）；文字恒为白 */
@@ -53,10 +55,10 @@ export struct KlotskiPage {
 
       Column() {
         GameHeader({
-          gameTitle: '华容道',
+          gameTitle: $r('app.string.game_klotski_name'),
           showScore: false,
           showPause: false,
-          subtitle: '步数 ' + this.viewModel.stepCount,
+          subtitle: $r('app.string.game_klotski_subtitle_format', this.viewModel.stepCount),
           difficulty: this.viewModel.difficulty,
           onDifficultyChange: (d: GameDifficulty) => { this.viewModel.changeDifficulty(d); },
           onBack: () => { this.pathStack.pop(); },
@@ -76,7 +78,7 @@ export struct KlotskiPage {
                         // 棋子底色为彩色，白字在两套主题下均可读
                         .fontColor('#FFFFFF')
                     } else if (row === 4 && col === 1) {
-                      Text('出口').fontSize(Math.max(10, this.cell * 0.16)).fontColor(SemanticColors.textTertiary)
+                      Text($r('app.string.klotski_exit')).fontSize(Math.max(10, this.cell * 0.16)).fontColor(SemanticColors.textTertiary)
                     }
                   }.width(this.cell).height(this.cell).margin(2)
                   .backgroundColor(this.getCellBg(row, col))
@@ -100,7 +102,7 @@ export struct KlotskiPage {
           onLeft: () => this.viewModel.moveBlock(-1, 0),
           onRight: () => this.viewModel.moveBlock(1, 0),
           onCenter: () => {},
-          centerLabel: '移'
+          centerLabel: this.centerLabel
         })
       }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
@@ -108,10 +110,11 @@ export struct KlotskiPage {
         GameResultDialog({
           symbol: $r('sys.symbol.checkmark_circle'),
           symbolColor: SemanticColors.success,
-          title: '曹操出逃成功!',
-          detail: '' + this.viewModel.stepCount + ' 步完成',
+          title: $r('app.string.result_klotski_success'),
+          detail: $r('app.string.result_detail_steps_complete_format', this.viewModel.stepCount),
           detailColor: SemanticColors.warning,
-          primaryText: '再来一局',
+          showDetail: true,
+          primaryText: $r('app.string.result_play_again'),
           onPrimary: () => { this.viewModel.startGame(); }
         })
       }

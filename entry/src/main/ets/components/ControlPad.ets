@@ -21,6 +21,13 @@ export struct ControlPad {
     return 0.3;
   }
 
+  getCenterA11yText(): Resource | string {
+    if (this.centerLabel.length > 0) {
+      return this.centerLabel;
+    }
+    return $r('app.string.a11y_center_action');
+  }
+
   build() {
     Column({ space: SpacingTokens.sm }) {
       if (this.actionButtons) {
@@ -37,7 +44,7 @@ export struct ControlPad {
       .backgroundColor(SemanticColors.surface)
       .borderRadius(RadiusTokens.base)
       .shadow(ShadowTokens.button)
-      .accessibilityText('向上')
+      .accessibilityText($r('app.string.a11y_direction_up'))
       .onClick(() => { this.onUp(); })
 
       // 左 / 中 / 右
@@ -51,7 +58,7 @@ export struct ControlPad {
         .backgroundColor(SemanticColors.surface)
         .borderRadius(RadiusTokens.base)
         .shadow(ShadowTokens.button)
-        .accessibilityText('向左')
+        .accessibilityText($r('app.string.a11y_direction_left'))
         .onClick(() => { this.onLeft(); })
 
         Button() {
@@ -70,7 +77,7 @@ export struct ControlPad {
         .borderRadius(RadiusTokens.base)
         .opacity(this.getCenterOpacity())
         .shadow(ShadowTokens.button)
-        .accessibilityText(this.centerLabel.length > 0 ? this.centerLabel : '中央操作')
+        .accessibilityText(this.getCenterA11yText())
         .onClick(() => { this.onCenter(); })
 
         Button() {
@@ -82,7 +89,7 @@ export struct ControlPad {
         .backgroundColor(SemanticColors.surface)
         .borderRadius(RadiusTokens.base)
         .shadow(ShadowTokens.button)
-        .accessibilityText('向右')
+        .accessibilityText($r('app.string.a11y_direction_right'))
         .onClick(() => { this.onRight(); })
       }
 
@@ -96,7 +103,7 @@ export struct ControlPad {
       .backgroundColor(SemanticColors.surface)
       .borderRadius(RadiusTokens.base)
       .shadow(ShadowTokens.button)
-      .accessibilityText('向下')
+      .accessibilityText($r('app.string.a11y_direction_down'))
       .onClick(() => { this.onDown(); })
     }
   }

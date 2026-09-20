@@ -17,6 +17,7 @@ import { intl } from '@kit.LocalizationKit';
 import { GameDataManager } from '../model/GameData';
 import { GameInfo, GameCategory } from '../common/GameConstants';
 import { SemanticColors, SpacingTokens, FontTokens, BrandColors } from '../common/DesignTokens';
+import { resolveString } from '../common/I18nUtils';
 import { GamePageMap, GameRoutes } from '../router/GameRoutes';
 import { SplashLayer } from './home/SplashLayer';
 import { FeaturedTab } from './home/FeaturedTab';
@@ -79,7 +80,12 @@ struct Index {
   // 中文按拼音排序（系统 Locale 习惯排序）
   sortByPinyin(list: GameInfo[]): GameInfo[] {
     const copy = list.slice();
-    copy.sort((a: GameInfo, b: GameInfo) => PINYIN_COLLATOR.compare(a.name, b.name));
+    const context = this.getUIContext().getHostContext();
+    copy.sort((a: GameInfo, b: GameInfo) => {
+      const nameA = resolveString(a.name, context);
+      const nameB = resolveString(b.name, context);
+      return PINYIN_COLLATOR.compare(nameA, nameB);
+    });
     return copy;
   }
 
@@ -119,7 +125,7 @@ struct Index {
                 onGameClick: (game: GameInfo) => { this.navigateToGame(game); }
               })
             }
-            .tabBar(this.TabBuilder(0, '精选'))
+            .tabBar(this.TabBuilder(0, $r('app.string.tab_featured')))
             TabContent() {
               CategoryTab({
                 classicGames: this.classicGames,
@@ -128,7 +134,7 @@ struct Index {
                 onGameClick: (game: GameInfo) => { this.navigateToGame(game); }
               })
             }
-            .tabBar(this.TabBuilder(1, '分类'))
+            .tabBar(this.TabBuilder(1, $r('app.string.tab_category')))
             TabContent() {
               ProfileTab({
                 totalGames: this.totalGames,
@@ -136,7 +142,7 @@ struct Index {
                 rankedGames: this.rankedGames
               })
             }
-            .tabBar(this.TabBuilder(2, '我的'))
+            .tabBar(this.TabBuilder(2, $r('app.string.tab_profile')))
           }
           .barHeight(56)
           .barMode(BarMode.Fixed)
@@ -214,7 +220,7 @@ struct Index {
   }
 
   @Builder
-  TabBuilder(index: number, title: string) {
+  TabBuilder(index: number, title: Resource | string) {
     Column() {
       SymbolGlyph(this.getTabSymbol(index))
         .fontSize(22)

@@ -23,6 +23,11 @@ export struct SudokuPage {
   @Local offsetX: number = 0;
   @Local offsetY: number = 0;
   @Local boardPixelSize: number = 302;
+  // 无障碍描述预解析缓存
+  @Local a11yFixed: string = '';
+  @Local a11yBlank: string = '';
+  @Local a11yNumberFormat: string = '';
+  @Local a11yRowColFormat: string = '';
   private idx9: number[] = range(9);
   private startScale: number = 1;
   private startOffsetX: number = 0;
@@ -31,6 +36,11 @@ export struct SudokuPage {
   aboutToAppear(): void {
     this.boardPixelSize = ScreenUtils.calcCell(9, 520, 24, 28) * 9 + 8;
     this.viewModel.newGame();
+    // 预解析无障碍描述字符串
+    this.a11yFixed = getStringSync($r('app.string.a11y_sudoku_fixed'));
+    this.a11yBlank = getStringSync($r('app.string.a11y_sudoku_blank'));
+    this.a11yNumberFormat = getStringSync($r('app.string.a11y_sudoku_number_format'));
+    this.a11yRowColFormat = getStringSync($r('app.string.a11y_mine_row_col_format'));
   }
 
   getCellSize(): number {
@@ -64,10 +74,10 @@ export struct SudokuPage {
 
   /** 无障碍描述：行/列 + 是否题面固定格 + 当前数字 */
   cellA11y(row: number, col: number): string {
-    const pos = '第' + (row + 1) + '行第' + (col + 1) + '列';
+    const pos = this.a11yRowColFormat.replace('%1$d', (row + 1).toString()).replace('%2$d', (col + 1).toString());
     const v = this.viewModel.cellValue(row, col);
-    const fixed = this.viewModel.isFixed(row, col) ? '，题面固定' : '';
-    return v > 0 ? pos + '，数字' + v + fixed : pos + '，空白' + fixed;
+    const fixed = this.viewModel.isFixed(row, col) ? this.a11yFixed : '';
+    return v > 0 ? pos + this.a11yNumberFormat.replace('%1$d', v.toString()) + fixed : pos + this.a11yBlank + fixed;
   }
 
   build() {
@@ -77,10 +87,10 @@ export struct SudokuPage {
 
       Column() {
         GameHeader({
-          gameTitle: '数独',
+          gameTitle: $r('app.string.game_sudoku_name'),
           showScore: false,
           showPause: false,
-          subtitle: '点击格子 · 填入数字',
+          subtitle: $r('app.string.game_sudoku_subtitle'),
           difficulty: this.viewModel.difficulty,
           onDifficultyChange: (d: GameDifficulty) => { this.viewModel.changeDifficulty(d); },
           onBack: () => { this.pathStack.pop(); },
@@ -178,8 +188,8 @@ export struct SudokuPage {
         GameResultDialog({
           symbol: $r('sys.symbol.checkmark_circle'),
           symbolColor: SemanticColors.success,
-          title: '恭喜完成!',
-          primaryText: '新游戏',
+          title: $r('app.string.result_sudoku_complete'),
+          primaryText: $r('app.string.result_new_game'),
           onPrimary: () => { this.viewModel.newGame(); }
         })
       }

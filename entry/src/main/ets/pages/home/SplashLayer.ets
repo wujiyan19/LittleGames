@@ -115,7 +115,7 @@ export struct SplashLayer {
         // 图标块含 backdropBlur/阴影等重合成，动画期间整体缓存为一张位图，减少渲染批次
         .renderGroup(true)
 
-        Text('小游戏合集')
+        Text($r('app.string.app_splash_title'))
           .fontFamily(FontTokens.family)
           .fontSize(FontTokens.sizeDisplay)
           .fontWeight(FontTokens.weightBold)
@@ -123,7 +123,7 @@ export struct SplashLayer {
           .opacity(this.titleAnimOpacity)
           .margin({ top: 28 })
 
-        Text('宇宙蓝 × 雪域灰 · 轻拟物设计')
+        Text($r('app.string.app_splash_subtitle'))
           .fontFamily(FontTokens.family)
           .fontSize(FontTokens.sizeBody)
           .fontColor('rgba(255, 255, 255, 0.72)')
@@ -134,5 +134,12 @@ export struct SplashLayer {
       .justifyContent(FlexAlign.Center)
     }
     .width('100%').height('100%')
+    .onClick(() => {
+      if (this.finishTimer !== -1) {
+        clearTimeout(this.finishTimer);
+        this.finishTimer = -1;
+      }
+      this.onFinish();
+    })
   }
 }

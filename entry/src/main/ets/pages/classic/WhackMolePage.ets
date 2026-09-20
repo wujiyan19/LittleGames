@@ -18,8 +18,20 @@ export struct WhackMolePage {
   @Local safeBottom: number = SafeAreaInsets.bottom;
   @Local viewModel: WhackMoleViewModel = new WhackMoleViewModel();
   private idx3: number[] = range(3);
+  // 无障碍字符串缓存（在 aboutToAppear 中预解析，避免渲染热路径中反复调用 getStringSync）
+  @Local a11yHoleFormat: string = '';
+  @Local a11yHasMole: string = '';
+  @Local a11yEmpty: string = '';
 
-  aboutToAppear(): void { this.viewModel.startGame(); }
+  aboutToAppear(): void {
+    const context = this.getUIContext().getHostContext();
+    if (context) {
+      this.a11yHoleFormat = context.resourceManager.getStringSync($r('app.string.a11y_whack_hole_format'));
+      this.a11yHasMole = context.resourceManager.getStringSync($r('app.string.a11y_whack_has_mole'));
+      this.a11yEmpty = context.resourceManager.getStringSync($r('app.string.a11y_whack_empty'));
+    }
+    this.viewModel.startGame();
+  }
   aboutToDisappear(): void { this.viewModel.dispose(); }
 
   onPageHide(): void { this.viewModel.onPageHide(); }
@@ -36,7 +48,7 @@ export struct WhackMolePage {
         .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
 
       Column() {
-        GameHeader({ gameTitle: '打地鼠', // 得分/最高分已由下方大字指标卡展示，关闭标题栏的小字重复显示
+        GameHeader({ gameTitle: $r('app.string.game_whackmole_name'), // 得分/最高分已由下方大字指标卡展示，关闭标题栏的小字重复显示
           showScore: false,
           isPaused: this.viewModel.status === GameStatus.PAUSED,
           difficulty: this.viewModel.difficulty,
@@ -47,13 +59,13 @@ export struct WhackMolePage {
 
         Row() {
           Column() {
-            Text('得分').fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
+            Text($r('app.string.score_label')).fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
             Text('' + this.viewModel.score).fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold).fontColor(SemanticColors.accent)
           }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
           .alignItems(HorizontalAlign.Center).margin({ left: 16 })
 
           Column() {
-            Text('时间').fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
+            Text($r('app.string.time_label')).fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
             Text(this.viewModel.timeLeft + 's').fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold)
               .fontColor(this.getTimeColor())
           }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
@@ -75,12 +87,14 @@ export struct WhackMolePage {
         GameResultDialog({
           symbol: $r('sys.symbol.star_fill'),
           symbolColor: SemanticColors.warning,
-          title: '时间到！',
-          detail: '得分 ' + this.viewModel.score,
+          title: $r('app.string.result_time_up'),
+          detail: $r('app.string.result_detail_score_format', this.viewModel.score),
           detailColor: SemanticColors.accent,
-          primaryText: '再来一局',
+          showDetail: true,
+          primaryText: $r('app.string.result_play_again'),
           onPrimary: () => { this.viewModel.startGame(); },
-          secondaryText: '返回',
+          secondaryText: $r('app.string.action_back'),
+          showSecondary: true,
           onSecondary: () => { this.pathStack.pop(); }
         })
       }
@@ -107,7 +121,7 @@ export struct WhackMolePage {
     .layoutWeight(1).aspectRatio(0.92)
     .justifyContent(FlexAlign.End)
     // 无障碍:读屏念出洞号与当前是否有地鼠
-    .accessibilityText('第' + (index + 1) + '个地鼠洞' + (this.viewModel.holes[index] ? '，有地鼠' : '，空'))
+    .accessibilityText(this.a11yHoleFormat.replace('%1$d', '' + (index + 1)) + (this.viewModel.holes[index] ? this.a11yHasMole : this.a11yEmpty))
     .onClick(() => this.viewModel.whack(index))
   }
 }

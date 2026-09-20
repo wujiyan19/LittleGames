@@ -11,6 +11,7 @@
 import { SemanticColors, FontTokens, RadiusTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
 import { GameInfo } from '../../common/GameConstants';
 import { GameCard } from '../../components/GameCard';
+import { resolveString } from '../../common/I18nUtils';
 
 @ComponentV2
 export struct CategoryTab {
@@ -38,10 +39,13 @@ export struct CategoryTab {
     if (keyword.length === 0) {
       return source;
     }
+    const context = this.getUIContext().getHostContext();
     const result: GameInfo[] = [];
     for (let i = 0; i < source.length; i++) {
       const g: GameInfo = source[i];
-      if (g.name.toLowerCase().includes(keyword) || g.description.toLowerCase().includes(keyword)) {
+      const nameStr = resolveString(g.name, context).toLowerCase();
+      const descStr = resolveString(g.description, context).toLowerCase();
+      if (nameStr.includes(keyword) || descStr.includes(keyword)) {
         result.push(g);
       }
     }
@@ -78,7 +82,7 @@ export struct CategoryTab {
           .fontWeight(FontWeight.Regular)
           .fontColor([SemanticColors.textTertiary])
           .margin({ left: SpacingTokens.md })
-        TextInput({ text: this.searchText, placeholder: '搜索游戏名称或描述' })
+        TextInput({ text: this.searchText, placeholder: $r('app.string.search_placeholder') })
           .layoutWeight(1)
           .height(40)
           .fontFamily(FontTokens.family)
@@ -115,9 +119,9 @@ export struct CategoryTab {
       .shadow(ShadowTokens.card)
 
       Row() {
-        this.CategoryChip(-1, '全部')
-        this.CategoryChip(0, '经典休闲')
-        this.CategoryChip(1, '益智解谜')
+        this.CategoryChip(-1, $r('app.string.cat_all'))
+        this.CategoryChip(0, $r('app.string.cat_classic'))
+        this.CategoryChip(1, $r('app.string.cat_puzzle'))
       }
       .width('100%')
       .padding({ left: SpacingTokens.pageHorizontal, top: SpacingTokens.base })
@@ -149,12 +153,12 @@ export struct CategoryTab {
                 .fontSize(44)
                 .fontWeight(FontWeight.Regular)
                 .fontColor([SemanticColors.textDisabled])
-              Text('未找到「' + this.searchText.trim() + '」相关游戏')
+              Text($r('app.string.search_no_result_prefix') + this.searchText.trim() + $r('app.string.search_no_result_suffix'))
                 .fontFamily(FontTokens.family)
                 .fontSize(FontTokens.sizeBodyLarge)
                 .fontWeight(FontTokens.weightMedium)
                 .fontColor(SemanticColors.textTertiary)
-              Text('换个关键词试试，或看看其他分类')
+              Text($r('app.string.search_try_other'))
                 .fontFamily(FontTokens.family)
                 .fontSize(FontTokens.sizeBodySmall)
                 .fontColor(SemanticColors.textDisabled)
@@ -181,7 +185,7 @@ export struct CategoryTab {
   }
 
   @Builder
-  CategoryChip(index: number, title: string) {
+  CategoryChip(index: number, title: Resource | string) {
     Row({ space: SpacingTokens.xs }) {
       SymbolGlyph(this.getCategorySymbol(index))
         .fontSize(16)

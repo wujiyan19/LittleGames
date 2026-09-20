@@ -4,6 +4,7 @@
  */
 import { SemanticColors, FontTokens, RadiusTokens, ShadowTokens, SpacingTokens } from '../common/DesignTokens';
 import { GameInfo, GameCategory } from '../common/GameConstants';
+import { resolveString } from '../common/I18nUtils';
 
 const EMPTY_GAME: GameInfo = {
   id: '',
@@ -13,7 +14,7 @@ const EMPTY_GAME: GameInfo = {
   description: '',
   highScore: 0,
   playCount: 0,
-  scoreLabel: '分'
+  scoreLabel: $r('app.string.score_label')
 };
 
 @ComponentV2
@@ -21,6 +22,13 @@ export struct GameCard {
   @Param game: GameInfo = EMPTY_GAME;
   /** 点击跳转，由父组件持有导航逻辑（各 Tab 不感知 NavPathStack）。命名为 onTap 以避开基类 onClick 属性 */
   @Param onTap: () => void = () => {};
+
+  buildA11yText(): string {
+    const context = this.getUIContext().getHostContext();
+    const nameStr = resolveString(this.game.name, context);
+    const descStr = resolveString(this.game.description, context);
+    return nameStr + '，' + descStr;
+  }
 
   build() {
     Column() {
@@ -57,7 +65,7 @@ export struct GameCard {
     .alignItems(HorizontalAlign.Start)
     // 卡片整体作为一个无障碍节点，读屏一次念出「游戏名，描述」（子文本不再各自朗读）
     .accessibilityGroup(true)
-    .accessibilityText(this.game.name + '，' + this.game.description)
+    .accessibilityText(this.buildA11yText())
     .onClick(() => { this.onTap(); })
   }
 }

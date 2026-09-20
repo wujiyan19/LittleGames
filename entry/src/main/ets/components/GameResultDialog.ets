@@ -22,16 +22,19 @@ export struct GameResultDialog {
   /** 图标前景色：成功用 success，失败用 error，普通结算用 warning */
   @Param symbolColor: ResourceColor = SemanticColors.warning;
   /** 主标题 */
-  @Param title: string = '';
-  /** 副标题（成绩详情），留空则不渲染 */
-  @Param detail: string = '';
+  @Param title: Resource | string = '';
+  /** 副标题（成绩详情），showDetail 为 true 时渲染 */
+  @Param detail: Resource | string = '';
   /** 副标题颜色：成绩类用 accent，提示类用 warning */
   @Param detailColor: ResourceColor = SemanticColors.accent;
+  /** 是否显示副标题（Resource 类型无 length 属性，需显式控制） */
+  @Param showDetail: boolean = false;
   /** 主按钮文案 */
-  @Param primaryText: string = '再来一局';
+  @Param primaryText: Resource | string = $r('app.string.result_play_again');
   @Param onPrimary: () => void = () => {};
-  /** 次按钮文案，留空则不渲染 */
-  @Param secondaryText: string = '';
+  /** 次按钮文案，showSecondary 为 true 时渲染 */
+  @Param secondaryText: Resource | string = '';
+  @Param showSecondary: boolean = false;
   @Param onSecondary: () => void = () => {};
   /** true = 居中卡片式；false = 全屏遮罩式 */
   @Param cardStyle: boolean = false;
@@ -75,10 +78,10 @@ export struct GameResultDialog {
         .fontColor(SemanticColors.textPrimary)
         .margin({
           top: SpacingTokens.md,
-          bottom: this.detail.length > 0 ? SpacingTokens.xs : SpacingTokens.base
+          bottom: this.showDetail ? SpacingTokens.xs : SpacingTokens.base
         })
 
-      if (this.detail.length > 0) {
+      if (this.showDetail) {
         Text(this.detail)
           .fontFamily(FontTokens.family)
           .fontSize(FontTokens.sizeSubtitle).fontColor(this.detailColor)
@@ -100,7 +103,7 @@ export struct GameResultDialog {
         .shadow(ShadowTokens.button)
         .onClick(() => this.onPrimary())
 
-        if (this.secondaryText.length > 0) {
+        if (this.showSecondary) {
           Button(this.secondaryText)
             .height(44).padding({ left: SpacingTokens.lg, right: SpacingTokens.lg })
             .fontFamily(FontTokens.family)
