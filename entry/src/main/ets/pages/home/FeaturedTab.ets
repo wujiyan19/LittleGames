@@ -61,38 +61,57 @@ export struct FeaturedTab {
   /** 横幅：背景为品牌渐变（gradientHero），故其上文字恒为白色，不随主题变化 */
   @Builder
   Banner() {
-    Row() {
-      Column() {
-        Text($r('app.string.home_banner_title'))
-          .fontFamily(FontTokens.family)
-          .fontSize(FontTokens.sizeSubtitle)
-          .fontColor('#FFFFFF')
-          .fontWeight(FontWeight.Bold)
-        Text($r('app.string.home_banner_subtitle'))
-          .fontFamily(FontTokens.family)
-          .fontSize(FontTokens.sizeBody)
-          .fontColor('rgba(255, 255, 255, 0.78)')
-          .margin({ top: SpacingTokens.xs })
-      }
-      .alignItems(HorizontalAlign.Start)
-      .layoutWeight(1)
+    Stack() {
+      Row() {
+        Column() {
+          Text($r('app.string.home_banner_title'))
+            .fontFamily(FontTokens.family)
+            .fontSize(FontTokens.sizeTitle)
+            .fontColor('#FFFFFF')
+            .fontWeight(FontWeight.Bold)
+          Text($r('app.string.home_banner_subtitle'))
+            .fontFamily(FontTokens.family)
+            .fontSize(FontTokens.sizeBody)
+            .fontColor('rgba(255, 255, 255, 0.78)')
+            .fontWeight(FontWeight.Medium)
+            .margin({ top: SpacingTokens.xs })
+        }
+        .alignItems(HorizontalAlign.Start)
+        .layoutWeight(1)
 
-      SymbolGlyph($r('sys.symbol.star_fill'))
-        .fontSize(44)
-        .fontWeight(FontWeight.Medium)
-        .fontColor(['rgba(255, 255, 255, 0.95)', 'rgba(255, 255, 255, 0.45)'])
+        SymbolGlyph($r('sys.symbol.gamecontroller'))
+          .fontSize(56)
+          .fontWeight(FontWeight.Medium)
+          .fontColor(['rgba(255, 255, 255, 0.95)', 'rgba(255, 255, 255, 0.45)'])
+      }
+      .width('100%')
+      .padding({ left: SpacingTokens.lg, right: SpacingTokens.lg, top: SpacingTokens.lg, bottom: SpacingTokens.lg })
+      .borderRadius(RadiusTokens.xl)
+      .linearGradient({
+        angle: 135,
+        colors: [
+          [BrandColors.cosmicBlue, 0],
+          [BrandColors.auroraPurple, 1]
+        ]
+      })
+      .shadow(ShadowTokens.float)
+      .margin({
+        left: SpacingTokens.pageHorizontal,
+        right: SpacingTokens.pageHorizontal,
+        top: SpacingTokens.base
+      })
+
+      Circle({ width: 180, height: 180 })
+        .fill('rgba(93, 134, 255, 0.30)')
+        .blur(50)
+        .position({ x: -40, y: -30 })
+
+      Circle({ width: 140, height: 140 })
+        .fill('rgba(122, 90, 248, 0.25)')
+        .blur(40)
+        .position({ x: '75%', y: '60%' })
     }
     .width('100%')
-    .padding({ left: SpacingTokens.lg, right: SpacingTokens.lg, top: SpacingTokens.base, bottom: SpacingTokens.base })
-    .borderRadius(RadiusTokens.xl)
-    .linearGradient({
-      angle: 135,
-      colors: [
-        [BrandColors.cosmicBlue, 0],
-        [BrandColors.auroraPurple, 1]
-      ]
-    })
-    .shadow(ShadowTokens.float)
     .margin({
       left: SpacingTokens.pageHorizontal,
       right: SpacingTokens.pageHorizontal,

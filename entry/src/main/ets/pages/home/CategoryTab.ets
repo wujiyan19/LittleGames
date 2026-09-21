@@ -116,7 +116,7 @@ export struct CategoryTab {
       })
       .backgroundColor(SemanticColors.surface)
       .borderRadius(RadiusTokens.full)
-      .shadow(ShadowTokens.card)
+      .shadow({ radius: 8, color: $r('app.color.card_shadow'), offsetX: 0, offsetY: 2 })
 
       Row() {
         this.CategoryChip(-1, $r('app.string.cat_all'))
@@ -201,6 +201,12 @@ export struct CategoryTab {
     .borderRadius(RadiusTokens.full)
     .backgroundColor(this.getCategoryBgColor(index))
     .margin({ right: SpacingTokens.md })
-    .onClick(() => { this.currentCategory = index; })
+    .scale({ x: this.currentCategory === index ? 1.05 : 1.0, y: this.currentCategory === index ? 1.05 : 1.0 })
+    .animation({ duration: 200, curve: Curve.FastOutSlowIn })
+    .onClick(() => {
+      this.getUIContext().animateTo({ duration: 200, curve: Curve.FastOutSlowIn }, () => {
+        this.currentCategory = index;
+      });
+    })
   }
 }

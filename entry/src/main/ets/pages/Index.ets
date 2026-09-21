@@ -197,8 +197,8 @@ struct Index {
     .padding({
       left: SpacingTokens.pageHorizontal,
       right: SpacingTokens.pageHorizontal,
-      top: SpacingTokens.base,
-      bottom: SpacingTokens.base
+      top: SpacingTokens.lg,
+      bottom: SpacingTokens.lg
     })
     .linearGradient({
       angle: 120,
@@ -229,7 +229,7 @@ struct Index {
   TabBuilder(index: number, title: Resource | string) {
     Column() {
       SymbolGlyph(this.getTabSymbol(index))
-        .fontSize(22)
+        .fontSize(this.currentTab === index ? 24 : 22)
         .fontWeight(FontWeight.Regular)
         .fontColor([this.getTabColor(index)])
       Text(title)
@@ -237,7 +237,7 @@ struct Index {
         .fontSize(FontTokens.sizeCaption)
         .fontWeight(this.getTabWeight(index))
         .fontColor(this.getTabColor(index))
-        .margin({ top: 2 })
+        .margin({ top: 4 })
     }
     .width('100%').height('100%')
     .justifyContent(FlexAlign.Center)

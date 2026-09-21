@@ -76,6 +76,27 @@
     { "name": "mine_num_6", "value": "#33E0C8" },
     { "name": "mine_num_7", "value": "#FFFFFF" },
     { "name": "mine_num_8", "value": "#98A2B8" },
-    { "name": "mine_num_invalid", "value": "#FF6B6B" }
+    { "name": "mine_num_invalid", "value": "#FF6B6B" },
+
+    { "name": "badge_snake_start", "value": "#4FDE9B" },
+    { "name": "badge_snake_end", "value": "#2DD482" },
+    { "name": "badge_tetris_start", "value": "#A08FFA" },
+    { "name": "badge_tetris_end", "value": "#8675F8" },
+    { "name": "badge_2048_start", "value": "#FFB84D" },
+    { "name": "badge_2048_end", "value": "#FF8080" },
+    { "name": "badge_whackmole_start", "value": "#FF85B0" },
+    { "name": "badge_whackmole_end", "value": "#FF6B9D" },
+    { "name": "badge_minesweeper_start", "value": "#5CABFF" },
+    { "name": "badge_minesweeper_end", "value": "#3399FF" },
+    { "name": "badge_sudoku_start", "value": "#26DEC4" },
+    { "name": "badge_sudoku_end", "value": "#00D4B4" },
+    { "name": "badge_slidepuzzle_start", "value": "#FF8080" },
+    { "name": "badge_slidepuzzle_end", "value": "#FF6B6B" },
+    { "name": "badge_klotski_start", "value": "#6FA8FF" },
+    { "name": "badge_klotski_end", "value": "#5C9AFF" },
+    { "name": "badge_guessnumber_start", "value": "#FFB33D" },
+    { "name": "badge_guessnumber_end", "value": "#F5A623" },
+    { "name": "badge_memorycard_start", "value": "#B8A3FF" },
+    { "name": "badge_memorycard_end", "value": "#9A83FF" }
   ]
 }

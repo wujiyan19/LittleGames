@@ -149,3 +149,42 @@ export class ShadowTokens {
   /** 悬浮/弹层阴影 */
   static float: ShadowOptions = { radius: 24, color: $r('app.color.button_shadow'), offsetX: 0, offsetY: 8 };
 }
+/**
+ * 游戏徽章渐变色 —— 每个游戏独有双色渐变，用于卡片图标徽章
+ * 引用 resources，随系统深浅色模式自动适配
+ */
+export class GameBadgeColors {
+  static getGradient(gameId: string): [Resource, number][] {
+    if (gameId === 'snake') {
+      return [[$r('app.color.badge_snake_start'), 0], [$r('app.color.badge_snake_end'), 1]];
+    }
+    if (gameId === 'tetris') {
+      return [[$r('app.color.badge_tetris_start'), 0], [$r('app.color.badge_tetris_end'), 1]];
+    }
+    if (gameId === '2048') {
+      return [[$r('app.color.badge_2048_start'), 0], [$r('app.color.badge_2048_end'), 1]];
+    }
+    if (gameId === 'whackmole') {
+      return [[$r('app.color.badge_whackmole_start'), 0], [$r('app.color.badge_whackmole_end'), 1]];
+    }
+    if (gameId === 'minesweeper') {
+      return [[$r('app.color.badge_minesweeper_start'), 0], [$r('app.color.badge_minesweeper_end'), 1]];
+    }
+    if (gameId === 'sudoku') {
+      return [[$r('app.color.badge_sudoku_start'), 0], [$r('app.color.badge_sudoku_end'), 1]];
+    }
+    if (gameId === 'slidepuzzle') {
+      return [[$r('app.color.badge_slidepuzzle_start'), 0], [$r('app.color.badge_slidepuzzle_end'), 1]];
+    }
+    if (gameId === 'klotski') {
+      return [[$r('app.color.badge_klotski_start'), 0], [$r('app.color.badge_klotski_end'), 1]];
+    }
+    if (gameId === 'guessnumber') {
+      return [[$r('app.color.badge_guessnumber_start'), 0], [$r('app.color.badge_guessnumber_end'), 1]];
+    }
+    if (gameId === 'memorycard') {
+      return [[$r('app.color.badge_memorycard_start'), 0], [$r('app.color.badge_memorycard_end'), 1]];
+    }
+    return [[$r('app.color.primary'), 0], [$r('app.color.accent'), 1]];
+  }
+}
