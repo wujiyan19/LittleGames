@@ -7,6 +7,7 @@
  */
 import { GameDifficulty, GameStatus } from '../common/GameConstants';
 import { GameDataManager } from '../model/GameData';
+import { GameLifecycleObserver } from '../common/GameLifecycleBus';
 import { Game2048Rules, SpawnResult, SwipeDir, SwipeResult } from '../model/game/Game2048Model';
 import { RandomSource, RealRandom } from '../model/game/RandomSource';
 
@@ -14,7 +15,7 @@ const SIZE = 4;
 const GAME_ID = '2048';
 
 @ObservedV2
-export class Game2048ViewModel {
+export class Game2048ViewModel implements GameLifecycleObserver {
   @Trace board: number[][] = [];
   @Trace score: number = 0;
   @Trace highScore: number = 0;
@@ -23,6 +24,8 @@ export class Game2048ViewModel {
   /** 最近一次生成的新块位置，-1 表示无（供 View 动画） */
   @Trace spawnRow: number = -1;
   @Trace spawnCol: number = -1;
+  /** 退出确认弹窗显隐（F2：对局中返回需确认） */
+  @Trace confirmExit: boolean = false;
 
   private rules: Game2048Rules = new Game2048Rules(SIZE);
   private rng: RandomSource;
@@ -101,11 +104,50 @@ export class Game2048ViewModel {
     return this.lastSources[index];
   }
 
+  /**
+   * 结算当前对局分数（max 语义幂等）。无定时器，切后台只需结算不需暂停。
+   * 原先只在对局结束/下次开局时结算，中途退出会静默丢失当前得分。
+   */
+  private settleCurrentScore(): void {
+    if (this.score > 0) { GameDataManager.updateHighScore(GAME_ID, this.score); }
+  }
+
+  /** 切后台（GameLifecycleBus）：结算当前分。无定时器，无需暂停 */
+  onAppHidden(): void {
+    this.settleCurrentScore();
+  }
+
+  onAppShown(): void {
+  }
+
+  /** 系统侧滑返回转发（NavDestination.onBackPressed）。进行中弹确认并拦截 */
+  onBackRequested(): boolean {
+    return this.requestBack();
+  }
+
+  /** 页面返回按钮与系统侧滑共用：进行中弹确认，其余放行 */
+  requestBack(): boolean {
+    if (this.status === GameStatus.PLAYING) {
+      this.confirmExit = true;
+      return true;
+    }
+    return false;
+  }
+
+  dismissExitConfirm(): void {
+    this.confirmExit = false;
+  }
+
   cellValue(r: number, c: number): number {
     return this.board[r][c];
   }
 
   isOver(): boolean {
     return this.rules.isGameOver(this.board);
+  }
+
+  /** 页面销毁：结算当前分（无定时器可停） */
+  dispose(): void {
+    this.settleCurrentScore();
   }
 }

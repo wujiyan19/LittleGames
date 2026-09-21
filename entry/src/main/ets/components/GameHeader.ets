@@ -42,6 +42,7 @@ export struct GameHeader {
       .width(40).height(40)
       .backgroundColor(SemanticColors.surface)
       .shadow(ShadowTokens.button)
+      .accessibilityText($r('app.string.a11y_header_back'))
       .onClick(() => {
         this.onBack();
       })
@@ -58,7 +59,7 @@ export struct GameHeader {
             .fontSize(FontTokens.sizeCaption)
             .fontColor(SemanticColors.textTertiary)
             .margin({ top: 2 })
-        } else if (this.subtitle.length > 0) {
+        } else if (typeof this.subtitle === 'string' && this.subtitle.length > 0) {
           Text(this.subtitle)
             .fontFamily(FontTokens.family)
             .fontSize(FontTokens.sizeCaption)
@@ -80,6 +81,7 @@ export struct GameHeader {
         .width(40).height(40)
         .backgroundColor(SemanticColors.surface)
         .shadow(ShadowTokens.button)
+        .accessibilityText($r('app.string.a11y_header_difficulty'))
         .bindMenu(this.difficultyMenu)
 
         // 暂停 / 继续
@@ -93,6 +95,7 @@ export struct GameHeader {
           .width(40).height(40)
           .backgroundColor(SemanticColors.surface)
           .shadow(ShadowTokens.button)
+          .accessibilityText(this.isPaused ? $r('app.string.a11y_header_resume') : $r('app.string.a11y_header_pause'))
           .onClick(() => { this.onPauseToggle(); })
         }
 
@@ -106,6 +109,7 @@ export struct GameHeader {
         .width(40).height(40)
         .backgroundColor(SemanticColors.surface)
         .shadow(ShadowTokens.button)
+        .accessibilityText($r('app.string.a11y_header_restart'))
         .onClick(() => {
           if (this.enableNewGame) {
             this.showRefreshMenu = true;

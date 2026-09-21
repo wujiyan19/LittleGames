@@ -13,6 +13,8 @@ import { GameDifficulty, GameStatus } from '../../common/GameConstants';
 import { SafeAreaInsets } from '../../common/SafeAreaInsets';
 import { ScreenUtils } from '../../common/ScreenUtils';
 import { range } from '../../common/Range';
+import { GameLifecycleBus } from '../../common/GameLifecycleBus';
+import { ExitConfirmDialog } from '../../components/ExitConfirmDialog';
 import { SnakeViewModel } from '../../viewmodel/SnakeViewModel';
 
 const COLS = 20;
@@ -28,19 +30,23 @@ export struct SnakeGamePage {
 
   aboutToAppear(): void {
     this.cell = ScreenUtils.calcCell(COLS, 560, 24, 8);
+    // 挂到生命周期总线：切后台暂停/恢复、系统侧滑返回拦截都经总线转发
+    // （页面 onPageHide/onPageShow 仅对 @Entry 生效，本页是 @ComponentV2，不可依赖）
+    GameLifecycleBus.attach(this.viewModel);
     this.viewModel.startGame();
   }
 
   aboutToDisappear(): void {
+    GameLifecycleBus.detach(this.viewModel);
     this.viewModel.dispose();
   }
 
-  onPageHide(): void {
-    this.viewModel.onPageHide();
-  }
-
-  onPageShow(): void {
-    this.viewModel.onPageShow();
+  /** 返回请求统一入口：进行中弹确认（被 requestBack 拦截），其余直接返回 */
+  requestExit(): void {
+    if (this.viewModel.requestBack()) {
+      return;
+    }
+    this.pathStack.pop();
   }
 
   getCellColor(col: number, row: number): ResourceColor {
@@ -66,7 +72,7 @@ export struct SnakeGamePage {
           isPaused: this.viewModel.status === GameStatus.PAUSED,
           difficulty: this.viewModel.difficulty,
           onDifficultyChange: (d: GameDifficulty) => { this.viewModel.changeDifficulty(d); },
-          onBack: () => { this.pathStack.pop(); },
+          onBack: () => { this.requestExit(); },
           onPauseToggle: () => { this.viewModel.togglePause(); },
           onRestart: () => { this.viewModel.startGame(); } })
 
@@ -123,6 +129,16 @@ export struct SnakeGamePage {
           secondaryText: $r('app.string.action_back'),
           showSecondary: true,
           onSecondary: () => { this.pathStack.pop(); }
+        })
+      }
+
+      if (this.viewModel.confirmExit) {
+        ExitConfirmDialog({
+          onConfirm: () => {
+            this.viewModel.dismissExitConfirm();
+            this.pathStack.pop();
+          },
+          onCancel: () => { this.viewModel.dismissExitConfirm(); }
         })
       }
     }.width('100%').height('100%')

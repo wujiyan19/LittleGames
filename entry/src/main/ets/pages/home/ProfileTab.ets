@@ -6,6 +6,8 @@
  */
 import { SemanticColors, FontTokens, RadiusTokens, ShadowTokens, SpacingTokens, BrandColors } from '../../common/DesignTokens';
 import { GameInfo } from '../../common/GameConstants';
+import { GameDataManager } from '../../model/GameData';
+import { resolveString } from '../../common/I18nUtils';
 
 @ComponentV2
 export struct ProfileTab {
@@ -15,6 +17,11 @@ export struct ProfileTab {
   @Param bestScoreText: string = '--';
   /** 按最高分排序的展示列表 */
   @Param rankedGames: GameInfo[] = [];
+  @Local hapticsEnabled: boolean = true;
+
+  aboutToAppear(): void {
+    this.hapticsEnabled = GameDataManager.getSetting('hapticsEnabled', true);
+  }
 
   getRankColor(index: number): Resource {
     if (index < 3) { return SemanticColors.warning; }
@@ -22,7 +29,11 @@ export struct ProfileTab {
   }
 
   getHighScoreText(game: GameInfo): string {
-    if (game.highScore > 0) { return '' + game.highScore; }
+    if (game.highScore > 0) {
+      const context = this.getUIContext().getHostContext();
+      const label = resolveString(game.scoreLabel, context);
+      return '' + game.highScore + ' ' + label;
+    }
     return '--';
   }
 
@@ -91,6 +102,41 @@ export struct ProfileTab {
           top: SpacingTokens.base
         })
 
+        // 设置卡片
+        Row() {
+          Column() {
+            Text($r('app.string.settings_haptics'))
+              .fontFamily(FontTokens.family)
+              .fontSize(FontTokens.sizeBody)
+              .fontWeight(FontTokens.weightMedium)
+              .fontColor(SemanticColors.textPrimary)
+            Text($r('app.string.settings_haptics_desc'))
+              .fontFamily(FontTokens.family)
+              .fontSize(FontTokens.sizeBodySmall)
+              .fontColor(SemanticColors.textTertiary)
+              .margin({ top: 2 })
+          }
+          .alignItems(HorizontalAlign.Start)
+          .layoutWeight(1)
+
+          Toggle({ type: ToggleType.Switch, isOn: this.hapticsEnabled })
+            .onChange((isOn: boolean) => {
+              this.hapticsEnabled = isOn;
+              GameDataManager.setSetting('hapticsEnabled', isOn);
+            })
+            .selectedColor(SemanticColors.primary)
+        }
+        .width('100%')
+        .padding(SpacingTokens.base)
+        .borderRadius(RadiusTokens.lg)
+        .backgroundColor(SemanticColors.surface)
+        .shadow(ShadowTokens.card)
+        .margin({
+          left: SpacingTokens.pageHorizontal,
+          right: SpacingTokens.pageHorizontal,
+          top: SpacingTokens.base
+        })
+
         Row() {
           SymbolGlyph($r('sys.symbol.star_fill'))
             .fontSize(18)
@@ -105,35 +151,33 @@ export struct ProfileTab {
         .width('100%')
         .padding({ left: SpacingTokens.pageHorizontal, top: SpacingTokens.lg, bottom: SpacingTokens.sm })
 
-        List() {
+        Column() {
           ForEach(this.rankedGames,
             (game: GameInfo, index: number) => {
-              ListItem() {
-                Row() {
-                  Text('' + (index + 1))
-                    .fontFamily(FontTokens.family)
-                    .fontSize(FontTokens.sizeBody)
-                    .fontWeight(FontTokens.weightBold)
-                    .fontColor(this.getRankColor(index))
-                    .width(28)
-                  Text(game.icon)
-                    .fontSize(20)
-                    .margin({ left: SpacingTokens.sm })
-                  Text(game.name)
-                    .fontFamily(FontTokens.family)
-                    .fontSize(FontTokens.sizeBody)
-                    .fontColor(SemanticColors.textPrimary)
-                    .layoutWeight(1)
-                    .margin({ left: SpacingTokens.sm })
-                  Text(this.getHighScoreText(game))
-                    .fontFamily(FontTokens.family)
-                    .fontSize(FontTokens.sizeBody)
-                    .fontWeight(FontTokens.weightBold)
-                    .fontColor(this.getHighScoreColor(game))
-                }
-                .width('100%')
-                .padding({ left: SpacingTokens.base, right: SpacingTokens.base })
+              Row() {
+                Text('' + (index + 1))
+                  .fontFamily(FontTokens.family)
+                  .fontSize(FontTokens.sizeBody)
+                  .fontWeight(FontTokens.weightBold)
+                  .fontColor(this.getRankColor(index))
+                  .width(28)
+                Text(game.icon)
+                  .fontSize(20)
+                  .margin({ left: SpacingTokens.sm })
+                Text(game.name)
+                  .fontFamily(FontTokens.family)
+                  .fontSize(FontTokens.sizeBody)
+                  .fontColor(SemanticColors.textPrimary)
+                  .layoutWeight(1)
+                  .margin({ left: SpacingTokens.sm })
+                Text(this.getHighScoreText(game))
+                  .fontFamily(FontTokens.family)
+                  .fontSize(FontTokens.sizeBody)
+                  .fontWeight(FontTokens.weightBold)
+                  .fontColor(this.getHighScoreColor(game))
               }
+              .width('100%')
+              .padding({ left: SpacingTokens.base, right: SpacingTokens.base })
               .height(52)
             }, (game: GameInfo) => game.id)
         }
@@ -142,7 +186,6 @@ export struct ProfileTab {
         .backgroundColor(SemanticColors.surface)
         .borderRadius(RadiusTokens.lg)
         .margin({ left: SpacingTokens.pageHorizontal, right: SpacingTokens.pageHorizontal })
-        .height(312)
       }
       .width('100%')
       .padding({ bottom: SpacingTokens.xxl })

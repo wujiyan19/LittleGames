@@ -9,6 +9,7 @@
  */
 import { GameDifficulty, GameStatus } from '../common/GameConstants';
 import { GameDataManager } from '../model/GameData';
+import { GameLifecycleObserver } from '../common/GameLifecycleBus';
 import { Direction, Point, SnakeRules } from '../model/game/SnakeModel';
 import { RandomSource, RealRandom } from '../model/game/RandomSource';
 
@@ -17,7 +18,7 @@ const ROWS = 20;
 const GAME_ID = 'snake';
 
 @ObservedV2
-export class SnakeViewModel {
+export class SnakeViewModel implements GameLifecycleObserver {
   /** 渲染所需的对局状态（蛇身/食物用整体替换，触发 @Trace 刷新） */
   @Trace snake: Point[] = [];
   @Trace food: Point = new Point(-1, -1);
@@ -25,6 +26,8 @@ export class SnakeViewModel {
   @Trace highScore: number = 0;
   @Trace status: GameStatus = GameStatus.IDLE;
   @Trace difficulty: GameDifficulty = GameDifficulty.NORMAL;
+  /** 退出确认弹窗显隐（F2：对局中返回需确认） */
+  @Trace confirmExit: boolean = false;
 
   private rules: SnakeRules = new SnakeRules(COLS, ROWS);
   private rng: RandomSource;
@@ -107,6 +110,15 @@ export class SnakeViewModel {
     }
   }
 
+  /**
+   * 结算当前对局分数。updateHighScore 为 max 语义，重复调用幂等。
+   * 场景：中途退出（dispose）、切后台（onAppHidden）——原先只在对局结束/下次开局时结算，
+   * 中途退出会静默丢失当前得分。
+   */
+  private settleCurrentScore(): void {
+    if (this.score > 0) { GameDataManager.updateHighScore(GAME_ID, this.score); }
+  }
+
   /** 手动暂停/恢复。只在「进行中 ⇄ 暂停」间切换，已结束的对局不会被误切换 */
   togglePause(): void {
     if (this.status === GameStatus.PLAYING) {
@@ -137,19 +149,46 @@ export class SnakeViewModel {
     return this.food.x === x && this.food.y === y;
   }
 
-  /** 切后台自动暂停：否则蛇会在后台撞墙直到 game over */
-  onPageHide(): void {
+  /**
+   * 切后台（GameLifecycleBus：UIAbility.onBackground）。
+   * 注意：不能依赖页面的 onPageHide()——它仅对 @Entry 组件生效，本应用游戏页是
+   * @ComponentV2，该钩子永远不会被调用（切后台自动暂停曾因此整体失效）。
+   */
+  onAppHidden(): void {
+    this.settleCurrentScore();
     if (this.status === GameStatus.PLAYING) {
       this.autoPaused = true;
       this.status = GameStatus.PAUSED;
     }
   }
 
-  onPageShow(): void {
+  onAppShown(): void {
     if (this.autoPaused) {
       this.autoPaused = false;
       this.status = GameStatus.PLAYING;
     }
+  }
+
+  /** 系统侧滑返回转发（NavDestination.onBackPressed）。进行中弹确认并拦截 */
+  onBackRequested(): boolean {
+    return this.requestBack();
+  }
+
+  /**
+   * 页面返回按钮与系统侧滑共用的退出请求。
+   * 进行中 → 置 confirmExit 弹确认并拦截；暂停/已结束 → 放行
+   * （暂停与退出路径的分数结算由 dispose()/onAppHidden() 兜底，无需再打扰）。
+   */
+  requestBack(): boolean {
+    if (this.status === GameStatus.PLAYING) {
+      this.confirmExit = true;
+      return true;
+    }
+    return false;
+  }
+
+  dismissExitConfirm(): void {
+    this.confirmExit = false;
   }
 
   private gameOver(): void {
@@ -159,7 +198,9 @@ export class SnakeViewModel {
     GameDataManager.updateHighScore(GAME_ID, this.score);
   }
 
+  /** 页面销毁：停定时器并结算当前分（覆盖「中途退出丢分」主路径） */
   dispose(): void {
     this.stopTimer();
+    this.settleCurrentScore();
   }
 }

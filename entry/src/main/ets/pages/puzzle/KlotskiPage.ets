@@ -10,6 +10,8 @@ import { GameHeader } from '../../components/GameHeader';
 import { GameDifficulty, GameStatus } from '../../common/GameConstants';
 import { SafeAreaInsets } from '../../common/SafeAreaInsets';
 import { GameResultDialog } from '../../components/GameResultDialog';
+import { ExitConfirmDialog } from '../../components/ExitConfirmDialog';
+import { GameLifecycleBus } from '../../common/GameLifecycleBus';
 import { ScreenUtils } from '../../common/ScreenUtils';
 import { range } from '../../common/Range';
 import { KlotskiViewModel } from '../../viewmodel/KlotskiViewModel';
@@ -24,13 +26,36 @@ export struct KlotskiPage {
   @Local viewModel: KlotskiViewModel = new KlotskiViewModel();
   @Local cell: number = 65;
   @Local centerLabel: string = '';
+  // 无障碍字符串缓存
+  @Local a11yBlockFormat: string = '';
   private rowArray: number[] = range(BH);
   private colArray: number[] = range(BW);
 
   aboutToAppear(): void {
     this.cell = ScreenUtils.calcCell(BW, 560, 28, 48);
+    const context = this.getUIContext().getHostContext();
+    if (context) {
+      this.a11yBlockFormat = context.resourceManager.getStringSync($r('app.string.a11y_klotski_block_format'));
+    }
+    GameLifecycleBus.attach(this.viewModel);
     this.viewModel.startGame();
-    this.centerLabel = getStringSync($r('app.string.klotski_move'));
+    const ctx = this.getUIContext().getHostContext();
+    if (ctx) {
+      this.centerLabel = ctx.resourceManager.getStringSync($r('app.string.klotski_move'));
+    }
+  }
+
+  aboutToDisappear(): void {
+    GameLifecycleBus.detach(this.viewModel);
+    this.viewModel.dispose();
+  }
+
+  /** 返回请求统一入口：进行中弹确认，其余直接返回 */
+  requestExit(): void {
+    if (this.viewModel.requestBack()) {
+      return;
+    }
+    this.pathStack.pop();
   }
 
   /** 棋子配色（种类由 ViewModel 给出，颜色资源在 View）；文字恒为白 */
@@ -61,7 +86,7 @@ export struct KlotskiPage {
           subtitle: $r('app.string.game_klotski_subtitle_format', this.viewModel.stepCount),
           difficulty: this.viewModel.difficulty,
           onDifficultyChange: (d: GameDifficulty) => { this.viewModel.changeDifficulty(d); },
-          onBack: () => { this.pathStack.pop(); },
+          onBack: () => { this.requestExit(); },
           onPauseToggle: () => {},
           onRestart: () => { this.viewModel.startGame(); }
         })
@@ -87,6 +112,11 @@ export struct KlotskiPage {
                     width: this.getBorderWidth(row, col),
                     color: SemanticColors.borderStrong
                   })
+                  .accessibilityText(
+                    this.viewModel.blockKind(row, col) > 0
+                      ? this.a11yBlockFormat.replace('%1$s', this.viewModel.blockLabel(row, col))
+                      : ''
+                  )
                   .onClick(() => this.viewModel.selectBlockAt(row, col))
                 }, (col: number) => col.toString())
               }
@@ -116,6 +146,16 @@ export struct KlotskiPage {
           showDetail: true,
           primaryText: $r('app.string.result_play_again'),
           onPrimary: () => { this.viewModel.startGame(); }
+        })
+      }
+
+      if (this.viewModel.confirmExit) {
+        ExitConfirmDialog({
+          onConfirm: () => {
+            this.viewModel.dismissExitConfirm();
+            this.pathStack.pop();
+          },
+          onCancel: () => { this.viewModel.dismissExitConfirm(); }
         })
       }
     }.width('100%').height('100%')

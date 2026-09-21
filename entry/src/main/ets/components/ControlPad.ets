@@ -3,6 +3,7 @@
  * 方向键使用系统 Symbol 图标，按键高度 ≥ 48vp（热区 ≥ 40vp）
  */
 import { SemanticColors, FontTokens, RadiusTokens, ShadowTokens, SpacingTokens } from '../common/DesignTokens';
+import { Haptics } from '../common/Haptics';
 
 @ComponentV2
 export struct ControlPad {
@@ -21,11 +22,15 @@ export struct ControlPad {
     return 0.3;
   }
 
-  getCenterA11yText(): Resource | string {
+  getCenterA11yText(): string {
     if (this.centerLabel.length > 0) {
       return this.centerLabel;
     }
-    return $r('app.string.a11y_center_action');
+    const context = this.getUIContext().getHostContext();
+    if (context) {
+      return context.resourceManager.getStringSync($r('app.string.a11y_center_action'));
+    }
+    return '';
   }
 
   build() {
@@ -45,7 +50,7 @@ export struct ControlPad {
       .borderRadius(RadiusTokens.base)
       .shadow(ShadowTokens.button)
       .accessibilityText($r('app.string.a11y_direction_up'))
-      .onClick(() => { this.onUp(); })
+      .onClick(() => { Haptics.tap(); this.onUp(); })
 
       // 左 / 中 / 右
       Row({ space: SpacingTokens.md }) {
@@ -59,7 +64,7 @@ export struct ControlPad {
         .borderRadius(RadiusTokens.base)
         .shadow(ShadowTokens.button)
         .accessibilityText($r('app.string.a11y_direction_left'))
-        .onClick(() => { this.onLeft(); })
+        .onClick(() => { Haptics.tap(); this.onLeft(); })
 
         Button() {
           if (this.centerLabel.length > 0) {
@@ -78,7 +83,7 @@ export struct ControlPad {
         .opacity(this.getCenterOpacity())
         .shadow(ShadowTokens.button)
         .accessibilityText(this.getCenterA11yText())
-        .onClick(() => { this.onCenter(); })
+        .onClick(() => { Haptics.tap(); this.onCenter(); })
 
         Button() {
           SymbolGlyph($r('sys.symbol.arrow_right'))
@@ -90,7 +95,7 @@ export struct ControlPad {
         .borderRadius(RadiusTokens.base)
         .shadow(ShadowTokens.button)
         .accessibilityText($r('app.string.a11y_direction_right'))
-        .onClick(() => { this.onRight(); })
+        .onClick(() => { Haptics.tap(); this.onRight(); })
       }
 
       // 下
@@ -104,7 +109,7 @@ export struct ControlPad {
       .borderRadius(RadiusTokens.base)
       .shadow(ShadowTokens.button)
       .accessibilityText($r('app.string.a11y_direction_down'))
-      .onClick(() => { this.onDown(); })
+      .onClick(() => { Haptics.tap(); this.onDown(); })
     }
   }
 }

@@ -2,6 +2,7 @@ import { UIAbility, Want, AbilityConstant } from '@kit.AbilityKit';
 import { window } from '@kit.ArkUI';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { GameDataManager } from '../model/GameData';
+import { GameLifecycleBus } from '../common/GameLifecycleBus';
 import { SafeAreaInsets } from '../common/SafeAreaInsets';
 import { ScreenUtils } from '../common/ScreenUtils';
 
@@ -56,10 +57,12 @@ export default class EntryAbility extends UIAbility {
 
   onForeground(): void {
     hilog.info(0x0000, 'LittleGames', '%{public}s', 'onForeground');
+    GameLifecycleBus.notifyShown();
   }
 
   onBackground(): void {
     hilog.info(0x0000, 'LittleGames', '%{public}s', 'onBackground');
+    GameLifecycleBus.notifyHidden();
     // 落盘走 200ms 防抖，这里强制刷一次，避免防抖窗口内的变更因进程被杀而丢失
     GameDataManager.flushNow();
   }

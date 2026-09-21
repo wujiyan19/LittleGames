@@ -9,6 +9,9 @@ import { GameHeader } from '../../components/GameHeader';
 import { GameDifficulty, GameStatus } from '../../common/GameConstants';
 import { SafeAreaInsets } from '../../common/SafeAreaInsets';
 import { GameResultDialog } from '../../components/GameResultDialog';
+import { ExitConfirmDialog } from '../../components/ExitConfirmDialog';
+import { GameLifecycleBus } from '../../common/GameLifecycleBus';
+import { Haptics } from '../../common/Haptics';
 import { ScreenUtils } from '../../common/ScreenUtils';
 import { range } from '../../common/Range';
 import { MemoryCardViewModel } from '../../viewmodel/MemoryCardViewModel';
@@ -24,13 +27,33 @@ export struct MemoryCardPage {
   @Local cardW: number = 78;
   @Local rowIdx: number[] = range(4);
   private colIdx: number[] = range(COLS);
+  // 无障碍字符串缓存
+  @Local a11yCardFlippedFormat: string = '';
+  @Local a11yCardHiddenFormat: string = '';
 
   aboutToAppear(): void {
+    const context = this.getUIContext().getHostContext();
+    if (context) {
+      this.a11yCardFlippedFormat = context.resourceManager.getStringSync($r('app.string.a11y_card_flipped_format'));
+      this.a11yCardHiddenFormat = context.resourceManager.getStringSync($r('app.string.a11y_card_hidden_format'));
+    }
     this.refreshLayout();
+    GameLifecycleBus.attach(this.viewModel);
     this.viewModel.startGame();
   }
 
-  aboutToDisappear(): void { this.viewModel.dispose(); }
+  aboutToDisappear(): void {
+    GameLifecycleBus.detach(this.viewModel);
+    this.viewModel.dispose();
+  }
+
+  /** 返回请求统一入口：进行中弹确认，其余直接返回 */
+  requestExit(): void {
+    if (this.viewModel.requestBack()) {
+      return;
+    }
+    this.pathStack.pop();
+  }
 
   /** 卡牌尺寸与行数随难度变化 */
   refreshLayout(): void {
@@ -67,7 +90,7 @@ export struct MemoryCardPage {
           subtitle: $r('app.string.game_memorycard_subtitle_format', this.viewModel.matchedCount, this.viewModel.getPairCount()),
           difficulty: this.viewModel.difficulty,
           onDifficultyChange: (d: GameDifficulty) => { this.changeDifficulty(d); },
-          onBack: () => { this.pathStack.pop(); },
+          onBack: () => { this.requestExit(); },
           onPauseToggle: () => {},
           onRestart: () => { this.viewModel.startGame(); }
         })
@@ -103,7 +126,12 @@ export struct MemoryCardPage {
                 .borderRadius(RadiusTokens.base)
                 .shadow(ShadowTokens.button)
                 .opacity(this.getCardOpacity(r * COLS + c))
-                .onClick(() => this.viewModel.flipCard(r * COLS + c))
+                .accessibilityText(
+                  this.viewModel.isFaceUp(r * COLS + c)
+                    ? this.a11yCardFlippedFormat.replace('%1$d', '' + (r * COLS + c + 1))
+                    : this.a11yCardHiddenFormat.replace('%1$d', '' + (r * COLS + c + 1))
+                )
+                .onClick(() => { Haptics.tap(); this.viewModel.flipCard(r * COLS + c); })
               }, (c: number) => c.toString())
             }
           }, (r: number) => r.toString())
@@ -121,6 +149,16 @@ export struct MemoryCardPage {
           primaryText: $r('app.string.result_play_again'),
           onPrimary: () => { this.viewModel.startGame(); },
           cardStyle: true
+        })
+      }
+
+      if (this.viewModel.confirmExit) {
+        ExitConfirmDialog({
+          onConfirm: () => {
+            this.viewModel.dismissExitConfirm();
+            this.pathStack.pop();
+          },
+          onCancel: () => { this.viewModel.dismissExitConfirm(); }
         })
       }
     }.width('100%').height('100%')

@@ -10,6 +10,8 @@ import { GameHeader } from '../../components/GameHeader';
 import { GameDifficulty, GameStatus } from '../../common/GameConstants';
 import { SafeAreaInsets } from '../../common/SafeAreaInsets';
 import { GameResultDialog } from '../../components/GameResultDialog';
+import { ExitConfirmDialog } from '../../components/ExitConfirmDialog';
+import { GameLifecycleBus } from '../../common/GameLifecycleBus';
 import { ScreenUtils } from '../../common/ScreenUtils';
 import { range } from '../../common/Range';
 import { SudokuViewModel } from '../../viewmodel/SudokuViewModel';
@@ -37,10 +39,27 @@ export struct SudokuPage {
     this.boardPixelSize = ScreenUtils.calcCell(9, 520, 24, 28) * 9 + 8;
     this.viewModel.newGame();
     // 预解析无障碍描述字符串
-    this.a11yFixed = getStringSync($r('app.string.a11y_sudoku_fixed'));
-    this.a11yBlank = getStringSync($r('app.string.a11y_sudoku_blank'));
-    this.a11yNumberFormat = getStringSync($r('app.string.a11y_sudoku_number_format'));
-    this.a11yRowColFormat = getStringSync($r('app.string.a11y_mine_row_col_format'));
+    const context = this.getUIContext().getHostContext();
+    if (context) {
+      this.a11yFixed = context.resourceManager.getStringSync($r('app.string.a11y_sudoku_fixed'));
+      this.a11yBlank = context.resourceManager.getStringSync($r('app.string.a11y_sudoku_blank'));
+      this.a11yNumberFormat = context.resourceManager.getStringSync($r('app.string.a11y_sudoku_number_format'));
+      this.a11yRowColFormat = context.resourceManager.getStringSync($r('app.string.a11y_mine_row_col_format'));
+    }
+    GameLifecycleBus.attach(this.viewModel);
+  }
+
+  aboutToDisappear(): void {
+    GameLifecycleBus.detach(this.viewModel);
+    this.viewModel.dispose();
+  }
+
+  /** 返回请求统一入口：进行中弹确认，其余直接返回 */
+  requestExit(): void {
+    if (this.viewModel.requestBack()) {
+      return;
+    }
+    this.pathStack.pop();
   }
 
   getCellSize(): number {
@@ -93,7 +112,7 @@ export struct SudokuPage {
           subtitle: $r('app.string.game_sudoku_subtitle'),
           difficulty: this.viewModel.difficulty,
           onDifficultyChange: (d: GameDifficulty) => { this.viewModel.changeDifficulty(d); },
-          onBack: () => { this.pathStack.pop(); },
+          onBack: () => { this.requestExit(); },
           onPauseToggle: () => {},
           onRestart: () => { this.viewModel.restartGame(); },
           onNewGame: () => { this.viewModel.newGame(); },
@@ -191,6 +210,16 @@ export struct SudokuPage {
           title: $r('app.string.result_sudoku_complete'),
           primaryText: $r('app.string.result_new_game'),
           onPrimary: () => { this.viewModel.newGame(); }
+        })
+      }
+
+      if (this.viewModel.confirmExit) {
+        ExitConfirmDialog({
+          onConfirm: () => {
+            this.viewModel.dismissExitConfirm();
+            this.pathStack.pop();
+          },
+          onCancel: () => { this.viewModel.dismissExitConfirm(); }
         })
       }
     }.width('100%').height('100%')

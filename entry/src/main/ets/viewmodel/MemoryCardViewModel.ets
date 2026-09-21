@@ -7,13 +7,14 @@
  */
 import { GameDifficulty, GameStatus } from '../common/GameConstants';
 import { GameDataManager } from '../model/GameData';
+import { GameLifecycleObserver } from '../common/GameLifecycleBus';
 import { Card, MemoryCardRules } from '../model/game/MemoryCardModel';
 import { RandomSource, RealRandom } from '../model/game/RandomSource';
 
 const GAME_ID = 'memorycard';
 
 @ObservedV2
-export class MemoryCardViewModel {
+export class MemoryCardViewModel implements GameLifecycleObserver {
   @Trace private cards: Card[] = [];
   @Trace private flippedIdxs: number[] = [];
   @Trace matchedCount: number = 0;
@@ -21,6 +22,8 @@ export class MemoryCardViewModel {
   @Trace bestScore: number = 999;
   @Trace status: GameStatus = GameStatus.PLAYING;
   @Trace difficulty: GameDifficulty = GameDifficulty.NORMAL;
+  /** 退出确认弹窗显隐（F2：对局中返回需确认，防误丢尝试进度） */
+  @Trace confirmExit: boolean = false;
 
   private rules: MemoryCardRules = new MemoryCardRules();
   private rng: RandomSource;
@@ -142,5 +145,31 @@ export class MemoryCardViewModel {
     return '' + this.bestScore;
   }
 
+  // —— GameLifecycleObserver（完成才计分；flipTimer 为亚秒级翻牌延时，切后台无需处理）——
+  onAppHidden(): void {
+  }
+
+  onAppShown(): void {
+  }
+
+  /** 系统侧滑返回转发（NavDestination.onBackPressed）。进行中弹确认并拦截 */
+  onBackRequested(): boolean {
+    return this.requestBack();
+  }
+
+  /** 页面返回按钮与系统侧滑共用：进行中弹确认（进度无保存机制，防误退），其余放行 */
+  requestBack(): boolean {
+    if (this.status === GameStatus.PLAYING) {
+      this.confirmExit = true;
+      return true;
+    }
+    return false;
+  }
+
+  dismissExitConfirm(): void {
+    this.confirmExit = false;
+  }
+
+  /** 页面销毁：清理翻牌结算定时器 */
   dispose(): void { this.clearTimer(); }
 }

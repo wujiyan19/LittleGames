@@ -9,6 +9,9 @@ import { GameHeader } from '../../components/GameHeader';
 import { GameDifficulty, GameStatus } from '../../common/GameConstants';
 import { SafeAreaInsets } from '../../common/SafeAreaInsets';
 import { GameResultDialog } from '../../components/GameResultDialog';
+import { ExitConfirmDialog } from '../../components/ExitConfirmDialog';
+import { GameLifecycleBus } from '../../common/GameLifecycleBus';
+
 import { GuessNumberViewModel, GuessRecord } from '../../viewmodel/GuessNumberViewModel';
 
 @ComponentV2
@@ -17,7 +20,23 @@ export struct GuessNumberPage {
   @Local safeBottom: number = SafeAreaInsets.bottom;
   @Local viewModel: GuessNumberViewModel = new GuessNumberViewModel();
 
-  aboutToAppear(): void { this.viewModel.startGame(); }
+  aboutToAppear(): void {
+    GameLifecycleBus.attach(this.viewModel);
+    this.viewModel.startGame();
+  }
+
+  aboutToDisappear(): void {
+    GameLifecycleBus.detach(this.viewModel);
+    this.viewModel.dispose();
+  }
+
+  /** 返回请求统一入口：进行中弹确认，其余直接返回 */
+  requestExit(): void {
+    if (this.viewModel.requestBack()) {
+      return;
+    }
+    this.pathStack.pop();
+  }
 
   getResultColor(a: number): ResourceColor {
     if (a === this.viewModel.getSecretLength()) { return SemanticColors.success; }
@@ -58,6 +77,24 @@ export struct GuessNumberPage {
     return undefined;
   }
 
+  getKeyA11yText(key: string): string {
+    if (key === '⌫') {
+      const context = this.getUIContext().getHostContext();
+      if (context) {
+        return context.resourceManager.getStringSync($r('app.string.a11y_keypad_delete'));
+      }
+      return 'Delete';
+    }
+    if (key === 'submit') {
+      const context = this.getUIContext().getHostContext();
+      if (context) {
+        return context.resourceManager.getStringSync($r('app.string.a11y_keypad_submit'));
+      }
+      return 'Submit';
+    }
+    return key;
+  }
+
   build() {
     Stack() {
       Column().width('100%').height('100%')
@@ -70,7 +107,7 @@ export struct GuessNumberPage {
           subtitle: $r('app.string.game_guessnumber_subtitle_format', this.viewModel.tries, this.viewModel.getMaxTries()),
           difficulty: this.viewModel.difficulty,
           onDifficultyChange: (d: GameDifficulty) => { this.viewModel.changeDifficulty(d); },
-          onBack: () => { this.pathStack.pop(); },
+          onBack: () => { this.requestExit(); },
           onPauseToggle: () => {},
           onRestart: () => { this.viewModel.startGame(); } })
 
@@ -155,6 +192,16 @@ export struct GuessNumberPage {
           cardStyle: true
         })
       }
+
+      if (this.viewModel.confirmExit) {
+        ExitConfirmDialog({
+          onConfirm: () => {
+            this.viewModel.dismissExitConfirm();
+            this.pathStack.pop();
+          },
+          onCancel: () => { this.viewModel.dismissExitConfirm(); }
+        })
+      }
     }.width('100%').height('100%')
   }
 
@@ -182,6 +229,7 @@ export struct GuessNumberPage {
         .backgroundColor(this.getKeyBgColor(key))
         .borderRadius(RadiusTokens.base)
         .shadow(this.getKeyShadow(key))
+        .accessibilityText(this.getKeyA11yText(key))
         .onClick(() => {
           if (key === '⌫') { this.viewModel.deleteDigit(); }
           else if (key === 'submit') { this.viewModel.submit(); }

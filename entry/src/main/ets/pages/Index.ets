@@ -74,7 +74,13 @@ struct Index {
     this.featuredGames = GameDataManager.getMostPlayed(6);
     this.rankedGames = GameDataManager.getTopGames(6);
     const top: GameInfo[] = GameDataManager.getTopGames(1);
-    this.bestScoreText = (top.length > 0 && top[0].highScore > 0) ? top[0].highScore.toString() : '--';
+    if (top.length > 0 && top[0].highScore > 0) {
+      const context = this.getUIContext().getHostContext();
+      const label = resolveString(top[0].scoreLabel, context);
+      this.bestScoreText = top[0].highScore.toString() + ' ' + label;
+    } else {
+      this.bestScoreText = '--';
+    }
   }
 
   // 中文按拼音排序（系统 Locale 习惯排序）

@@ -7,18 +7,21 @@
  */
 import { GameDifficulty, GameStatus } from '../common/GameConstants';
 import { GameDataManager } from '../model/GameData';
+import { GameLifecycleObserver } from '../common/GameLifecycleBus';
 import { PuzzleResult, SudokuRules } from '../model/game/SudokuModel';
 import { RandomSource, RealRandom } from '../model/game/RandomSource';
 
 const GAME_ID = 'sudoku';
 
 @ObservedV2
-export class SudokuViewModel {
+export class SudokuViewModel implements GameLifecycleObserver {
   @Trace board: number[] = [];
   @Trace selectedRow: number = -1;
   @Trace selectedCol: number = -1;
   @Trace status: GameStatus = GameStatus.PLAYING;
   @Trace difficulty: GameDifficulty = GameDifficulty.NORMAL;
+  /** 退出确认弹窗显隐（F2：对局中返回需确认，防误丢填题进度） */
+  @Trace confirmExit: boolean = false;
 
   private rules: SudokuRules = new SudokuRules();
   private rng: RandomSource;
@@ -105,4 +108,33 @@ export class SudokuViewModel {
   // —— 供 View 渲染的只读查询 ——
   cellValue(r: number, c: number): number { return this.board[r * 9 + c]; }
   isFixed(r: number, c: number): boolean { return this.fixed[r * 9 + c]; }
+
+  // —— GameLifecycleObserver（完成才计分、无定时器：切后台无需暂停/结算）——
+  onAppHidden(): void {
+  }
+
+  onAppShown(): void {
+  }
+
+  /** 系统侧滑返回转发（NavDestination.onBackPressed）。进行中弹确认并拦截 */
+  onBackRequested(): boolean {
+    return this.requestBack();
+  }
+
+  /** 页面返回按钮与系统侧滑共用：进行中弹确认（进度无保存机制，防误退），其余放行 */
+  requestBack(): boolean {
+    if (this.status === GameStatus.PLAYING) {
+      this.confirmExit = true;
+      return true;
+    }
+    return false;
+  }
+
+  dismissExitConfirm(): void {
+    this.confirmExit = false;
+  }
+
+  /** 页面销毁：无定时器可停（保持全部 VM 的 dispose 形态统一） */
+  dispose(): void {
+  }
 }

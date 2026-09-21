@@ -6,6 +6,7 @@
  */
 import { GameDifficulty, GameStatus } from '../common/GameConstants';
 import { GameDataManager } from '../model/GameData';
+import { GameLifecycleObserver } from '../common/GameLifecycleBus';
 import { ActivePiece, TetrisRules } from '../model/game/TetrisModel';
 import { RandomSource, RealRandom } from '../model/game/RandomSource';
 
@@ -14,7 +15,7 @@ const ROWS = 20;
 const GAME_ID = 'tetris';
 
 @ObservedV2
-export class TetrisViewModel {
+export class TetrisViewModel implements GameLifecycleObserver {
   /** 棋盘只存数据：0=空，n=第 (n-1) 号形状占据；颜色由 View 查表 */
   @Trace board: number[][] = [];
   @Trace piece: ActivePiece | null = null;
@@ -23,6 +24,8 @@ export class TetrisViewModel {
   @Trace level: number = 1;
   @Trace status: GameStatus = GameStatus.IDLE;
   @Trace difficulty: GameDifficulty = GameDifficulty.NORMAL;
+  /** 退出确认弹窗显隐（F2：对局中返回需确认） */
+  @Trace confirmExit: boolean = false;
 
   private rules: TetrisRules = new TetrisRules(COLS, ROWS);
   private rng: RandomSource;
@@ -146,6 +149,14 @@ export class TetrisViewModel {
     this.lockPiece();
   }
 
+  /**
+   * 结算当前对局分数（max 语义幂等）。原先只在对局结束/下次开局时结算，
+   * 中途退出会静默丢失当前得分。
+   */
+  private settleCurrentScore(): void {
+    if (this.score > 0) { GameDataManager.updateHighScore(GAME_ID, this.score); }
+  }
+
   /** 手动暂停/恢复。只在「进行中 ⇄ 暂停」间切换 */
   togglePause(): void {
     if (this.status === GameStatus.PLAYING) {
@@ -155,18 +166,42 @@ export class TetrisViewModel {
     }
   }
 
-  onPageHide(): void {
+  /**
+   * 切后台（GameLifecycleBus：UIAbility.onBackground）。结算 + 自动暂停。
+   * 注意：页面 onPageHide() 仅对 @Entry 生效，本应用游戏页是 @ComponentV2，
+   * 必须走总线（原 onPageHide/onPageShow 钩子从未被调用过）。
+   */
+  onAppHidden(): void {
+    this.settleCurrentScore();
     if (this.status === GameStatus.PLAYING) {
       this.autoPaused = true;
       this.status = GameStatus.PAUSED;
     }
   }
 
-  onPageShow(): void {
+  onAppShown(): void {
     if (this.autoPaused) {
       this.autoPaused = false;
       this.status = GameStatus.PLAYING;
     }
+  }
+
+  /** 系统侧滑返回转发（NavDestination.onBackPressed）。进行中弹确认并拦截 */
+  onBackRequested(): boolean {
+    return this.requestBack();
+  }
+
+  /** 页面返回按钮与系统侧滑共用：进行中弹确认，其余放行 */
+  requestBack(): boolean {
+    if (this.status === GameStatus.PLAYING) {
+      this.confirmExit = true;
+      return true;
+    }
+    return false;
+  }
+
+  dismissExitConfirm(): void {
+    this.confirmExit = false;
   }
 
   /** 供 View 渲染：0=空，n=占用（n-1 为形状索引） */
@@ -181,7 +216,9 @@ export class TetrisViewModel {
     GameDataManager.updateHighScore(GAME_ID, this.score);
   }
 
+  /** 页面销毁：停定时器并结算当前分（覆盖「中途退出丢分」主路径） */
   dispose(): void {
     this.stopTimer();
+    this.settleCurrentScore();
   }
 }

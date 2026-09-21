@@ -13,8 +13,10 @@ import { GameHeader } from '../../components/GameHeader';
 import { GameDifficulty, GameStatus } from '../../common/GameConstants';
 import { SafeAreaInsets } from '../../common/SafeAreaInsets';
 import { GameResultDialog } from '../../components/GameResultDialog';
+import { ExitConfirmDialog } from '../../components/ExitConfirmDialog';
 import { ScreenUtils } from '../../common/ScreenUtils';
 import { range } from '../../common/Range';
+import { GameLifecycleBus } from '../../common/GameLifecycleBus';
 import { Game2048ViewModel } from '../../viewmodel/Game2048ViewModel';
 
 const SIZE = 4;
@@ -45,13 +47,32 @@ export struct Game2048Page {
   private animationDuration: number = 150;
   /** 弹动回落定时器（新块/合并块缩放回 1） */
   private settleTimer: number = -1;
+  // 无障碍字符串缓存
+  @Local a11yTileFormat: string = '';
 
   aboutToAppear(): void {
     this.initBoardSize();
+    const context = this.getUIContext().getHostContext();
+    if (context) {
+      this.a11yTileFormat = context.resourceManager.getStringSync($r('app.string.a11y_2048_tile_format'));
+    }
+    GameLifecycleBus.attach(this.viewModel);
     this.startGame();
   }
 
-  aboutToDisappear(): void { this.clearSettleTimer(); }
+  aboutToDisappear(): void {
+    GameLifecycleBus.detach(this.viewModel);
+    this.viewModel.dispose();
+    this.clearSettleTimer();
+  }
+
+  /** 返回请求统一入口：进行中弹确认，其余直接返回 */
+  requestExit(): void {
+    if (this.viewModel.requestBack()) {
+      return;
+    }
+    this.pathStack.pop();
+  }
 
   initBoardSize(): void {
     this.cell = ScreenUtils.calcCell(SIZE, 520, 32, 40);
@@ -192,7 +213,7 @@ export struct Game2048Page {
           difficulty: this.viewModel.difficulty,
           showPause: false,
           onDifficultyChange: (d: GameDifficulty) => { this.viewModel.changeDifficulty(d); },
-          onBack: () => { this.pathStack.pop(); },
+          onBack: () => { this.requestExit(); },
           onPauseToggle: () => {},
           onRestart: () => { this.startGame(); } })
 
@@ -237,6 +258,7 @@ export struct Game2048Page {
               .justifyContent(FlexAlign.Center)
               .offset({ x: tile.col * this.step() + 3, y: tile.row * this.step() + 3 })
               .scale({ x: tile.scale, y: tile.scale })
+              .accessibilityText(this.a11yTileFormat.replace('%1$d', '' + (tile.row + 1)).replace('%2$d', '' + (tile.col + 1)).replace('%3$d', '' + tile.value))
               // 放在最后：对它之前的 offset/scale/backgroundColor 做隐式插值
               .animation(this.getTileAnimation())
             }, (tile: TileData) => tile.id.toString())
@@ -280,6 +302,16 @@ export struct Game2048Page {
           secondaryText: $r('app.string.action_back'),
           showSecondary: true,
           onSecondary: () => { this.pathStack.pop(); }
+        })
+      }
+
+      if (this.viewModel.confirmExit) {
+        ExitConfirmDialog({
+          onConfirm: () => {
+            this.viewModel.dismissExitConfirm();
+            this.pathStack.pop();
+          },
+          onCancel: () => { this.viewModel.dismissExitConfirm(); }
         })
       }
     }.width('100%').height('100%')

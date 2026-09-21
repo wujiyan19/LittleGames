@@ -50,7 +50,7 @@
 
 - **⭐ 精选** — 品牌渐变 Banner + 热门推荐，按历史最高分智能排序精选游戏
 - **🗂️ 分类** — 全部 / 经典休闲 / 益智解谜分类筛选，支持**实时搜索**（游戏名称与描述模糊匹配，输入即刷新），全部游戏按中文拼音智能排序
-- **👤 我的** — 玩家卡片、游戏总数 / 最高分等数据统计、最高分排行榜
+- **👤 我的** — 玩家卡片、游戏总数 / 最高分等数据统计、最高分排行榜（含分数单位）、触感反馈开关
 
 ### 🎬 动效闪屏
 
@@ -62,12 +62,30 @@
 
 - 每款游戏的**最高分**自动记录并持久化
 - **游玩次数**累计统计
+- **触感反馈开关**等用户设置持久化
 - 应用重启后数据完整保留，写入失败不影响游戏流程
+
+### 🔄 生命周期管理
+
+- 切后台自动暂停（定时器类游戏）+ 结算当前分数，避免进程被杀导致丢分
+- 对局进行中点返回或侧滑时弹出**退出确认弹窗**，分数自动保留
+- 系统侧滑返回由 `NavDestination.onBackPressed` 统一拦截
+
+### 📳 触感反馈
+
+- 方向键操作、翻牌、敲地鼠等交互触发轻触震动
+- 对局胜利/结束时触发成功震动
+- 「我的」页面提供开关，可全局关闭触感反馈
+
+### ♿ 无障碍支持
+
+- 所有游戏交互元素（按钮、棋盘格子、卡牌、键盘）均提供 `accessibilityText` 读屏描述
+- 支持 TalkBack 等屏幕阅读器，覆盖 10 款游戏全部核心操作
 
 ### 📱 响应式多端适配
 
 - `GridRow` 断点栅格布局（320vp / 600vp / 840vp），列数随屏幕宽度自适应
-- 媒体查询监听：≥840vp 自动切换平板宽屏版式
+
 - 游戏棋盘按屏幕尺寸动态计算格子大小，安全区自动扩展
 
 ### 🎨 统一设计系统
@@ -75,7 +93,7 @@
 - 自研 **Design Tokens** 体系：色彩 / 间距 / 圆角 / 阴影 / 字体全量令牌化
 - 「宇宙蓝（`#2D6CE8`）× 极光紫（`#7A5AF8`）」品牌渐变 + 雪域灰底色
 - 语义色资源定义于 `base`（亮色）/ `dark`（深色），**随系统深浅色模式自动适配**
-- 通用游戏组件复用：`GameHeader`（对局信息栏）、`ControlPad`（虚拟方向盘）、`GameOverDialog`（结算弹窗）、`NumberKeyboard`（数字键盘）
+- 通用游戏组件复用：`GameHeader`（对局信息栏）、`ControlPad`（虚拟方向盘）、`GameResultDialog`（结算弹窗）、`ExitConfirmDialog`（退出确认弹窗）
 
 ## 🛠️ 技术栈
 
@@ -87,7 +105,7 @@
 | 路由 | `Navigation` + `NavPathStack` 组件导航 |
 | 数据 | `@kit.ArkData` Preferences 轻量持久化 |
 | 国际化 | `@kit.LocalizationKit` intl.Collator 中文拼音排序 |
-| 布局 | GridRow 断点栅格 + MediaQuery 媒体查询 |
+| 布局 | GridRow 断点栅格 + SafeAreaInsets 安全区适配 |
 | SDK | compileSdk / compatibleSdk / targetSdk 均为 `6.1.1(24)` |
 | 设备类型 | phone、tablet |
 
@@ -97,27 +115,41 @@
 LittleGames
 ├── AppScope/                        # 应用级配置（bundleName、版本、图标）
 └── entry/src/main/
-    ├── module.json5                 # 模块配置（Ability、设备类型、页面路由）
+    ├── module.json5                 # 模块配置（Ability、设备类型、页面路由、权限）
     ├── ets/
-    │   ├── entryability/            # EntryAbility 应用入口
+    │   ├── entryability/            # EntryAbility 应用入口（生命周期总线通知）
     │   ├── common/
     │   │   ├── DesignTokens.ets     # 设计令牌（色彩/间距/圆角/阴影/字体）
-    │   │   └── GameConstants.ets    # 游戏分类/难度/状态枚举与接口
+    │   │   ├── GameConstants.ets    # 游戏分类/难度/状态枚举与接口
+    │   │   ├── GameLifecycleBus.ets # 生命周期总线（切后台暂停/返回拦截）
+    │   │   ├── Haptics.ets          # 触感反馈工具（震动开关可控）
+    │   │   ├── I18nUtils.ets        # 国际化工具（Resource/string 解析）
+    │   │   ├── SafeAreaInsets.ets   # 安全区避让
+    │   │   ├── ScreenUtils.ets      # 屏幕度量工具
+    │   │   └── Range.ets            # 数组生成工具
     │   ├── model/
-    │   │   └── GameData.ets         # 游戏数据中心（最高分/次数持久化）
+    │   │   └── GameData.ets         # 游戏数据中心（最高分/次数/设置持久化）
     │   ├── components/              # 通用组件
-    │   │   ├── GameHeader.ets       #   对局信息栏
+    │   │   ├── GameHeader.ets       #   对局信息栏（返回/难度/暂停/重启）
     │   │   ├── ControlPad.ets       #   虚拟方向盘
-    │   │   ├── GameOverDialog.ets   #   结算弹窗
-    │   │   └── NumberKeyboard.ets   #   数字键盘
+    │   │   ├── GameResultDialog.ets #   结算弹窗
+    │   │   └── ExitConfirmDialog.ets#   退出确认弹窗
+    │   ├── router/
+    │   │   └── GameRoutes.ets       # 路由映射（NavDestination + onBackPressed）
     │   └── pages/
-    │       ├── Index.ets            # 主页（精选/分类/我的，含启动闪屏层）
-    │       ├── ProfilePage.ets      # 我的页面
+    │       ├── Index.ets            # 主页壳（Navigation + Tabs 骨架）
+    │       ├── home/
+    │       │   ├── SplashLayer.ets  #   启动闪屏
+    │       │   ├── FeaturedTab.ets  #   精选 Tab
+    │       │   ├── CategoryTab.ets  #   分类 Tab
+    │       │   └── ProfileTab.ets   #   我的 Tab（排行/设置）
     │       ├── classic/             # 经典休闲：贪吃蛇/俄罗斯方块/2048/打地鼠/扫雷
     │       └── puzzle/              # 益智解谜：数独/滑动拼图/华容道/猜数字/记忆翻牌
     └── resources/
         ├── base/                    # 亮色模式资源（颜色/字符串/图标）
-        └── dark/                    # 深色模式资源
+        ├── dark/                    # 深色模式资源
+        ├── zh_CN/                   # 中文（简体）字符串
+        └── en_US/                   # 英文字符串
 ```
 
 ## 🚀 快速开始

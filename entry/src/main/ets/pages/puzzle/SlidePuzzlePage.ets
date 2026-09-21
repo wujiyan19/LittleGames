@@ -9,6 +9,8 @@ import { GameHeader } from '../../components/GameHeader';
 import { GameDifficulty, GameStatus } from '../../common/GameConstants';
 import { SafeAreaInsets } from '../../common/SafeAreaInsets';
 import { GameResultDialog } from '../../components/GameResultDialog';
+import { ExitConfirmDialog } from '../../components/ExitConfirmDialog';
+import { GameLifecycleBus } from '../../common/GameLifecycleBus';
 import { ScreenUtils } from '../../common/ScreenUtils';
 import { range } from '../../common/Range';
 import { SlidePuzzleViewModel } from '../../viewmodel/SlidePuzzleViewModel';
@@ -20,10 +22,30 @@ export struct SlidePuzzlePage {
   @Local viewModel: SlidePuzzleViewModel = new SlidePuzzleViewModel();
   @Local cell: number = 85;
   @Local idxN: number[] = range(3);
+  // 无障碍字符串缓存
+  @Local a11yTileFormat: string = '';
 
   aboutToAppear(): void {
+    const context = this.getUIContext().getHostContext();
+    if (context) {
+      this.a11yTileFormat = context.resourceManager.getStringSync($r('app.string.a11y_slide_tile_format'));
+    }
     this.refreshLayout();
+    GameLifecycleBus.attach(this.viewModel);
     this.viewModel.startGame();
+  }
+
+  aboutToDisappear(): void {
+    GameLifecycleBus.detach(this.viewModel);
+    this.viewModel.dispose();
+  }
+
+  /** 返回请求统一入口：进行中弹确认，其余直接返回 */
+  requestExit(): void {
+    if (this.viewModel.requestBack()) {
+      return;
+    }
+    this.pathStack.pop();
   }
 
   /** 尺寸随难度变化，重算格子大小与索引表 */
@@ -62,7 +84,7 @@ export struct SlidePuzzlePage {
           subtitle: $r('app.string.game_slidepuzzle_subtitle'),
           difficulty: this.viewModel.difficulty,
           onDifficultyChange: (d: GameDifficulty) => { this.changeDifficulty(d); },
-          onBack: () => { this.pathStack.pop(); },
+          onBack: () => { this.requestExit(); },
           onPauseToggle: () => {},
           onRestart: () => { this.viewModel.startGame(); } })
 
@@ -97,6 +119,11 @@ export struct SlidePuzzlePage {
                   .borderRadius(RadiusTokens.base)
                   .shadow(ShadowTokens.button)
                   .opacity(this.getCellOpacity(r, c))
+                  .accessibilityText(
+                    this.viewModel.cellAt(r, c) > 0
+                      ? this.a11yTileFormat.replace('%1$d', '' + this.viewModel.cellAt(r, c))
+                      : ''
+                  )
                   .onClick(() => this.viewModel.tapCell(r, c))
                 }, (c: number) => c.toString())
               }
@@ -115,6 +142,16 @@ export struct SlidePuzzlePage {
           showDetail: true,
           primaryText: $r('app.string.result_play_again'),
           onPrimary: () => { this.viewModel.startGame(); }
+        })
+      }
+
+      if (this.viewModel.confirmExit) {
+        ExitConfirmDialog({
+          onConfirm: () => {
+            this.viewModel.dismissExitConfirm();
+            this.pathStack.pop();
+          },
+          onCancel: () => { this.viewModel.dismissExitConfirm(); }
         })
       }
     }.width('100%').height('100%')

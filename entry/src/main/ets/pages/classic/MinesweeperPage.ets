@@ -9,6 +9,8 @@ import { GameHeader } from '../../components/GameHeader';
 import { GameDifficulty, GameStatus } from '../../common/GameConstants';
 import { SafeAreaInsets } from '../../common/SafeAreaInsets';
 import { GameResultDialog } from '../../components/GameResultDialog';
+import { ExitConfirmDialog } from '../../components/ExitConfirmDialog';
+import { GameLifecycleBus } from '../../common/GameLifecycleBus';
 import { ScreenUtils } from '../../common/ScreenUtils';
 import { range } from '../../common/Range';
 import { MinesweeperViewModel } from '../../viewmodel/MinesweeperViewModel';
@@ -42,15 +44,22 @@ export struct MinesweeperPage {
       this.a11yBlank = context.resourceManager.getStringSync($r('app.string.a11y_mine_blank'));
     }
     this.cellSize = ScreenUtils.calcCell(COLS, 520, 20, 24);
+    GameLifecycleBus.attach(this.viewModel);
     this.viewModel.startGame();
   }
 
   aboutToDisappear(): void {
+    GameLifecycleBus.detach(this.viewModel);
     this.viewModel.dispose();
   }
 
-  onPageHide(): void { this.viewModel.onPageHide(); }
-  onPageShow(): void { this.viewModel.onPageShow(); }
+  /** 返回请求统一入口：进行中弹确认，其余直接返回 */
+  requestExit(): void {
+    if (this.viewModel.requestBack()) {
+      return;
+    }
+    this.pathStack.pop();
+  }
 
   /**
    * 雷数提示色。数字 7 用纯白会在亮色底上不可见，已收编为资源，两套主题各有可读配色；
@@ -120,7 +129,7 @@ export struct MinesweeperPage {
           subtitle: $r('app.string.game_minesweeper_subtitle'),
           difficulty: this.viewModel.difficulty,
           onDifficultyChange: (d: GameDifficulty) => { this.viewModel.changeDifficulty(d); },
-          onBack: () => { this.pathStack.pop(); },
+          onBack: () => { this.requestExit(); },
           onPauseToggle: () => {},
           onRestart: () => { this.viewModel.startGame(); }
         })
@@ -197,6 +206,16 @@ export struct MinesweeperPage {
           secondaryText: $r('app.string.action_back'),
           showSecondary: true,
           onSecondary: () => { this.pathStack.pop(); }
+        })
+      }
+
+      if (this.viewModel.confirmExit) {
+        ExitConfirmDialog({
+          onConfirm: () => {
+            this.viewModel.dismissExitConfirm();
+            this.pathStack.pop();
+          },
+          onCancel: () => { this.viewModel.dismissExitConfirm(); }
         })
       }
     }.width('100%').height('100%')

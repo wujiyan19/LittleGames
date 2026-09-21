@@ -9,7 +9,10 @@ import { GameHeader } from '../../components/GameHeader';
 import { GameDifficulty, GameStatus } from '../../common/GameConstants';
 import { SafeAreaInsets } from '../../common/SafeAreaInsets';
 import { GameResultDialog } from '../../components/GameResultDialog';
+import { ExitConfirmDialog } from '../../components/ExitConfirmDialog';
 import { range } from '../../common/Range';
+import { GameLifecycleBus } from '../../common/GameLifecycleBus';
+import { Haptics } from '../../common/Haptics';
 import { WhackMoleViewModel } from '../../viewmodel/WhackMoleViewModel';
 
 @ComponentV2
@@ -30,12 +33,22 @@ export struct WhackMolePage {
       this.a11yHasMole = context.resourceManager.getStringSync($r('app.string.a11y_whack_has_mole'));
       this.a11yEmpty = context.resourceManager.getStringSync($r('app.string.a11y_whack_empty'));
     }
+    GameLifecycleBus.attach(this.viewModel);
     this.viewModel.startGame();
   }
-  aboutToDisappear(): void { this.viewModel.dispose(); }
 
-  onPageHide(): void { this.viewModel.onPageHide(); }
-  onPageShow(): void { this.viewModel.onPageShow(); }
+  aboutToDisappear(): void {
+    GameLifecycleBus.detach(this.viewModel);
+    this.viewModel.dispose();
+  }
+
+  /** 返回请求统一入口：进行中弹确认，其余直接返回 */
+  requestExit(): void {
+    if (this.viewModel.requestBack()) {
+      return;
+    }
+    this.pathStack.pop();
+  }
 
   getTimeColor(): ResourceColor {
     if (this.viewModel.timeLeft <= 5) { return SemanticColors.error; }
@@ -53,7 +66,7 @@ export struct WhackMolePage {
           isPaused: this.viewModel.status === GameStatus.PAUSED,
           difficulty: this.viewModel.difficulty,
           onDifficultyChange: (d: GameDifficulty) => { this.viewModel.changeDifficulty(d); },
-          onBack: () => { this.pathStack.pop(); },
+          onBack: () => { this.requestExit(); },
           onPauseToggle: () => { this.viewModel.togglePause(); },
           onRestart: () => { this.viewModel.startGame(); } })
 
@@ -98,6 +111,16 @@ export struct WhackMolePage {
           onSecondary: () => { this.pathStack.pop(); }
         })
       }
+
+      if (this.viewModel.confirmExit) {
+        ExitConfirmDialog({
+          onConfirm: () => {
+            this.viewModel.dismissExitConfirm();
+            this.pathStack.pop();
+          },
+          onCancel: () => { this.viewModel.dismissExitConfirm(); }
+        })
+      }
     }.width('100%').height('100%')
   }
 
@@ -122,6 +145,6 @@ export struct WhackMolePage {
     .justifyContent(FlexAlign.End)
     // 无障碍:读屏念出洞号与当前是否有地鼠
     .accessibilityText(this.a11yHoleFormat.replace('%1$d', '' + (index + 1)) + (this.viewModel.holes[index] ? this.a11yHasMole : this.a11yEmpty))
-    .onClick(() => this.viewModel.whack(index))
+    .onClick(() => { Haptics.tap(); this.viewModel.whack(index); })
   }
 }

@@ -14,6 +14,7 @@
  * 次按钮（secondaryText）留空即不渲染——数独、华容道等页面只保留一个主操作。
  */
 import { SemanticColors, FontTokens, RadiusTokens, ShadowTokens, SpacingTokens } from '../common/DesignTokens';
+import { Haptics } from '../common/Haptics';
 
 @ComponentV2
 export struct GameResultDialog {
@@ -38,6 +39,10 @@ export struct GameResultDialog {
   @Param onSecondary: () => void = () => {};
   /** true = 居中卡片式；false = 全屏遮罩式 */
   @Param cardStyle: boolean = false;
+
+  aboutToAppear(): void {
+    Haptics.success();
+  }
 
   build() {
     if (this.cardStyle) {
@@ -101,6 +106,7 @@ export struct GameResultDialog {
         .height(44).padding({ left: SpacingTokens.lg, right: SpacingTokens.lg })
         .backgroundColor(SemanticColors.primary).borderRadius(RadiusTokens.full)
         .shadow(ShadowTokens.button)
+        .accessibilityText($r('app.string.a11y_dialog_play_again'))
         .onClick(() => this.onPrimary())
 
         if (this.showSecondary) {
@@ -109,6 +115,7 @@ export struct GameResultDialog {
             .fontFamily(FontTokens.family)
             .fontColor(SemanticColors.textPrimary).backgroundColor(SemanticColors.surface)
             .borderRadius(RadiusTokens.full).shadow(ShadowTokens.button)
+            .accessibilityText($r('app.string.a11y_dialog_back'))
             .onClick(() => this.onSecondary())
         }
       }

@@ -7,6 +7,7 @@ import { hilog } from '@kit.PerformanceAnalysisKit';
 const STORE_NAME = 'little_games_data';
 const KEY_HIGH_SCORES = 'highScores';
 const KEY_PLAY_COUNTS = 'playCounts';
+const KEY_SETTINGS = 'settings';
 /** 落盘防抖窗口（ms）：合并同窗口期内的多次变更，避免重复全量序列化 */
 const PERSIST_DEBOUNCE_MS = 200;
 
@@ -18,6 +19,8 @@ export class GameDataManager {
   private static store: preferences.Preferences | null = null;
   /** 防抖定时器句柄，-1 表示无待落盘任务 */
   private static flushTimer: number = -1;
+  /** 用户设置（持久化） */
+  private static settings: Record<string, boolean> = { 'hapticsEnabled': true };
   private static games: GameInfo[] = [
     {
       id: 'snake',
@@ -138,6 +141,19 @@ export class GameDataManager {
     const countJson = GameDataManager.store.getSync(KEY_PLAY_COUNTS, '') as string;
     GameDataManager.applyMap(scoreJson, (g: GameInfo, v: number): void => { g.highScore = v; });
     GameDataManager.applyMap(countJson, (g: GameInfo, v: number): void => { g.playCount = v; });
+    // 恢复用户设置
+    const settingsJson = GameDataManager.store.getSync(KEY_SETTINGS, '') as string;
+    if (settingsJson.length > 0) {
+      try {
+        const parsed = JSON.parse(settingsJson) as Record<string, boolean>;
+        const keys = Object.keys(parsed);
+        for (let i = 0; i < keys.length; i++) {
+          GameDataManager.settings[keys[i]] = parsed[keys[i]];
+        }
+      } catch (e) {
+        hilog.error(0x0000, 'LittleGames', 'Failed to parse settings, fallback to defaults');
+      }
+    }
   }
 
   private static applyMap(json: string, apply: (g: GameInfo, v: number) => void): void {
@@ -184,6 +200,7 @@ export class GameDataManager {
     try {
       GameDataManager.store.putSync(KEY_HIGH_SCORES, JSON.stringify(scores));
       GameDataManager.store.putSync(KEY_PLAY_COUNTS, JSON.stringify(counts));
+      GameDataManager.store.putSync(KEY_SETTINGS, JSON.stringify(GameDataManager.settings));
       // flush 是异步的，原实现直接丢弃 Promise，写入失败无从察觉
       GameDataManager.store.flush().catch((err: BusinessError) => {
         hilog.error(0x0000, 'LittleGames', 'Failed to flush preferences: %{public}d', err.code);
@@ -241,5 +258,18 @@ export class GameDataManager {
   /** 按游玩次数排序——「热门/精选」口径，与「最高分排行」区分（P2-8） */
   static getMostPlayed(limit: number = 5): GameInfo[] {
     return [...GameDataManager.games].sort((a, b) => b.playCount - a.playCount).slice(0, limit);
+  }
+
+  /** 获取设置项，不存在时返回默认值 */
+  static getSetting(key: string, defaultValue: boolean): boolean {
+    const val = GameDataManager.settings[key];
+    if (val === undefined) { return defaultValue; }
+    return val;
+  }
+
+  /** 设置设置项并标记落盘 */
+  static setSetting(key: string, value: boolean): void {
+    GameDataManager.settings[key] = value;
+    GameDataManager.markDirty();
   }
 }

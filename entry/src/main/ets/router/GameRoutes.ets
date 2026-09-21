@@ -27,6 +27,7 @@ import { SlidePuzzlePage } from '../pages/puzzle/SlidePuzzlePage';
 import { KlotskiPage } from '../pages/puzzle/KlotskiPage';
 import { GuessNumberPage } from '../pages/puzzle/GuessNumberPage';
 import { MemoryCardPage } from '../pages/puzzle/MemoryCardPage';
+import { GameLifecycleBus } from '../common/GameLifecycleBus';
 
 export class GameRoutes {
   /** 游戏 ID → 路由名。与 GameDataManager.games 的 id 一一对应 */
@@ -81,4 +82,8 @@ export function GamePageMap(name: string, pathStack: NavPathStack) {
     }
   }
   .hideTitleBar(true)
+  .onBackPressed(() => {
+    GameLifecycleBus.notifyBackRequested();
+    return true;
+  })
 }

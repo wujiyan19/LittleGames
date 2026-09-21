@@ -6,6 +6,7 @@
  */
 import { GameDifficulty, GameStatus } from '../common/GameConstants';
 import { GameDataManager } from '../model/GameData';
+import { GameLifecycleObserver } from '../common/GameLifecycleBus';
 import { GuessFeedback, GuessNumberRules } from '../model/game/GuessNumberModel';
 import { RandomSource, RealRandom } from '../model/game/RandomSource';
 
@@ -27,7 +28,7 @@ export class GuessRecord {
 }
 
 @ObservedV2
-export class GuessNumberViewModel {
+export class GuessNumberViewModel implements GameLifecycleObserver {
   @Trace secret: string = '';
   @Trace input: string = '';
   @Trace records: GuessRecord[] = [];
@@ -36,6 +37,8 @@ export class GuessNumberViewModel {
   @Trace status: GameStatus = GameStatus.PLAYING;
   @Trace tries: number = 0;
   @Trace difficulty: GameDifficulty = GameDifficulty.NORMAL;
+  /** 退出确认弹窗显隐（F2：对局中返回需确认，防误丢尝试进度） */
+  @Trace confirmExit: boolean = false;
 
   private rules: GuessNumberRules = new GuessNumberRules();
   private rng: RandomSource;
@@ -96,5 +99,34 @@ export class GuessNumberViewModel {
     }
     if (this.tries >= this.getMaxTries()) { this.status = GameStatus.OVER; }
     this.input = '';
+  }
+
+  // —— GameLifecycleObserver（完成才计分、无定时器：切后台无需暂停/结算）——
+  onAppHidden(): void {
+  }
+
+  onAppShown(): void {
+  }
+
+  /** 系统侧滑返回转发（NavDestination.onBackPressed）。进行中弹确认并拦截 */
+  onBackRequested(): boolean {
+    return this.requestBack();
+  }
+
+  /** 页面返回按钮与系统侧滑共用：进行中弹确认（进度无保存机制，防误退），其余放行 */
+  requestBack(): boolean {
+    if (this.status === GameStatus.PLAYING) {
+      this.confirmExit = true;
+      return true;
+    }
+    return false;
+  }
+
+  dismissExitConfirm(): void {
+    this.confirmExit = false;
+  }
+
+  /** 页面销毁：无定时器可停（保持全部 VM 的 dispose 形态统一） */
+  dispose(): void {
   }
 }
