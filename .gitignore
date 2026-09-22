@@ -15,3 +15,8 @@
 /AGENTS.md
 /.vscode
 .arts/
+# 测试/调试产物
+.hypium/
+.test-screenshots/
+package.json
+package-lock.json
