@@ -104,6 +104,12 @@ export struct SnakeGamePage {
           }.width(this.cell * COLS).height(this.cell * ROWS)
           .border({ width: 2, color: SemanticColors.boardBorder, radius: RadiusTokens.sm })
           .backgroundColor(SemanticColors.boardBg)
+
+          if (!this.viewModel.started) {
+            Text('按方向键开始')
+              .fontSize(FontTokens.sizeSubtitle).fontColor(SemanticColors.textTertiary)
+              .margin({ top: 12 })
+          }
         }.layoutWeight(1).justifyContent(FlexAlign.Center)
 
         ControlPad({

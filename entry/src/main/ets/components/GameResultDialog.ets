@@ -52,14 +52,12 @@ export struct GameResultDialog {
         .backgroundColor(SemanticColors.surfaceTranslucent)
         .backdropBlur(24)
         .shadow(ShadowTokens.float)
-        .renderGroup(true)
     } else {
       Column() { this.DialogContent() }
         .width('100%').height('100%')
         .backgroundColor(SemanticColors.scrim)
         .backdropBlur(20)
         .justifyContent(FlexAlign.Center)
-        .renderGroup(true)
     }
   }
 
@@ -94,20 +92,15 @@ export struct GameResultDialog {
       }
 
       Row({ space: SpacingTokens.base }) {
-        Button() {
-          Row({ space: SpacingTokens.xs }) {
-            SymbolGlyph($r('sys.symbol.arrow_clockwise'))
-              .fontSize(16).fontColor([SemanticColors.textOnPrimary])
-            Text(this.primaryText)
-              .fontFamily(FontTokens.family)
-              .fontSize(FontTokens.sizeBody).fontColor(SemanticColors.textOnPrimary)
-          }
-        }
-        .height(44).padding({ left: SpacingTokens.lg, right: SpacingTokens.lg })
-        .backgroundColor(SemanticColors.primary).borderRadius(RadiusTokens.full)
-        .shadow(ShadowTokens.button)
-        .accessibilityText($r('app.string.a11y_dialog_play_again'))
-        .onClick(() => this.onPrimary())
+        Button(this.primaryText)
+          .height(44).padding({ left: SpacingTokens.lg, right: SpacingTokens.lg })
+          .fontFamily(FontTokens.family)
+          .fontSize(FontTokens.sizeBody)
+          .fontColor(SemanticColors.textOnPrimary)
+          .backgroundColor(SemanticColors.primary).borderRadius(RadiusTokens.full)
+          .shadow(ShadowTokens.button)
+          .accessibilityText($r('app.string.a11y_dialog_play_again'))
+          .onClick(() => this.onPrimary())
 
         if (this.showSecondary) {
           Button(this.secondaryText)

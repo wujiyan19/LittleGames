@@ -13,6 +13,7 @@ import { GameLifecycleObserver } from '../common/GameLifecycleBus';
 import { Direction, Point, SnakeRules } from '../model/game/SnakeModel';
 import { RandomSource, RealRandom } from '../model/game/RandomSource';
 
+
 const COLS = 20;
 const ROWS = 20;
 const GAME_ID = 'snake';
@@ -31,14 +32,18 @@ export class SnakeViewModel implements GameLifecycleObserver {
 
   private rules: SnakeRules = new SnakeRules(COLS, ROWS);
   private rng: RandomSource;
-  /** 蛇身占用集合（非 UI 状态），随蛇变动重建；供渲染 O(1) 查询（P2-2） */
-  private occupied: Set<number> = new Set<number>();
+  /** 蛇身占用集合，随蛇变动重建；供渲染 O(1) 查询。
+   *  @Trace：build 函数通过 isSnakeCell() → isOccupied(occupied,...) 间接读取，
+   *  若不加 @Trace，蛇移动时 occupied 变化不会被框架检测，界面不刷新。 */
+  @Trace private occupied: Set<number> = new Set<number>();
   private direction: Direction = Direction.RIGHT;
   // 方向输入缓冲：每个 tick 只应用一次转向，防止一个 tick 内连按两键造成 180° 反向自杀
   private pendingTurn: Direction | null = null;
   private timer: number = -1;
   /** 本次暂停是否由「切后台」自动触发——决定回到前台时是否需要自动恢复 */
   private autoPaused: boolean = false;
+  /** 玩家是否已按过方向键（首次按键才启动定时器） */
+  @Trace started: boolean = false;
 
   constructor(rng?: RandomSource) {
     this.rng = rng ?? new RealRandom();
@@ -70,13 +75,15 @@ export class SnakeViewModel implements GameLifecycleObserver {
     this.pendingTurn = null;
     this.score = 0;
     this.status = GameStatus.PLAYING;
+    this.started = false;
   }
 
   /** 开局并启动定时器 */
   startGame(): void {
     if (this.score > 0) { GameDataManager.updateHighScore(GAME_ID, this.score); }
     this.newGame();
-    this.startTimer();
+    // 不立即启动定时器——等玩家按第一个方向键后再开始移动
+    this.started = false;
   }
 
   startTimer(): void {
@@ -138,6 +145,11 @@ export class SnakeViewModel implements GameLifecycleObserver {
     if (this.pendingTurn !== null) { return; }
     if (!this.rules.turnAllowed(this.direction, dir)) { return; }
     this.pendingTurn = dir;
+    // 首次按方向键时启动定时器（开局不自动移动，等玩家操作）
+    if (!this.started) {
+      this.started = true;
+      this.startTimer();
+    }
   }
 
   /** 渲染热路径：O(1) 查询占用集合（P2-2） */
@@ -192,6 +204,7 @@ export class SnakeViewModel implements GameLifecycleObserver {
   }
 
   private gameOver(): void {
+
     this.status = GameStatus.OVER;
     this.stopTimer();
     if (this.score > this.highScore) { this.highScore = this.score; }

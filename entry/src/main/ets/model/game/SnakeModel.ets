@@ -46,9 +46,11 @@ export class SnakeRules {
     this.rows = rows;
   }
 
-  /** 开局蛇身：位于棋盘正中，长度 1 */
+  /** 开局蛇身：位于棋盘正中，长度 3，水平排列向右移动 */
   initialSnake(): Point[] {
-    return [new Point(Math.floor(this.cols / 2), Math.floor(this.rows / 2))];
+    const cy = Math.floor(this.rows / 2);
+    const cx = Math.floor(this.cols / 2);
+    return [new Point(cx, cy), new Point(cx - 1, cy), new Point(cx - 2, cy)];
   }
 
   /** 转向是否合法：不能原地不变、不能 180° 反向 */

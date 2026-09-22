@@ -16,7 +16,7 @@ const GAME_ID = '2048';
 
 @ObservedV2
 export class Game2048ViewModel implements GameLifecycleObserver {
-  @Trace board: number[][] = [];
+  @Trace board: number[][] = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
   @Trace score: number = 0;
   @Trace highScore: number = 0;
   @Trace status: GameStatus = GameStatus.PLAYING;
@@ -29,8 +29,10 @@ export class Game2048ViewModel implements GameLifecycleObserver {
 
   private rules: Game2048Rules = new Game2048Rules(SIZE);
   private rng: RandomSource;
-  /** 最近一次滑动「每格来源」（供 View 计算位移动画），非 UI 状态 */
-  private lastSources: number[] = [];
+  /** 最近一次滑动「每格来源」（供 View 计算位移动画）。
+   *  @Trace：rebuildTiles() 通过 sourceAt() 读取此字段判断方块来源，
+   *  若不加 @Trace，框架无法追踪依赖，滑动后方块身份判定可能出错。 */
+  @Trace private lastSources: number[] = [];
 
   constructor(rng?: RandomSource) {
     this.rng = rng ?? new RealRandom();

@@ -23,12 +23,28 @@ const SIZE = 4;
 /** 格间距（每格 margin 3 → 相邻两格共 6） */
 const GAP = 6;
 
-interface TileData {
-  id: number;
-  value: number;
-  row: number;
-  col: number;
-  scale: number;
+/**
+ * 方块数据（P0-3）。
+ * 必须是 @ObservedV2 类而非普通 interface：
+ * V2 的 ForEach 对「key 相同（id 复用）但属性变化的项」不会重新执行 itemGenerator，
+ * 普通 interface 的方块滑动后（row/col/value 变化）渲染层不跟随——方块卡在旧位/合并块不出现。
+ * 改为 @ObservedV2 + @Trace 后，原地修改属性即触发组件内更新，.animation() 对 offset/scale 自动插值。
+ */
+@ObservedV2
+class TileData {
+  readonly id: number;
+  @Trace value: number;
+  @Trace row: number;
+  @Trace col: number;
+  @Trace scale: number;
+
+  constructor(id: number, value: number, row: number, col: number, scale: number) {
+    this.id = id;
+    this.value = value;
+    this.row = row;
+    this.col = col;
+    this.scale = scale;
+  }
 }
 
 @ComponentV2
@@ -103,9 +119,12 @@ export struct Game2048Page {
   }
 
   /**
-   * 依据 viewModel.board 重建方块列表。
+   * 依据 viewModel.board 同步方块列表（P0-3 重构：原地更新）。
    * animateAllNew=true（开局）时所有非空格视为新块；否则只有 spawn 格算新块。
-   * 非空格优先沿用「来源格」的旧方块 id —— 保持身份不变，offset 变化即产生滑动。
+   * - 复用块：沿用「来源格」旧 TileData 对象，原地改 row/col/value/scale（@Trace 触发
+   *   组件内更新，.animation() 对 offset/scale/背景色自动插值出滑动效果）；
+   * - 新块：new TileData 追加；被合并吃掉的旧块随数组替换自然销毁。
+   * 数组仅在增删时整体替换（触发 ForEach diff），属性更新全部走 @Trace。
    */
   rebuildTiles(animateAllNew: boolean): void {
     this.clearSettleTimer();
@@ -117,8 +136,9 @@ export struct Game2048Page {
       oldAt[t.row * SIZE + t.col] = t;
     }
 
-    const next: TileData[] = [];
-    const settleIds: number[] = [];
+    const kept: TileData[] = [];        // 复用（原地更新）的块
+    const spawned: TileData[] = [];     // 新建块
+    const settleTiles: TileData[] = []; // 需要弹动回落到 scale=1 的块
     for (let r = 0; r < SIZE; r++) {
       for (let c = 0; c < SIZE; c++) {
         const value = this.viewModel.cellValue(r, c);
@@ -128,43 +148,52 @@ export struct Game2048Page {
           (r === this.viewModel.spawnRow && c === this.viewModel.spawnCol);
         if (isSpawn) {
           const id = ++this.tileIdCounter;
-          next.push({ id: id, value: value, row: r, col: c, scale: 0.5 });
-          settleIds.push(id);
+          const t = new TileData(id, value, r, c, 0.5);
+          spawned.push(t);
+          settleTiles.push(t);
           continue;
         }
 
         const srcIdx = this.viewModel.sourceAt(r * SIZE + c);
         const old = (srcIdx >= 0) ? oldAt[srcIdx] : null;
-        const id = (old !== null) ? old.id : ++this.tileIdCounter;
-        // 合并判定：目标值 = 来源值 * 2
-        const merged = (old !== null) && old.value > 0 && old.value * 2 === value;
-        next.push({ id: id, value: value, row: r, col: c, scale: merged ? 1.15 : 1 });
-        if (merged) { settleIds.push(id); }
+        if (old !== null) {
+          // 合并判定必须用旧值：目标值 = 来源值 * 2（先算再赋新值）
+          const merged = old.value > 0 && old.value * 2 === value;
+          old.row = r;
+          old.col = c;
+          old.value = value;
+          // 非 merged 强制归 1：处理上次弹动动画被本次滑动打断的遗留状态
+          old.scale = merged ? 1.15 : 1;
+          if (merged) { settleTiles.push(old); }
+          kept.push(old);
+          continue;
+        }
+
+        // 无来源（理论上正常滑动不会发生）：兜底按新块渲染
+        const id = ++this.tileIdCounter;
+        spawned.push(new TileData(id, value, r, c, 1));
       }
     }
-    this.tiles = next;
+    // 数组替换触发 ForEach diff：kept 的 key 复用（属性更新走 @Trace）、
+    // spawned 新建、不在新列表中的旧块销毁
+    this.tiles = kept.concat(spawned);
 
-    if (settleIds.length > 0) {
+    if (settleTiles.length > 0) {
       this.settleTimer = setTimeout(() => {
         this.settleTimer = -1;
-        this.settleScales(settleIds);
+        this.settleScales(settleTiles);
       }, this.animationDuration);
     }
   }
 
-  /** 弹动回落：把指定方块 scale 归 1（由 .animation() 插值） */
-  private settleScales(ids: number[]): void {
-    const updated: TileData[] = [];
-    for (let i = 0; i < this.tiles.length; i++) {
-      const t = this.tiles[i];
-      let scale = t.scale;
-      for (let k = 0; k < ids.length; k++) {
-        if (ids[k] === t.id) { scale = 1; break; }
-      }
-      updated.push({ id: t.id, value: t.value, row: t.row, col: t.col, scale: scale });
+  /** 弹动回落：直接把指定块 scale 归 1（@Trace 触发，由 .animation() 插值）。
+   *  P0-3：不再创建新对象（同 id 新对象同样不会被 ForEach 复用更新），原地改属性。 */
+  private settleScales(tiles: TileData[]): void {
+    for (let i = 0; i < tiles.length; i++) {
+      tiles[i].scale = 1;
     }
-    this.tiles = updated;
   }
+
 
   /**
    * 方块底色。已收编为资源，深色模式在 dark/element/color.json 提供另一套值。
@@ -233,17 +262,19 @@ export struct Game2048Page {
 
         Column() {
           Stack({ alignContent: Alignment.TopStart }) {
-            // 底色格
-            ForEach(this.idx4, (row: number) => {
-              Row() {
-                ForEach(this.idx4, (col: number) => {
-                  Column()
-                    .width(this.cell).height(this.cell).margin(3)
-                    .borderRadius(RadiusTokens.md)
-                    .backgroundColor(SemanticColors.cellHidden)
-                }, (col: number) => col.toString())
-              }
-            }, (row: number) => row.toString())
+            // 底色格 — 用 Column 包裹使 4 个 Row 垂直排列（Stack 是层叠布局，直接放 Row 会重叠）
+            Column() {
+              ForEach(this.idx4, (row: number) => {
+                Row() {
+                  ForEach(this.idx4, (col: number) => {
+                    Column()
+                      .width(this.cell).height(this.cell).margin(3)
+                      .borderRadius(RadiusTokens.md)
+                      .backgroundColor(SemanticColors.cellHidden)
+                  }, (col: number) => col.toString())
+                }
+              }, (row: number) => row.toString())
+            }
 
             // 方块层：稳定 id，按 row/col 偏移定位
             ForEach(this.tiles, (tile: TileData) => {
@@ -264,8 +295,7 @@ export struct Game2048Page {
             }, (tile: TileData) => tile.id.toString())
           }
           .width(this.innerSize()).height(this.innerSize())
-          // 多个方块同时滑动/缩放，整体缓存为一张位图，减少渲染批次（P2-1）
-          .renderGroup(true)
+
         }.width(this.boardSize).height(this.boardSize)
         .backgroundColor(SemanticColors.boardBg)
         .border({ width: 2, color: SemanticColors.boardBorder, radius: RadiusTokens.base })
