@@ -99,6 +99,15 @@
     { "name": "badge_memorycard_start", "value": "#9A83FF" },
     { "name": "badge_memorycard_end", "value": "#7A5AF8" },
     { "name": "badge_jumpjump_start", "value": "#2DD4BF" },
-    { "name": "badge_jumpjump_end", "value": "#0D9488" }
+    { "name": "badge_jumpjump_end", "value": "#0D9488" },
+
+    { "name": "badge_brickbreaker_start", "value": "#FF6B6B" },
+    { "name": "badge_brickbreaker_end", "value": "#CC3333" },
+
+    { "name": "brick_row_0", "value": "#FF6B6B" },
+    { "name": "brick_row_1", "value": "#FFAA33" },
+    { "name": "brick_row_2", "value": "#2DD482" },
+    { "name": "brick_row_3", "value": "#3399FF" },
+    { "name": "brick_row_4", "value": "#8675F8" }
   ]
 }

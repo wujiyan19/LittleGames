@@ -28,6 +28,7 @@ import { KlotskiPage } from '../pages/puzzle/KlotskiPage';
 import { GuessNumberPage } from '../pages/puzzle/GuessNumberPage';
 import { MemoryCardPage } from '../pages/puzzle/MemoryCardPage';
 import { JumpJumpPage } from '../pages/classic/JumpJumpPage';
+import { BrickBreakerPage } from '../pages/classic/BrickBreakerPage';
 import { GameLifecycleBus } from '../common/GameLifecycleBus';
 
 export class GameRoutes {
@@ -43,7 +44,8 @@ export class GameRoutes {
     'klotski': 'KlotskiPage',
     'guessnumber': 'GuessNumberPage',
     'memorycard': 'MemoryCardPage',
-    'jumpjump': 'JumpJumpPage'
+    'jumpjump': 'JumpJumpPage',
+    'brickbreaker': 'BrickBreakerPage'
   };
 
   /** 查路由名。未登记的 ID 返回空串，调用方应据此拒绝导航（而非静默跳错页） */
@@ -83,6 +85,8 @@ export function GamePageMap(name: string, pathStack: NavPathStack) {
       MemoryCardPage({ pathStack: pathStack })
     } else if (name === 'JumpJumpPage') {
       JumpJumpPage({ pathStack: pathStack })
+    } else if (name === 'BrickBreakerPage') {
+      BrickBreakerPage({ pathStack: pathStack })
     }
   }
   .hideTitleBar(true)
