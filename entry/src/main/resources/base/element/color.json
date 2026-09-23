@@ -97,6 +97,8 @@
     { "name": "badge_guessnumber_start", "value": "#F5A623" },
     { "name": "badge_guessnumber_end", "value": "#D48806" },
     { "name": "badge_memorycard_start", "value": "#9A83FF" },
-    { "name": "badge_memorycard_end", "value": "#7A5AF8" }
+    { "name": "badge_memorycard_end", "value": "#7A5AF8" },
+    { "name": "badge_jumpjump_start", "value": "#2DD4BF" },
+    { "name": "badge_jumpjump_end", "value": "#0D9488" }
   ]
 }

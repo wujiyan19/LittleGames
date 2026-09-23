@@ -121,6 +121,16 @@ export class GameDataManager {
       highScore: 0,
       playCount: 0,
       scoreLabel: $r('app.string.game_memorycard_score_label'),
+    },
+    {
+      id: 'jumpjump',
+      name: $r('app.string.game_jumpjump_name'),
+      category: GameCategory.CLASSIC,
+      icon: '🐸',
+      description: $r('app.string.game_jumpjump_desc'),
+      highScore: 0,
+      playCount: 0,
+      scoreLabel: $r('app.string.game_jumpjump_score_label'),
     }
   ];
 

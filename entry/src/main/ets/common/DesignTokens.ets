@@ -185,6 +185,9 @@ export class GameBadgeColors {
     if (gameId === 'memorycard') {
       return [[$r('app.color.badge_memorycard_start'), 0], [$r('app.color.badge_memorycard_end'), 1]];
     }
+    if (gameId === 'jumpjump') {
+      return [[$r('app.color.badge_jumpjump_start'), 0], [$r('app.color.badge_jumpjump_end'), 1]];
+    }
     return [[$r('app.color.primary'), 0], [$r('app.color.accent'), 1]];
   }
 }
