@@ -101,15 +101,6 @@ export struct FeaturedTab {
         top: SpacingTokens.base
       })
 
-      Circle({ width: 180, height: 180 })
-        .fill('rgba(93, 134, 255, 0.30)')
-        .blur(50)
-        .position({ x: -40, y: -30 })
-
-      Circle({ width: 140, height: 140 })
-        .fill('rgba(122, 90, 248, 0.25)')
-        .blur(40)
-        .position({ x: '75%', y: '60%' })
     }
     .width('100%')
     .margin({
