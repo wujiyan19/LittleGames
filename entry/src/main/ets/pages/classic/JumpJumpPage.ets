@@ -73,7 +73,7 @@ export struct JumpJumpPage {
   /** 地面（平台顶部）在游戏区内的 y 坐标 */
   private groundY(): number {
     if (this.areaH <= 0) { return 300; }
-    return this.areaH * 0.66;
+    return this.areaH * 0.35;
   }
 
   build() {
@@ -127,17 +127,19 @@ export struct JumpJumpPage {
 
         // 游戏区：全屏长按蓄力
         Stack({ alignContent: Alignment.TopStart }) {
-          // 平台层
+          // 平台层（只渲染屏幕可见范围内的平台）
           ForEach(this.viewModel.platforms, (p: PlatformData, index: number) => {
-            Column()
-              .width(p.width).height(PLATFORM_H)
-              .borderRadius(RadiusTokens.sm)
-              .backgroundColor(index === this.viewModel.currentIndex
-                ? SemanticColors.primary : SemanticColors.boardBorder)
-              .offset({ x: p.centerX - p.width / 2, y: this.groundY() })
-              .id(index === this.viewModel.currentIndex + 1
-                ? 'jumpjump_next_platform' : 'jumpjump_platform_' + p.id)
-              .accessibilityText(this.platformA11y(index))
+            if (p.centerX + p.width / 2 >= -20 && p.centerX - p.width / 2 <= this.areaW + 20) {
+              Column()
+                .width(p.width).height(PLATFORM_H)
+                .borderRadius(RadiusTokens.sm)
+                .backgroundColor(index === this.viewModel.currentIndex
+                  ? SemanticColors.primary : SemanticColors.boardBorder)
+                .offset({ x: p.centerX - p.width / 2, y: this.groundY() })
+                .id(index === this.viewModel.currentIndex + 1
+                  ? 'jumpjump_next_platform' : 'jumpjump_platform_' + p.id)
+                .accessibilityText(this.platformA11y(index))
+            }
           }, (p: PlatformData) => p.id.toString())
 
           // 角色（压缩用 scale，位移用 offset）

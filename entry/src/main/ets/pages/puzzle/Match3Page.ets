@@ -54,7 +54,9 @@ export struct Match3Page {
   }
 
   initBoardSize(): void {
-    this.cell = ScreenUtils.calcCell(COLS, 360, 24, 28);
+    // padding 参数需包含：格子间距 7*3=21vp + 棋盘 padding 4*2=8vp + border 2*2=4vp = 33vp
+    // 取 32 留余量，确保棋盘不溢出窗口
+    this.cell = ScreenUtils.calcCell(COLS, 360, 32, 28);
     this.boardSize = this.cell * COLS + (COLS - 1) * GAP + 8;
   }
 

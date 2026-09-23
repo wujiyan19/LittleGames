@@ -97,7 +97,7 @@ export struct BrickBreakerPage {
 
         // 游戏区域 - 用Column包裹Stack以支持justifyContent居中
         Column() {
-          Stack() {
+          Stack({ alignContent: Alignment.TopStart }) {
             // 游戏区域背景
             Column()
               .width(this.viewModel.gameWidth())

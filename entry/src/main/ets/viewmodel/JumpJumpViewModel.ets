@@ -32,7 +32,7 @@ const INITIAL_PLATFORMS = 12;
 /** 每次补充的平台数量 */
 const REFILL_PLATFORMS = 6;
 /** 当前平台在屏幕上的固定水平位置占比 */
-const BASE_SCREEN_RATIO = 0.28;
+const BASE_SCREEN_RATIO = 0.18;
 
 /** 平台视图数据：@ObservedV2 + @Trace 以便原地改 centerX 触发重渲染 */
 @ObservedV2
