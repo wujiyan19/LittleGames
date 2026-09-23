@@ -141,6 +141,16 @@ export class GameDataManager {
       highScore: 0,
       playCount: 0,
       scoreLabel: $r('app.string.game_brickbreaker_score_label'),
+    },
+    {
+      id: 'match3',
+      name: $r('app.string.game_match3_name'),
+      category: GameCategory.PUZZLE,
+      icon: '💎',
+      description: $r('app.string.game_match3_desc'),
+      highScore: 0,
+      playCount: 0,
+      scoreLabel: $r('app.string.game_match3_score_label'),
     }
   ];
 

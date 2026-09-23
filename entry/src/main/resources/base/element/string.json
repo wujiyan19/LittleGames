@@ -675,6 +675,30 @@
     {
       "name": "a11y_brickbreaker_ball",
       "value": "小球"
+    },
+    {
+      "name": "game_match3_name",
+      "value": "消消乐"
+    },
+    {
+      "name": "game_match3_desc",
+      "value": "交换相邻宝石，连线消除得分"
+    },
+    {
+      "name": "game_match3_score_label",
+      "value": "分"
+    },
+    {
+      "name": "game_match3_hint",
+      "value": "点击宝石选中，再点击相邻宝石交换"
+    },
+    {
+      "name": "game_match3_moves_label",
+      "value": "步数"
+    },
+    {
+      "name": "a11y_match3_gem_format",
+      "value": "第 %1$d 行第 %2$d 列，第 %3$d 种宝石"
     }
   ]
 }

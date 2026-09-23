@@ -191,6 +191,9 @@ export class GameBadgeColors {
     if (gameId === 'brickbreaker') {
       return [[$r('app.color.badge_brickbreaker_start'), 0], [$r('app.color.badge_brickbreaker_end'), 1]];
     }
+    if (gameId === 'match3') {
+      return [[$r('app.color.badge_match3_start'), 0], [$r('app.color.badge_match3_end'), 1]];
+    }
     return [[$r('app.color.primary'), 0], [$r('app.color.accent'), 1]];
   }
 }

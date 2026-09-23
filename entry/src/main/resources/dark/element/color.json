@@ -108,6 +108,9 @@
     { "name": "brick_row_1", "value": "#FFB84D" },
     { "name": "brick_row_2", "value": "#4FDE9B" },
     { "name": "brick_row_3", "value": "#5CABFF" },
-    { "name": "brick_row_4", "value": "#A08FFA" }
+    { "name": "brick_row_4", "value": "#A08FFA" },
+
+    { "name": "badge_match3_start", "value": "#5CABFF" },
+    { "name": "badge_match3_end", "value": "#A08FFA" }
   ]
 }

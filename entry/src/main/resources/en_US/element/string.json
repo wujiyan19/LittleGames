@@ -675,6 +675,30 @@
     {
       "name": "a11y_brickbreaker_ball",
       "value": "Ball"
+    },
+    {
+      "name": "game_match3_name",
+      "value": "Match-3"
+    },
+    {
+      "name": "game_match3_desc",
+      "value": "Swap adjacent gems to match and score"
+    },
+    {
+      "name": "game_match3_score_label",
+      "value": "pts"
+    },
+    {
+      "name": "game_match3_hint",
+      "value": "Tap a gem to select, then tap an adjacent gem to swap"
+    },
+    {
+      "name": "game_match3_moves_label",
+      "value": "Moves"
+    },
+    {
+      "name": "a11y_match3_gem_format",
+      "value": "Row %1$d Col %2$d, Gem %3$d"
     }
   ]
 }
