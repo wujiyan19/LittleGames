@@ -1,187 +1,107 @@
 <div align="center">
 
-# 🎮 LittleGames · 小游戏合集
+# 🎮 LittleGames
 
-**一款基于 HarmonyOS NEXT 的轻量级小游戏合集应用**
+### 13 款小游戏，随手开一局。
 
-HarmonyOS 系统色 · 克制的原生界面 · 13 款精选小游戏 · 手机 / 平板双端适配
+基于 HarmonyOS NEXT 的原生小游戏合集。打开即玩，战绩留在本机。
 
-![HarmonyOS](https://img.shields.io/badge/HarmonyOS-NEXT-2D6CE8?style=for-the-badge)
-![ArkTS](https://img.shields.io/badge/ArkTS-ArkUI_@ComponentV2-7A5AF8?style=for-the-badge)
-![SDK](https://img.shields.io/badge/API-24_(6.1.1)-16205F?style=for-the-badge)
-![Device](https://img.shields.io/badge/设备-Phone_∣_Tablet-0B1135?style=for-the-badge)
-![Version](https://img.shields.io/badge/version-1.0.0-5C9AFF?style=for-the-badge)
+**ArkTS / ArkUI** · **HarmonyOS 6.1.1（API 24）** · **手机 / 平板工程配置**
 
 </div>
 
 ---
 
-## ✨ 应用简介
+## 界面预览
 
-**LittleGames（小游戏合集）** 是一款原生 HarmonyOS 休闲游戏应用，收录了 **13 款小游戏**，涵盖「经典休闲」与「益智解谜」两大分类。界面使用 HarmonyOS 系统色与统一的间距、圆角和字阶，随系统深浅色模式适配。所有游戏的最高分与游玩次数自动本地持久化，重启应用后战绩依然保留。
+<p align="center">
+  <img src="docs/screenshots/home.jpeg" alt="精选页" width="220">
+  <img src="docs/screenshots/profile.jpeg" alt="个人战绩页" width="220">
+  <img src="docs/screenshots/match3.jpeg" alt="消消乐游戏页" width="220">
+</p>
 
-## 🕹️ 游戏列表
+<p align="center"><sub>精选推荐 · 个人战绩 · 沉浸游玩｜截图来自 API 24 本地模拟器</sub></p>
 
-### 🎯 经典休闲
+## 玩什么
 
-| 图标 | 游戏 | 玩法说明 |
-| :---: | :--- | :--- |
-| 🐍 | **贪吃蛇** | 20×20 棋盘，虚拟方向盘操控，转向输入缓冲防误触，吃食物变长挑战高分 |
-| 🧩 | **俄罗斯方块** | 经典 10×20 棋盘，七种方块旋转下落，消行得分，速度随分数递增 |
-| 🔲 | **2048** | 4×4 滑动合并数字方块，带滑动动画，冲击 2048 目标 |
-| 🐹 | **打地鼠** | 9 洞地鼠快速反应挑战，点击冒出的地鼠得分，考验手速 |
-| 💣 | **扫雷** | 经典扫雷规则，翻开格子推理雷区，标记并排除所有地雷 |
-| 🐸 | **跳一跳** | 长按蓄力，松手跳跃到下一个平台 |
-| 🧱 | **打砖块** | 移动挡板反弹球，击碎砖块挑战关卡 |
+| 经典休闲 · 7 款 | 玩法 |
+| --- | --- |
+| 🐍 贪吃蛇 | 控制方向，吃到食物并避开自己 |
+| 🧩 俄罗斯方块 | 旋转、移动方块，消除整行 |
+| 🔲 2048 | 滑动合并数字，向 2048 前进 |
+| 🐹 打地鼠 | 在限定时间内点击冒出的地鼠 |
+| 💣 扫雷 | 翻开安全格，标记地雷 |
+| 🐸 跳一跳 | 长按蓄力，松手跃向下一平台 |
+| 🧱 打砖块 | 移动挡板，反弹小球击碎砖块 |
 
-### 🧠 益智解谜
+| 益智解谜 · 6 款 | 玩法 |
+| --- | --- |
+| 🔢 数独 | 根据已知数字填满九宫格 |
+| 🧩 滑动拼图 | 移动方块，还原正确顺序 |
+| 💠 华容道 | 移动棋子，为曹操打开出口 |
+| 🎲 猜数字 | 根据 A/B 提示推理四位数字 |
+| 🃏 记忆翻牌 | 翻开卡片，找出相同配对 |
+| 💎 消消乐 | 交换相邻宝石，连线消除得分 |
 
-| 图标 | 游戏 | 玩法说明 |
-| :---: | :--- | :--- |
-| 🔢 | **数独** | 标准 9×9 数独，唯一解校验、新题不重复，支持双指缩放与拖拽查看 |
-| 🧩 | **滑动拼图** | 移动方块还原完整拼图，步数计时双指标 |
-| 💠 | **华容道** | 经典横刀立马布局，移动棋子助曹操从出口逃脱 |
-| 🎲 | **猜数字** | 根据 A/B 提示推理 4 位不重复数字密码，越少次数越强 |
-| 🃏 | **记忆翻牌** | 翻开卡片寻找相同 Emoji 配对，考验记忆力与反应 |
-| 💎 | **消消乐** | 交换相邻宝石，连线消除得分 |
+## 体验细节
 
-> 全部游戏均支持 **简单 / 普通 / 困难** 难度体系、最高分记录与游玩次数统计。
+- **找游戏更快**：精选页按游玩次数推荐；分类页支持分类筛选，以及按名称或描述实时搜索。
+- **战绩自动保存**：最高分、游玩次数和触感反馈开关通过 Preferences 保存在本机。
+- **界面随主题变化**：页面使用 HarmonyOS 系统色与统一间距，适配浅色和深色模式；可点击控件提供按压反馈。
+- **对局操作一致**：游戏页复用标题栏、方向控制、结算与退出确认组件。部分游戏提供简单、普通、困难难度。
+- **语言与设备**：提供简体中文、英文字符串资源；工程声明支持 phone 和 tablet。
 
-## 🌟 核心功能
+## 运行项目
 
-### 🏠 三大主页 Tab
+### 在 DevEco Studio 中
 
-- **⭐ 精选** — 系统色横幅 + 热门推荐，按游玩次数排序精选游戏
-- **🗂️ 分类** — 全部 / 经典休闲 / 益智解谜分类筛选，支持**实时搜索**（游戏名称与描述模糊匹配，输入即刷新），全部游戏按中文拼音智能排序
-- **👤 我的** — 玩家卡片、游戏总数 / 最高分等数据统计、最高分排行榜（含分数单位）、触感反馈开关
+1. 安装支持 **HarmonyOS 6.1.1（API 24）** 的 DevEco Studio 和 SDK。
+2. 打开本仓库根目录，等待工程同步完成。
+3. 启动 Local Emulator，或连接 HarmonyOS NEXT 真机。
+4. 选择设备，点击 **Run**。真机运行前需在 DevEco Studio 中配置签名。
 
-### 🎬 动效闪屏
+### 命令行构建（Windows PowerShell）
 
-系统背景与强调色配合轻量入场动画，自然过渡进入主页。
+本项目使用 DevEco Studio 自带的 hvigor，仓库根目录没有 hvigorw。以下命令按默认安装路径编写；如安装在其他位置，请修改第一行。
 
-### 💾 本地数据持久化
+~~~powershell
+$studio = 'C:\Program Files\Huawei\DevEco Studio'
+$env:DEVECO_SDK_HOME = "$studio\sdk"
+$env:JAVA_HOME = "$studio\jbr"
+$env:PATH = "$studio\tools\node;$studio\tools\ohpm\bin;$studio\jbr\bin;$env:PATH"
+& "$studio\tools\node\node.exe" "$studio\tools\hvigor\bin\hvigorw.js" assembleHap --mode module -p product=default --no-daemon
+~~~
 
-基于 `@kit.ArkData` Preferences 存储：
+构建产物位于 **entry/build/default/outputs/default/**。当前仓库未配置签名，命令行构建生成 unsigned HAP；真机安装请先配置签名。
 
-- 每款游戏的**最高分**自动记录并持久化
-- **游玩次数**累计统计
-- **触感反馈开关**等用户设置持久化
-- 应用重启后数据完整保留，写入失败不影响游戏流程
+## 工程结构
 
-### 🔄 生命周期管理
+~~~text
+AppScope/                     应用信息与图标
+entry/src/main/
+├── ets/
+│   ├── common/               设计令牌、游戏常量、通用工具
+│   ├── components/           游戏页共用组件
+│   ├── model/                游戏列表与本地数据
+│   ├── pages/
+│   │   ├── home/             精选、分类、我的
+│   │   ├── classic/          7 款经典休闲游戏
+│   │   └── puzzle/           6 款益智解谜游戏
+│   └── router/               页面路由
+└── resources/                浅色、深色及多语言资源
+docs/screenshots/             本地模拟器界面截图
+~~~
 
-- 切后台自动暂停（定时器类游戏）+ 结算当前分数，避免进程被杀导致丢分
-- 对局进行中点返回或侧滑时弹出**退出确认弹窗**，分数自动保留
-- 系统侧滑返回由 `NavDestination.onBackPressed` 统一拦截
+主模块采用 **@ComponentV2**、**@Local**、**Navigation / NavPathStack** 和 **GridRow**；运行时没有第三方依赖。模块仅声明振动权限，不需要网络权限。
 
-### 📳 触感反馈
+## 验证情况
 
-- 方向键操作、翻牌、敲地鼠等交互触发轻触震动
-- 对局胜利/结束时触发成功震动
-- 「我的」页面提供开关，可全局关闭触感反馈
+已在 **HarmonyOS 6.1.1 / API 24 手机本地模拟器**完成构建、安装，并检查首页、分类、“我的”、2048、跳一跳和消消乐的主要界面及深浅模式。平板布局与真机能力仍需在对应设备上复查。
 
-### ♿ 无障碍支持
-
-- 所有游戏交互元素（按钮、棋盘格子、卡牌、键盘）均提供 `accessibilityText` 读屏描述
-- 支持 TalkBack 等屏幕阅读器，覆盖 13 款游戏全部核心操作
-
-### 📱 响应式多端适配
-
-- `GridRow` 断点栅格布局（320vp / 600vp / 840vp），列数随屏幕宽度自适应
-
-- 游戏棋盘按屏幕尺寸动态计算格子大小，安全区自动扩展
-
-### 🎨 统一设计系统
-
-- 自研 **Design Tokens** 体系：色彩 / 间距 / 圆角 / 阴影 / 字体全量令牌化
-- 页面背景、卡片、文字与主行动项使用 HarmonyOS 系统资源 `$r('sys.color.*')`
-- 页面颜色取自系统资源，游戏专属色在 `base` / `dark` 资源目录中分别定义，随系统深浅色模式适配
-- 通用游戏组件复用：`GameHeader`（对局信息栏）、`ControlPad`（虚拟方向盘）、`GameResultDialog`（结算弹窗）、`ExitConfirmDialog`（退出确认弹窗）
-
-## 🛠️ 技术栈
-
-| 项目 | 说明 |
-| :--- | :--- |
-| 平台 | HarmonyOS NEXT（runtimeOS: HarmonyOS） |
-| 语言 | ArkTS（严格模式） |
-| UI 框架 | ArkUI 声明式开发范式（`@ComponentV2` / `@Local` 状态管理） |
-| 路由 | `Navigation` + `NavPathStack` 组件导航 |
-| 数据 | `@kit.ArkData` Preferences 轻量持久化 |
-| 国际化 | `@kit.LocalizationKit` intl.Collator 中文拼音排序 |
-| 布局 | GridRow 断点栅格 + SafeAreaInsets 安全区适配 |
-| SDK | compileSdk / compatibleSdk / targetSdk 均为 `6.1.1(24)` |
-| 设备类型 | phone、tablet |
-
-## 📁 项目结构
-
-```
-LittleGames
-├── AppScope/                        # 应用级配置（bundleName、版本、图标）
-└── entry/src/main/
-    ├── module.json5                 # 模块配置（Ability、设备类型、页面路由、权限）
-    ├── ets/
-    │   ├── entryability/            # EntryAbility 应用入口（生命周期总线通知）
-    │   ├── common/
-    │   │   ├── DesignTokens.ets     # 设计令牌（色彩/间距/圆角/阴影/字体）
-    │   │   ├── GameConstants.ets    # 游戏分类/难度/状态枚举与接口
-    │   │   ├── GameLifecycleBus.ets # 生命周期总线（切后台暂停/返回拦截）
-    │   │   ├── Haptics.ets          # 触感反馈工具（震动开关可控）
-    │   │   ├── I18nUtils.ets        # 国际化工具（Resource/string 解析）
-    │   │   ├── SafeAreaInsets.ets   # 安全区避让
-    │   │   ├── ScreenUtils.ets      # 屏幕度量工具
-    │   │   └── Range.ets            # 数组生成工具
-    │   ├── model/
-    │   │   └── GameData.ets         # 游戏数据中心（最高分/次数/设置持久化）
-    │   ├── components/              # 通用组件
-    │   │   ├── GameHeader.ets       #   对局信息栏（返回/难度/暂停/重启）
-    │   │   ├── ControlPad.ets       #   虚拟方向盘
-    │   │   ├── GameResultDialog.ets #   结算弹窗
-    │   │   └── ExitConfirmDialog.ets#   退出确认弹窗
-    │   ├── router/
-    │   │   └── GameRoutes.ets       # 路由映射（NavDestination + onBackPressed）
-    │   └── pages/
-    │       ├── Index.ets            # 主页壳（Navigation + Tabs 骨架）
-    │       ├── home/
-    │       │   ├── SplashLayer.ets  #   启动闪屏
-    │       │   ├── FeaturedTab.ets  #   精选 Tab
-    │       │   ├── CategoryTab.ets  #   分类 Tab
-    │       │   └── ProfileTab.ets   #   我的 Tab（排行/设置）
-    │       ├── classic/             # 经典休闲：贪吃蛇/俄罗斯方块/2048/打地鼠/扫雷/跳一跳/打砖块
-    │       └── puzzle/              # 益智解谜：数独/滑动拼图/华容道/猜数字/记忆翻牌/消消乐
-    └── resources/
-        ├── base/                    # 亮色模式资源（颜色/字符串/图标）
-        ├── dark/                    # 深色模式资源
-        ├── zh_CN/                   # 中文（简体）字符串
-        └── en_US/                   # 英文字符串
-```
-
-## 🚀 快速开始
-
-### 环境要求
-
-- **DevEco Studio**（支持 HarmonyOS NEXT 的版本）
-- **HarmonyOS SDK** API 24（6.1.1）
-- 真机（HarmonyOS NEXT）或本地模拟器 / Previewer
-
-### 构建运行
-
-1. 使用 DevEco Studio 打开项目根目录
-2. 等待 IDE 自动同步依赖（`hvigor` 构建体系，无第三方依赖）
-3. 连接真机或启动模拟器
-4. 点击 **Run ▶** 即可安装运行
-
-> 命令行构建：`node "C:/Program Files/Huawei/DevEco Studio/tools/hvigor/bin/hvigorw.js" assembleHap --mode module -p product=default --no-daemon`
-> （需先设置 `DEVECO_SDK_HOME`，详见 `AGENTS.md`）
-
-> 💡 也可在 IDE 中使用 Previewer 预览各页面 UI。
-
-## 📄 说明
-
-- 本应用为学习练手项目，所有游戏均为原创手写实现，无任何第三方依赖与网络权限
-- Bundle Name：`com.littlegames.collection`
+---
 
 <div align="center">
 
-**今天也要加油哦！13 款精选小游戏等你来挑战 ⭐**
+**挑一款，开始玩吧。**
 
 </div>
