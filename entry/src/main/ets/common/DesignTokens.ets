@@ -1,82 +1,65 @@
 /**
- * 设计令牌系统 —— 「宇宙蓝 × 雪域灰」
- * 品牌基调：宇宙蓝（深邃星空蓝 + 极光紫）与 雪域灰（清冷浅灰）。
- * 所有语义色通过 resources 定义（base=亮色 / dark=深色），
- * 组件统一引用 $r('app.color.*')，随系统深浅色模式自动适配。
+ * HarmonyOS 原生设计令牌。
+ * 页面颜色优先采用系统资源；游戏棋盘色保留应用资源并提供深色版本。
  * ArkTS 严格模式
  */
 
 /**
- * 品牌色常量（深浅色模式共用，用于品牌渐变 / 强调装饰）
+ * 品牌语义别名，统一指向系统强调色。
  */
 export class BrandColors {
-  /** 宇宙蓝主色 */
-  static cosmicBlue = '#2D6CE8';
-  /** 宇宙蓝（亮） */
-  static cosmicBlueBright = '#5C9AFF';
-  /** 宇宙蓝（深） */
-  static cosmicBlueDeep = '#1B4DB8';
-  /** 极光紫 */
-  static auroraPurple = '#7A5AF8';
-  /** 极光紫（亮） */
-  static auroraPurpleBright = '#9A83FF';
-  /** 宇宙深空 */
-  static deepSpace = '#0B1135';
-  /** 宇宙深空面板 */
-  static deepSpaceSurface = '#182257';
-  /** 雪域灰背景 */
-  static snowfieldBg = '#F4F6FB';
-  /** 雪域灰面板 */
-  static snowfieldSurface = '#FFFFFF';
-  /** 雪域墨色 */
-  static snowfieldInk = '#12203A';
+  static cosmicBlue: Resource = $r('sys.color.ohos_id_color_emphasize');
+  static cosmicBlueBright: Resource = $r('sys.color.ohos_id_color_emphasize');
+  static cosmicBlueDeep: Resource = $r('sys.color.ohos_id_color_emphasize');
+  static auroraPurple: Resource = $r('sys.color.ohos_id_color_emphasize');
+  static auroraPurpleBright: Resource = $r('sys.color.ohos_id_color_emphasize');
+  static deepSpace: Resource = $r('sys.color.ohos_id_color_sub_background');
+  static deepSpaceSurface: Resource = $r('sys.color.ohos_id_color_component_normal');
+  static snowfieldBg: Resource = $r('sys.color.ohos_id_color_sub_background');
+  static snowfieldSurface: Resource = $r('sys.color.ohos_id_color_component_normal');
+  static snowfieldInk: Resource = $r('sys.color.ohos_id_color_text_primary');
 }
 
 /**
- * 语义色令牌 —— 引用 resources，随系统深浅色模式自动适配
- *
- * 明暗不在这里区分：深浅由资源目录（base/ = 亮色，dark/ = 深色）决定，
- * 因此「亮色令牌」「深色令牌」两个类是同一批资源的两份别名——
- * 新增一个语义色要改两处，且容易造成语义倒挂（亮色页面里写着 DarkColors.xxx）。
- * 已合并为单一语义类；确实需要「固定深色」的场景（如启动闪屏）请用 BrandColors。
+ * 语义色令牌。component_normal 在本地模拟器的深浅模式中均提供可读的卡片层级。
  */
 export class SemanticColors {
-  static bg: Resource = $r('app.color.bg');
-  static bgElevated: Resource = $r('app.color.bg_elevated');
-  static surface: Resource = $r('app.color.surface');
-  static surfaceHover: Resource = $r('app.color.surface_hover');
-  static surfaceTranslucent: Resource = $r('app.color.surface_translucent');
+  static bg: Resource = $r('sys.color.ohos_id_color_sub_background');
+  static bgElevated: Resource = $r('sys.color.ohos_id_color_component_normal');
+  static surface: Resource = $r('sys.color.ohos_id_color_component_normal');
+  static surfaceHover: Resource = $r('sys.color.ohos_id_color_component_normal');
+  static surfaceTranslucent: Resource = $r('sys.color.ohos_id_color_bottom_tab_sub_bg_blur');
   static scrim: Resource = $r('app.color.scrim');
-  static primary: Resource = $r('app.color.primary');
-  static primaryHover: Resource = $r('app.color.primary_hover');
-  static primaryActive: Resource = $r('app.color.primary_active');
-  static primaryLight: Resource = $r('app.color.primary_light');
-  static accent: Resource = $r('app.color.accent');
-  static accentLight: Resource = $r('app.color.accent_light');
+  static primary: Resource = $r('sys.color.ohos_id_color_emphasize');
+  static primaryHover: Resource = $r('sys.color.ohos_id_color_emphasize');
+  static primaryActive: Resource = $r('sys.color.ohos_id_color_emphasize');
+  static primaryLight: Resource = $r('sys.color.ohos_id_color_component_activated');
+  static accent: Resource = $r('sys.color.ohos_id_color_emphasize');
+  static accentLight: Resource = $r('sys.color.ohos_id_color_component_activated');
   static success: Resource = $r('app.color.success');
   static warning: Resource = $r('app.color.warning');
   static error: Resource = $r('app.color.error');
-  static textPrimary: Resource = $r('app.color.text_primary');
-  static textSecondary: Resource = $r('app.color.text_secondary');
-  static textTertiary: Resource = $r('app.color.text_tertiary');
-  static textDisabled: Resource = $r('app.color.text_disabled');
-  static textOnPrimary: Resource = $r('app.color.text_on_primary');
-  static divider: Resource = $r('app.color.divider');
+  static textPrimary: Resource = $r('sys.color.ohos_id_color_text_primary');
+  static textSecondary: Resource = $r('sys.color.ohos_id_color_text_secondary');
+  static textTertiary: Resource = $r('sys.color.ohos_id_color_text_tertiary');
+  static textDisabled: Resource = $r('sys.color.ohos_id_color_text_tertiary');
+  static textOnPrimary: Resource = $r('sys.color.ohos_id_color_text_primary_contrary');
+  static divider: Resource = $r('sys.color.ohos_id_color_component_normal');
   static border: Resource = $r('app.color.border');
   static borderStrong: Resource = $r('app.color.border_strong');
   static gradientScreen: Resource[] = [
-    $r('app.color.gradient_screen_start'),
-    $r('app.color.gradient_screen_mid'),
-    $r('app.color.gradient_screen_end')
+    $r('sys.color.ohos_id_color_sub_background'),
+    $r('sys.color.ohos_id_color_sub_background'),
+    $r('sys.color.ohos_id_color_sub_background')
   ];
   static gradientHero: Resource[] = [
-    $r('app.color.gradient_hero_start'),
-    $r('app.color.gradient_hero_mid'),
-    $r('app.color.gradient_hero_end')
+    $r('sys.color.ohos_id_color_emphasize'),
+    $r('sys.color.ohos_id_color_emphasize'),
+    $r('sys.color.ohos_id_color_emphasize')
   ];
   static gradientBrand: Resource[] = [
-    $r('app.color.gradient_brand_start'),
-    $r('app.color.gradient_brand_end')
+    $r('sys.color.ohos_id_color_emphasize'),
+    $r('sys.color.ohos_id_color_emphasize')
   ];
   /** 游戏棋盘/格子系统色 */
   static cellHidden: Resource = $r('app.color.cell_hidden');
@@ -106,13 +89,13 @@ export class SpacingTokens {
  * 圆角令牌
  */
 export class RadiusTokens {
-  static xs = 2;
-  static sm = 4;
+  static xs = 4;
+  static sm = 8;
   static md = 8;
-  static base = 12;
+  static base = 16;
   static lg = 16;
-  static xl = 20;
-  static xxl = 28;
+  static xl = 24;
+  static xxl = 32;
   static full = 9999;
 }
 
@@ -122,14 +105,14 @@ export class RadiusTokens {
 export class FontTokens {
   /** 系统字体：HarmonyOS Sans，跨设备渲染效果最佳 */
   static family = 'HarmonyOS Sans';
-  static sizeCaption = 10;
+  static sizeCaption = 12;
   static sizeBodySmall = 12;
   static sizeBody = 14;
   static sizeBodyLarge = 16;
-  static sizeSubtitle = 18;
-  static sizeTitle = 20;
+  static sizeSubtitle = 16;
+  static sizeTitle = 24;
   static sizeHeadline = 24;
-  static sizeDisplay = 32;
+  static sizeDisplay = 30;
   static sizeMega = 48;
 
   static weightRegular = 400;
@@ -139,61 +122,18 @@ export class FontTokens {
 }
 
 /**
- * 阴影令牌 —— 轻拟物质感（轻投影，避免过度设计）
+ * 阴影令牌：只为浮层保留轻投影。
  */
 export class ShadowTokens {
-  /** 卡片阴影 */
-  static card: ShadowOptions = { radius: 16, color: $r('app.color.card_shadow'), offsetX: 0, offsetY: 4 };
-  /** 按钮阴影 */
-  static button: ShadowOptions = { radius: 12, color: $r('app.color.button_shadow'), offsetX: 0, offsetY: 3 };
-  /** 悬浮/弹层阴影 */
-  static float: ShadowOptions = { radius: 24, color: $r('app.color.button_shadow'), offsetX: 0, offsetY: 8 };
+  static card: ShadowOptions = { radius: 0, color: $r('app.color.card_shadow'), offsetX: 0, offsetY: 0 };
+  static button: ShadowOptions = { radius: 0, color: $r('app.color.button_shadow'), offsetX: 0, offsetY: 0 };
+  static float: ShadowOptions = { radius: 8, color: $r('app.color.float_shadow'), offsetX: 0, offsetY: 2 };
 }
 /**
- * 游戏徽章渐变色 —— 每个游戏独有双色渐变，用于卡片图标徽章
- * 引用 resources，随系统深浅色模式自动适配
+ * 游戏徽章统一使用系统强调色。
  */
 export class GameBadgeColors {
   static getGradient(gameId: string): [Resource, number][] {
-    if (gameId === 'snake') {
-      return [[$r('app.color.badge_snake_start'), 0], [$r('app.color.badge_snake_end'), 1]];
-    }
-    if (gameId === 'tetris') {
-      return [[$r('app.color.badge_tetris_start'), 0], [$r('app.color.badge_tetris_end'), 1]];
-    }
-    if (gameId === '2048') {
-      return [[$r('app.color.badge_2048_start'), 0], [$r('app.color.badge_2048_end'), 1]];
-    }
-    if (gameId === 'whackmole') {
-      return [[$r('app.color.badge_whackmole_start'), 0], [$r('app.color.badge_whackmole_end'), 1]];
-    }
-    if (gameId === 'minesweeper') {
-      return [[$r('app.color.badge_minesweeper_start'), 0], [$r('app.color.badge_minesweeper_end'), 1]];
-    }
-    if (gameId === 'sudoku') {
-      return [[$r('app.color.badge_sudoku_start'), 0], [$r('app.color.badge_sudoku_end'), 1]];
-    }
-    if (gameId === 'slidepuzzle') {
-      return [[$r('app.color.badge_slidepuzzle_start'), 0], [$r('app.color.badge_slidepuzzle_end'), 1]];
-    }
-    if (gameId === 'klotski') {
-      return [[$r('app.color.badge_klotski_start'), 0], [$r('app.color.badge_klotski_end'), 1]];
-    }
-    if (gameId === 'guessnumber') {
-      return [[$r('app.color.badge_guessnumber_start'), 0], [$r('app.color.badge_guessnumber_end'), 1]];
-    }
-    if (gameId === 'memorycard') {
-      return [[$r('app.color.badge_memorycard_start'), 0], [$r('app.color.badge_memorycard_end'), 1]];
-    }
-    if (gameId === 'jumpjump') {
-      return [[$r('app.color.badge_jumpjump_start'), 0], [$r('app.color.badge_jumpjump_end'), 1]];
-    }
-    if (gameId === 'brickbreaker') {
-      return [[$r('app.color.badge_brickbreaker_start'), 0], [$r('app.color.badge_brickbreaker_end'), 1]];
-    }
-    if (gameId === 'match3') {
-      return [[$r('app.color.badge_match3_start'), 0], [$r('app.color.badge_match3_end'), 1]];
-    }
-    return [[$r('app.color.primary'), 0], [$r('app.color.accent'), 1]];
+    return [[SemanticColors.primary, 0], [SemanticColors.primary, 1]];
   }
 }

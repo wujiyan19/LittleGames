@@ -78,6 +78,12 @@ export struct MemoryCardPage {
     return 1;
   }
 
+  @Styles
+  pressedFeedback() {
+    .opacity(0.72)
+    .scale({ x: 0.96, y: 0.96 })
+  }
+
   build() {
     Stack() {
       Column().width('100%').height('100%')
@@ -124,14 +130,14 @@ export struct MemoryCardPage {
                 }.width(this.cardW).height(this.cardW * 1.15).margin(3)
                 .backgroundColor(this.getCardBg(r * COLS + c))
                 .borderRadius(RadiusTokens.base)
-                .shadow(ShadowTokens.button)
+
                 .opacity(this.getCardOpacity(r * COLS + c))
                 .accessibilityText(
                   this.viewModel.isFaceUp(r * COLS + c)
                     ? this.a11yCardFlippedFormat.replace('%1$d', '' + (r * COLS + c + 1))
                     : this.a11yCardHiddenFormat.replace('%1$d', '' + (r * COLS + c + 1))
                 )
-                .onClick(() => { Haptics.tap(); this.viewModel.flipCard(r * COLS + c); })
+                .stateStyles({ pressed: this.pressedFeedback }).onClick(() => { Haptics.tap(); this.viewModel.flipCard(r * COLS + c); })
               }, (c: number) => c.toString())
             }
           }, (r: number) => r.toString())

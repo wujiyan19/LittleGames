@@ -50,6 +50,12 @@ export struct BrickBreakerPage {
     return $r('app.color.brick_row_2');
   }
 
+  @Styles
+  pressedFeedback() {
+    .opacity(0.72)
+    .scale({ x: 0.96, y: 0.96 })
+  }
+
   build() {
     Stack() {
       Column().width('100%').height('100%')
@@ -103,7 +109,7 @@ export struct BrickBreakerPage {
               .width(this.viewModel.gameWidth())
               .height(this.viewModel.gameHeight())
               .backgroundColor(SemanticColors.boardBg)
-              .border({ width: 2, color: SemanticColors.boardBorder, radius: RadiusTokens.sm })
+              .borderRadius(RadiusTokens.sm)
 
             // 砖块层
             ForEach(this.viewModel.bricks, (brick: BrickViewData) => {
@@ -131,7 +137,7 @@ export struct BrickBreakerPage {
                 x: this.viewModel.paddleCenterX - this.viewModel.paddleWidth() / 2,
                 y: this.viewModel.paddleY()
               })
-              .shadow(ShadowTokens.button)
+
 
             // 小球 - 用Column+borderRadius实现圆形
             Column() {}
@@ -177,7 +183,7 @@ export struct BrickBreakerPage {
                 this.viewModel.launchBall();
               })
           )
-          .onClick(() => {
+          .stateStyles({ pressed: this.pressedFeedback }).onClick(() => {
             this.viewModel.launchBall();
           })
         }.layoutWeight(1).justifyContent(FlexAlign.Center)
@@ -192,9 +198,9 @@ export struct BrickBreakerPage {
           .type(ButtonType.Circle)
           .width(56).height(56)
           .backgroundColor(SemanticColors.primary)
-          .shadow(ShadowTokens.button)
+
           .accessibilityText($r('app.string.a11y_brickbreaker_left'))
-          .onClick(() => {
+          .stateStyles({ pressed: this.pressedFeedback }).onClick(() => {
             Haptics.tap();
             this.viewModel.movePaddleLeft();
             this.viewModel.launchBall();
@@ -208,9 +214,9 @@ export struct BrickBreakerPage {
           .type(ButtonType.Circle)
           .width(56).height(56)
           .backgroundColor(SemanticColors.primary)
-          .shadow(ShadowTokens.button)
+
           .accessibilityText($r('app.string.a11y_brickbreaker_right'))
-          .onClick(() => {
+          .stateStyles({ pressed: this.pressedFeedback }).onClick(() => {
             Haptics.tap();
             this.viewModel.movePaddleRight();
             this.viewModel.launchBall();

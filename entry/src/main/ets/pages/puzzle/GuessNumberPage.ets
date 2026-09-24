@@ -95,6 +95,12 @@ export struct GuessNumberPage {
     return key;
   }
 
+  @Styles
+  pressedFeedback() {
+    .opacity(0.72)
+    .scale({ x: 0.96, y: 0.96 })
+  }
+
   build() {
     Stack() {
       Column().width('100%').height('100%')
@@ -230,7 +236,7 @@ export struct GuessNumberPage {
         .borderRadius(RadiusTokens.base)
         .shadow(this.getKeyShadow(key))
         .accessibilityText(this.getKeyA11yText(key))
-        .onClick(() => {
+        .stateStyles({ pressed: this.pressedFeedback }).onClick(() => {
           if (key === '⌫') { this.viewModel.deleteDigit(); }
           else if (key === 'submit') { this.viewModel.submit(); }
           else { this.viewModel.pushDigit(key); }

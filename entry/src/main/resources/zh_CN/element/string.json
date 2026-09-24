@@ -42,7 +42,7 @@
     },
     {
       "name": "home_banner_subtitle",
-      "value": "10 款精选小游戏等你来挑战"
+      "value": "精选小游戏等你来挑战"
     },
     {
       "name": "home_hot_title",
@@ -699,6 +699,26 @@
     {
       "name": "a11y_match3_gem_format",
       "value": "第 %1$d 行第 %2$d 列，第 %3$d 种宝石"
+    },
+    {
+      "name": "home_empty_title",
+      "value": "暂无游戏"
+    },
+    {
+      "name": "home_empty_desc",
+      "value": "游戏列表暂时为空"
+    },
+    {
+      "name": "home_error_title",
+      "value": "加载失败"
+    },
+    {
+      "name": "home_error_desc",
+      "value": "请重试加载游戏列表"
+    },
+    {
+      "name": "home_retry",
+      "value": "重试"
     }
   ]
 }

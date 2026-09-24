@@ -261,7 +261,8 @@ export struct Game2048Page {
         }.margin({ top: 12, bottom: 12 })
 
         Column() {
-          Stack({ alignContent: Alignment.TopStart }) {
+          Column() {
+            Stack({ alignContent: Alignment.TopStart }) {
             // 底色格 — 用 Column 包裹使 4 个 Row 垂直排列（Stack 是层叠布局，直接放 Row 会重叠）
             Column() {
               ForEach(this.idx4, (row: number) => {
@@ -293,24 +294,25 @@ export struct Game2048Page {
               // 放在最后：对它之前的 offset/scale/backgroundColor 做隐式插值
               .animation(this.getTileAnimation())
             }, (tile: TileData) => tile.id.toString())
-          }
-          .width(this.innerSize()).height(this.innerSize())
-
-        }.width(this.boardSize).height(this.boardSize)
-        .backgroundColor(SemanticColors.boardBg)
-        .border({ width: 2, color: SemanticColors.boardBorder, radius: RadiusTokens.base })
-        .padding(4)
-        .gesture(PanGesture({ direction: PanDirection.All })
-          .onActionStart((e: GestureEvent) => { this.sx = e.offsetX; this.sy = e.offsetY; })
-          .onActionEnd((e: GestureEvent) => {
-            const dx = e.offsetX - this.sx;
-            const dy = e.offsetY - this.sy;
-            if (Math.abs(dx) > Math.abs(dy)) {
-              this.swipe(() => { return dx > 0 ? this.viewModel.swipeRight() : this.viewModel.swipeLeft(); });
-            } else {
-              this.swipe(() => { return dy > 0 ? this.viewModel.swipeDown() : this.viewModel.swipeUp(); });
             }
-          }))
+            .width(this.innerSize()).height(this.innerSize())
+          }
+          .width(this.boardSize).height(this.boardSize)
+          .backgroundColor(SemanticColors.boardBg)
+          .borderRadius(RadiusTokens.base)
+          .padding(4)
+          .gesture(PanGesture({ direction: PanDirection.All })
+            .onActionStart((e: GestureEvent) => { this.sx = e.offsetX; this.sy = e.offsetY; })
+            .onActionEnd((e: GestureEvent) => {
+              const dx = e.offsetX - this.sx;
+              const dy = e.offsetY - this.sy;
+              if (Math.abs(dx) > Math.abs(dy)) {
+                this.swipe(() => { return dx > 0 ? this.viewModel.swipeRight() : this.viewModel.swipeLeft(); });
+              } else {
+                this.swipe(() => { return dy > 0 ? this.viewModel.swipeDown() : this.viewModel.swipeUp(); });
+              }
+            }))
+        }
         .layoutWeight(1).justifyContent(FlexAlign.Center)
 
         Text($r('app.string.game_2048_hint'))

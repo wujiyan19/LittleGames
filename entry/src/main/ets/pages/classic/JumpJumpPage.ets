@@ -173,6 +173,7 @@ export struct JumpJumpPage {
         }
         .width('100%')
         .layoutWeight(1)
+        .clip(true)
         .id('jumpjump_area')
         .onAreaChange((oldValue: Area, newValue: Area) => {
           this.areaW = this.toNumber(newValue.width);

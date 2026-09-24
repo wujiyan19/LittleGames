@@ -116,6 +116,12 @@ export struct MinesweeperPage {
     return v > 0 ? pos + this.a11yAroundFormat.replace('%1$d', '' + v) : pos + this.a11yBlank;
   }
 
+  @Styles
+  pressedFeedback() {
+    .opacity(0.72)
+    .scale({ x: 0.96, y: 0.96 })
+  }
+
   build() {
     Stack() {
       Column().width('100%').height('100%')
@@ -178,13 +184,13 @@ export struct MinesweeperPage {
                   .backgroundColor(this.getCellBg(row, col))
                   .border({ width: 1, color: SemanticColors.boardBorder }).borderRadius(RadiusTokens.xs)
                   .accessibilityText(this.cellA11y(row, col))
-                  .onClick(() => { if (!this.viewModel.isFlagged(row, col)) { this.viewModel.reveal(row, col); } })
+                  .stateStyles({ pressed: this.pressedFeedback }).onClick(() => { if (!this.viewModel.isFlagged(row, col)) { this.viewModel.reveal(row, col); } })
                   .gesture(LongPressGesture().onAction(() => this.viewModel.toggleFlag(row, col)))
                 }, (col: number) => col.toString())
               }
             }, (row: number) => row.toString())
           }.padding(2)
-          .backgroundColor(SemanticColors.boardBg).border({ width: 2, color: SemanticColors.boardBorder, radius: RadiusTokens.md })
+          .backgroundColor(SemanticColors.boardBg).borderRadius(RadiusTokens.md)
         }.layoutWeight(1).justifyContent(FlexAlign.Center)
 
         Text($r('app.string.game_minesweeper_subtitle'))

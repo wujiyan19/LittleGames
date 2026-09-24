@@ -40,6 +40,12 @@ export struct GameResultDialog {
   /** true = 居中卡片式；false = 全屏遮罩式 */
   @Param cardStyle: boolean = false;
 
+  @Styles
+  pressedFeedback() {
+    .opacity(0.72)
+    .scale({ x: 0.96, y: 0.96 })
+  }
+
   aboutToAppear(): void {
     Haptics.success();
   }
@@ -98,7 +104,8 @@ export struct GameResultDialog {
           .fontSize(FontTokens.sizeBody)
           .fontColor(SemanticColors.textOnPrimary)
           .backgroundColor(SemanticColors.primary).borderRadius(RadiusTokens.full)
-          .shadow(ShadowTokens.button)
+          .stateStyles({ pressed: this.pressedFeedback })
+
           .accessibilityText($r('app.string.a11y_dialog_play_again'))
           .onClick(() => this.onPrimary())
 
@@ -107,7 +114,8 @@ export struct GameResultDialog {
             .height(44).padding({ left: SpacingTokens.lg, right: SpacingTokens.lg })
             .fontFamily(FontTokens.family)
             .fontColor(SemanticColors.textPrimary).backgroundColor(SemanticColors.surface)
-            .borderRadius(RadiusTokens.full).shadow(ShadowTokens.button)
+            .borderRadius(RadiusTokens.full)
+            .stateStyles({ pressed: this.pressedFeedback })
             .accessibilityText($r('app.string.a11y_dialog_back'))
             .onClick(() => this.onSecondary())
         }

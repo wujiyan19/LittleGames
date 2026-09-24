@@ -42,7 +42,7 @@
     },
     {
       "name": "home_banner_subtitle",
-      "value": "10 classic games await you"
+      "value": "Handpicked games await you"
     },
     {
       "name": "home_hot_title",
@@ -699,6 +699,26 @@
     {
       "name": "a11y_match3_gem_format",
       "value": "Row %1$d Col %2$d, Gem %3$d"
+    },
+    {
+      "name": "home_empty_title",
+      "value": "No games yet"
+    },
+    {
+      "name": "home_empty_desc",
+      "value": "The game list is currently empty"
+    },
+    {
+      "name": "home_error_title",
+      "value": "Unable to load"
+    },
+    {
+      "name": "home_error_desc",
+      "value": "Please try loading the games again"
+    },
+    {
+      "name": "home_retry",
+      "value": "Retry"
     }
   ]
 }

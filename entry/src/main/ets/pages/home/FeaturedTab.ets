@@ -3,7 +3,7 @@
  * 原先是 Index.ets 内的 @Builder，抽出后横幅与卡片栅格自持，
  * 只通过 games 接收数据、onGameClick 透出点击，不感知路由与数据层。
  */
-import { SemanticColors, FontTokens, RadiusTokens, ShadowTokens, SpacingTokens, BrandColors } from '../../common/DesignTokens';
+import { SemanticColors, FontTokens, RadiusTokens, SpacingTokens } from '../../common/DesignTokens';
 import { GameInfo } from '../../common/GameConstants';
 import { GameCard } from '../../components/GameCard';
 
@@ -58,7 +58,7 @@ export struct FeaturedTab {
     .backgroundColor(SemanticColors.bg)
   }
 
-  /** 横幅：背景为品牌渐变（gradientHero），故其上文字恒为白色，不随主题变化 */
+  /** 横幅使用系统卡片、文字和强调色。 */
   @Builder
   Banner() {
     Stack() {
@@ -67,12 +67,12 @@ export struct FeaturedTab {
           Text($r('app.string.home_banner_title'))
             .fontFamily(FontTokens.family)
             .fontSize(FontTokens.sizeTitle)
-            .fontColor('#FFFFFF')
+            .fontColor(SemanticColors.textPrimary)
             .fontWeight(FontWeight.Bold)
           Text($r('app.string.home_banner_subtitle'))
             .fontFamily(FontTokens.family)
             .fontSize(FontTokens.sizeBody)
-            .fontColor('rgba(255, 255, 255, 0.78)')
+            .fontColor(SemanticColors.textSecondary)
             .fontWeight(FontWeight.Medium)
             .margin({ top: SpacingTokens.xs })
         }
@@ -82,28 +82,16 @@ export struct FeaturedTab {
         SymbolGlyph($r('sys.symbol.gamecontroller'))
           .fontSize(56)
           .fontWeight(FontWeight.Medium)
-          .fontColor(['rgba(255, 255, 255, 0.95)', 'rgba(255, 255, 255, 0.45)'])
+          .fontColor([SemanticColors.primary])
       }
       .width('100%')
       .padding({ left: SpacingTokens.lg, right: SpacingTokens.lg, top: SpacingTokens.lg, bottom: SpacingTokens.lg })
       .borderRadius(RadiusTokens.xl)
-      .linearGradient({
-        angle: 135,
-        colors: [
-          [BrandColors.cosmicBlue, 0],
-          [BrandColors.auroraPurple, 1]
-        ]
-      })
-      .shadow(ShadowTokens.float)
-      .margin({
-        left: SpacingTokens.pageHorizontal,
-        right: SpacingTokens.pageHorizontal,
-        top: SpacingTokens.base
-      })
+      .backgroundColor(SemanticColors.surface)
 
     }
     .width('100%')
-    .margin({
+    .padding({
       left: SpacingTokens.pageHorizontal,
       right: SpacingTokens.pageHorizontal,
       top: SpacingTokens.base

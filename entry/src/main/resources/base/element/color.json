@@ -34,6 +34,7 @@
     { "name": "gradient_brand_end", "value": "#7A5AF8" },
     { "name": "card_shadow", "value": "#1F1B2C45" },
     { "name": "button_shadow", "value": "#331B2C45" },
+    { "name": "float_shadow", "value": "#0A000000" },
     { "name": "cell_hidden", "value": "#C9D6EC" },
     { "name": "cell_revealed", "value": "#F2F6FD" },
     { "name": "board_bg", "value": "#DCE5F4" },

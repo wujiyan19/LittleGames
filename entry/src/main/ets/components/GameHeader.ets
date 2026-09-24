@@ -25,6 +25,12 @@ export struct GameHeader {
   @Param enableNewGame: boolean = false;
   @Local showRefreshMenu: boolean = false;
 
+  @Styles
+  pressedFeedback() {
+    .opacity(0.72)
+    .scale({ x: 0.96, y: 0.96 })
+  }
+
   getPauseSymbol(): Resource {
     if (this.isPaused) { return $r('sys.symbol.play'); }
     return $r('sys.symbol.pause');
@@ -41,7 +47,8 @@ export struct GameHeader {
       .type(ButtonType.Circle)
       .width(40).height(40)
       .backgroundColor(SemanticColors.surface)
-      .shadow(ShadowTokens.button)
+      .stateStyles({ pressed: this.pressedFeedback })
+
       .accessibilityText($r('app.string.a11y_header_back'))
       .onClick(() => {
         this.onBack();
@@ -80,7 +87,8 @@ export struct GameHeader {
         .type(ButtonType.Circle)
         .width(40).height(40)
         .backgroundColor(SemanticColors.surface)
-        .shadow(ShadowTokens.button)
+        .stateStyles({ pressed: this.pressedFeedback })
+
         .accessibilityText($r('app.string.a11y_header_difficulty'))
         .bindMenu(this.difficultyMenu)
 
@@ -94,7 +102,8 @@ export struct GameHeader {
           .type(ButtonType.Circle)
           .width(40).height(40)
           .backgroundColor(SemanticColors.surface)
-          .shadow(ShadowTokens.button)
+          .stateStyles({ pressed: this.pressedFeedback })
+
           .accessibilityText(this.isPaused ? $r('app.string.a11y_header_resume') : $r('app.string.a11y_header_pause'))
           .onClick(() => { this.onPauseToggle(); })
         }
@@ -108,7 +117,8 @@ export struct GameHeader {
         .type(ButtonType.Circle)
         .width(40).height(40)
         .backgroundColor(SemanticColors.surface)
-        .shadow(ShadowTokens.button)
+        .stateStyles({ pressed: this.pressedFeedback })
+
         .accessibilityText($r('app.string.a11y_header_restart'))
         .onClick(() => {
           if (this.enableNewGame) {

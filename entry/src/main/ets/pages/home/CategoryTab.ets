@@ -8,7 +8,7 @@
  *   也不会出现「改了筛选条件却忘了刷新列表」的错位
  * 点击通过 onGameClick 透出，不感知路由。
  */
-import { SemanticColors, FontTokens, RadiusTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
+import { SemanticColors, FontTokens, RadiusTokens, SpacingTokens } from '../../common/DesignTokens';
 import { GameInfo } from '../../common/GameConstants';
 import { GameCard } from '../../components/GameCard';
 import { resolveString } from '../../common/I18nUtils';
@@ -23,6 +23,12 @@ export struct CategoryTab {
   // -1=全部 0=经典休闲 1=益智解谜
   @Local currentCategory: number = -1;
   @Local searchText: string = '';
+
+  @Styles
+  pressedFeedback() {
+    .opacity(0.72)
+    .scale({ x: 0.96, y: 0.96 })
+  }
 
   /** 当前分类 + 搜索词过滤后的展示列表，随状态自动重算 */
   @Computed
@@ -60,7 +66,7 @@ export struct CategoryTab {
 
   getCategoryTextColor(index: number): Resource {
     if (this.currentCategory === index) { return SemanticColors.textOnPrimary; }
-    return SemanticColors.primary;
+    return SemanticColors.textPrimary;
   }
 
   getCategoryWeight(index: number): number {
@@ -70,19 +76,20 @@ export struct CategoryTab {
 
   getCategoryBgColor(index: number): Resource {
     if (this.currentCategory === index) { return SemanticColors.primary; }
-    return SemanticColors.primaryLight;
+    return SemanticColors.surface;
   }
 
   build() {
     Column() {
       // 搜索栏
-      Row({ space: SpacingTokens.sm }) {
-        SymbolGlyph($r('sys.symbol.magnifyingglass'))
+      Column() {
+        Row({ space: SpacingTokens.sm }) {
+          SymbolGlyph($r('sys.symbol.magnifyingglass'))
           .fontSize(18)
           .fontWeight(FontWeight.Regular)
           .fontColor([SemanticColors.textTertiary])
           .margin({ left: SpacingTokens.md })
-        TextInput({ text: this.searchText, placeholder: $r('app.string.search_placeholder') })
+          TextInput({ text: this.searchText, placeholder: $r('app.string.search_placeholder') })
           .layoutWeight(1)
           .height(40)
           .fontFamily(FontTokens.family)
@@ -94,29 +101,31 @@ export struct CategoryTab {
           .caretColor(SemanticColors.primary)
           .enterKeyType(EnterKeyType.Search)
           .onChange((value: string) => { this.searchText = value; })
-        if (this.searchText.length > 0) {
-          Button() {
-            SymbolGlyph($r('sys.symbol.xmark_circle'))
+          if (this.searchText.length > 0) {
+            Button() {
+              SymbolGlyph($r('sys.symbol.xmark_circle'))
               .fontSize(16)
               .fontColor([SemanticColors.textTertiary])
+            }
+            .type(ButtonType.Circle)
+            .width(32).height(32)
+            .backgroundColor(Color.Transparent)
+            .stateStyles({ pressed: this.pressedFeedback })
+            .onClick(() => { this.searchText = ''; })
           }
-          .type(ButtonType.Circle)
-          .width(32).height(32)
-          .backgroundColor(Color.Transparent)
-          .onClick(() => { this.searchText = ''; })
         }
+        .width('100%')
+        .height(44)
+        .padding({ right: SpacingTokens.xs })
+        .backgroundColor(SemanticColors.surface)
+        .borderRadius(RadiusTokens.full)
       }
       .width('100%')
-      .height(44)
-      .padding({ right: SpacingTokens.xs })
-      .margin({
+      .padding({
         left: SpacingTokens.pageHorizontal,
         right: SpacingTokens.pageHorizontal,
         top: SpacingTokens.base
       })
-      .backgroundColor(SemanticColors.surface)
-      .borderRadius(RadiusTokens.full)
-      .shadow({ radius: 8, color: $r('app.color.card_shadow'), offsetX: 0, offsetY: 2 })
 
       Row() {
         this.CategoryChip(-1, $r('app.string.cat_all'))
@@ -203,6 +212,7 @@ export struct CategoryTab {
     .margin({ right: SpacingTokens.md })
     .scale({ x: this.currentCategory === index ? 1.05 : 1.0, y: this.currentCategory === index ? 1.05 : 1.0 })
     .animation({ duration: 200, curve: Curve.FastOutSlowIn })
+    .stateStyles({ pressed: this.pressedFeedback })
     .onClick(() => {
       this.getUIContext().animateTo({ duration: 200, curve: Curve.FastOutSlowIn }, () => {
         this.currentCategory = index;

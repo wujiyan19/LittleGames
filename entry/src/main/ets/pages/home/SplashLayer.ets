@@ -4,11 +4,9 @@
  * 原先是 Index.ets 内的 @Builder（动画状态与 UI 混在一起），抽出后：
  * 动画状态自持、播放完成通过 onFinish 通知父组件隐藏自己。
  *
- * 注意：这里的深空渐变、光晕与白色文字均为**品牌固定配色**（deepSpace 系），
- * 不随系统深浅色模式变化——闪屏是品牌展示页，两套主题下都应呈现同一张「宇宙蓝星空」。
- * 因此本文件内的 #16205F / #2A2B7E / rgba(...) / #FFFFFF 是刻意为之，请勿替换为语义色。
+ * 使用系统背景和文字资源，随深浅色模式自动适配。
  */
-import { SemanticColors, FontTokens, RadiusTokens, ShadowTokens, SpacingTokens, BrandColors } from '../../common/DesignTokens';
+import { SemanticColors, FontTokens, RadiusTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
 
 @ComponentV2
 export struct SplashLayer {
@@ -74,30 +72,14 @@ export struct SplashLayer {
     Stack() {
       Column()
         .width('100%').height('100%')
-        .linearGradient({
-          angle: 160,
-          colors: [
-            [BrandColors.deepSpace, 0],
-            ['#16205F', 0.5],
-            ['#2A2B7E', 1]
-          ]
-        })
-
-      Circle({ width: 260, height: 260 })
-        .fill('rgba(93, 134, 255, 0.25)')
-        .blur(60)
-        .position({ x: -80, y: -40 })
-      Circle({ width: 220, height: 220 })
-        .fill('rgba(122, 90, 248, 0.22)')
-        .blur(60)
-        .position({ x: '72%', y: '68%' })
+        .backgroundColor(SemanticColors.bg)
 
       Column() {
         Column() {
           SymbolGlyph($r('sys.symbol.gamecontroller'))
             .fontSize(72)
             .fontWeight(FontWeight.Medium)
-            .fontColor([BrandColors.cosmicBlueBright, BrandColors.auroraPurpleBright])
+            .fontColor([SemanticColors.primary])
         }
         .width(152).height(152)
         // 图标居中：alignItems 默认已是 Center，但 justifyContent 默认是 Start，
@@ -105,9 +87,7 @@ export struct SplashLayer {
         .justifyContent(FlexAlign.Center)
         .alignItems(HorizontalAlign.Center)
         .borderRadius(RadiusTokens.full)
-        .backgroundColor('rgba(255, 255, 255, 0.10)')
-        .border({ width: 1, color: 'rgba(255, 255, 255, 0.22)', radius: RadiusTokens.full })
-        .backdropBlur(20)
+        .backgroundColor(SemanticColors.surface)
         .shadow(ShadowTokens.float)
         .opacity(this.iconAnimOpacity)
         .scale({ x: this.iconAnimScale, y: this.iconAnimScale })
@@ -119,14 +99,14 @@ export struct SplashLayer {
           .fontFamily(FontTokens.family)
           .fontSize(FontTokens.sizeDisplay)
           .fontWeight(FontTokens.weightBold)
-          .fontColor('#FFFFFF')
+          .fontColor(SemanticColors.textPrimary)
           .opacity(this.titleAnimOpacity)
-          .margin({ top: 28 })
+          .margin({ top: SpacingTokens.xl })
 
         Text($r('app.string.app_splash_subtitle'))
           .fontFamily(FontTokens.family)
           .fontSize(FontTokens.sizeBody)
-          .fontColor('rgba(255, 255, 255, 0.72)')
+          .fontColor(SemanticColors.textSecondary)
           .opacity(this.subtitleAnimOpacity)
           .margin({ top: SpacingTokens.sm })
       }

@@ -2,7 +2,7 @@
  * 游戏卡片 — 精选页与分类页共用
  * 原先是 Index.ets 内的 @Builder，抽出后两个 Tab 各自持有，不再共享单文件
  */
-import { SemanticColors, FontTokens, RadiusTokens, ShadowTokens, SpacingTokens, GameBadgeColors } from '../common/DesignTokens';
+import { SemanticColors, FontTokens, RadiusTokens, SpacingTokens } from '../common/DesignTokens';
 import { GameInfo, GameCategory } from '../common/GameConstants';
 import { resolveString } from '../common/I18nUtils';
 
@@ -33,33 +33,14 @@ export struct GameCard {
 
   build() {
     Column() {
-      Row() {
-        Column() {
-          Text(this.game.icon)
-            .fontSize(28)
-        }
-        .width(52).height(52)
-        .borderRadius(RadiusTokens.base)
-        .linearGradient({
-          angle: 135,
-          colors: GameBadgeColors.getGradient(this.game.id)
-        })
-        .justifyContent(FlexAlign.Center)
-        .shadow({ radius: 8, color: $r('app.color.button_shadow'), offsetX: 0, offsetY: 2 })
-
-        if (this.game.playCount > 0) {
-          Text('' + this.game.playCount)
-            .fontFamily(FontTokens.family)
-            .fontSize(FontTokens.sizeCaption)
-            .fontWeight(FontTokens.weightBold)
-            .fontColor(SemanticColors.textOnPrimary)
-            .padding({ left: 6, right: 6, top: 2, bottom: 2 })
-            .borderRadius(RadiusTokens.full)
-            .backgroundColor(SemanticColors.primary)
-            .margin({ left: -8, top: -4 })
-        }
+      Column() {
+        Text(this.game.icon)
+          .fontSize(28)
       }
-      .alignItems(VerticalAlign.Top)
+      .width(52).height(52)
+      .borderRadius(RadiusTokens.base)
+      .backgroundColor(SemanticColors.primaryLight)
+      .justifyContent(FlexAlign.Center)
 
       Text(this.game.name)
         .fontFamily(FontTokens.family)
@@ -90,7 +71,7 @@ export struct GameCard {
     .padding(SpacingTokens.base)
     .borderRadius(RadiusTokens.xl)
     .backgroundColor(SemanticColors.surface)
-    .shadow(ShadowTokens.card)
+
     .alignItems(HorizontalAlign.Start)
     .scale({ x: this.isPressed ? 0.95 : 1.0, y: this.isPressed ? 0.95 : 1.0 })
     .accessibilityGroup(true)

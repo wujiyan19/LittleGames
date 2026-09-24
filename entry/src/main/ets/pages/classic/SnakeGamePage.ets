@@ -102,7 +102,7 @@ export struct SnakeGamePage {
               }
             }, (row: number) => row.toString())
           }.width(this.cell * COLS).height(this.cell * ROWS)
-          .border({ width: 2, color: SemanticColors.boardBorder, radius: RadiusTokens.sm })
+          .borderRadius(RadiusTokens.sm)
           .backgroundColor(SemanticColors.boardBg)
 
           if (!this.viewModel.started) {

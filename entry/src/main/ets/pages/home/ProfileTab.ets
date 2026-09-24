@@ -4,7 +4,7 @@
  * 统计数据（总数 / 最高分 / 排行榜）由父组件算好通过 @Param 传入，
  * 不再在 build 过程中调用数据层。
  */
-import { SemanticColors, FontTokens, RadiusTokens, ShadowTokens, SpacingTokens, BrandColors, GameBadgeColors } from '../../common/DesignTokens';
+import { SemanticColors, FontTokens, RadiusTokens, SpacingTokens, GameBadgeColors } from '../../common/DesignTokens';
 import { GameInfo } from '../../common/GameConstants';
 import { GameDataManager } from '../../model/GameData';
 import { resolveString } from '../../common/I18nUtils';
@@ -48,8 +48,6 @@ export struct ProfileTab {
 
   getLevelColor(): Resource {
     const total = this.getTotalPlayCount();
-    if (total >= 100) { return SemanticColors.warning; }
-    if (total >= 50) { return SemanticColors.accent; }
     if (total >= 10) { return SemanticColors.primary; }
     return SemanticColors.textTertiary;
   }
@@ -59,16 +57,16 @@ export struct ProfileTab {
   }
 
   getRankColor(index: number): Resource {
-    if (index === 0) { return $r('app.color.warning'); }
+    if (index === 0) { return SemanticColors.primary; }
     if (index === 1) { return SemanticColors.textSecondary; }
-    if (index === 2) { return $r('app.color.accent'); }
+    if (index === 2) { return SemanticColors.textSecondary; }
     return SemanticColors.textTertiary;
   }
 
   getRankBgColor(index: number): Resource {
-    if (index === 0) { return $r('app.color.accent_light'); }
+    if (index === 0) { return SemanticColors.surfaceHover; }
     if (index === 1) { return SemanticColors.surfaceHover; }
-    if (index === 2) { return $r('app.color.primary_light'); }
+    if (index === 2) { return SemanticColors.surfaceHover; }
     return SemanticColors.bg;
   }
 
@@ -95,14 +93,11 @@ export struct ProfileTab {
             SymbolGlyph($r('sys.symbol.person_fill'))
               .fontSize(36)
               .fontWeight(FontWeight.Medium)
-              .fontColor(['#FFFFFF'])
+              .fontColor([SemanticColors.textOnPrimary])
           }
           .width(64).height(64)
           .borderRadius(RadiusTokens.full)
-          .linearGradient({
-            angle: 135,
-            colors: [[BrandColors.cosmicBlue, 0], [BrandColors.auroraPurple, 1]]
-          })
+          .backgroundColor(SemanticColors.primary)
           .justifyContent(FlexAlign.Center)
 
           Column() {
@@ -121,12 +116,12 @@ export struct ProfileTab {
                 .fontSize(FontTokens.sizeCaption)
                 .fontWeight(FontTokens.weightBold)
                 .fontColor(this.getLevelColor())
-                .padding({ left: 6, right: 6, top: 2, bottom: 2 })
+                .padding({ left: SpacingTokens.sm, right: SpacingTokens.sm, top: SpacingTokens.xs, bottom: SpacingTokens.xs })
                 .borderRadius(RadiusTokens.full)
                 .backgroundColor(SemanticColors.surfaceHover)
                 .margin({ left: SpacingTokens.sm })
             }
-            .margin({ top: 2 })
+            .margin({ top: SpacingTokens.xs })
           }
           .alignItems(HorizontalAlign.Start)
           .layoutWeight(1)
@@ -136,12 +131,7 @@ export struct ProfileTab {
         .padding(SpacingTokens.base)
         .borderRadius(RadiusTokens.lg)
         .backgroundColor(SemanticColors.surface)
-        .shadow(ShadowTokens.card)
-        .margin({
-          left: SpacingTokens.pageHorizontal,
-          right: SpacingTokens.pageHorizontal,
-          top: SpacingTokens.base
-        })
+        .margin({ top: SpacingTokens.base })
 
         // 最近玩过
         if (this.getTotalPlayCount() > 0) {
@@ -157,7 +147,7 @@ export struct ProfileTab {
               .margin({ left: SpacingTokens.sm })
           }
           .width('100%')
-          .padding({ left: SpacingTokens.pageHorizontal, top: SpacingTokens.lg, bottom: SpacingTokens.sm })
+          .padding({ top: SpacingTokens.lg, bottom: SpacingTokens.sm })
 
           Scroll() {
             Row({ space: SpacingTokens.md }) {
@@ -187,7 +177,6 @@ export struct ProfileTab {
                 .alignItems(HorizontalAlign.Center)
               }, (game: GameInfo) => game.id)
             }
-            .padding({ left: SpacingTokens.pageHorizontal, right: SpacingTokens.pageHorizontal })
           }
           .scrollable(ScrollDirection.Horizontal)
           .scrollBar(BarState.Off)
@@ -197,15 +186,11 @@ export struct ProfileTab {
         // 数据卡片
         Row({ space: SpacingTokens.base }) {
           this.StatsCard($r('sys.symbol.square_grid_2x2'), $r('app.string.profile_stat_total'), '' + this.totalGames)
-          this.StatsCard($r('sys.symbol.star_fill'), $r('app.string.profile_stat_collected'), '10')
+          this.StatsCard($r('sys.symbol.star_fill'), $r('app.string.profile_stat_collected'), '' + this.totalGames)
           this.StatsCard($r('sys.symbol.star_fill'), $r('app.string.profile_stat_best'), this.bestScoreText)
         }
         .width('100%')
-        .padding({
-          left: SpacingTokens.pageHorizontal,
-          right: SpacingTokens.pageHorizontal,
-          top: SpacingTokens.base
-        })
+        .padding({ top: SpacingTokens.base })
 
         // 设置卡片
         Row() {
@@ -219,7 +204,7 @@ export struct ProfileTab {
               .fontFamily(FontTokens.family)
               .fontSize(FontTokens.sizeBodySmall)
               .fontColor(SemanticColors.textTertiary)
-              .margin({ top: 2 })
+              .margin({ top: SpacingTokens.xs })
           }
           .alignItems(HorizontalAlign.Start)
           .layoutWeight(1)
@@ -235,17 +220,12 @@ export struct ProfileTab {
         .padding(SpacingTokens.base)
         .borderRadius(RadiusTokens.lg)
         .backgroundColor(SemanticColors.surface)
-        .shadow(ShadowTokens.card)
-        .margin({
-          left: SpacingTokens.pageHorizontal,
-          right: SpacingTokens.pageHorizontal,
-          top: SpacingTokens.base
-        })
+        .margin({ top: SpacingTokens.base })
 
         Row() {
           SymbolGlyph($r('sys.symbol.star_fill'))
             .fontSize(18)
-            .fontColor([SemanticColors.warning])
+            .fontColor([SemanticColors.primary])
           Text($r('app.string.profile_ranking_title'))
             .fontFamily(FontTokens.family)
             .fontSize(FontTokens.sizeBodyLarge)
@@ -254,7 +234,7 @@ export struct ProfileTab {
             .margin({ left: SpacingTokens.sm })
         }
         .width('100%')
-        .padding({ left: SpacingTokens.pageHorizontal, top: SpacingTokens.lg, bottom: SpacingTokens.sm })
+        .padding({ top: SpacingTokens.lg, bottom: SpacingTokens.sm })
 
         Column() {
           ForEach(this.rankedGames,
@@ -303,15 +283,14 @@ export struct ProfileTab {
             }, (game: GameInfo) => game.id)
         }
         .width('100%')
-        .padding({ left: SpacingTokens.pageHorizontal, right: SpacingTokens.pageHorizontal })
+        .padding({ left: SpacingTokens.base, right: SpacingTokens.base })
         .backgroundColor(SemanticColors.surface)
         .borderRadius(RadiusTokens.lg)
-        .margin({ left: SpacingTokens.pageHorizontal, right: SpacingTokens.pageHorizontal })
         .opacity(this.rankListOpacity)
         .translate({ y: this.rankListTranslateY })
       }
       .width('100%')
-      .padding({ bottom: SpacingTokens.xxl })
+      .padding({ left: SpacingTokens.pageHorizontal, right: SpacingTokens.pageHorizontal, bottom: SpacingTokens.xxl })
     }
     .scrollBar(BarState.Off)
     .edgeEffect(EdgeEffect.Spring)
@@ -334,13 +313,13 @@ export struct ProfileTab {
         .fontFamily(FontTokens.family)
         .fontSize(FontTokens.sizeBodySmall)
         .fontColor(SemanticColors.textTertiary)
-        .margin({ top: 2 })
+        .margin({ top: SpacingTokens.xs })
     }
     .layoutWeight(1)
     .padding({ top: SpacingTokens.base, bottom: SpacingTokens.base })
     .borderRadius(RadiusTokens.base)
     .backgroundColor(SemanticColors.surface)
-    .shadow(ShadowTokens.card)
+
     .alignItems(HorizontalAlign.Center)
   }
 }

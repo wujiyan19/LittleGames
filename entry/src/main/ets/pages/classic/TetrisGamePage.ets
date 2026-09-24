@@ -66,6 +66,12 @@ export struct TetrisGamePage {
     return SemanticColors.cellRevealed;
   }
 
+  @Styles
+  pressedFeedback() {
+    .opacity(0.72)
+    .scale({ x: 0.96, y: 0.96 })
+  }
+
   build() {
     Stack() {
       Column().width('100%').height('100%')
@@ -107,7 +113,7 @@ export struct TetrisGamePage {
               }
             }, (row: number) => row.toString())
           }.width(this.cell * COLS).height(this.cell * ROWS)
-          .border({ width: 2, color: SemanticColors.boardBorder, radius: RadiusTokens.sm })
+          .borderRadius(RadiusTokens.sm)
           .backgroundColor(SemanticColors.boardBg)
         }.layoutWeight(1).justifyContent(FlexAlign.Center)
 
@@ -118,19 +124,19 @@ export struct TetrisGamePage {
                 .fontSize(18).fontColor([SemanticColors.textPrimary])
             }
             .layoutWeight(1).height(48).backgroundColor(SemanticColors.surface)
-            .borderRadius(RadiusTokens.base).shadow(ShadowTokens.button).onClick(() => this.viewModel.moveLeft())
+            .borderRadius(RadiusTokens.base).stateStyles({ pressed: this.pressedFeedback }).onClick(() => this.viewModel.moveLeft())
             Button() {
               SymbolGlyph($r('sys.symbol.arrow_clockwise'))
                 .fontSize(18).fontColor([SemanticColors.textPrimary])
             }
             .layoutWeight(1).height(48).backgroundColor(SemanticColors.surface)
-            .borderRadius(RadiusTokens.base).shadow(ShadowTokens.button).onClick(() => this.viewModel.rotateBlock())
+            .borderRadius(RadiusTokens.base).stateStyles({ pressed: this.pressedFeedback }).onClick(() => this.viewModel.rotateBlock())
             Button() {
               SymbolGlyph($r('sys.symbol.arrow_right'))
                 .fontSize(18).fontColor([SemanticColors.textPrimary])
             }
             .layoutWeight(1).height(48).backgroundColor(SemanticColors.surface)
-            .borderRadius(RadiusTokens.base).shadow(ShadowTokens.button).onClick(() => this.viewModel.moveRight())
+            .borderRadius(RadiusTokens.base).stateStyles({ pressed: this.pressedFeedback }).onClick(() => this.viewModel.moveRight())
           }
           .width('100%').padding({ left: SpacingTokens.base, right: SpacingTokens.base })
           Button() {
@@ -143,7 +149,7 @@ export struct TetrisGamePage {
             }
           }
           .width('80%').height(48).backgroundColor(SemanticColors.primary)
-          .borderRadius(RadiusTokens.full).shadow(ShadowTokens.button).onClick(() => this.viewModel.hardDrop())
+          .borderRadius(RadiusTokens.full).stateStyles({ pressed: this.pressedFeedback }).onClick(() => this.viewModel.hardDrop())
         }.padding({ bottom: SpacingTokens.lg })
       }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 

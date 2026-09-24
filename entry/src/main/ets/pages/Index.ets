@@ -1,5 +1,5 @@
 /**
- * 主页壳 — 宇宙蓝 × 雪域灰
+ * 主页壳 — HarmonyOS 系统色与三栏导航
  *
  * 本文件原本 855 行、承担 6 类职责（路由表 / 闪屏 / Tab 容器 / 精选 / 分类 / 我的），
  * 已按职责拆分为：
@@ -16,7 +16,7 @@
 import { intl } from '@kit.LocalizationKit';
 import { GameDataManager } from '../model/GameData';
 import { GameInfo, GameCategory } from '../common/GameConstants';
-import { SemanticColors, SpacingTokens, FontTokens, BrandColors } from '../common/DesignTokens';
+import { SemanticColors, SpacingTokens, FontTokens } from '../common/DesignTokens';
 import { resolveString } from '../common/I18nUtils';
 import { GamePageMap, GameRoutes } from '../router/GameRoutes';
 import { SplashLayer } from './home/SplashLayer';
@@ -39,10 +39,17 @@ struct Index {
   @Local rankedGames: GameInfo[] = [];
   @Local totalGames: number = 0;
   @Local bestScoreText: string = '--';
+  /** 0 加载中，1 已就绪，2 无数据，3 加载异常 */
+  @Local dataStatus: number = 0;
   // 全部游戏按拼音排序（非 UI 状态，传给分类页的「全部」）
   private allGamesPinyin: GameInfo[] = [];
   /** 冷启动时 aboutToAppear 已完整加载，跳过紧随其后的首次 onPageShow */
   private firstShow: boolean = true;
+
+  @Styles
+  pressedFeedback() {
+    .opacity(0.72)
+  }
 
   aboutToAppear(): void {
     this.loadAll();
@@ -59,11 +66,17 @@ struct Index {
 
   /** 完整加载：分类、拼音排序、排行榜与概要（冷启动一次） */
   loadAll(): void {
-    this.classicGames = GameDataManager.getGamesByCategory(GameCategory.CLASSIC);
-    this.puzzleGames = GameDataManager.getGamesByCategory(GameCategory.PUZZLE);
-    this.allGamesPinyin = this.sortByPinyin(GameDataManager.getAllGames());
-    this.totalGames = this.classicGames.length + this.puzzleGames.length;
-    this.refreshScores();
+    this.dataStatus = 0;
+    try {
+      this.classicGames = GameDataManager.getGamesByCategory(GameCategory.CLASSIC);
+      this.puzzleGames = GameDataManager.getGamesByCategory(GameCategory.PUZZLE);
+      this.allGamesPinyin = this.sortByPinyin(GameDataManager.getAllGames());
+      this.totalGames = this.classicGames.length + this.puzzleGames.length;
+      this.refreshScores();
+      this.dataStatus = this.totalGames > 0 ? 1 : 2;
+    } catch (e) {
+      this.dataStatus = 3;
+    }
   }
 
   /**
@@ -124,6 +137,13 @@ struct Index {
       Navigation(this.pathStack) {
         Column() {
           this.TopBar()
+          if (this.dataStatus === 0) {
+            this.LoadingView()
+          } else if (this.dataStatus === 2) {
+            this.EmptyView()
+          } else if (this.dataStatus === 3) {
+            this.ErrorView()
+          } else {
           Tabs({ barPosition: BarPosition.End, index: this.currentTab }) {
             TabContent() {
               FeaturedTab({
@@ -156,6 +176,7 @@ struct Index {
           .barBackgroundBlurStyle(BlurStyle.Thin)
           .onChange((index: number) => { this.currentTab = index; })
           .layoutWeight(1)
+          }
         }
         .width('100%').height('100%')
         .backgroundColor(SemanticColors.bg)
@@ -171,10 +192,74 @@ struct Index {
     }
   }
 
-  /**
-   * 顶部品牌栏。背景为品牌渐变（gradientBrand，不随主题变化），
-   * 因此其上的白色文字与半透明白图标是固定配色，非疏漏。
-   */
+  @Builder
+  LoadingView() {
+    Column({ space: SpacingTokens.base }) {
+      Row() {
+        Column() {}.width('65%').height(24).borderRadius(8).backgroundColor(SemanticColors.surfaceHover)
+      }
+      .width('100%').padding(SpacingTokens.base)
+      .borderRadius(16).backgroundColor(SemanticColors.surface)
+
+      Row({ space: SpacingTokens.base }) {
+        this.SkeletonCard()
+        this.SkeletonCard()
+      }
+      .width('100%')
+    }
+    .width('100%').layoutWeight(1)
+    .padding(SpacingTokens.base)
+    .backgroundColor(SemanticColors.bg)
+  }
+
+  @Builder
+  SkeletonCard() {
+    Column({ space: SpacingTokens.md }) {
+      Column() {}.width(52).height(52).borderRadius(16).backgroundColor(SemanticColors.primaryLight)
+      Column() {}.width('70%').height(16).borderRadius(8).backgroundColor(SemanticColors.surfaceHover)
+      Column() {}.width('100%').height(12).borderRadius(8).backgroundColor(SemanticColors.surfaceHover)
+    }
+    .layoutWeight(1).padding(SpacingTokens.base)
+    .borderRadius(24).backgroundColor(SemanticColors.surface)
+    .alignItems(HorizontalAlign.Start)
+  }
+
+  @Builder
+  EmptyView() {
+    this.StatusView($r('app.string.home_empty_title'), $r('app.string.home_empty_desc'))
+  }
+
+  @Builder
+  ErrorView() {
+    this.StatusView($r('app.string.home_error_title'), $r('app.string.home_error_desc'))
+  }
+
+  @Builder
+  StatusView(title: Resource, detail: Resource) {
+    Column({ space: SpacingTokens.md }) {
+      SymbolGlyph($r('sys.symbol.gamecontroller'))
+        .fontSize(48).fontColor([SemanticColors.primary])
+      Text(title)
+        .fontFamily(FontTokens.family).fontSize(FontTokens.sizeTitle)
+        .fontWeight(FontWeight.Bold).fontColor(SemanticColors.textPrimary)
+      Text(detail)
+        .fontFamily(FontTokens.family).fontSize(FontTokens.sizeBody)
+        .fontColor(SemanticColors.textSecondary)
+      Button($r('app.string.home_retry'))
+        .fontFamily(FontTokens.family).fontSize(FontTokens.sizeBody)
+        .fontColor(SemanticColors.textOnPrimary)
+        .backgroundColor(SemanticColors.primary)
+        .borderRadius(24)
+        .margin({ top: SpacingTokens.md })
+        .stateStyles({ pressed: this.pressedFeedback })
+        .onClick(() => { this.loadAll(); })
+    }
+    .width('100%').layoutWeight(1)
+    .justifyContent(FlexAlign.Center)
+    .backgroundColor(SemanticColors.bg)
+  }
+
+  /** 顶部品牌栏使用系统文字、卡片与强调色。 */
   @Builder
   TopBar() {
     Row() {
@@ -183,7 +268,7 @@ struct Index {
           .fontFamily(FontTokens.family)
           .fontSize(FontTokens.sizeTitle)
           .fontWeight(FontTokens.weightSemibold)
-          .fontColor('#FFFFFF')
+          .fontColor(SemanticColors.textPrimary)
       }
       .alignItems(HorizontalAlign.Start)
       .layoutWeight(1)
@@ -191,22 +276,16 @@ struct Index {
       SymbolGlyph($r('sys.symbol.gamecontroller'))
         .fontSize(30)
         .fontWeight(FontWeight.Medium)
-        .fontColor(['rgba(255, 255, 255, 0.95)', 'rgba(255, 255, 255, 0.55)'])
+        .fontColor([SemanticColors.primary])
     }
     .width('100%')
     .padding({
       left: SpacingTokens.pageHorizontal,
       right: SpacingTokens.pageHorizontal,
-      top: SpacingTokens.lg,
-      bottom: SpacingTokens.lg
+      top: SpacingTokens.base,
+      bottom: SpacingTokens.base
     })
-    .linearGradient({
-      angle: 120,
-      colors: [
-        [BrandColors.cosmicBlue, 0],
-        [BrandColors.auroraPurple, 1]
-      ]
-    })
+    .backgroundColor(SemanticColors.surface)
   }
 
   getTabSymbol(index: number): Resource {
@@ -241,5 +320,6 @@ struct Index {
     }
     .width('100%').height('100%')
     .justifyContent(FlexAlign.Center)
+    .stateStyles({ pressed: this.pressedFeedback })
   }
 }

@@ -99,6 +99,12 @@ export struct SudokuPage {
     return v > 0 ? pos + this.a11yNumberFormat.replace('%1$d', v.toString()) + fixed : pos + this.a11yBlank + fixed;
   }
 
+  @Styles
+  pressedFeedback() {
+    .opacity(0.72)
+    .scale({ x: 0.96, y: 0.96 })
+  }
+
   build() {
     Stack() {
       Column().width('100%').height('100%')
@@ -140,7 +146,7 @@ export struct SudokuPage {
                   })
                   .justifyContent(FlexAlign.Center)
                   .accessibilityText(this.cellA11y(row, col))
-                  .onClick(() => { this.viewModel.selectCell(row, col); })
+                  .stateStyles({ pressed: this.pressedFeedback }).onClick(() => { this.viewModel.selectCell(row, col); })
                 }, (col: number) => col.toString())
               }
             }, (row: number) => row.toString())
@@ -189,8 +195,8 @@ export struct SudokuPage {
             }
             .layoutWeight(1).height(46)
             .backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
-            .shadow(ShadowTokens.button)
-            .onClick(() => this.viewModel.setNumber(n))
+
+            .stateStyles({ pressed: this.pressedFeedback }).onClick(() => this.viewModel.setNumber(n))
           }, (n: number) => n.toString())
           Button() {
             SymbolGlyph($r('sys.symbol.xmark'))
@@ -198,8 +204,8 @@ export struct SudokuPage {
           }
           .width(46).height(46)
           .backgroundColor(SemanticColors.error).borderRadius(RadiusTokens.base)
-          .shadow(ShadowTokens.button)
-          .onClick(() => this.viewModel.erase())
+
+          .stateStyles({ pressed: this.pressedFeedback }).onClick(() => this.viewModel.erase())
         }.width('100%').padding({ left: SpacingTokens.base, right: SpacingTokens.base, bottom: SpacingTokens.lg })
       }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 

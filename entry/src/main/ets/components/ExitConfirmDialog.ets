@@ -13,6 +13,12 @@ export struct ExitConfirmDialog {
   /** 继续对局：仅关闭弹窗 */
   @Param onCancel: () => void = () => {};
 
+  @Styles
+  pressedFeedback() {
+    .opacity(0.72)
+    .scale({ x: 0.96, y: 0.96 })
+  }
+
   build() {
     Column() {
       Column({ space: SpacingTokens.md }) {
@@ -49,7 +55,8 @@ export struct ExitConfirmDialog {
           .layoutWeight(1).height(44)
           .backgroundColor(SemanticColors.surface)
           .borderRadius(RadiusTokens.full)
-          .shadow(ShadowTokens.button)
+          .stateStyles({ pressed: this.pressedFeedback })
+
           .onClick(() => this.onCancel())
 
           Button() {
@@ -61,7 +68,8 @@ export struct ExitConfirmDialog {
           .layoutWeight(1).height(44)
           .backgroundColor(SemanticColors.primary)
           .borderRadius(RadiusTokens.full)
-          .shadow(ShadowTokens.button)
+          .stateStyles({ pressed: this.pressedFeedback })
+
           .onClick(() => this.onConfirm())
         }
         .width('100%')

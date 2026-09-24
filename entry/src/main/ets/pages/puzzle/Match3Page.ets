@@ -89,6 +89,12 @@ export struct Match3Page {
     }
   }
 
+  @Styles
+  pressedFeedback() {
+    .opacity(0.72)
+    .scale({ x: 0.96, y: 0.96 })
+  }
+
   build() {
     Stack() {
       Column().width('100%').height('100%')
@@ -127,7 +133,8 @@ export struct Match3Page {
 
         // 棋盘
         Column() {
-          ForEach(this.rowIdx, (r: number) => {
+          Column() {
+            ForEach(this.rowIdx, (r: number) => {
             Row() {
               ForEach(this.colIdx, (c: number) => {
                 Stack() {
@@ -160,15 +167,16 @@ export struct Match3Page {
                     .replace('%2$d', '' + (c + 1))
                     .replace('%3$d', '' + (this.viewModel.gemType(r, c) + 1))
                 )
-                .onClick(() => { this.viewModel.onGemClick(r, c); })
+                .stateStyles({ pressed: this.pressedFeedback }).onClick(() => { this.viewModel.onGemClick(r, c); })
               }, (c: number) => c.toString())
             }
-          }, (r: number) => r.toString())
+            }, (r: number) => r.toString())
+          }
+          .width(this.innerSize())
+          .padding(4)
+          .backgroundColor(SemanticColors.boardBg)
+          .borderRadius(RadiusTokens.base)
         }
-        .width(this.innerSize())
-        .padding(4)
-        .backgroundColor(SemanticColors.boardBg)
-        .border({ width: 2, color: SemanticColors.boardBorder, radius: RadiusTokens.base })
         .layoutWeight(1).justifyContent(FlexAlign.Center)
 
         Text($r('app.string.game_match3_hint'))

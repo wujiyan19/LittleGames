@@ -73,6 +73,12 @@ export struct KlotskiPage {
     return 0;
   }
 
+  @Styles
+  pressedFeedback() {
+    .opacity(0.72)
+    .scale({ x: 0.96, y: 0.96 })
+  }
+
   build() {
     Stack() {
       Column().width('100%').height('100%')
@@ -101,7 +107,7 @@ export struct KlotskiPage {
                       Text(this.viewModel.blockLabel(row, col))
                         .fontSize(Math.max(16, this.cell * 0.28)).fontWeight(FontWeight.Bold)
                         // 棋子底色为彩色，白字在两套主题下均可读
-                        .fontColor('#FFFFFF')
+                        .fontColor($r('app.color.tile_text_high'))
                     } else if (row === 4 && col === 1) {
                       Text($r('app.string.klotski_exit')).fontSize(Math.max(10, this.cell * 0.16)).fontColor(SemanticColors.textTertiary)
                     }
@@ -117,13 +123,13 @@ export struct KlotskiPage {
                       ? this.a11yBlockFormat.replace('%1$s', this.viewModel.blockLabel(row, col))
                       : ''
                   )
-                  .onClick(() => this.viewModel.selectBlockAt(row, col))
+                  .stateStyles({ pressed: this.pressedFeedback }).onClick(() => this.viewModel.selectBlockAt(row, col))
                 }, (col: number) => col.toString())
               }
             }, (row: number) => row.toString())
           }.width(this.cell * BW + 30).height(this.cell * BH + 34)
           .backgroundColor(SemanticColors.boardBg)
-          .border({ width: 3, color: SemanticColors.boardBorder, radius: RadiusTokens.base }).padding(4)
+          .borderRadius(RadiusTokens.base).padding(4)
         }.layoutWeight(1).justifyContent(FlexAlign.Center)
 
         ControlPad({

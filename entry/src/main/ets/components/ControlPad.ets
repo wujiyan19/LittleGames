@@ -17,6 +17,12 @@ export struct ControlPad {
   @Param onCenter: () => void = () => {};
   @BuilderParam actionButtons?: () => void;
 
+  @Styles
+  pressedFeedback() {
+    .opacity(0.72)
+    .scale({ x: 0.96, y: 0.96 })
+  }
+
   getCenterOpacity(): number {
     if (this.showCenter) { return 1; }
     return 0.3;
@@ -48,7 +54,8 @@ export struct ControlPad {
       .width(this.buttonSize).height(48)
       .backgroundColor(SemanticColors.surface)
       .borderRadius(RadiusTokens.base)
-      .shadow(ShadowTokens.button)
+      .stateStyles({ pressed: this.pressedFeedback })
+
       .accessibilityText($r('app.string.a11y_direction_up'))
       .onClick(() => { Haptics.tap(); this.onUp(); })
 
@@ -62,7 +69,8 @@ export struct ControlPad {
         .width(this.buttonSize).height(48)
         .backgroundColor(SemanticColors.surface)
         .borderRadius(RadiusTokens.base)
-        .shadow(ShadowTokens.button)
+        .stateStyles({ pressed: this.pressedFeedback })
+
         .accessibilityText($r('app.string.a11y_direction_left'))
         .onClick(() => { Haptics.tap(); this.onLeft(); })
 
@@ -80,8 +88,9 @@ export struct ControlPad {
         .width(this.buttonSize).height(48)
         .backgroundColor(SemanticColors.surface)
         .borderRadius(RadiusTokens.base)
+        .stateStyles({ pressed: this.pressedFeedback })
         .opacity(this.getCenterOpacity())
-        .shadow(ShadowTokens.button)
+
         .accessibilityText(this.getCenterA11yText())
         .onClick(() => { Haptics.tap(); this.onCenter(); })
 
@@ -93,7 +102,8 @@ export struct ControlPad {
         .width(this.buttonSize).height(48)
         .backgroundColor(SemanticColors.surface)
         .borderRadius(RadiusTokens.base)
-        .shadow(ShadowTokens.button)
+        .stateStyles({ pressed: this.pressedFeedback })
+
         .accessibilityText($r('app.string.a11y_direction_right'))
         .onClick(() => { Haptics.tap(); this.onRight(); })
       }
@@ -107,7 +117,8 @@ export struct ControlPad {
       .width(this.buttonSize).height(48)
       .backgroundColor(SemanticColors.surface)
       .borderRadius(RadiusTokens.base)
-      .shadow(ShadowTokens.button)
+      .stateStyles({ pressed: this.pressedFeedback })
+
       .accessibilityText($r('app.string.a11y_direction_down'))
       .onClick(() => { Haptics.tap(); this.onDown(); })
     }

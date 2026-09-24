@@ -72,6 +72,12 @@ export struct SlidePuzzlePage {
     return 1;
   }
 
+  @Styles
+  pressedFeedback() {
+    .opacity(0.72)
+    .scale({ x: 0.96, y: 0.96 })
+  }
+
   build() {
     Stack() {
       Column().width('100%').height('100%')
@@ -112,19 +118,19 @@ export struct SlidePuzzlePage {
                       Text('' + this.viewModel.cellAt(r, c)).fontSize(Math.max(22, this.cell * 0.34))
                         .fontWeight(FontWeight.Bold)
                         // 拼图块底色为 accent / success，白字在两套主题下均可读
-                        .fontColor('#FFFFFF')
+                        .fontColor($r('app.color.tile_text_high'))
                     }
                   }.width(this.cell).height(this.cell).margin(2)
                   .backgroundColor(this.getCellBg(r, c))
                   .borderRadius(RadiusTokens.base)
-                  .shadow(ShadowTokens.button)
+
                   .opacity(this.getCellOpacity(r, c))
                   .accessibilityText(
                     this.viewModel.cellAt(r, c) > 0
                       ? this.a11yTileFormat.replace('%1$d', '' + this.viewModel.cellAt(r, c))
                       : ''
                   )
-                  .onClick(() => this.viewModel.tapCell(r, c))
+                  .stateStyles({ pressed: this.pressedFeedback }).onClick(() => this.viewModel.tapCell(r, c))
                 }, (c: number) => c.toString())
               }
             }, (r: number) => r.toString())
