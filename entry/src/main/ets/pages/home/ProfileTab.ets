@@ -53,7 +53,7 @@ export struct ProfileTab {
   }
 
   getRecentGames(): GameInfo[] {
-    return GameDataManager.getMostPlayed(5);
+    return GameDataManager.getRecentlyPlayed(5);
   }
 
   getRankColor(index: number): Resource {
@@ -134,7 +134,7 @@ export struct ProfileTab {
         .margin({ top: SpacingTokens.base })
 
         // 最近玩过
-        if (this.getTotalPlayCount() > 0) {
+        if (this.getRecentGames().length > 0) {
           Row() {
             SymbolGlyph($r('sys.symbol.clock'))
               .fontSize(16)
@@ -154,8 +154,9 @@ export struct ProfileTab {
               ForEach(this.getRecentGames(), (game: GameInfo) => {
                 Column() {
                   Column() {
-                    Text(game.icon)
-                      .fontSize(22)
+                    Image(game.icon)
+                      .width(38).height(38)
+                      .objectFit(ImageFit.Contain)
                   }
                   .width(44).height(44)
                   .borderRadius(RadiusTokens.base)
@@ -186,7 +187,7 @@ export struct ProfileTab {
         // 数据卡片
         Row({ space: SpacingTokens.base }) {
           this.StatsCard($r('sys.symbol.square_grid_2x2'), $r('app.string.profile_stat_total'), '' + this.totalGames)
-          this.StatsCard($r('sys.symbol.star_fill'), $r('app.string.profile_stat_collected'), '' + this.totalGames)
+          this.StatsCard($r('sys.symbol.star_fill'), $r('app.string.profile_stat_collected'), '' + GameDataManager.getPlayedGameCount())
           this.StatsCard($r('sys.symbol.star_fill'), $r('app.string.profile_stat_best'), this.bestScoreText)
         }
         .width('100%')
@@ -253,8 +254,9 @@ export struct ProfileTab {
                 .justifyContent(FlexAlign.Center)
 
                 Column() {
-                  Text(game.icon)
-                    .fontSize(18)
+                  Image(game.icon)
+                    .width(32).height(32)
+                    .objectFit(ImageFit.Contain)
                 }
                 .width(36).height(36)
                 .borderRadius(RadiusTokens.sm)

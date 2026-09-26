@@ -31,7 +31,7 @@ export interface GameInfo {
   id: string;
   name: Resource | string;
   category: GameCategory;
-  icon: string;
+  icon: Resource | string;
   description: Resource | string;
   highScore: number;
   playCount: number;

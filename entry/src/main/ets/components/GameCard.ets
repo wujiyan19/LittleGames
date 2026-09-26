@@ -34,8 +34,9 @@ export struct GameCard {
   build() {
     Column() {
       Column() {
-        Text(this.game.icon)
-          .fontSize(28)
+        Image(this.game.icon)
+          .width(42).height(42)
+          .objectFit(ImageFit.Contain)
       }
       .width(52).height(52)
       .borderRadius(RadiusTokens.base)

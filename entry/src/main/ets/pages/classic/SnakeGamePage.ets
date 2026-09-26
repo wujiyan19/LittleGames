@@ -50,7 +50,7 @@ export struct SnakeGamePage {
   }
 
   getCellColor(col: number, row: number): ResourceColor {
-    if (this.viewModel.isFood(col, row)) { return SemanticColors.error; }
+    if (this.viewModel.isFood(col, row) || this.viewModel.isSnakeHead(col, row)) { return SemanticColors.cellRevealed; }
     if (this.viewModel.isSnakeCell(col, row)) { return SemanticColors.success; }
     if ((row + col) % 2 === 0) { return SemanticColors.cellHidden; }
     return SemanticColors.cellRevealed;
@@ -95,7 +95,13 @@ export struct SnakeGamePage {
             ForEach(this.idx20, (row: number) => {
               Row() {
                 ForEach(this.idx20, (col: number) => {
-                  Column() {}.width(this.cell).height(this.cell)
+                  Stack() {
+                    if (this.viewModel.isSnakeHead(col, row)) {
+                      Image($r('app.media.play_snake_head')).width(this.cell).height(this.cell).objectFit(ImageFit.Contain)
+                    } else if (this.viewModel.isFood(col, row)) {
+                      Image($r('app.media.play_snake_food')).width(this.cell).height(this.cell).objectFit(ImageFit.Contain)
+                    }
+                  }.width(this.cell).height(this.cell)
                     .backgroundColor(this.getCellColor(col, row))
                     .borderRadius(this.getCellRadius(col, row))
                 }, (col: number) => col.toString())
@@ -118,7 +124,7 @@ export struct SnakeGamePage {
           onLeft: () => this.viewModel.turnLeft(),
           onRight: () => this.viewModel.turnRight(),
           onCenter: () => {},
-          showCenter: true, centerLabel: '✨'
+          showCenter: true
         })
       }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
@@ -148,5 +154,9 @@ export struct SnakeGamePage {
         })
       }
     }.width('100%').height('100%')
+      .onAreaChange((oldValue: Area, newValue: Area) => {
+        const width: number = parseFloat(newValue.width as string);
+        if (!isNaN(width) && width > 0) { this.cell = ScreenUtils.calcCellForWidth(width, COLS, 560, 24); }
+      })
   }
 }

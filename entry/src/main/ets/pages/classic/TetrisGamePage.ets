@@ -42,9 +42,22 @@ export struct TetrisGamePage {
   private colIdx: number[] = range(COLS);
 
   aboutToAppear(): void {
-    this.cell = ScreenUtils.calcCell(COLS, 560, 16, 8);
+    const byWidth: number = ScreenUtils.calcCell(COLS, 560, 16, 1);
+    const byHeight: number = Math.floor((ScreenUtils.windowHeightVp() - 340) / ROWS);
+    this.cell = Math.max(1, Math.min(byWidth, byHeight));
     GameLifecycleBus.attach(this.viewModel);
     this.viewModel.startGame();
+  }
+
+  /** 棋盘必须同时适配可用宽度和页头、操作键之外的实际高度。 */
+  updateCell(area: Area): void {
+    const width: number = parseFloat(area.width as string);
+    const height: number = parseFloat(area.height as string);
+    if (isNaN(width) || isNaN(height) || width < 100 || height < 100) { return; }
+    const byWidth: number = Math.floor((Math.min(width, 560) - 16) / COLS);
+    const byHeight: number = Math.floor((height - 4) / ROWS);
+    const next: number = Math.max(1, Math.min(byWidth, byHeight));
+    if (next !== this.cell) { this.cell = next; }
   }
 
   aboutToDisappear(): void {
@@ -106,7 +119,12 @@ export struct TetrisGamePage {
             ForEach(this.rowIdx, (row: number) => {
               Row() {
                 ForEach(this.colIdx, (col: number) => {
-                  Column() {}.width(this.cell).height(this.cell)
+                  Stack() {
+                    if (this.viewModel.cellMark(row, col) !== 0) {
+                      Image($r('app.media.play_tetris_gloss'))
+                        .width(this.cell).height(this.cell).objectFit(ImageFit.Fill)
+                    }
+                  }.width(this.cell).height(this.cell)
                     .backgroundColor(this.getCellColor(row, col))
                     .border({ width: 0.5, color: SemanticColors.divider })
                 }, (col: number) => col.toString())
@@ -115,7 +133,8 @@ export struct TetrisGamePage {
           }.width(this.cell * COLS).height(this.cell * ROWS)
           .borderRadius(RadiusTokens.sm)
           .backgroundColor(SemanticColors.boardBg)
-        }.layoutWeight(1).justifyContent(FlexAlign.Center)
+        }.width('100%').layoutWeight(1).justifyContent(FlexAlign.Center)
+          .onAreaChange((oldValue: Area, newValue: Area) => { this.updateCell(newValue); })
 
         Column({ space: SpacingTokens.sm }) {
           Row({ space: SpacingTokens.sm }) {

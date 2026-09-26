@@ -4,7 +4,7 @@
  * 只持有 @Local viewModel，读取其 @Trace 状态、转发操作；不 import Model 类型。
  * 规则见 model/game/WhackMoleModel.ets，状态编排见 viewmodel/WhackMoleViewModel.ets。
  */
-import { SemanticColors, RadiusTokens, FontTokens, ShadowTokens, SpacingTokens } from '../../common/DesignTokens';
+import { SemanticColors, RadiusTokens, FontTokens, SpacingTokens } from '../../common/DesignTokens';
 import { GameHeader } from '../../components/GameHeader';
 import { GameDifficulty, GameStatus } from '../../common/GameConstants';
 import { SafeAreaInsets } from '../../common/SafeAreaInsets';
@@ -132,23 +132,16 @@ export struct WhackMolePage {
 
   @Builder
   MoleHole(index: number) {
-    Column() {
+    Stack({ alignContent: Alignment.Bottom }) {
       if (this.viewModel.holes[index]) {
-        Text('🐹')
-          .fontSize(44)
-          .translate({ y: -8 })
-      } else {
-        Column() {}
-          .width('72%').aspectRatio(1.4)
-          .borderRadius(RadiusTokens.full)
-          .backgroundColor(SemanticColors.surface)
-          // 阴影恒为半透明黑：投影在深浅两种底色上都应压暗，不随主题反转
-          .shadow(ShadowTokens.float)
-          .margin({ bottom: 8 })
+        Image($r('app.media.play_mole'))
+          .width('80%').height('86%').objectFit(ImageFit.Contain)
+          .translate({ y: -6 })
       }
+      Image($r('app.media.play_whack_hole'))
+        .width('84%').height('43%').objectFit(ImageFit.Contain)
     }
     .layoutWeight(1).aspectRatio(0.92)
-    .justifyContent(FlexAlign.End)
     // 无障碍:读屏念出洞号与当前是否有地鼠
     .accessibilityText(this.a11yHoleFormat.replace('%1$d', '' + (index + 1)) + (this.viewModel.holes[index] ? this.a11yHasMole : this.a11yEmpty))
     .stateStyles({ pressed: this.pressedFeedback }).onClick(() => { Haptics.tap(); this.viewModel.whack(index); })

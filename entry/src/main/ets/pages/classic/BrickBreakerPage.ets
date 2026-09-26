@@ -113,7 +113,12 @@ export struct BrickBreakerPage {
 
             // 砖块层
             ForEach(this.viewModel.bricks, (brick: BrickViewData) => {
-              Column() {}
+              Stack() {
+                Image($r('app.media.play_brick_gloss'))
+                  .width(this.viewModel.brickWidth())
+                  .height(this.viewModel.brickHeight())
+                  .objectFit(ImageFit.Fill)
+              }
                 .width(this.viewModel.brickWidth())
                 .height(this.viewModel.brickHeight())
                 .backgroundColor(this.getBrickColor(brick.row))
@@ -128,23 +133,21 @@ export struct BrickBreakerPage {
             }, (brick: BrickViewData) => brick.id.toString())
 
             // 挡板
-            Row() {}
+            Image($r('app.media.play_brick_paddle'))
               .width(this.viewModel.paddleWidth())
               .height(this.viewModel.paddleHeight())
-              .backgroundColor(SemanticColors.primary)
-              .borderRadius(RadiusTokens.xs)
+              .objectFit(ImageFit.Fill)
               .offset({
                 x: this.viewModel.paddleCenterX - this.viewModel.paddleWidth() / 2,
                 y: this.viewModel.paddleY()
               })
 
 
-            // 小球 - 用Column+borderRadius实现圆形
-            Column() {}
+            // 小球
+            Image($r('app.media.play_brick_ball'))
               .width(this.viewModel.ballRadius() * 2)
               .height(this.viewModel.ballRadius() * 2)
-              .backgroundColor(SemanticColors.accent)
-              .borderRadius(this.viewModel.ballRadius())
+              .objectFit(ImageFit.Contain)
               .offset({
                 x: this.viewModel.ballX - this.viewModel.ballRadius(),
                 y: this.viewModel.ballY - this.viewModel.ballRadius()

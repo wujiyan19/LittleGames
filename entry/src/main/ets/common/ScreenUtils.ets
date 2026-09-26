@@ -17,6 +17,7 @@ import { hilog } from '@kit.PerformanceAnalysisKit';
 export class ScreenUtils {
   /** 最近一次取到的窗口宽度（px）；0 表示尚未初始化 */
   private static widthPx: number = 0;
+  private static heightPx: number = 0;
 
   /** px → vp 换算系数。获取失败时退化为 1（即不换算） */
   private static density(): number {
@@ -38,10 +39,13 @@ export class ScreenUtils {
    */
   static updateFromWindow(win: window.Window): void {
     try {
-      ScreenUtils.widthPx = win.getWindowProperties().windowRect.width;
+      const rect = win.getWindowProperties().windowRect;
+      ScreenUtils.widthPx = rect.width;
+      ScreenUtils.heightPx = rect.height;
     } catch (e) {
       hilog.error(0x0000, 'LittleGames', 'getWindowProperties failed, window width unknown');
       ScreenUtils.widthPx = 0;
+      ScreenUtils.heightPx = 0;
     }
   }
 
@@ -66,19 +70,38 @@ export class ScreenUtils {
     }
   }
 
+  static windowHeightVp(): number {
+    const density: number = ScreenUtils.density();
+    if (density <= 0) { return 0; }
+    if (ScreenUtils.heightPx > 0) { return ScreenUtils.heightPx / density; }
+    try {
+      return display.getDefaultDisplaySync().height / density;
+    } catch (e) {
+      hilog.error(0x0000, 'LittleGames', 'getDefaultDisplaySync failed, window height unknown');
+      return 0;
+    }
+  }
+
   /**
    * 计算棋盘格子边长（vp）
    *
    * @param count   一行（或一列）的格子数
    * @param maxWidth 棋盘允许占用的最大宽度（vp），窄屏按窗口算、宽屏按此值封顶
    * @param padding 需要扣除的内边距与格子间距总和（vp）
-   * @param minSize 格子最小边长（vp），防止极窄窗口下算成 0 或负数
+   * @param minSize 窗口宽度尚不可用时的回退值
    */
   static calcCell(count: number, maxWidth: number, padding: number, minSize: number): number {
     const widthVp: number = ScreenUtils.windowWidthVp();
     if (widthVp <= 0 || count <= 0) {
       return minSize;
     }
-    return Math.max(minSize, Math.floor((Math.min(widthVp, maxWidth) - padding) / count));
+    return ScreenUtils.calcCellForWidth(widthVp, count, maxWidth, padding);
+  }
+
+  /** 已知布局区域宽度时直接计算，供窗口尺寸变化回调使用。 */
+  static calcCellForWidth(widthVp: number, count: number, maxWidth: number, padding: number): number {
+    if (widthVp <= 0 || count <= 0) { return 1; }
+    // 极窄窗口下不能用固定最小边长撑破容器。
+    return Math.max(1, Math.floor((Math.min(widthVp, maxWidth) - padding) / count));
   }
 }

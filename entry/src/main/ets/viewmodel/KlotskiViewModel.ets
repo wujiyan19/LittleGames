@@ -14,6 +14,29 @@ const BW = 4;
 const BH = 5;
 const GAME_ID = 'klotski';
 
+/** A whole movable piece, kept separate from the rule model for the view. */
+export class KlotskiPieceView {
+  id: string;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  kind: number;
+  label: string;
+  selected: boolean;
+
+  constructor(id: string, x: number, y: number, w: number, h: number, kind: number, label: string, selected: boolean) {
+    this.id = id;
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;
+    this.kind = kind;
+    this.label = label;
+    this.selected = selected;
+  }
+}
+
 @ObservedV2
 export class KlotskiViewModel implements GameLifecycleObserver {
   @Trace private blocks: KlotskiBlock[] = [];
@@ -85,6 +108,18 @@ export class KlotskiViewModel implements GameLifecycleObserver {
 
   isSelected(r: number, c: number): boolean {
     return this.selId !== '' && this.grid[r][c] === this.selId;
+  }
+
+  piecesForView(): KlotskiPieceView[] {
+    const pieces: KlotskiPieceView[] = [];
+    for (let i = 0; i < this.blocks.length; i++) {
+      const block = this.blocks[i];
+      pieces.push(new KlotskiPieceView(
+        block.id, block.x, block.y, block.w, block.h,
+        this.rules.kind(block), this.rules.label(block), this.selId === block.id
+      ));
+    }
+    return pieces;
   }
 
   // —— GameLifecycleObserver（完成才计分、无定时器：切后台无需暂停/结算）——

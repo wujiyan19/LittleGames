@@ -95,7 +95,6 @@ export function GamePageMap(name: string, pathStack: NavPathStack) {
   }
   .hideTitleBar(true)
   .onBackPressed(() => {
-    GameLifecycleBus.notifyBackRequested();
-    return true;
+    return GameLifecycleBus.notifyBackRequested();
   })
 }

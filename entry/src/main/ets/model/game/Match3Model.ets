@@ -63,15 +63,30 @@ export class Match3Rules {
   getCols(): number { return COLS; }
   getGemTypes(): number { return GEM_TYPES; }
 
-  /** 生成一个无现成三连的 8×8 棋盘 */
+  /** 生成无现成三连且至少有一步合法交换的 8×8 棋盘 */
   generateBoard(rng: RandomSource): number[][] {
-    let board: number[][] = [];
-    let attempts = 0;
-    do {
-      board = this.randomBoard(rng);
-      attempts++;
-    } while (this.hasMatches(board) && attempts < 1000);
-    // 极端情况下 1000 次仍失败，直接返回（概率极低）
+    for (let attempt = 0; attempt < 1000; attempt++) {
+      const board: number[][] = this.randomBoard(rng);
+      if (!this.hasMatches(board) && this.hasLegalSwap(board)) {
+        return board;
+      }
+    }
+    // 随机源退化时仍须提供可玩的棋盘。
+    return this.fallbackBoard();
+  }
+
+  private fallbackBoard(): number[][] {
+    const board: number[][] = [];
+    for (let r = 0; r < ROWS; r++) {
+      const row: number[] = [];
+      for (let c = 0; c < COLS; c++) {
+        row.push((r + c) % GEM_TYPES);
+      }
+      board.push(row);
+    }
+    // 交换 (0,1) 和 (1,1) 后，首行前三格形成三连。
+    board[0][2] = 0;
+    board[1][1] = 0;
     return board;
   }
 
@@ -102,6 +117,37 @@ export class Match3Rules {
       for (let r = 0; r < ROWS - 2; r++) {
         if (board[r][c] >= 0 && board[r][c] === board[r + 1][c] && board[r][c] === board[r + 2][c]) {
           return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  /** 稳定棋盘上是否存在能形成三连的相邻交换 */
+  hasLegalSwap(board: number[][]): boolean {
+    if (this.hasMatches(board)) { return false; }
+    const candidate: number[][] = this.clone(board);
+    for (let r = 0; r < ROWS; r++) {
+      for (let c = 0; c < COLS; c++) {
+        if (c + 1 < COLS && candidate[r][c] !== candidate[r][c + 1]) {
+          const current: number = candidate[r][c];
+          const other: number = candidate[r][c + 1];
+          candidate[r][c] = other;
+          candidate[r][c + 1] = current;
+          const legal: boolean = this.hasMatches(candidate);
+          candidate[r][c] = current;
+          candidate[r][c + 1] = other;
+          if (legal) { return true; }
+        }
+        if (r + 1 < ROWS && candidate[r][c] !== candidate[r + 1][c]) {
+          const current: number = candidate[r][c];
+          const other: number = candidate[r + 1][c];
+          candidate[r][c] = other;
+          candidate[r + 1][c] = current;
+          const legal: boolean = this.hasMatches(candidate);
+          candidate[r][c] = current;
+          candidate[r + 1][c] = other;
+          if (legal) { return true; }
         }
       }
     }
@@ -238,6 +284,10 @@ export class Match3Rules {
       currentBoard = this.applyGravity(removeRes.board, rng);
     }
 
+    // 连锁结束后的死局重新发牌，分数和剩余步数由调用方保留。
+    if (!this.hasLegalSwap(currentBoard)) {
+      currentBoard = this.generateBoard(rng);
+    }
     return new ChainResult(currentBoard, totalGained, chainRounds);
   }
 

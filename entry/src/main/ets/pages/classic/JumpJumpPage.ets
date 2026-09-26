@@ -130,11 +130,10 @@ export struct JumpJumpPage {
           // 平台层（只渲染屏幕可见范围内的平台）
           ForEach(this.viewModel.platforms, (p: PlatformData, index: number) => {
             if (p.centerX + p.width / 2 >= -20 && p.centerX - p.width / 2 <= this.areaW + 20) {
-              Column()
+              Image($r('app.media.play_jump_platform'))
                 .width(p.width).height(PLATFORM_H)
-                .borderRadius(RadiusTokens.sm)
-                .backgroundColor(index === this.viewModel.currentIndex
-                  ? SemanticColors.primary : SemanticColors.boardBorder)
+                .objectFit(ImageFit.Fill)
+                .opacity(index === this.viewModel.currentIndex ? 1 : 0.75)
                 .offset({ x: p.centerX - p.width / 2, y: this.groundY() })
                 .id(index === this.viewModel.currentIndex + 1
                   ? 'jumpjump_next_platform' : 'jumpjump_platform_' + p.id)
@@ -143,13 +142,9 @@ export struct JumpJumpPage {
           }, (p: PlatformData) => p.id.toString())
 
           // 角色（压缩用 scale，位移用 offset）
-          Column() {
-            Text('🐸').fontSize(24)
-          }
+          Image($r('app.media.play_jump_frog'))
           .width(PLAYER_W).height(PLAYER_H)
-          .borderRadius(RadiusTokens.md)
-          .backgroundColor(SemanticColors.surface)
-          .justifyContent(FlexAlign.Center)
+          .objectFit(ImageFit.Fill)
           .scale({ x: this.viewModel.playerScaleX, y: this.viewModel.playerScaleY })
           .offset({
             x: this.viewModel.playerX + this.viewModel.playerJumpX - PLAYER_W / 2,

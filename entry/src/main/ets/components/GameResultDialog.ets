@@ -59,7 +59,13 @@ export struct GameResultDialog {
         .backdropBlur(24)
         .shadow(ShadowTokens.float)
     } else {
-      Column() { this.DialogContent() }
+      Column() {
+        Column() { this.DialogContent() }
+          .width('86%').padding(SpacingTokens.lg)
+          .borderRadius(RadiusTokens.xl)
+          .backgroundColor($r('app.color.surface'))
+          .shadow(ShadowTokens.float)
+      }
         .width('100%').height('100%')
         .backgroundColor(SemanticColors.scrim)
         .backdropBlur(20)

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><linearGradient id="surface" x1="0" y1="0" x2=".14" y2="1"><stop offset="0" stop-color="#A8DEFF"/><stop offset="1" stop-color="#238BD5"/></linearGradient></defs>
+    <path d="M50 5L91 27L91 73L50 95L9 73L9 27Z" fill="url(#surface)" stroke="#238BD5" stroke-width="3"/>
+    <path d="M50 10L68 35L50 72L31 35Z" fill="#fff" opacity=".28"/>
+    <path d="M14 34L50 10L31 35L50 72Z" fill="#fff" opacity=".3"/>
+    <path d="M68 35L87 34L50 72Z" fill="#238BD5" opacity=".36"/>
+    <path d="M50 72L77 80L50 94L22 80Z" fill="#238BD5" opacity=".33"/></svg>

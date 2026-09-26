@@ -55,6 +55,8 @@ export class BrickBreakerViewModel implements GameLifecycleObserver {
   private bricksAlive: boolean[] = [];
   private timer: number = -1;
   private autoPaused: boolean = false;
+  private levelTransitionTimer: number = -1;
+  private levelTransitionGeneration: number = 0;
 
   constructor(rng?: RandomSource) {
     this.rng = rng ?? new RealRandom();
@@ -77,6 +79,9 @@ export class BrickBreakerViewModel implements GameLifecycleObserver {
 
   /** 只铺开局数据，不启动定时器 */
   newGame(): void {
+    this.cancelLevelTransition();
+    this.stopTimer();
+    this.autoPaused = false;
     GameDataManager.incrementPlayCount(GAME_ID);
     this.score = 0;
     this.lives = 3;
@@ -165,11 +170,30 @@ export class BrickBreakerViewModel implements GameLifecycleObserver {
 
   /** 进入下一关 */
   private nextLevel(): void {
+    this.stopTimer();
     this.level += 1;
     this.levelClearMsg = true;
     this.status = GameStatus.PAUSED;
-    // 2秒后自动进入下一关
-    setTimeout(() => {
+    this.scheduleLevelTransition();
+  }
+
+  private cancelLevelTransition(): void {
+    this.levelTransitionGeneration++;
+    if (this.levelTransitionTimer !== -1) {
+      clearTimeout(this.levelTransitionTimer);
+      this.levelTransitionTimer = -1;
+    }
+  }
+
+  private scheduleLevelTransition(): void {
+    this.cancelLevelTransition();
+    const generation: number = this.levelTransitionGeneration;
+    this.levelTransitionTimer = setTimeout(() => {
+      if (generation !== this.levelTransitionGeneration || !this.levelClearMsg ||
+        this.status !== GameStatus.PAUSED || this.autoPaused) {
+        return;
+      }
+      this.levelTransitionTimer = -1;
       this.levelClearMsg = false;
       this.status = GameStatus.PLAYING;
       this.initLevel();
@@ -226,6 +250,7 @@ export class BrickBreakerViewModel implements GameLifecycleObserver {
   }
 
   private gameOver(): void {
+    this.cancelLevelTransition();
     this.status = GameStatus.OVER;
     this.stopTimer();
     if (this.score > this.highScore) { this.highScore = this.score; }
@@ -236,7 +261,10 @@ export class BrickBreakerViewModel implements GameLifecycleObserver {
 
   onAppHidden(): void {
     this.settleCurrentScore();
-    if (this.status === GameStatus.PLAYING) {
+    if (this.levelClearMsg) {
+      this.cancelLevelTransition();
+      this.autoPaused = true;
+    } else if (this.status === GameStatus.PLAYING) {
       this.autoPaused = true;
       this.status = GameStatus.PAUSED;
     }
@@ -245,7 +273,11 @@ export class BrickBreakerViewModel implements GameLifecycleObserver {
   onAppShown(): void {
     if (this.autoPaused) {
       this.autoPaused = false;
-      this.status = GameStatus.PLAYING;
+      if (this.levelClearMsg) {
+        this.scheduleLevelTransition();
+      } else if (this.status === GameStatus.PAUSED) {
+        this.status = GameStatus.PLAYING;
+      }
     }
   }
 
@@ -266,6 +298,7 @@ export class BrickBreakerViewModel implements GameLifecycleObserver {
   }
 
   dispose(): void {
+    this.cancelLevelTransition();
     this.stopTimer();
     this.settleCurrentScore();
   }

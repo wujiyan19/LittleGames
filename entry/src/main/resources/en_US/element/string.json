@@ -2,27 +2,23 @@
   "string": [
     {
       "name": "module_desc",
-      "value": "Little Games - Classic & Puzzle"
+      "value": "玩趣盒 - Classic & Puzzle"
     },
     {
       "name": "EntryAbility_desc",
-      "value": "Little Games Main Entry"
+      "value": "玩趣盒 Main Entry"
     },
     {
       "name": "EntryAbility_label",
-      "value": "Little Games"
-    },
-    {
-      "name": "app_name",
-      "value": "Little Games"
+      "value": "玩趣盒"
     },
     {
       "name": "app_splash_title",
-      "value": "Little Games"
+      "value": "玩趣盒"
     },
     {
       "name": "app_splash_subtitle",
-      "value": "Cosmic Blue × Snow Gray · Skeuomorphic Design"
+      "value": "13 mini-games. Pick one and play."
     },
     {
       "name": "tab_featured",
@@ -94,7 +90,7 @@
     },
     {
       "name": "profile_stat_collected",
-      "value": "Collected"
+      "value": "Played"
     },
     {
       "name": "profile_stat_best",

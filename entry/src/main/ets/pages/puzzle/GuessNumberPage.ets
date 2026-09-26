@@ -216,20 +216,25 @@ export struct GuessNumberPage {
     Row({ space: SpacingTokens.sm }) {
       ForEach(keys, (key: string) => {
         Button() {
-          if (key === '⌫') {
-            SymbolGlyph($r('sys.symbol.delete_left'))
-              .fontSize(20).fontColor([SemanticColors.textOnPrimary])
-          } else if (key === 'submit') {
-            Text($r('app.string.guess_confirm'))
-              .fontFamily(FontTokens.family)
-              .fontSize(this.getKeyFontSize(key))
-              .fontColor(this.getKeyFontColor(key))
-          } else {
-            Text(key)
-              .fontFamily(FontTokens.family)
-              .fontSize(this.getKeyFontSize(key))
-              .fontColor(this.getKeyFontColor(key))
+          Stack() {
+            Image($r('app.media.play_guess_key'))
+              .width('100%').height('100%').objectFit(ImageFit.Fill)
+            if (key === '⌫') {
+              SymbolGlyph($r('sys.symbol.delete_left'))
+                .fontSize(20).fontColor([SemanticColors.textOnPrimary])
+            } else if (key === 'submit') {
+              Text($r('app.string.guess_confirm'))
+                .fontFamily(FontTokens.family)
+                .fontSize(this.getKeyFontSize(key))
+                .fontColor(this.getKeyFontColor(key))
+            } else {
+              Text(key)
+                .fontFamily(FontTokens.family)
+                .fontSize(this.getKeyFontSize(key))
+                .fontColor(this.getKeyFontColor(key))
+            }
           }
+          .width('100%').height('100%')
         }
         .layoutWeight(1).height(52)
         .backgroundColor(this.getKeyBgColor(key))

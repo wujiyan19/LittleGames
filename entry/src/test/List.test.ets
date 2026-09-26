@@ -14,6 +14,8 @@ import sudokuModelTest from './SudokuModel.test';
 import viewModelClassicTest from './ViewModelClassic.test';
 import viewModelPuzzleTest from './ViewModelPuzzle.test';
 import gameDataManagerTest from './GameDataManager.test';
+import jumpJumpModelTest from './JumpJumpModel.test';
+import match3ModelTest from './Match3Model.test';
 
 export default function testsuite() {
   snakeModelTest();
@@ -29,4 +31,6 @@ export default function testsuite() {
   viewModelClassicTest();
   viewModelPuzzleTest();
   gameDataManagerTest();
+  jumpJumpModelTest();
+  match3ModelTest();
 }

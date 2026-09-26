@@ -53,39 +53,26 @@ export struct Match3Page {
     this.pathStack.pop();
   }
 
-  initBoardSize(): void {
+  initBoardSize(widthVp: number = ScreenUtils.windowWidthVp()): void {
     // padding 参数需包含：格子间距 7*3=21vp + 棋盘 padding 4*2=8vp + border 2*2=4vp = 33vp
     // 取 32 留余量，确保棋盘不溢出窗口
-    this.cell = ScreenUtils.calcCell(COLS, 360, 32, 28);
+    this.cell = ScreenUtils.calcCellForWidth(widthVp, COLS, 360, 32);
     this.boardSize = this.cell * COLS + (COLS - 1) * GAP + 8;
   }
 
   private step(): number { return this.cell + GAP; }
   private innerSize(): number { return this.cell * COLS + (COLS - 1) * GAP; }
 
-  /** 宝石背景色：6 种宝石对应 shape_1 ~ shape_6 */
-  getGemBg(type: number): ResourceColor {
+  /** 六种原创宝石图案，对应游戏规则中的类型编号。 */
+  getGemImage(type: number): Resource {
     switch (type) {
-      case 0: return $r('app.color.shape_1');
-      case 1: return $r('app.color.shape_2');
-      case 2: return $r('app.color.shape_3');
-      case 3: return $r('app.color.shape_4');
-      case 4: return $r('app.color.shape_5');
-      case 5: return $r('app.color.shape_6');
-      default: return SemanticColors.cellHidden;
-    }
-  }
-
-  /** 宝石内 SymbolGlyph：6 种不同形状辅助区分 */
-  getGemSymbol(type: number): Resource {
-    switch (type) {
-      case 0: return $r('sys.symbol.circle_fill');
-      case 1: return $r('sys.symbol.square_fill');
-      case 2: return $r('sys.symbol.star_fill');
-      case 3: return $r('sys.symbol.heart_fill');
-      case 4: return $r('sys.symbol.circle_fill');
-      case 5: return $r('sys.symbol.square_fill');
-      default: return $r('sys.symbol.circle_fill');
+      case 0: return $r('app.media.play_gem_0');
+      case 1: return $r('app.media.play_gem_1');
+      case 2: return $r('app.media.play_gem_2');
+      case 3: return $r('app.media.play_gem_3');
+      case 4: return $r('app.media.play_gem_4');
+      case 5: return $r('app.media.play_gem_5');
+      default: return $r('app.media.play_gem_0');
     }
   }
 
@@ -138,16 +125,15 @@ export struct Match3Page {
             Row() {
               ForEach(this.colIdx, (c: number) => {
                 Stack() {
-                  // 宝石底色
+                  // 中性底板让不同颜色的宝石图案保持清晰。
                   Column()
                     .width(this.cell).height(this.cell)
                     .borderRadius(RadiusTokens.md)
-                    .backgroundColor(this.getGemBg(this.viewModel.gemType(r, c)))
+                    .backgroundColor(SemanticColors.cellHidden)
 
-                  // 宝石内形状标识
-                  SymbolGlyph(this.getGemSymbol(this.viewModel.gemType(r, c)))
-                    .fontSize(Math.max(10, this.cell * 0.35))
-                    .fontColor([SemanticColors.textOnPrimary])
+                  Image(this.getGemImage(this.viewModel.gemType(r, c)))
+                    .width(this.cell * 0.88).height(this.cell * 0.88)
+                    .objectFit(ImageFit.Contain)
 
                   // 选中高亮：边框 + 缩放
                   if (this.viewModel.isSelected(r, c)) {
@@ -213,5 +199,9 @@ export struct Match3Page {
         })
       }
     }.width('100%').height('100%')
+      .onAreaChange((oldValue: Area, newValue: Area) => {
+        const width: number = parseFloat(newValue.width as string);
+        if (!isNaN(width) && width > 0) { this.initBoardSize(width); }
+      })
   }
 }

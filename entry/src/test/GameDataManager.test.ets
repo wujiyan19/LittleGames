@@ -7,8 +7,8 @@ import { GameCategory } from '../main/ets/common/GameConstants';
 
 export default function gameDataManagerTest() {
   describe('GameDataManager', () => {
-    it('get_all_games_has_ten', 0, () => {
-      expect(GameDataManager.getAllGames().length).assertEqual(10);
+    it('get_all_games_has_thirteen', 0, () => {
+      expect(GameDataManager.getAllGames().length).assertEqual(13);
     });
 
     it('get_game_by_id_works', 0, () => {
@@ -20,7 +20,7 @@ export default function gameDataManagerTest() {
     it('get_games_by_category_partitions', 0, () => {
       const classic = GameDataManager.getGamesByCategory(GameCategory.CLASSIC);
       const puzzle = GameDataManager.getGamesByCategory(GameCategory.PUZZLE);
-      expect(classic.length + puzzle.length).assertEqual(10);
+      expect(classic.length + puzzle.length).assertEqual(13);
       expect(classic.length > 0 && puzzle.length > 0).assertTrue();
     });
 
@@ -35,6 +35,16 @@ export default function gameDataManagerTest() {
       const most = GameDataManager.getMostPlayed(3);
       expect(most.length).assertEqual(3);
       expect(most[0].playCount >= most[1].playCount).assertTrue();
+    });
+
+    it('recent_games_follow_entry_order', 0, () => {
+      GameDataManager.incrementPlayCount('snake');
+      GameDataManager.incrementPlayCount('2048');
+      GameDataManager.incrementPlayCount('snake');
+      const recent = GameDataManager.getRecentlyPlayed(2);
+      expect(recent.length).assertEqual(2);
+      expect(recent[0].id).assertEqual('snake');
+      expect(recent[1].id).assertEqual('2048');
     });
   });
 }

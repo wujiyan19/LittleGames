@@ -67,6 +67,7 @@
     { "name": "klotski_horizontal", "value": "#FFAA33" },
     { "name": "klotski_vertical", "value": "#3399FF" },
     { "name": "klotski_normal", "value": "#2DD482" },
+    { "name": "klotski_wood_text", "value": "#5B382B" },
 
     { "name": "mine_num_0", "value": "#6B7280" },
     { "name": "mine_num_1", "value": "#3399FF" },

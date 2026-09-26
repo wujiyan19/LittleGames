@@ -264,7 +264,7 @@ struct Index {
   TopBar() {
     Row() {
       Column() {
-        Text('LittleGames')
+        Text($r('app.string.app_name'))
           .fontFamily(FontTokens.family)
           .fontSize(FontTokens.sizeTitle)
           .fontWeight(FontTokens.weightSemibold)

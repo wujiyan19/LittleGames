@@ -157,6 +157,10 @@ export class SnakeViewModel implements GameLifecycleObserver {
     return this.rules.isOccupied(this.occupied, x, y);
   }
 
+  isSnakeHead(x: number, y: number): boolean {
+    return this.snake.length > 0 && this.snake[0].x === x && this.snake[0].y === y;
+  }
+
   isFood(x: number, y: number): boolean {
     return this.food.x === x && this.food.y === y;
   }

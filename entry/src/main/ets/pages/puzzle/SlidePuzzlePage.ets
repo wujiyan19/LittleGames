@@ -49,10 +49,10 @@ export struct SlidePuzzlePage {
   }
 
   /** 尺寸随难度变化，重算格子大小与索引表 */
-  refreshLayout(): void {
+  refreshLayout(widthVp: number = ScreenUtils.windowWidthVp()): void {
     const n = this.viewModel.getSize();
     this.idxN = range(n);
-    this.cell = ScreenUtils.calcCell(n, 520, 40, 40);
+    this.cell = ScreenUtils.calcCellForWidth(widthVp, n, 520, 40);
   }
 
   changeDifficulty(d: GameDifficulty): void {
@@ -113,8 +113,10 @@ export struct SlidePuzzlePage {
             ForEach(this.idxN, (r: number) => {
               Row() {
                 ForEach(this.idxN, (c: number) => {
-                  Column() {
+                  Stack() {
                     if (this.viewModel.cellAt(r, c) > 0) {
+                      Image($r('app.media.play_slide_tile'))
+                        .width(this.cell).height(this.cell).objectFit(ImageFit.Fill)
                       Text('' + this.viewModel.cellAt(r, c)).fontSize(Math.max(22, this.cell * 0.34))
                         .fontWeight(FontWeight.Bold)
                         // 拼图块底色为 accent / success，白字在两套主题下均可读
@@ -161,5 +163,9 @@ export struct SlidePuzzlePage {
         })
       }
     }.width('100%').height('100%')
+      .onAreaChange((oldValue: Area, newValue: Area) => {
+        const width: number = parseFloat(newValue.width as string);
+        if (!isNaN(width) && width > 0) { this.refreshLayout(width); }
+      })
   }
 }

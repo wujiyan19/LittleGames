@@ -6,7 +6,7 @@
  * 难度映射为「平台宽度 + 相邻平台间距」：
  *   简单 → 平台更宽、间距更近；困难 → 平台更窄、间距更远。
  * 同难度内平台宽度与间距取固定值，保证对局可预测、可复现。
- * 最大跳跃距离略大于最大平台间距，保证满蓄力仍有落台可能。
+ * 最大跳跃距离覆盖两平台中心距离，保证满蓄力可落台。
  *
  * 本层只做几何与判定，动画/相机/渲染留在 ViewModel 与 View。
  */
@@ -67,10 +67,12 @@ export class JumpJumpRules {
     return new JumpPlatformConfig(76, 150, 150);
   }
 
-  /** 满蓄力对应的水平跳跃距离（略大于最大间距，满蓄力必落台） */
+  /** 从当前平台中心起跳；满蓄力落在目标平台中心稍右处 */
   static maxJumpDistance(difficulty: GameDifficulty): number {
     const cfg: JumpPlatformConfig = JumpJumpRules.configFor(difficulty);
-    return cfg.gapMax * 1.12;
+    // gap 是两平台边缘间距；同难度平台等宽，中心距离为 gap + width。
+    // 额外四分之一平台宽度提供蓄满后的落点余量，仍在目标平台范围内。
+    return cfg.gapMax + cfg.width * 1.25;
   }
 
   /** 蓄力比例（0~1）→ 水平跳跃距离；越界自动收敛到 [0,1] */

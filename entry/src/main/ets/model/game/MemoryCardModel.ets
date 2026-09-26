@@ -6,7 +6,7 @@
 import { GameDifficulty } from '../../common/GameConstants';
 import { RandomSource } from './RandomSource';
 
-export const ALL_EMOJIS: string[] = ['🎮', '🎯', '🎲', '🎸', '🎨', '🚀', '🌈', '⭐', '🍎', '🌺', '🐶', '🐱'];
+export const ALL_SYMBOLS: string[] = ['sun', 'moon', 'star', 'heart', 'clover', 'bolt', 'crown', 'diamond', 'spiral', 'leaf', 'shell', 'flame'];
 
 export class Card {
   id: number;
@@ -33,10 +33,10 @@ export class MemoryCardRules {
     return Math.floor(this.pairCount(difficulty) / 2);
   }
 
-  /** 发牌：从表情池选 pairCount 个，各两张，再整体打乱 */
+  /** 发牌：从图案池选 pairCount 个，各两张，再整体打乱 */
   deal(pairCount: number, rng: RandomSource): Card[] {
-    // 洗表情池
-    const pool = ALL_EMOJIS.slice();
+    // 洗图案池
+    const pool = ALL_SYMBOLS.slice();
     for (let i = pool.length - 1; i > 0; i--) {
       const j = Math.floor(rng.next() * (i + 1));
       const tmp = pool[i];

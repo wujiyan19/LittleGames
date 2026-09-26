@@ -91,8 +91,24 @@ export struct Game2048Page {
   }
 
   initBoardSize(): void {
-    this.cell = ScreenUtils.calcCell(SIZE, 520, 32, 40);
+    const byWidth: number = ScreenUtils.calcCell(SIZE, 520, 32 + SIZE * GAP + 8, 1);
+    const byHeight: number = Math.floor((ScreenUtils.windowHeightVp() - 280 - SIZE * GAP - 8) / SIZE);
+    this.cell = Math.max(1, Math.min(byWidth, byHeight));
     this.boardSize = this.innerSize() + 8;
+  }
+
+  /** 弹性内容区变化时，按实际宽高重新约束正方形棋盘。 */
+  updateBoardSize(area: Area): void {
+    const width: number = parseFloat(area.width as string);
+    const height: number = parseFloat(area.height as string);
+    if (isNaN(width) || isNaN(height) || width < 100 || height < 100) { return; }
+    const byWidth: number = Math.floor((Math.min(width, 520) - 32 - SIZE * GAP - 8) / SIZE);
+    const byHeight: number = Math.floor((height - SIZE * GAP - 8) / SIZE);
+    const next: number = Math.max(1, Math.min(byWidth, byHeight));
+    if (next !== this.cell) {
+      this.cell = next;
+      this.boardSize = this.innerSize() + 8;
+    }
   }
 
   private step(): number { return this.cell + GAP; }
@@ -279,7 +295,9 @@ export struct Game2048Page {
 
             // 方块层：稳定 id，按 row/col 偏移定位
             ForEach(this.tiles, (tile: TileData) => {
-              Column() {
+              Stack() {
+                Image($r('app.media.play_2048_surface'))
+                  .width(this.cell).height(this.cell).objectFit(ImageFit.Fill)
                 Text('' + tile.value)
                   .fontSize(Math.max(18, this.cell * 0.36)).fontWeight(FontWeight.Bold)
                   .fontColor(this.getTileFontColor(tile.value))
@@ -287,7 +305,6 @@ export struct Game2048Page {
               .width(this.cell).height(this.cell)
               .borderRadius(RadiusTokens.md)
               .backgroundColor(this.getCellBg(tile.value))
-              .justifyContent(FlexAlign.Center)
               .offset({ x: tile.col * this.step() + 3, y: tile.row * this.step() + 3 })
               .scale({ x: tile.scale, y: tile.scale })
               .accessibilityText(this.a11yTileFormat.replace('%1$d', '' + (tile.row + 1)).replace('%2$d', '' + (tile.col + 1)).replace('%3$d', '' + tile.value))
@@ -313,7 +330,8 @@ export struct Game2048Page {
               }
             }))
         }
-        .layoutWeight(1).justifyContent(FlexAlign.Center)
+        .width('100%').layoutWeight(1).justifyContent(FlexAlign.Center)
+        .onAreaChange((oldValue: Area, newValue: Area) => { this.updateBoardSize(newValue); })
 
         Text($r('app.string.game_2048_hint'))
           .fontFamily(FontTokens.family)

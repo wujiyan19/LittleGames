@@ -63,7 +63,7 @@ export default class EntryAbility extends UIAbility {
   onBackground(): void {
     hilog.info(0x0000, 'LittleGames', '%{public}s', 'onBackground');
     GameLifecycleBus.notifyHidden();
-    // 落盘走 200ms 防抖，这里强制刷一次，避免防抖窗口内的变更因进程被杀而丢失
+    // 后台切换立即同步刷盘，避免防抖窗口内的变更丢失。
     GameDataManager.flushNow();
   }
 }

@@ -2,27 +2,23 @@
   "string": [
     {
       "name": "module_desc",
-      "value": "小游戏合集 - 经典休闲与益智解谜"
+      "value": "玩趣盒 - 经典休闲与益智解谜"
     },
     {
       "name": "EntryAbility_desc",
-      "value": "小游戏合集主入口"
+      "value": "玩趣盒主入口"
     },
     {
       "name": "EntryAbility_label",
-      "value": "小游戏合集"
-    },
-    {
-      "name": "app_name",
-      "value": "小游戏合集"
+      "value": "玩趣盒"
     },
     {
       "name": "app_splash_title",
-      "value": "小游戏合集"
+      "value": "玩趣盒"
     },
     {
       "name": "app_splash_subtitle",
-      "value": "宇宙蓝 × 雪域灰 · 轻拟物设计"
+      "value": "13 款小游戏，随手开一局。"
     },
     {
       "name": "tab_featured",
@@ -94,7 +90,7 @@
     },
     {
       "name": "profile_stat_collected",
-      "value": "已收录"
+      "value": "已玩游戏"
     },
     {
       "name": "profile_stat_best",

@@ -13,8 +13,7 @@ import { GameResultDialog } from '../../components/GameResultDialog';
 import { ExitConfirmDialog } from '../../components/ExitConfirmDialog';
 import { GameLifecycleBus } from '../../common/GameLifecycleBus';
 import { ScreenUtils } from '../../common/ScreenUtils';
-import { range } from '../../common/Range';
-import { KlotskiViewModel } from '../../viewmodel/KlotskiViewModel';
+import { KlotskiPieceView, KlotskiViewModel } from '../../viewmodel/KlotskiViewModel';
 
 const BW = 4;
 const BH = 5;
@@ -28,8 +27,6 @@ export struct KlotskiPage {
   @Local centerLabel: string = '';
   // 无障碍字符串缓存
   @Local a11yBlockFormat: string = '';
-  private rowArray: number[] = range(BH);
-  private colArray: number[] = range(BW);
 
   aboutToAppear(): void {
     this.cell = ScreenUtils.calcCell(BW, 560, 28, 48);
@@ -58,19 +55,13 @@ export struct KlotskiPage {
     this.pathStack.pop();
   }
 
-  /** 棋子配色（种类由 ViewModel 给出，颜色资源在 View）；文字恒为白 */
-  getCellBg(row: number, col: number): ResourceColor {
-    const kind = this.viewModel.blockKind(row, col);
-    if (kind === 0) { return SemanticColors.boardBg; }
-    if (kind === 1) { return $r('app.color.klotski_target'); }
-    if (kind === 2) { return $r('app.color.klotski_horizontal'); }
-    if (kind === 3) { return $r('app.color.klotski_vertical'); }
-    return $r('app.color.klotski_normal');
-  }
+  private step(): number { return this.cell + 4; }
 
-  getBorderWidth(row: number, col: number): number {
-    if (this.viewModel.isSelected(row, col)) { return 2; }
-    return 0;
+  getPieceImage(kind: number): Resource {
+    if (kind === 1) { return $r('app.media.play_klotski_target'); }
+    if (kind === 2) { return $r('app.media.play_klotski_horizontal'); }
+    if (kind === 3) { return $r('app.media.play_klotski_vertical'); }
+    return $r('app.media.play_klotski_soldier');
   }
 
   @Styles
@@ -98,38 +89,36 @@ export struct KlotskiPage {
         })
 
         Column() {
-          Column() {
-            ForEach(this.rowArray, (row: number) => {
-              Row() {
-                ForEach(this.colArray, (col: number) => {
-                  Column() {
-                    if (this.viewModel.blockKind(row, col) > 0) {
-                      Text(this.viewModel.blockLabel(row, col))
-                        .fontSize(Math.max(16, this.cell * 0.28)).fontWeight(FontWeight.Bold)
-                        // 棋子底色为彩色，白字在两套主题下均可读
-                        .fontColor($r('app.color.tile_text_high'))
-                    } else if (row === 4 && col === 1) {
-                      Text($r('app.string.klotski_exit')).fontSize(Math.max(10, this.cell * 0.16)).fontColor(SemanticColors.textTertiary)
-                    }
-                  }.width(this.cell).height(this.cell).margin(2)
-                  .backgroundColor(this.getCellBg(row, col))
-                  .borderRadius(RadiusTokens.base)
-                  .border({
-                    width: this.getBorderWidth(row, col),
-                    color: SemanticColors.borderStrong
-                  })
-                  .accessibilityText(
-                    this.viewModel.blockKind(row, col) > 0
-                      ? this.a11yBlockFormat.replace('%1$s', this.viewModel.blockLabel(row, col))
-                      : ''
-                  )
-                  .stateStyles({ pressed: this.pressedFeedback }).onClick(() => this.viewModel.selectBlockAt(row, col))
-                }, (col: number) => col.toString())
+          Stack({ alignContent: Alignment.TopStart }) {
+            Image($r('app.media.play_klotski_board'))
+              .width(this.step() * BW + 8).height(this.step() * BH + 8)
+              .objectFit(ImageFit.Fill)
+
+            ForEach(this.viewModel.piecesForView(), (piece: KlotskiPieceView) => {
+              Stack() {
+                Image(this.getPieceImage(piece.kind))
+                  .width(piece.w * this.step() - 4)
+                  .height(piece.h * this.step() - 4)
+                  .objectFit(ImageFit.Fill)
+                Text(piece.label)
+                  .fontSize(Math.max(18, this.cell * 0.3))
+                  .fontWeight(FontWeight.Bold)
+                  .fontColor(piece.kind === 4 ? $r('app.color.klotski_wood_text') : $r('app.color.tile_text_high'))
               }
-            }, (row: number) => row.toString())
-          }.width(this.cell * BW + 30).height(this.cell * BH + 34)
-          .backgroundColor(SemanticColors.boardBg)
-          .borderRadius(RadiusTokens.base).padding(4)
+              .width(piece.w * this.step() - 4).height(piece.h * this.step() - 4)
+              .border({ width: piece.selected ? 3 : 0, color: SemanticColors.warning })
+              .borderRadius(RadiusTokens.base)
+              .offset({ x: 6 + piece.x * this.step(), y: 6 + piece.y * this.step() })
+              .accessibilityText(this.a11yBlockFormat.replace('%1$s', piece.label))
+              .stateStyles({ pressed: this.pressedFeedback })
+              .onClick(() => this.viewModel.selectBlockAt(piece.y, piece.x))
+            }, (piece: KlotskiPieceView) => piece.id)
+          }
+          .width(this.step() * BW + 8).height(this.step() * BH + 8)
+          Text($r('app.string.klotski_exit'))
+            .fontSize(FontTokens.sizeCaption)
+            .fontColor(SemanticColors.textSecondary)
+            .margin({ top: SpacingTokens.sm })
         }.layoutWeight(1).justifyContent(FlexAlign.Center)
 
         ControlPad({
@@ -165,5 +154,9 @@ export struct KlotskiPage {
         })
       }
     }.width('100%').height('100%')
+      .onAreaChange((oldValue: Area, newValue: Area) => {
+        const width: number = parseFloat(newValue.width as string);
+        if (!isNaN(width) && width > 0) { this.cell = ScreenUtils.calcCellForWidth(width, BW, 560, 28); }
+      })
   }
 }

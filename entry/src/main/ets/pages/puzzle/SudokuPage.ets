@@ -132,7 +132,10 @@ export struct SudokuPage {
             ForEach(this.idx9, (row: number) => {
               Row() {
                 ForEach(this.idx9, (col: number) => {
-                  Column() {
+                  Stack() {
+                    Image($r('app.media.play_sudoku_cell'))
+                      .width(this.getCellSize()).height(this.getCellSize())
+                      .objectFit(ImageFit.Fill)
                     if (this.viewModel.cellValue(row, col) > 0) {
                       Text('' + this.viewModel.cellValue(row, col)).fontSize(Math.max(14, this.getCellSize() * 0.5))
                         .fontColor(this.getNumberColor(row, col))
@@ -144,7 +147,6 @@ export struct SudokuPage {
                     width: this.getCellBorderWidth(row, col),
                     color: SemanticColors.boardBorder
                   })
-                  .justifyContent(FlexAlign.Center)
                   .accessibilityText(this.cellA11y(row, col))
                   .stateStyles({ pressed: this.pressedFeedback }).onClick(() => { this.viewModel.selectCell(row, col); })
                 }, (col: number) => col.toString())
@@ -229,5 +231,11 @@ export struct SudokuPage {
         })
       }
     }.width('100%').height('100%')
+      .onAreaChange((oldValue: Area, newValue: Area) => {
+        const width: number = parseFloat(newValue.width as string);
+        if (!isNaN(width) && width > 0) {
+          this.boardPixelSize = ScreenUtils.calcCellForWidth(width, 9, 520, 24) * 9 + 8;
+        }
+      })
   }
 }

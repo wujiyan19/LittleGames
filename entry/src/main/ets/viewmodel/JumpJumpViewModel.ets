@@ -80,6 +80,10 @@ export class JumpJumpViewModel implements GameLifecycleObserver {
   private jumpTimer: number = -1;
   private dropTimer: number = -1;
   private chargeStartTs: number = 0;
+  private pendingLanding: boolean = false;
+  private pendingLandingX: number = 0;
+  private pendingTarget: PlatformData | null = null;
+  private pendingFall: boolean = false;
 
   constructor() {
     this.highScore = GameDataManager.getGameById(GAME_ID)?.highScore ?? 0;
@@ -111,6 +115,8 @@ export class JumpJumpViewModel implements GameLifecycleObserver {
   /** 只铺开局数据（初始化/单测用），不记游玩次数 */
   newGame(): void {
     this.stopAllTimers();
+    this.pendingTarget = null;
+    this.pendingFall = false;
     this.score = 0;
     this.status = GameStatus.PLAYING;
     this.confirmExit = false;
@@ -222,6 +228,9 @@ export class JumpJumpViewModel implements GameLifecycleObserver {
       JumpJumpRules.judge(landingX, new JumpPlatform(target.centerX, target.width));
 
     this.isJumping = true;
+    this.pendingLanding = outcome.landed;
+    this.pendingLandingX = landingX;
+    this.pendingTarget = target;
     const duration: number = 260 + distance * 0.9;
     const height: number = 84;
     const startTs: number = Date.now();
@@ -233,6 +242,7 @@ export class JumpJumpViewModel implements GameLifecycleObserver {
       this.playerJumpY = -4 * height * t * (1 - t);
       if (t >= 1) {
         this.stopJumpTimer();
+        this.pendingTarget = null;
         this.settleJump(outcome.landed, landingX, target);
       }
     }, FRAME_MS);
@@ -260,6 +270,7 @@ export class JumpJumpViewModel implements GameLifecycleObserver {
 
   private startFall(): void {
     this.chargeRatio = 0;
+    this.pendingFall = true;
     const startTs: number = Date.now();
     this.dropTimer = setInterval(() => {
       const raw: number = (Date.now() - startTs) / 520;
@@ -267,6 +278,7 @@ export class JumpJumpViewModel implements GameLifecycleObserver {
       this.playerDropY = 460 * t * t;
       if (t >= 1) {
         this.stopDropTimer();
+        this.pendingFall = false;
         this.endGame();
       }
     }, FRAME_MS);
@@ -309,18 +321,32 @@ export class JumpJumpViewModel implements GameLifecycleObserver {
     if (this.score > 0) { GameDataManager.updateHighScore(GAME_ID, this.score); }
   }
 
-  /** 切后台：复位半途蓄力并结算当前分 */
+  /** 切后台：停止所有动画计时器，保留跳跃结果供回前台稳定结算。 */
   onAppHidden(): void {
     this.abortCharge();
+    this.stopJumpTimer();
+    this.stopDropTimer();
     this.settleCurrentScore();
   }
 
   onAppShown(): void {
+    const target: PlatformData | null = this.pendingTarget;
+    if (target !== null) {
+      this.pendingTarget = null;
+      this.settleJump(this.pendingLanding, this.pendingLandingX, target);
+    }
+    if (this.pendingFall) {
+      this.pendingFall = false;
+      this.playerDropY = 460;
+      this.endGame();
+    }
   }
 
   /** 页面销毁：停表并结算 */
   dispose(): void {
     this.stopAllTimers();
+    this.pendingTarget = null;
+    this.pendingFall = false;
     this.settleCurrentScore();
   }
 

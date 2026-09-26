@@ -56,9 +56,9 @@ export struct MemoryCardPage {
   }
 
   /** 卡牌尺寸与行数随难度变化 */
-  refreshLayout(): void {
+  refreshLayout(widthVp: number = ScreenUtils.windowWidthVp()): void {
     this.rowIdx = range(this.viewModel.getRowCount());
-    this.cardW = ScreenUtils.calcCell(COLS, 520, 48, 56);
+    this.cardW = ScreenUtils.calcCellForWidth(widthVp, COLS, 520, 48);
     if (this.viewModel.getRowCount() >= 6) { this.cardW = Math.floor(this.cardW * 0.8); }
   }
 
@@ -76,6 +76,24 @@ export struct MemoryCardPage {
   getCardOpacity(idx: number): number {
     if (this.viewModel.isMatched(idx)) { return 0.72; }
     return 1;
+  }
+
+  getCardFace(symbol: string): Resource {
+    switch (symbol) {
+      case 'sun': return $r('app.media.play_memory_sun');
+      case 'moon': return $r('app.media.play_memory_moon');
+      case 'star': return $r('app.media.play_memory_star');
+      case 'heart': return $r('app.media.play_memory_heart');
+      case 'clover': return $r('app.media.play_memory_clover');
+      case 'bolt': return $r('app.media.play_memory_bolt');
+      case 'crown': return $r('app.media.play_memory_crown');
+      case 'diamond': return $r('app.media.play_memory_diamond');
+      case 'spiral': return $r('app.media.play_memory_spiral');
+      case 'leaf': return $r('app.media.play_memory_leaf');
+      case 'shell': return $r('app.media.play_memory_shell');
+      case 'flame': return $r('app.media.play_memory_flame');
+      default: return $r('app.media.play_memory_star');
+    }
   }
 
   @Styles
@@ -119,13 +137,15 @@ export struct MemoryCardPage {
           ForEach(this.rowIdx, (r: number) => {
             Row() {
               ForEach(this.colIdx, (c: number) => {
-                Column() {
+                Stack() {
                   if (this.viewModel.isFaceUp(r * COLS + c)) {
-                    Text(this.viewModel.cardEmoji(r * COLS + c)).fontSize(Math.max(24, this.cardW * 0.45))
+                    Image(this.getCardFace(this.viewModel.cardEmoji(r * COLS + c)))
+                      .width(this.cardW * 0.7).height(this.cardW * 0.7)
+                      .objectFit(ImageFit.Contain)
                   } else {
-                    SymbolGlyph($r('sys.symbol.star'))
-                      .fontSize(Math.max(16, this.cardW * 0.3))
-                      .fontColor([SemanticColors.textTertiary])
+                    Image($r('app.media.play_memory_back'))
+                      .width(this.cardW).height(this.cardW * 1.15)
+                      .objectFit(ImageFit.Fill)
                   }
                 }.width(this.cardW).height(this.cardW * 1.15).margin(3)
                 .backgroundColor(this.getCardBg(r * COLS + c))
@@ -168,5 +188,9 @@ export struct MemoryCardPage {
         })
       }
     }.width('100%').height('100%')
+      .onAreaChange((oldValue: Area, newValue: Area) => {
+        const width: number = parseFloat(newValue.width as string);
+        if (!isNaN(width) && width > 0) { this.refreshLayout(width); }
+      })
   }
 }

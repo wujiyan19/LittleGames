@@ -172,13 +172,15 @@ export struct MinesweeperPage {
                   Column() {
                     if (this.viewModel.isRevealed(row, col)) {
                       if (this.viewModel.isMine(row, col)) {
-                        Text('💣').fontSize(Math.max(14, this.cellSize * 0.5))
+                        Image($r('app.media.play_mine'))
+                          .width(this.cellSize * 0.72).height(this.cellSize * 0.72).objectFit(ImageFit.Contain)
                       } else if (this.viewModel.cellValue(row, col) > 0) {
                         Text('' + this.viewModel.cellValue(row, col)).fontSize(Math.max(14, this.cellSize * 0.5)).fontWeight(FontWeight.Bold)
                           .fontColor(this.getNumColor(this.viewModel.cellValue(row, col)))
                       }
                     } else if (this.viewModel.isFlagged(row, col)) {
-                      Text('🚩').fontSize(Math.max(14, this.cellSize * 0.5))
+                      Image($r('app.media.play_flag'))
+                        .width(this.cellSize * 0.72).height(this.cellSize * 0.72).objectFit(ImageFit.Contain)
                     }
                   }.width(this.cellSize).height(this.cellSize)
                   .backgroundColor(this.getCellBg(row, col))
@@ -225,5 +227,9 @@ export struct MinesweeperPage {
         })
       }
     }.width('100%').height('100%')
+      .onAreaChange((oldValue: Area, newValue: Area) => {
+        const width: number = parseFloat(newValue.width as string);
+        if (!isNaN(width) && width > 0) { this.cellSize = ScreenUtils.calcCellForWidth(width, COLS, 520, 20); }
+      })
   }
 }
