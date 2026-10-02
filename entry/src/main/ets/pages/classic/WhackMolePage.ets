@@ -21,6 +21,8 @@ export struct WhackMolePage {
   @Param pathStack: NavPathStack = new NavPathStack();
   @Local safeBottom: number = SafeAreaInsets.bottom;
   @Local viewModel: WhackMoleViewModel = new WhackMoleViewModel();
+  @Local holeWidth: number = 96;
+  @Local holeHeight: number = 104;
   private idx3: number[] = range(3);
   // 无障碍字符串缓存（在 aboutToAppear 中预解析，避免渲染热路径中反复调用 getStringSync）
   @Local a11yHoleFormat: string = '';
@@ -54,6 +56,17 @@ export struct WhackMolePage {
   getTimeColor(): ResourceColor {
     if (this.viewModel.timeLeft <= 5) { return SemanticColors.error; }
     return SemanticColors.success;
+  }
+
+  updateHoleSize(area: Area): void {
+    const width: number = parseFloat(area.width as string);
+    const height: number = parseFloat(area.height as string);
+    if (!Number.isFinite(width) || !Number.isFinite(height) || width <= 0 || height <= 0) { return; }
+    // 洞位尺寸由剩余游戏区决定，横屏和矮窗口下也保留完整三行。
+    const cell: number = Math.max(1, Math.floor(Math.min(width, height * 0.92) / 3));
+    if (cell === this.holeWidth) { return; }
+    this.holeWidth = cell;
+    this.holeHeight = cell / 0.92;
   }
 
   @Styles
@@ -92,15 +105,19 @@ export struct WhackMolePage {
           .alignItems(HorizontalAlign.Center).margin({ left: 8, right: 16 })
         }.margin({ top: 12, bottom: 12 })
 
-        Column() {
-          ForEach(this.idx3, (row: number) => {
-            Row() {
-              ForEach(this.idx3, (col: number) => {
-                this.MoleHole(row * 3 + col)
-              }, (col: number) => col.toString())
-            }
-          }, (row: number) => row.toString())
-        }.layoutWeight(1).justifyContent(FlexAlign.Center)
+        Stack() {
+          Column() {
+            ForEach(this.idx3, (row: number) => {
+              Row() {
+                ForEach(this.idx3, (col: number) => {
+                  this.MoleHole(row * 3 + col)
+                }, (col: number) => col.toString())
+              }
+            }, (row: number) => row.toString())
+          }.width(this.holeWidth * 3).height(this.holeHeight * 3)
+        }.layoutWeight(1).width('100%')
+          .constraintSize({ maxWidth: $r('app.float.whack_board_max') })
+          .onAreaChange((oldValue: Area, newValue: Area) => { this.updateHoleSize(newValue); })
       }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
       if (this.viewModel.status === GameStatus.OVER) {
@@ -141,7 +158,7 @@ export struct WhackMolePage {
       Image($r('app.media.play_whack_hole'))
         .width('84%').height('43%').objectFit(ImageFit.Contain)
     }
-    .layoutWeight(1).aspectRatio(0.92)
+    .width(this.holeWidth).height(this.holeHeight)
     // 无障碍:读屏念出洞号与当前是否有地鼠
     .accessibilityText(this.a11yHoleFormat.replace('%1$d', '' + (index + 1)) + (this.viewModel.holes[index] ? this.a11yHasMole : this.a11yEmpty))
     .stateStyles({ pressed: this.pressedFeedback }).onClick(() => { Haptics.tap(); this.viewModel.whack(index); })

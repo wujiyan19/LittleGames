@@ -124,7 +124,14 @@ export struct SnakeGamePage {
               .fontSize(FontTokens.sizeSubtitle).fontColor(SemanticColors.textTertiary)
               .margin({ top: 12 })
           }
-        }.layoutWeight(1).justifyContent(FlexAlign.Center)
+        }.width('100%').layoutWeight(1).justifyContent(FlexAlign.Center)
+          .onAreaChange((oldValue: Area, newValue: Area) => {
+            const width: number = parseFloat(newValue.width as string);
+            const height: number = parseFloat(newValue.height as string);
+            if (Number.isFinite(width) && Number.isFinite(height) && width > 0 && height > 0) {
+              this.cell = ScreenUtils.calcCellForArea(width, height, COLS, ROWS, 560, 24, 40);
+            }
+          })
 
         ControlPad({
           onUp: () => this.viewModel.turnUp(),
@@ -161,9 +168,5 @@ export struct SnakeGamePage {
         })
       }
     }.width('100%').height('100%')
-      .onAreaChange((oldValue: Area, newValue: Area) => {
-        const width: number = parseFloat(newValue.width as string);
-        if (!isNaN(width) && width > 0) { this.cell = ScreenUtils.calcCellForWidth(width, COLS, 560, 24); }
-      })
   }
 }

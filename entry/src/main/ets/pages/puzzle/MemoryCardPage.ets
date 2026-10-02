@@ -28,6 +28,8 @@ export struct MemoryCardPage {
   @Local cardW: number = 78;
   @Local rowIdx: number[] = range(4);
   private colIdx: number[] = range(COLS);
+  private boardWidthVp: number = 0;
+  private boardHeightVp: number = 0;
   // 无障碍字符串缓存
   @Local a11yCardFlippedFormat: string = '';
   @Local a11yCardHiddenFormat: string = '';
@@ -57,10 +59,16 @@ export struct MemoryCardPage {
   }
 
   /** 卡牌尺寸与行数随难度变化 */
-  refreshLayout(widthVp: number = ScreenUtils.windowWidthVp()): void {
+  refreshLayout(): void {
     this.rowIdx = range(this.viewModel.getRowCount());
+    const widthVp: number = this.boardWidthVp > 0 ? this.boardWidthVp : ScreenUtils.windowWidthVp();
     this.cardW = ScreenUtils.calcCellForWidth(widthVp, COLS, 520, 48);
     if (this.viewModel.getRowCount() >= 6) { this.cardW = Math.floor(this.cardW * 0.8); }
+    if (this.boardHeightVp > 0) {
+      const rows: number = this.viewModel.getRowCount();
+      const byHeight: number = Math.floor((this.boardHeightVp - rows * 6) / (rows * 1.15));
+      this.cardW = Math.max(1, Math.min(this.cardW, byHeight));
+    }
   }
 
   changeDifficulty(d: GameDifficulty): void {
@@ -162,7 +170,16 @@ export struct MemoryCardPage {
               }, (c: number) => c.toString())
             }
           }, (r: number) => r.toString())
-        }.layoutWeight(1).justifyContent(FlexAlign.Center)
+        }.width('100%').layoutWeight(1).justifyContent(FlexAlign.Center)
+          .onAreaChange((oldValue: Area, newValue: Area) => {
+            const width: number = parseFloat(newValue.width as string);
+            const height: number = parseFloat(newValue.height as string);
+            if (Number.isFinite(width) && Number.isFinite(height) && width > 0 && height > 0) {
+              this.boardWidthVp = width;
+              this.boardHeightVp = height;
+              this.refreshLayout();
+            }
+          })
       }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
       if (this.viewModel.status === GameStatus.OVER) {
@@ -189,9 +206,5 @@ export struct MemoryCardPage {
         })
       }
     }.width('100%').height('100%')
-      .onAreaChange((oldValue: Area, newValue: Area) => {
-        const width: number = parseFloat(newValue.width as string);
-        if (!isNaN(width) && width > 0) { this.refreshLayout(width); }
-      })
   }
 }

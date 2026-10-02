@@ -54,10 +54,12 @@ export struct Match3Page {
     this.pathStack.pop();
   }
 
-  initBoardSize(widthVp: number = ScreenUtils.windowWidthVp()): void {
+  initBoardSize(widthVp: number = ScreenUtils.windowWidthVp(), heightVp: number = 0): void {
     // padding 参数需包含：格子间距 7*3=21vp + 棋盘 padding 4*2=8vp + border 2*2=4vp = 33vp
     // 取 32 留余量，确保棋盘不溢出窗口
-    this.cell = ScreenUtils.calcCellForWidth(widthVp, COLS, 360, 32);
+    this.cell = heightVp > 0
+      ? ScreenUtils.calcCellForArea(widthVp, heightVp, COLS, ROWS, 360, 32, (ROWS - 1) * GAP + 8)
+      : ScreenUtils.calcCellForWidth(widthVp, COLS, 360, 32);
     this.boardSize = this.cell * COLS + (COLS - 1) * GAP + 8;
   }
 
@@ -165,7 +167,14 @@ export struct Match3Page {
           .backgroundColor(SemanticColors.boardBg)
           .borderRadius(RadiusTokens.base)
         }
-        .layoutWeight(1).justifyContent(FlexAlign.Center)
+        .width('100%').layoutWeight(1).justifyContent(FlexAlign.Center)
+        .onAreaChange((oldValue: Area, newValue: Area) => {
+          const width: number = parseFloat(newValue.width as string);
+          const height: number = parseFloat(newValue.height as string);
+          if (Number.isFinite(width) && Number.isFinite(height) && width > 0 && height > 0) {
+            this.initBoardSize(width, height);
+          }
+        })
 
         Text($r('app.string.game_match3_hint'))
           .fontFamily(FontTokens.family)
@@ -201,9 +210,5 @@ export struct Match3Page {
         })
       }
     }.width('100%').height('100%')
-      .onAreaChange((oldValue: Area, newValue: Area) => {
-        const width: number = parseFloat(newValue.width as string);
-        if (!isNaN(width) && width > 0) { this.initBoardSize(width); }
-      })
   }
 }

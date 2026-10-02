@@ -1,6 +1,10 @@
 {
   "float": [
     {
+      "name": "whack_board_max",
+      "value": "520vp"
+    },
+    {
       "name": "brand_banner_icon_size",
       "value": "56vp"
     },

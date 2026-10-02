@@ -197,7 +197,14 @@ export struct MinesweeperPage {
             }, (row: number) => row.toString())
           }.padding(2)
           .backgroundColor(SemanticColors.boardBg).borderRadius(RadiusTokens.md)
-        }.layoutWeight(1).justifyContent(FlexAlign.Center)
+        }.width('100%').layoutWeight(1).justifyContent(FlexAlign.Center)
+          .onAreaChange((oldValue: Area, newValue: Area) => {
+            const width: number = parseFloat(newValue.width as string);
+            const height: number = parseFloat(newValue.height as string);
+            if (Number.isFinite(width) && Number.isFinite(height) && width > 0 && height > 0) {
+              this.cellSize = ScreenUtils.calcCellForArea(width, height, COLS, ROWS, 520, 20, 4);
+            }
+          })
 
         Text($r('app.string.game_minesweeper_subtitle'))
           .fontFamily(FontTokens.family)
@@ -231,9 +238,5 @@ export struct MinesweeperPage {
         })
       }
     }.width('100%').height('100%')
-      .onAreaChange((oldValue: Area, newValue: Area) => {
-        const width: number = parseFloat(newValue.width as string);
-        if (!isNaN(width) && width > 0) { this.cellSize = ScreenUtils.calcCellForWidth(width, COLS, 520, 20); }
-      })
   }
 }

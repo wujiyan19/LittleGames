@@ -195,7 +195,14 @@ export struct SudokuPage {
               )
             )
           }
-        }.layoutWeight(1).justifyContent(FlexAlign.Center).clip(true)
+        }.width('100%').layoutWeight(1).justifyContent(FlexAlign.Center).clip(true)
+          .onAreaChange((oldValue: Area, newValue: Area) => {
+            const width: number = parseFloat(newValue.width as string);
+            const height: number = parseFloat(newValue.height as string);
+            if (Number.isFinite(width) && Number.isFinite(height) && width > 0 && height > 0) {
+              this.boardPixelSize = ScreenUtils.calcCellForArea(width, height, 9, 9, 520, 24, 8) * 9 + 8;
+            }
+          })
 
         Row({ space: SpacingTokens.sm }) {
           ForEach([1, 2, 3, 4, 5, 6, 7, 8, 9], (n: number) => {
@@ -244,11 +251,5 @@ export struct SudokuPage {
         })
       }
     }.width('100%').height('100%')
-      .onAreaChange((oldValue: Area, newValue: Area) => {
-        const width: number = parseFloat(newValue.width as string);
-        if (!isNaN(width) && width > 0) {
-          this.boardPixelSize = ScreenUtils.calcCellForWidth(width, 9, 520, 24) * 9 + 8;
-        }
-      })
   }
 }

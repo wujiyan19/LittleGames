@@ -120,7 +120,14 @@ export struct KlotskiPage {
             .fontSize(FontTokens.sizeCaption)
             .fontColor(SemanticColors.textSecondary)
             .margin({ top: SpacingTokens.sm })
-        }.layoutWeight(1).justifyContent(FlexAlign.Center)
+        }.width('100%').layoutWeight(1).justifyContent(FlexAlign.Center)
+          .onAreaChange((oldValue: Area, newValue: Area) => {
+            const width: number = parseFloat(newValue.width as string);
+            const height: number = parseFloat(newValue.height as string);
+            if (Number.isFinite(width) && Number.isFinite(height) && width > 0 && height > 0) {
+              this.cell = ScreenUtils.calcCellForArea(width, height, BW, BH, 560, 28, 48);
+            }
+          })
 
         ControlPad({
           onUp: () => this.viewModel.moveBlock(0, -1),
@@ -155,9 +162,5 @@ export struct KlotskiPage {
         })
       }
     }.width('100%').height('100%')
-      .onAreaChange((oldValue: Area, newValue: Area) => {
-        const width: number = parseFloat(newValue.width as string);
-        if (!isNaN(width) && width > 0) { this.cell = ScreenUtils.calcCellForWidth(width, BW, 560, 28); }
-      })
   }
 }

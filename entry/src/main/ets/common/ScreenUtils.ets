@@ -104,4 +104,13 @@ export class ScreenUtils {
     // 极窄窗口下不能用固定最小边长撑破容器。
     return Math.max(1, Math.floor((Math.min(widthVp, maxWidth) - padding) / count));
   }
+
+  /** 棋盘区域已扣除标题、指标和操作区，格子同时受宽、高约束。 */
+  static calcCellForArea(widthVp: number, heightVp: number, columns: number, rows: number,
+    maxWidth: number, widthPadding: number, heightPadding: number): number {
+    if (heightVp <= 0 || rows <= 0) { return 1; }
+    const byWidth: number = ScreenUtils.calcCellForWidth(widthVp, columns, maxWidth, widthPadding);
+    const byHeight: number = Math.floor((heightVp - heightPadding) / rows);
+    return Math.max(1, Math.min(byWidth, byHeight));
+  }
 }

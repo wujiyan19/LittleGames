@@ -23,6 +23,8 @@ export struct SlidePuzzlePage {
   @Local viewModel: SlidePuzzleViewModel = new SlidePuzzleViewModel();
   @Local cell: number = 85;
   @Local idxN: number[] = range(3);
+  private boardWidthVp: number = 0;
+  private boardHeightVp: number = 0;
   // 无障碍字符串缓存
   @Local a11yTileFormat: string = '';
 
@@ -50,10 +52,13 @@ export struct SlidePuzzlePage {
   }
 
   /** 尺寸随难度变化，重算格子大小与索引表 */
-  refreshLayout(widthVp: number = ScreenUtils.windowWidthVp()): void {
+  refreshLayout(): void {
     const n = this.viewModel.getSize();
     this.idxN = range(n);
-    this.cell = ScreenUtils.calcCellForWidth(widthVp, n, 520, 40);
+    const widthVp: number = this.boardWidthVp > 0 ? this.boardWidthVp : ScreenUtils.windowWidthVp();
+    this.cell = this.boardHeightVp > 0
+      ? ScreenUtils.calcCellForArea(widthVp, this.boardHeightVp, n, n, 520, 40, n * 4 + 8)
+      : ScreenUtils.calcCellForWidth(widthVp, n, 520, 40);
   }
 
   changeDifficulty(d: GameDifficulty): void {
@@ -138,7 +143,16 @@ export struct SlidePuzzlePage {
               }
             }, (r: number) => r.toString())
           }.backgroundColor(SemanticColors.boardBg).borderRadius(RadiusTokens.base).padding(4)
-        }.layoutWeight(1).justifyContent(FlexAlign.Center)
+        }.width('100%').layoutWeight(1).justifyContent(FlexAlign.Center)
+          .onAreaChange((oldValue: Area, newValue: Area) => {
+            const width: number = parseFloat(newValue.width as string);
+            const height: number = parseFloat(newValue.height as string);
+            if (Number.isFinite(width) && Number.isFinite(height) && width > 0 && height > 0) {
+              this.boardWidthVp = width;
+              this.boardHeightVp = height;
+              this.refreshLayout();
+            }
+          })
       }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
       if (this.viewModel.status === GameStatus.OVER) {
@@ -164,9 +178,5 @@ export struct SlidePuzzlePage {
         })
       }
     }.width('100%').height('100%')
-      .onAreaChange((oldValue: Area, newValue: Area) => {
-        const width: number = parseFloat(newValue.width as string);
-        if (!isNaN(width) && width > 0) { this.refreshLayout(width); }
-      })
   }
 }

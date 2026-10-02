@@ -68,8 +68,10 @@ export struct FeaturedTab {
       }
       .width('100%')
     }
+    .width('100%').height('100%')
     .scrollBar(BarState.Off)
     .edgeEffect(EdgeEffect.Spring)
+    .align(Alignment.Top)
     .backgroundColor(SemanticColors.bg)
   }
 

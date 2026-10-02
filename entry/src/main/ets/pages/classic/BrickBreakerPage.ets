@@ -21,7 +21,10 @@ export struct BrickBreakerPage {
   @Param pathStack: NavPathStack = new NavPathStack();
   @Local safeBottom: number = SafeAreaInsets.bottom;
   @Local viewModel: BrickBreakerViewModel = new BrickBreakerViewModel();
+  @Local boardScale: number = 1;
   private dragStartPaddleX: number = 0;
+
+  private boardLength(value: number): number { return value * this.boardScale; }
 
   aboutToAppear(): void {
     this.viewModel.setFrameLoop(new DisplayFrameLoop(this.getUIContext()));
@@ -110,8 +113,8 @@ export struct BrickBreakerPage {
           Stack({ alignContent: Alignment.TopStart }) {
             // 游戏区域背景
             Column()
-              .width(this.viewModel.gameWidth())
-              .height(this.viewModel.gameHeight())
+              .width(this.boardLength(this.viewModel.gameWidth()))
+              .height(this.boardLength(this.viewModel.gameHeight()))
               .backgroundColor(SemanticColors.boardBg)
               .borderRadius(RadiusTokens.sm)
 
@@ -119,17 +122,17 @@ export struct BrickBreakerPage {
             ForEach(this.viewModel.bricks, (brick: BrickViewData) => {
               Stack() {
                 Image($r('app.media.play_brick_gloss'))
-                  .width(this.viewModel.brickWidth())
-                  .height(this.viewModel.brickHeight())
+                  .width(this.boardLength(this.viewModel.brickWidth()))
+                  .height(this.boardLength(this.viewModel.brickHeight()))
                   .objectFit(ImageFit.Fill)
               }
-                .width(this.viewModel.brickWidth())
-                .height(this.viewModel.brickHeight())
+                .width(this.boardLength(this.viewModel.brickWidth()))
+                .height(this.boardLength(this.viewModel.brickHeight()))
                 .backgroundColor(this.getBrickColor(brick.row))
                 .borderRadius(RadiusTokens.xs)
                 .translate({
-                  x: this.viewModel.sidePadding() + brick.col * (this.viewModel.brickWidth() + this.viewModel.brickGap()),
-                  y: this.viewModel.topPadding() + brick.row * (this.viewModel.brickHeight() + this.viewModel.brickGap())
+                  x: this.boardLength(this.viewModel.sidePadding() + brick.col * (this.viewModel.brickWidth() + this.viewModel.brickGap())),
+                  y: this.boardLength(this.viewModel.topPadding() + brick.row * (this.viewModel.brickHeight() + this.viewModel.brickGap()))
                 })
                 .opacity(brick.alive ? 1 : 0)
                 .scale({ x: brick.alive ? 1 : 0, y: brick.alive ? 1 : 0 })
@@ -138,30 +141,30 @@ export struct BrickBreakerPage {
 
             // 挡板
             Image($r('app.media.play_brick_paddle'))
-              .width(this.viewModel.paddleWidth())
-              .height(this.viewModel.paddleHeight())
+              .width(this.boardLength(this.viewModel.paddleWidth()))
+              .height(this.boardLength(this.viewModel.paddleHeight()))
               .objectFit(ImageFit.Fill)
               .translate({
-                x: this.viewModel.paddleCenterX - this.viewModel.paddleWidth() / 2,
-                y: this.viewModel.paddleY()
+                x: this.boardLength(this.viewModel.paddleCenterX - this.viewModel.paddleWidth() / 2),
+                y: this.boardLength(this.viewModel.paddleY())
               })
 
 
             // 小球
             Image($r('app.media.play_brick_ball'))
-              .width(this.viewModel.ballRadius() * 2)
-              .height(this.viewModel.ballRadius() * 2)
+              .width(this.boardLength(this.viewModel.ballRadius() * 2))
+              .height(this.boardLength(this.viewModel.ballRadius() * 2))
               .objectFit(ImageFit.Contain)
               .translate({
-                x: this.viewModel.ballX - this.viewModel.ballRadius(),
-                y: this.viewModel.ballY - this.viewModel.ballRadius()
+                x: this.boardLength(this.viewModel.ballX - this.viewModel.ballRadius()),
+                y: this.boardLength(this.viewModel.ballY - this.viewModel.ballRadius())
               })
 
             // 待发提示
             if (!this.viewModel.started && this.viewModel.status === GameStatus.PLAYING) {
               Text($r('app.string.game_brickbreaker_hint'))
-                .fontSize(FontTokens.sizeSubtitle).fontColor(SemanticColors.textTertiary)
-                .position({ x: this.viewModel.gameWidth() / 2 - 80, y: this.viewModel.gameHeight() / 2 })
+                .fontSize(FontTokens.sizeSubtitle * this.boardScale).fontColor(SemanticColors.textTertiary)
+                .position({ x: this.boardLength(this.viewModel.gameWidth() / 2 - 80), y: this.boardLength(this.viewModel.gameHeight() / 2) })
             }
 
             // 通关提示
@@ -170,21 +173,21 @@ export struct BrickBreakerPage {
                 Text($r('app.string.brickbreaker_level_clear'))
                   .fontSize(FontTokens.sizeTitle).fontWeight(FontTokens.weightBold).fontColor(SemanticColors.success)
               }
-              .width(this.viewModel.gameWidth())
-              .height(this.viewModel.gameHeight())
+              .width(this.boardLength(this.viewModel.gameWidth()))
+              .height(this.boardLength(this.viewModel.gameHeight()))
               .backgroundColor(SemanticColors.scrim)
               .justifyContent(FlexAlign.Center)
             }
           }
-          .width(this.viewModel.gameWidth())
-          .height(this.viewModel.gameHeight())
+          .width(this.boardLength(this.viewModel.gameWidth()))
+          .height(this.boardLength(this.viewModel.gameHeight()))
           .gesture(
             PanGesture({ direction: PanDirection.Horizontal })
               .onActionStart((e: GestureEvent) => {
                 this.dragStartPaddleX = this.viewModel.paddleCenterX;
               })
               .onActionUpdate((e: GestureEvent) => {
-                this.viewModel.dragPaddle(this.dragStartPaddleX + e.offsetX);
+                this.viewModel.dragPaddle(this.dragStartPaddleX + e.offsetX / this.boardScale);
               })
               .onActionEnd(() => {
                 this.viewModel.launchBall();
@@ -193,7 +196,15 @@ export struct BrickBreakerPage {
           .stateStyles({ pressed: this.pressedFeedback }).onClick(() => {
             this.viewModel.launchBall();
           })
-        }.layoutWeight(1).justifyContent(FlexAlign.Center)
+        }.width('100%').layoutWeight(1).justifyContent(FlexAlign.Center)
+          .onAreaChange((oldValue: Area, newValue: Area) => {
+            const width: number = parseFloat(newValue.width as string);
+            const height: number = parseFloat(newValue.height as string);
+            if (Number.isFinite(width) && Number.isFinite(height) && width > 0 && height > 0) {
+              this.boardScale = Math.max(0.01, Math.min(1,
+                width / this.viewModel.gameWidth(), height / this.viewModel.gameHeight()));
+            }
+          })
 
         // 左右按钮
         Row({ space: SpacingTokens.xl }) {
