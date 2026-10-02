@@ -1,0 +1,179 @@
+{
+  "date": "2026-10-02T02:47:02.798Z",
+  "passed": 26,
+  "total": 26,
+  "details": {
+    "maze/easy": {
+      "boards": 1000,
+      "deadEnds": 1209,
+      "shortest": 8,
+      "longest": 16
+    },
+    "sudoku/easy": {
+      "puzzles": 50,
+      "minimumClues": 45,
+      "maximumClues": 45
+    },
+    "maze/normal": {
+      "boards": 1000,
+      "deadEnds": 1929,
+      "shortest": 12,
+      "longest": 28
+    },
+    "sudoku/normal": {
+      "puzzles": 50,
+      "minimumClues": 29,
+      "maximumClues": 29
+    },
+    "maze/hard": {
+      "boards": 1000,
+      "deadEnds": 2864,
+      "shortest": 16,
+      "longest": 48
+    },
+    "sudoku/hard": {
+      "puzzles": 50,
+      "minimumClues": 23,
+      "maximumClues": 27
+    },
+    "klotski": {
+      "minimumUnitMoves": [
+        5,
+        9,
+        116
+      ]
+    }
+  },
+  "results": [
+    {
+      "name": "maze/easy: 1000 connected boards, legal finish and reversible dead ends",
+      "passed": true,
+      "ms": 33
+    },
+    {
+      "name": "slide/easy: 500 valid, solvable, unfinished boards and bounded random sources",
+      "passed": true,
+      "ms": 5
+    },
+    {
+      "name": "mines/easy: 100 seeds × all 81 first cells preserve count, clues and safe opening",
+      "passed": true,
+      "ms": 185
+    },
+    {
+      "name": "peg/easy: 300 seeds have the requested move depth",
+      "passed": true,
+      "ms": 15
+    },
+    {
+      "name": "lights and flood/easy: 300 seeds and repeated random sources finish within their rules",
+      "passed": true,
+      "ms": 36
+    },
+    {
+      "name": "sudoku/easy: 50 independently unique puzzles, fixed clues and no consecutive duplicate",
+      "passed": true,
+      "ms": 23
+    },
+    {
+      "name": "maze/normal: 1000 connected boards, legal finish and reversible dead ends",
+      "passed": true,
+      "ms": 28
+    },
+    {
+      "name": "slide/normal: 500 valid, solvable, unfinished boards and bounded random sources",
+      "passed": true,
+      "ms": 5
+    },
+    {
+      "name": "mines/normal: 100 seeds × all 81 first cells preserve count, clues and safe opening",
+      "passed": true,
+      "ms": 189
+    },
+    {
+      "name": "peg/normal: 300 seeds have the requested move depth",
+      "passed": true,
+      "ms": 9
+    },
+    {
+      "name": "lights and flood/normal: 300 seeds and repeated random sources finish within their rules",
+      "passed": true,
+      "ms": 41
+    },
+    {
+      "name": "sudoku/normal: 50 independently unique puzzles, fixed clues and no consecutive duplicate",
+      "passed": true,
+      "ms": 46
+    },
+    {
+      "name": "maze/hard: 1000 connected boards, legal finish and reversible dead ends",
+      "passed": true,
+      "ms": 31
+    },
+    {
+      "name": "slide/hard: 500 valid, solvable, unfinished boards and bounded random sources",
+      "passed": true,
+      "ms": 4
+    },
+    {
+      "name": "mines/hard: 100 seeds × all 81 first cells preserve count, clues and safe opening",
+      "passed": true,
+      "ms": 165
+    },
+    {
+      "name": "peg/hard: 300 seeds have the requested move depth",
+      "passed": true,
+      "ms": 7
+    },
+    {
+      "name": "lights and flood/hard: 300 seeds and repeated random sources finish within their rules",
+      "passed": true,
+      "ms": 64
+    },
+    {
+      "name": "sudoku/hard: 50 independently unique puzzles, fixed clues and no consecutive duplicate",
+      "passed": true,
+      "ms": 197
+    },
+    {
+      "name": "Klotski: all layouts solve through legal unit moves and hard requires more moves than normal",
+      "passed": true,
+      "ms": 182
+    },
+    {
+      "name": "mole: each spawn contains 1–2 distinct targets and terminates for a repeated random value",
+      "passed": true,
+      "ms": 2
+    },
+    {
+      "name": "quiz: 18000 rounds have one distinct correct option and repeated RNG cannot block generation",
+      "passed": true,
+      "ms": 37
+    },
+    {
+      "name": "Sudoku rejects duplicate, malformed, fractional and out-of-range grids",
+      "passed": true,
+      "ms": 1
+    },
+    {
+      "name": "Sudoku: restart during a difficulty change never restores the previous difficulty puzzle",
+      "passed": true,
+      "ms": 11
+    },
+    {
+      "name": "collection: every difficulty initializes, restarts and rejects invalid inputs without changing the board",
+      "passed": true,
+      "ms": 68
+    },
+    {
+      "name": "brick levels: every generated layout stays inside the board and high-level balls still hit the paddle",
+      "passed": true,
+      "ms": 13
+    },
+    {
+      "name": "classic generators: 2048 mass, distinct memory pairs, unique secrets, reachable jumps, food and tetrominoes",
+      "passed": true,
+      "ms": 32
+    }
+  ]
+}

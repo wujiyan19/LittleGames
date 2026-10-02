@@ -1,0 +1,106 @@
+{
+  "scope": "result-dialog-regression",
+  "target": "FMR0224521016052",
+  "packageHash": "A2F49BC992711E20E608C5780E490C8B58376D4E1FB9D2C5221C95DCF8B62A93",
+  "previousPackageHash": "57DB0B700BBC7933BC61F5B2EA689E27DAC1D5348939BBC70C7A1640BB1A2ECF",
+  "original": {
+    "selected": [
+      "跟随系统",
+      "普通"
+    ],
+    "toggles": [
+      {
+        "key": "settings_remember_difficulty",
+        "checked": "false"
+      },
+      {
+        "key": "settings_haptics",
+        "checked": "true"
+      },
+      {
+        "key": "settings_confirm_exit",
+        "checked": "true"
+      }
+    ]
+  },
+  "results": [
+    {
+      "id": "dark-collection",
+      "passedCases": [
+        "胜利和平局结算显示",
+        "遮罩拦住底层重开按钮",
+        "再来一局恢复空棋盘及首回合",
+        "结算退出返回列表"
+      ],
+      "evidence": [
+        "result-mate60-dark-win-after",
+        "result-mate60-dark-blocked-after",
+        "result-mate60-dark-restart-after",
+        "result-mate60-dark-draw-after"
+      ],
+      "status": "passed-selected-cases",
+      "at": "2026-09-30T15:05:30.792Z"
+    },
+    {
+      "id": "dark-full",
+      "passedCases": [
+        "踩雷失败结算显示",
+        "再来一局恢复旗数",
+        "退出确认显示、取消后留在游戏、确认退出"
+      ],
+      "evidence": [
+        "result-mate60-dark-loss-after",
+        "result-mate60-dark-loss-restart-after",
+        "result-mate60-dark-exit-confirm-after"
+      ],
+      "status": "passed-selected-cases",
+      "at": "2026-09-30T15:06:13.764Z"
+    },
+    {
+      "id": "light-collection",
+      "passedCases": [
+        "胜利和平局结算显示",
+        "遮罩拦住底层重开按钮",
+        "再来一局恢复空棋盘及首回合",
+        "结算退出返回列表"
+      ],
+      "evidence": [
+        "result-mate60-light-win-after",
+        "result-mate60-light-blocked-after",
+        "result-mate60-light-restart-after",
+        "result-mate60-light-draw-after"
+      ],
+      "status": "passed-selected-cases",
+      "at": "2026-09-30T15:07:36.189Z"
+    },
+    {
+      "id": "light-full",
+      "passedCases": [
+        "踩雷失败结算显示",
+        "再来一局恢复旗数",
+        "退出确认显示、取消后留在游戏、确认退出"
+      ],
+      "evidence": [
+        "result-mate60-light-loss-after",
+        "result-mate60-light-loss-restart-after",
+        "result-mate60-light-exit-confirm-after"
+      ],
+      "status": "passed-selected-cases",
+      "at": "2026-09-30T15:08:15.829Z"
+    }
+  ],
+  "beforeEvidence": [
+    "result-mate60-light-before",
+    "result-mate60-dark-before"
+  ],
+  "startedAt": "2026-09-30T15:04:16.222Z",
+  "installation": "[Info]App install path:E:\\lianxi\\LittleGames\\entry\\build\\default\\outputs\\default\\entry-default-signed.hap msg:install bundle successfully. \r\nAppMod finish\r\n",
+  "finalState": "original-preferences-restored-home",
+  "completedAt": "2026-09-30T15:08:57.111Z",
+  "visualReview": {
+    "reviewed": 8,
+    "scope": "浅色/深色胜利、平局、失败与退出确认截图"
+  },
+  "verificationComplete": true,
+  "verifiedEvidencePairs": 18
+}

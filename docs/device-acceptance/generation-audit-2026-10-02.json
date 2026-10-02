@@ -1,0 +1,1501 @@
+{
+  "target": "FMR0224521016052",
+  "checkedOn": "2026-10-02",
+  "packageHash": "3C5C1C4028093D21E8F01DA3ECD3C416EAF85D06165D8D89C95E385F65403468",
+  "results": [
+    {
+      "name": "迷宫寻路·简单",
+      "id": "maze-7",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "屏幕 7×7 地图全部道路连通",
+        "墙格不能穿越",
+        "进入死胡同 10 步并原路返回",
+        "合法相邻移动到出口，主路线 8 步",
+        "结算及同难度重新生成"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-maze-7-board",
+        "audit-20261002-maze-7-pixels",
+        "audit-20261002-maze-7-dead-end",
+        "audit-20261002-maze-7-backtracked",
+        "audit-20261002-maze-7-win",
+        "audit-20261002-maze-7-restart"
+      ],
+      "floorCount": 17,
+      "route": [
+        9,
+        10,
+        17,
+        24,
+        31,
+        38,
+        39,
+        40
+      ],
+      "detour": [
+        9,
+        10,
+        17,
+        24,
+        31,
+        38,
+        37,
+        36,
+        29,
+        22
+      ],
+      "grid": 7,
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "迷宫寻路·普通",
+      "id": "maze-9",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "屏幕 9×9 地图全部道路连通",
+        "墙格不能穿越",
+        "进入死胡同 12 步并原路返回",
+        "合法相邻移动到出口，主路线 12 步",
+        "结算及同难度重新生成"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-maze-9-board",
+        "audit-20261002-maze-9-pixels",
+        "audit-20261002-maze-9-dead-end",
+        "audit-20261002-maze-9-backtracked",
+        "audit-20261002-maze-9-win",
+        "audit-20261002-maze-9-restart"
+      ],
+      "floorCount": 31,
+      "route": [
+        11,
+        12,
+        21,
+        30,
+        31,
+        32,
+        33,
+        34,
+        43,
+        52,
+        61,
+        70
+      ],
+      "detour": [
+        11,
+        12,
+        21,
+        30,
+        31,
+        32,
+        33,
+        34,
+        25,
+        16,
+        15,
+        14
+      ],
+      "grid": 9,
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "迷宫寻路·困难",
+      "id": "maze-11",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "屏幕 11×11 地图全部道路连通",
+        "墙格不能穿越",
+        "进入死胡同 20 步并原路返回",
+        "合法相邻移动到出口，主路线 20 步",
+        "结算及同难度重新生成"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-maze-11-board",
+        "audit-20261002-maze-11-pixels",
+        "audit-20261002-maze-11-dead-end",
+        "audit-20261002-maze-11-backtracked",
+        "audit-20261002-maze-11-win",
+        "audit-20261002-maze-11-restart"
+      ],
+      "floorCount": 49,
+      "route": [
+        23,
+        34,
+        45,
+        56,
+        67,
+        78,
+        89,
+        100,
+        101,
+        102,
+        91,
+        80,
+        81,
+        82,
+        83,
+        84,
+        95,
+        106,
+        107,
+        108
+      ],
+      "detour": [
+        23,
+        34,
+        45,
+        56,
+        67,
+        78,
+        89,
+        100,
+        101,
+        102,
+        91,
+        80,
+        81,
+        82,
+        83,
+        84,
+        95,
+        106,
+        105,
+        104
+      ],
+      "grid": 11,
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "井字棋",
+      "id": "tictactoe",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "已占格重复落子被拒绝",
+        "玩家 1 三连胜",
+        "九格填满平局",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-tictactoe-ready",
+        "audit-20261002-tictactoe-tictactoe-result",
+        "audit-20261002-tictactoe-tictactoe-draw",
+        "audit-20261002-tictactoe-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "五子棋",
+      "id": "gomoku",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "双方交替落子",
+        "横向五连结算",
+        "重开后纵向五连结算",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-gomoku-ready",
+        "audit-20261002-gomoku-gomoku-result",
+        "audit-20261002-gomoku-gomoku-result",
+        "audit-20261002-gomoku-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "落子四连",
+      "id": "fourline",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "落子自动下沉",
+        "纵向四连获胜",
+        "满列再次落子被拒绝",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-fourline-ready",
+        "audit-20261002-fourline-fourline-result",
+        "audit-20261002-fourline-fourline-full-column",
+        "audit-20261002-fourline-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "翻转棋",
+      "id": "reversi",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "非法格点击被拒绝",
+        "按提示合法落子与翻子",
+        "完整对局终盘及胜负结算（32 手）",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-reversi-ready",
+        "audit-20261002-reversi-reversi-result",
+        "audit-20261002-reversi-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "取石子·普通",
+      "id": "nim-普通",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "每手取 1～3 枚并交替回合",
+        "取完最后一枚结算胜方",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-nim-普通-ready",
+        "audit-20261002-nim-普通-nim-result",
+        "audit-20261002-nim-普通-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "汉诺塔·普通",
+      "id": "hanoi-普通",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "较大盘不能叠在小盘上",
+        "全部圆盘移到柱 3",
+        "最少步数通关 15",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-hanoi-普通-ready",
+        "audit-20261002-hanoi-普通-hanoi-result",
+        "audit-20261002-hanoi-普通-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "数字寻序·普通",
+      "id": "schulte-普通",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "乱序点击不跳过目标",
+        "按 1～16 顺序完成",
+        "结算得分",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-schulte-普通-ready",
+        "audit-20261002-schulte-普通-schulte-result",
+        "audit-20261002-schulte-普通-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "顺序记忆·普通",
+      "id": "memorysequence-普通",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "记忆阶段不能作答",
+        "按展示顺序回忆全部数字",
+        "错误顺序结束并提示失败",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-memorysequence-普通-ready",
+        "audit-20261002-memorysequence-普通-memorysequence-result",
+        "audit-20261002-memorysequence-普通-memorysequence-wrong",
+        "audit-20261002-memorysequence-普通-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "心算十题·普通",
+      "id": "arithmetic-普通",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "从界面题目计算并作答十题",
+        "首题错误不加分并显示答案",
+        "其余九题正确，结算 1800 分",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-arithmetic-普通-ready",
+        "audit-20261002-arithmetic-普通-arithmetic-result",
+        "audit-20261002-arithmetic-普通-arithmetic-score-1800",
+        "audit-20261002-arithmetic-普通-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "算式比大小·普通",
+      "id": "compare-普通",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "从界面题目计算并作答十题",
+        "首题错误不加分并显示答案",
+        "其余九题正确，结算 1800 分",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-compare-普通-ready",
+        "audit-20261002-compare-普通-compare-result",
+        "audit-20261002-compare-普通-compare-score-1800",
+        "audit-20261002-compare-普通-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "数列推演·普通",
+      "id": "sequence-普通",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "从界面题目计算并作答十题",
+        "首题错误不加分并显示答案",
+        "其余九题正确，结算 1800 分",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-sequence-普通-ready",
+        "audit-20261002-sequence-普通-sequence-result",
+        "audit-20261002-sequence-普通-sequence-score-1800",
+        "audit-20261002-sequence-普通-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "二进制解码·普通",
+      "id": "binary-普通",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "从界面题目计算并作答十题",
+        "首题错误不加分并显示答案",
+        "其余九题正确，结算 1800 分",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-binary-普通-ready",
+        "audit-20261002-binary-普通-binary-result",
+        "audit-20261002-binary-普通-binary-score-1800",
+        "audit-20261002-binary-普通-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "补数求和·普通",
+      "id": "targetsum-普通",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "从界面题目计算并作答十题",
+        "首题错误不加分并显示答案",
+        "其余九题正确，结算 1800 分",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-targetsum-普通-ready",
+        "audit-20261002-targetsum-普通-targetsum-result",
+        "audit-20261002-targetsum-普通-targetsum-score-1800",
+        "audit-20261002-targetsum-普通-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "记忆缺项·普通",
+      "id": "missing-普通",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "从界面题目计算并作答十题",
+        "首题错误不加分并显示答案",
+        "其余九题正确，结算 1800 分",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-missing-普通-ready",
+        "audit-20261002-missing-普通-missing-result",
+        "audit-20261002-missing-普通-missing-score-1800",
+        "audit-20261002-missing-普通-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "信号反应",
+      "id": "reaction",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "信号前抢按判失败",
+        "等待信号…变更后点击结算反应时间",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-reaction-ready",
+        "audit-20261002-reaction-reaction-early",
+        "audit-20261002-reaction-reaction-result",
+        "audit-20261002-reaction-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "数字绘格·普通",
+      "id": "nonogram-普通",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "空白答案检查提示调整",
+        "按行列连续数字填格",
+        "合法行列答案完成挑战",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-nonogram-普通-ready",
+        "audit-20261002-nonogram-普通-nonogram-result",
+        "audit-20261002-nonogram-普通-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "猜数字·普通",
+      "id": "guessnumber-普通",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "重复数字被拒绝",
+        "未填满提交不消耗次数",
+        "删除键撤销末位",
+        "根据界面 A/B 提示推理，5 次猜中",
+        "再来一局重置尝试记录",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-guessnumber-普通-ready",
+        "audit-20261002-guessnumber-普通-guessnumber-win",
+        "audit-20261002-guessnumber-普通-guessnumber-restart",
+        "audit-20261002-guessnumber-普通-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "滑动拼图·简单（完整通关）",
+      "id": "slidepuzzle-easy-win",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "非相邻方块点击不移动",
+        "切换简单难度，按屏幕数字还原完整 3×3 拼图",
+        "通关步数 20",
+        "重开重新打乱并清零步数",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-slidepuzzle-普通-ready",
+        "audit-20261002-slidepuzzle-普通-slidepuzzle-win",
+        "audit-20261002-slidepuzzle-普通-slidepuzzle-restart",
+        "audit-20261002-slidepuzzle-普通-finished"
+      ],
+      "requestedDifficulty": "普通",
+      "testedDifficulty": "简单",
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "记忆翻牌·普通",
+      "id": "memorycard-普通",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "翻开图案",
+        "不匹配卡牌延迟盖回",
+        "依据实际翻面图案找齐 8 对",
+        "完成结算尝试次数",
+        "重开全部盖回",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-memorycard-普通-ready",
+        "audit-20261002-memorycard-普通-memorycard-mismatches",
+        "audit-20261002-memorycard-普通-memorycard-win",
+        "audit-20261002-memorycard-普通-memorycard-restart",
+        "audit-20261002-memorycard-普通-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "2048",
+      "id": "2048",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "四方向滑动操作",
+        "同值合并、生成新块和计分",
+        "连续 48 次滑动仍在游戏页",
+        "顶部重新开始重置棋盘",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-2048-ready",
+        "audit-20261002-2048-2048-merged",
+        "audit-20261002-2048-2048-restart",
+        "audit-20261002-2048-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "华容道·简单",
+      "id": "klotski-简单",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "选择棋块并通过方向键移动",
+        "按显示布局把曹操移至底部出口",
+        "通关 5 步及重开",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-klotski-简单-ready",
+        "audit-20261002-klotski-简单-klotski-win",
+        "audit-20261002-klotski-简单-klotski-restart",
+        "audit-20261002-klotski-简单-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "华容道·普通",
+      "id": "klotski-普通",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "选择棋块并通过方向键移动",
+        "按显示布局把曹操移至底部出口",
+        "通关 9 步及重开",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-klotski-普通-ready",
+        "audit-20261002-klotski-普通-klotski-win",
+        "audit-20261002-klotski-普通-klotski-restart",
+        "audit-20261002-klotski-普通-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "华容道·困难",
+      "id": "klotski-困难",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "选择棋块并通过方向键移动",
+        "按显示布局把曹操移至底部出口",
+        "通关 116 步及重开",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-klotski-困难-ready",
+        "audit-20261002-klotski-困难-klotski-win",
+        "audit-20261002-klotski-困难-klotski-restart",
+        "audit-20261002-klotski-困难-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "数独·简单",
+      "id": "sudoku-简单",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "实际题面提示数 45，独立求解确认唯一解",
+        "切换后重开保持本难度题面",
+        "原题数字不能修改",
+        "填入和擦除数字",
+        "按实际题面求解并填完 81 格",
+        "完成结算及生成新题",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-sudoku-简单-ready",
+        "audit-20261002-sudoku-简单-same-difficulty-restart",
+        "audit-20261002-sudoku-简单-sudoku-win",
+        "audit-20261002-sudoku-简单-sudoku-new",
+        "audit-20261002-sudoku-简单-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "数独·普通",
+      "id": "sudoku-普通",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "实际题面提示数 29，独立求解确认唯一解",
+        "切换后重开保持本难度题面",
+        "原题数字不能修改",
+        "填入和擦除数字",
+        "按实际题面求解并填完 81 格",
+        "完成结算及生成新题",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-sudoku-普通-ready",
+        "audit-20261002-sudoku-普通-same-difficulty-restart",
+        "audit-20261002-sudoku-普通-sudoku-win",
+        "audit-20261002-sudoku-普通-sudoku-new",
+        "audit-20261002-sudoku-普通-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "数独·困难",
+      "id": "sudoku-困难",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "实际题面提示数 25，独立求解确认唯一解",
+        "切换后重开保持本难度题面",
+        "原题数字不能修改",
+        "填入和擦除数字",
+        "按实际题面求解并填完 81 格",
+        "完成结算及生成新题",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-sudoku-困难-ready",
+        "audit-20261002-sudoku-困难-same-difficulty-restart",
+        "audit-20261002-sudoku-困难-sudoku-win",
+        "audit-20261002-sudoku-困难-sudoku-new",
+        "audit-20261002-sudoku-困难-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "扫雷·简单",
+      "id": "mines-8",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "插旗、取消与旗格不能揭开",
+        "首点及周围 3×3 安全揭开，中心为空白",
+        "界面雷数标记 8，三档设置正确",
+        "踩雷后立即结算并显示踩中的雷",
+        "重新开始旗数及时间清零"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-mines-8-board",
+        "audit-20261002-mines-8-safe-first",
+        "audit-20261002-mines-8-result",
+        "audit-20261002-mines-8-restart"
+      ],
+      "displayedMineCount": 8,
+      "visibleHitMines": [
+        2
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "扫雷·普通",
+      "id": "mines-10",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "插旗、取消与旗格不能揭开",
+        "首点及周围 3×3 安全揭开，中心为空白",
+        "界面雷数标记 10，三档设置正确",
+        "踩雷后立即结算并显示踩中的雷",
+        "重新开始旗数及时间清零"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-mines-10-board",
+        "audit-20261002-mines-10-safe-first",
+        "audit-20261002-mines-10-result",
+        "audit-20261002-mines-10-restart"
+      ],
+      "displayedMineCount": 10,
+      "visibleHitMines": [
+        3
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "扫雷·困难",
+      "id": "mines-14",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "插旗、取消与旗格不能揭开",
+        "首点及周围 3×3 安全揭开，中心为空白",
+        "界面雷数标记 14，三档设置正确",
+        "踩雷后立即结算并显示踩中的雷",
+        "重新开始旗数及时间清零"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-mines-14-board",
+        "audit-20261002-mines-14-safe-first",
+        "audit-20261002-mines-14-result",
+        "audit-20261002-mines-14-restart"
+      ],
+      "displayedMineCount": 14,
+      "visibleHitMines": [
+        0
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "滑动拼图·简单",
+      "id": "slide-3",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "棋盘 3×3，数字与空格恰好各出现一次",
+        "独立逆序数校验确认可还原",
+        "相邻方块移动及空格交换正确",
+        "重新生成"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-slide-3-board",
+        "audit-20261002-slide-3-move",
+        "audit-20261002-slide-3-restart"
+      ],
+      "inversions": 18,
+      "blankRowFromBottom": 3,
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "滑动拼图·普通",
+      "id": "slide-4",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "棋盘 4×4，数字与空格恰好各出现一次",
+        "独立逆序数校验确认可还原",
+        "相邻方块移动及空格交换正确",
+        "重新生成"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-slide-4-board",
+        "audit-20261002-slide-4-move",
+        "audit-20261002-slide-4-restart"
+      ],
+      "inversions": 44,
+      "blankRowFromBottom": 3,
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "滑动拼图·困难",
+      "id": "slide-5",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "棋盘 5×5，数字与空格恰好各出现一次",
+        "独立逆序数校验确认可还原",
+        "相邻方块移动及空格交换正确",
+        "重新生成"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-slide-5-board",
+        "audit-20261002-slide-5-move",
+        "audit-20261002-slide-5-restart"
+      ],
+      "inversions": 160,
+      "blankRowFromBottom": 3,
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "跳子独留·简单",
+      "id": "peg-简单",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "选择棋子并越过相邻棋子",
+        "被跳棋子移除",
+        "最终只留一子，结算 4 步",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-peg-简单-ready",
+        "audit-20261002-peg-简单-peg-result",
+        "audit-20261002-peg-简单-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "跳子独留·普通",
+      "id": "peg-普通",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "选择棋子并越过相邻棋子",
+        "被跳棋子移除",
+        "最终只留一子，结算 5 步",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-peg-普通-ready",
+        "audit-20261002-peg-普通-peg-result",
+        "audit-20261002-peg-普通-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "跳子独留·困难",
+      "id": "peg-困难",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "选择棋子并越过相邻棋子",
+        "被跳棋子移除",
+        "最终只留一子，结算 6 步",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-peg-困难-ready",
+        "audit-20261002-peg-困难-peg-result",
+        "audit-20261002-peg-困难-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "色块归一·简单",
+      "id": "flood-简单",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "相同颜色不消耗步数",
+        "连通区域扩展及步数变化",
+        "限制步数内全部色块归一（7 步）",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-flood-简单-ready",
+        "audit-20261002-flood-简单-flood-result",
+        "audit-20261002-flood-简单-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "色块归一·普通",
+      "id": "flood-普通",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "相同颜色不消耗步数",
+        "连通区域扩展及步数变化",
+        "限制步数内全部色块归一（6 步）",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-flood-普通-ready",
+        "audit-20261002-flood-普通-flood-result",
+        "audit-20261002-flood-普通-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "色块归一·困难",
+      "id": "flood-困难",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "相同颜色不消耗步数",
+        "连通区域扩展及步数变化",
+        "限制步数内全部色块归一（9 步）",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-flood-困难-ready",
+        "audit-20261002-flood-困难-flood-result",
+        "audit-20261002-flood-困难-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "十字熄灯·简单",
+      "id": "lights-简单",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "点击格子翻转自身及十字邻格",
+        "按实际亮灯画面求解并熄灭全部灯",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-lights-简单-ready",
+        "audit-20261002-lights-简单-lights-board",
+        "audit-20261002-lights-简单-lights-result",
+        "audit-20261002-lights-简单-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "十字熄灯·普通",
+      "id": "lights-普通",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "点击格子翻转自身及十字邻格",
+        "按实际亮灯画面求解并熄灭全部灯",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-lights-普通-ready",
+        "audit-20261002-lights-普通-lights-board",
+        "audit-20261002-lights-普通-lights-result",
+        "audit-20261002-lights-普通-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "十字熄灯·困难",
+      "id": "lights-困难",
+      "checkedOn": "2026-10-02",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "点击格子翻转自身及十字邻格",
+        "按实际亮灯画面求解并熄灭全部灯",
+        "返回分类列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-lights-困难-ready",
+        "audit-20261002-lights-困难-lights-board",
+        "audit-20261002-lights-困难-lights-result",
+        "audit-20261002-lights-困难-finished"
+      ],
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871"
+    },
+    {
+      "name": "贪吃蛇·简单",
+      "id": "snake-简单",
+      "checkedOn": "2026-10-02",
+      "packageHash": "3C5C1C4028093D21E8F01DA3ECD3C416EAF85D06165D8D89C95E385F65403468",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "点击方向按钮后小蛇移动",
+        "暂停后画面保持",
+        "切后台 2 秒返回保持暂停棋盘",
+        "继续游戏后画面推进",
+        "重新开始与返回"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-snake-简单-ready",
+        "audit-20261002-snake-简单-paused",
+        "audit-20261002-snake-简单-background-resumed",
+        "audit-20261002-snake-简单-advanced",
+        "audit-20261002-snake-简单-restart"
+      ]
+    },
+    {
+      "name": "贪吃蛇·普通",
+      "id": "snake-普通",
+      "checkedOn": "2026-10-02",
+      "packageHash": "3C5C1C4028093D21E8F01DA3ECD3C416EAF85D06165D8D89C95E385F65403468",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "点击方向按钮后小蛇移动",
+        "暂停后画面保持",
+        "切后台 2 秒返回保持暂停棋盘",
+        "继续游戏后画面推进",
+        "重新开始与返回"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-snake-普通-ready",
+        "audit-20261002-snake-普通-paused",
+        "audit-20261002-snake-普通-background-resumed",
+        "audit-20261002-snake-普通-advanced",
+        "audit-20261002-snake-普通-restart"
+      ]
+    },
+    {
+      "name": "贪吃蛇·困难",
+      "id": "snake-困难",
+      "checkedOn": "2026-10-02",
+      "packageHash": "3C5C1C4028093D21E8F01DA3ECD3C416EAF85D06165D8D89C95E385F65403468",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "点击方向按钮后小蛇移动",
+        "暂停后画面保持",
+        "切后台 2 秒返回保持暂停棋盘",
+        "继续游戏后画面推进",
+        "重新开始与返回"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-snake-困难-ready",
+        "audit-20261002-snake-困难-paused",
+        "audit-20261002-snake-困难-background-resumed",
+        "audit-20261002-snake-困难-advanced",
+        "audit-20261002-snake-困难-restart"
+      ]
+    },
+    {
+      "name": "俄罗斯方块·简单",
+      "id": "tetris-简单",
+      "checkedOn": "2026-10-02",
+      "packageHash": "3C5C1C4028093D21E8F01DA3ECD3C416EAF85D06165D8D89C95E385F65403468",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "点击加速下落按钮，方块落下",
+        "暂停后画面保持",
+        "切后台 2 秒返回保持暂停棋盘",
+        "继续游戏后画面推进",
+        "重新开始与返回"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-tetris-简单-ready",
+        "audit-20261002-tetris-简单-paused",
+        "audit-20261002-tetris-简单-background-resumed",
+        "audit-20261002-tetris-简单-advanced",
+        "audit-20261002-tetris-简单-restart"
+      ]
+    },
+    {
+      "name": "俄罗斯方块·普通",
+      "id": "tetris-普通",
+      "checkedOn": "2026-10-02",
+      "packageHash": "3C5C1C4028093D21E8F01DA3ECD3C416EAF85D06165D8D89C95E385F65403468",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "点击加速下落按钮，方块落下",
+        "暂停后画面保持",
+        "切后台 2 秒返回保持暂停棋盘",
+        "继续游戏后画面推进",
+        "重新开始与返回"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-tetris-普通-ready",
+        "audit-20261002-tetris-普通-paused",
+        "audit-20261002-tetris-普通-background-resumed",
+        "audit-20261002-tetris-普通-advanced",
+        "audit-20261002-tetris-普通-restart"
+      ]
+    },
+    {
+      "name": "俄罗斯方块·困难",
+      "id": "tetris-困难",
+      "checkedOn": "2026-10-02",
+      "packageHash": "3C5C1C4028093D21E8F01DA3ECD3C416EAF85D06165D8D89C95E385F65403468",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "点击加速下落按钮，方块落下",
+        "暂停后画面保持",
+        "切后台 2 秒返回保持暂停棋盘",
+        "继续游戏后画面推进",
+        "重新开始与返回"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-tetris-困难-ready",
+        "audit-20261002-tetris-困难-paused",
+        "audit-20261002-tetris-困难-background-resumed",
+        "audit-20261002-tetris-困难-advanced",
+        "audit-20261002-tetris-困难-restart"
+      ]
+    },
+    {
+      "name": "打地鼠·简单",
+      "id": "whackmole-简单",
+      "checkedOn": "2026-10-02",
+      "packageHash": "3C5C1C4028093D21E8F01DA3ECD3C416EAF85D06165D8D89C95E385F65403468",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "观察生成地鼠数量为 1–2，只点击实际出洞位置",
+        "击中后加分",
+        "暂停冻结倒计时和洞位",
+        "倒计时结束结算及重新开始"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-whackmole-简单-hit",
+        "audit-20261002-whackmole-简单-paused",
+        "audit-20261002-whackmole-简单-time-up"
+      ],
+      "spawnCounts": [
+        2
+      ]
+    },
+    {
+      "name": "打地鼠·普通",
+      "id": "whackmole-普通",
+      "checkedOn": "2026-10-02",
+      "packageHash": "3C5C1C4028093D21E8F01DA3ECD3C416EAF85D06165D8D89C95E385F65403468",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "观察生成地鼠数量为 1–2，只点击实际出洞位置",
+        "击中后加分",
+        "暂停冻结倒计时和洞位",
+        "倒计时结束结算及重新开始"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-whackmole-普通-hit",
+        "audit-20261002-whackmole-普通-paused",
+        "audit-20261002-whackmole-普通-time-up"
+      ],
+      "spawnCounts": [
+        1,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "name": "打地鼠·困难",
+      "id": "whackmole-困难",
+      "checkedOn": "2026-10-02",
+      "packageHash": "3C5C1C4028093D21E8F01DA3ECD3C416EAF85D06165D8D89C95E385F65403468",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "观察生成地鼠数量为 1–2，只点击实际出洞位置",
+        "击中后加分",
+        "暂停冻结倒计时和洞位",
+        "倒计时结束结算及重新开始"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-whackmole-困难-hit",
+        "audit-20261002-whackmole-困难-paused",
+        "audit-20261002-whackmole-困难-time-up"
+      ],
+      "spawnCounts": [
+        1
+      ]
+    },
+    {
+      "name": "跳一跳·简单",
+      "id": "jump-简单",
+      "checkedOn": "2026-10-02",
+      "packageHash": "3C5C1C4028093D21E8F01DA3ECD3C416EAF85D06165D8D89C95E385F65403468",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "真实长按蓄满后落到下一平台",
+        "连续 3 次成功跳跃、加分到 3",
+        "返回确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-jump-简单-ready",
+        "audit-20261002-jump-简单-three-landings"
+      ]
+    },
+    {
+      "name": "跳一跳·普通",
+      "id": "jump-普通",
+      "checkedOn": "2026-10-02",
+      "packageHash": "3C5C1C4028093D21E8F01DA3ECD3C416EAF85D06165D8D89C95E385F65403468",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "真实长按蓄满后落到下一平台",
+        "连续 3 次成功跳跃、加分到 3",
+        "返回确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-jump-普通-ready",
+        "audit-20261002-jump-普通-three-landings"
+      ]
+    },
+    {
+      "name": "跳一跳·困难",
+      "id": "jump-困难",
+      "checkedOn": "2026-10-02",
+      "packageHash": "3C5C1C4028093D21E8F01DA3ECD3C416EAF85D06165D8D89C95E385F65403468",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "真实长按蓄满后落到下一平台",
+        "连续 3 次成功跳跃、加分到 3",
+        "返回确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-jump-困难-ready",
+        "audit-20261002-jump-困难-three-landings"
+      ]
+    },
+    {
+      "name": "打砖块",
+      "id": "brickbreaker",
+      "checkedOn": "2026-10-02",
+      "packageHash": "3C5C1C4028093D21E8F01DA3ECD3C416EAF85D06165D8D89C95E385F65403468",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "点击左右按钮移动挡板并发球",
+        "暂停后画面保持",
+        "切后台 2 秒返回保持暂停棋盘",
+        "继续游戏后画面推进",
+        "重新开始与返回"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-brickbreaker-ready",
+        "audit-20261002-brickbreaker-paused",
+        "audit-20261002-brickbreaker-background-resumed",
+        "audit-20261002-brickbreaker-advanced",
+        "audit-20261002-brickbreaker-restart"
+      ]
+    },
+    {
+      "name": "消消乐",
+      "id": "match3",
+      "checkedOn": "2026-10-02",
+      "packageHash": "3C5C1C4028093D21E8F01DA3ECD3C416EAF85D06165D8D89C95E385F65403468",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "固定规则游戏的标题只显示返回和重开",
+        "无三连交换还原且不扣步数",
+        "根据实际宝石画面完成 30 次有效交换，结算 1480 分",
+        "剩余步数归零结束",
+        "重开恢复得分 0、步数 30",
+        "返回分类及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "audit-20261002-match3-final-ready",
+        "audit-20261002-match3-final-invalid-swap",
+        "audit-20261002-match3-final-result",
+        "audit-20261002-match3-final-restart"
+      ]
+    }
+  ],
+  "installed": true,
+  "initialPackageHash": "DFE92A664098B51C62D8BD05C63797025CF02CD03690612C481ED855BAB3006E",
+  "executionMode": "continuous",
+  "mazeFixPackageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871",
+  "installHistory": [
+    {
+      "packageHash": "DFE92A664098B51C62D8BD05C63797025CF02CD03690612C481ED855BAB3006E",
+      "change": "生成逻辑修复"
+    },
+    {
+      "packageHash": "BC09C00E3982F81917992D8AEE9ED8C9E6D9AF4207EB2F98CBDB216064308871",
+      "change": "迷宫切换尺寸刷新修复"
+    },
+    {
+      "packageHash": "3C5C1C4028093D21E8F01DA3ECD3C416EAF85D06165D8D89C95E385F65403468",
+      "change": "固定规则玩法隐藏无效难度按钮",
+      "installedAt": "2026-10-02T04:36:47.478Z"
+    }
+  ],
+  "uiChecks": [
+    {
+      "checkedOn": "2026-10-02",
+      "packageHash": "3C5C1C4028093D21E8F01DA3ECD3C416EAF85D06165D8D89C95E385F65403468",
+      "name": "我的页面测试后的实际统计",
+      "evidence": [
+        "audit-20261002-profile-stats"
+      ],
+      "text": [
+        "游戏玩家",
+        "享受游戏的乐趣！",
+        "大师",
+        "最近玩过",
+        "消消乐",
+        "打砖块",
+        "跳一跳",
+        "打地鼠",
+        "俄罗斯方块",
+        "33",
+        "游戏总数",
+        "33",
+        "已玩游戏",
+        "3000 挑战分",
+        "最高分",
+        "设置",
+        "主题、游戏偏好、数据与关于",
+        "最高分排行",
+        "1",
+        "心算十题",
+        "3000 挑战分",
+        "2",
+        "消消乐",
+        "2480 分",
+        "3",
+        "记忆缺项",
+        "2000 挑战分",
+        "4",
+        "算式比大小",
+        "1800 挑战分",
+        "5",
+        "数列推演",
+        "1800 挑战分",
+        "6",
+        "二进制解码",
+        "1800 挑战分",
+        "精选",
+        "分类",
+        "我的"
+      ]
+    }
+  ]
+}

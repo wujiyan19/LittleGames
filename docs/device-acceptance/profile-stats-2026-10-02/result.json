@@ -1,0 +1,149 @@
+{
+  "device": "FMR0224521016052",
+  "model": "ALN-AL00",
+  "date": "2026-10-02",
+  "packageHash": "02c25d0c41980c712ffe731c9ebe0659b536d857c23043d351cf00087a6b64d3",
+  "before": [
+    {
+      "label": "游戏总数",
+      "value": "33",
+      "valueBounds": [
+        179,
+        1069,
+        275,
+        1160
+      ],
+      "labelBounds": [
+        149,
+        1173,
+        306,
+        1219
+      ],
+      "cardBounds": [
+        52,
+        939,
+        403,
+        1271
+      ],
+      "fontSize": null
+    },
+    {
+      "label": "已玩游戏",
+      "value": "33",
+      "valueBounds": [
+        582,
+        1069,
+        678,
+        1160
+      ],
+      "labelBounds": [
+        552,
+        1173,
+        709,
+        1219
+      ],
+      "cardBounds": [
+        455,
+        939,
+        806,
+        1271
+      ],
+      "fontSize": null
+    },
+    {
+      "label": "最高分",
+      "value": "3000 挑战分",
+      "valueBounds": [
+        887,
+        1023,
+        1178,
+        1205
+      ],
+      "labelBounds": [
+        973,
+        1218,
+        1091,
+        1264
+      ],
+      "cardBounds": [
+        857,
+        893,
+        1208,
+        1316
+      ],
+      "fontSize": null
+    }
+  ],
+  "after": [
+    {
+      "label": "游戏总数",
+      "value": "33",
+      "valueBounds": [
+        65,
+        1023,
+        390,
+        1127
+      ],
+      "labelBounds": [
+        149,
+        1140,
+        306,
+        1186
+      ],
+      "cardBounds": [
+        52,
+        893,
+        403,
+        1238
+      ],
+      "fontSize": null
+    },
+    {
+      "label": "已玩游戏",
+      "value": "33",
+      "valueBounds": [
+        468,
+        1023,
+        793,
+        1127
+      ],
+      "labelBounds": [
+        552,
+        1140,
+        709,
+        1186
+      ],
+      "cardBounds": [
+        455,
+        893,
+        806,
+        1238
+      ],
+      "fontSize": null
+    },
+    {
+      "label": "最高分",
+      "value": "3000 挑战分",
+      "valueBounds": [
+        870,
+        1023,
+        1195,
+        1127
+      ],
+      "labelBounds": [
+        973,
+        1140,
+        1091,
+        1186
+      ],
+      "cardBounds": [
+        857,
+        893,
+        1208,
+        1238
+      ],
+      "fontSize": null
+    }
+  ],
+  "result": "passed: same card height, same value area height and aligned labels; 3000 challenge points displayed in one line"
+}

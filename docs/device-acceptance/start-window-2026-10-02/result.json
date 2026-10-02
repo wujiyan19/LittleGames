@@ -1,0 +1,36 @@
+{
+  "device": "FMR0224521016052",
+  "model": "ALN-AL00",
+  "theme": "light",
+  "packageHash": "92fd042dc05a7393a22a0f85b768bb0aad4104c0d1f574b0ffbe5a3578adb5f8",
+  "tests": [
+    {
+      "name": "cold-light",
+      "pidBefore": null,
+      "pidAfter": "36258",
+      "frameCount": 32,
+      "finalHomeConfirmed": true
+    },
+    {
+      "name": "cold-light-2",
+      "pidBefore": null,
+      "pidAfter": "36397",
+      "frameCount": 8,
+      "finalHomeConfirmed": true
+    },
+    {
+      "name": "cold-light-3",
+      "pidBefore": null,
+      "pidAfter": "36976",
+      "frameCount": 8,
+      "finalHomeConfirmed": true
+    },
+    {
+      "name": "warm",
+      "pidBefore": "36976",
+      "pidAfter": "36976",
+      "frameCount": 8,
+      "finalHomeConfirmed": true
+    }
+  ]
+}

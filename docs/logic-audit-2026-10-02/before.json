@@ -1,0 +1,161 @@
+{
+  "date": "2026-10-02T02:35:27.031Z",
+  "passed": 8,
+  "total": 20,
+  "details": {
+    "maze/easy": {
+      "boards": 1000,
+      "deadEnds": 1209,
+      "shortest": 8,
+      "longest": 16
+    },
+    "sudoku/easy": {
+      "puzzles": 50,
+      "minimumClues": 45,
+      "maximumClues": 45
+    },
+    "maze/normal": {
+      "boards": 1000,
+      "deadEnds": 1929,
+      "shortest": 12,
+      "longest": 28
+    },
+    "sudoku/normal": {
+      "puzzles": 50,
+      "minimumClues": 29,
+      "maximumClues": 29
+    },
+    "maze/hard": {
+      "boards": 1000,
+      "deadEnds": 2864,
+      "shortest": 16,
+      "longest": 48
+    },
+    "sudoku/hard": {
+      "puzzles": 50,
+      "minimumClues": 23,
+      "maximumClues": 27
+    },
+    "klotski": {
+      "minimumUnitMoves": [
+        5,
+        9,
+        5
+      ]
+    }
+  },
+  "results": [
+    {
+      "name": "maze/easy: 1000 connected boards, legal finish and reversible dead ends",
+      "passed": true,
+      "ms": 32
+    },
+    {
+      "name": "slide/easy: 500 valid, solvable, unfinished boards and bounded random sources",
+      "passed": false,
+      "ms": 12,
+      "error": "The expression evaluated to a falsy value:\n\n  assert(!rules.isSolved(board))\n"
+    },
+    {
+      "name": "mines/easy: 100 seeds × all 81 first cells preserve count, clues and safe opening",
+      "passed": false,
+      "ms": 177,
+      "error": "random generation exceeded its finite work budget"
+    },
+    {
+      "name": "peg/easy: 300 seeds have the requested move depth",
+      "passed": true,
+      "ms": 6
+    },
+    {
+      "name": "sudoku/easy: 50 independently unique puzzles, fixed clues and no consecutive duplicate",
+      "passed": true,
+      "ms": 22
+    },
+    {
+      "name": "maze/normal: 1000 connected boards, legal finish and reversible dead ends",
+      "passed": true,
+      "ms": 27
+    },
+    {
+      "name": "slide/normal: 500 valid, solvable, unfinished boards and bounded random sources",
+      "passed": false,
+      "ms": 6,
+      "error": "The expression evaluated to a falsy value:\n\n  assert(!rules.isSolved(board))\n"
+    },
+    {
+      "name": "mines/normal: 100 seeds × all 81 first cells preserve count, clues and safe opening",
+      "passed": false,
+      "ms": 169,
+      "error": "random generation exceeded its finite work budget"
+    },
+    {
+      "name": "peg/normal: 300 seeds have the requested move depth",
+      "passed": false,
+      "ms": 1,
+      "error": "Expected values to be strictly equal:\n\n5 !== 6\n"
+    },
+    {
+      "name": "sudoku/normal: 50 independently unique puzzles, fixed clues and no consecutive duplicate",
+      "passed": true,
+      "ms": 44
+    },
+    {
+      "name": "maze/hard: 1000 connected boards, legal finish and reversible dead ends",
+      "passed": true,
+      "ms": 33
+    },
+    {
+      "name": "slide/hard: 500 valid, solvable, unfinished boards and bounded random sources",
+      "passed": false,
+      "ms": 4,
+      "error": "The expression evaluated to a falsy value:\n\n  assert(!rules.isSolved(board))\n"
+    },
+    {
+      "name": "mines/hard: 100 seeds × all 81 first cells preserve count, clues and safe opening",
+      "passed": false,
+      "ms": 160,
+      "error": "random generation exceeded its finite work budget"
+    },
+    {
+      "name": "peg/hard: 300 seeds have the requested move depth",
+      "passed": false,
+      "ms": 1,
+      "error": "Expected values to be strictly equal:\n\n6 !== 7\n"
+    },
+    {
+      "name": "sudoku/hard: 50 independently unique puzzles, fixed clues and no consecutive duplicate",
+      "passed": true,
+      "ms": 188
+    },
+    {
+      "name": "Klotski: all layouts solve through legal unit moves and hard requires more moves than normal",
+      "passed": false,
+      "ms": 105,
+      "error": "difficulty order is reversed"
+    },
+    {
+      "name": "mole: each spawn contains 1–2 distinct targets and terminates for a repeated random value",
+      "passed": false,
+      "ms": 3,
+      "error": "random generation exceeded its finite work budget"
+    },
+    {
+      "name": "quiz: 6000 rounds have one distinct correct option and repeated RNG cannot block generation",
+      "passed": false,
+      "ms": 3,
+      "error": "random generation exceeded its finite work budget"
+    },
+    {
+      "name": "Sudoku rejects duplicate, malformed, fractional and out-of-range grids",
+      "passed": false,
+      "ms": 0,
+      "error": "Expected values to be strictly equal:\n\n1 !== 0\n"
+    },
+    {
+      "name": "collection: every difficulty initializes, restarts and rejects invalid inputs without changing the board",
+      "passed": true,
+      "ms": 73
+    }
+  ]
+}

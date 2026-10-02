@@ -1,0 +1,14 @@
+[
+  {
+    "id": "maze-7",
+    "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n1 !== 2\n\n    at maze (E:\\lianxi\\LittleGames\\scripts\\device-generation-audit.cjs:37:38)\n    at E:\\lianxi\\LittleGames\\scripts\\device-generation-audit.cjs:71:91\n    at checked (E:\\lianxi\\LittleGames\\scripts\\device-generation-audit.cjs:69:58)\n    at Object.<anonymous> (E:\\lianxi\\LittleGames\\scripts\\device-generation-audit.cjs:71:69)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:128:12)\n    at node:internal/main/run_main_module:28:49"
+  },
+  {
+    "id": "maze-9",
+    "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n1 !== 2\n\n    at maze (E:\\lianxi\\LittleGames\\scripts\\device-generation-audit.cjs:46:12)\n    at E:\\lianxi\\LittleGames\\scripts\\device-generation-audit.cjs:71:91\n    at checked (E:\\lianxi\\LittleGames\\scripts\\device-generation-audit.cjs:69:58)\n    at Object.<anonymous> (E:\\lianxi\\LittleGames\\scripts\\device-generation-audit.cjs:71:69)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:128:12)\n    at node:internal/main/run_main_module:28:49"
+  },
+  {
+    "id": "maze-11",
+    "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n1 !== 2\n\n    at maze (E:\\lianxi\\LittleGames\\scripts\\device-generation-audit.cjs:37:38)\n    at E:\\lianxi\\LittleGames\\scripts\\device-generation-audit.cjs:71:91\n    at checked (E:\\lianxi\\LittleGames\\scripts\\device-generation-audit.cjs:69:58)\n    at Object.<anonymous> (E:\\lianxi\\LittleGames\\scripts\\device-generation-audit.cjs:71:69)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:128:12)\n    at node:internal/main/run_main_module:28:49"
+  }
+]

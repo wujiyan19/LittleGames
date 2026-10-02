@@ -1,0 +1,290 @@
+{
+  "version": 1,
+  "target": "FMR0224521016052",
+  "label": "mate60-light",
+  "packageHash": "5197B4A2F4ECDD0CC1DEF672A80B2254309F06EB9644F0773F05B2F643F3679C",
+  "scope": "entry-return",
+  "importedFrom": "entry/build/emulator-acceptance/mate60-light-smoke-results.json",
+  "at": "2026-09-30T08:21:14.710Z",
+  "results": [
+    {
+      "name": "2048",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-2048.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-29T09:48:07.9710000Z"
+    },
+    {
+      "name": "猜数字",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-guess.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-29T09:48:07.9710000Z"
+    },
+    {
+      "name": "打地鼠",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-whack.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-29T09:48:07.9710000Z"
+    },
+    {
+      "name": "打砖块",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-brick.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-29T09:48:07.9710000Z"
+    },
+    {
+      "name": "俄罗斯方块",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-tetris.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-29T09:48:07.9710000Z"
+    },
+    {
+      "name": "华容道",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-klotski.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-29T09:48:07.9710000Z"
+    },
+    {
+      "name": "滑动拼图",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-slide.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-29T09:48:07.9710000Z"
+    },
+    {
+      "name": "记忆翻牌",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-memory.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-29T09:48:07.9710000Z"
+    },
+    {
+      "name": "扫雷",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-mines.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-29T09:48:07.9710000Z"
+    },
+    {
+      "name": "数独",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-sudoku.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-29T09:48:07.9710000Z"
+    },
+    {
+      "name": "贪吃蛇",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-snake.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-29T09:48:07.9710000Z"
+    },
+    {
+      "name": "跳一跳",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-jump.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-29T09:48:07.9710000Z"
+    },
+    {
+      "name": "消消乐",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-match3.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-29T09:48:07.9710000Z"
+    },
+    {
+      "name": "井字棋",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-tictactoe.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-29T09:48:07.9710000Z"
+    },
+    {
+      "name": "五子棋",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-gomoku.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-29T09:48:07.9710000Z"
+    },
+    {
+      "name": "翻转棋",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-reversi.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-29T09:48:07.9710000Z"
+    },
+    {
+      "name": "落子四连",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-fourline.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-29T09:48:07.9710000Z"
+    },
+    {
+      "name": "取石子",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-nim.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-29T09:48:07.9710000Z"
+    },
+    {
+      "name": "十字熄灯",
+      "slug": "lights",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-lights.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-30T08:00:53.229Z"
+    },
+    {
+      "name": "色块归一",
+      "slug": "flood",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-flood.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-30T08:01:10.381Z"
+    },
+    {
+      "name": "迷宫寻路",
+      "slug": "maze",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-maze.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-30T08:01:27.900Z"
+    },
+    {
+      "name": "汉诺塔",
+      "slug": "hanoi",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-hanoi.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-30T08:01:45.032Z"
+    },
+    {
+      "name": "跳子独留",
+      "slug": "peg",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-peg.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-30T08:08:21.900Z"
+    },
+    {
+      "name": "数字绘格",
+      "slug": "nonogram",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-nonogram.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-30T08:08:38.658Z"
+    },
+    {
+      "name": "心算十题",
+      "slug": "arithmetic",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-arithmetic.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-30T08:08:55.606Z"
+    },
+    {
+      "name": "算式比大小",
+      "slug": "compare",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-compare.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-30T08:09:12.466Z"
+    },
+    {
+      "name": "数列推演",
+      "slug": "sequence",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-sequence.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-30T08:16:58.244Z"
+    },
+    {
+      "name": "二进制解码",
+      "slug": "binary",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-binary.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-30T08:17:14.989Z"
+    },
+    {
+      "name": "补数求和",
+      "slug": "targetsum",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-targetsum.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-30T08:17:31.962Z"
+    },
+    {
+      "name": "数字寻序",
+      "slug": "schulte",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-schulte.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-30T08:17:49.730Z"
+    },
+    {
+      "name": "顺序记忆",
+      "slug": "memorysequence",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-memorysequence.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-30T08:20:41.238Z"
+    },
+    {
+      "name": "记忆缺项",
+      "slug": "missing",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-missing.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-30T08:20:57.836Z"
+    },
+    {
+      "name": "信号反应",
+      "slug": "reaction",
+      "scope": "entry-return",
+      "screenshot": "screenshots/accept-mate60-light-reaction.jpeg",
+      "entered": true,
+      "returned": true,
+      "checkedAt": "2026-09-30T08:21:14.710Z"
+    }
+  ]
+}

@@ -1,0 +1,468 @@
+{
+  "style": "LittleGames / soft tactile miniatures",
+  "source": "First-party SVG geometry; no external assets",
+  "games": [
+    {
+      "id": "tictactoe",
+      "name": "井字棋",
+      "icon": "game_tictactoe"
+    },
+    {
+      "id": "gomoku",
+      "name": "五子棋",
+      "icon": "game_gomoku"
+    },
+    {
+      "id": "reversi",
+      "name": "翻转棋",
+      "icon": "game_reversi"
+    },
+    {
+      "id": "fourline",
+      "name": "落子四连",
+      "icon": "game_fourline"
+    },
+    {
+      "id": "nim",
+      "name": "取石子",
+      "icon": "game_nim"
+    },
+    {
+      "id": "lights",
+      "name": "十字熄灯",
+      "icon": "game_lights"
+    },
+    {
+      "id": "flood",
+      "name": "色块归一",
+      "icon": "game_flood"
+    },
+    {
+      "id": "maze",
+      "name": "迷宫寻路",
+      "icon": "game_maze"
+    },
+    {
+      "id": "hanoi",
+      "name": "汉诺塔",
+      "icon": "game_hanoi"
+    },
+    {
+      "id": "peg",
+      "name": "跳子独留",
+      "icon": "game_peg"
+    },
+    {
+      "id": "nonogram",
+      "name": "数字绘格",
+      "icon": "game_nonogram"
+    },
+    {
+      "id": "arithmetic",
+      "name": "心算十题",
+      "icon": "game_arithmetic"
+    },
+    {
+      "id": "compare",
+      "name": "算式比大小",
+      "icon": "game_compare"
+    },
+    {
+      "id": "sequence",
+      "name": "数列推演",
+      "icon": "game_sequence"
+    },
+    {
+      "id": "binary",
+      "name": "二进制解码",
+      "icon": "game_binary"
+    },
+    {
+      "id": "targetsum",
+      "name": "补数求和",
+      "icon": "game_targetsum"
+    },
+    {
+      "id": "schulte",
+      "name": "数字寻序",
+      "icon": "game_schulte"
+    },
+    {
+      "id": "memorysequence",
+      "name": "顺序记忆",
+      "icon": "game_memorysequence"
+    },
+    {
+      "id": "missing",
+      "name": "记忆缺项",
+      "icon": "game_missing"
+    },
+    {
+      "id": "reaction",
+      "name": "信号反应",
+      "icon": "game_reaction"
+    }
+  ],
+  "assets": [
+    {
+      "name": "col_stone_dark",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_stone_light",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_cross",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_ring",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_chip_blue",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_chip_coral",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_stone",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_peg",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_robot",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_portal",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_light_on",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_light_off",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_peg_hole",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_gem_blue",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_gem_mint",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_gem_gold",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_gem_coral",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_gem_violet",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_flood_0",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_flood_1",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_flood_2",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_flood_3",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_card_front",
+      "width": 100,
+      "height": 120
+    },
+    {
+      "name": "col_card_back",
+      "width": 100,
+      "height": 120
+    },
+    {
+      "name": "col_ceramic_cell",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_paper_cell",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_ink_cell",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_go_cell",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_jade_cell",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_drop_hole",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_path",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_wall",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_table_board",
+      "width": 400,
+      "height": 400
+    },
+    {
+      "name": "col_jade_board",
+      "width": 400,
+      "height": 400
+    },
+    {
+      "name": "col_blue_board",
+      "width": 400,
+      "height": 400
+    },
+    {
+      "name": "col_ceramic_board",
+      "width": 400,
+      "height": 400
+    },
+    {
+      "name": "col_garden_board",
+      "width": 400,
+      "height": 400
+    },
+    {
+      "name": "col_night_board",
+      "width": 400,
+      "height": 400
+    },
+    {
+      "name": "col_paper_board",
+      "width": 400,
+      "height": 400
+    },
+    {
+      "name": "col_table_tray",
+      "width": 500,
+      "height": 190
+    },
+    {
+      "name": "col_hanoi_post",
+      "width": 120,
+      "height": 220
+    },
+    {
+      "name": "col_disc_0",
+      "width": 180,
+      "height": 40
+    },
+    {
+      "name": "col_disc_1",
+      "width": 180,
+      "height": 40
+    },
+    {
+      "name": "col_disc_2",
+      "width": 180,
+      "height": 40
+    },
+    {
+      "name": "col_disc_3",
+      "width": 180,
+      "height": 40
+    },
+    {
+      "name": "col_disc_4",
+      "width": 180,
+      "height": 40
+    },
+    {
+      "name": "col_signal_0",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_signal_1",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_signal_2",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "col_question_paper",
+      "width": 500,
+      "height": 200
+    },
+    {
+      "name": "col_question_binary",
+      "width": 500,
+      "height": 200
+    },
+    {
+      "name": "col_question_memory",
+      "width": 500,
+      "height": 200
+    },
+    {
+      "name": "game_tictactoe",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "game_gomoku",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "game_reversi",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "game_fourline",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "game_nim",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "game_lights",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "game_flood",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "game_maze",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "game_hanoi",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "game_peg",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "game_nonogram",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "game_arithmetic",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "game_compare",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "game_sequence",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "game_binary",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "game_targetsum",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "game_schulte",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "game_memorysequence",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "game_missing",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "game_reaction",
+      "width": 256,
+      "height": 256
+    }
+  ]
+}

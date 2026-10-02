@@ -1,0 +1,479 @@
+{
+  "target": "FMR0224521016052",
+  "checkedOn": "2026-09-30",
+  "results": [
+    {
+      "name": "三个设置开关",
+      "status": "passed-selected-cases",
+      "details": "逐个切换并恢复原值",
+      "evidence": [
+        "public-mate60-settings-original"
+      ]
+    },
+    {
+      "name": "设置选中状态反馈",
+      "status": "failed-device-cases",
+      "details": "切换深色、困难后，选中标记仍为跟随系统、普通；重新进入设置才更新。实际偏好已保存。",
+      "evidence": [
+        "public-mate60-settings-original",
+        "public-mate60-settings-changed",
+        "public-mate60-settings-stale",
+        "public-mate60-settings-reentered"
+      ]
+    },
+    {
+      "name": "冷启动持久化",
+      "status": "passed-selected-cases",
+      "details": "终止应用进程后重开，深色、困难设置及可见个人统计、排行榜和最近游戏条目保留（最近条目顺序另行复核）",
+      "evidence": [
+        "public-mate60-settings-changed",
+        "public-mate60-settings-relaunch",
+        "public-mate60-profile-before",
+        "public-mate60-profile-relaunch"
+      ]
+    },
+    {
+      "name": "默认难度应用到新局",
+      "status": "passed-selected-cases",
+      "details": "困难设置使猜数字采用五位密码",
+      "evidence": [
+        "public-mate60-default-hard"
+      ]
+    },
+    {
+      "name": "临时默认难度恢复",
+      "status": "passed-selected-cases",
+      "details": "普通",
+      "evidence": [
+        "public-mate60-difficulty-restored"
+      ]
+    },
+    {
+      "name": "最近玩过即时刷新",
+      "status": "failed-device-cases",
+      "details": "刚进入猜数字后返回我的，列表仍以俄罗斯方块开头；冷启动后猜数字才成为第一项。条目已保存，当前页面没有及时刷新。",
+      "evidence": [
+        "public-mate60-default-hard",
+        "public-mate60-profile-recent-after-game",
+        "public-mate60-profile-recent-relaunch"
+      ],
+      "warm": [
+        "俄罗斯方块",
+        "贪吃蛇",
+        "跳一跳",
+        "打砖块",
+        "打地鼠"
+      ],
+      "cold": [
+        "猜数字",
+        "俄罗斯方块",
+        "贪吃蛇",
+        "跳一跳",
+        "打砖块"
+      ]
+    },
+    {
+      "name": "深色主题全部入口与返回",
+      "status": "passed-selected-cases",
+      "details": "33 款标题、棋盘/题目与返回流程检查",
+      "evidence": [
+        "accept-mate60-dark-2048",
+        "accept-mate60-dark-guess",
+        "accept-mate60-dark-whack",
+        "accept-mate60-dark-brick",
+        "accept-mate60-dark-tetris",
+        "accept-mate60-dark-klotski",
+        "accept-mate60-dark-slide",
+        "accept-mate60-dark-memory",
+        "accept-mate60-dark-mines",
+        "accept-mate60-dark-sudoku",
+        "accept-mate60-dark-snake",
+        "accept-mate60-dark-jump",
+        "accept-mate60-dark-match3",
+        "accept-mate60-dark-tictactoe",
+        "accept-mate60-dark-gomoku",
+        "accept-mate60-dark-reversi",
+        "accept-mate60-dark-fourline",
+        "accept-mate60-dark-nim",
+        "accept-mate60-dark-lights",
+        "accept-mate60-dark-flood",
+        "accept-mate60-dark-maze",
+        "accept-mate60-dark-hanoi",
+        "accept-mate60-dark-peg",
+        "accept-mate60-dark-nonogram",
+        "accept-mate60-dark-arithmetic",
+        "accept-mate60-dark-compare",
+        "accept-mate60-dark-sequence",
+        "accept-mate60-dark-binary",
+        "accept-mate60-dark-targetsum",
+        "accept-mate60-dark-schulte",
+        "accept-mate60-dark-memorysequence",
+        "accept-mate60-dark-missing",
+        "accept-mate60-dark-reaction"
+      ]
+    },
+    {
+      "name": "原始偏好恢复",
+      "status": "passed-selected-cases",
+      "details": "重新进入设置核对：主题、默认难度和三个开关均恢复原值",
+      "evidence": [
+        "public-mate60-settings-original",
+        "public-mate60-settings-restored"
+      ]
+    },
+    {
+      "name": "退出确认取消",
+      "status": "passed-selected-cases",
+      "details": "贪吃蛇待开始状态取消退出，食物、蛇身和得分保持",
+      "evidence": [
+        "public-mate60-exit-before",
+        "public-mate60-exit-confirm",
+        "public-mate60-exit-cancel"
+      ]
+    },
+    {
+      "name": "数据操作确认取消与关于页面",
+      "status": "passed-selected-cases",
+      "details": "恢复默认和清空数据均仅取消，个人统计保持；设置和关于显示 1.0.0，说明页面可滚动",
+      "evidence": [
+        "public-mate60-reset-confirm",
+        "public-mate60-clear-confirm",
+        "public-mate60-settings-version",
+        "public-mate60-about",
+        "public-mate60-about-help"
+      ]
+    },
+    {
+      "name": "验收结束页面",
+      "status": "passed-selected-cases",
+      "details": "偏好恢复后回到精选首页",
+      "evidence": [
+        "public-mate60-final-home"
+      ]
+    }
+  ],
+  "darkGames": [
+    {
+      "name": "2048",
+      "screenshot": "accept-mate60-dark-2048",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "猜数字",
+      "screenshot": "accept-mate60-dark-guess",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "打地鼠",
+      "screenshot": "accept-mate60-dark-whack",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "打砖块",
+      "screenshot": "accept-mate60-dark-brick",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "俄罗斯方块",
+      "screenshot": "accept-mate60-dark-tetris",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "华容道",
+      "screenshot": "accept-mate60-dark-klotski",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "滑动拼图",
+      "screenshot": "accept-mate60-dark-slide",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "记忆翻牌",
+      "screenshot": "accept-mate60-dark-memory",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "扫雷",
+      "screenshot": "accept-mate60-dark-mines",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "数独",
+      "screenshot": "accept-mate60-dark-sudoku",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "贪吃蛇",
+      "screenshot": "accept-mate60-dark-snake",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "跳一跳",
+      "screenshot": "accept-mate60-dark-jump",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "消消乐",
+      "screenshot": "accept-mate60-dark-match3",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "井字棋",
+      "screenshot": "accept-mate60-dark-tictactoe",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "五子棋",
+      "screenshot": "accept-mate60-dark-gomoku",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "翻转棋",
+      "screenshot": "accept-mate60-dark-reversi",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "落子四连",
+      "screenshot": "accept-mate60-dark-fourline",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "取石子",
+      "screenshot": "accept-mate60-dark-nim",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "十字熄灯",
+      "slug": "lights",
+      "screenshot": "accept-mate60-dark-lights",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "色块归一",
+      "slug": "flood",
+      "screenshot": "accept-mate60-dark-flood",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "迷宫寻路",
+      "slug": "maze",
+      "screenshot": "accept-mate60-dark-maze",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "汉诺塔",
+      "slug": "hanoi",
+      "screenshot": "accept-mate60-dark-hanoi",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "跳子独留",
+      "slug": "peg",
+      "screenshot": "accept-mate60-dark-peg",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "数字绘格",
+      "slug": "nonogram",
+      "screenshot": "accept-mate60-dark-nonogram",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "心算十题",
+      "slug": "arithmetic",
+      "screenshot": "accept-mate60-dark-arithmetic",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "算式比大小",
+      "slug": "compare",
+      "screenshot": "accept-mate60-dark-compare",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "数列推演",
+      "slug": "sequence",
+      "screenshot": "accept-mate60-dark-sequence",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "二进制解码",
+      "slug": "binary",
+      "screenshot": "accept-mate60-dark-binary",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "补数求和",
+      "slug": "targetsum",
+      "screenshot": "accept-mate60-dark-targetsum",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "数字寻序",
+      "slug": "schulte",
+      "screenshot": "accept-mate60-dark-schulte",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "顺序记忆",
+      "slug": "memorysequence",
+      "screenshot": "accept-mate60-dark-memorysequence",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "记忆缺项",
+      "slug": "missing",
+      "screenshot": "accept-mate60-dark-missing",
+      "entered": true,
+      "returned": true
+    },
+    {
+      "name": "信号反应",
+      "slug": "reaction",
+      "screenshot": "accept-mate60-dark-reaction",
+      "entered": true,
+      "returned": true
+    }
+  ],
+  "packageHash": "5197B4A2F4ECDD0CC1DEF672A80B2254309F06EB9644F0773F05B2F643F3679C",
+  "original": {
+    "selected": [
+      "跟随系统",
+      "普通"
+    ],
+    "toggles": [
+      {
+        "bounds": "[1033,1573][1150,1638]",
+        "checked": "false"
+      },
+      {
+        "bounds": "[1033,1820][1150,1885]",
+        "checked": "true"
+      },
+      {
+        "bounds": "[1033,2067][1150,2132]",
+        "checked": "true"
+      }
+    ],
+    "records": [
+      "33",
+      "33",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "profileTexts": [
+      "游戏玩家",
+      "享受游戏的乐趣！",
+      "大师",
+      "最近玩过",
+      "跳一跳",
+      "俄罗斯方块",
+      "打砖块",
+      "打地鼠",
+      "贪吃蛇",
+      "33",
+      "游戏总数",
+      "33",
+      "已玩游戏",
+      "2480 分",
+      "最高分",
+      "设置",
+      "主题、游戏偏好、数据与关于",
+      "最高分排行",
+      "1",
+      "消消乐",
+      "2480 分",
+      "2",
+      "心算十题",
+      "1800 挑战分",
+      "3",
+      "算式比大小",
+      "1800 挑战分",
+      "4",
+      "数列推演",
+      "1800 挑战分",
+      "5",
+      "二进制解码",
+      "1800 挑战分",
+      "6",
+      "补数求和",
+      "1800 挑战分",
+      "精选",
+      "分类",
+      "我的"
+    ]
+  },
+  "profileRecentBefore": [
+    "跳一跳",
+    "俄罗斯方块",
+    "打砖块",
+    "打地鼠",
+    "贪吃蛇"
+  ],
+  "profileRecentAfterCold": [
+    "俄罗斯方块",
+    "贪吃蛇",
+    "跳一跳",
+    "打砖块",
+    "打地鼠"
+  ],
+  "visualReview": {
+    "reviewedScreens": 33,
+    "method": "实际查看六张分组总览，包含全部 33 张深色首屏",
+    "contactSheets": [
+      "visual-review/dark-1.jpeg",
+      "visual-review/dark-2.jpeg",
+      "visual-review/dark-3.jpeg",
+      "visual-review/dark-4.jpeg",
+      "visual-review/dark-5.jpeg",
+      "visual-review/dark-6.jpeg"
+    ],
+    "result": "全部标题、棋盘/题目及主要操作区可见，未发现新的首屏操作遮挡。华容道副标题缺失另见问题记录；不代表长局、字体缩放或所有对局状态视觉通过。"
+  },
+  "completedOn": "2026-09-30",
+  "scope": "public-selected-cases",
+  "finalState": {
+    "page": "精选首页",
+    "theme": "跟随系统",
+    "defaultDifficulty": "普通",
+    "rememberDifficulty": false,
+    "hapticsEnabled": true,
+    "confirmExitEnabled": true
+  }
+}

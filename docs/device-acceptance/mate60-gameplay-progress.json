@@ -1,0 +1,1046 @@
+{
+  "version": 1,
+  "target": "FMR0224521016052",
+  "packageHash": "5197B4A2F4ECDD0CC1DEF672A80B2254309F06EB9644F0773F05B2F643F3679C",
+  "scope": "gameplay-selected-cases",
+  "results": [
+    {
+      "name": "贪吃蛇",
+      "batch": 1,
+      "checkedOn": "2026-09-30",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "方向键开始",
+        "向上转向",
+        "手动暂停与继续",
+        "暂停期间蛇格坐标保持不变",
+        "撞墙结束及得分 0 结算",
+        "再来一局重置为按方向键开始",
+        "系统返回及退出确认",
+        "手动暂停后后台停留 5 秒，返回保持棋盘/倒计时",
+        "简单难度吃到实际画面食物，得分 10，蛇身增加一格",
+        "应用冷启动后最高分仍显示 10，深色首屏核对"
+      ],
+      "pendingCases": [
+        "自碰撞",
+        "其它难度",
+        "长局性能",
+        "运行中自动暂停与恢复"
+      ],
+      "evidence": [
+        "play-mate60-b1-snake-ready",
+        "play-mate60-b1-snake-paused-a",
+        "play-mate60-b1-snake-paused-b",
+        "play-mate60-b1-snake-over",
+        "play-mate60-b1-snake-restart",
+        "supplement-mate60-snake-before",
+        "supplement-mate60-snake-after",
+        "supplement-mate60-snake-food-ready",
+        "supplement-mate60-snake-food-eaten",
+        "accept-mate60-dark-snake"
+      ]
+    },
+    {
+      "name": "打地鼠",
+      "batch": 1,
+      "checkedOn": "2026-09-30",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "命中计分 0→10→20→30",
+        "已观察空洞点击使 30→25",
+        "0 分空击保持 0",
+        "手动暂停保持 28s",
+        "继续后倒计时归零并结算 25 分",
+        "再来一局重置 0 分与 30s",
+        "暂停状态系统返回",
+        "手动暂停后后台停留 5 秒，返回保持棋盘/倒计时"
+      ],
+      "pendingCases": [
+        "其它难度",
+        "最高分重启持久化",
+        "长局性能",
+        "运行中自动暂停与恢复"
+      ],
+      "evidence": [
+        "play-mate60-b1-whack-ready-paused",
+        "play-mate60-b1-whack-paused-b",
+        "play-mate60-b1-whack-score-paused",
+        "play-mate60-b1-whack-empty-minus5",
+        "play-mate60-b1-whack-over",
+        "play-mate60-b1-whack-restart-floor",
+        "supplement-mate60-whackmole-before",
+        "supplement-mate60-whackmole-after"
+      ]
+    },
+    {
+      "name": "打砖块",
+      "batch": 1,
+      "checkedOn": "2026-09-30",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "左按钮移动并发球",
+        "右按钮与横向拖动挡板",
+        "手动暂停保持小球与挡板位置",
+        "击砖加分至 40",
+        "掉球生命 3→2→1→0",
+        "结束结算 40 分",
+        "再来一局重置 0 分、3 生命、关卡 1 并保留最高 40",
+        "系统返回及退出确认",
+        "手动暂停后后台停留 5 秒，返回保持棋盘/倒计时",
+        "应用冷启动后最高分仍显示 40，深色首屏核对"
+      ],
+      "pendingCases": [
+        "清空砖块与下一关",
+        "多关连玩",
+        "长局性能",
+        "运行中自动暂停与恢复"
+      ],
+      "evidence": [
+        "play-mate60-b1-brick-ready",
+        "play-mate60-b1-brick-paused-a",
+        "play-mate60-b1-brick-paused-b",
+        "play-mate60-b1-brick-first-loss",
+        "play-mate60-b1-brick-second-loss",
+        "play-mate60-b1-brick-over",
+        "play-mate60-b1-brick-restart",
+        "supplement-mate60-brickbreaker-before",
+        "supplement-mate60-brickbreaker-after",
+        "accept-mate60-dark-brick"
+      ]
+    },
+    {
+      "name": "俄罗斯方块",
+      "batch": 1,
+      "checkedOn": "2026-09-30",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "手动暂停保持活动方块坐标",
+        "继续后自动下落",
+        "左移与右移一格",
+        "旋转改变 L 形方块朝向",
+        "加速下落锁定方块并生成下一块",
+        "连续落块堆满后结束及得分 0 结算",
+        "再来一局清空堆积并恢复级别 1、得分 0",
+        "系统返回及退出确认",
+        "手动暂停后后台停留 5 秒，返回保持棋盘/倒计时",
+        "简单难度按可见布局旋转、移动和落块，消行得分 100"
+      ],
+      "pendingCases": [
+        "连消与升级",
+        "旋转贴墙与顶边",
+        "其它难度",
+        "长局性能",
+        "运行中自动暂停与恢复"
+      ],
+      "evidence": [
+        "play-mate60-b1-tetris-paused-a",
+        "play-mate60-b1-tetris-paused-b",
+        "play-mate60-b1-tetris-left",
+        "play-mate60-b1-tetris-rotate",
+        "play-mate60-b1-tetris-right",
+        "play-mate60-b1-tetris-drop",
+        "play-mate60-b1-tetris-over",
+        "play-mate60-b1-tetris-restart",
+        "supplement-mate60-tetris-before",
+        "supplement-mate60-tetris-after",
+        "supplement-mate60-tetris-line-ready",
+        "supplement-mate60-tetris-line-cleared"
+      ]
+    },
+    {
+      "name": "跳一跳",
+      "batch": 1,
+      "checkedOn": "2026-09-30",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "长按松手成功落台并加 1 分",
+        "落台后下一平台继续显示",
+        "短按落空并结束结算 1 分",
+        "再来一局恢复 0 分并保留最高 1",
+        "系统返回及退出确认",
+        "待蓄力状态后台 5 秒再返回，角色、平台和得分保持",
+        "应用冷启动后最高分仍显示 1，深色首屏核对"
+      ],
+      "pendingCases": [
+        "连续多次跳跃与平台补充",
+        "蓄力中后台恢复",
+        "其它难度",
+        "长局性能"
+      ],
+      "evidence": [
+        "play-mate60-b1-jump-ready",
+        "play-mate60-b1-jump-landed",
+        "play-mate60-b1-jump-over",
+        "play-mate60-b1-jump-restart",
+        "supplement-mate60-jump-before",
+        "supplement-mate60-jump-after",
+        "accept-mate60-dark-jump"
+      ]
+    },
+    {
+      "name": "井字棋",
+      "id": "tictactoe",
+      "checkedOn": "2026-09-30",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "已占格重复落子被拒绝",
+        "玩家 1 三连胜",
+        "九格填满平局",
+        "再来一局恢复初始状态",
+        "系统返回及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "play-mate60-all-tictactoe-ready",
+        "play-mate60-all-tictactoe-result",
+        "play-mate60-all-tictactoe-draw",
+        "play-mate60-all-tictactoe-restart"
+      ]
+    },
+    {
+      "name": "五子棋",
+      "id": "gomoku",
+      "checkedOn": "2026-09-30",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "双方交替落子",
+        "横向五连结算",
+        "重开后纵向五连结算",
+        "再来一局恢复初始状态",
+        "系统返回及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "play-mate60-all-gomoku-ready",
+        "play-mate60-all-gomoku-result",
+        "play-mate60-all-gomoku-result",
+        "play-mate60-all-gomoku-restart"
+      ]
+    },
+    {
+      "name": "翻转棋",
+      "id": "reversi",
+      "checkedOn": "2026-09-30",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "非法格点击被拒绝",
+        "按提示合法落子与翻子",
+        "完整对局终盘及胜负结算（32 手）",
+        "再来一局恢复初始状态",
+        "系统返回及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "play-mate60-all-reversi-ready",
+        "play-mate60-all-reversi-result",
+        "play-mate60-all-reversi-restart"
+      ]
+    },
+    {
+      "name": "取石子",
+      "id": "nim",
+      "checkedOn": "2026-09-30",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "每手取 1～3 枚并交替回合",
+        "取完最后一枚结算胜方",
+        "再来一局恢复初始状态",
+        "系统返回及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "play-mate60-all-nim-ready",
+        "play-mate60-all-nim-result",
+        "play-mate60-all-nim-restart"
+      ]
+    },
+    {
+      "name": "数字寻序",
+      "id": "schulte",
+      "checkedOn": "2026-09-30",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "乱序点击不跳过目标",
+        "按 1～16 顺序完成",
+        "结算得分",
+        "再来一局恢复初始状态",
+        "系统返回及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "play-mate60-all-schulte-ready",
+        "play-mate60-all-schulte-result",
+        "play-mate60-all-schulte-restart"
+      ]
+    },
+    {
+      "name": "心算十题",
+      "id": "arithmetic",
+      "checkedOn": "2026-09-30",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "从界面题目计算并作答十题",
+        "首题错误不加分并显示答案",
+        "其余九题正确，结算 1800 分",
+        "再来一局恢复初始状态",
+        "系统返回及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "play-mate60-all-arithmetic-ready",
+        "play-mate60-all-arithmetic-result",
+        "play-mate60-all-arithmetic-score-1800",
+        "play-mate60-all-arithmetic-restart"
+      ]
+    },
+    {
+      "name": "算式比大小",
+      "id": "compare",
+      "checkedOn": "2026-09-30",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "从界面题目计算并作答十题",
+        "首题错误不加分并显示答案",
+        "其余九题正确，结算 1800 分",
+        "再来一局恢复初始状态",
+        "系统返回及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "play-mate60-all-compare-ready",
+        "play-mate60-all-compare-result",
+        "play-mate60-all-compare-score-1800",
+        "play-mate60-all-compare-restart"
+      ]
+    },
+    {
+      "name": "数列推演",
+      "id": "sequence",
+      "checkedOn": "2026-09-30",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "从界面题目计算并作答十题",
+        "首题错误不加分并显示答案",
+        "其余九题正确，结算 1800 分",
+        "再来一局恢复初始状态",
+        "系统返回及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "play-mate60-all-sequence-ready",
+        "play-mate60-all-sequence-result",
+        "play-mate60-all-sequence-score-1800",
+        "play-mate60-all-sequence-restart"
+      ]
+    },
+    {
+      "name": "补数求和",
+      "id": "targetsum",
+      "checkedOn": "2026-09-30",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "从界面题目计算并作答十题",
+        "首题错误不加分并显示答案",
+        "其余九题正确，结算 1800 分",
+        "再来一局恢复初始状态",
+        "系统返回及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "play-mate60-all-targetsum-ready",
+        "play-mate60-all-targetsum-result",
+        "play-mate60-all-targetsum-score-1800",
+        "play-mate60-all-targetsum-restart"
+      ]
+    },
+    {
+      "name": "信号反应",
+      "id": "reaction",
+      "checkedOn": "2026-09-30",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "信号前抢按判失败",
+        "等待信号…变更后点击结算反应时间",
+        "再来一局恢复初始状态",
+        "系统返回及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "play-mate60-all-reaction-ready",
+        "play-mate60-all-reaction-early",
+        "play-mate60-all-reaction-result",
+        "play-mate60-all-reaction-restart"
+      ]
+    },
+    {
+      "name": "十字熄灯",
+      "id": "lights",
+      "checkedOn": "2026-09-30",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "点击格子翻转自身及十字邻格",
+        "按实际亮灯画面求解并熄灭全部灯",
+        "再来一局恢复初始状态",
+        "系统返回及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "play-mate60-all-lights-ready",
+        "play-mate60-all-lights-board",
+        "play-mate60-all-lights-result",
+        "play-mate60-all-lights-restart"
+      ]
+    },
+    {
+      "name": "汉诺塔",
+      "id": "hanoi",
+      "checkedOn": "2026-09-30",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "较大盘不能叠在小盘上",
+        "全部圆盘移到柱 3",
+        "最少步数通关 15",
+        "再来一局恢复初始状态",
+        "系统返回及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "play-mate60-all-hanoi-ready",
+        "play-mate60-all-hanoi-result",
+        "play-mate60-all-hanoi-restart"
+      ]
+    },
+    {
+      "name": "二进制解码",
+      "id": "binary",
+      "checkedOn": "2026-09-30",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "从界面题目计算并作答十题",
+        "首题错误不加分并显示答案",
+        "其余九题正确，结算 1800 分",
+        "再来一局恢复初始状态",
+        "系统返回及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "play-mate60-all-binary-ready",
+        "play-mate60-all-binary-result",
+        "play-mate60-all-binary-score-1800",
+        "play-mate60-all-binary-restart"
+      ]
+    },
+    {
+      "name": "色块归一",
+      "id": "flood",
+      "checkedOn": "2026-09-30",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "相同颜色不消耗步数",
+        "连通区域扩展及步数变化",
+        "限制步数内全部色块归一（8 步）",
+        "再来一局恢复初始状态",
+        "系统返回及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "play-mate60-all-flood-ready",
+        "play-mate60-all-flood-result",
+        "play-mate60-all-flood-restart"
+      ]
+    },
+    {
+      "name": "跳子独留",
+      "id": "peg",
+      "checkedOn": "2026-09-30",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "选择棋子并越过相邻棋子",
+        "被跳棋子移除",
+        "最终只留一子，结算 4 步",
+        "再来一局恢复初始状态",
+        "系统返回及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "play-mate60-all-peg-ready",
+        "play-mate60-all-peg-result",
+        "play-mate60-all-peg-restart"
+      ]
+    },
+    {
+      "name": "数字绘格",
+      "id": "nonogram",
+      "checkedOn": "2026-09-30",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "空白答案检查提示调整",
+        "按行列连续数字填格",
+        "合法行列答案完成挑战",
+        "再来一局恢复初始状态",
+        "系统返回及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "play-mate60-all-nonogram-ready",
+        "play-mate60-all-nonogram-result",
+        "play-mate60-all-nonogram-restart"
+      ]
+    },
+    {
+      "name": "落子四连",
+      "id": "fourline",
+      "checkedOn": "2026-09-30",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "落子自动下沉",
+        "纵向四连获胜",
+        "满列再次落子被拒绝",
+        "再来一局恢复初始状态",
+        "系统返回及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "play-mate60-all-fourline-ready",
+        "play-mate60-all-fourline-result",
+        "play-mate60-all-fourline-full-column",
+        "play-mate60-all-fourline-restart"
+      ]
+    },
+    {
+      "name": "迷宫寻路",
+      "id": "maze",
+      "checkedOn": "2026-09-30",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "墙格点击不能穿墙",
+        "按实际地图相邻移动至出口",
+        "到达出口结算 16 步",
+        "再来一局恢复初始状态",
+        "系统返回及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "play-mate60-all-maze-ready",
+        "play-mate60-all-maze-board",
+        "play-mate60-all-maze-result",
+        "play-mate60-all-maze-restart"
+      ]
+    },
+    {
+      "name": "记忆缺项",
+      "id": "missing",
+      "checkedOn": "2026-09-30",
+      "status": "failed-device-cases",
+      "passedCases": [
+        "进入游戏与记忆阶段切换"
+      ],
+      "failedCases": [
+        "所见数字与判定答案不一致，阻断可靠作答"
+      ],
+      "pendingCases": [
+        "修复后复测"
+      ],
+      "evidence": [
+        "bug-mate60-missing-q0-after",
+        "bug-mate60-missing-q0-before",
+        "bug-mate60-missing-q0-feedback"
+      ],
+      "detail": {
+        "before": [
+          "3",
+          "8",
+          "12",
+          "11",
+          "15"
+        ],
+        "after": [
+          "3",
+          "8",
+          "12",
+          "11"
+        ],
+        "options": [
+          "11",
+          "8",
+          "3",
+          "15",
+          "12"
+        ],
+        "visibleMissing": "15",
+        "feedback": "上一题正确答案：12",
+        "problem": "按画面消失数字作答，被判错误"
+      }
+    },
+    {
+      "name": "顺序记忆",
+      "id": "memorysequence",
+      "checkedOn": "2026-09-30",
+      "status": "failed-device-cases",
+      "passedCases": [
+        "记忆阶段不能作答",
+        "按展示顺序回忆全部数字",
+        "错误顺序结束并提示失败",
+        "系统返回及退出确认",
+        "结果页重开回到记忆阶段（新序列正确性不通过）"
+      ],
+      "failedCases": [
+        "顶部重开后按显示序列回忆却判失败"
+      ],
+      "pendingCases": [
+        "修复后复测"
+      ],
+      "evidence": [
+        "play-mate60-all-memorysequence-ready",
+        "play-mate60-all-memorysequence-result",
+        "play-mate60-all-memorysequence-wrong",
+        "play-mate60-all-memorysequence-restart",
+        "bug-mate60-memorysequence-before",
+        "bug-mate60-memorysequence-restarted",
+        "bug-mate60-memorysequence-recall"
+      ],
+      "detail": {
+        "before": [
+          "7",
+          "5",
+          "9",
+          "7",
+          "7",
+          "7"
+        ],
+        "shown": [
+          "7",
+          "5",
+          "9",
+          "7",
+          "7",
+          "7"
+        ],
+        "result": [
+          "本局结束",
+          "本局得分：0"
+        ]
+      }
+    },
+    {
+      "name": "记忆翻牌",
+      "id": "memorycard",
+      "checkedOn": "2026-09-30",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "翻开图案",
+        "不匹配卡牌延迟盖回",
+        "依据实际翻面图案找齐 8 对",
+        "完成结算尝试次数",
+        "重开全部盖回",
+        "返回列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "play-mate60-all-memorycard-ready",
+        "play-mate60-all-memorycard-mismatches",
+        "play-mate60-all-memorycard-win",
+        "play-mate60-all-memorycard-restart"
+      ]
+    },
+    {
+      "name": "2048",
+      "id": "2048",
+      "checkedOn": "2026-09-30",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "四方向滑动操作",
+        "同值合并、生成新块和计分",
+        "连续 48 次滑动仍在游戏页",
+        "顶部重新开始重置棋盘",
+        "返回列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "play-mate60-all-2048-ready",
+        "play-mate60-all-2048-merged",
+        "play-mate60-all-2048-restart"
+      ]
+    },
+    {
+      "name": "猜数字",
+      "id": "guessnumber",
+      "checkedOn": "2026-09-30",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "重复数字被拒绝",
+        "未填满提交不消耗次数",
+        "删除键撤销末位",
+        "根据界面 A/B 提示推理，6 次猜中",
+        "再来一局重置尝试记录",
+        "返回列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "play-mate60-all-guessnumber-ready",
+        "play-mate60-all-guessnumber-win",
+        "play-mate60-all-guessnumber-restart"
+      ]
+    },
+    {
+      "name": "滑动拼图",
+      "id": "slidepuzzle",
+      "checkedOn": "2026-09-30",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "非相邻方块点击不移动",
+        "切换简单难度，按屏幕数字还原完整 3×3 拼图",
+        "通关步数 26",
+        "重开重新打乱并清零步数",
+        "返回列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "play-mate60-all-slidepuzzle-ready",
+        "play-mate60-all-slidepuzzle-win",
+        "play-mate60-all-slidepuzzle-restart"
+      ]
+    },
+    {
+      "name": "数独",
+      "id": "sudoku",
+      "checkedOn": "2026-09-30",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "原题数字不能修改",
+        "填入和擦除数字",
+        "按实际题面求解并填完 81 格",
+        "完成结算及生成新题",
+        "返回列表及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "play-mate60-all-sudoku-ready",
+        "play-mate60-all-sudoku-win",
+        "play-mate60-all-sudoku-new"
+      ]
+    },
+    {
+      "name": "华容道",
+      "id": "klotski",
+      "checkedOn": "2026-09-30",
+      "status": "failed-device-cases",
+      "passedCases": [
+        "进入游戏、棋块与方向键显示",
+        "系统返回及退出确认"
+      ],
+      "pendingCases": [
+        "修复后复测"
+      ],
+      "evidence": [
+        "bug-mate60-klotski-before",
+        "bug-mate60-klotski-selected",
+        "bug-mate60-klotski-right",
+        "bug-mate60-klotski-down"
+      ],
+      "failedCases": [
+        "初始左下兵向空位右移/下移后，棋块画面位置均不更新"
+      ],
+      "detail": {
+        "selected": [
+          32,
+          1283,
+          321,
+          1572
+        ],
+        "before": [
+          [
+            334,
+            376,
+            926,
+            968
+          ],
+          [
+            32,
+            376,
+            321,
+            968
+          ],
+          [
+            939,
+            376,
+            1228,
+            968
+          ],
+          [
+            32,
+            981,
+            321,
+            1270
+          ],
+          [
+            334,
+            981,
+            623,
+            1270
+          ],
+          [
+            637,
+            981,
+            926,
+            1270
+          ],
+          [
+            939,
+            981,
+            1228,
+            1270
+          ],
+          [
+            32,
+            1283,
+            321,
+            1572
+          ],
+          [
+            939,
+            1283,
+            1228,
+            1572
+          ]
+        ],
+        "after": [
+          [
+            334,
+            376,
+            926,
+            968
+          ],
+          [
+            32,
+            376,
+            321,
+            968
+          ],
+          [
+            939,
+            376,
+            1228,
+            968
+          ],
+          [
+            32,
+            981,
+            321,
+            1270
+          ],
+          [
+            334,
+            981,
+            623,
+            1270
+          ],
+          [
+            637,
+            981,
+            926,
+            1270
+          ],
+          [
+            939,
+            981,
+            1228,
+            1270
+          ],
+          [
+            38,
+            1289,
+            315,
+            1566
+          ],
+          [
+            939,
+            1283,
+            1228,
+            1572
+          ]
+        ],
+        "down": [
+          [
+            334,
+            376,
+            926,
+            968
+          ],
+          [
+            32,
+            376,
+            321,
+            968
+          ],
+          [
+            939,
+            376,
+            1228,
+            968
+          ],
+          [
+            32,
+            981,
+            321,
+            1270
+          ],
+          [
+            334,
+            981,
+            623,
+            1270
+          ],
+          [
+            637,
+            981,
+            926,
+            1270
+          ],
+          [
+            939,
+            981,
+            1228,
+            1270
+          ],
+          [
+            38,
+            1289,
+            315,
+            1566
+          ],
+          [
+            939,
+            1283,
+            1228,
+            1572
+          ]
+        ]
+      }
+    },
+    {
+      "name": "扫雷",
+      "id": "minesweeper",
+      "checkedOn": "2026-09-30",
+      "status": "failed-device-cases",
+      "passedCases": [
+        "首次长按插旗，显示 1/10",
+        "旗格短按不揭开",
+        "返回列表及退出确认",
+        "首点安全、踩雷结算和重开通过"
+      ],
+      "pendingCases": [
+        "修复后复测"
+      ],
+      "evidence": [
+        "bug-mate60-mine-flagged",
+        "bug-mate60-mine-center-0",
+        "bug-mate60-mine-center-1",
+        "bug-mate60-mine-center-2",
+        "bug-mate60-mine-edge",
+        "play-mate60-all-minesweeper-safe",
+        "play-mate60-all-minesweeper-result",
+        "play-mate60-all-minesweeper-restart"
+      ],
+      "failedCases": [
+        "旗格中心重复长按三次，旗帜未取消"
+      ],
+      "detail": {
+        "states": [
+          "1/10",
+          "1/10",
+          "1/10",
+          "1/10",
+          "1/10",
+          "0/10"
+        ]
+      }
+    },
+    {
+      "name": "消消乐",
+      "id": "match3",
+      "checkedOn": "2026-09-30",
+      "status": "passed-selected-cases",
+      "passedCases": [
+        "不产生三连的交换还原且不扣步数",
+        "连续 30 次成功交换与消除，结算 2480 分",
+        "剩余步数归零触发结束",
+        "再来一局恢复得分 0 和 30 步",
+        "系统返回及退出确认"
+      ],
+      "pendingCases": [
+        "长局性能及人手触感未量化"
+      ],
+      "evidence": [
+        "play-mate60-all-match3-complete-ready",
+        "play-mate60-all-match3-complete-invalid",
+        "play-mate60-all-match3-complete-result",
+        "play-mate60-all-match3-complete-restart"
+      ]
+    }
+  ],
+  "executionMode": "continuous",
+  "findingsReport": "mate60-issues-2026-09-30.md",
+  "localRegression": {
+    "collection": "82/82",
+    "performanceAndSettings": "159/159",
+    "continuation": "72/72",
+    "total": "313/313",
+    "scope": "desktop rules, not real-device UI"
+  },
+  "completedOn": "2026-09-30",
+  "summary": {
+    "gamesChecked": 33,
+    "passedSelectedGames": 29,
+    "failedGames": 4,
+    "confirmedFindingCategories": 5,
+    "report": "mate60-full-2026-09-30.md",
+    "releaseDecision": "修复后复测，不予按当前候选放行"
+  }
+}

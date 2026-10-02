@@ -1,0 +1,7 @@
+fileType:
+process: display 0, file type: jpeg, width: 1260, height: 2720
+fileType: jpeg
+snapshot: pixel format is: 3
+snapshot: convert rgba8888 to rgb888 successfully.
+
+success: snapshot display 0 , write to /data/local/tmp/lg-start-window-cold-light-2/frame-1.jpeg as jpeg, width: 630, height: 1360

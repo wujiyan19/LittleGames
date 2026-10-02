@@ -1,0 +1,6 @@
+[
+  {
+    "id": "match3",
+    "error": "Error: Expected UI not observed: 消消乐 | 得分 | 270 | 最高 | 2480 | 步数 | 23 | 点击宝石选中，再点击相邻宝石交换\n    at Object.wait (E:\\lianxi\\LittleGames\\scripts\\device-acceptance-core.cjs:46:147)\n    at spec.match3 (E:\\lianxi\\LittleGames\\scripts\\device-standalone-continuous.cjs:26:909)\n    at Object.run (E:\\lianxi\\LittleGames\\scripts\\device-standalone-continuous.cjs:30:96)\n    at legacy (E:\\lianxi\\LittleGames\\scripts\\device-generation-audit.cjs:63:22)\n    at E:\\lianxi\\LittleGames\\scripts\\device-generation-audit.cjs:120:82\n    at checked (E:\\lianxi\\LittleGames\\scripts\\device-generation-audit.cjs:116:58)\n    at Object.<anonymous> (E:\\lianxi\\LittleGames\\scripts\\device-generation-audit.cjs:120:67)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)"
+  }
+]
