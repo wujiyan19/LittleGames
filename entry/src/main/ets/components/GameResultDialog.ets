@@ -5,11 +5,9 @@
  * 副标题 + 主/次按钮 + 遮罩三件套），重复约 120 行 ×10 处。本组件收敛掉这部分，
  * 差异全部通过参数表达。
  *
- * 两种形态：
- * - 全屏遮罩（cardStyle = false）：整屏 scrim + 背景模糊，内容居中。
- *   用于「游戏已结束、棋盘无需再看」的场景（贪吃蛇 / 2048 / 方块 / 打地鼠 / 扫雷）。
- * - 居中卡片（cardStyle = true）：86% 宽圆角卡片，棋盘边缘仍可见。
- *   用于「想让用户回看最终盘面」的场景（记忆翻牌 / 猜数字 / 拼图 / 华容道）。
+ * 两种内容间距共用整页遮罩和不透明卡片，棋盘边缘仍可见。
+ * cardStyle = true 使用紧凑间距（记忆翻牌 / 猜数字 / 扩展游戏）。
+ * 组件常规填充色可能带透明度，不能用作覆盖棋盘的弹窗底色。
  *
  * 次按钮（secondaryText）留空即不渲染——数独、华容道等页面只保留一个主操作。
  */
@@ -37,7 +35,7 @@ export struct GameResultDialog {
   @Param secondaryText: Resource | string = '';
   @Param showSecondary: boolean = false;
   @Param onSecondary: () => void = () => {};
-  /** true = 居中卡片式；false = 全屏遮罩式 */
+  /** true = 紧凑内容间距；两种形态均有整页遮罩 */
   @Param cardStyle: boolean = false;
 
   @Styles
@@ -51,26 +49,17 @@ export struct GameResultDialog {
   }
 
   build() {
-    if (this.cardStyle) {
+    Column() {
       Column() { this.DialogContent() }
         .width('86%').padding(SpacingTokens.lg)
         .borderRadius(RadiusTokens.xl)
-        .backgroundColor(SemanticColors.surfaceTranslucent)
-        .backdropBlur(24)
+        .backgroundColor($r('app.color.surface'))
         .shadow(ShadowTokens.float)
-    } else {
-      Column() {
-        Column() { this.DialogContent() }
-          .width('86%').padding(SpacingTokens.lg)
-          .borderRadius(RadiusTokens.xl)
-          .backgroundColor($r('app.color.surface'))
-          .shadow(ShadowTokens.float)
-      }
-        .width('100%').height('100%')
-        .backgroundColor(SemanticColors.scrim)
-        .backdropBlur(20)
-        .justifyContent(FlexAlign.Center)
     }
+      .width('100%').height('100%')
+      .backgroundColor(SemanticColors.scrim)
+      .justifyContent(FlexAlign.Center)
+      .onClick(() => {})
   }
 
   @Builder

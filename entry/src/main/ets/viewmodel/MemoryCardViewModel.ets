@@ -6,12 +6,27 @@
  * 定时回调与单测都走它（单测可直接调用，无需等待）。
  */
 import { GameDifficulty, GameStatus } from '../common/GameConstants';
+import { ContinuationValidation as V } from '../common/GameSessionTransfer';
 import { GameDataManager } from '../model/GameData';
 import { GameLifecycleObserver } from '../common/GameLifecycleBus';
 import { Card, MemoryCardRules } from '../model/game/MemoryCardModel';
 import { RandomSource, RealRandom } from '../model/game/RandomSource';
 
 const GAME_ID = 'memorycard';
+
+
+interface MemoryCardContinuationState {
+  version: number;
+  cards: Card[];
+  flippedIdxs: number[];
+  matchedCount: number;
+  attempts: number;
+  bestScore: number;
+  status: GameStatus;
+  difficulty: GameDifficulty;
+  locked: boolean;
+  pendingMatch: boolean;
+}
 
 @ObservedV2
 export class MemoryCardViewModel implements GameLifecycleObserver {
@@ -21,7 +36,7 @@ export class MemoryCardViewModel implements GameLifecycleObserver {
   @Trace attempts: number = 0;
   @Trace bestScore: number = 999;
   @Trace status: GameStatus = GameStatus.PLAYING;
-  @Trace difficulty: GameDifficulty = GameDifficulty.NORMAL;
+  @Trace difficulty: GameDifficulty = GameDataManager.getInitialDifficulty(GAME_ID);
   /** 退出确认弹窗显隐（F2：对局中返回需确认，防误丢尝试进度） */
   @Trace confirmExit: boolean = false;
 
@@ -41,6 +56,7 @@ export class MemoryCardViewModel implements GameLifecycleObserver {
   getRowCount(): number { return this.rules.rowCount(this.difficulty); }
 
   changeDifficulty(d: GameDifficulty): void {
+    GameDataManager.rememberGameDifficulty(GAME_ID, d);
     if (this.difficulty === d) { return; }
     this.difficulty = d;
     this.startGame();
@@ -159,6 +175,7 @@ export class MemoryCardViewModel implements GameLifecycleObserver {
 
   /** 页面返回按钮与系统侧滑共用：进行中弹确认（进度无保存机制，防误退），其余放行 */
   requestBack(): boolean {
+    if (!GameDataManager.getSetting('confirmExitEnabled', true)) { return false; }
     if (this.status === GameStatus.PLAYING) {
       this.confirmExit = true;
       return true;
@@ -172,4 +189,67 @@ export class MemoryCardViewModel implements GameLifecycleObserver {
 
   /** 页面销毁：清理翻牌结算定时器 */
   dispose(): void { this.clearTimer(); }
+
+  continuationGameId(): string { return GAME_ID; }
+
+  /** Capture only game data; exporting never pauses or mutates the source game. */
+  exportContinuation(): string {
+
+    const state: MemoryCardContinuationState = {
+      version: 1,
+      cards: this.cards,
+      flippedIdxs: this.flippedIdxs,
+      matchedCount: this.matchedCount,
+      attempts: this.attempts,
+      bestScore: this.bestScore,
+      status: this.status,
+      difficulty: this.difficulty,
+      locked: this.locked,
+      pendingMatch: this.pendingMatch
+    };
+    return JSON.stringify(state);
+  }
+
+  /** Validate completely before replacing a running game. Rebuild observed class instances. */
+  importContinuation(payload: string): boolean {
+    try {
+      if (payload.length > 65536) { return false; }
+      const s: MemoryCardContinuationState = JSON.parse(payload) as MemoryCardContinuationState;
+      if (s === null || s.version !== 1 || !V.integer(s.matchedCount) ||
+          !V.integer(s.attempts) ||
+          !V.integer(s.bestScore) ||
+          (s.status !== GameStatus.PLAYING && s.status !== GameStatus.PAUSED && s.status !== GameStatus.OVER && s.status !== GameStatus.IDLE) ||
+          (s.difficulty !== GameDifficulty.EASY && s.difficulty !== GameDifficulty.NORMAL && s.difficulty !== GameDifficulty.HARD) ||
+          typeof s.locked !== 'boolean' ||
+          typeof s.pendingMatch !== 'boolean') { return false; }
+      const pairs: number = this.rules.pairCount(s.difficulty);
+      if (!Array.isArray(s.cards) || s.cards.length !== pairs * 2 || s.matchedCount > pairs ||
+          !Array.isArray(s.flippedIdxs) || s.flippedIdxs.length > 2 ||
+          !V.numbers(s.flippedIdxs, s.flippedIdxs.length, 0, s.cards.length - 1)) { return false; }
+      for (let i = 0; i < s.cards.length; i++) {
+        const c: Card = s.cards[i];
+        if (c === null || !V.integer(c.id) || typeof c.emoji !== 'string' || c.emoji.length > 32 ||
+            typeof c.flipped !== 'boolean' || typeof c.matched !== 'boolean') { return false; }
+      }
+      if (s.locked !== (s.flippedIdxs.length === 2)) { return false; }
+      this.clearTimer();
+      this.cards = s.cards;
+      this.flippedIdxs = s.flippedIdxs;
+      this.matchedCount = s.matchedCount;
+      this.attempts = s.attempts;
+      this.bestScore = Math.min(this.bestScore, s.bestScore);
+      this.status = s.status;
+      this.difficulty = s.difficulty;
+      this.locked = s.locked;
+      this.pendingMatch = s.pendingMatch;
+      this.confirmExit = false;
+      this.cards = s.cards.map((c: Card): Card => new Card(c.id, c.emoji, c.flipped, c.matched));
+      if (this.locked) {
+        this.flipTimer = setTimeout(() => { this.resolvePending(); }, this.pendingMatch ? 500 : 800);
+      }
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }

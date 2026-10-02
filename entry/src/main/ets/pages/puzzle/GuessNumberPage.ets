@@ -1,3 +1,4 @@
+import { GameSessionTransfer } from '../../common/GameSessionTransfer';
 /**
  * 猜数字 —— View 层（纯展示与组装）
  *
@@ -22,7 +23,7 @@ export struct GuessNumberPage {
 
   aboutToAppear(): void {
     GameLifecycleBus.attach(this.viewModel);
-    this.viewModel.startGame();
+    if (!GameSessionTransfer.restore(this.viewModel)) { this.viewModel.startGame(); }
   }
 
   aboutToDisappear(): void {

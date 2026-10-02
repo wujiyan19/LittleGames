@@ -11,12 +11,27 @@ import { GameCard } from '../../components/GameCard';
 export struct FeaturedTab {
   /** 已按热度排好的展示列表 */
   @Param games: GameInfo[] = [];
+  @Param newGames: GameInfo[] = [];
   @Param onGameClick: (game: GameInfo) => void = () => {};
 
   build() {
     Scroll() {
       Column() {
         this.Banner()
+
+        Text($r('app.string.collection_new'))
+          .fontSize(FontTokens.sizeBodyLarge).fontWeight(FontTokens.weightSemibold)
+          .fontColor(SemanticColors.textPrimary).width('100%')
+          .padding({ left: SpacingTokens.pageHorizontal, top: SpacingTokens.lg, bottom: SpacingTokens.sm })
+        GridRow({ gutter: { x: SpacingTokens.base, y: SpacingTokens.base },
+          columns: { sm: 4, md: 8, lg: 12 },
+          breakpoints: { value: ['320vp', '600vp', '840vp'], reference: BreakpointsReference.WindowSize } }) {
+          ForEach(this.newGames, (game: GameInfo) => {
+            GridCol({ span: { sm: 2, md: 2, lg: 3 } }) {
+              GameCard({ game: game, onTap: () => { this.onGameClick(game); } })
+            }
+          }, (game: GameInfo) => game.id)
+        }.width('100%').padding({ left: SpacingTokens.pageHorizontal, right: SpacingTokens.pageHorizontal })
 
         Row() {
           Text($r('app.string.home_hot_title'))
@@ -42,13 +57,13 @@ export struct FeaturedTab {
             GridCol({ span: { sm: 2, md: 2, lg: 3 } }) {
               GameCard({ game: game, onTap: () => { this.onGameClick(game); } })
             }
-          }, (game: GameInfo) => game.id)
+          }, (game: GameInfo) => game.id + '_' + game.playCount.toString())
         }
         .width('100%')
         .padding({
           left: SpacingTokens.pageHorizontal,
           right: SpacingTokens.pageHorizontal,
-          bottom: SpacingTokens.xxl
+          bottom: $r('app.float.home_tab_content_inset')
         })
       }
       .width('100%')
@@ -79,10 +94,11 @@ export struct FeaturedTab {
         .alignItems(HorizontalAlign.Start)
         .layoutWeight(1)
 
-        SymbolGlyph($r('sys.symbol.gamecontroller'))
-          .fontSize(56)
-          .fontWeight(FontWeight.Medium)
-          .fontColor([SemanticColors.primary])
+        Image($r('app.media.brand_start_icon'))
+          .width($r('app.float.brand_banner_icon_size'))
+          .height($r('app.float.brand_banner_icon_size'))
+          .objectFit(ImageFit.Contain)
+          .borderRadius(RadiusTokens.md)
       }
       .width('100%')
       .padding({ left: SpacingTokens.lg, right: SpacingTokens.lg, top: SpacingTokens.lg, bottom: SpacingTokens.lg })

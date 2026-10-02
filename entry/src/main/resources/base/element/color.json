@@ -1,118 +1,452 @@
 {
   "color": [
-    { "name": "start_window_background", "value": "#F4F6FB" },
-    { "name": "bg", "value": "#F4F6FB" },
-    { "name": "bg_elevated", "value": "#FFFFFF" },
-    { "name": "surface", "value": "#FFFFFF" },
-    { "name": "surface_hover", "value": "#EBF0FA" },
-    { "name": "surface_translucent", "value": "#F2FFFFFF" },
-    { "name": "scrim", "value": "#990A1026" },
-    { "name": "primary", "value": "#2D6CE8" },
-    { "name": "primary_hover", "value": "#1F5BD0" },
-    { "name": "primary_active", "value": "#1B4DB8" },
-    { "name": "primary_light", "value": "#E4EDFF" },
-    { "name": "accent", "value": "#7A5AF8" },
-    { "name": "accent_light", "value": "#ECE7FF" },
-    { "name": "success", "value": "#2FB97B" },
-    { "name": "warning", "value": "#F5A623" },
-    { "name": "error", "value": "#F2524B" },
-    { "name": "text_primary", "value": "#12203A" },
-    { "name": "text_secondary", "value": "#52617E" },
-    { "name": "text_tertiary", "value": "#8B97AE" },
-    { "name": "text_disabled", "value": "#BAC4D6" },
-    { "name": "text_on_primary", "value": "#FFFFFF" },
-    { "name": "divider", "value": "#E4E9F3" },
-    { "name": "border", "value": "#DCE3F0" },
-    { "name": "border_strong", "value": "#C7D2E6" },
-    { "name": "gradient_screen_start", "value": "#EAF0FB" },
-    { "name": "gradient_screen_mid", "value": "#F5F7FC" },
-    { "name": "gradient_screen_end", "value": "#EEF1F9" },
-    { "name": "gradient_hero_start", "value": "#2D6CE8" },
-    { "name": "gradient_hero_mid", "value": "#4E5BEF" },
-    { "name": "gradient_hero_end", "value": "#7A5AF8" },
-    { "name": "gradient_brand_start", "value": "#2D6CE8" },
-    { "name": "gradient_brand_end", "value": "#7A5AF8" },
-    { "name": "card_shadow", "value": "#1F1B2C45" },
-    { "name": "button_shadow", "value": "#331B2C45" },
-    { "name": "float_shadow", "value": "#0A000000" },
-    { "name": "cell_hidden", "value": "#C9D6EC" },
-    { "name": "cell_revealed", "value": "#F2F6FD" },
-    { "name": "board_bg", "value": "#DCE5F4" },
-    { "name": "board_border", "value": "#9DB2D9" },
-
-    { "name": "tile_2", "value": "#EEE4DA" },
-    { "name": "tile_4", "value": "#EDE0C8" },
-    { "name": "tile_8", "value": "#F2B179" },
-    { "name": "tile_16", "value": "#F59563" },
-    { "name": "tile_32", "value": "#F67C5F" },
-    { "name": "tile_64", "value": "#F65E3B" },
-    { "name": "tile_128", "value": "#EDCF72" },
-    { "name": "tile_256", "value": "#EDCC61" },
-    { "name": "tile_512", "value": "#EDC850" },
-    { "name": "tile_1024", "value": "#EDC53F" },
-    { "name": "tile_2048", "value": "#EDC22E" },
-    { "name": "tile_large", "value": "#3C3A32" },
-    { "name": "tile_text_low", "value": "#776E65" },
-    { "name": "tile_text_high", "value": "#FFFFFF" },
-
-    { "name": "shape_1", "value": "#FF6B6B" },
-    { "name": "shape_2", "value": "#FFAA33" },
-    { "name": "shape_3", "value": "#2DD482" },
-    { "name": "shape_4", "value": "#3399FF" },
-    { "name": "shape_5", "value": "#8675F8" },
-    { "name": "shape_6", "value": "#FF6B9D" },
-    { "name": "shape_7", "value": "#00D4B4" },
-
-    { "name": "klotski_target", "value": "#FF6666" },
-    { "name": "klotski_horizontal", "value": "#FFAA33" },
-    { "name": "klotski_vertical", "value": "#3399FF" },
-    { "name": "klotski_normal", "value": "#2DD482" },
-    { "name": "klotski_wood_text", "value": "#5B382B" },
-
-    { "name": "mine_num_0", "value": "#6B7280" },
-    { "name": "mine_num_1", "value": "#3399FF" },
-    { "name": "mine_num_2", "value": "#2DD482" },
-    { "name": "mine_num_3", "value": "#FF6666" },
-    { "name": "mine_num_4", "value": "#8675F8" },
-    { "name": "mine_num_5", "value": "#FF6B6B" },
-    { "name": "mine_num_6", "value": "#00D4B4" },
-    { "name": "mine_num_7", "value": "#2A3550" },
-    { "name": "mine_num_8", "value": "#6B7280" },
-    { "name": "mine_num_invalid", "value": "#F2524B" },
-
-    { "name": "badge_snake_start", "value": "#2DD482" },
-    { "name": "badge_snake_end", "value": "#00B560" },
-    { "name": "badge_tetris_start", "value": "#8675F8" },
-    { "name": "badge_tetris_end", "value": "#5C3FD4" },
-    { "name": "badge_2048_start", "value": "#FFAA33" },
-    { "name": "badge_2048_end", "value": "#FF6B6B" },
-    { "name": "badge_whackmole_start", "value": "#FF6B9D" },
-    { "name": "badge_whackmole_end", "value": "#FF3D7F" },
-    { "name": "badge_minesweeper_start", "value": "#3399FF" },
-    { "name": "badge_minesweeper_end", "value": "#1A66CC" },
-    { "name": "badge_sudoku_start", "value": "#00D4B4" },
-    { "name": "badge_sudoku_end", "value": "#00A88A" },
-    { "name": "badge_slidepuzzle_start", "value": "#FF6B6B" },
-    { "name": "badge_slidepuzzle_end", "value": "#CC3333" },
-    { "name": "badge_klotski_start", "value": "#5C9AFF" },
-    { "name": "badge_klotski_end", "value": "#2D6CE8" },
-    { "name": "badge_guessnumber_start", "value": "#F5A623" },
-    { "name": "badge_guessnumber_end", "value": "#D48806" },
-    { "name": "badge_memorycard_start", "value": "#9A83FF" },
-    { "name": "badge_memorycard_end", "value": "#7A5AF8" },
-    { "name": "badge_jumpjump_start", "value": "#2DD4BF" },
-    { "name": "badge_jumpjump_end", "value": "#0D9488" },
-
-    { "name": "badge_brickbreaker_start", "value": "#FF6B6B" },
-    { "name": "badge_brickbreaker_end", "value": "#CC3333" },
-
-    { "name": "brick_row_0", "value": "#FF6B6B" },
-    { "name": "brick_row_1", "value": "#FFAA33" },
-    { "name": "brick_row_2", "value": "#2DD482" },
-    { "name": "brick_row_3", "value": "#3399FF" },
-    { "name": "brick_row_4", "value": "#8675F8" },
-
-    { "name": "badge_match3_start", "value": "#3399FF" },
-    { "name": "badge_match3_end", "value": "#8675F8" }
+    {
+      "name": "start_window_background",
+      "value": "#F1F3F5"
+    },
+    {
+      "name": "bg",
+      "value": "#F4F6FB"
+    },
+    {
+      "name": "bg_elevated",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "surface",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "surface_hover",
+      "value": "#EBF0FA"
+    },
+    {
+      "name": "surface_translucent",
+      "value": "#F2FFFFFF"
+    },
+    {
+      "name": "scrim",
+      "value": "#990A1026"
+    },
+    {
+      "name": "primary",
+      "value": "#2D6CE8"
+    },
+    {
+      "name": "primary_hover",
+      "value": "#1F5BD0"
+    },
+    {
+      "name": "primary_active",
+      "value": "#1B4DB8"
+    },
+    {
+      "name": "primary_light",
+      "value": "#E4EDFF"
+    },
+    {
+      "name": "accent",
+      "value": "#7A5AF8"
+    },
+    {
+      "name": "accent_light",
+      "value": "#ECE7FF"
+    },
+    {
+      "name": "success",
+      "value": "#2FB97B"
+    },
+    {
+      "name": "warning",
+      "value": "#F5A623"
+    },
+    {
+      "name": "error",
+      "value": "#F2524B"
+    },
+    {
+      "name": "text_primary",
+      "value": "#12203A"
+    },
+    {
+      "name": "text_secondary",
+      "value": "#52617E"
+    },
+    {
+      "name": "text_tertiary",
+      "value": "#8B97AE"
+    },
+    {
+      "name": "text_disabled",
+      "value": "#BAC4D6"
+    },
+    {
+      "name": "text_on_primary",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "divider",
+      "value": "#E4E9F3"
+    },
+    {
+      "name": "border",
+      "value": "#DCE3F0"
+    },
+    {
+      "name": "border_strong",
+      "value": "#C7D2E6"
+    },
+    {
+      "name": "gradient_screen_start",
+      "value": "#EAF0FB"
+    },
+    {
+      "name": "gradient_screen_mid",
+      "value": "#F5F7FC"
+    },
+    {
+      "name": "gradient_screen_end",
+      "value": "#EEF1F9"
+    },
+    {
+      "name": "gradient_hero_start",
+      "value": "#2D6CE8"
+    },
+    {
+      "name": "gradient_hero_mid",
+      "value": "#4E5BEF"
+    },
+    {
+      "name": "gradient_hero_end",
+      "value": "#7A5AF8"
+    },
+    {
+      "name": "gradient_brand_start",
+      "value": "#2D6CE8"
+    },
+    {
+      "name": "gradient_brand_end",
+      "value": "#7A5AF8"
+    },
+    {
+      "name": "card_shadow",
+      "value": "#1F1B2C45"
+    },
+    {
+      "name": "button_shadow",
+      "value": "#331B2C45"
+    },
+    {
+      "name": "float_shadow",
+      "value": "#0A000000"
+    },
+    {
+      "name": "cell_hidden",
+      "value": "#C9D6EC"
+    },
+    {
+      "name": "cell_revealed",
+      "value": "#F2F6FD"
+    },
+    {
+      "name": "board_bg",
+      "value": "#DCE5F4"
+    },
+    {
+      "name": "board_border",
+      "value": "#9DB2D9"
+    },
+    {
+      "name": "tile_2",
+      "value": "#EEE4DA"
+    },
+    {
+      "name": "tile_4",
+      "value": "#EDE0C8"
+    },
+    {
+      "name": "tile_8",
+      "value": "#F2B179"
+    },
+    {
+      "name": "tile_16",
+      "value": "#F59563"
+    },
+    {
+      "name": "tile_32",
+      "value": "#F67C5F"
+    },
+    {
+      "name": "tile_64",
+      "value": "#F65E3B"
+    },
+    {
+      "name": "tile_128",
+      "value": "#EDCF72"
+    },
+    {
+      "name": "tile_256",
+      "value": "#EDCC61"
+    },
+    {
+      "name": "tile_512",
+      "value": "#EDC850"
+    },
+    {
+      "name": "tile_1024",
+      "value": "#EDC53F"
+    },
+    {
+      "name": "tile_2048",
+      "value": "#EDC22E"
+    },
+    {
+      "name": "tile_large",
+      "value": "#3C3A32"
+    },
+    {
+      "name": "tile_text_low",
+      "value": "#776E65"
+    },
+    {
+      "name": "tile_text_high",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "shape_1",
+      "value": "#FF6B6B"
+    },
+    {
+      "name": "shape_2",
+      "value": "#FFAA33"
+    },
+    {
+      "name": "shape_3",
+      "value": "#2DD482"
+    },
+    {
+      "name": "shape_4",
+      "value": "#3399FF"
+    },
+    {
+      "name": "shape_5",
+      "value": "#8675F8"
+    },
+    {
+      "name": "shape_6",
+      "value": "#FF6B9D"
+    },
+    {
+      "name": "shape_7",
+      "value": "#00D4B4"
+    },
+    {
+      "name": "klotski_target",
+      "value": "#FF6666"
+    },
+    {
+      "name": "klotski_horizontal",
+      "value": "#FFAA33"
+    },
+    {
+      "name": "klotski_vertical",
+      "value": "#3399FF"
+    },
+    {
+      "name": "klotski_normal",
+      "value": "#2DD482"
+    },
+    {
+      "name": "klotski_wood_text",
+      "value": "#5B382B"
+    },
+    {
+      "name": "mine_num_0",
+      "value": "#6B7280"
+    },
+    {
+      "name": "mine_num_1",
+      "value": "#3399FF"
+    },
+    {
+      "name": "mine_num_2",
+      "value": "#2DD482"
+    },
+    {
+      "name": "mine_num_3",
+      "value": "#FF6666"
+    },
+    {
+      "name": "mine_num_4",
+      "value": "#8675F8"
+    },
+    {
+      "name": "mine_num_5",
+      "value": "#FF6B6B"
+    },
+    {
+      "name": "mine_num_6",
+      "value": "#00D4B4"
+    },
+    {
+      "name": "mine_num_7",
+      "value": "#2A3550"
+    },
+    {
+      "name": "mine_num_8",
+      "value": "#6B7280"
+    },
+    {
+      "name": "mine_num_invalid",
+      "value": "#F2524B"
+    },
+    {
+      "name": "badge_snake_start",
+      "value": "#2DD482"
+    },
+    {
+      "name": "badge_snake_end",
+      "value": "#00B560"
+    },
+    {
+      "name": "badge_tetris_start",
+      "value": "#8675F8"
+    },
+    {
+      "name": "badge_tetris_end",
+      "value": "#5C3FD4"
+    },
+    {
+      "name": "badge_2048_start",
+      "value": "#FFAA33"
+    },
+    {
+      "name": "badge_2048_end",
+      "value": "#FF6B6B"
+    },
+    {
+      "name": "badge_whackmole_start",
+      "value": "#FF6B9D"
+    },
+    {
+      "name": "badge_whackmole_end",
+      "value": "#FF3D7F"
+    },
+    {
+      "name": "badge_minesweeper_start",
+      "value": "#3399FF"
+    },
+    {
+      "name": "badge_minesweeper_end",
+      "value": "#1A66CC"
+    },
+    {
+      "name": "badge_sudoku_start",
+      "value": "#00D4B4"
+    },
+    {
+      "name": "badge_sudoku_end",
+      "value": "#00A88A"
+    },
+    {
+      "name": "badge_slidepuzzle_start",
+      "value": "#FF6B6B"
+    },
+    {
+      "name": "badge_slidepuzzle_end",
+      "value": "#CC3333"
+    },
+    {
+      "name": "badge_klotski_start",
+      "value": "#5C9AFF"
+    },
+    {
+      "name": "badge_klotski_end",
+      "value": "#2D6CE8"
+    },
+    {
+      "name": "badge_guessnumber_start",
+      "value": "#F5A623"
+    },
+    {
+      "name": "badge_guessnumber_end",
+      "value": "#D48806"
+    },
+    {
+      "name": "badge_memorycard_start",
+      "value": "#9A83FF"
+    },
+    {
+      "name": "badge_memorycard_end",
+      "value": "#7A5AF8"
+    },
+    {
+      "name": "badge_jumpjump_start",
+      "value": "#2DD4BF"
+    },
+    {
+      "name": "badge_jumpjump_end",
+      "value": "#0D9488"
+    },
+    {
+      "name": "badge_brickbreaker_start",
+      "value": "#FF6B6B"
+    },
+    {
+      "name": "badge_brickbreaker_end",
+      "value": "#CC3333"
+    },
+    {
+      "name": "brick_row_0",
+      "value": "#FF6B6B"
+    },
+    {
+      "name": "brick_row_1",
+      "value": "#FFAA33"
+    },
+    {
+      "name": "brick_row_2",
+      "value": "#2DD482"
+    },
+    {
+      "name": "brick_row_3",
+      "value": "#3399FF"
+    },
+    {
+      "name": "brick_row_4",
+      "value": "#8675F8"
+    },
+    {
+      "name": "badge_match3_start",
+      "value": "#3399FF"
+    },
+    {
+      "name": "badge_match3_end",
+      "value": "#8675F8"
+    },
+    {
+      "name": "collection_blue",
+      "value": "#98B8F0"
+    },
+    {
+      "name": "collection_green",
+      "value": "#83D9B0"
+    },
+    {
+      "name": "collection_gold",
+      "value": "#F4C475"
+    },
+    {
+      "name": "collection_rose",
+      "value": "#F39AB2"
+    },
+    {
+      "name": "collection_ink",
+      "value": "#12203A"
+    },
+    {
+      "name": "collection_art_ink",
+      "value": "#263E60"
+    }
   ]
 }

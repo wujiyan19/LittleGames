@@ -1,3 +1,4 @@
+import { GameSessionTransfer } from '../../common/GameSessionTransfer';
 /**
  * 数独 —— View 层（展示与组装，含双指缩放）
  *
@@ -22,8 +23,8 @@ export struct SudokuPage {
   @Local safeBottom: number = SafeAreaInsets.bottom;
   @Local viewModel: SudokuViewModel = new SudokuViewModel();
   @Local scaleFactor: number = 1;
-  @Local offsetX: number = 0;
-  @Local offsetY: number = 0;
+  @Local translateX: number = 0;
+  @Local translateY: number = 0;
   @Local boardPixelSize: number = 302;
   // 无障碍描述预解析缓存
   @Local a11yFixed: string = '';
@@ -37,7 +38,7 @@ export struct SudokuPage {
 
   aboutToAppear(): void {
     this.boardPixelSize = ScreenUtils.calcCell(9, 520, 24, 28) * 9 + 8;
-    this.viewModel.newGame();
+    if (!GameSessionTransfer.restore(this.viewModel)) { this.viewModel.newGameAsync(); }
     // 预解析无障碍描述字符串
     const context = this.getUIContext().getHostContext();
     if (context) {
@@ -121,69 +122,79 @@ export struct SudokuPage {
           onBack: () => { this.requestExit(); },
           onPauseToggle: () => {},
           onRestart: () => { this.viewModel.restartGame(); },
-          onNewGame: () => { this.viewModel.newGame(); },
+          onNewGame: () => { this.viewModel.newGameAsync(); },
           enableNewGame: true
         })
 
         // 外层容器：fill 空间、居中，供缩放容器摆放
         Column() {
-          // 棋盘容器：缩放变换作用于此
-          Column() {
-            ForEach(this.idx9, (row: number) => {
-              Row() {
-                ForEach(this.idx9, (col: number) => {
-                  Stack() {
-                    Image($r('app.media.play_sudoku_cell'))
-                      .width(this.getCellSize()).height(this.getCellSize())
-                      .objectFit(ImageFit.Fill)
-                    if (this.viewModel.cellValue(row, col) > 0) {
-                      Text('' + this.viewModel.cellValue(row, col)).fontSize(Math.max(14, this.getCellSize() * 0.5))
-                        .fontColor(this.getNumberColor(row, col))
-                        .fontWeight(this.getNumberWeight(row, col))
-                    }
-                  }.width(this.getCellSize()).height(this.getCellSize())
-                  .backgroundColor(this.getCellBg(row, col))
-                  .border({
-                    width: this.getCellBorderWidth(row, col),
-                    color: SemanticColors.boardBorder
+          if (this.viewModel.isGenerating) {
+            LoadingProgress().width(36).height(36).color(SemanticColors.primary)
+            Text($r('app.string.sudoku_generating'))
+              .fontSize(FontTokens.sizeBody).fontColor(SemanticColors.textSecondary)
+          } else if (this.viewModel.generationFailed) {
+            Text($r('app.string.sudoku_generation_failed'))
+              .fontSize(FontTokens.sizeBody).fontColor(SemanticColors.textSecondary)
+            Button($r('app.string.home_retry')).onClick(() => { this.viewModel.newGameAsync(); })
+          } else {
+            // 棋盘容器：缩放变换作用于此
+            Column() {
+              ForEach(this.idx9, (row: number) => {
+                Row() {
+                  ForEach(this.idx9, (col: number) => {
+                    Stack() {
+                      Image($r('app.media.play_sudoku_cell'))
+                        .width(this.getCellSize()).height(this.getCellSize())
+                        .objectFit(ImageFit.Fill)
+                      if (this.viewModel.cellValue(row, col) > 0) {
+                        Text('' + this.viewModel.cellValue(row, col)).fontSize(Math.max(14, this.getCellSize() * 0.5))
+                          .fontColor(this.getNumberColor(row, col))
+                          .fontWeight(this.getNumberWeight(row, col))
+                      }
+                    }.width(this.getCellSize()).height(this.getCellSize())
+                    .backgroundColor(this.getCellBg(row, col))
+                    .border({
+                      width: this.getCellBorderWidth(row, col),
+                      color: SemanticColors.boardBorder
+                    })
+                    .accessibilityText(this.cellA11y(row, col))
+                    .stateStyles({ pressed: this.pressedFeedback }).onClick(() => { this.viewModel.selectCell(row, col); })
+                  }, (col: number) => col.toString())
+                }
+              }, (row: number) => row.toString())
+            }
+            .scale({ x: this.scaleFactor, y: this.scaleFactor })
+            .translate({ x: this.translateX, y: this.translateY })
+            // 81 格随双指缩放/位移，整体缓存为一张位图，减少渲染批次（P2-1）
+            .renderGroup(true)
+            .gesture(
+              GestureGroup(GestureMode.Parallel,
+                PinchGesture({ fingers: 2 })
+                  .onActionStart((event: GestureEvent) => {
+                    this.startScale = this.scaleFactor;
+                    this.startOffsetX = this.translateX;
+                    this.startOffsetY = this.translateY;
                   })
-                  .accessibilityText(this.cellA11y(row, col))
-                  .stateStyles({ pressed: this.pressedFeedback }).onClick(() => { this.viewModel.selectCell(row, col); })
-                }, (col: number) => col.toString())
-              }
-            }, (row: number) => row.toString())
-          }
-          .scale({ x: this.scaleFactor, y: this.scaleFactor })
-          .offset({ x: this.offsetX, y: this.offsetY })
-          // 81 格随双指缩放/位移，整体缓存为一张位图，减少渲染批次（P2-1）
-          .renderGroup(true)
-          .gesture(
-            GestureGroup(GestureMode.Parallel,
-              PinchGesture({ fingers: 2 })
-                .onActionStart((event: GestureEvent) => {
-                  this.startScale = this.scaleFactor;
-                  this.startOffsetX = this.offsetX;
-                  this.startOffsetY = this.offsetY;
-                })
-                .onActionUpdate((event: GestureEvent) => {
-                  const newScale = Math.max(1, Math.min(3, this.startScale * event.scale));
-                  const cx = event.pinchCenterX;
-                  const cy = event.pinchCenterY;
-                  const half = this.boardPixelSize / 2;
-                  // 以 pinchCenter 为锚点计算偏移：保持触摸中心在视觉上不动
-                  this.offsetX = this.startOffsetX + (cx - half) * (this.startScale - newScale);
-                  this.offsetY = this.startOffsetY + (cy - half) * (this.startScale - newScale);
-                  this.scaleFactor = newScale;
-                }),
-              TapGesture({ count: 2 })
-                .onAction(() => {
-                  // 双击重置缩放
-                  this.scaleFactor = 1;
-                  this.offsetX = 0;
-                  this.offsetY = 0;
-                })
+                  .onActionUpdate((event: GestureEvent) => {
+                    const newScale = Math.max(1, Math.min(3, this.startScale * event.scale));
+                    const cx = event.pinchCenterX;
+                    const cy = event.pinchCenterY;
+                    const half = this.boardPixelSize / 2;
+                    // 以 pinchCenter 为锚点计算偏移：保持触摸中心在视觉上不动
+                    this.translateX = this.startOffsetX + (cx - half) * (this.startScale - newScale);
+                    this.translateY = this.startOffsetY + (cy - half) * (this.startScale - newScale);
+                    this.scaleFactor = newScale;
+                  }),
+                TapGesture({ count: 2 })
+                  .onAction(() => {
+                    // 双击重置缩放
+                    this.scaleFactor = 1;
+                    this.translateX = 0;
+                    this.translateY = 0;
+                  })
+              )
             )
-          )
+          }
         }.layoutWeight(1).justifyContent(FlexAlign.Center).clip(true)
 
         Row({ space: SpacingTokens.sm }) {
@@ -196,6 +207,7 @@ export struct SudokuPage {
                 .fontColor(SemanticColors.textPrimary)
             }
             .layoutWeight(1).height(46)
+            .enabled(!this.viewModel.isGenerating && !this.viewModel.generationFailed)
             .backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
 
             .stateStyles({ pressed: this.pressedFeedback }).onClick(() => this.viewModel.setNumber(n))
@@ -205,6 +217,7 @@ export struct SudokuPage {
               .fontSize(18).fontColor([SemanticColors.textOnPrimary])
           }
           .width(46).height(46)
+          .enabled(!this.viewModel.isGenerating && !this.viewModel.generationFailed)
           .backgroundColor(SemanticColors.error).borderRadius(RadiusTokens.base)
 
           .stateStyles({ pressed: this.pressedFeedback }).onClick(() => this.viewModel.erase())
@@ -217,7 +230,7 @@ export struct SudokuPage {
           symbolColor: SemanticColors.success,
           title: $r('app.string.result_sudoku_complete'),
           primaryText: $r('app.string.result_new_game'),
-          onPrimary: () => { this.viewModel.newGame(); }
+          onPrimary: () => { this.viewModel.newGameAsync(); }
         })
       }
 

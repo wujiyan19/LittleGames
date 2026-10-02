@@ -6,6 +6,7 @@
  * View 只与它交互，不接触 Model 类型。
  */
 import { GameDifficulty, GameStatus } from '../common/GameConstants';
+import { ContinuationValidation as V } from '../common/GameSessionTransfer';
 import { GameDataManager } from '../model/GameData';
 import { GameLifecycleObserver } from '../common/GameLifecycleBus';
 import { Game2048Rules, SpawnResult, SwipeDir, SwipeResult } from '../model/game/Game2048Model';
@@ -14,13 +15,23 @@ import { RandomSource, RealRandom } from '../model/game/RandomSource';
 const SIZE = 4;
 const GAME_ID = '2048';
 
+
+interface Game2048ContinuationState {
+  version: number;
+  board: number[][];
+  score: number;
+  highScore: number;
+  status: GameStatus;
+  difficulty: GameDifficulty;
+}
+
 @ObservedV2
 export class Game2048ViewModel implements GameLifecycleObserver {
   @Trace board: number[][] = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
   @Trace score: number = 0;
   @Trace highScore: number = 0;
   @Trace status: GameStatus = GameStatus.PLAYING;
-  @Trace difficulty: GameDifficulty = GameDifficulty.NORMAL;
+  @Trace difficulty: GameDifficulty = GameDataManager.getInitialDifficulty(GAME_ID);
   /** 最近一次生成的新块位置，-1 表示无（供 View 动画） */
   @Trace spawnRow: number = -1;
   @Trace spawnCol: number = -1;
@@ -48,6 +59,7 @@ export class Game2048ViewModel implements GameLifecycleObserver {
   }
 
   changeDifficulty(d: GameDifficulty): void {
+    GameDataManager.rememberGameDifficulty(GAME_ID, d);
     if (this.difficulty === d) { return; }
     this.difficulty = d;
     this.startGame();
@@ -129,6 +141,7 @@ export class Game2048ViewModel implements GameLifecycleObserver {
 
   /** 页面返回按钮与系统侧滑共用：进行中弹确认，其余放行 */
   requestBack(): boolean {
+    if (!GameDataManager.getSetting('confirmExitEnabled', true)) { return false; }
     if (this.status === GameStatus.PLAYING) {
       this.confirmExit = true;
       return true;
@@ -151,5 +164,54 @@ export class Game2048ViewModel implements GameLifecycleObserver {
   /** 页面销毁：结算当前分（无定时器可停） */
   dispose(): void {
     this.settleCurrentScore();
+  }
+
+  continuationGameId(): string { return GAME_ID; }
+
+  /** Capture only game data; exporting never pauses or mutates the source game. */
+  exportContinuation(): string {
+
+    const state: Game2048ContinuationState = {
+      version: 1,
+      board: this.board,
+      score: this.score,
+      highScore: this.highScore,
+      status: this.status,
+      difficulty: this.difficulty
+    };
+    return JSON.stringify(state);
+  }
+
+  /** Validate completely before replacing a running game. Rebuild observed class instances. */
+  importContinuation(payload: string): boolean {
+    try {
+      if (payload.length > 65536) { return false; }
+      const s: Game2048ContinuationState = JSON.parse(payload) as Game2048ContinuationState;
+      if (s === null || s.version !== 1 || !V.integer(s.score) ||
+          !V.integer(s.highScore) ||
+          (s.status !== GameStatus.PLAYING && s.status !== GameStatus.PAUSED && s.status !== GameStatus.OVER && s.status !== GameStatus.IDLE) ||
+          (s.difficulty !== GameDifficulty.EASY && s.difficulty !== GameDifficulty.NORMAL && s.difficulty !== GameDifficulty.HARD)) { return false; }
+      if (!V.matrix(s.board, 4, 4, 0, 1073741824)) { return false; }
+      for (let r = 0; r < 4; r++) {
+        for (let c = 0; c < 4; c++) {
+          const value: number = s.board[r][c];
+          if (value !== 0 && (value < 2 || !Number.isInteger(Math.log2(value)))) { return false; }
+        }
+      }
+
+      this.board = s.board;
+      this.score = s.score;
+      this.highScore = Math.max(s.highScore, GameDataManager.getGameById(GAME_ID)?.highScore ?? 0);
+      GameDataManager.updateHighScore(GAME_ID, this.highScore);
+      this.status = s.status;
+      this.difficulty = s.difficulty;
+      this.confirmExit = false;
+      this.lastSources = [];
+      this.spawnRow = -1;
+      this.spawnCol = -1;
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

@@ -1,3 +1,4 @@
+import { GameSessionTransfer } from '../../common/GameSessionTransfer';
 /**
  * 俄罗斯方块 —— View 层（纯展示与组装）
  *
@@ -46,7 +47,7 @@ export struct TetrisGamePage {
     const byHeight: number = Math.floor((ScreenUtils.windowHeightVp() - 340) / ROWS);
     this.cell = Math.max(1, Math.min(byWidth, byHeight));
     GameLifecycleBus.attach(this.viewModel);
-    this.viewModel.startGame();
+    if (!GameSessionTransfer.restore(this.viewModel)) { this.viewModel.startGame(); }
   }
 
   /** 棋盘必须同时适配可用宽度和页头、操作键之外的实际高度。 */
@@ -74,7 +75,7 @@ export struct TetrisGamePage {
   }
 
   getCellColor(r: number, c: number): ResourceColor {
-    const mark = this.viewModel.cellMark(r, c);
+    const mark = this.viewModel.cells[r * COLS + c].mark;
     if (mark !== 0) { return SHAPE_COLORS[mark - 1]; }
     return SemanticColors.cellRevealed;
   }
@@ -120,7 +121,7 @@ export struct TetrisGamePage {
               Row() {
                 ForEach(this.colIdx, (col: number) => {
                   Stack() {
-                    if (this.viewModel.cellMark(row, col) !== 0) {
+                    if (this.viewModel.cells[row * COLS + col].mark !== 0) {
                       Image($r('app.media.play_tetris_gloss'))
                         .width(this.cell).height(this.cell).objectFit(ImageFit.Fill)
                     }
@@ -191,7 +192,6 @@ export struct TetrisGamePage {
       if (this.viewModel.confirmExit) {
         ExitConfirmDialog({
           onConfirm: () => {
-            this.viewModel.dismissExitConfirm();
             this.pathStack.pop();
           },
           onCancel: () => { this.viewModel.dismissExitConfirm(); }

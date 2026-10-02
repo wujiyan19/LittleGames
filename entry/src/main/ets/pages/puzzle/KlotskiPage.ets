@@ -1,3 +1,4 @@
+import { GameSessionTransfer } from '../../common/GameSessionTransfer';
 /**
  * 华容道 —— View 层（纯展示与组装）
  *
@@ -35,7 +36,7 @@ export struct KlotskiPage {
       this.a11yBlockFormat = context.resourceManager.getStringSync($r('app.string.a11y_klotski_block_format'));
     }
     GameLifecycleBus.attach(this.viewModel);
-    this.viewModel.startGame();
+    if (!GameSessionTransfer.restore(this.viewModel)) { this.viewModel.startGame(); }
     const ctx = this.getUIContext().getHostContext();
     if (ctx) {
       this.centerLabel = ctx.resourceManager.getStringSync($r('app.string.klotski_move'));
@@ -108,7 +109,7 @@ export struct KlotskiPage {
               .width(piece.w * this.step() - 4).height(piece.h * this.step() - 4)
               .border({ width: piece.selected ? 3 : 0, color: SemanticColors.warning })
               .borderRadius(RadiusTokens.base)
-              .offset({ x: 6 + piece.x * this.step(), y: 6 + piece.y * this.step() })
+              .translate({ x: 6 + piece.x * this.step(), y: 6 + piece.y * this.step() })
               .accessibilityText(this.a11yBlockFormat.replace('%1$s', piece.label))
               .stateStyles({ pressed: this.pressedFeedback })
               .onClick(() => this.viewModel.selectBlockAt(piece.y, piece.x))

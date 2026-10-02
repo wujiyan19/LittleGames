@@ -1,3 +1,4 @@
+import { GameSessionTransfer } from '../../common/GameSessionTransfer';
 /**
  * 记忆翻牌 —— View 层（纯展示与组装）
  *
@@ -37,9 +38,9 @@ export struct MemoryCardPage {
       this.a11yCardFlippedFormat = context.resourceManager.getStringSync($r('app.string.a11y_card_flipped_format'));
       this.a11yCardHiddenFormat = context.resourceManager.getStringSync($r('app.string.a11y_card_hidden_format'));
     }
-    this.refreshLayout();
     GameLifecycleBus.attach(this.viewModel);
-    this.viewModel.startGame();
+    if (!GameSessionTransfer.restore(this.viewModel)) { this.viewModel.startGame(); }
+    this.refreshLayout();
   }
 
   aboutToDisappear(): void {

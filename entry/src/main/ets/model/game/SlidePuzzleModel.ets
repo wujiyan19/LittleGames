@@ -45,22 +45,28 @@ export class SlidePuzzleRules {
     return inv % 2 === 0;
   }
 
-  /** 反复洗牌直到可解（最多 100 次），返回新数组 */
+  /** 一次洗牌，再校正逆序奇偶，保证有限时间内返回可解且未完成的棋盘。 */
   shuffle(rng: RandomSource): number[] {
     const n = this.size;
     const nums: number[] = [];
     for (let i = 1; i < n * n; i++) { nums.push(i); }
     nums.push(0);
-    let attempts = 0;
-    do {
-      for (let i = nums.length - 1; i > 0; i--) {
-        const j = Math.floor(rng.next() * (i + 1));
-        const tmp = nums[i];
-        nums[i] = nums[j];
-        nums[j] = tmp;
-      }
-      attempts++;
-    } while (!this.isSolvable(nums) && attempts < 100);
+    for (let i = nums.length - 1; i > 0; i--) {
+      const j = Math.floor(rng.next() * (i + 1));
+      const tmp = nums[i];
+      nums[i] = nums[j];
+      nums[j] = tmp;
+    }
+    if (!this.isSolvable(nums)) {
+      // 只交换两个数字，空格所在行不变，奇偶性恰好翻转。
+      const first: number = nums[0] === 0 ? 1 : 0;
+      const second: number = nums[first + 1] === 0 ? first + 2 : first + 1;
+      const tmp: number = nums[first]; nums[first] = nums[second]; nums[second] = tmp;
+    }
+    if (this.isSolved(nums)) {
+      // 从完成态合法移动一格，避免开局已经完成但没有结算。
+      nums[nums.length - 1] = nums[nums.length - 2]; nums[nums.length - 2] = 0;
+    }
     return nums.slice();
   }
 
@@ -73,6 +79,7 @@ export class SlidePuzzleRules {
 
   /** (r,c) 是否与空格相邻（可移动） */
   canMove(board: number[], r: number, c: number): boolean {
+    if (!Number.isInteger(r) || !Number.isInteger(c) || r < 0 || c < 0 || r >= this.size || c >= this.size) { return false; }
     const zi = this.zeroIndex(board);
     if (zi < 0) { return false; }
     const zr = Math.floor(zi / this.size);
@@ -85,6 +92,7 @@ export class SlidePuzzleRules {
   /** 将 (r,c) 与空格交换，返回新数组（调用前应先 canMove） */
   tap(board: number[], r: number, c: number): number[] {
     const next = board.slice();
+    if (!this.canMove(board, r, c)) { return next; }
     const zi = this.zeroIndex(next);
     const tapped = r * this.size + c;
     next[zi] = next[tapped];

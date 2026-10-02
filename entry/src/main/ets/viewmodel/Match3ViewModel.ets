@@ -5,6 +5,7 @@
  * View 只与它交互，不接触 Model 类型。
  */
 import { GameStatus } from '../common/GameConstants';
+import { ContinuationValidation as V } from '../common/GameSessionTransfer';
 import { GameDataManager } from '../model/GameData';
 import { GameLifecycleObserver } from '../common/GameLifecycleBus';
 import { Match3Rules, ChainResult } from '../model/game/Match3Model';
@@ -13,6 +14,18 @@ import { Haptics } from '../common/Haptics';
 
 const GAME_ID = 'match3';
 const MAX_MOVES = 30;
+
+
+interface Match3ContinuationState {
+  version: number;
+  board: number[][];
+  score: number;
+  highScore: number;
+  movesLeft: number;
+  status: GameStatus;
+  selectedRow: number;
+  selectedCol: number;
+}
 
 @ObservedV2
 export class Match3ViewModel implements GameLifecycleObserver {
@@ -140,6 +153,7 @@ export class Match3ViewModel implements GameLifecycleObserver {
 
   /** 页面返回按钮与系统侧滑共用：进行中弹确认，其余放行 */
   requestBack(): boolean {
+    if (!GameDataManager.getSetting('confirmExitEnabled', true)) { return false; }
     if (this.status === GameStatus.PLAYING) {
       this.confirmExit = true;
       return true;
@@ -154,5 +168,54 @@ export class Match3ViewModel implements GameLifecycleObserver {
   /** 页面销毁：结算当前分 */
   dispose(): void {
     this.settleCurrentScore();
+  }
+
+  continuationGameId(): string { return GAME_ID; }
+
+  /** Capture only game data; exporting never pauses or mutates the source game. */
+  exportContinuation(): string {
+
+    const state: Match3ContinuationState = {
+      version: 1,
+      board: this.board,
+      score: this.score,
+      highScore: this.highScore,
+      movesLeft: this.movesLeft,
+      status: this.status,
+      selectedRow: this.selectedRow,
+      selectedCol: this.selectedCol
+    };
+    return JSON.stringify(state);
+  }
+
+  /** Validate completely before replacing a running game. Rebuild observed class instances. */
+  importContinuation(payload: string): boolean {
+    try {
+      if (payload.length > 65536) { return false; }
+      const s: Match3ContinuationState = JSON.parse(payload) as Match3ContinuationState;
+      if (s === null || s.version !== 1 || !V.integer(s.score) ||
+          !V.integer(s.highScore) ||
+          !V.integer(s.movesLeft) ||
+          (s.status !== GameStatus.PLAYING && s.status !== GameStatus.PAUSED && s.status !== GameStatus.OVER && s.status !== GameStatus.IDLE) ||
+          !V.integer(s.selectedRow, -1) ||
+          !V.integer(s.selectedCol, -1)) { return false; }
+      if (!V.matrix(s.board, 8, 8, 0, 5) || s.movesLeft > MAX_MOVES ||
+          !V.integer(s.selectedRow, -1, 7) || !V.integer(s.selectedCol, -1, 7) ||
+          (s.selectedRow === -1) !== (s.selectedCol === -1)) { return false; }
+
+      this.board = s.board;
+      this.score = s.score;
+      this.highScore = Math.max(s.highScore, GameDataManager.getGameById(GAME_ID)?.highScore ?? 0);
+      GameDataManager.updateHighScore(GAME_ID, this.highScore);
+      this.movesLeft = s.movesLeft;
+      this.status = s.status;
+      this.selectedRow = s.selectedRow;
+      this.selectedCol = s.selectedCol;
+      this.confirmExit = false;
+
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

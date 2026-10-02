@@ -78,14 +78,13 @@ export struct ExitConfirmDialog {
       .width('86%')
       .padding(SpacingTokens.lg)
       .borderRadius(RadiusTokens.xl)
-      .backgroundColor(SemanticColors.surfaceTranslucent)
-      .backdropBlur(24)
+      .backgroundColor($r('app.color.surface'))
       .shadow(ShadowTokens.float)
       .alignItems(HorizontalAlign.Center)
     }
     .width('100%').height('100%')
     .backgroundColor(SemanticColors.scrim)
-    .backdropBlur(20)
     .justifyContent(FlexAlign.Center)
+    .onClick(() => {})
   }
 }

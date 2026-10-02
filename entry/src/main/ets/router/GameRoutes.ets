@@ -13,11 +13,14 @@
  *
  * 新增一款游戏的登记步骤：
  *   ① model/GameData.ets 的 games 数组加数据
- *   ② 本文件 GameRoutes.PATHS 加一条「id → 路由名」
+ *   ② GameRouteRegistry.PATHS 加一条「id → 路由名」；合集游戏通过 COLLECTION_IDS 注册
  *   ③ GamePageMap 的 if-else 里加一个组件分支（ArkTS 不支持把组件当值存表，此链无法消除）
- *   ④ 首页 Tab 卡片由数据驱动，无需改动
+ *   ④ 首页 Tab 卡片由数据驱动；合集玩法共用 CollectionPage 分支
  */
 import { SnakeGamePage } from '../pages/classic/SnakeGamePage';
+import { CollectionPage } from '../pages/collection/CollectionPage';
+import { GameRoutes } from './GameRouteRegistry';
+import { COLLECTION_IDS } from '../model/game/CollectionModel';
 import { TetrisGamePage } from '../pages/classic/TetrisGamePage';
 import { Game2048Page } from '../pages/classic/Game2048Page';
 import { WhackMolePage } from '../pages/classic/WhackMolePage';
@@ -31,41 +34,21 @@ import { JumpJumpPage } from '../pages/classic/JumpJumpPage';
 import { BrickBreakerPage } from '../pages/classic/BrickBreakerPage';
 import { Match3Page } from '../pages/puzzle/Match3Page';
 import { GameLifecycleBus } from '../common/GameLifecycleBus';
+import { SettingsPage } from '../pages/settings/SettingsPage';
+import { AboutPage } from '../pages/settings/AboutPage';
 
-export class GameRoutes {
-  /** 游戏 ID → 路由名。与 GameDataManager.games 的 id 一一对应 */
-  static readonly PATHS: Record<string, string> = {
-    'snake': 'SnakeGamePage',
-    'tetris': 'TetrisGamePage',
-    '2048': 'Game2048Page',
-    'whackmole': 'WhackMolePage',
-    'minesweeper': 'MinesweeperPage',
-    'sudoku': 'SudokuPage',
-    'slidepuzzle': 'SlidePuzzlePage',
-    'klotski': 'KlotskiPage',
-    'guessnumber': 'GuessNumberPage',
-    'memorycard': 'MemoryCardPage',
-    'jumpjump': 'JumpJumpPage',
-    'brickbreaker': 'BrickBreakerPage',
-    'match3': 'Match3Page'
-  };
-
-  /** 查路由名。未登记的 ID 返回空串，调用方应据此拒绝导航（而非静默跳错页） */
-  static routeName(gameId: string): string {
-    const name: string | undefined = GameRoutes.PATHS[gameId];
-    if (name === undefined) {
-      return '';
-    }
-    return name;
-  }
-}
+export { GameRoutes } from './GameRouteRegistry';
 
 @Builder
-export function GamePageMap(name: string, pathStack: NavPathStack) {
+export function GamePageMap(name: string, pathStack: NavPathStack, onDataChanged: () => void = () => {}) {
   // NavDestination 与 hideTitleBar 只在这里写一次；if-else 只负责选组件
   // （ArkTS 不支持把组件当值存表，这条链是语言限制，已尽量收窄到一行一个分支）
   NavDestination() {
-    if (name === 'SnakeGamePage') {
+    if (name === 'SettingsPage') {
+      SettingsPage({ pathStack: pathStack, onDataChanged: onDataChanged })
+    } else if (name === 'AboutPage') {
+      AboutPage({ pathStack: pathStack })
+    } else if (name === 'SnakeGamePage') {
       SnakeGamePage({ pathStack: pathStack })
     } else if (name === 'TetrisGamePage') {
       TetrisGamePage({ pathStack: pathStack })
@@ -91,6 +74,8 @@ export function GamePageMap(name: string, pathStack: NavPathStack) {
       BrickBreakerPage({ pathStack: pathStack })
     } else if (name === 'Match3Page') {
       Match3Page({ pathStack: pathStack })
+    } else if (COLLECTION_IDS.includes(GameRoutes.gameIdForRoute(name))) {
+      CollectionPage({ gameId: GameRoutes.gameIdForRoute(name), pathStack: pathStack })
     }
   }
   .hideTitleBar(true)

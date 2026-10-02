@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <!-- Horizontal body, matching the head's eight-pixel-wide neck and palette. -->
+  <rect x="0" y="4" width="16" height="8" fill="#14543D"/>
+  <rect x="0" y="5" width="16" height="6" fill="#2FB97B"/>
+  <rect x="0" y="5" width="16" height="1" fill="#70E5A0"/>
+  <rect x="0" y="10" width="16" height="1" fill="#219366"/>
+  <!-- Staggered, square scales stay readable in a small board cell. -->
+  <g fill="#70E5A0">
+    <rect x="3" y="7" width="2" height="2"/>
+    <rect x="10" y="6" width="2" height="2"/>
+  </g>
+  <g fill="#219366">
+    <rect x="5" y="8" width="2" height="2"/>
+    <rect x="12" y="8" width="2" height="2"/>
+  </g>
+</svg>

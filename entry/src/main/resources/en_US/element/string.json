@@ -2,7 +2,7 @@
   "string": [
     {
       "name": "module_desc",
-      "value": "玩趣盒 - Classic & Puzzle"
+      "value": "LittleGames - 33 offline games across six categories"
     },
     {
       "name": "EntryAbility_desc",
@@ -18,7 +18,7 @@
     },
     {
       "name": "app_splash_subtitle",
-      "value": "13 mini-games. Pick one and play."
+      "value": "33 mini-games. Pick one and play."
     },
     {
       "name": "tab_featured",
@@ -58,11 +58,11 @@
     },
     {
       "name": "cat_classic",
-      "value": "Classic"
+      "value": "Arcade"
     },
     {
       "name": "cat_puzzle",
-      "value": "Puzzle"
+      "value": "Logic"
     },
     {
       "name": "search_no_result_prefix",
@@ -715,6 +715,650 @@
     {
       "name": "home_retry",
       "value": "Retry"
+    },
+    {
+      "name": "sudoku_generating",
+      "value": "Generating puzzle…"
+    },
+    {
+      "name": "sudoku_generation_failed",
+      "value": "Could not generate a puzzle. Please try again."
+    },
+    {
+      "name": "settings_title",
+      "value": "Settings"
+    },
+    {
+      "name": "settings_entry_desc",
+      "value": "Appearance, gameplay, data and about"
+    },
+    {
+      "name": "settings_intro",
+      "value": "Make every game feel right for you."
+    },
+    {
+      "name": "settings_appearance",
+      "value": "Appearance"
+    },
+    {
+      "name": "settings_theme",
+      "value": "Theme"
+    },
+    {
+      "name": "settings_theme_desc",
+      "value": "Applies immediately. System follows your device theme."
+    },
+    {
+      "name": "settings_theme_system",
+      "value": "System"
+    },
+    {
+      "name": "settings_theme_light",
+      "value": "Light"
+    },
+    {
+      "name": "settings_theme_dark",
+      "value": "Dark"
+    },
+    {
+      "name": "settings_theme_failed",
+      "value": "Could not change the theme. Please try again."
+    },
+    {
+      "name": "settings_gameplay",
+      "value": "Gameplay"
+    },
+    {
+      "name": "settings_difficulty",
+      "value": "Default difficulty"
+    },
+    {
+      "name": "settings_difficulty_desc",
+      "value": "Applies when you next enter a game with difficulty options."
+    },
+    {
+      "name": "settings_remember_difficulty",
+      "value": "Remember game difficulty"
+    },
+    {
+      "name": "settings_remember_difficulty_desc",
+      "value": "Use the last difficulty selected in each game; otherwise use the default."
+    },
+    {
+      "name": "settings_confirm_exit",
+      "value": "Confirm before leaving"
+    },
+    {
+      "name": "settings_confirm_exit_desc",
+      "value": "Protect progress from accidental exits. Turn off to leave immediately."
+    },
+    {
+      "name": "settings_data",
+      "value": "Data management"
+    },
+    {
+      "name": "settings_reset",
+      "value": "Restore default settings"
+    },
+    {
+      "name": "settings_reset_desc",
+      "value": "Reset appearance and gameplay preferences. Keep all scores."
+    },
+    {
+      "name": "settings_reset_confirm",
+      "value": "Restore the system theme, normal difficulty, vibration and exit confirmation. Disable difficulty memory and remove remembered difficulties. Scores are kept."
+    },
+    {
+      "name": "settings_restore",
+      "value": "Restore"
+    },
+    {
+      "name": "settings_cancel",
+      "value": "Cancel"
+    },
+    {
+      "name": "settings_reset_done",
+      "value": "Default settings restored"
+    },
+    {
+      "name": "settings_clear",
+      "value": "Clear play data"
+    },
+    {
+      "name": "settings_clear_desc",
+      "value": "Delete high scores, play counts and recent games."
+    },
+    {
+      "name": "settings_clear_confirm",
+      "value": "Delete all high scores, play counts and recent games? This cannot be undone. Appearance and gameplay preferences will be kept."
+    },
+    {
+      "name": "settings_clear_action",
+      "value": "Clear data"
+    },
+    {
+      "name": "settings_clear_done",
+      "value": "Play data cleared"
+    },
+    {
+      "name": "settings_about_section",
+      "value": "About"
+    },
+    {
+      "name": "settings_about",
+      "value": "About this app"
+    },
+    {
+      "name": "settings_about_desc",
+      "value": "App statement, privacy and help"
+    },
+    {
+      "name": "settings_version",
+      "value": "Version"
+    },
+    {
+      "name": "settings_version_unavailable",
+      "value": "Version unavailable"
+    },
+    {
+      "name": "settings_about_tagline",
+      "value": "33 little games across six categories"
+    },
+    {
+      "name": "settings_statement_title",
+      "value": "App statement"
+    },
+    {
+      "name": "settings_statement_content",
+      "value": "Little Games is a collection of local casual games. Scores track your personal play. Games use different scoring rules, so scores do not represent a shared competitive ranking. Enjoy games in moderation."
+    },
+    {
+      "name": "settings_privacy_title",
+      "value": "Privacy and local data"
+    },
+    {
+      "name": "settings_privacy_content",
+      "value": "This version requires no account and does not upload play data. High scores, play counts, recent games and settings are stored on this device, with no in-app cloud sync. Clearing play data removes scores and history; restoring defaults only resets preferences. Uninstalling or clearing app data may remove local records."
+    },
+    {
+      "name": "settings_permission_title",
+      "value": "Permissions"
+    },
+    {
+      "name": "settings_permission_content",
+      "value": "Vibration is used for supported touch feedback and completion cues. You can turn it off in Settings. The app then stops requesting vibration. Devices without vibration can still play normally."
+    },
+    {
+      "name": "settings_help_title",
+      "value": "Help"
+    },
+    {
+      "name": "settings_help_content",
+      "value": "Use the game header to change difficulty or restart. The default difficulty applies the next time you enter a game. With difficulty memory enabled, each game uses your last selection. Leaving does not save an unfinished board or level. Language and text size follow system settings."
+    },
+    {
+      "name": "settings_selected",
+      "value": "Selected"
+    },
+    {
+      "name": "settings_unselected",
+      "value": "Not selected"
+    },
+    {
+      "name": "immersive_light_content",
+      "value": "The floating bottom tabs use native HarmonyOS immersive materials, follow the system color theme, and adapt to device capability and thermal conditions."
+    },
+    {
+      "name": "continuation_restored",
+      "value": "Continued on this device"
+    },
+    {
+      "name": "continuation_restore_failed",
+      "value": "Unable to restore progress. Please reopen the game."
+    },
+    {
+      "name": "immersive_light_title",
+      "value": "Immersive light"
+    },
+    {
+      "name": "continuation_help_content",
+      "value": "Use the system continuation entry on a nearby phone or tablet signed in to the same HUAWEI ID to continue your game or page. Both devices need a compatible app version and system continuation enabled. Snake, Tetris, Whack-a-Mole and Brick Breaker pause on arrival; tap resume when ready. Wait for Sudoku generation to finish before continuing."
+    },
+    {
+      "name": "continuation_help_title",
+      "value": "Continue on another device"
+    },
+    {
+      "name": "cat_board",
+      "value": "Board"
+    },
+    {
+      "name": "cat_number",
+      "value": "Numbers"
+    },
+    {
+      "name": "cat_memory",
+      "value": "Focus"
+    },
+    {
+      "name": "cat_reaction",
+      "value": "Reaction"
+    },
+    {
+      "name": "collection_score",
+      "value": "Challenge points"
+    },
+    {
+      "name": "collection_rules",
+      "value": "How to play"
+    },
+    {
+      "name": "collection_ready",
+      "value": "Ready"
+    },
+    {
+      "name": "collection_check",
+      "value": "Check grid"
+    },
+    {
+      "name": "collection_check_again",
+      "value": "Some clues do not match yet. Keep adjusting."
+    },
+    {
+      "name": "collection_turn",
+      "value": "Local two-player · Player %d to move"
+    },
+    {
+      "name": "collection_steps",
+      "value": "Moves: %d"
+    },
+    {
+      "name": "collection_round",
+      "value": "Question %d / 10 · Score %d"
+    },
+    {
+      "name": "collection_player_win",
+      "value": "Player %d wins"
+    },
+    {
+      "name": "collection_draw",
+      "value": "Draw"
+    },
+    {
+      "name": "collection_win",
+      "value": "Challenge complete"
+    },
+    {
+      "name": "collection_fail",
+      "value": "Round over"
+    },
+    {
+      "name": "collection_score_result",
+      "value": "Round score: %d"
+    },
+    {
+      "name": "collection_reaction_result",
+      "value": "Response: %d ms"
+    },
+    {
+      "name": "collection_reaction_start",
+      "value": "Tap to start"
+    },
+    {
+      "name": "collection_reaction_wait",
+      "value": "Wait for the signal…"
+    },
+    {
+      "name": "collection_reaction_go",
+      "value": "Tap now!"
+    },
+    {
+      "name": "collection_target",
+      "value": "Next: %d"
+    },
+    {
+      "name": "collection_limit",
+      "value": "Moves %d / %d"
+    },
+    {
+      "name": "collection_progress",
+      "value": "Recalled %d / %d"
+    },
+    {
+      "name": "collection_stones",
+      "value": "Stones remaining: %d"
+    },
+    {
+      "name": "collection_rows",
+      "value": "Row clues (top to bottom)"
+    },
+    {
+      "name": "collection_columns",
+      "value": "Column clues (left to right)"
+    },
+    {
+      "name": "collection_post",
+      "value": "Post %d"
+    },
+    {
+      "name": "collection_empty",
+      "value": "Empty"
+    },
+    {
+      "name": "collection_cell",
+      "value": "Row %d, column %d: %s"
+    },
+    {
+      "name": "collection_count",
+      "value": "%d games"
+    },
+    {
+      "name": "collection_new",
+      "value": "New games · Try something different"
+    },
+    {
+      "name": "collection_duel_score",
+      "value": "Completed rounds"
+    },
+    {
+      "name": "game_tictactoe_name",
+      "value": "Three in a Row"
+    },
+    {
+      "name": "game_tictactoe_desc",
+      "value": "Local two-player three-in-a-row."
+    },
+    {
+      "name": "game_tictactoe_rules",
+      "value": "Take turns placing × and ○. Make a line of three horizontally, vertically or diagonally. A full board without a line is a draw."
+    },
+    {
+      "name": "game_gomoku_name",
+      "value": "Five in a Row"
+    },
+    {
+      "name": "game_gomoku_desc",
+      "value": "Make five in a row on a 9×9 board."
+    },
+    {
+      "name": "game_gomoku_rules",
+      "value": "Two local players take turns. Five or more consecutive pieces wins in any direction. Free placement rules; no forbidden moves."
+    },
+    {
+      "name": "game_reversi_name",
+      "value": "Disc Reversal"
+    },
+    {
+      "name": "game_reversi_desc",
+      "value": "Bracket opposing discs to capture them."
+    },
+    {
+      "name": "game_reversi_rules",
+      "value": "Play locally with two players. Place a disc to bracket opponents along a straight line and flip them. A player with no move passes automatically. When neither can move, most discs wins. Dots mark legal moves."
+    },
+    {
+      "name": "game_fourline_name",
+      "value": "Falling Four"
+    },
+    {
+      "name": "game_fourline_desc",
+      "value": "Drop pieces and connect four."
+    },
+    {
+      "name": "game_fourline_rules",
+      "value": "Two local players tap a column in turn. Pieces fall to the lowest empty slot. Connect four in any direction to win."
+    },
+    {
+      "name": "game_nim_name",
+      "value": "Take the Stones"
+    },
+    {
+      "name": "game_nim_desc",
+      "value": "Take one to three; the last stone wins."
+    },
+    {
+      "name": "game_nim_rules",
+      "value": "Two local players remove 1–3 stones per turn, up to the remaining count. Taking the last stone wins. Difficulty changes the starting pile."
+    },
+    {
+      "name": "game_lights_name",
+      "value": "Cross Lights"
+    },
+    {
+      "name": "game_lights_desc",
+      "value": "Toggle a cross to turn all lights off."
+    },
+    {
+      "name": "game_lights_rules",
+      "value": "Tap a cell to toggle it and its four immediate neighbors. Turn off every warm yellow light. Every puzzle is generated from a solved board."
+    },
+    {
+      "name": "game_flood_name",
+      "value": "Region Fill"
+    },
+    {
+      "name": "game_flood_desc",
+      "value": "Unify the board from the top-left region."
+    },
+    {
+      "name": "game_flood_rules",
+      "value": "Choose a numbered color to recolor the connected top-left region and absorb matching neighbors. Unify the board within the move limit. Numbers identify colors too."
+    },
+    {
+      "name": "game_maze_name",
+      "value": "Maze Walk"
+    },
+    {
+      "name": "game_maze_desc",
+      "value": "Find a path through a generated maze."
+    },
+    {
+      "name": "game_maze_rules",
+      "value": "The robot is you, the green arch is the exit, and hedges are walls. Tap an adjacent open cell or use the direction buttons. Reach the exit. Every generated maze is connected."
+    },
+    {
+      "name": "game_hanoi_name",
+      "value": "Tower Transfer"
+    },
+    {
+      "name": "game_hanoi_desc",
+      "value": "Move a tower between three posts."
+    },
+    {
+      "name": "game_hanoi_rules",
+      "value": "Select a source post, then a destination. Only the top disc can move; larger discs cannot sit on smaller ones. Move every disc to post 3. Smaller numbers mean smaller discs."
+    },
+    {
+      "name": "game_peg_name",
+      "value": "Last Peg"
+    },
+    {
+      "name": "game_peg_desc",
+      "value": "Jump over pegs until only one remains."
+    },
+    {
+      "name": "game_peg_rules",
+      "value": "Select a peg, then an empty hole two cells away in a straight line. Jump over and remove the middle peg. Leave one peg to win. No legal jumps ends the game. Boards are generated with reverse legal moves."
+    },
+    {
+      "name": "game_nonogram_name",
+      "value": "Run Grid"
+    },
+    {
+      "name": "game_nonogram_desc",
+      "value": "Fill a grid using row and column runs."
+    },
+    {
+      "name": "game_nonogram_rules",
+      "value": "Clues give lengths of filled runs. For example, 2 1 means two filled cells, at least one gap, then one filled cell. Tap to toggle and check when ready. Any grid matching all clues is accepted."
+    },
+    {
+      "name": "game_arithmetic_name",
+      "value": "Mental Arithmetic"
+    },
+    {
+      "name": "game_arithmetic_desc",
+      "value": "Ten questions of addition, subtraction and multiplication."
+    },
+    {
+      "name": "game_arithmetic_rules",
+      "value": "Choose the correct answer to each of ten questions. Correct answers earn points based on difficulty; wrong answers earn none."
+    },
+    {
+      "name": "game_compare_name",
+      "value": "Compare Expressions"
+    },
+    {
+      "name": "game_compare_desc",
+      "value": "Compare the values of two expressions."
+    },
+    {
+      "name": "game_compare_rules",
+      "value": "Compare the two expressions and choose <, = or >. Answer ten questions; correct answers earn points."
+    },
+    {
+      "name": "game_sequence_name",
+      "value": "Number Patterns"
+    },
+    {
+      "name": "game_sequence_desc",
+      "value": "Find the pattern and complete the sequence."
+    },
+    {
+      "name": "game_sequence_rules",
+      "value": "Choose the next term. Sequences use a constant difference; hard mode may also use doubling. Ten questions, scored for correct answers."
+    },
+    {
+      "name": "game_binary_name",
+      "value": "Binary Decoder"
+    },
+    {
+      "name": "game_binary_desc",
+      "value": "Convert binary numbers to decimal."
+    },
+    {
+      "name": "game_binary_rules",
+      "value": "Convert the base-2 number to base 10 and select an answer. Ten questions. Higher difficulty increases the number range."
+    },
+    {
+      "name": "game_targetsum_name",
+      "value": "Missing Addend"
+    },
+    {
+      "name": "game_targetsum_desc",
+      "value": "Find the missing number in an addition."
+    },
+    {
+      "name": "game_targetsum_rules",
+      "value": "Given a sum and two addends, choose the missing addend. Ten questions; correct answers score points."
+    },
+    {
+      "name": "game_schulte_name",
+      "value": "Number Search"
+    },
+    {
+      "name": "game_schulte_desc",
+      "value": "Find all numbers in ascending order."
+    },
+    {
+      "name": "game_schulte_rules",
+      "value": "Tap numbers in order from 1 to the last. Wrong taps count as moves but do not advance the target. Fewer taps earns a better score."
+    },
+    {
+      "name": "game_memorysequence_name",
+      "value": "Sequence Recall"
+    },
+    {
+      "name": "game_memorysequence_desc",
+      "value": "Memorize and reproduce a digit sequence."
+    },
+    {
+      "name": "game_memorysequence_rules",
+      "value": "Study the sequence, then tap Ready to hide it. Tap the digits in the same order, including repetitions. One incorrect tap ends the round."
+    },
+    {
+      "name": "game_missing_name",
+      "value": "Missing Memory"
+    },
+    {
+      "name": "game_missing_desc",
+      "value": "Remember a set and find the missing number."
+    },
+    {
+      "name": "game_missing_rules",
+      "value": "Memorize the displayed set, then tap Ready. One number disappears. Choose the missing number from memory. Ten questions; correct answers earn points."
+    },
+    {
+      "name": "game_reaction_name",
+      "value": "Signal Tap"
+    },
+    {
+      "name": "game_reaction_desc",
+      "value": "Wait for the signal and test your response."
+    },
+    {
+      "name": "game_reaction_rules",
+      "value": "Tap to start and wait for the Tap now signal. Tapping early fails. Your response time is shown in milliseconds; score is 2000 minus that time, minimum zero. Backgrounding or opening exit confirmation resets the timing trial."
+    },
+    {
+      "name": "collection_correct",
+      "value": "Previous answer correct · %s"
+    },
+    {
+      "name": "collection_wrong",
+      "value": "Previous correct answer: %s"
+    },
+    {
+      "name": "collection_art_robot",
+      "value": "Robot, your position"
+    },
+    {
+      "name": "collection_art_exit",
+      "value": "Exit arch"
+    },
+    {
+      "name": "collection_art_wall",
+      "value": "Hedge wall"
+    },
+    {
+      "name": "collection_art_path",
+      "value": "Path"
+    },
+    {
+      "name": "collection_art_player",
+      "value": "Player %d piece"
+    },
+    {
+      "name": "collection_art_on",
+      "value": "Light on"
+    },
+    {
+      "name": "collection_art_off",
+      "value": "Light off"
+    },
+    {
+      "name": "collection_art_filled",
+      "value": "Filled"
+    },
+    {
+      "name": "collection_art_peg",
+      "value": "Peg"
+    },
+    {
+      "name": "collection_art_legal",
+      "value": "Legal move"
+    },
+    {
+      "name": "collection_art_hidden",
+      "value": "Hidden memory card"
+    },
+    {
+      "name": "collection_art_tower",
+      "value": "Post %d, discs from top to bottom: %s"
+    },
+    {
+      "name": "collection_art_card",
+      "value": "Memory card %d"
     }
   ]
 }

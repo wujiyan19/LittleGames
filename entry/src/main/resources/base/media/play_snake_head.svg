@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <!-- Right-facing, top-down pixel sprite. All edges follow the 16 x 16 grid. -->
+  <!-- Stepped outline and flat neck keep the head distinct from the body. -->
+  <g fill="#14543D">
+    <rect x="0" y="4" width="3" height="8"/>
+    <rect x="2" y="2" width="8" height="12"/>
+    <rect x="10" y="3" width="2" height="10"/>
+    <rect x="12" y="5" width="2" height="6"/>
+  </g>
+  <g fill="#2FB97B">
+    <rect x="0" y="5" width="3" height="6"/>
+    <rect x="3" y="3" width="6" height="10"/>
+    <rect x="9" y="4" width="2" height="8"/>
+    <rect x="11" y="6" width="2" height="4"/>
+  </g>
+  <!-- Flat highlights and shadows, without gradients or rounded edges. -->
+  <g fill="#70E5A0">
+    <rect x="3" y="3" width="4" height="2"/>
+    <rect x="2" y="5" width="3" height="1"/>
+    <rect x="5" y="6" width="2" height="2"/>
+  </g>
+  <rect x="3" y="11" width="4" height="2" fill="#219366"/>
+  <!-- Eyes sit at the front, with pupils looking in the travel direction. -->
+  <g fill="#F5FFE9">
+    <rect x="8" y="3" width="3" height="3"/>
+    <rect x="8" y="10" width="3" height="3"/>
+  </g>
+  <g fill="#103D2F">
+    <rect x="10" y="4" width="1" height="2"/>
+    <rect x="10" y="10" width="1" height="2"/>
+    <rect x="12" y="6" width="1" height="1"/>
+    <rect x="12" y="9" width="1" height="1"/>
+  </g>
+  <!-- Forked tongue stays inside the cell, including at the board edges. -->
+  <g fill="#E85573">
+    <rect x="13" y="7" width="2" height="2"/>
+    <rect x="15" y="6" width="1" height="1"/>
+    <rect x="15" y="9" width="1" height="1"/>
+  </g>
+</svg>

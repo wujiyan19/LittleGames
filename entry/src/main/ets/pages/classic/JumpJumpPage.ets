@@ -1,11 +1,12 @@
+import { GameSessionTransfer } from '../../common/GameSessionTransfer';
 /**
  * 跳一跳 —— View 层（展示与动画）
  *
  * 动画口径（遵守 AGENTS.md ArkUI 动画规范）：
- * - 角色跳跃/下落位移用 offset（合成属性，不触发布局）；
+ * - 角色跳跃/下落位移用 translate（图形变换，不触发布局）；
  * - 角色蓄力压缩用 scale（不改 height）；
  * - 蓄力条增长用 scale + transformOrigin（不改 width）；
- * - 不使用 renderGroup（含全屏长按手势，开启可能影响事件）。
+ * - 单张角色图片无需额外的子树缓存。
  * 规则/状态在 Model/ViewModel；本层不 import Model 类型。
  */
 import { SemanticColors, RadiusTokens, FontTokens, SpacingTokens } from '../../common/DesignTokens';
@@ -16,6 +17,7 @@ import { GameResultDialog } from '../../components/GameResultDialog';
 import { ExitConfirmDialog } from '../../components/ExitConfirmDialog';
 import { GameLifecycleBus } from '../../common/GameLifecycleBus';
 import { JumpJumpViewModel, PlatformData } from '../../viewmodel/JumpJumpViewModel';
+import { DisplayFrameLoop } from '../../common/DisplayFrameLoop';
 
 /** 平台高度（vp） */
 const PLATFORM_H = 18;
@@ -36,8 +38,9 @@ export struct JumpJumpPage {
   @Local areaH: number = 0;
 
   aboutToAppear(): void {
+    this.viewModel.setFrameLoop(new DisplayFrameLoop(this.getUIContext()));
     GameLifecycleBus.attach(this.viewModel);
-    this.startGame();
+    if (!GameSessionTransfer.restore(this.viewModel)) { this.startGame(); }
   }
 
   aboutToDisappear(): void {
@@ -63,8 +66,8 @@ export struct JumpJumpPage {
   }
 
   /** 平台无障碍文案：下一平台单独标识（供测试定位） */
-  private platformA11y(index: number): Resource {
-    if (index === this.viewModel.currentIndex + 1) {
+  private platformA11y(id: number): Resource {
+    if (this.viewModel.isNextPlatform(id)) {
       return $r('app.string.a11y_jumpjump_next_platform');
     }
     return $r('app.string.a11y_jumpjump_platform');
@@ -128,25 +131,25 @@ export struct JumpJumpPage {
         // 游戏区：全屏长按蓄力
         Stack({ alignContent: Alignment.TopStart }) {
           // 平台层（只渲染屏幕可见范围内的平台）
-          ForEach(this.viewModel.platforms, (p: PlatformData, index: number) => {
+          ForEach(this.viewModel.platforms, (p: PlatformData) => {
             if (p.centerX + p.width / 2 >= -20 && p.centerX - p.width / 2 <= this.areaW + 20) {
               Image($r('app.media.play_jump_platform'))
                 .width(p.width).height(PLATFORM_H)
                 .objectFit(ImageFit.Fill)
-                .opacity(index === this.viewModel.currentIndex ? 1 : 0.75)
-                .offset({ x: p.centerX - p.width / 2, y: this.groundY() })
-                .id(index === this.viewModel.currentIndex + 1
+                .opacity(this.viewModel.isCurrentPlatform(p.id) ? 1 : 0.75)
+                .translate({ x: p.centerX - p.width / 2, y: this.groundY() })
+                .id(this.viewModel.isNextPlatform(p.id)
                   ? 'jumpjump_next_platform' : 'jumpjump_platform_' + p.id)
-                .accessibilityText(this.platformA11y(index))
+                .accessibilityText(this.platformA11y(p.id))
             }
           }, (p: PlatformData) => p.id.toString())
 
-          // 角色（压缩用 scale，位移用 offset）
+          // 角色（压缩用 scale，位移用 translate）
           Image($r('app.media.play_jump_frog'))
           .width(PLAYER_W).height(PLAYER_H)
           .objectFit(ImageFit.Fill)
           .scale({ x: this.viewModel.playerScaleX, y: this.viewModel.playerScaleY })
-          .offset({
+          .translate({
             x: this.viewModel.playerX + this.viewModel.playerJumpX - PLAYER_W / 2,
             y: this.groundY() - PLAYER_H + this.viewModel.playerJumpY + this.viewModel.playerDropY
           })
@@ -158,7 +161,7 @@ export struct JumpJumpPage {
             SymbolGlyph($r('sys.symbol.bolt_fill'))
               .fontSize(16)
               .fontColor([SemanticColors.accent])
-              .offset({
+              .translate({
                 x: this.viewModel.playerX - 8,
                 y: this.groundY() - PLAYER_H - 26
               })
@@ -232,7 +235,6 @@ export struct JumpJumpPage {
       if (this.viewModel.confirmExit) {
         ExitConfirmDialog({
           onConfirm: () => {
-            this.viewModel.dismissExitConfirm();
             this.pathStack.pop();
           },
           onCancel: () => { this.viewModel.dismissExitConfirm(); }

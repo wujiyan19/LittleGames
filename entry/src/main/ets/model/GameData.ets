@@ -1,8 +1,10 @@
 import { GameCategory, GameInfo } from '../common/GameConstants';
+import { collectionGames } from './CollectionCatalog';
 import { preferences } from '@kit.ArkData';
 import { Context } from '@kit.AbilityKit';
 import { BusinessError } from '@kit.BasicServicesKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
+import { GameDifficulty } from '../common/GameDifficulty';
 
 const STORE_NAME = 'little_games_data';
 const KEY_HIGH_SCORES = 'highScores';
@@ -20,8 +22,13 @@ export class GameDataManager {
   private static store: preferences.Preferences | null = null;
   /** 防抖定时器句柄，-1 表示无待落盘任务 */
   private static flushTimer: number = -1;
+  private static dirty: boolean = false;
+  private static pendingFlushes: number = 0;
   /** 用户设置（持久化） */
-  private static settings: Record<string, boolean> = { 'hapticsEnabled': true };
+  private static settings: Record<string, boolean | string> = {
+    'hapticsEnabled': true, 'themeMode': 'system', 'defaultDifficulty': 'normal',
+    'rememberDifficulty': false, 'confirmExitEnabled': true
+  };
   /** 最近进入的游戏 ID，按新到旧排列。 */
   private static recentGameIds: string[] = [];
   private static games: GameInfo[] = [
@@ -48,7 +55,7 @@ export class GameDataManager {
     {
       id: '2048',
       name: $r('app.string.game_2048_name'),
-      category: GameCategory.CLASSIC,
+      category: GameCategory.NUMBER,
       icon: $r('app.media.game_2048'),
       description: $r('app.string.game_2048_desc'),
       highScore: 0,
@@ -58,7 +65,7 @@ export class GameDataManager {
     {
       id: 'whackmole',
       name: $r('app.string.game_whackmole_name'),
-      category: GameCategory.CLASSIC,
+      category: GameCategory.REACTION,
       icon: $r('app.media.game_whackmole'),
       description: $r('app.string.game_whackmole_desc'),
       highScore: 0,
@@ -68,7 +75,7 @@ export class GameDataManager {
     {
       id: 'minesweeper',
       name: $r('app.string.game_minesweeper_name'),
-      category: GameCategory.CLASSIC,
+      category: GameCategory.PUZZLE,
       icon: $r('app.media.game_minesweeper'),
       description: $r('app.string.game_minesweeper_desc'),
       highScore: 0,
@@ -78,7 +85,7 @@ export class GameDataManager {
     {
       id: 'sudoku',
       name: $r('app.string.game_sudoku_name'),
-      category: GameCategory.PUZZLE,
+      category: GameCategory.NUMBER,
       icon: $r('app.media.game_sudoku'),
       description: $r('app.string.game_sudoku_desc'),
       highScore: 0,
@@ -108,7 +115,7 @@ export class GameDataManager {
     {
       id: 'guessnumber',
       name: $r('app.string.game_guessnumber_name'),
-      category: GameCategory.PUZZLE,
+      category: GameCategory.NUMBER,
       icon: $r('app.media.game_guessnumber'),
       description: $r('app.string.game_guessnumber_desc'),
       highScore: 0,
@@ -118,7 +125,7 @@ export class GameDataManager {
     {
       id: 'memorycard',
       name: $r('app.string.game_memorycard_name'),
-      category: GameCategory.PUZZLE,
+      category: GameCategory.MEMORY,
       icon: $r('app.media.game_memorycard'),
       description: $r('app.string.game_memorycard_desc'),
       highScore: 0,
@@ -128,7 +135,7 @@ export class GameDataManager {
     {
       id: 'jumpjump',
       name: $r('app.string.game_jumpjump_name'),
-      category: GameCategory.CLASSIC,
+      category: GameCategory.REACTION,
       icon: $r('app.media.game_jumpjump'),
       description: $r('app.string.game_jumpjump_desc'),
       highScore: 0,
@@ -154,7 +161,8 @@ export class GameDataManager {
       highScore: 0,
       playCount: 0,
       scoreLabel: $r('app.string.game_match3_score_label'),
-    }
+    },
+    ...collectionGames()
   ];
 
   static init(context: Context): void {
@@ -189,10 +197,13 @@ export class GameDataManager {
     const settingsJson = GameDataManager.store.getSync(KEY_SETTINGS, '') as string;
     if (settingsJson.length > 0) {
       try {
-        const parsed = JSON.parse(settingsJson) as Record<string, boolean>;
+        const parsed = JSON.parse(settingsJson) as Record<string, boolean | string>;
         const keys = Object.keys(parsed);
         for (let i = 0; i < keys.length; i++) {
-          GameDataManager.settings[keys[i]] = parsed[keys[i]];
+          const value = parsed[keys[i]];
+          if (typeof value === 'boolean' || typeof value === 'string') {
+            GameDataManager.settings[keys[i]] = value;
+          }
         }
       } catch (e) {
         hilog.error(0x0000, 'LittleGames', 'Failed to parse settings, fallback to defaults');
@@ -221,6 +232,7 @@ export class GameDataManager {
    * 若各自立即落盘，等于一次开局做两遍全量序列化 + 两次磁盘 IO。
    */
   private static markDirty(): void {
+    GameDataManager.dirty = true;
     if (!GameDataManager.store) { return; }
     if (GameDataManager.flushTimer !== -1) {
       clearTimeout(GameDataManager.flushTimer);
@@ -234,26 +246,37 @@ export class GameDataManager {
   /** 实际落盘：全量序列化游戏数据。关键操作使用同步刷盘。 */
   private static persist(sync: boolean = false): void {
     if (!GameDataManager.store) { return; }
-    const scores: Record<string, number> = {};
-    const counts: Record<string, number> = {};
-    for (let i = 0; i < GameDataManager.games.length; i++) {
-      const g = GameDataManager.games[i];
-      scores[g.id] = g.highScore;
-      counts[g.id] = g.playCount;
-    }
+    if (!GameDataManager.dirty && (!sync || GameDataManager.pendingFlushes === 0)) { return; }
     try {
-      GameDataManager.store.putSync(KEY_HIGH_SCORES, JSON.stringify(scores));
-      GameDataManager.store.putSync(KEY_PLAY_COUNTS, JSON.stringify(counts));
-      GameDataManager.store.putSync(KEY_SETTINGS, JSON.stringify(GameDataManager.settings));
-      GameDataManager.store.putSync(KEY_RECENT_GAMES, JSON.stringify(GameDataManager.recentGameIds));
+      if (GameDataManager.dirty) {
+        const scores: Record<string, number> = {};
+        const counts: Record<string, number> = {};
+        for (let i = 0; i < GameDataManager.games.length; i++) {
+          const game: GameInfo = GameDataManager.games[i];
+          scores[game.id] = game.highScore;
+          counts[game.id] = game.playCount;
+        }
+        GameDataManager.store.putSync(KEY_HIGH_SCORES, JSON.stringify(scores));
+        GameDataManager.store.putSync(KEY_PLAY_COUNTS, JSON.stringify(counts));
+        GameDataManager.store.putSync(KEY_SETTINGS, JSON.stringify(GameDataManager.settings));
+        GameDataManager.store.putSync(KEY_RECENT_GAMES, JSON.stringify(GameDataManager.recentGameIds));
+        GameDataManager.dirty = false;
+      }
       if (sync) {
         GameDataManager.store.flushSync();
       } else {
-        GameDataManager.store.flush().catch((err: BusinessError) => {
+        const flush: Promise<void> = GameDataManager.store.flush();
+        GameDataManager.pendingFlushes++;
+        flush.then(() => {
+          GameDataManager.pendingFlushes--;
+        }).catch((err: BusinessError) => {
+          GameDataManager.pendingFlushes--;
+          GameDataManager.dirty = true;
           hilog.error(0x0000, 'LittleGames', 'Failed to flush preferences: %{public}d', err.code);
         });
       }
     } catch (e) {
+      GameDataManager.dirty = true;
       // 写入失败不影响游戏流程
       hilog.error(0x0000, 'LittleGames', 'Failed to persist game data');
     }
@@ -326,13 +349,79 @@ export class GameDataManager {
   /** 获取设置项，不存在时返回默认值 */
   static getSetting(key: string, defaultValue: boolean): boolean {
     const val = GameDataManager.settings[key];
-    if (val === undefined) { return defaultValue; }
-    return val;
+    return typeof val === 'boolean' ? val : defaultValue;
+  }
+
+  static getTextSetting(key: string, defaultValue: string): string {
+    const val = GameDataManager.settings[key];
+    return typeof val === 'string' ? val : defaultValue;
+  }
+
+  static getThemeMode(): string {
+    const value = GameDataManager.getTextSetting('themeMode', 'system');
+    return value === 'light' || value === 'dark' ? value : 'system';
+  }
+
+  static getDefaultDifficulty(): GameDifficulty {
+    return GameDataManager.parseDifficulty(GameDataManager.getTextSetting('defaultDifficulty', 'normal'));
+  }
+
+  private static parseDifficulty(value: string): GameDifficulty {
+    if (value === GameDifficulty.EASY) { return GameDifficulty.EASY; }
+    if (value === GameDifficulty.HARD) { return GameDifficulty.HARD; }
+    return GameDifficulty.NORMAL;
+  }
+
+  /** 仅在进入游戏时读取；重开当前对局保持当前难度。 */
+  static getInitialDifficulty(gameId: string): GameDifficulty {
+    const fallback: GameDifficulty = GameDataManager.getDefaultDifficulty();
+    if (!GameDataManager.getSetting('rememberDifficulty', false)) { return fallback; }
+    const value: string = GameDataManager.getTextSetting('difficulty_' + gameId, fallback);
+    if (value === GameDifficulty.EASY || value === GameDifficulty.NORMAL || value === GameDifficulty.HARD) {
+      return GameDataManager.parseDifficulty(value);
+    }
+    return fallback;
+  }
+
+  static rememberGameDifficulty(gameId: string, difficulty: GameDifficulty): void {
+    if (GameDataManager.getSetting('rememberDifficulty', false)) {
+      GameDataManager.setTextSetting('difficulty_' + gameId, difficulty);
+    }
+  }
+
+  static setTextSetting(key: string, value: string): void {
+    if (GameDataManager.settings[key] === value) { return; }
+    GameDataManager.settings[key] = value;
+    GameDataManager.dirty = true;
+    GameDataManager.flushNow();
+  }
+
+  /** 仅恢复偏好设置，保留战绩。页面需同时应用恢复后的主题。 */
+  static resetSettings(): void {
+    GameDataManager.settings = {
+      'hapticsEnabled': true, 'themeMode': 'system', 'defaultDifficulty': 'normal',
+      'rememberDifficulty': false, 'confirmExitEnabled': true
+    };
+    GameDataManager.dirty = true;
+    GameDataManager.flushNow();
+  }
+
+  /** 清空战绩和最近游玩列表，保留用户设置。调用前由设置页确认。 */
+  static clearPlayData(): void {
+    for (let i = 0; i < GameDataManager.games.length; i++) {
+      GameDataManager.games[i].highScore = 0;
+      GameDataManager.games[i].playCount = 0;
+    }
+    GameDataManager.recentGameIds = [];
+    GameDataManager.dirty = true;
+    GameDataManager.flushNow();
   }
 
   /** 设置开关立即同步刷盘，避免快速结束进程时丢失。 */
   static setSetting(key: string, value: boolean): void {
+    if (GameDataManager.settings[key] === value) { return; }
     GameDataManager.settings[key] = value;
+    GameDataManager.dirty = true;
     GameDataManager.flushNow();
   }
 }

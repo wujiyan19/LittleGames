@@ -40,10 +40,11 @@ export class WhackMoleRules {
   spawnHoles(rng: RandomSource): boolean[] {
     const next = this.initialHoles();
     const count = rng.next() < 0.3 ? 2 : 1;
-    let placed = 0;
-    while (placed < count) {
-      const idx = Math.floor(rng.next() * HOLE_COUNT);
-      if (!next[idx]) { next[idx] = true; placed++; }
+    const available: number[] = [];
+    for (let i = 0; i < HOLE_COUNT; i++) { available.push(i); }
+    for (let i = 0; i < count; i++) {
+      const pick: number = Math.floor(rng.next() * available.length);
+      const idx: number = available.splice(pick, 1)[0]; next[idx] = true;
     }
     return next;
   }

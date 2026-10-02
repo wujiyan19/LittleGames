@@ -4,7 +4,7 @@
  * 位掩码回溯求解器 + 题面生成（唯一解校验）+ 完成校验。
  * 一维 81 格棋盘（0 为空）。生成用注入的 RandomSource，便于确定性单测。
  */
-import { GameDifficulty } from '../../common/GameConstants';
+import { GameDifficulty } from '../../common/GameDifficulty';
 import { RandomSource, SeededRandom } from './RandomSource';
 
 /** 生成的题面 + 指纹（供「不连续重复」去重） */
@@ -70,7 +70,8 @@ export class SudokuRules {
   }
 
   // 依据当前棋盘重建行/列/宫占用掩码
-  private buildMasks(grid: number[]): void {
+  private buildMasks(grid: number[]): boolean {
+    if (grid.length !== 81) { return false; }
     for (let i = 0; i < 9; i++) {
       this.rowMask[i] = 0;
       this.colMask[i] = 0;
@@ -78,13 +79,16 @@ export class SudokuRules {
     }
     for (let i = 0; i < 81; i++) {
       const v = grid[i];
+      if (!Number.isInteger(v) || v < 0 || v > 9) { return false; }
       if (v === 0) { continue; }
       const bit = 1 << (v - 1);
       const b = this.boxOf[i];
+      if (((this.rowMask[Math.floor(i / 9)] | this.colMask[i % 9] | this.boxMask[b]) & bit) !== 0) { return false; }
       this.rowMask[Math.floor(i / 9)] = this.rowMask[Math.floor(i / 9)] | bit;
       this.colMask[i % 9] = this.colMask[i % 9] | bit;
       this.boxMask[b] = this.boxMask[b] | bit;
     }
+    return true;
   }
 
   private candidateMask(idx: number): number {
@@ -182,8 +186,9 @@ export class SudokuRules {
 
   countSolutions(grid: number[]): number {
     this.solutionCount = 0;
+    if (grid.length !== 81) { return 0; }
     const work = this.copyGrid(grid);
-    this.buildMasks(work);
+    if (!this.buildMasks(work)) { return 0; }
     this.solveCountBit(work);
     return this.solutionCount;
   }
@@ -279,6 +284,7 @@ export class SudokuRules {
 
   /** 全部填满且无冲突即完成 */
   isComplete(grid: number[]): boolean {
+    if (grid.length !== 81 || grid.some((value: number) => !Number.isInteger(value) || value < 1 || value > 9)) { return false; }
     for (let r = 0; r < 9; r++) {
       for (let c = 0; c < 9; c++) {
         const v = grid[r * 9 + c];

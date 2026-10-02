@@ -84,12 +84,21 @@ export class MinesweeperRules {
    */
   placeMines(board: number[][], mineCount: number, safeR: number, safeC: number, rng: RandomSource): number[][] {
     const next = this.copyNum(board);
-    let placed = 0;
-    while (placed < mineCount) {
-      const r = Math.floor(rng.next() * this.rows);
-      const c = Math.floor(rng.next() * this.cols);
-      if (Math.abs(r - safeR) <= 1 && Math.abs(c - safeC) <= 1) { continue; }
-      if (next[r][c] !== -1) { next[r][c] = -1; placed++; }
+    const candidates: number[] = [];
+    for (let r = 0; r < this.rows; r++) {
+      for (let c = 0; c < this.cols; c++) {
+        next[r][c] = 0;
+        if (Math.abs(r - safeR) > 1 || Math.abs(c - safeC) > 1) { candidates.push(r * this.cols + c); }
+      }
+    }
+    if (!Number.isInteger(mineCount) || mineCount < 0 || mineCount > candidates.length) {
+      throw new Error('Mine count exceeds available cells');
+    }
+    // 从安全区外的候选格中不放回抽样，重复随机值也不会卡在首点或已布雷格。
+    for (let i = 0; i < mineCount; i++) {
+      const selected: number = i + Math.floor(rng.next() * (candidates.length - i));
+      const at: number = candidates[selected]; candidates[selected] = candidates[i]; candidates[i] = at;
+      next[Math.floor(at / this.cols)][at % this.cols] = -1;
     }
     for (let r = 0; r < this.rows; r++) {
       for (let c = 0; c < this.cols; c++) {

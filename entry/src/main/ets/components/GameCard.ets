@@ -74,6 +74,7 @@ export struct GameCard {
     .backgroundColor(SemanticColors.surface)
 
     .alignItems(HorizontalAlign.Start)
+    .renderGroup(true)
     .scale({ x: this.isPressed ? 0.95 : 1.0, y: this.isPressed ? 0.95 : 1.0 })
     .accessibilityGroup(true)
     .accessibilityText(this.buildA11yText())

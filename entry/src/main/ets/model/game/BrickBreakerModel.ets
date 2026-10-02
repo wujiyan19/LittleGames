@@ -2,7 +2,7 @@
  * 打砖块 —— Model 层（纯逻辑，零 ArkUI 依赖）
  *
  * 只有「数据 + 规则」，不引用任何状态管理装饰器 / UI / 持久化，
- * 可脱离 ArkUI 运行时直接单测。规则类无状态，调用方持有状态。
+ * 可脱离 ArkUI 运行时直接单测。对局状态由调用方持有，规则类只缓存固定砖块几何。
  */
 import { RandomSource } from './RandomSource';
 
@@ -70,6 +70,8 @@ export class BrickRect {
  * 打砖块规则。无状态：所有游戏状态由调用方（ViewModel）持有并传入。
  */
 export class BrickBreakerRules {
+  /** 几何恒定，按格缓存；不同关卡可以复用，不在每一步创建碰撞矩形。 */
+  private rects: BrickRect[] = [];
   // 游戏区域尺寸（vp）
   static readonly GAME_WIDTH: number = 320;
   static readonly GAME_HEIGHT: number = 400;
@@ -93,6 +95,8 @@ export class BrickBreakerRules {
   // 球速
   static readonly BASE_SPEED: number = 3;
   static readonly SPEED_INCREMENT: number = 0.5;
+  // 每次物理推进不超过球直径，避免高关卡一步跨过挡板或砖块的碰撞区域。
+  static readonly MAX_SPEED: number = 12;
 
   // 每行砖块分值（靠近顶部的行分值更高）
   static readonly ROW_SCORES: number[] = [50, 40, 30, 20, 10, 50, 40, 30];
@@ -106,10 +110,15 @@ export class BrickBreakerRules {
 
   /** 计算某行某列砖块的矩形 */
   brickRect(row: number, col: number): BrickRect {
+    const index: number = row * BrickBreakerRules.BRICK_COLS + col;
+    const cached: BrickRect | undefined = this.rects[index];
+    if (cached !== undefined) { return cached; }
     const bw = this.brickWidth();
     const x = BrickBreakerRules.SIDE_PADDING + col * (bw + BrickBreakerRules.BRICK_GAP);
     const y = BrickBreakerRules.TOP_PADDING + row * (BrickBreakerRules.BRICK_HEIGHT + BrickBreakerRules.BRICK_GAP);
-    return new BrickRect(x, y, x + bw, y + BrickBreakerRules.BRICK_HEIGHT);
+    const rect: BrickRect = new BrickRect(x, y, x + bw, y + BrickBreakerRules.BRICK_HEIGHT);
+    this.rects[index] = rect;
+    return rect;
   }
 
   /** 挡板 Y 坐标（顶部） */
@@ -125,6 +134,7 @@ export class BrickBreakerRules {
     for (let row = 0; row < rows; row++) {
       for (let col = 0; col < BrickBreakerRules.BRICK_COLS; col++) {
         const score = BrickBreakerRules.ROW_SCORES[row % BrickBreakerRules.ROW_SCORES.length];
+        this.brickRect(row, col);
         layouts.push(new BrickLayout(row, col, score));
       }
     }
@@ -133,7 +143,8 @@ export class BrickBreakerRules {
 
   /** 获取球速（vp/帧），随关卡递增 */
   getBallSpeed(level: number): number {
-    return BrickBreakerRules.BASE_SPEED + (level - 1) * BrickBreakerRules.SPEED_INCREMENT;
+    return Math.min(BrickBreakerRules.MAX_SPEED,
+      BrickBreakerRules.BASE_SPEED + (level - 1) * BrickBreakerRules.SPEED_INCREMENT);
   }
 
   /** 生成球的初始状态（位于挡板上方中央，待发） */

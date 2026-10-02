@@ -1,9 +1,10 @@
+import { GameSessionTransfer } from '../../common/GameSessionTransfer';
 /**
  * 2048 —— View 层（展示与动画）
  *
  * 动画机制统一为「状态驱动 + .animation() 隐式动画」：
- * - 每个方块有稳定 id，渲染在 Stack 中按 row/col 用 offset 定位；
- * - 移动时沿用旧方块 id、只改 row/col → .animation() 自动把 offset 从旧位置插值到新位置（滑动）；
+ * - 每个方块有稳定 id，渲染在 Stack 中按 row/col 用 translate 定位；
+ * - 移动时沿用旧方块 id、只改 row/col → .animation() 自动把 translate 从旧位置插值到新位置（滑动）；
  * - 新块初始 scale=0.5、合并块先 scale=1.15，随后统一回落 1（弹动）。
  * 已删除原先 .animation() 与嵌套 animateTo 混用的实现（P2-4）。
  * 规则/状态在 Model/ViewModel；本层不 import Model 类型。
@@ -28,7 +29,7 @@ const GAP = 6;
  * 必须是 @ObservedV2 类而非普通 interface：
  * V2 的 ForEach 对「key 相同（id 复用）但属性变化的项」不会重新执行 itemGenerator，
  * 普通 interface 的方块滑动后（row/col/value 变化）渲染层不跟随——方块卡在旧位/合并块不出现。
- * 改为 @ObservedV2 + @Trace 后，原地修改属性即触发组件内更新，.animation() 对 offset/scale 自动插值。
+ * 改为 @ObservedV2 + @Trace 后，原地修改属性即触发组件内更新，.animation() 对 translate/scale 自动插值。
  */
 @ObservedV2
 class TileData {
@@ -52,7 +53,7 @@ export struct Game2048Page {
   @Param pathStack: NavPathStack = new NavPathStack();
   @Local safeBottom: number = SafeAreaInsets.bottom;
   @Local viewModel: Game2048ViewModel = new Game2048ViewModel();
-  // 方块列表（稳定 id），非按格存储——这样移动时组件身份不变，offset 才会被插值
+  // 方块列表（稳定 id），非按格存储——这样移动时组件身份不变，translate 才会被插值
   @Local tiles: TileData[] = [];
   @Local cell: number = 64;
   @Local boardSize: number = 286;
@@ -73,7 +74,11 @@ export struct Game2048Page {
       this.a11yTileFormat = context.resourceManager.getStringSync($r('app.string.a11y_2048_tile_format'));
     }
     GameLifecycleBus.attach(this.viewModel);
-    this.startGame();
+    if (GameSessionTransfer.restore(this.viewModel)) {
+      this.rebuildTiles(false);
+    } else {
+      this.startGame();
+    }
   }
 
   aboutToDisappear(): void {
@@ -138,7 +143,7 @@ export struct Game2048Page {
    * 依据 viewModel.board 同步方块列表（P0-3 重构：原地更新）。
    * animateAllNew=true（开局）时所有非空格视为新块；否则只有 spawn 格算新块。
    * - 复用块：沿用「来源格」旧 TileData 对象，原地改 row/col/value/scale（@Trace 触发
-   *   组件内更新，.animation() 对 offset/scale/背景色自动插值出滑动效果）；
+   *   组件内更新，.animation() 对 translate/scale/背景色自动插值出滑动效果）；
    * - 新块：new TileData 追加；被合并吃掉的旧块随数组替换自然销毁。
    * 数组仅在增删时整体替换（触发 ForEach diff），属性更新全部走 @Trace。
    */
@@ -305,10 +310,10 @@ export struct Game2048Page {
               .width(this.cell).height(this.cell)
               .borderRadius(RadiusTokens.md)
               .backgroundColor(this.getCellBg(tile.value))
-              .offset({ x: tile.col * this.step() + 3, y: tile.row * this.step() + 3 })
+              .translate({ x: tile.col * this.step() + 3, y: tile.row * this.step() + 3 })
               .scale({ x: tile.scale, y: tile.scale })
               .accessibilityText(this.a11yTileFormat.replace('%1$d', '' + (tile.row + 1)).replace('%2$d', '' + (tile.col + 1)).replace('%3$d', '' + tile.value))
-              // 放在最后：对它之前的 offset/scale/backgroundColor 做隐式插值
+              // 放在最后：对它之前的 translate/scale/backgroundColor 做隐式插值
               .animation(this.getTileAnimation())
             }, (tile: TileData) => tile.id.toString())
             }

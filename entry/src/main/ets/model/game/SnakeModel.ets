@@ -98,17 +98,23 @@ export class SnakeRules {
 
   /** 在空格中随机生成食物；棋盘被占满时返回 (-1,-1) 表示无处可生成 */
   spawnFood(snake: Point[], rng: RandomSource): Point {
-    const empties: Point[] = [];
+    return this.spawnFoodFromOccupancy(this.occupancy(snake), rng);
+  }
+
+  /** O(棋盘格数) 的均匀选择；仅为最终食物创建 Point，不创建所有空格对象。 */
+  spawnFoodFromOccupancy(occupied: Set<number>, rng: RandomSource): Point {
+    const freeCount: number = this.cols * this.rows - occupied.size;
+    if (freeCount <= 0) { return new Point(-1, -1); }
+    let selected: number = Math.floor(rng.next() * freeCount);
     for (let x = 0; x < this.cols; x++) {
       for (let y = 0; y < this.rows; y++) {
-        if (!this.contains(snake, x, y)) {
-          empties.push(new Point(x, y));
+        if (!this.isOccupied(occupied, x, y)) {
+          if (selected === 0) { return new Point(x, y); }
+          selected--;
         }
       }
     }
-    if (empties.length === 0) { return new Point(-1, -1); }
-    const idx = Math.floor(rng.next() * empties.length);
-    return empties[idx];
+    return new Point(-1, -1);
   }
 
   contains(snake: Point[], x: number, y: number): boolean {

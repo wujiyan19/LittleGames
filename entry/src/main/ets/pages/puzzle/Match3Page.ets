@@ -1,3 +1,4 @@
+import { GameSessionTransfer } from '../../common/GameSessionTransfer';
 /**
  * 消消乐（Match3）—— View 层（展示与交互）
  *
@@ -37,7 +38,7 @@ export struct Match3Page {
       this.a11yGemFormat = context.resourceManager.getStringSync($r('app.string.a11y_match3_gem_format'));
     }
     GameLifecycleBus.attach(this.viewModel);
-    this.viewModel.startGame();
+    if (!GameSessionTransfer.restore(this.viewModel)) { this.viewModel.startGame(); }
   }
 
   aboutToDisappear(): void {
@@ -92,6 +93,7 @@ export struct Match3Page {
           gameTitle: $r('app.string.game_match3_name'),
           showScore: false,
           showPause: false,
+          showDifficulty: false,
           onBack: () => { this.requestExit(); },
           onPauseToggle: () => {},
           onRestart: () => { this.viewModel.startGame(); }

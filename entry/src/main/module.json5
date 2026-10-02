@@ -28,9 +28,13 @@
         "description": "$string:EntryAbility_desc",
         "icon": "$media:app_icon",
         "label": "$string:EntryAbility_label",
-        "startWindowIcon": "$media:app_icon",
+        // 品牌展示由系统增强启动窗口完成，首页不再叠加应用内闪屏。
+        "startWindow": "$profile:start_window",
+        "startWindowIcon": "$media:brand_start_icon",
         "startWindowBackground": "$color:start_window_background",
         "exported": true,
+        "launchType": "singleton",
+        "continuable": true,
         "skills": [
           {
             "entities": [

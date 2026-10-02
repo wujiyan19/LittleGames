@@ -44,16 +44,18 @@ export class KlotskiRules {
       ];
     }
     if (difficulty === GameDifficulty.HARD) {
+      // 横刀立马：仅留两格空位，避免旧困难布局与简单同为五步即可通关。
       return [
         new KlotskiBlock('cc', 2, 2, 1, 0, true),
         new KlotskiBlock('g1', 1, 2, 0, 0, false),
         new KlotskiBlock('g2', 1, 2, 3, 0, false),
-        new KlotskiBlock('b1', 1, 1, 1, 2, false),
-        new KlotskiBlock('b2', 1, 1, 2, 2, false),
-        new KlotskiBlock('b3', 1, 1, 0, 3, false),
-        new KlotskiBlock('b4', 1, 1, 3, 3, false),
-        new KlotskiBlock('b5', 1, 1, 0, 4, false),
-        new KlotskiBlock('b6', 1, 1, 3, 4, false)
+        new KlotskiBlock('g3', 1, 2, 0, 2, false),
+        new KlotskiBlock('g4', 1, 2, 3, 2, false),
+        new KlotskiBlock('h1', 2, 1, 1, 2, false),
+        new KlotskiBlock('b1', 1, 1, 1, 3, false),
+        new KlotskiBlock('b2', 1, 1, 2, 3, false),
+        new KlotskiBlock('b3', 1, 1, 0, 4, false),
+        new KlotskiBlock('b4', 1, 1, 3, 4, false)
       ];
     }
     return [
@@ -94,6 +96,7 @@ export class KlotskiRules {
   }
 
   canMove(blocks: KlotskiBlock[], grid: (string | null)[][], id: string, dx: number, dy: number): boolean {
+    if (!Number.isInteger(dx) || !Number.isInteger(dy) || Math.abs(dx) + Math.abs(dy) !== 1) { return false; }
     const b = this.find(blocks, id);
     if (!b) { return false; }
     const nx = b.x + dx;

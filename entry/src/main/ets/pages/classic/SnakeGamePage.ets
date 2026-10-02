@@ -1,3 +1,4 @@
+import { GameSessionTransfer } from '../../common/GameSessionTransfer';
 /**
  * 贪吃蛇 —— View 层（纯展示与组装）
  *
@@ -33,7 +34,7 @@ export struct SnakeGamePage {
     // 挂到生命周期总线：切后台暂停/恢复、系统侧滑返回拦截都经总线转发
     // （页面 onPageHide/onPageShow 仅对 @Entry 生效，本页是 @ComponentV2，不可依赖）
     GameLifecycleBus.attach(this.viewModel);
-    this.viewModel.startGame();
+    if (!GameSessionTransfer.restore(this.viewModel)) { this.viewModel.startGame(); }
   }
 
   aboutToDisappear(): void {
@@ -50,10 +51,16 @@ export struct SnakeGamePage {
   }
 
   getCellColor(col: number, row: number): ResourceColor {
-    if (this.viewModel.isFood(col, row) || this.viewModel.isSnakeHead(col, row)) { return SemanticColors.cellRevealed; }
-    if (this.viewModel.isSnakeCell(col, row)) { return SemanticColors.success; }
+    if (this.viewModel.isFood(col, row)) { return SemanticColors.cellRevealed; }
     if ((row + col) % 2 === 0) { return SemanticColors.cellHidden; }
     return SemanticColors.cellRevealed;
+  }
+
+  getSnakeImage(col: number, row: number): Resource {
+    if (this.viewModel.isSnakeHead(col, row)) { return $r('app.media.play_snake_head'); }
+    if (this.viewModel.isSnakeTail(col, row)) { return $r('app.media.play_snake_tail'); }
+    if (this.viewModel.isSnakeCorner(col, row)) { return $r('app.media.play_snake_corner'); }
+    return $r('app.media.play_snake_body');
   }
 
   getCellRadius(col: number, row: number): number {
@@ -96,8 +103,9 @@ export struct SnakeGamePage {
               Row() {
                 ForEach(this.idx20, (col: number) => {
                   Stack() {
-                    if (this.viewModel.isSnakeHead(col, row)) {
-                      Image($r('app.media.play_snake_head')).width(this.cell).height(this.cell).objectFit(ImageFit.Contain)
+                    if (this.viewModel.isSnakeCell(col, row)) {
+                      Image(this.getSnakeImage(col, row)).width(this.cell).height(this.cell).objectFit(ImageFit.Contain)
+                        .rotate({ z: 1, angle: this.viewModel.getSnakeRotation(col, row), centerX: '50%', centerY: '50%' })
                     } else if (this.viewModel.isFood(col, row)) {
                       Image($r('app.media.play_snake_food')).width(this.cell).height(this.cell).objectFit(ImageFit.Contain)
                     }
@@ -147,7 +155,6 @@ export struct SnakeGamePage {
       if (this.viewModel.confirmExit) {
         ExitConfirmDialog({
           onConfirm: () => {
-            this.viewModel.dismissExitConfirm();
             this.pathStack.pop();
           },
           onCancel: () => { this.viewModel.dismissExitConfirm(); }

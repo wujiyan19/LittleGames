@@ -65,7 +65,7 @@ export class Match3Rules {
 
   /** 生成无现成三连且至少有一步合法交换的 8×8 棋盘 */
   generateBoard(rng: RandomSource): number[][] {
-    for (let attempt = 0; attempt < 1000; attempt++) {
+    for (let attempt = 0; attempt < 16; attempt++) {
       const board: number[][] = this.randomBoard(rng);
       if (!this.hasMatches(board) && this.hasLegalSwap(board)) {
         return board;
@@ -92,10 +92,18 @@ export class Match3Rules {
 
   private randomBoard(rng: RandomSource): number[][] {
     const board: number[][] = [];
+    const choices: number[] = [];
     for (let r = 0; r < ROWS; r++) {
       const row: number[] = [];
       for (let c = 0; c < COLS; c++) {
-        row.push(Math.floor(rng.next() * GEM_TYPES));
+        // 生成时排除会形成三连的颜色，避免整盘反复废弃重抽。
+        choices.length = 0;
+        for (let type = 0; type < GEM_TYPES; type++) {
+          if (c >= 2 && row[c - 1] === type && row[c - 2] === type) { continue; }
+          if (r >= 2 && board[r - 1][c] === type && board[r - 2][c] === type) { continue; }
+          choices.push(type);
+        }
+        row.push(choices[Math.floor(rng.next() * choices.length)]);
       }
       board.push(row);
     }
@@ -134,7 +142,7 @@ export class Match3Rules {
           const other: number = candidate[r][c + 1];
           candidate[r][c] = other;
           candidate[r][c + 1] = current;
-          const legal: boolean = this.hasMatches(candidate);
+          const legal: boolean = this.hasMatchAt(candidate, r, c) || this.hasMatchAt(candidate, r, c + 1);
           candidate[r][c] = current;
           candidate[r][c + 1] = other;
           if (legal) { return true; }
@@ -144,7 +152,7 @@ export class Match3Rules {
           const other: number = candidate[r + 1][c];
           candidate[r][c] = other;
           candidate[r + 1][c] = current;
-          const legal: boolean = this.hasMatches(candidate);
+          const legal: boolean = this.hasMatchAt(candidate, r, c) || this.hasMatchAt(candidate, r + 1, c);
           candidate[r][c] = current;
           candidate[r + 1][c] = other;
           if (legal) { return true; }
@@ -152,6 +160,20 @@ export class Match3Rules {
       }
     }
     return false;
+  }
+
+  /** 交换只可能在两个交换位置形成新连线，无需为每个候选扫描整盘。 */
+  private hasMatchAt(board: number[][], row: number, col: number): boolean {
+    const type: number = board[row][col];
+    if (type < 0) { return false; }
+    let count: number = 1;
+    for (let c = col - 1; c >= 0 && board[row][c] === type; c--) { count++; }
+    for (let c = col + 1; c < COLS && board[row][c] === type; c++) { count++; }
+    if (count >= 3) { return true; }
+    count = 1;
+    for (let r = row - 1; r >= 0 && board[r][col] === type; r--) { count++; }
+    for (let r = row + 1; r < ROWS && board[r][col] === type; r++) { count++; }
+    return count >= 3;
   }
 
   /** 查找所有匹配格，返回 boolean[][] 标记 */
@@ -275,7 +297,8 @@ export class Match3Rules {
     let totalGained = 0;
     let chainRounds = 0;
 
-    while (this.hasMatches(currentBoard)) {
+    // 退化随机源也必须有限时间结束，避免同步循环永久阻塞 UI。
+    while (chainRounds < 32 && this.hasMatches(currentBoard)) {
       chainRounds++;
       const matched = this.findMatches(currentBoard);
       const removeRes = this.removeMatches(currentBoard, matched);
@@ -285,7 +308,7 @@ export class Match3Rules {
     }
 
     // 连锁结束后的死局重新发牌，分数和剩余步数由调用方保留。
-    if (!this.hasLegalSwap(currentBoard)) {
+    if (this.hasMatches(currentBoard) || !this.hasLegalSwap(currentBoard)) {
       currentBoard = this.generateBoard(rng);
     }
     return new ChainResult(currentBoard, totalGained, chainRounds);

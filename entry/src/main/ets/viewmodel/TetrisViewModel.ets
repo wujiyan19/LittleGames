@@ -5,6 +5,7 @@
  * View 只与它交互，不接触 Model 类型。
  */
 import { GameDifficulty, GameStatus } from '../common/GameConstants';
+import { ContinuationValidation as V } from '../common/GameSessionTransfer';
 import { GameDataManager } from '../model/GameData';
 import { GameLifecycleObserver } from '../common/GameLifecycleBus';
 import { ActivePiece, TetrisRules } from '../model/game/TetrisModel';
@@ -15,6 +16,25 @@ const ROWS = 20;
 const GAME_ID = 'tetris';
 
 @ObservedV2
+export class TetrisCellData {
+  readonly id: number;
+  @Trace mark: number = 0;
+  constructor(id: number) { this.id = id; }
+}
+
+
+interface TetrisContinuationState {
+  version: number;
+  board: number[][];
+  piece: ActivePiece | null;
+  score: number;
+  highScore: number;
+  level: number;
+  status: GameStatus;
+  difficulty: GameDifficulty;
+}
+
+@ObservedV2
 export class TetrisViewModel implements GameLifecycleObserver {
   /** 棋盘只存数据：0=空，n=第 (n-1) 号形状占据；颜色由 View 查表 */
   @Trace board: number[][] = [];
@@ -23,18 +43,22 @@ export class TetrisViewModel implements GameLifecycleObserver {
   @Trace highScore: number = 0;
   @Trace level: number = 1;
   @Trace status: GameStatus = GameStatus.IDLE;
-  @Trace difficulty: GameDifficulty = GameDifficulty.NORMAL;
+  @Trace difficulty: GameDifficulty = GameDataManager.getInitialDifficulty(GAME_ID);
   /** 退出确认弹窗显隐（F2：对局中返回需确认） */
   @Trace confirmExit: boolean = false;
+
+  readonly cells: TetrisCellData[] = [];
 
   private rules: TetrisRules = new TetrisRules(COLS, ROWS);
   private rng: RandomSource;
   private timer: number = -1;
   /** 本次暂停是否由「切后台」自动触发 */
   private autoPaused: boolean = false;
+  private appVisible: boolean = true;
 
   constructor(rng?: RandomSource) {
     this.rng = rng ?? new RealRandom();
+    for (let i = 0; i < COLS * ROWS; i++) { this.cells.push(new TetrisCellData(i)); }
     this.highScore = GameDataManager.getGameById(GAME_ID)?.highScore ?? 0;
   }
 
@@ -52,6 +76,7 @@ export class TetrisViewModel implements GameLifecycleObserver {
   }
 
   changeDifficulty(d: GameDifficulty): void {
+    GameDataManager.rememberGameDifficulty(GAME_ID, d);
     if (this.difficulty === d) { return; }
     this.difficulty = d;
     this.startGame();
@@ -59,6 +84,9 @@ export class TetrisViewModel implements GameLifecycleObserver {
 
   /** 只铺开局数据，不启动定时器（初始化/单测用） */
   newGame(): void {
+    this.stopTimer();
+    this.autoPaused = false;
+    this.confirmExit = false;
     GameDataManager.incrementPlayCount(GAME_ID);
     this.board = this.rules.emptyBoard();
     this.score = 0;
@@ -76,6 +104,7 @@ export class TetrisViewModel implements GameLifecycleObserver {
 
   startTimer(): void {
     this.stopTimer();
+    if (!this.appVisible || this.confirmExit || this.status !== GameStatus.PLAYING) { return; }
     this.timer = setInterval(() => {
       if (this.status === GameStatus.PLAYING) { this.drop(); }
     }, this.fallInterval());
@@ -91,15 +120,17 @@ export class TetrisViewModel implements GameLifecycleObserver {
   private spawnPiece(): void {
     this.piece = this.rules.spawn(this.rng);
     if (!this.rules.canPlace(this.board, this.piece, 0, 0)) { this.gameOver(); }
+    this.updateCells();
   }
 
   /** 每 tick 下落一格；无法再下时锁定。定时器与单测都走这里 */
   drop(): void {
-    if (this.status !== GameStatus.PLAYING) { return; }
+    if (!this.appVisible || this.confirmExit || this.status !== GameStatus.PLAYING) { return; }
     const p = this.piece;
     if (!p) { return; }
     if (this.rules.canPlace(this.board, p, 0, 1)) {
       this.piece = new ActivePiece(p.idx, p.rot, p.x, p.y + 1);
+      this.updateCells();
     } else {
       this.lockPiece();
     }
@@ -124,26 +155,29 @@ export class TetrisViewModel implements GameLifecycleObserver {
   }
 
   moveLeft(): void {
-    if (this.status !== GameStatus.PLAYING || !this.piece) { return; }
+    if (!this.appVisible || this.confirmExit || this.status !== GameStatus.PLAYING || !this.piece) { return; }
     if (this.rules.canPlace(this.board, this.piece, -1, 0)) {
       this.piece = new ActivePiece(this.piece.idx, this.piece.rot, this.piece.x - 1, this.piece.y);
+      this.updateCells();
     }
   }
 
   moveRight(): void {
-    if (this.status !== GameStatus.PLAYING || !this.piece) { return; }
+    if (!this.appVisible || this.confirmExit || this.status !== GameStatus.PLAYING || !this.piece) { return; }
     if (this.rules.canPlace(this.board, this.piece, 1, 0)) {
       this.piece = new ActivePiece(this.piece.idx, this.piece.rot, this.piece.x + 1, this.piece.y);
+      this.updateCells();
     }
   }
 
   rotateBlock(): void {
-    if (this.status !== GameStatus.PLAYING || !this.piece) { return; }
+    if (!this.appVisible || this.confirmExit || this.status !== GameStatus.PLAYING || !this.piece) { return; }
     this.piece = this.rules.rotated(this.board, this.piece);
+    this.updateCells();
   }
 
   hardDrop(): void {
-    if (this.status !== GameStatus.PLAYING || !this.piece) { return; }
+    if (!this.appVisible || this.confirmExit || this.status !== GameStatus.PLAYING || !this.piece) { return; }
     const finalY = this.rules.hardDropY(this.board, this.piece);
     this.piece = new ActivePiece(this.piece.idx, this.piece.rot, this.piece.x, finalY);
     this.lockPiece();
@@ -161,8 +195,10 @@ export class TetrisViewModel implements GameLifecycleObserver {
   togglePause(): void {
     if (this.status === GameStatus.PLAYING) {
       this.status = GameStatus.PAUSED;
-    } else if (this.status === GameStatus.PAUSED) {
+      this.stopTimer();
+    } else if (this.status === GameStatus.PAUSED && this.appVisible && !this.confirmExit) {
       this.status = GameStatus.PLAYING;
+      this.startTimer();
     }
   }
 
@@ -172,6 +208,8 @@ export class TetrisViewModel implements GameLifecycleObserver {
    * 必须走总线（原 onPageHide/onPageShow 钩子从未被调用过）。
    */
   onAppHidden(): void {
+    this.appVisible = false;
+    this.stopTimer();
     this.settleCurrentScore();
     if (this.status === GameStatus.PLAYING) {
       this.autoPaused = true;
@@ -180,9 +218,11 @@ export class TetrisViewModel implements GameLifecycleObserver {
   }
 
   onAppShown(): void {
+    this.appVisible = true;
     if (this.autoPaused) {
       this.autoPaused = false;
       this.status = GameStatus.PLAYING;
+      this.startTimer();
     }
   }
 
@@ -193,8 +233,10 @@ export class TetrisViewModel implements GameLifecycleObserver {
 
   /** 页面返回按钮与系统侧滑共用：进行中弹确认，其余放行 */
   requestBack(): boolean {
+    if (!GameDataManager.getSetting('confirmExitEnabled', true)) { return false; }
     if (this.status === GameStatus.PLAYING) {
       this.confirmExit = true;
+      this.stopTimer();
       return true;
     }
     return false;
@@ -202,11 +244,22 @@ export class TetrisViewModel implements GameLifecycleObserver {
 
   dismissExitConfirm(): void {
     this.confirmExit = false;
+    this.startTimer();
   }
 
   /** 供 View 渲染：0=空，n=占用（n-1 为形状索引） */
   cellMark(r: number, c: number): number {
     return this.rules.cellMark(this.board, this.piece, r, c);
+  }
+
+  private updateCells(): void {
+    for (let row = 0; row < ROWS; row++) {
+      for (let col = 0; col < COLS; col++) {
+        const cell: TetrisCellData = this.cells[row * COLS + col];
+        const mark: number = this.rules.cellMark(this.board, this.piece, row, col);
+        if (cell.mark !== mark) { cell.mark = mark; }
+      }
+    }
   }
 
   private gameOver(): void {
@@ -218,7 +271,64 @@ export class TetrisViewModel implements GameLifecycleObserver {
 
   /** 页面销毁：停定时器并结算当前分（覆盖「中途退出丢分」主路径） */
   dispose(): void {
+    this.appVisible = false;
+    this.autoPaused = false;
     this.stopTimer();
     this.settleCurrentScore();
+  }
+
+  continuationGameId(): string { return GAME_ID; }
+
+  /** Capture only game data; exporting never pauses or mutates the source game. */
+  exportContinuation(): string {
+
+    const state: TetrisContinuationState = {
+      version: 1,
+      board: this.board,
+      piece: this.piece,
+      score: this.score,
+      highScore: this.highScore,
+      level: this.level,
+      status: this.status,
+      difficulty: this.difficulty
+    };
+    return JSON.stringify(state);
+  }
+
+  /** Validate completely before replacing a running game. Rebuild observed class instances. */
+  importContinuation(payload: string): boolean {
+    try {
+      if (payload.length > 65536) { return false; }
+      const s: TetrisContinuationState = JSON.parse(payload) as TetrisContinuationState;
+      if (s === null || s.version !== 1 || !V.integer(s.score) ||
+          !V.integer(s.highScore) ||
+          !V.integer(s.level) ||
+          (s.status !== GameStatus.PLAYING && s.status !== GameStatus.PAUSED && s.status !== GameStatus.OVER && s.status !== GameStatus.IDLE) ||
+          (s.difficulty !== GameDifficulty.EASY && s.difficulty !== GameDifficulty.NORMAL && s.difficulty !== GameDifficulty.HARD)) { return false; }
+      if (!V.matrix(s.board, ROWS, COLS, 0, 7) || s.level < 1) { return false; }
+      const p: ActivePiece | null = s.piece;
+      if (p !== null && (!V.integer(p.idx, 0, 6) || !V.integer(p.rot, 0, this.rules.rotationCount(p.idx) - 1) ||
+          !V.integer(p.x, -4, COLS) || !V.integer(p.y, -4, ROWS))) { return false; }
+      if (p === null && s.status !== GameStatus.OVER && s.status !== GameStatus.IDLE) { return false; }
+      this.stopTimer();
+      this.board = s.board;
+      this.piece = s.piece;
+      this.score = s.score;
+      this.highScore = Math.max(s.highScore, GameDataManager.getGameById(GAME_ID)?.highScore ?? 0);
+      GameDataManager.updateHighScore(GAME_ID, this.highScore);
+      this.level = s.level;
+      this.status = s.status;
+      this.difficulty = s.difficulty;
+      this.confirmExit = false;
+      const piece: ActivePiece | null = s.piece;
+      this.piece = piece === null ? null : new ActivePiece(piece.idx, piece.rot, piece.x, piece.y);
+      this.appVisible = true;
+      this.autoPaused = false;
+      if (this.status === GameStatus.PLAYING) { this.status = GameStatus.PAUSED; }
+      this.updateCells();
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

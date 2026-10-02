@@ -1,29 +1,67 @@
-import { UIAbility, Want, AbilityConstant } from '@kit.AbilityKit';
+import { UIAbility, Want, AbilityConstant, wantConstant } from '@kit.AbilityKit';
+import { BusinessError } from '@kit.BasicServicesKit';
 import { window } from '@kit.ArkUI';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { GameDataManager } from '../model/GameData';
 import { GameLifecycleBus } from '../common/GameLifecycleBus';
 import { SafeAreaInsets } from '../common/SafeAreaInsets';
 import { ScreenUtils } from '../common/ScreenUtils';
+import { AppTheme } from '../common/AppTheme';
+import { AppContinuation } from '../common/AppContinuation';
 
 export default class EntryAbility extends UIAbility {
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
     hilog.info(0x0000, 'LittleGames', '%{public}s', 'onCreate');
     GameDataManager.init(this.context);
+    AppContinuation.setStateHandler((active: boolean) => {
+      this.context.setMissionContinueState(active ? AbilityConstant.ContinueState.ACTIVE :
+        AbilityConstant.ContinueState.INACTIVE).catch((error: BusinessError) => {
+        hilog.warn(0x0000, 'LittleGames', 'Set continuation state failed: %{public}d', error.code);
+      });
+    });
+    this.restoreContinuation(want, launchParam);
+  }
+
+  onNewWant(want: Want, launchParam: AbilityConstant.LaunchParam): void {
+    this.restoreContinuation(want, launchParam);
+  }
+
+  onContinue(wantParam: Record<string, Object>): AbilityConstant.OnContinueResult {
+    try {
+      wantParam.littleGamesContinuation = AppContinuation.capture();
+      // Navigation + ComponentV2 state is restored explicitly from our versioned snapshots.
+      wantParam[wantConstant.Params.SUPPORT_CONTINUE_PAGE_STACK_KEY] = false;
+      GameDataManager.flushNow();
+      return AbilityConstant.OnContinueResult.AGREE;
+    } catch (e) {
+      hilog.warn(0x0000, 'LittleGames', 'Continuation rejected: game or page is not ready');
+      return AbilityConstant.OnContinueResult.REJECT;
+    }
+  }
+
+  private restoreContinuation(want: Want, launchParam: AbilityConstant.LaunchParam): void {
+    if (launchParam.launchReason !== AbilityConstant.LaunchReason.CONTINUATION) { return; }
+    const payload: Object | undefined = want.parameters?.littleGamesContinuation;
+    if (typeof payload !== 'string' || !AppContinuation.receive(payload as string)) {
+      hilog.warn(0x0000, 'LittleGames', 'Invalid or incompatible continuation payload');
+      AppContinuation.reportFailure();
+    }
   }
 
   onDestroy(): void {
+    AppContinuation.disconnect();
     hilog.info(0x0000, 'LittleGames', '%{public}s', 'onDestroy');
   }
 
   onWindowStageCreate(windowStage: window.WindowStage): void {
     hilog.info(0x0000, 'LittleGames', '%{public}s', 'onWindowStageCreate');
+    this.initWindowMetrics(windowStage);
     windowStage.loadContent('pages/Index', (err) => {
       if (err.code) {
         hilog.error(0x0000, 'LittleGames', 'Failed to load content: %{public}s', err.message);
         return;
       }
-      this.initWindowMetrics(windowStage);
+      AppTheme.apply(this.context, GameDataManager.getThemeMode());
     });
   }
 

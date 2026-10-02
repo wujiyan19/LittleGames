@@ -6,8 +6,8 @@
  */
 import { SemanticColors, FontTokens, RadiusTokens, SpacingTokens, GameBadgeColors } from '../../common/DesignTokens';
 import { GameInfo } from '../../common/GameConstants';
-import { GameDataManager } from '../../model/GameData';
 import { resolveString } from '../../common/I18nUtils';
+import { ProfileStatsCard } from '../../components/ProfileStatsCard';
 
 @ComponentV2
 export struct ProfileTab {
@@ -17,12 +17,14 @@ export struct ProfileTab {
   @Param bestScoreText: string = '--';
   /** 按最高分排序的展示列表 */
   @Param rankedGames: GameInfo[] = [];
-  @Local hapticsEnabled: boolean = true;
+  @Param recentGames: GameInfo[] = [];
+  @Param playedGameCount: number = 0;
+  @Param totalPlayCount: number = 0;
+  @Param onSettingsClick: () => void = () => {};
   @Local rankListOpacity: number = 0;
   @Local rankListTranslateY: number = 20;
 
   aboutToAppear(): void {
-    this.hapticsEnabled = GameDataManager.getSetting('hapticsEnabled', true);
     this.getUIContext().animateTo({ duration: 400, delay: 100, curve: Curve.FastOutSlowIn }, () => {
       this.rankListOpacity = 1;
       this.rankListTranslateY = 0;
@@ -30,12 +32,7 @@ export struct ProfileTab {
   }
 
   getTotalPlayCount(): number {
-    let total = 0;
-    const allGames = GameDataManager.getAllGames();
-    for (let i = 0; i < allGames.length; i++) {
-      total += allGames[i].playCount;
-    }
-    return total;
+    return this.totalPlayCount;
   }
 
   getLevelLabel(): Resource {
@@ -53,7 +50,7 @@ export struct ProfileTab {
   }
 
   getRecentGames(): GameInfo[] {
-    return GameDataManager.getRecentlyPlayed(5);
+    return this.recentGames;
   }
 
   getRankColor(index: number): Resource {
@@ -186,42 +183,45 @@ export struct ProfileTab {
 
         // 数据卡片
         Row({ space: SpacingTokens.base }) {
-          this.StatsCard($r('sys.symbol.square_grid_2x2'), $r('app.string.profile_stat_total'), '' + this.totalGames)
-          this.StatsCard($r('sys.symbol.star_fill'), $r('app.string.profile_stat_collected'), '' + GameDataManager.getPlayedGameCount())
-          this.StatsCard($r('sys.symbol.star_fill'), $r('app.string.profile_stat_best'), this.bestScoreText)
+          ProfileStatsCard({ icon: $r('sys.symbol.square_grid_2x2'), title: $r('app.string.profile_stat_total'), value: '' + this.totalGames })
+          ProfileStatsCard({ icon: $r('sys.symbol.star_fill'), title: $r('app.string.profile_stat_collected'), value: '' + this.playedGameCount })
+          ProfileStatsCard({ icon: $r('sys.symbol.star_fill'), title: $r('app.string.profile_stat_best'), value: this.bestScoreText })
         }
         .width('100%')
         .padding({ top: SpacingTokens.base })
 
         // 设置卡片
-        Row() {
-          Column() {
-            Text($r('app.string.settings_haptics'))
-              .fontFamily(FontTokens.family)
-              .fontSize(FontTokens.sizeBody)
-              .fontWeight(FontTokens.weightMedium)
-              .fontColor(SemanticColors.textPrimary)
-            Text($r('app.string.settings_haptics_desc'))
-              .fontFamily(FontTokens.family)
-              .fontSize(FontTokens.sizeBodySmall)
-              .fontColor(SemanticColors.textTertiary)
-              .margin({ top: SpacingTokens.xs })
-          }
-          .alignItems(HorizontalAlign.Start)
-          .layoutWeight(1)
+        Button() {
+          Row({ space: SpacingTokens.md }) {
+            SymbolGlyph($r('sys.symbol.gearshape'))
+              .fontSize(22).fontColor([SemanticColors.primary])
+            Column() {
+              Text($r('app.string.settings_title'))
+                .fontFamily(FontTokens.family)
+                .fontSize(FontTokens.sizeBody)
+                .fontWeight(FontTokens.weightMedium)
+                .fontColor(SemanticColors.textPrimary)
+              Text($r('app.string.settings_entry_desc'))
+                .fontFamily(FontTokens.family)
+                .fontSize(FontTokens.sizeBodySmall)
+                .fontColor(SemanticColors.textTertiary)
+                .margin({ top: SpacingTokens.xs })
+            }
+            .alignItems(HorizontalAlign.Start)
+            .layoutWeight(1)
 
-          Toggle({ type: ToggleType.Switch, isOn: this.hapticsEnabled })
-            .onChange((isOn: boolean) => {
-              this.hapticsEnabled = isOn;
-              GameDataManager.setSetting('hapticsEnabled', isOn);
-            })
-            .selectedColor(SemanticColors.primary)
+            SymbolGlyph($r('sys.symbol.chevron_right'))
+              .fontSize(14).fontColor([SemanticColors.textTertiary])
+          }
+          .width('100%')
         }
+        .type(ButtonType.Normal)
         .width('100%')
         .padding(SpacingTokens.base)
         .borderRadius(RadiusTokens.lg)
         .backgroundColor(SemanticColors.surface)
         .margin({ top: SpacingTokens.base })
+        .onClick(() => { this.onSettingsClick(); })
 
         Row() {
           SymbolGlyph($r('sys.symbol.star_fill'))
@@ -282,7 +282,7 @@ export struct ProfileTab {
               .width('100%')
               .padding({ left: SpacingTokens.base, right: SpacingTokens.base })
               .height(52)
-            }, (game: GameInfo) => game.id)
+            }, (game: GameInfo, index: number) => game.id + '_' + game.highScore.toString() + '_' + index.toString())
         }
         .width('100%')
         .padding({ left: SpacingTokens.base, right: SpacingTokens.base })
@@ -292,36 +292,11 @@ export struct ProfileTab {
         .translate({ y: this.rankListTranslateY })
       }
       .width('100%')
-      .padding({ left: SpacingTokens.pageHorizontal, right: SpacingTokens.pageHorizontal, bottom: SpacingTokens.xxl })
+      .padding({ left: SpacingTokens.pageHorizontal, right: SpacingTokens.pageHorizontal, bottom: $r('app.float.home_tab_content_inset') })
     }
     .scrollBar(BarState.Off)
     .edgeEffect(EdgeEffect.Spring)
     .backgroundColor(SemanticColors.bg)
   }
 
-  @Builder
-  StatsCard(icon: Resource, title: Resource | string, value: string) {
-    Column() {
-      SymbolGlyph(icon)
-        .fontSize(20)
-        .fontColor([SemanticColors.primary])
-      Text(value)
-        .fontFamily(FontTokens.family)
-        .fontSize(FontTokens.sizeHeadline)
-        .fontWeight(FontTokens.weightBold)
-        .fontColor(SemanticColors.textPrimary)
-        .margin({ top: SpacingTokens.xs })
-      Text(title)
-        .fontFamily(FontTokens.family)
-        .fontSize(FontTokens.sizeBodySmall)
-        .fontColor(SemanticColors.textTertiary)
-        .margin({ top: SpacingTokens.xs })
-    }
-    .layoutWeight(1)
-    .padding({ top: SpacingTokens.base, bottom: SpacingTokens.base })
-    .borderRadius(RadiusTokens.base)
-    .backgroundColor(SemanticColors.surface)
-
-    .alignItems(HorizontalAlign.Center)
-  }
 }

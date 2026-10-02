@@ -5,6 +5,7 @@
  * View 只与它交互；列表项类型 GuessRecord 也定义在此层，View 从本模块 import。
  */
 import { GameDifficulty, GameStatus } from '../common/GameConstants';
+import { ContinuationValidation as V } from '../common/GameSessionTransfer';
 import { GameDataManager } from '../model/GameData';
 import { GameLifecycleObserver } from '../common/GameLifecycleBus';
 import { GuessFeedback, GuessNumberRules } from '../model/game/GuessNumberModel';
@@ -27,6 +28,19 @@ export class GuessRecord {
   }
 }
 
+
+interface GuessNumberContinuationState {
+  version: number;
+  secret: string;
+  input: string;
+  records: GuessRecord[];
+  isWin: boolean;
+  status: GameStatus;
+  tries: number;
+  difficulty: GameDifficulty;
+  recordSeq: number;
+}
+
 @ObservedV2
 export class GuessNumberViewModel implements GameLifecycleObserver {
   @Trace secret: string = '';
@@ -36,7 +50,7 @@ export class GuessNumberViewModel implements GameLifecycleObserver {
   /** 对局是否仍在进行。胜负由 isWin 表达——那是「结果」，与「状态」是两回事 */
   @Trace status: GameStatus = GameStatus.PLAYING;
   @Trace tries: number = 0;
-  @Trace difficulty: GameDifficulty = GameDifficulty.NORMAL;
+  @Trace difficulty: GameDifficulty = GameDataManager.getInitialDifficulty(GAME_ID);
   /** 退出确认弹窗显隐（F2：对局中返回需确认，防误丢尝试进度） */
   @Trace confirmExit: boolean = false;
 
@@ -65,6 +79,7 @@ export class GuessNumberViewModel implements GameLifecycleObserver {
   }
 
   changeDifficulty(d: GameDifficulty): void {
+    GameDataManager.rememberGameDifficulty(GAME_ID, d);
     if (this.difficulty === d) { return; }
     this.difficulty = d;
     this.startGame();
@@ -115,6 +130,7 @@ export class GuessNumberViewModel implements GameLifecycleObserver {
 
   /** 页面返回按钮与系统侧滑共用：进行中弹确认（进度无保存机制，防误退），其余放行 */
   requestBack(): boolean {
+    if (!GameDataManager.getSetting('confirmExitEnabled', true)) { return false; }
     if (this.status === GameStatus.PLAYING) {
       this.confirmExit = true;
       return true;
@@ -128,5 +144,62 @@ export class GuessNumberViewModel implements GameLifecycleObserver {
 
   /** 页面销毁：无定时器可停（保持全部 VM 的 dispose 形态统一） */
   dispose(): void {
+  }
+
+  continuationGameId(): string { return GAME_ID; }
+
+  /** Capture only game data; exporting never pauses or mutates the source game. */
+  exportContinuation(): string {
+
+    const state: GuessNumberContinuationState = {
+      version: 1,
+      secret: this.secret,
+      input: this.input,
+      records: this.records,
+      isWin: this.isWin,
+      status: this.status,
+      tries: this.tries,
+      difficulty: this.difficulty,
+      recordSeq: this.recordSeq
+    };
+    return JSON.stringify(state);
+  }
+
+  /** Validate completely before replacing a running game. Rebuild observed class instances. */
+  importContinuation(payload: string): boolean {
+    try {
+      if (payload.length > 65536) { return false; }
+      const s: GuessNumberContinuationState = JSON.parse(payload) as GuessNumberContinuationState;
+      if (s === null || s.version !== 1 || typeof s.secret !== 'string' || s.secret.length > 4096 ||
+          typeof s.input !== 'string' || s.input.length > 4096 ||
+          typeof s.isWin !== 'boolean' ||
+          (s.status !== GameStatus.PLAYING && s.status !== GameStatus.PAUSED && s.status !== GameStatus.OVER && s.status !== GameStatus.IDLE) ||
+          !V.integer(s.tries) ||
+          (s.difficulty !== GameDifficulty.EASY && s.difficulty !== GameDifficulty.NORMAL && s.difficulty !== GameDifficulty.HARD) ||
+          !V.integer(s.recordSeq)) { return false; }
+      const length: number = this.rules.secretLength(s.difficulty);
+      if (!/^[0-9]+$/.test(s.secret) || s.secret.length !== length || new Set<string>(s.secret.split('')).size !== length ||
+          s.input.length > length || (s.input.length > 0 && !/^[0-9]+$/.test(s.input)) ||
+          !Array.isArray(s.records) || s.records.length !== s.tries || s.tries > this.rules.maxTries(s.difficulty)) { return false; }
+      for (let i = 0; i < s.records.length; i++) {
+        const r: GuessRecord = s.records[i];
+        if (r === null || typeof r.guess !== 'string' || r.guess.length !== length ||
+            !V.integer(r.a, 0, length) || !V.integer(r.b, 0, length) || !V.integer(r.seq, 1)) { return false; }
+      }
+
+      this.secret = s.secret;
+      this.input = s.input;
+      this.records = s.records;
+      this.isWin = s.isWin;
+      this.status = s.status;
+      this.tries = s.tries;
+      this.difficulty = s.difficulty;
+      this.recordSeq = s.recordSeq;
+      this.confirmExit = false;
+      this.records = s.records.map((r: GuessRecord): GuessRecord => new GuessRecord(r.guess, r.a, r.b, r.seq));
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

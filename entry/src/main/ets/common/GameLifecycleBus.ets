@@ -19,7 +19,9 @@
  * - onAppShown：应用回前台，若此前为自动暂停则恢复
  * - onBackRequested：系统侧滑返回。返回 true 表示已拦截（如弹出退出确认），false 表示放行
  */
-export interface GameLifecycleObserver {
+import { GameSessionParticipant } from './GameSessionTransfer';
+
+export interface GameLifecycleObserver extends GameSessionParticipant {
   onAppHidden(): void;
   onAppShown(): void;
   onBackRequested(): boolean;
@@ -27,6 +29,14 @@ export interface GameLifecycleObserver {
 
 export class GameLifecycleBus {
   private static observer: GameLifecycleObserver | null = null;
+
+  static exportSession(gameId: string): string {
+    const observer: GameLifecycleObserver | null = GameLifecycleBus.observer;
+    if (observer === null || observer.continuationGameId() !== gameId) {
+      throw new Error('Game page is not ready');
+    }
+    return observer.exportContinuation();
+  }
 
   /** 注册活跃对局的观察者（游戏页 aboutToAppear 时调用） */
   static attach(observer: GameLifecycleObserver): void {

@@ -1,3 +1,4 @@
+import { GameSessionTransfer } from '../../common/GameSessionTransfer';
 /**
  * 打地鼠 —— View 层（纯展示与组装）
  *
@@ -34,7 +35,7 @@ export struct WhackMolePage {
       this.a11yEmpty = context.resourceManager.getStringSync($r('app.string.a11y_whack_empty'));
     }
     GameLifecycleBus.attach(this.viewModel);
-    this.viewModel.startGame();
+    if (!GameSessionTransfer.restore(this.viewModel)) { this.viewModel.startGame(); }
   }
 
   aboutToDisappear(): void {
@@ -121,7 +122,6 @@ export struct WhackMolePage {
       if (this.viewModel.confirmExit) {
         ExitConfirmDialog({
           onConfirm: () => {
-            this.viewModel.dismissExitConfirm();
             this.pathStack.pop();
           },
           onCancel: () => { this.viewModel.dismissExitConfirm(); }

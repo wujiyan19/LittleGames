@@ -5,12 +5,25 @@
  * View 只与它交互，不接触 Model 类型。
  */
 import { GameDifficulty, GameStatus } from '../common/GameConstants';
+import { ContinuationValidation as V } from '../common/GameSessionTransfer';
 import { GameDataManager } from '../model/GameData';
 import { GameLifecycleObserver } from '../common/GameLifecycleBus';
 import { WhackMoleRules, WhackResult } from '../model/game/WhackMoleModel';
 import { RandomSource, RealRandom } from '../model/game/RandomSource';
 
 const GAME_ID = 'whackmole';
+
+
+interface WhackMoleContinuationState {
+  version: number;
+  holes: boolean[];
+  score: number;
+  highScore: number;
+  timeLeft: number;
+  status: GameStatus;
+  difficulty: GameDifficulty;
+  countdownRemainingMs: number;
+}
 
 @ObservedV2
 export class WhackMoleViewModel implements GameLifecycleObserver {
@@ -19,7 +32,7 @@ export class WhackMoleViewModel implements GameLifecycleObserver {
   @Trace highScore: number = 0;
   @Trace timeLeft: number = 30;
   @Trace status: GameStatus = GameStatus.IDLE;
-  @Trace difficulty: GameDifficulty = GameDifficulty.NORMAL;
+  @Trace difficulty: GameDifficulty = GameDataManager.getInitialDifficulty(GAME_ID);
   /** 退出确认弹窗显隐（F2：对局中返回需确认） */
   @Trace confirmExit: boolean = false;
 
@@ -27,8 +40,11 @@ export class WhackMoleViewModel implements GameLifecycleObserver {
   private rng: RandomSource;
   private mtimer: number = -1;
   private ctimer: number = -1;
+  private countdownRemainingMs: number = 1000;
+  private countdownDeadline: number = 0;
   /** 本次暂停是否由「切后台」自动触发 */
   private autoPaused: boolean = false;
+  private appVisible: boolean = true;
 
   constructor(rng?: RandomSource) {
     this.rng = rng ?? new RealRandom();
@@ -39,6 +55,7 @@ export class WhackMoleViewModel implements GameLifecycleObserver {
   getSpawnInterval(): number { return this.rules.getSpawnInterval(this.difficulty); }
 
   changeDifficulty(d: GameDifficulty): void {
+    GameDataManager.rememberGameDifficulty(GAME_ID, d);
     if (this.difficulty === d) { return; }
     this.difficulty = d;
     this.startGame();
@@ -46,9 +63,13 @@ export class WhackMoleViewModel implements GameLifecycleObserver {
 
   startGame(): void {
     if (this.score > 0) { GameDataManager.updateHighScore(GAME_ID, this.score); }
+    this.stopTimers();
+    this.autoPaused = false;
+    this.confirmExit = false;
     GameDataManager.incrementPlayCount(GAME_ID);
     this.score = 0;
     this.timeLeft = this.getGameTime();
+    this.countdownRemainingMs = 1000;
     this.status = GameStatus.PLAYING;
     this.holes = this.rules.initialHoles();
     this.startTimers();
@@ -56,19 +77,26 @@ export class WhackMoleViewModel implements GameLifecycleObserver {
 
   private startTimers(): void {
     this.stopTimers();
-    // 倒计时
-    this.ctimer = setInterval(() => {
-      if (this.status === GameStatus.PLAYING) {
-        this.timeLeft--;
-        if (this.timeLeft <= 0) { this.gameOver(); }
-      }
-    }, 1000);
+    if (!this.appVisible || this.confirmExit || this.status !== GameStatus.PLAYING) { return; }
+    this.scheduleCountdown();
     // 刷怪
     this.mtimer = setInterval(() => {
       if (this.status === GameStatus.PLAYING) {
         this.holes = this.rules.spawnHoles(this.rng);
       }
     }, this.getSpawnInterval());
+  }
+
+  private scheduleCountdown(): void {
+    this.countdownDeadline = Date.now() + this.countdownRemainingMs;
+    this.ctimer = setTimeout(() => {
+      this.ctimer = -1;
+      if (!this.appVisible || this.confirmExit || this.status !== GameStatus.PLAYING) { return; }
+      this.timeLeft--;
+      this.countdownRemainingMs = 1000;
+      if (this.timeLeft <= 0) { this.gameOver(); }
+      else { this.scheduleCountdown(); }
+    }, this.countdownRemainingMs);
   }
 
   /**
@@ -83,8 +111,10 @@ export class WhackMoleViewModel implements GameLifecycleObserver {
   togglePause(): void {
     if (this.status === GameStatus.PLAYING) {
       this.status = GameStatus.PAUSED;
-    } else if (this.status === GameStatus.PAUSED) {
+      this.stopTimers();
+    } else if (this.status === GameStatus.PAUSED && this.appVisible && !this.confirmExit) {
       this.status = GameStatus.PLAYING;
+      this.startTimers();
     }
   }
 
@@ -93,6 +123,8 @@ export class WhackMoleViewModel implements GameLifecycleObserver {
    * 避免倒计时在后台归零直接结算（页面 onPageHide() 仅对 @Entry 生效，不可依赖）。
    */
   onAppHidden(): void {
+    this.appVisible = false;
+    this.stopTimers();
     this.settleCurrentScore();
     if (this.status === GameStatus.PLAYING) {
       this.autoPaused = true;
@@ -101,9 +133,11 @@ export class WhackMoleViewModel implements GameLifecycleObserver {
   }
 
   onAppShown(): void {
+    this.appVisible = true;
     if (this.autoPaused) {
       this.autoPaused = false;
       this.status = GameStatus.PLAYING;
+      this.startTimers();
     }
   }
 
@@ -114,8 +148,10 @@ export class WhackMoleViewModel implements GameLifecycleObserver {
 
   /** 页面返回按钮与系统侧滑共用：进行中弹确认，其余放行 */
   requestBack(): boolean {
+    if (!GameDataManager.getSetting('confirmExitEnabled', true)) { return false; }
     if (this.status === GameStatus.PLAYING) {
       this.confirmExit = true;
+      this.stopTimers();
       return true;
     }
     return false;
@@ -123,10 +159,11 @@ export class WhackMoleViewModel implements GameLifecycleObserver {
 
   dismissExitConfirm(): void {
     this.confirmExit = false;
+    this.startTimers();
   }
 
   whack(index: number): void {
-    if (this.status !== GameStatus.PLAYING) { return; }
+    if (this.status !== GameStatus.PLAYING || this.confirmExit || !this.appVisible) { return; }
     const result: WhackResult = this.rules.whack(this.holes, index);
     this.holes = result.holes;
     this.score = Math.max(0, this.score + result.delta);
@@ -140,13 +177,69 @@ export class WhackMoleViewModel implements GameLifecycleObserver {
   }
 
   private stopTimers(): void {
-    if (this.ctimer !== -1) { clearInterval(this.ctimer); this.ctimer = -1; }
+    if (this.ctimer !== -1) {
+      this.countdownRemainingMs = Math.max(1, this.countdownDeadline - Date.now());
+      clearTimeout(this.ctimer);
+      this.ctimer = -1;
+    }
     if (this.mtimer !== -1) { clearInterval(this.mtimer); this.mtimer = -1; }
   }
 
   /** 页面销毁：停定时器并结算当前分（覆盖「中途退出丢分」主路径） */
   dispose(): void {
+    this.appVisible = false;
+    this.autoPaused = false;
     this.stopTimers();
     this.settleCurrentScore();
+  }
+
+  continuationGameId(): string { return GAME_ID; }
+
+  /** Capture only game data; exporting never pauses or mutates the source game. */
+  exportContinuation(): string {
+
+    const state: WhackMoleContinuationState = {
+      version: 1,
+      holes: this.holes,
+      score: this.score,
+      highScore: this.highScore,
+      timeLeft: this.timeLeft,
+      status: this.status,
+      difficulty: this.difficulty,
+      countdownRemainingMs: this.ctimer !== -1 ? Math.max(1, this.countdownDeadline - Date.now()) : this.countdownRemainingMs
+    };
+    return JSON.stringify(state);
+  }
+
+  /** Validate completely before replacing a running game. Rebuild observed class instances. */
+  importContinuation(payload: string): boolean {
+    try {
+      if (payload.length > 65536) { return false; }
+      const s: WhackMoleContinuationState = JSON.parse(payload) as WhackMoleContinuationState;
+      if (s === null || s.version !== 1 || !V.integer(s.score) ||
+          !V.integer(s.highScore) ||
+          !V.integer(s.timeLeft) ||
+          (s.status !== GameStatus.PLAYING && s.status !== GameStatus.PAUSED && s.status !== GameStatus.OVER && s.status !== GameStatus.IDLE) ||
+          (s.difficulty !== GameDifficulty.EASY && s.difficulty !== GameDifficulty.NORMAL && s.difficulty !== GameDifficulty.HARD) ||
+          !V.integer(s.countdownRemainingMs)) { return false; }
+      if (!V.booleans(s.holes, 9) || s.timeLeft > this.rules.getGameTime(s.difficulty) ||
+          !V.integer(s.countdownRemainingMs, 1, 1000)) { return false; }
+      this.stopTimers();
+      this.holes = s.holes;
+      this.score = s.score;
+      this.highScore = Math.max(s.highScore, GameDataManager.getGameById(GAME_ID)?.highScore ?? 0);
+      GameDataManager.updateHighScore(GAME_ID, this.highScore);
+      this.timeLeft = s.timeLeft;
+      this.status = s.status;
+      this.difficulty = s.difficulty;
+      this.countdownRemainingMs = s.countdownRemainingMs;
+      this.confirmExit = false;
+      this.appVisible = true;
+      this.autoPaused = false;
+      if (this.status === GameStatus.PLAYING) { this.status = GameStatus.PAUSED; }
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

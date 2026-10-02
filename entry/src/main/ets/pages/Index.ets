@@ -4,7 +4,6 @@
  * 本文件原本 855 行、承担 6 类职责（路由表 / 闪屏 / Tab 容器 / 精选 / 分类 / 我的），
  * 已按职责拆分为：
  * - router/GameRoutes.ets    — Navigation 的 navDestination 路由映射
- * - pages/home/SplashLayer.ets — 启动闪屏（自带动画状态与播放时序）
  * - pages/home/FeaturedTab.ets — 精选 Tab（横幅 + 热门推荐）
  * - pages/home/CategoryTab.ets — 分类 Tab（搜索 + 筛选 + 空态）
  * - pages/home/ProfileTab.ets  — 我的 Tab（数据 + 排行榜）
@@ -14,12 +13,16 @@
  * 顺带清理：isTablet 是死状态（mediaquery 监听后从未在 UI 使用，见报告 P2-7）。
  */
 import { intl } from '@kit.LocalizationKit';
+import { HdsTabs, HdsTabsFloatingStyle } from '@kit.UIDesignKit';
+import { AppContinuation, AppContinuationState, ContinuationNavigationState } from '../common/AppContinuation';
+import { GameSessionTransfer } from '../common/GameSessionTransfer';
+import { ImmersiveLight } from '../common/ImmersiveLight';
+import { GameLifecycleBus } from '../common/GameLifecycleBus';
 import { GameDataManager } from '../model/GameData';
-import { GameInfo, GameCategory } from '../common/GameConstants';
+import { GameInfo } from '../common/GameConstants';
 import { SemanticColors, SpacingTokens, FontTokens } from '../common/DesignTokens';
 import { resolveString } from '../common/I18nUtils';
 import { GamePageMap, GameRoutes } from '../router/GameRoutes';
-import { SplashLayer } from './home/SplashLayer';
 import { FeaturedTab } from './home/FeaturedTab';
 import { CategoryTab } from './home/CategoryTab';
 import { ProfileTab } from './home/ProfileTab';
@@ -31,20 +34,23 @@ const PINYIN_COLLATOR: intl.Collator = new intl.Collator('zh-CN', { usage: 'sort
 @ComponentV2
 struct Index {
   pathStack: NavPathStack = new NavPathStack();
-  @Local showSplash: boolean = true;
   @Local currentTab: number = 0;
   @Local featuredGames: GameInfo[] = [];
-  @Local classicGames: GameInfo[] = [];
-  @Local puzzleGames: GameInfo[] = [];
+  @Local newGames: GameInfo[] = [];
   @Local rankedGames: GameInfo[] = [];
   @Local totalGames: number = 0;
   @Local bestScoreText: string = '--';
+  @Local recentGames: GameInfo[] = [];
+  @Local playedGameCount: number = 0;
+  @Local totalPlayCount: number = 0;
   /** 0 加载中，1 已就绪，2 无数据，3 加载异常 */
   @Local dataStatus: number = 0;
-  // 全部游戏按拼音排序（非 UI 状态，传给分类页的「全部」）
-  private allGamesPinyin: GameInfo[] = [];
+  // 全部游戏按拼音排序；清空数据后替换列表，分类页同步刷新。
+  @Local allGamesPinyin: GameInfo[] = [];
   /** 冷启动时 aboutToAppear 已完整加载，跳过紧随其后的首次 onPageShow */
   private firstShow: boolean = true;
+  private floatingTabStyle: HdsTabsFloatingStyle = ImmersiveLight.floatingTabs();
+  @Local navigationGeneration: number = 0;
 
   @Styles
   pressedFeedback() {
@@ -53,6 +59,51 @@ struct Index {
 
   aboutToAppear(): void {
     this.loadAll();
+    GameSessionTransfer.setFailureHandler(() => {
+      AppContinuation.setRestoring(false);
+      AppContinuation.reportFailure();
+    });
+    GameSessionTransfer.setRestoredHandler(() => {
+      AppContinuation.setRestoring(false);
+      this.showContinuationFeedback(true);
+    });
+    AppContinuation.setFailureHandler(() => { this.showContinuationFeedback(false); });
+    AppContinuation.connect((): ContinuationNavigationState => {
+      return { tab: this.currentTab, paths: this.pathStack.getAllPathName() };
+    }, (state: AppContinuationState) => { this.restoreContinuation(state); });
+  }
+
+  aboutToDisappear(): void {
+    AppContinuation.disconnect();
+  }
+
+  private showContinuationFeedback(success: boolean): void {
+    const message: string = resolveString(success ? $r('app.string.continuation_restored') :
+      $r('app.string.continuation_restore_failed'), this.getUIContext().getHostContext());
+    try {
+      this.getUIContext().getPromptAction().showToast({ message: message });
+    } catch (e) {
+      // A disappearing window must not turn an otherwise valid continuation into a failure.
+    }
+  }
+
+  private restoreContinuation(state: AppContinuationState): void {
+    AppContinuation.setRestoring(true);
+    GameLifecycleBus.notifyHidden();
+    GameDataManager.flushNow();
+    this.currentTab = state.tab;
+    GameSessionTransfer.prepare(state.gameId, state.gamePayload);
+    this.pathStack = new NavPathStack();
+    for (let i = 0; i < state.paths.length; i++) {
+      this.pathStack.pushPathByName(state.paths[i], null, false);
+    }
+    // A new key recreates Navigation even when the warm target is displaying the same game.
+    this.navigationGeneration++;
+    this.refreshScores();
+    if (state.gameId.length === 0) {
+      AppContinuation.setRestoring(false);
+      this.showContinuationFeedback(true);
+    }
   }
 
   onPageShow(): void {
@@ -68,10 +119,10 @@ struct Index {
   loadAll(): void {
     this.dataStatus = 0;
     try {
-      this.classicGames = GameDataManager.getGamesByCategory(GameCategory.CLASSIC);
-      this.puzzleGames = GameDataManager.getGamesByCategory(GameCategory.PUZZLE);
+      this.newGames = GameDataManager.getAllGames().filter((game: GameInfo) =>
+        ['tictactoe', 'lights', 'maze', 'arithmetic', 'memorysequence', 'reaction'].includes(game.id));
       this.allGamesPinyin = this.sortByPinyin(GameDataManager.getAllGames());
-      this.totalGames = this.classicGames.length + this.puzzleGames.length;
+      this.totalGames = this.allGamesPinyin.length;
       this.refreshScores();
       this.dataStatus = this.totalGames > 0 ? 1 : 2;
     } catch (e) {
@@ -86,6 +137,12 @@ struct Index {
   refreshScores(): void {
     this.featuredGames = GameDataManager.getMostPlayed(6);
     this.rankedGames = GameDataManager.getTopGames(6);
+    this.recentGames = GameDataManager.getRecentlyPlayed(5);
+    this.playedGameCount = GameDataManager.getPlayedGameCount();
+    let playCount = 0;
+    const games: GameInfo[] = GameDataManager.getAllGames();
+    for (let i = 0; i < games.length; i++) { playCount += games[i].playCount; }
+    this.totalPlayCount = playCount;
     const top: GameInfo[] = GameDataManager.getTopGames(1);
     if (top.length > 0 && top[0].highScore > 0) {
       const context = this.getUIContext().getHostContext();
@@ -109,7 +166,7 @@ struct Index {
   }
 
   /**
-   * 跳转到指定游戏。路由名查 GameRoutes.PATHS 表；
+   * 跳转到指定游戏。路由名通过 GameRoutes.routeName 查询；
    * 未登记的 ID 直接忽略——原实现的 else 兜底是 MemoryCardPage，
    * ID 写错会静默跳进错误的页面，比白屏更难排查。
    */
@@ -129,14 +186,14 @@ struct Index {
    */
   @Builder
   PageMap(name: string) {
-    GamePageMap(name, this.pathStack)
+    GamePageMap(name, this.pathStack, () => { this.loadAll(); })
   }
 
   build() {
     Stack() {
+      ForEach([this.navigationGeneration], (generation: number) => {
       Navigation(this.pathStack) {
         Column() {
-          this.TopBar()
           if (this.dataStatus === 0) {
             this.LoadingView()
           } else if (this.dataStatus === 2) {
@@ -144,18 +201,17 @@ struct Index {
           } else if (this.dataStatus === 3) {
             this.ErrorView()
           } else {
-          Tabs({ barPosition: BarPosition.End, index: this.currentTab }) {
+          HdsTabs({ barPosition: BarPosition.End, index: this.currentTab }) {
             TabContent() {
               FeaturedTab({
                 games: this.featuredGames,
+                newGames: this.newGames,
                 onGameClick: (game: GameInfo) => { this.navigateToGame(game); }
               })
             }
             .tabBar(this.TabBuilder(0, $r('app.string.tab_featured')))
             TabContent() {
               CategoryTab({
-                classicGames: this.classicGames,
-                puzzleGames: this.puzzleGames,
                 allGames: this.allGamesPinyin,
                 onGameClick: (game: GameInfo) => { this.navigateToGame(game); }
               })
@@ -165,16 +221,23 @@ struct Index {
               ProfileTab({
                 totalGames: this.totalGames,
                 bestScoreText: this.bestScoreText,
-                rankedGames: this.rankedGames
+                rankedGames: this.rankedGames,
+                recentGames: this.recentGames,
+                playedGameCount: this.playedGameCount,
+                totalPlayCount: this.totalPlayCount,
+                onSettingsClick: () => { this.pathStack.pushPathByName('SettingsPage', null); }
               })
             }
             .tabBar(this.TabBuilder(2, $r('app.string.tab_profile')))
           }
-          .barHeight(56)
+          .barHeight($r('app.float.home_tab_height'))
           .barMode(BarMode.Fixed)
-          .barBackgroundColor(SemanticColors.surfaceTranslucent)
-          .barBackgroundBlurStyle(BlurStyle.Thin)
-          .onChange((index: number) => { this.currentTab = index; })
+          .barOverlap(true)
+          .barFloatingStyle(this.floatingTabStyle)
+          .onChange((index: number) => {
+            this.currentTab = index;
+            this.refreshScores();
+          })
           .layoutWeight(1)
           }
         }
@@ -185,10 +248,11 @@ struct Index {
       .mode(NavigationMode.Stack)
       .hideTitleBar(true)
       .navDestination(this.PageMap)
+      .onNavBarStateChange((isVisible: boolean) => {
+        if (isVisible) { this.refreshScores(); }
+      })
+      }, (generation: number) => generation.toString())
 
-      if (this.showSplash) {
-        SplashLayer({ onFinish: () => { this.showSplash = false; } })
-      }
     }
   }
 
@@ -237,8 +301,11 @@ struct Index {
   @Builder
   StatusView(title: Resource, detail: Resource) {
     Column({ space: SpacingTokens.md }) {
-      SymbolGlyph($r('sys.symbol.gamecontroller'))
-        .fontSize(48).fontColor([SemanticColors.primary])
+      Image($r('app.media.brand_start_icon'))
+        .width($r('app.float.brand_status_icon_size'))
+        .height($r('app.float.brand_status_icon_size'))
+        .objectFit(ImageFit.Contain)
+        .borderRadius(SpacingTokens.sm)
       Text(title)
         .fontFamily(FontTokens.family).fontSize(FontTokens.sizeTitle)
         .fontWeight(FontWeight.Bold).fontColor(SemanticColors.textPrimary)
@@ -257,35 +324,6 @@ struct Index {
     .width('100%').layoutWeight(1)
     .justifyContent(FlexAlign.Center)
     .backgroundColor(SemanticColors.bg)
-  }
-
-  /** 顶部品牌栏使用系统文字、卡片与强调色。 */
-  @Builder
-  TopBar() {
-    Row() {
-      Column() {
-        Text($r('app.string.app_name'))
-          .fontFamily(FontTokens.family)
-          .fontSize(FontTokens.sizeTitle)
-          .fontWeight(FontTokens.weightSemibold)
-          .fontColor(SemanticColors.textPrimary)
-      }
-      .alignItems(HorizontalAlign.Start)
-      .layoutWeight(1)
-
-      SymbolGlyph($r('sys.symbol.gamecontroller'))
-        .fontSize(30)
-        .fontWeight(FontWeight.Medium)
-        .fontColor([SemanticColors.primary])
-    }
-    .width('100%')
-    .padding({
-      left: SpacingTokens.pageHorizontal,
-      right: SpacingTokens.pageHorizontal,
-      top: SpacingTokens.base,
-      bottom: SpacingTokens.base
-    })
-    .backgroundColor(SemanticColors.surface)
   }
 
   getTabSymbol(index: number): Resource {

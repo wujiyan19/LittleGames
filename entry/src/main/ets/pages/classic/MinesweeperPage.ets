@@ -1,3 +1,4 @@
+import { GameSessionTransfer } from '../../common/GameSessionTransfer';
 /**
  * 扫雷 —— View 层（纯展示与组装）
  *
@@ -45,7 +46,7 @@ export struct MinesweeperPage {
     }
     this.cellSize = ScreenUtils.calcCell(COLS, 520, 20, 24);
     GameLifecycleBus.attach(this.viewModel);
-    this.viewModel.startGame();
+    if (!GameSessionTransfer.restore(this.viewModel)) { this.viewModel.startGame(); }
   }
 
   aboutToDisappear(): void {
@@ -174,13 +175,16 @@ export struct MinesweeperPage {
                       if (this.viewModel.isMine(row, col)) {
                         Image($r('app.media.play_mine'))
                           .width(this.cellSize * 0.72).height(this.cellSize * 0.72).objectFit(ImageFit.Contain)
+                          .draggable(false).hitTestBehavior(HitTestMode.None)
                       } else if (this.viewModel.cellValue(row, col) > 0) {
                         Text('' + this.viewModel.cellValue(row, col)).fontSize(Math.max(14, this.cellSize * 0.5)).fontWeight(FontWeight.Bold)
                           .fontColor(this.getNumColor(this.viewModel.cellValue(row, col)))
+                          .draggable(false).hitTestBehavior(HitTestMode.None)
                       }
                     } else if (this.viewModel.isFlagged(row, col)) {
                       Image($r('app.media.play_flag'))
                         .width(this.cellSize * 0.72).height(this.cellSize * 0.72).objectFit(ImageFit.Contain)
+                        .draggable(false).hitTestBehavior(HitTestMode.None)
                     }
                   }.width(this.cellSize).height(this.cellSize)
                   .backgroundColor(this.getCellBg(row, col))

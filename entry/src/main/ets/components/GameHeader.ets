@@ -21,6 +21,7 @@ export struct GameHeader {
   @Param onNewGame: () => void = () => {};
   // 无暂停玩法的游戏（如数独/拼图）隐藏暂停键，避免无效按钮
   @Param showPause: boolean = true;
+  @Param showDifficulty: boolean = true;
   // 开启后刷新按钮变为「重新开始 / 新游戏」菜单
   @Param enableNewGame: boolean = false;
   @Local showRefreshMenu: boolean = false;
@@ -66,7 +67,7 @@ export struct GameHeader {
             .fontSize(FontTokens.sizeCaption)
             .fontColor(SemanticColors.textTertiary)
             .margin({ top: 2 })
-        } else if (typeof this.subtitle === 'string' && this.subtitle.length > 0) {
+        } else if (typeof this.subtitle !== 'string' || this.subtitle.length > 0) {
           Text(this.subtitle)
             .fontFamily(FontTokens.family)
             .fontSize(FontTokens.sizeCaption)
@@ -79,6 +80,7 @@ export struct GameHeader {
 
       Row({ space: SpacingTokens.sm }) {
         // 难度选择
+        if (this.showDifficulty) {
         Button() {
           SymbolGlyph($r('sys.symbol.gearshape'))
             .fontSize(18)
@@ -91,6 +93,7 @@ export struct GameHeader {
 
         .accessibilityText($r('app.string.a11y_header_difficulty'))
         .bindMenu(this.difficultyMenu)
+        }
 
         // 暂停 / 继续
         if (this.showPause) {
@@ -139,8 +142,7 @@ export struct GameHeader {
       top: SpacingTokens.sm,
       bottom: SpacingTokens.sm
     })
-    .backgroundColor(SemanticColors.surfaceTranslucent)
-    .backdropBlur(20)
+    .backgroundColor(SemanticColors.surface)
   }
 
   @Builder

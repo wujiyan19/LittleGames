@@ -7,6 +7,7 @@
  * View 只与它交互，不接触 Model 类型。
  */
 import { GameDifficulty, GameStatus } from '../common/GameConstants';
+import { ContinuationValidation as V } from '../common/GameSessionTransfer';
 import { GameDataManager } from '../model/GameData';
 import { GameLifecycleObserver } from '../common/GameLifecycleBus';
 import { MinesweeperRules, RevealResult } from '../model/game/MinesweeperModel';
@@ -16,6 +17,21 @@ const ROWS = 9;
 const COLS = 9;
 const GAME_ID = 'minesweeper';
 
+
+interface MinesweeperContinuationState {
+  version: number;
+  board: number[][];
+  revealed: boolean[][];
+  flagged: boolean[][];
+  status: GameStatus;
+  flagCount: number;
+  difficulty: GameDifficulty;
+  elapsed: number;
+  gameResult: boolean;
+  timerRunning: boolean;
+  minesPlaced: boolean;
+}
+
 @ObservedV2
 export class MinesweeperViewModel implements GameLifecycleObserver {
   @Trace board: number[][] = [];
@@ -23,7 +39,7 @@ export class MinesweeperViewModel implements GameLifecycleObserver {
   @Trace flagged: boolean[][] = [];
   @Trace status: GameStatus = GameStatus.PLAYING;
   @Trace flagCount: number = 0;
-  @Trace difficulty: GameDifficulty = GameDifficulty.NORMAL;
+  @Trace difficulty: GameDifficulty = GameDataManager.getInitialDifficulty(GAME_ID);
   @Trace elapsed: number = 0;
   @Trace gameResult: boolean = false;
   /** 退出确认弹窗显隐（F2：对局中返回需确认） */
@@ -51,6 +67,7 @@ export class MinesweeperViewModel implements GameLifecycleObserver {
   }
 
   changeDifficulty(d: GameDifficulty): void {
+    GameDataManager.rememberGameDifficulty(GAME_ID, d);
     if (this.difficulty === d) { return; }
     this.difficulty = d;
     this.startGame();
@@ -127,6 +144,7 @@ export class MinesweeperViewModel implements GameLifecycleObserver {
 
   /** 页面返回按钮与系统侧滑共用：进行中弹确认，其余放行 */
   requestBack(): boolean {
+    if (!GameDataManager.getSetting('confirmExitEnabled', true)) { return false; }
     if (this.status === GameStatus.PLAYING) {
       this.confirmExit = true;
       return true;
@@ -176,4 +194,58 @@ export class MinesweeperViewModel implements GameLifecycleObserver {
   cellValue(r: number, c: number): number { return this.board[r][c]; }
 
   dispose(): void { this.stopTimer(); }
+
+  continuationGameId(): string { return GAME_ID; }
+
+  /** Capture only game data; exporting never pauses or mutates the source game. */
+  exportContinuation(): string {
+
+    const state: MinesweeperContinuationState = {
+      version: 1,
+      board: this.board,
+      revealed: this.revealed,
+      flagged: this.flagged,
+      status: this.status,
+      flagCount: this.flagCount,
+      difficulty: this.difficulty,
+      elapsed: this.timer !== -1 ? Math.floor((Date.now() - this.startTime) / 1000) : this.elapsed,
+      gameResult: this.gameResult,
+      timerRunning: this.timerRunning,
+      minesPlaced: this.minesPlaced
+    };
+    return JSON.stringify(state);
+  }
+
+  /** Validate completely before replacing a running game. Rebuild observed class instances. */
+  importContinuation(payload: string): boolean {
+    try {
+      if (payload.length > 65536) { return false; }
+      const s: MinesweeperContinuationState = JSON.parse(payload) as MinesweeperContinuationState;
+      if (s === null || s.version !== 1 || (s.status !== GameStatus.PLAYING && s.status !== GameStatus.PAUSED && s.status !== GameStatus.OVER && s.status !== GameStatus.IDLE) ||
+          !V.integer(s.flagCount) ||
+          (s.difficulty !== GameDifficulty.EASY && s.difficulty !== GameDifficulty.NORMAL && s.difficulty !== GameDifficulty.HARD) ||
+          !V.integer(s.elapsed) ||
+          typeof s.gameResult !== 'boolean' ||
+          typeof s.timerRunning !== 'boolean' ||
+          typeof s.minesPlaced !== 'boolean') { return false; }
+      if (!V.matrix(s.board, 9, 9, -1, 8) || !V.boolMatrix(s.revealed, 9, 9) || !V.boolMatrix(s.flagged, 9, 9) ||
+          s.flagCount !== this.rules.countFlags(s.flagged)) { return false; }
+      this.stopTimer();
+      this.board = s.board;
+      this.revealed = s.revealed;
+      this.flagged = s.flagged;
+      this.status = s.status;
+      this.flagCount = s.flagCount;
+      this.difficulty = s.difficulty;
+      this.elapsed = s.elapsed;
+      this.gameResult = s.gameResult;
+      this.timerRunning = s.timerRunning;
+      this.minesPlaced = s.minesPlaced;
+      this.confirmExit = false;
+      if (this.timerRunning && this.status === GameStatus.PLAYING) { this.resumeTimer(); }
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }

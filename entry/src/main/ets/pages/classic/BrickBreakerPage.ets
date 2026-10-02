@@ -1,3 +1,4 @@
+import { GameSessionTransfer } from '../../common/GameSessionTransfer';
 /**
  * 打砖块 —— View 层（纯展示与组装）
  *
@@ -13,6 +14,7 @@ import { SafeAreaInsets } from '../../common/SafeAreaInsets';
 import { GameLifecycleBus } from '../../common/GameLifecycleBus';
 import { Haptics } from '../../common/Haptics';
 import { BrickBreakerViewModel, BrickViewData } from '../../viewmodel/BrickBreakerViewModel';
+import { DisplayFrameLoop } from '../../common/DisplayFrameLoop';
 
 @ComponentV2
 export struct BrickBreakerPage {
@@ -22,8 +24,9 @@ export struct BrickBreakerPage {
   private dragStartPaddleX: number = 0;
 
   aboutToAppear(): void {
+    this.viewModel.setFrameLoop(new DisplayFrameLoop(this.getUIContext()));
     GameLifecycleBus.attach(this.viewModel);
-    this.viewModel.startGame();
+    if (!GameSessionTransfer.restore(this.viewModel)) { this.viewModel.startGame(); }
   }
 
   aboutToDisappear(): void {
@@ -68,6 +71,7 @@ export struct BrickBreakerPage {
         GameHeader({
           gameTitle: $r('app.string.game_brickbreaker_name'),
           showScore: false,
+          showDifficulty: false,
           isPaused: this.viewModel.status === GameStatus.PAUSED,
           onBack: () => { this.requestExit(); },
           onPauseToggle: () => { this.viewModel.togglePause(); },
@@ -123,7 +127,7 @@ export struct BrickBreakerPage {
                 .height(this.viewModel.brickHeight())
                 .backgroundColor(this.getBrickColor(brick.row))
                 .borderRadius(RadiusTokens.xs)
-                .offset({
+                .translate({
                   x: this.viewModel.sidePadding() + brick.col * (this.viewModel.brickWidth() + this.viewModel.brickGap()),
                   y: this.viewModel.topPadding() + brick.row * (this.viewModel.brickHeight() + this.viewModel.brickGap())
                 })
@@ -137,7 +141,7 @@ export struct BrickBreakerPage {
               .width(this.viewModel.paddleWidth())
               .height(this.viewModel.paddleHeight())
               .objectFit(ImageFit.Fill)
-              .offset({
+              .translate({
                 x: this.viewModel.paddleCenterX - this.viewModel.paddleWidth() / 2,
                 y: this.viewModel.paddleY()
               })
@@ -148,7 +152,7 @@ export struct BrickBreakerPage {
               .width(this.viewModel.ballRadius() * 2)
               .height(this.viewModel.ballRadius() * 2)
               .objectFit(ImageFit.Contain)
-              .offset({
+              .translate({
                 x: this.viewModel.ballX - this.viewModel.ballRadius(),
                 y: this.viewModel.ballY - this.viewModel.ballRadius()
               })
@@ -250,7 +254,6 @@ export struct BrickBreakerPage {
       if (this.viewModel.confirmExit) {
         ExitConfirmDialog({
           onConfirm: () => {
-            this.viewModel.dismissExitConfirm();
             this.pathStack.pop();
           },
           onCancel: () => { this.viewModel.dismissExitConfirm(); }

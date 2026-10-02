@@ -1,3 +1,6 @@
+import { GameDifficulty } from './GameDifficulty';
+export { GameDifficulty } from './GameDifficulty';
+
 /**
  * 游戏分类枚举
  *
@@ -6,19 +9,15 @@
  */
 export enum GameCategory {
   CLASSIC = 'classic',
-  PUZZLE = 'puzzle'
+  PUZZLE = 'puzzle',
+  BOARD = 'board',
+  NUMBER = 'number',
+  MEMORY = 'memory',
+  REACTION = 'reaction'
 }
 
-/**
- * 游戏难度
- *
- * 枚举值为英文逻辑标识，UI 显示文案通过 getDifficultyLabel() 获取 $r() 资源引用。
- */
-export enum GameDifficulty {
-  EASY = 'easy',
-  NORMAL = 'normal',
-  HARD = 'hard'
-}
+export const GAME_CATEGORIES: GameCategory[] = [GameCategory.CLASSIC, GameCategory.PUZZLE,
+  GameCategory.BOARD, GameCategory.NUMBER, GameCategory.MEMORY, GameCategory.REACTION];
 
 /**
  * 游戏信息接口
@@ -46,6 +45,10 @@ export interface GameInfo {
  * 将 GameCategory 枚举映射到国际化资源引用
  */
 export function getCategoryLabel(category: GameCategory): Resource {
+  if (category === GameCategory.BOARD) { return $r('app.string.cat_board'); }
+  if (category === GameCategory.NUMBER) { return $r('app.string.cat_number'); }
+  if (category === GameCategory.MEMORY) { return $r('app.string.cat_memory'); }
+  if (category === GameCategory.REACTION) { return $r('app.string.cat_reaction'); }
   if (category === GameCategory.CLASSIC) {
     return $r('app.string.cat_classic');
   }

@@ -1,0 +1,96 @@
+{
+  "float": [
+    {
+      "name": "brand_banner_icon_size",
+      "value": "56vp"
+    },
+    {
+      "name": "brand_status_icon_size",
+      "value": "48vp"
+    },
+    {
+      "name": "home_tab_width_small",
+      "value": "288vp"
+    },
+    {
+      "name": "home_tab_width_medium",
+      "value": "360vp"
+    },
+    {
+      "name": "home_tab_width_large",
+      "value": "480vp"
+    },
+    {
+      "name": "home_tab_height",
+      "value": "56vp"
+    },
+    {
+      "name": "home_tab_side_margin",
+      "value": "16vp"
+    },
+    {
+      "name": "home_tab_bottom_margin",
+      "value": "24vp"
+    },
+    {
+      "name": "home_tab_content_inset",
+      "value": "104vp"
+    },
+    {
+      "name": "collection_signal_height",
+      "value": "180vp"
+    },
+    {
+      "name": "collection_control_height",
+      "value": "48vp"
+    },
+    {
+      "name": "collection_board_max",
+      "value": "560vp"
+    },
+    {
+      "name": "collection_rule_line",
+      "value": "24fp"
+    },
+    {
+      "name": "collection_art_beacon",
+      "value": "88vp"
+    },
+    {
+      "name": "collection_art_turn",
+      "value": "32vp"
+    },
+    {
+      "name": "collection_art_question_icon",
+      "value": "48vp"
+    },
+    {
+      "name": "collection_art_question_height",
+      "value": "180vp"
+    },
+    {
+      "name": "collection_art_card_width",
+      "value": "44vp"
+    },
+    {
+      "name": "collection_art_card_height",
+      "value": "56vp"
+    },
+    {
+      "name": "collection_art_stone",
+      "value": "36vp"
+    },
+    {
+      "name": "collection_art_tray_height",
+      "value": "190vp"
+    },
+    {
+      "name": "collection_art_disc_height",
+      "value": "26vp"
+    },
+    {
+      "name": "collection_art_tower_height",
+      "value": "232vp"
+    }
+  ]
+}

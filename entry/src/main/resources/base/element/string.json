@@ -2,7 +2,7 @@
   "string": [
     {
       "name": "module_desc",
-      "value": "玩趣盒 - 经典休闲与益智解谜"
+      "value": "玩趣盒 - 六大分类，33 款离线小游戏"
     },
     {
       "name": "EntryAbility_desc",
@@ -18,7 +18,7 @@
     },
     {
       "name": "app_splash_subtitle",
-      "value": "13 款小游戏，随手开一局。"
+      "value": "33 款小游戏，随手开一局。"
     },
     {
       "name": "tab_featured",
@@ -58,11 +58,11 @@
     },
     {
       "name": "cat_classic",
-      "value": "经典休闲"
+      "value": "街机休闲"
     },
     {
       "name": "cat_puzzle",
-      "value": "益智解谜"
+      "value": "逻辑解谜"
     },
     {
       "name": "search_no_result_prefix",
@@ -715,6 +715,650 @@
     {
       "name": "home_retry",
       "value": "重试"
+    },
+    {
+      "name": "sudoku_generating",
+      "value": "正在准备题目…"
+    },
+    {
+      "name": "sudoku_generation_failed",
+      "value": "题目准备失败，请重试。"
+    },
+    {
+      "name": "settings_title",
+      "value": "设置"
+    },
+    {
+      "name": "settings_entry_desc",
+      "value": "主题、游戏偏好、数据与关于"
+    },
+    {
+      "name": "settings_intro",
+      "value": "把每一局调成你喜欢的样子"
+    },
+    {
+      "name": "settings_appearance",
+      "value": "外观"
+    },
+    {
+      "name": "settings_theme",
+      "value": "主题模式"
+    },
+    {
+      "name": "settings_theme_desc",
+      "value": "立即生效，跟随系统会自动切换亮暗主题"
+    },
+    {
+      "name": "settings_theme_system",
+      "value": "跟随系统"
+    },
+    {
+      "name": "settings_theme_light",
+      "value": "浅色"
+    },
+    {
+      "name": "settings_theme_dark",
+      "value": "深色"
+    },
+    {
+      "name": "settings_theme_failed",
+      "value": "主题切换失败，请重试"
+    },
+    {
+      "name": "settings_gameplay",
+      "value": "游戏偏好"
+    },
+    {
+      "name": "settings_difficulty",
+      "value": "默认难度"
+    },
+    {
+      "name": "settings_difficulty_desc",
+      "value": "下次进入支持难度选择的游戏时生效；当前对局不变"
+    },
+    {
+      "name": "settings_remember_difficulty",
+      "value": "记住各游戏难度"
+    },
+    {
+      "name": "settings_remember_difficulty_desc",
+      "value": "开启后优先使用各游戏上次选择的难度，未选择过则使用默认难度"
+    },
+    {
+      "name": "settings_confirm_exit",
+      "value": "退出对局前确认"
+    },
+    {
+      "name": "settings_confirm_exit_desc",
+      "value": "防止误触返回丢失进度；关闭后返回将直接结束对局"
+    },
+    {
+      "name": "settings_data",
+      "value": "数据管理"
+    },
+    {
+      "name": "settings_reset",
+      "value": "恢复默认设置"
+    },
+    {
+      "name": "settings_reset_desc",
+      "value": "恢复主题和游戏偏好，保留所有战绩"
+    },
+    {
+      "name": "settings_reset_confirm",
+      "value": "恢复跟随系统主题、普通难度、开启震动和退出确认，并关闭难度记忆。各游戏记住的难度会移除，战绩保留。"
+    },
+    {
+      "name": "settings_restore",
+      "value": "恢复默认"
+    },
+    {
+      "name": "settings_cancel",
+      "value": "取消"
+    },
+    {
+      "name": "settings_reset_done",
+      "value": "已恢复默认设置"
+    },
+    {
+      "name": "settings_clear",
+      "value": "清空游玩数据"
+    },
+    {
+      "name": "settings_clear_desc",
+      "value": "删除最高分、游玩次数和最近玩过记录"
+    },
+    {
+      "name": "settings_clear_confirm",
+      "value": "将删除全部游戏的最高分、游玩次数和最近玩过记录，无法撤销。你的主题和游戏偏好会保留。确定清空吗？"
+    },
+    {
+      "name": "settings_clear_action",
+      "value": "确认清空"
+    },
+    {
+      "name": "settings_clear_done",
+      "value": "游玩数据已清空"
+    },
+    {
+      "name": "settings_about_section",
+      "value": "关于"
+    },
+    {
+      "name": "settings_about",
+      "value": "关于软件"
+    },
+    {
+      "name": "settings_about_desc",
+      "value": "软件声明、隐私说明与使用帮助"
+    },
+    {
+      "name": "settings_version",
+      "value": "当前版本"
+    },
+    {
+      "name": "settings_version_unavailable",
+      "value": "暂时无法获取版本"
+    },
+    {
+      "name": "settings_about_tagline",
+      "value": "六大分类，33 款小游戏"
+    },
+    {
+      "name": "settings_statement_title",
+      "value": "软件声明"
+    },
+    {
+      "name": "settings_statement_content",
+      "value": "玩趣盒是一款本地休闲小游戏合集。游戏分数用于记录个人游玩表现，不同游戏的计分规则不同，分数不代表统一竞技排名。请合理安排游玩时间。"
+    },
+    {
+      "name": "settings_privacy_title",
+      "value": "隐私与本地数据"
+    },
+    {
+      "name": "settings_privacy_content",
+      "value": "当前版本无需账号登录，也不上传游玩数据。最高分、游玩次数、最近玩过记录及设置保存在本机，不提供应用内云同步。在设置中清空游玩数据会删除战绩与最近记录；恢复默认设置仅重置偏好。卸载或清除应用数据可能导致本地记录丢失。"
+    },
+    {
+      "name": "settings_permission_title",
+      "value": "权限说明"
+    },
+    {
+      "name": "settings_permission_content",
+      "value": "震动权限仅用于支持触感反馈的操作和通关提示，可在设置中关闭。关闭后应用不再主动触发震动；设备不支持震动时不影响游玩。"
+    },
+    {
+      "name": "settings_help_title",
+      "value": "使用帮助"
+    },
+    {
+      "name": "settings_help_content",
+      "value": "在游戏标题栏选择难度，可重新开始当前游戏。默认难度对下一次进入的游戏生效；开启难度记忆后，每款游戏优先使用你上次选择的难度。返回退出不会保存未完成的棋盘或关卡进度。语言和字体大小跟随系统设置。"
+    },
+    {
+      "name": "settings_selected",
+      "value": "已选择"
+    },
+    {
+      "name": "settings_unselected",
+      "value": "未选择"
+    },
+    {
+      "name": "immersive_light_content",
+      "value": "底部悬浮页签使用鸿蒙原生沉浸光感材质，跟随系统明暗主题，并根据设备能力和温控状态调整效果。"
+    },
+    {
+      "name": "continuation_restored",
+      "value": "已接续到此设备"
+    },
+    {
+      "name": "continuation_restore_failed",
+      "value": "接续进度无法恢复，请重新打开游戏"
+    },
+    {
+      "name": "immersive_light_title",
+      "value": "沉浸光感"
+    },
+    {
+      "name": "continuation_help_content",
+      "value": "在登录同一华为账号的附近手机或平板上，点击系统接续入口，可继续当前游戏或页面。两端需安装支持接续的版本并开启系统接续功能。贪吃蛇、俄罗斯方块、打地鼠和打砖块的实时对局会暂停，准备好后点击继续；正在生成的数独需等待题面就绪。"
+    },
+    {
+      "name": "continuation_help_title",
+      "value": "跨设备继续玩"
+    },
+    {
+      "name": "cat_board",
+      "value": "棋盘对弈"
+    },
+    {
+      "name": "cat_number",
+      "value": "数字训练"
+    },
+    {
+      "name": "cat_memory",
+      "value": "记忆专注"
+    },
+    {
+      "name": "cat_reaction",
+      "value": "反应节奏"
+    },
+    {
+      "name": "collection_score",
+      "value": "挑战分"
+    },
+    {
+      "name": "collection_rules",
+      "value": "玩法说明"
+    },
+    {
+      "name": "collection_ready",
+      "value": "记好了"
+    },
+    {
+      "name": "collection_check",
+      "value": "检查答案"
+    },
+    {
+      "name": "collection_check_again",
+      "value": "线索尚未全部满足，请继续调整。"
+    },
+    {
+      "name": "collection_turn",
+      "value": "同屏双人 · 玩家 %d 回合"
+    },
+    {
+      "name": "collection_steps",
+      "value": "已用 %d 步"
+    },
+    {
+      "name": "collection_round",
+      "value": "第 %d / 10 题 · 得分 %d"
+    },
+    {
+      "name": "collection_player_win",
+      "value": "玩家 %d 获胜"
+    },
+    {
+      "name": "collection_draw",
+      "value": "平局"
+    },
+    {
+      "name": "collection_win",
+      "value": "挑战完成"
+    },
+    {
+      "name": "collection_fail",
+      "value": "本局结束"
+    },
+    {
+      "name": "collection_score_result",
+      "value": "本局得分：%d"
+    },
+    {
+      "name": "collection_reaction_result",
+      "value": "反应时间：%d 毫秒"
+    },
+    {
+      "name": "collection_reaction_start",
+      "value": "点击开始"
+    },
+    {
+      "name": "collection_reaction_wait",
+      "value": "等待信号…"
+    },
+    {
+      "name": "collection_reaction_go",
+      "value": "现在点击！"
+    },
+    {
+      "name": "collection_target",
+      "value": "下一个：%d"
+    },
+    {
+      "name": "collection_limit",
+      "value": "步数 %d / %d"
+    },
+    {
+      "name": "collection_progress",
+      "value": "已复现 %d / %d"
+    },
+    {
+      "name": "collection_stones",
+      "value": "剩余 %d 颗石子"
+    },
+    {
+      "name": "collection_rows",
+      "value": "行线索（自上而下）"
+    },
+    {
+      "name": "collection_columns",
+      "value": "列线索（自左向右）"
+    },
+    {
+      "name": "collection_post",
+      "value": "第 %d 柱"
+    },
+    {
+      "name": "collection_empty",
+      "value": "空"
+    },
+    {
+      "name": "collection_cell",
+      "value": "第 %d 行，第 %d 列：%s"
+    },
+    {
+      "name": "collection_count",
+      "value": "%d 款游戏"
+    },
+    {
+      "name": "collection_new",
+      "value": "新玩法 · 换个挑战"
+    },
+    {
+      "name": "collection_duel_score",
+      "value": "完成对局"
+    },
+    {
+      "name": "game_tictactoe_name",
+      "value": "井字棋"
+    },
+    {
+      "name": "game_tictactoe_desc",
+      "value": "三乘三棋盘，同屏双人连成三子。"
+    },
+    {
+      "name": "game_tictactoe_rules",
+      "value": "双方轮流落下 × 和 ○，横、竖或斜线先连成三子获胜。棋盘填满仍无人连线则平局。"
+    },
+    {
+      "name": "game_gomoku_name",
+      "value": "五子棋"
+    },
+    {
+      "name": "game_gomoku_desc",
+      "value": "九路棋盘，双人自由五子连线。"
+    },
+    {
+      "name": "game_gomoku_rules",
+      "value": "同屏双人轮流落子，任意方向连续五子或以上获胜。本局采用自由规则，没有禁手。"
+    },
+    {
+      "name": "game_reversi_name",
+      "value": "翻转棋"
+    },
+    {
+      "name": "game_reversi_desc",
+      "value": "夹住对方棋子，争夺棋盘多数。"
+    },
+    {
+      "name": "game_reversi_rules",
+      "value": "同屏双人对弈。落子必须在直线方向夹住对方棋子，夹住的全部翻为己方。无合法落点自动让行；双方均无法落子时，棋多者胜。小圆点表示合法位置。"
+    },
+    {
+      "name": "game_fourline_name",
+      "value": "落子四连"
+    },
+    {
+      "name": "game_fourline_desc",
+      "value": "棋子落到底部，抢先连成四子。"
+    },
+    {
+      "name": "game_fourline_rules",
+      "value": "同屏双人轮流点击一列，棋子落到该列最低空位。横、竖或斜线先连成四子获胜。"
+    },
+    {
+      "name": "game_nim_name",
+      "value": "取石子"
+    },
+    {
+      "name": "game_nim_desc",
+      "value": "每次取一至三颗，拿走最后一颗获胜。"
+    },
+    {
+      "name": "game_nim_rules",
+      "value": "同屏双人轮流取走 1～3 颗石子，不能超过剩余数量。取走最后一颗的玩家获胜。难度改变初始石子数。"
+    },
+    {
+      "name": "game_lights_name",
+      "value": "十字熄灯"
+    },
+    {
+      "name": "game_lights_desc",
+      "value": "翻转相邻灯格，让棋盘全部熄灭。"
+    },
+    {
+      "name": "game_lights_rules",
+      "value": "点击格子，会同时翻转自身与上下左右相邻格子的亮灭状态。将所有暖黄色亮灯熄灭即可过关。谜题从全灭状态反向生成。"
+    },
+    {
+      "name": "game_flood_name",
+      "value": "色块归一"
+    },
+    {
+      "name": "game_flood_desc",
+      "value": "从左上角出发，用有限步数统一色块。"
+    },
+    {
+      "name": "game_flood_rules",
+      "value": "选择下方数字颜色，将左上角相连的同色区域染成该颜色，并吸收相邻同色格。在步数上限内让所有格子相同。数字同时标识颜色。"
+    },
+    {
+      "name": "game_maze_name",
+      "value": "迷宫寻路"
+    },
+    {
+      "name": "game_maze_desc",
+      "value": "探索随机迷宫，走到终点。"
+    },
+    {
+      "name": "game_maze_rules",
+      "value": "小机器人是当前位置，绿色拱门是出口，绿篱是墙。点击上下左右相邻的空地移动，也可使用方向按钮。到达出口即过关。每局迷宫保证连通。"
+    },
+    {
+      "name": "game_hanoi_name",
+      "value": "汉诺塔"
+    },
+    {
+      "name": "game_hanoi_desc",
+      "value": "移动圆盘，完成三柱搬运。"
+    },
+    {
+      "name": "game_hanoi_rules",
+      "value": "先点来源柱，再点目标柱，每次只能移动最上方最小的圆盘。小盘可放在大盘上，反之不可。将所有圆盘移至第 3 柱。数字越小盘越小。"
+    },
+    {
+      "name": "game_peg_name",
+      "value": "跳子独留"
+    },
+    {
+      "name": "game_peg_desc",
+      "value": "跳过相邻棋子，最终只留一颗。"
+    },
+    {
+      "name": "game_peg_rules",
+      "value": "先点棋子，再点同一直线上隔一格的空位。中间必须有棋子，被跳过的棋子会移除。最后只剩一颗即获胜；无路可跳则结束。关卡由合法逆向跳跃生成。"
+    },
+    {
+      "name": "game_nonogram_name",
+      "value": "数字绘格"
+    },
+    {
+      "name": "game_nonogram_desc",
+      "value": "根据行列线索，填出格子图案。"
+    },
+    {
+      "name": "game_nonogram_rules",
+      "value": "行列线索描述连续实心格的组长，例如 2 1 表示连续两格、至少一格空白、再一格。点击切换填色。完成后点检查；任何满足全部线索的解都有效。"
+    },
+    {
+      "name": "game_arithmetic_name",
+      "value": "心算十题"
+    },
+    {
+      "name": "game_arithmetic_desc",
+      "value": "加减乘十题练习，挑战心算准确率。"
+    },
+    {
+      "name": "game_arithmetic_rules",
+      "value": "选择每道算式的正确答案，共 10 题。答对获得难度对应分数，答错不得分，完成后结算总分。"
+    },
+    {
+      "name": "game_compare_name",
+      "value": "算式比大小"
+    },
+    {
+      "name": "game_compare_desc",
+      "value": "算出两边大小，选择关系符号。"
+    },
+    {
+      "name": "game_compare_rules",
+      "value": "比较左右两个算式的结果，选择 ＜、＝ 或 ＞。共 10 题，按答对题数计分。"
+    },
+    {
+      "name": "game_sequence_name",
+      "value": "数列推演"
+    },
+    {
+      "name": "game_sequence_desc",
+      "value": "找出规律，补上数列下一项。"
+    },
+    {
+      "name": "game_sequence_rules",
+      "value": "观察给出的数列并选择下一项。普通关卡为等差数列，困难可能出现翻倍数列。共 10 题，答对得分。"
+    },
+    {
+      "name": "game_binary_name",
+      "value": "二进制解码"
+    },
+    {
+      "name": "game_binary_desc",
+      "value": "把二进制数字换算为十进制。"
+    },
+    {
+      "name": "game_binary_rules",
+      "value": "将带下标 ₂ 的二进制数转换成十进制，选择正确答案。共 10 题；难度越高，数字范围越大。"
+    },
+    {
+      "name": "game_targetsum_name",
+      "value": "补数求和"
+    },
+    {
+      "name": "game_targetsum_desc",
+      "value": "算出空缺数字，让总和成立。"
+    },
+    {
+      "name": "game_targetsum_rules",
+      "value": "已知总和及两个加数，选择问号处的数字，让等式成立。共 10 题，答对获得分数。"
+    },
+    {
+      "name": "game_schulte_name",
+      "value": "数字寻序"
+    },
+    {
+      "name": "game_schulte_desc",
+      "value": "从一开始，按顺序找齐数字。"
+    },
+    {
+      "name": "game_schulte_rules",
+      "value": "从 1 开始依次点击数字，直到找到最后一个。点错不会跳过数字，但会增加步数。用更少的点击获得更高成绩。"
+    },
+    {
+      "name": "game_memorysequence_name",
+      "value": "顺序记忆"
+    },
+    {
+      "name": "game_memorysequence_desc",
+      "value": "记住数字顺序，隐藏后依次复现。"
+    },
+    {
+      "name": "game_memorysequence_rules",
+      "value": "先观察数字序列，点「记好了」将其隐藏，然后按原顺序点击数字。重复数字也要重复点击；一次点错即结束。"
+    },
+    {
+      "name": "game_missing_name",
+      "value": "记忆缺项"
+    },
+    {
+      "name": "game_missing_desc",
+      "value": "记住一组数字，找出消失的那一个。"
+    },
+    {
+      "name": "game_missing_rules",
+      "value": "记住显示的数字组，点「记好了」后会少一个数字。根据记忆选出消失的数字。共 10 题，答对计分。"
+    },
+    {
+      "name": "game_reaction_name",
+      "value": "信号反应"
+    },
+    {
+      "name": "game_reaction_desc",
+      "value": "等待信号出现，测试点击反应。"
+    },
+    {
+      "name": "game_reaction_rules",
+      "value": "先点击开始，等待「现在点击」信号后再点。提前点会失败。完成后显示反应毫秒数；得分为 2000 减毫秒数，最低为 0。切后台或退出确认会取消当前计时，回到准备状态。"
+    },
+    {
+      "name": "collection_correct",
+      "value": "上一题答对了 · 答案 %s"
+    },
+    {
+      "name": "collection_wrong",
+      "value": "上一题正确答案：%s"
+    },
+    {
+      "name": "collection_art_robot",
+      "value": "小机器人，当前位置"
+    },
+    {
+      "name": "collection_art_exit",
+      "value": "出口拱门"
+    },
+    {
+      "name": "collection_art_wall",
+      "value": "绿篱墙"
+    },
+    {
+      "name": "collection_art_path",
+      "value": "小径"
+    },
+    {
+      "name": "collection_art_player",
+      "value": "玩家 %d 的棋子"
+    },
+    {
+      "name": "collection_art_on",
+      "value": "灯亮着"
+    },
+    {
+      "name": "collection_art_off",
+      "value": "灯已熄灭"
+    },
+    {
+      "name": "collection_art_filled",
+      "value": "已填色"
+    },
+    {
+      "name": "collection_art_peg",
+      "value": "棋子"
+    },
+    {
+      "name": "collection_art_legal",
+      "value": "可落子"
+    },
+    {
+      "name": "collection_art_hidden",
+      "value": "已隐藏的记忆卡"
+    },
+    {
+      "name": "collection_art_tower",
+      "value": "第 %d 柱，从上到下的圆盘：%s"
+    },
+    {
+      "name": "collection_art_card",
+      "value": "记忆卡 %d"
     }
   ]
 }

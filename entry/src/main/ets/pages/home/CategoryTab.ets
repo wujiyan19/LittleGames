@@ -2,25 +2,23 @@
  * 分类 Tab — 搜索 + 分类筛选 + 游戏栅格
  *
  * 原先是 Index.ets 内的 @Builder。抽出后它真正做到了自包含：
- * - 数据源（三个分类列表 + 拼音排序的全量）通过 @Param 传入
+ * - 拼音排序的全量游戏通过 @Param 传入，六类筛选共用同一数据源
  * - 筛选条件（分类 / 搜索词）是它自己的 @Local
  * - 展示列表用 @Computed 从两者自动推导，不再需要手动 refreshCategoryGames()，
  *   也不会出现「改了筛选条件却忘了刷新列表」的错位
  * 点击通过 onGameClick 透出，不感知路由。
  */
 import { SemanticColors, FontTokens, RadiusTokens, SpacingTokens } from '../../common/DesignTokens';
-import { GameInfo } from '../../common/GameConstants';
+import { GameInfo, GameCategory, GAME_CATEGORIES, getCategoryLabel } from '../../common/GameConstants';
 import { GameCard } from '../../components/GameCard';
 import { resolveString } from '../../common/I18nUtils';
 
 @ComponentV2
 export struct CategoryTab {
-  @Param classicGames: GameInfo[] = [];
-  @Param puzzleGames: GameInfo[] = [];
   /** 全部游戏（已按拼音排序），「全部」分类使用 */
   @Param allGames: GameInfo[] = [];
   @Param onGameClick: (game: GameInfo) => void = () => {};
-  // -1=全部 0=经典休闲 1=益智解谜
+  // -1 为全部，其余索引对应 GAME_CATEGORIES。
   @Local currentCategory: number = -1;
   @Local searchText: string = '';
 
@@ -36,10 +34,8 @@ export struct CategoryTab {
     let source: GameInfo[] = [];
     if (this.currentCategory === -1) {
       source = this.allGames;
-    } else if (this.currentCategory === 0) {
-      source = this.classicGames;
     } else {
-      source = this.puzzleGames;
+      source = this.allGames.filter((game: GameInfo) => game.category === GAME_CATEGORIES[this.currentCategory]);
     }
     const keyword: string = this.searchText.trim().toLowerCase();
     if (keyword.length === 0) {
@@ -77,6 +73,12 @@ export struct CategoryTab {
   getCategoryBgColor(index: number): Resource {
     if (this.currentCategory === index) { return SemanticColors.primary; }
     return SemanticColors.surface;
+  }
+
+  getSearchEmptyLabel(): string {
+    const context = this.getUIContext().getHostContext();
+    return resolveString($r('app.string.search_no_result_prefix'), context) + this.searchText.trim() +
+      resolveString($r('app.string.search_no_result_suffix'), context);
   }
 
   build() {
@@ -127,14 +129,18 @@ export struct CategoryTab {
         top: SpacingTokens.base
       })
 
-      Row() {
+      Flex({ wrap: FlexWrap.Wrap }) {
         this.CategoryChip(-1, $r('app.string.cat_all'))
-        this.CategoryChip(0, $r('app.string.cat_classic'))
-        this.CategoryChip(1, $r('app.string.cat_puzzle'))
+        ForEach(GAME_CATEGORIES, (category: GameCategory, index: number) => {
+          this.CategoryChip(index, getCategoryLabel(category))
+        }, (category: GameCategory) => category)
       }
       .width('100%')
       .padding({ left: SpacingTokens.pageHorizontal, top: SpacingTokens.base })
-      .justifyContent(FlexAlign.Start)
+
+      Text($r('app.string.collection_count', this.categoryGames.length))
+        .fontSize(FontTokens.sizeBodySmall).fontColor(SemanticColors.textSecondary)
+        .width('100%').padding({ left: SpacingTokens.pageHorizontal, top: SpacingTokens.xs })
 
       Scroll() {
         Column() {
@@ -147,7 +153,7 @@ export struct CategoryTab {
               GridCol({ span: { sm: 2, md: 2, lg: 3 } }) {
                 GameCard({ game: game, onTap: () => { this.onGameClick(game); } })
               }
-            }, (game: GameInfo) => game.id)
+            }, (game: GameInfo) => game.id + '_' + game.playCount.toString())
           }
           .width('100%')
           .padding({
@@ -162,7 +168,7 @@ export struct CategoryTab {
                 .fontSize(44)
                 .fontWeight(FontWeight.Regular)
                 .fontColor([SemanticColors.textDisabled])
-              Text($r('app.string.search_no_result_prefix') + this.searchText.trim() + $r('app.string.search_no_result_suffix'))
+              Text(this.getSearchEmptyLabel())
                 .fontFamily(FontTokens.family)
                 .fontSize(FontTokens.sizeBodyLarge)
                 .fontWeight(FontTokens.weightMedium)
@@ -182,7 +188,7 @@ export struct CategoryTab {
           }
         }
         .width('100%')
-        .padding({ bottom: SpacingTokens.xxl })
+        .padding({ bottom: $r('app.float.home_tab_content_inset') })
       }
       .layoutWeight(1)
       .scrollBar(BarState.Off)
@@ -205,11 +211,13 @@ export struct CategoryTab {
         .fontSize(FontTokens.sizeBody)
         .fontWeight(this.getCategoryWeight(index))
         .fontColor(this.getCategoryTextColor(index))
+      Text((index === -1 ? this.allGames.length : this.allGames.filter((game: GameInfo) => game.category === GAME_CATEGORIES[index]).length).toString())
+        .fontSize(FontTokens.sizeCaption).fontColor(this.getCategoryTextColor(index))
     }
     .padding({ left: SpacingTokens.base, right: SpacingTokens.base, top: SpacingTokens.sm, bottom: SpacingTokens.sm })
     .borderRadius(RadiusTokens.full)
     .backgroundColor(this.getCategoryBgColor(index))
-    .margin({ right: SpacingTokens.md })
+    .margin({ right: SpacingTokens.sm, bottom: SpacingTokens.sm })
     .scale({ x: this.currentCategory === index ? 1.05 : 1.0, y: this.currentCategory === index ? 1.05 : 1.0 })
     .animation({ duration: 200, curve: Curve.FastOutSlowIn })
     .stateStyles({ pressed: this.pressedFeedback })
