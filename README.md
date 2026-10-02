@@ -83,6 +83,7 @@ node scripts/test-collection.cjs
 node scripts/test-continuation.cjs
 node scripts/test-klotski-ui-state.cjs
 node scripts/test-generation-logic.cjs
+node scripts/test-window-sizing.cjs
 ~~~
 
 运行器默认使用 DevEco Studio 自带的 TypeScript 模块；其他安装路径可通过 `ARKTS_TYPESCRIPT_PATH` 指定。测试直接运行转换后的 Model / ViewModel，替代原生服务与时钟；ArkTS 编译、设备渲染和性能需分别验证。
@@ -114,11 +115,13 @@ scripts/                     回归、素材生成及设备验收工具
 
 ## 验证情况
 
-截至 **2026-10-02**，当前工作区的 DevEco / API 24 `assembleHap` 构建成功，**342/342 项桌面回归通过**：性能及设置 159 项、合集 82 项、接续 72 项、华容道界面状态 3 项、生成与难度 26 项。出题边界、可解性、难度切换和重开竞态的修复与采样规模见[逻辑审计报告](docs/logic-audit-2026-10-02/README.md)。
+截至 **2026-10-02**，当前工作区的 DevEco / API 24 `assembleHap` 构建成功，**350/350 项桌面回归通过**：性能及设置 159 项、合集 82 项、接续 72 项、华容道界面状态 3 项、生成与难度 26 项、窗口尺寸 8 项。出题边界、可解性、难度切换和重开竞态的修复与采样规模见[逻辑审计报告](docs/logic-audit-2026-10-02/README.md)。
 
 **Mate 60 Pro（ALN-AL00）真机已覆盖 33 款游戏、58 组选定用例**，包括多款解谜游戏完整通关、三档难度生成、实时游戏操作、暂停与后台恢复，以及迷宫切难度后的渲染修复。先前已完成 33 款浅色/深色入口与返回、设置持久化和结算弹窗复测；各轮对应不同测试包，以报告中的哈希和实际操作范围为准。详见[最新玩法验收](docs/device-acceptance/generation-audit-2026-10-02.md)与[设备验收索引](docs/device-acceptance/README.md)。
 
-原有 13 款的 API 24 手机与 Mate X7 展开态模拟器结果保留在[历史回归记录](docs/emulator-review-2026-09-25.md)。**长局帧率、内存、温升耗电、英文与最大系统字体、无障碍、平板、运行中分屏/旋转/折叠切换、真实跨设备接续和 Release 包专项仍待验收**；现有记录不代表所有随机局、所有胜负路径或所有机型通过。
+**WEB-W00 平板已完成横屏、竖屏各 33 款入口与返回检查**，并实测系统悬浮窗和不同高度的分屏。已修复打地鼠洞位越界、精选页在高窗口中居中，以及 8 款游戏在矮窗口中棋盘裁切或与操作区重叠的问题；复测范围、实际输入和各测试包身份见[平板窗口验收](docs/device-acceptance/tablet-window-2026-10-02/README.md)。
+
+原有 13 款的 API 24 手机与 Mate X7 展开态模拟器结果保留在[历史回归记录](docs/emulator-review-2026-09-25.md)。**长局帧率、内存、温升耗电、英文与最大系统字体、无障碍、折叠切换、真实跨设备接续和 Release 包专项仍待验收**；现有记录不代表所有随机局、所有胜负路径或所有机型通过。
 
 2026-10-02 更新为游戏盒子品牌图，桌面图标、系统启动窗口、首页和关于页已通过真机复测。当前启动窗口仅显示图标，不叠加应用内启动页；历史截图可能保留旧图标。素材来源与提示词见[品牌素材记录](docs/art/brand-game-box/README.md)，实测见[图标验收](docs/device-acceptance/brand-game-box-2026-10-02/README.md)。
 

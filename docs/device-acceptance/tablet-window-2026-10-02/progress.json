@@ -1,0 +1,700 @@
+{
+  "target": "49X0224C24001554",
+  "groups": {
+    "landscape-full": [
+      {
+        "id": "snake",
+        "name": "贪吃蛇",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-snake",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "tetris",
+        "name": "俄罗斯方块",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-tetris",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "2048",
+        "name": "2048",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-2048",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "whackmole",
+        "name": "打地鼠",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-whackmole",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "minesweeper",
+        "name": "扫雷",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-minesweeper",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "sudoku",
+        "name": "数独",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-sudoku",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "slidepuzzle",
+        "name": "滑动拼图",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-slidepuzzle",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "klotski",
+        "name": "华容道",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-klotski",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "guessnumber",
+        "name": "猜数字",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-guessnumber",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "memorycard",
+        "name": "记忆翻牌",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-memorycard",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "jumpjump",
+        "name": "跳一跳",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-jumpjump",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "brickbreaker",
+        "name": "打砖块",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-brickbreaker",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "match3",
+        "name": "消消乐",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-match3",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "tictactoe",
+        "name": "井字棋",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-tictactoe",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "gomoku",
+        "name": "五子棋",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-gomoku",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "reversi",
+        "name": "翻转棋",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-reversi",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "fourline",
+        "name": "落子四连",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-fourline",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "nim",
+        "name": "取石子",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-nim",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "lights",
+        "name": "十字熄灯",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-lights",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "flood",
+        "name": "色块归一",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-flood",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "maze",
+        "name": "迷宫寻路",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-maze",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "hanoi",
+        "name": "汉诺塔",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-hanoi",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "peg",
+        "name": "跳子独留",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-peg",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "nonogram",
+        "name": "数字绘格",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-nonogram",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "arithmetic",
+        "name": "心算十题",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-arithmetic",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "compare",
+        "name": "算式比大小",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-compare",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "sequence",
+        "name": "数列推演",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-sequence",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "binary",
+        "name": "二进制解码",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-binary",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "targetsum",
+        "name": "补数求和",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-targetsum",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "schulte",
+        "name": "数字寻序",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-schulte",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "memorysequence",
+        "name": "顺序记忆",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-memorysequence",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "missing",
+        "name": "记忆缺项",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-missing",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      },
+      {
+        "id": "reaction",
+        "name": "信号反应",
+        "status": "entry-return-passed",
+        "evidence": "landscape-full-reaction",
+        "packageHash": "5B340F4AED371FDA4E50FBC8F180F468B785FC7D5B927AFE9537055BE7AAA93B"
+      }
+    ],
+    "portrait-full": [
+      {
+        "id": "snake",
+        "name": "贪吃蛇",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-snake",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "tetris",
+        "name": "俄罗斯方块",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-tetris",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "2048",
+        "name": "2048",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-2048",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "whackmole",
+        "name": "打地鼠",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-whackmole",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "minesweeper",
+        "name": "扫雷",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-minesweeper",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "sudoku",
+        "name": "数独",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-sudoku",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "slidepuzzle",
+        "name": "滑动拼图",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-slidepuzzle",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "klotski",
+        "name": "华容道",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-klotski",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "guessnumber",
+        "name": "猜数字",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-guessnumber",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "memorycard",
+        "name": "记忆翻牌",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-memorycard",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "jumpjump",
+        "name": "跳一跳",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-jumpjump",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "brickbreaker",
+        "name": "打砖块",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-brickbreaker",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "match3",
+        "name": "消消乐",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-match3",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "tictactoe",
+        "name": "井字棋",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-tictactoe",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "gomoku",
+        "name": "五子棋",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-gomoku",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "reversi",
+        "name": "翻转棋",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-reversi",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "fourline",
+        "name": "落子四连",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-fourline",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "nim",
+        "name": "取石子",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-nim",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "lights",
+        "name": "十字熄灯",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-lights",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "flood",
+        "name": "色块归一",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-flood",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "maze",
+        "name": "迷宫寻路",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-maze",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "hanoi",
+        "name": "汉诺塔",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-hanoi",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "peg",
+        "name": "跳子独留",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-peg",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "nonogram",
+        "name": "数字绘格",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-nonogram",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "arithmetic",
+        "name": "心算十题",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-arithmetic",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "compare",
+        "name": "算式比大小",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-compare",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "sequence",
+        "name": "数列推演",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-sequence",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "binary",
+        "name": "二进制解码",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-binary",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "targetsum",
+        "name": "补数求和",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-targetsum",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "schulte",
+        "name": "数字寻序",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-schulte",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "memorysequence",
+        "name": "顺序记忆",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-memorysequence",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "missing",
+        "name": "记忆缺项",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-missing",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      },
+      {
+        "id": "reaction",
+        "name": "信号反应",
+        "status": "entry-return-passed",
+        "evidence": "portrait-full-reaction",
+        "packageHash": "2C7CEE973A4413E20793FD2CAD0D9D7F24B6C3288B68852AB5ED94F207DF7D1D"
+      }
+    ],
+    "portrait-split": [
+      {
+        "id": "snake",
+        "name": "贪吃蛇",
+        "status": "entry-return-passed",
+        "evidence": "portrait-split-snake",
+        "packageHash": "FB107F5B926C60BA6178BB17C501AE46EF74AFC2A4F98E1AEA960C837826FF77"
+      },
+      {
+        "id": "tetris",
+        "name": "俄罗斯方块",
+        "status": "entry-return-passed",
+        "evidence": "portrait-split-tetris",
+        "packageHash": "FB107F5B926C60BA6178BB17C501AE46EF74AFC2A4F98E1AEA960C837826FF77"
+      },
+      {
+        "id": "2048",
+        "name": "2048",
+        "status": "entry-return-passed",
+        "evidence": "portrait-split-2048",
+        "packageHash": "FB107F5B926C60BA6178BB17C501AE46EF74AFC2A4F98E1AEA960C837826FF77"
+      },
+      {
+        "id": "whackmole",
+        "name": "打地鼠",
+        "status": "entry-return-passed",
+        "evidence": "portrait-split-whackmole",
+        "packageHash": "FB107F5B926C60BA6178BB17C501AE46EF74AFC2A4F98E1AEA960C837826FF77"
+      },
+      {
+        "id": "minesweeper",
+        "name": "扫雷",
+        "status": "entry-return-passed",
+        "evidence": "portrait-split-minesweeper",
+        "packageHash": "FB107F5B926C60BA6178BB17C501AE46EF74AFC2A4F98E1AEA960C837826FF77"
+      },
+      {
+        "id": "sudoku",
+        "name": "数独",
+        "status": "entry-return-passed",
+        "evidence": "portrait-split-sudoku",
+        "packageHash": "FB107F5B926C60BA6178BB17C501AE46EF74AFC2A4F98E1AEA960C837826FF77"
+      },
+      {
+        "id": "slidepuzzle",
+        "name": "滑动拼图",
+        "status": "entry-return-passed",
+        "evidence": "portrait-split-slidepuzzle",
+        "packageHash": "FB107F5B926C60BA6178BB17C501AE46EF74AFC2A4F98E1AEA960C837826FF77"
+      },
+      {
+        "id": "klotski",
+        "name": "华容道",
+        "status": "entry-return-passed",
+        "evidence": "portrait-split-klotski",
+        "packageHash": "FB107F5B926C60BA6178BB17C501AE46EF74AFC2A4F98E1AEA960C837826FF77"
+      },
+      {
+        "id": "memorycard",
+        "name": "记忆翻牌",
+        "status": "entry-return-passed",
+        "evidence": "portrait-split-memorycard",
+        "packageHash": "FB107F5B926C60BA6178BB17C501AE46EF74AFC2A4F98E1AEA960C837826FF77"
+      },
+      {
+        "id": "brickbreaker",
+        "name": "打砖块",
+        "status": "entry-return-passed",
+        "evidence": "portrait-split-brickbreaker",
+        "packageHash": "FB107F5B926C60BA6178BB17C501AE46EF74AFC2A4F98E1AEA960C837826FF77"
+      },
+      {
+        "id": "match3",
+        "name": "消消乐",
+        "status": "entry-return-passed",
+        "evidence": "portrait-split-match3",
+        "packageHash": "FB107F5B926C60BA6178BB17C501AE46EF74AFC2A4F98E1AEA960C837826FF77"
+      },
+      {
+        "id": "gomoku",
+        "name": "五子棋",
+        "status": "entry-return-passed",
+        "evidence": "portrait-split-gomoku",
+        "packageHash": "FB107F5B926C60BA6178BB17C501AE46EF74AFC2A4F98E1AEA960C837826FF77"
+      },
+      {
+        "id": "nonogram",
+        "name": "数字绘格",
+        "status": "entry-return-passed",
+        "evidence": "portrait-split-nonogram",
+        "packageHash": "FB107F5B926C60BA6178BB17C501AE46EF74AFC2A4F98E1AEA960C837826FF77"
+      }
+    ],
+    "portrait-split-short": [
+      {
+        "id": "minesweeper",
+        "name": "扫雷",
+        "status": "entry-return-passed",
+        "evidence": "portrait-split-short-minesweeper",
+        "packageHash": "FB107F5B926C60BA6178BB17C501AE46EF74AFC2A4F98E1AEA960C837826FF77"
+      },
+      {
+        "id": "sudoku",
+        "name": "数独",
+        "status": "entry-return-passed",
+        "evidence": "portrait-split-short-sudoku",
+        "packageHash": "FB107F5B926C60BA6178BB17C501AE46EF74AFC2A4F98E1AEA960C837826FF77"
+      },
+      {
+        "id": "slidepuzzle",
+        "name": "滑动拼图",
+        "status": "entry-return-passed",
+        "evidence": "portrait-split-short-slidepuzzle",
+        "packageHash": "FB107F5B926C60BA6178BB17C501AE46EF74AFC2A4F98E1AEA960C837826FF77"
+      },
+      {
+        "id": "brickbreaker",
+        "name": "打砖块",
+        "status": "entry-return-passed",
+        "evidence": "portrait-split-short-brickbreaker",
+        "packageHash": "FB107F5B926C60BA6178BB17C501AE46EF74AFC2A4F98E1AEA960C837826FF77"
+      },
+      {
+        "id": "match3",
+        "name": "消消乐",
+        "status": "entry-return-passed",
+        "evidence": "portrait-split-short-match3",
+        "packageHash": "FB107F5B926C60BA6178BB17C501AE46EF74AFC2A4F98E1AEA960C837826FF77"
+      }
+    ],
+    "portrait-split-short-fixed": [
+      {
+        "id": "snake",
+        "name": "贪吃蛇",
+        "status": "entry-return-passed",
+        "evidence": "portrait-split-short-fixed-snake",
+        "packageHash": "DA75C39A7BFD4ED4930ED72D3F8F44F79B239D1AAA37F57224F39EFFDB8294E6"
+      },
+      {
+        "id": "tetris",
+        "name": "俄罗斯方块",
+        "status": "entry-return-passed",
+        "evidence": "portrait-split-short-fixed-tetris",
+        "packageHash": "DA75C39A7BFD4ED4930ED72D3F8F44F79B239D1AAA37F57224F39EFFDB8294E6"
+      },
+      {
+        "id": "2048",
+        "name": "2048",
+        "status": "entry-return-passed",
+        "evidence": "portrait-split-short-fixed-2048",
+        "packageHash": "DA75C39A7BFD4ED4930ED72D3F8F44F79B239D1AAA37F57224F39EFFDB8294E6"
+      },
+      {
+        "id": "whackmole",
+        "name": "打地鼠",
+        "status": "entry-return-passed",
+        "evidence": "portrait-split-short-fixed-whackmole",
+        "packageHash": "DA75C39A7BFD4ED4930ED72D3F8F44F79B239D1AAA37F57224F39EFFDB8294E6"
+      },
+      {
+        "id": "minesweeper",
+        "name": "扫雷",
+        "status": "entry-return-passed",
+        "evidence": "portrait-split-short-fixed-minesweeper",
+        "packageHash": "DA75C39A7BFD4ED4930ED72D3F8F44F79B239D1AAA37F57224F39EFFDB8294E6"
+      },
+      {
+        "id": "sudoku",
+        "name": "数独",
+        "status": "entry-return-passed",
+        "evidence": "portrait-split-short-fixed-sudoku",
+        "packageHash": "DA75C39A7BFD4ED4930ED72D3F8F44F79B239D1AAA37F57224F39EFFDB8294E6"
+      },
+      {
+        "id": "slidepuzzle",
+        "name": "滑动拼图",
+        "status": "entry-return-passed",
+        "evidence": "portrait-split-short-fixed-slidepuzzle",
+        "packageHash": "DA75C39A7BFD4ED4930ED72D3F8F44F79B239D1AAA37F57224F39EFFDB8294E6"
+      },
+      {
+        "id": "klotski",
+        "name": "华容道",
+        "status": "entry-return-passed",
+        "evidence": "portrait-split-short-fixed-klotski",
+        "packageHash": "DA75C39A7BFD4ED4930ED72D3F8F44F79B239D1AAA37F57224F39EFFDB8294E6"
+      },
+      {
+        "id": "memorycard",
+        "name": "记忆翻牌",
+        "status": "entry-return-passed",
+        "evidence": "portrait-split-short-fixed-memorycard",
+        "packageHash": "DA75C39A7BFD4ED4930ED72D3F8F44F79B239D1AAA37F57224F39EFFDB8294E6"
+      },
+      {
+        "id": "brickbreaker",
+        "name": "打砖块",
+        "status": "entry-return-passed",
+        "evidence": "portrait-split-short-fixed-brickbreaker",
+        "packageHash": "DA75C39A7BFD4ED4930ED72D3F8F44F79B239D1AAA37F57224F39EFFDB8294E6"
+      },
+      {
+        "id": "match3",
+        "name": "消消乐",
+        "status": "entry-return-passed",
+        "evidence": "portrait-split-short-fixed-match3",
+        "packageHash": "DA75C39A7BFD4ED4930ED72D3F8F44F79B239D1AAA37F57224F39EFFDB8294E6"
+      }
+    ],
+    "interaction": [
+      {
+        "id": "mines-last-cell",
+        "status": "passed",
+        "assertion": "81 complete cells; last cell long press sets flag count to 1/10",
+        "packageHash": "DA75C39A7BFD4ED4930ED72D3F8F44F79B239D1AAA37F57224F39EFFDB8294E6"
+      },
+      {
+        "id": "memory-hard",
+        "status": "passed",
+        "assertion": "24 complete cards; last card flips to face image",
+        "packageHash": "DA75C39A7BFD4ED4930ED72D3F8F44F79B239D1AAA37F57224F39EFFDB8294E6"
+      },
+      {
+        "id": "slide-and-cancel",
+        "status": "passed",
+        "assertion": "16 complete cells; legal move counts 1; cancel exit keeps round",
+        "packageHash": "DA75C39A7BFD4ED4930ED72D3F8F44F79B239D1AAA37F57224F39EFFDB8294E6"
+      }
+    ]
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-02",
+  "model": "WEB-W00",
+  "interfaceOS": "OpenHarmony-7.0.0.105",
+  "systemSettingsOS": "HarmonyOS 7.0.0.109 SP6",
+  "deviceApi": 26,
+  "buildApi": 24,
+  "version": "1.0.0",
+  "build": "Debug",
+  "finalPackageSha256": "DA75C39A7BFD4ED4930ED72D3F8F44F79B239D1AAA37F57224F39EFFDB8294E6",
+  "screenPortrait": {
+    "width": 1920,
+    "height": 2880
+  },
+  "screenLandscape": {
+    "width": 2880,
+    "height": 1920
+  },
+  "regressions": {
+    "performanceAndSettings": 159,
+    "collection": 82,
+    "continuation": 72,
+    "klotskiUi": 3,
+    "generation": 26,
+    "windowSizing": 8,
+    "total": 350
+  },
+  "buildResult": "assembleHap successful",
+  "renderEvidence": "app-only layout; screenshots cropped to app window",
+  "pending": [
+    "landscape rotation of current round",
+    "result dialog and final landscape selected pages"
+  ]
+}
