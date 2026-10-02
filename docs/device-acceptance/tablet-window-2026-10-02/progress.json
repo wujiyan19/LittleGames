@@ -694,6 +694,107 @@
         "status": "passed",
         "assertion": "16 complete cells; legal move counts 1; cancel exit keeps round",
         "packageHash": "DA75C39A7BFD4ED4930ED72D3F8F44F79B239D1AAA37F57224F39EFFDB8294E6"
+      },
+      {
+        "id": "lock-unlock-preserves-round",
+        "status": "passed",
+        "assertion": "After actual device auto-lock and user unlock, tile order and step count 1 remain",
+        "packageHash": "DA75C39A7BFD4ED4930ED72D3F8F44F79B239D1AAA37F57224F39EFFDB8294E6"
+      },
+      {
+        "id": "physical-rotation",
+        "status": "passed",
+        "assertion": "Portrait to landscape preserves 16 tile values and step count 1",
+        "packageHash": "DA75C39A7BFD4ED4930ED72D3F8F44F79B239D1AAA37F57224F39EFFDB8294E6"
+      },
+      {
+        "id": "brick-scaled-drag",
+        "status": "passed",
+        "assertion": "Rendered paddle moves right after a real swipe on the scaled board",
+        "packageHash": "DA75C39A7BFD4ED4930ED72D3F8F44F79B239D1AAA37F57224F39EFFDB8294E6"
+      },
+      {
+        "id": "floating-result-dialog",
+        "status": "passed",
+        "assertion": "Five real turns produce a win; both buttons fit; restart clears the result",
+        "packageHash": "DA75C39A7BFD4ED4930ED72D3F8F44F79B239D1AAA37F57224F39EFFDB8294E6"
+      },
+      {
+        "id": "landscape-result-dialog",
+        "status": "passed",
+        "assertion": "Five real turns produce a win; both buttons fit; restart clears the result",
+        "packageHash": "DA75C39A7BFD4ED4930ED72D3F8F44F79B239D1AAA37F57224F39EFFDB8294E6"
+      },
+      {
+        "id": "public-pages-and-theme",
+        "status": "passed",
+        "assertion": "Featured, profile, settings and about checked in landscape; dark theme applies; original System theme restored",
+        "packageHash": "DA75C39A7BFD4ED4930ED72D3F8F44F79B239D1AAA37F57224F39EFFDB8294E6"
+      }
+    ],
+    "landscape-fixed": [
+      {
+        "id": "snake",
+        "name": "贪吃蛇",
+        "status": "entry-return-passed",
+        "evidence": "landscape-fixed-snake",
+        "packageHash": "DA75C39A7BFD4ED4930ED72D3F8F44F79B239D1AAA37F57224F39EFFDB8294E6"
+      },
+      {
+        "id": "whackmole",
+        "name": "打地鼠",
+        "status": "entry-return-passed",
+        "evidence": "landscape-fixed-whackmole",
+        "packageHash": "DA75C39A7BFD4ED4930ED72D3F8F44F79B239D1AAA37F57224F39EFFDB8294E6"
+      },
+      {
+        "id": "minesweeper",
+        "name": "扫雷",
+        "status": "entry-return-passed",
+        "evidence": "landscape-fixed-minesweeper",
+        "packageHash": "DA75C39A7BFD4ED4930ED72D3F8F44F79B239D1AAA37F57224F39EFFDB8294E6"
+      },
+      {
+        "id": "sudoku",
+        "name": "数独",
+        "status": "entry-return-passed",
+        "evidence": "landscape-fixed-sudoku",
+        "packageHash": "DA75C39A7BFD4ED4930ED72D3F8F44F79B239D1AAA37F57224F39EFFDB8294E6"
+      },
+      {
+        "id": "slidepuzzle",
+        "name": "滑动拼图",
+        "status": "entry-return-passed",
+        "evidence": "landscape-fixed-slidepuzzle",
+        "packageHash": "DA75C39A7BFD4ED4930ED72D3F8F44F79B239D1AAA37F57224F39EFFDB8294E6"
+      },
+      {
+        "id": "klotski",
+        "name": "华容道",
+        "status": "entry-return-passed",
+        "evidence": "landscape-fixed-klotski",
+        "packageHash": "DA75C39A7BFD4ED4930ED72D3F8F44F79B239D1AAA37F57224F39EFFDB8294E6"
+      },
+      {
+        "id": "memorycard",
+        "name": "记忆翻牌",
+        "status": "entry-return-passed",
+        "evidence": "landscape-fixed-memorycard",
+        "packageHash": "DA75C39A7BFD4ED4930ED72D3F8F44F79B239D1AAA37F57224F39EFFDB8294E6"
+      },
+      {
+        "id": "brickbreaker",
+        "name": "打砖块",
+        "status": "entry-return-passed",
+        "evidence": "landscape-fixed-brickbreaker",
+        "packageHash": "DA75C39A7BFD4ED4930ED72D3F8F44F79B239D1AAA37F57224F39EFFDB8294E6"
+      },
+      {
+        "id": "match3",
+        "name": "消消乐",
+        "status": "entry-return-passed",
+        "evidence": "landscape-fixed-match3",
+        "packageHash": "DA75C39A7BFD4ED4930ED72D3F8F44F79B239D1AAA37F57224F39EFFDB8294E6"
       }
     ]
   }

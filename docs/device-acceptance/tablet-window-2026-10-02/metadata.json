@@ -27,8 +27,34 @@
   },
   "buildResult": "assembleHap successful",
   "renderEvidence": "app-only layout; screenshots cropped to app window",
-  "pending": [
-    "landscape rotation of current round",
-    "result dialog and final landscape selected pages"
+  "pending": [],
+  "finalPackageRechecks": {
+    "portraitShortSplitEntryReturn": 11,
+    "landscapeModifiedPagesEntryReturn": 9,
+    "completedInteractions": [
+      "lock-unlock preserves tile order and step count",
+      "physical portrait-to-landscape rotation preserves round",
+      "real paddle swipe in a system-scaled floating window",
+      "floating and landscape full-screen win dialogs and restart",
+      "landscape public pages and theme switching"
+    ]
+  },
+  "floatingWindow": {
+    "logicalWidth": 1008,
+    "logicalHeight": 1792,
+    "displayScaleApprox": 0.79,
+    "physicalWidth": 797,
+    "physicalHeight": 1416
+  },
+  "finalDeviceState": {
+    "orientation": "landscape",
+    "windowMode": "full-screen",
+    "page": "featured",
+    "themeMode": "system"
+  },
+  "scopeNotes": [
+    "Final package selected rechecks do not replace all 66 earlier entry-return checks",
+    "Floating drag and result checks cover the recorded window geometry and scale",
+    "Theme rechecks cover public pages, not all game pages"
   ]
 }

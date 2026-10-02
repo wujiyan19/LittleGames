@@ -52,6 +52,7 @@ function brickDrag() {
 }
 
 function ticTacToeResult() {
+  const prefix = process.argv[3] || 'landscape';
   d.open('井字棋');
   const cells = ns => ns.filter(n => n.type === 'Button').filter(n => {
     const b = d.bounds(n);
@@ -65,7 +66,7 @@ function ticTacToeResult() {
     d.sleep(120);
   }
   ns = d.wait(a => d.find(a, '再来一局'));
-  d.capture('landscape-result-dialog');
+  d.capture(prefix + '-result-dialog');
   const window = d.bounds(ns.find(n => n.type === 'NavDestination'));
   for (const label of ['再来一局', '退出']) {
     const button = d.find(ns, label);
@@ -75,8 +76,8 @@ function ticTacToeResult() {
   }
   d.tap('再来一局', ns);
   d.wait(a => !d.find(a, '再来一局'));
-  d.capture('landscape-result-restarted');
-  passed('result-dialog', 'Five real turns produce a win; both buttons fit; restart clears the result');
+  d.capture(prefix + '-result-restarted');
+  passed(prefix + '-result-dialog', 'Five real turns produce a win; both buttons fit; restart clears the result');
   console.log('PASS result dialog');
   d.back();
 }
