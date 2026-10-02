@@ -20,7 +20,7 @@ export default function viewModelClassicTest() {
       const vm = new SnakeViewModel(new SeededRandom(1));
       vm.newGame();
       expect(vm.status).assertEqual(GameStatus.PLAYING);
-      expect(vm.snake.length).assertEqual(1);
+      expect(vm.snake.length).assertEqual(3);
       expect(vm.score).assertEqual(0);
       vm.dispose();
     });

@@ -3,12 +3,12 @@
  */
 import { describe, it, expect } from '@ohos/hypium';
 import { GameDataManager } from '../main/ets/model/GameData';
-import { GameCategory } from '../main/ets/common/GameConstants';
+import { GameCategory, GAME_CATEGORIES } from '../main/ets/common/GameConstants';
 
 export default function gameDataManagerTest() {
   describe('GameDataManager', () => {
-    it('get_all_games_has_thirteen', 0, () => {
-      expect(GameDataManager.getAllGames().length).assertEqual(13);
+    it('get_all_games_has_thirty_three', 0, () => {
+      expect(GameDataManager.getAllGames().length).assertEqual(33);
     });
 
     it('get_game_by_id_works', 0, () => {
@@ -20,7 +20,12 @@ export default function gameDataManagerTest() {
     it('get_games_by_category_partitions', 0, () => {
       const classic = GameDataManager.getGamesByCategory(GameCategory.CLASSIC);
       const puzzle = GameDataManager.getGamesByCategory(GameCategory.PUZZLE);
-      expect(classic.length + puzzle.length).assertEqual(13);
+      let total: number = 0;
+      for (let i = 0; i < GAME_CATEGORIES.length; i++) {
+        const count: number = GameDataManager.getGamesByCategory(GAME_CATEGORIES[i]).length;
+        expect(count > 0).assertTrue(); total += count;
+      }
+      expect(total).assertEqual(33);
       expect(classic.length > 0 && puzzle.length > 0).assertTrue();
     });
 

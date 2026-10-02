@@ -1,0 +1,10 @@
+const c=require('./device-acceptance-core.cjs');
+const query=(...args)=>{try{return {ok:true,output:c.shell(...args).trim()};}catch(e){return {ok:false,output:e.stdout?.toString()||e.stderr?.toString()||e.message};}};
+const packageHash=JSON.parse(c.fs.readFileSync('docs/device-acceptance/mate60-gameplay-progress.json')).packageHash;
+const pidResult=query('pidof','com.littlegames.collection'),pid=pidResult.output.match(/^\d+$/)?.[0];
+const faultRecords=query('hidumper','-e','--list','com.littlegames.collection','-n','10');
+const memory=pid?query('hidumper','--mem',pid):{ok:false,output:'No running app process'};
+const cpu=pid?query('hidumper','--cpuusage',pid):{ok:false,output:'No running app process'};
+const pss=memory.output.match(/^\s*Total\s+(\d+)/im);
+const result={at:new Date().toISOString(),target:c.target,packageHash,bundle:'com.littlegames.collection',pid:pid||null,faultRecords,memory,cpu,totalPssKb:pss?Number(pss[1]):null,interpretation:{faultRecords:/no records found/i.test(faultRecords.output)?'本次应用故障记录查询没有返回记录；不等于证明全时段无崩溃或无响应。':'以原始查询结果为准，不能自动认定无故障。',memory:'单次采样，无连续趋势、泄漏、帧率、功耗或温升结论。'}};
+const file='docs/device-acceptance/mate60-diagnostics-2026-09-30.json';c.fs.writeFileSync(file,JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify({file,pid:result.pid,faultRecordStatus:result.interpretation.faultRecords,totalPssKb:result.totalPssKb}));

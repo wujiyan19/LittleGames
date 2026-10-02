@@ -12,7 +12,7 @@ export default function klotskiModelTest() {
     it('layout_block_counts_by_difficulty', 0, () => {
       expect(rules.layout(GameDifficulty.EASY).length).assertEqual(5);
       expect(rules.layout(GameDifficulty.NORMAL).length).assertEqual(9);
-      expect(rules.layout(GameDifficulty.HARD).length).assertEqual(9);
+      expect(rules.layout(GameDifficulty.HARD).length).assertEqual(10);
     });
 
     it('build_grid_places_blocks', 0, () => {

@@ -58,7 +58,22 @@ export default function match3ModelTest() {
     it('resolved_match_still_leaves_a_playable_board', 0, () => {
       const rules: Match3Rules = new Match3Rules();
       const board: number[][] = rules.generateBoard(new ConstantRandom());
-      const swapped: number[][] = rules.swap(board, 0, 1, 1, 1);
+      // 生成策略改变后不依赖固定坐标，寻找棋盘实际可消除的一步。
+      let swapped: number[][] = board;
+      let found: boolean = false;
+      for (let r = 0; r < 8 && !found; r++) {
+        for (let c = 0; c < 8 && !found; c++) {
+          if (c < 7) {
+            const candidate: number[][] = rules.swap(board, r, c, r, c + 1);
+            if (rules.hasMatches(candidate)) { swapped = candidate; found = true; }
+          }
+          if (!found && r < 7) {
+            const candidate: number[][] = rules.swap(board, r, c, r + 1, c);
+            if (rules.hasMatches(candidate)) { swapped = candidate; found = true; }
+          }
+        }
+      }
+      expect(found).assertTrue();
       const result: ChainResult = rules.resolveChain(swapped, new SeededRandom(7));
       expect(result.chainRounds > 0).assertTrue();
       expect(rules.hasMatches(result.board)).assertFalse();
