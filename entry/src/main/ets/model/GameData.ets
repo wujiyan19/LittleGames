@@ -1,5 +1,6 @@
 import { GameCategory, GameInfo } from '../common/GameConstants';
 import { collectionGames } from './CollectionCatalog';
+import { expansionGames } from './ExpansionCatalog';
 import { preferences } from '@kit.ArkData';
 import { Context } from '@kit.AbilityKit';
 import { BusinessError } from '@kit.BasicServicesKit';
@@ -162,7 +163,8 @@ export class GameDataManager {
       playCount: 0,
       scoreLabel: $r('app.string.game_match3_score_label'),
     },
-    ...collectionGames()
+    ...collectionGames(),
+    ...expansionGames()
   ];
 
   static init(context: Context): void {

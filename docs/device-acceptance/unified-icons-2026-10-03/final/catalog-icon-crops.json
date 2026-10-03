@@ -1,0 +1,133 @@
+{
+  "source": "Actual HDC screenshots, cropped using observed UI bounds",
+  "bounds": [
+    {
+      "tag": "light-catalog-snake",
+      "bounds": "[104,1057][273,1226]"
+    },
+    {
+      "tag": "light-catalog-tetris",
+      "bounds": "[104,1057][273,1226]"
+    },
+    {
+      "tag": "light-catalog-2048",
+      "bounds": "[104,1057][273,1226]"
+    },
+    {
+      "tag": "light-catalog-whackmole",
+      "bounds": "[104,1057][273,1226]"
+    },
+    {
+      "tag": "light-catalog-memorycard",
+      "bounds": "[104,1057][273,1226]"
+    },
+    {
+      "tag": "light-catalog-tictactoe",
+      "bounds": "[104,1057][273,1226]"
+    },
+    {
+      "tag": "light-catalog-gomoku",
+      "bounds": "[104,1057][273,1226]"
+    },
+    {
+      "tag": "light-catalog-arithmetic",
+      "bounds": "[104,1057][273,1226]"
+    },
+    {
+      "tag": "light-catalog-memorysequence",
+      "bounds": "[104,1057][273,1226]"
+    },
+    {
+      "tag": "light-catalog-reaction",
+      "bounds": "[104,1057][273,1226]"
+    },
+    {
+      "tag": "light-catalog-blockfit",
+      "bounds": "[104,1057][273,1226]"
+    },
+    {
+      "tag": "light-catalog-watersort",
+      "bounds": "[104,1057][273,1226]"
+    },
+    {
+      "tag": "light-catalog-fruitslice",
+      "bounds": "[104,1057][273,1226]"
+    },
+    {
+      "tag": "light-catalog-chess",
+      "bounds": "[104,1057][273,1226]"
+    },
+    {
+      "tag": "light-catalog-guandan",
+      "bounds": "[104,1057][273,1226]"
+    },
+    {
+      "tag": "light-catalog-decorate",
+      "bounds": "[104,1057][273,1226]"
+    },
+    {
+      "tag": "dark-catalog-snake",
+      "bounds": "[104,1057][273,1226]"
+    },
+    {
+      "tag": "dark-catalog-tetris",
+      "bounds": "[104,1057][273,1226]"
+    },
+    {
+      "tag": "dark-catalog-2048",
+      "bounds": "[104,1057][273,1226]"
+    },
+    {
+      "tag": "dark-catalog-whackmole",
+      "bounds": "[104,1057][273,1226]"
+    },
+    {
+      "tag": "dark-catalog-memorycard",
+      "bounds": "[104,1057][273,1226]"
+    },
+    {
+      "tag": "dark-catalog-tictactoe",
+      "bounds": "[104,1057][273,1226]"
+    },
+    {
+      "tag": "dark-catalog-gomoku",
+      "bounds": "[104,1057][273,1226]"
+    },
+    {
+      "tag": "dark-catalog-arithmetic",
+      "bounds": "[104,1057][273,1226]"
+    },
+    {
+      "tag": "dark-catalog-memorysequence",
+      "bounds": "[104,1057][273,1226]"
+    },
+    {
+      "tag": "dark-catalog-reaction",
+      "bounds": "[104,1057][273,1226]"
+    },
+    {
+      "tag": "dark-catalog-blockfit",
+      "bounds": "[104,1057][273,1226]"
+    },
+    {
+      "tag": "dark-catalog-watersort",
+      "bounds": "[104,1057][273,1226]"
+    },
+    {
+      "tag": "dark-catalog-fruitslice",
+      "bounds": "[104,1057][273,1226]"
+    },
+    {
+      "tag": "dark-catalog-chess",
+      "bounds": "[104,1057][273,1226]"
+    },
+    {
+      "tag": "dark-catalog-guandan",
+      "bounds": "[104,1057][273,1226]"
+    },
+    {
+      "tag": "dark-catalog-decorate",
+      "bounds": "[104,1057][273,1226]"
+    }
+  ]
+}

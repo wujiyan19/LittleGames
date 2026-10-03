@@ -1,0 +1,1786 @@
+{
+  "generator": "scripts/generate-expansion-art.cjs",
+  "themes": [
+    "base",
+    "dark"
+  ],
+  "games": [
+    {
+      "id": "blockfit",
+      "name": "方块拼填",
+      "icon": "game_blockfit",
+      "board": "exp_board_blockfit",
+      "family": "ceramic"
+    },
+    {
+      "id": "tilestack",
+      "name": "堆叠三消",
+      "icon": "game_tilestack",
+      "board": "exp_board_tilestack",
+      "family": "ceramic"
+    },
+    {
+      "id": "bubbleshooter",
+      "name": "泡泡龙",
+      "icon": "game_bubbleshooter",
+      "board": "exp_board_bubbleshooter",
+      "family": "ceramic"
+    },
+    {
+      "id": "fruitmerge",
+      "name": "落果合成",
+      "icon": "game_fruitmerge",
+      "board": "exp_board_fruitmerge",
+      "family": "ceramic"
+    },
+    {
+      "id": "watersort",
+      "name": "倒水排序",
+      "icon": "game_watersort",
+      "board": "exp_board_watersort",
+      "family": "ceramic"
+    },
+    {
+      "id": "arrowclear",
+      "name": "箭头清除",
+      "icon": "game_arrowclear",
+      "board": "exp_board_arrowclear",
+      "family": "ceramic"
+    },
+    {
+      "id": "screwout",
+      "name": "拆螺丝",
+      "icon": "game_screwout",
+      "board": "exp_board_screwout",
+      "family": "wood"
+    },
+    {
+      "id": "parkingjam",
+      "name": "停车场挪车",
+      "icon": "game_parkingjam",
+      "board": "exp_board_parkingjam",
+      "family": "street"
+    },
+    {
+      "id": "runner",
+      "name": "无尽跑酷",
+      "icon": "game_runner",
+      "board": "exp_board_runner",
+      "family": "street"
+    },
+    {
+      "id": "blackhole",
+      "name": "黑洞吞噬",
+      "icon": "game_blackhole",
+      "board": "exp_board_blackhole",
+      "family": "street"
+    },
+    {
+      "id": "fisheat",
+      "name": "大鱼吃小鱼",
+      "icon": "game_fisheat",
+      "board": "exp_board_fisheat",
+      "family": "water"
+    },
+    {
+      "id": "sokoban",
+      "name": "推箱子",
+      "icon": "game_sokoban",
+      "board": "exp_board_sokoban",
+      "family": "wood"
+    },
+    {
+      "id": "pipes",
+      "name": "管道连通",
+      "icon": "game_pipes",
+      "board": "exp_board_pipes",
+      "family": "ceramic"
+    },
+    {
+      "id": "differences",
+      "name": "找不同",
+      "icon": "game_differences",
+      "board": "exp_board_differences",
+      "family": "garden"
+    },
+    {
+      "id": "roomdefense",
+      "name": "房间塔防",
+      "icon": "game_roomdefense",
+      "board": "exp_board_roomdefense",
+      "family": "room"
+    },
+    {
+      "id": "basketball",
+      "name": "篮球投篮",
+      "icon": "game_basketball",
+      "board": "exp_board_basketball",
+      "family": "court"
+    },
+    {
+      "id": "solitaire",
+      "name": "经典纸牌",
+      "icon": "game_solitaire",
+      "board": "exp_board_solitaire",
+      "family": "felt"
+    },
+    {
+      "id": "characters",
+      "name": "汉字拆组",
+      "icon": "game_characters",
+      "board": "exp_board_characters",
+      "family": "wood"
+    },
+    {
+      "id": "rhythm",
+      "name": "节奏落键",
+      "icon": "game_rhythm",
+      "board": "exp_board_rhythm",
+      "family": "space"
+    },
+    {
+      "id": "restaurant",
+      "name": "迷你餐厅",
+      "icon": "game_restaurant",
+      "board": "exp_board_restaurant",
+      "family": "room"
+    },
+    {
+      "id": "linktiles",
+      "name": "连连看",
+      "icon": "game_linktiles",
+      "board": "exp_board_linktiles",
+      "family": "ceramic"
+    },
+    {
+      "id": "mahjongsolitaire",
+      "name": "麻将接龙",
+      "icon": "game_mahjongsolitaire",
+      "board": "exp_board_mahjongsolitaire",
+      "family": "ceramic"
+    },
+    {
+      "id": "groupclear",
+      "name": "点击群消",
+      "icon": "game_groupclear",
+      "board": "exp_board_groupclear",
+      "family": "ceramic"
+    },
+    {
+      "id": "slotpair",
+      "name": "落槽配对消除",
+      "icon": "game_slotpair",
+      "board": "exp_board_slotpair",
+      "family": "ceramic"
+    },
+    {
+      "id": "buscolor",
+      "name": "乘客上车",
+      "icon": "game_buscolor",
+      "board": "exp_board_buscolor",
+      "family": "street"
+    },
+    {
+      "id": "yarn",
+      "name": "毛线收卷",
+      "icon": "game_yarn",
+      "board": "exp_board_yarn",
+      "family": "wood"
+    },
+    {
+      "id": "sand",
+      "name": "沙画吸色",
+      "icon": "game_sand",
+      "board": "exp_board_sand",
+      "family": "wood"
+    },
+    {
+      "id": "untangle",
+      "name": "绳结解开",
+      "icon": "game_untangle",
+      "board": "exp_board_untangle",
+      "family": "ceramic"
+    },
+    {
+      "id": "platformer",
+      "name": "横版跳跃闯关",
+      "icon": "game_platformer",
+      "board": "exp_board_platformer",
+      "family": "sky"
+    },
+    {
+      "id": "grapple",
+      "name": "钩索摆荡",
+      "icon": "game_grapple",
+      "board": "exp_board_grapple",
+      "family": "sky"
+    },
+    {
+      "id": "flappy",
+      "name": "飞行穿柱",
+      "icon": "game_flappy",
+      "board": "exp_board_flappy",
+      "family": "sky"
+    },
+    {
+      "id": "fruitslice",
+      "name": "切水果",
+      "icon": "game_fruitslice",
+      "board": "exp_board_fruitslice",
+      "family": "ceramic"
+    },
+    {
+      "id": "rollingball",
+      "name": "滚动球闯关",
+      "icon": "game_rollingball",
+      "board": "exp_board_rollingball",
+      "family": "ceramic"
+    },
+    {
+      "id": "shooter",
+      "name": "雷电战机",
+      "icon": "game_shooter",
+      "board": "exp_board_shooter",
+      "family": "space"
+    },
+    {
+      "id": "tanks",
+      "name": "坦克对战",
+      "icon": "game_tanks",
+      "board": "exp_board_tanks",
+      "family": "room"
+    },
+    {
+      "id": "fortress",
+      "name": "射击守城",
+      "icon": "game_fortress",
+      "board": "exp_board_fortress",
+      "family": "room"
+    },
+    {
+      "id": "survival",
+      "name": "自动攻击生存",
+      "icon": "game_survival",
+      "board": "exp_board_survival",
+      "family": "space"
+    },
+    {
+      "id": "backpack",
+      "name": "背包战斗",
+      "icon": "game_backpack",
+      "board": "exp_board_backpack",
+      "family": "room"
+    },
+    {
+      "id": "billiards",
+      "name": "台球",
+      "icon": "game_billiards",
+      "board": "exp_board_billiards",
+      "family": "felt"
+    },
+    {
+      "id": "penalty",
+      "name": "足球点球",
+      "icon": "game_penalty",
+      "board": "exp_board_penalty",
+      "family": "court"
+    },
+    {
+      "id": "pingpong",
+      "name": "乒乓球",
+      "icon": "game_pingpong",
+      "board": "exp_board_pingpong",
+      "family": "court"
+    },
+    {
+      "id": "bowling",
+      "name": "保龄球",
+      "icon": "game_bowling",
+      "board": "exp_board_bowling",
+      "family": "wood"
+    },
+    {
+      "id": "golf",
+      "name": "迷你高尔夫",
+      "icon": "game_golf",
+      "board": "exp_board_golf",
+      "family": "court"
+    },
+    {
+      "id": "drift",
+      "name": "单键漂移",
+      "icon": "game_drift",
+      "board": "exp_board_drift",
+      "family": "street"
+    },
+    {
+      "id": "hillclimb",
+      "name": "爬坡越野",
+      "icon": "game_hillclimb",
+      "board": "exp_board_hillclimb",
+      "family": "sky"
+    },
+    {
+      "id": "airhockey",
+      "name": "空气曲棍球",
+      "icon": "game_airhockey",
+      "board": "exp_board_airhockey",
+      "family": "court"
+    },
+    {
+      "id": "tug",
+      "name": "双人拔河",
+      "icon": "game_tug",
+      "board": "exp_board_tug",
+      "family": "ceramic"
+    },
+    {
+      "id": "dots",
+      "name": "点格棋",
+      "icon": "game_dots",
+      "board": "exp_board_dots",
+      "family": "ceramic"
+    },
+    {
+      "id": "doudizhu",
+      "name": "斗地主",
+      "icon": "game_doudizhu",
+      "board": "exp_board_doudizhu",
+      "family": "felt"
+    },
+    {
+      "id": "guandan",
+      "name": "掼蛋",
+      "icon": "game_guandan",
+      "board": "exp_board_guandan",
+      "family": "felt"
+    },
+    {
+      "id": "mahjong",
+      "name": "四人麻将",
+      "icon": "game_mahjong",
+      "board": "exp_board_mahjong",
+      "family": "felt"
+    },
+    {
+      "id": "xiangqi",
+      "name": "中国象棋",
+      "icon": "game_xiangqi",
+      "board": "exp_board_xiangqi",
+      "family": "wood"
+    },
+    {
+      "id": "chess",
+      "name": "国际象棋",
+      "icon": "game_chess",
+      "board": "exp_board_chess",
+      "family": "ceramic"
+    },
+    {
+      "id": "ludo",
+      "name": "飞行棋",
+      "icon": "game_ludo",
+      "board": "exp_board_ludo",
+      "family": "ceramic"
+    },
+    {
+      "id": "spider",
+      "name": "蜘蛛纸牌",
+      "icon": "game_spider",
+      "board": "exp_board_spider",
+      "family": "felt"
+    },
+    {
+      "id": "freecell",
+      "name": "空当接龙",
+      "icon": "game_freecell",
+      "board": "exp_board_freecell",
+      "family": "felt"
+    },
+    {
+      "id": "onestroke",
+      "name": "一笔画",
+      "icon": "game_onestroke",
+      "board": "exp_board_onestroke",
+      "family": "ceramic"
+    },
+    {
+      "id": "hiddenobjects",
+      "name": "隐藏物品",
+      "icon": "game_hiddenobjects",
+      "board": "exp_board_hiddenobjects",
+      "family": "garden"
+    },
+    {
+      "id": "linerescue",
+      "name": "画线救援",
+      "icon": "game_linerescue",
+      "board": "exp_board_linerescue",
+      "family": "garden"
+    },
+    {
+      "id": "picturepuzzle",
+      "name": "图片拼图",
+      "icon": "game_picturepuzzle",
+      "board": "exp_board_picturepuzzle",
+      "family": "ceramic"
+    },
+    {
+      "id": "idiom",
+      "name": "成语填字",
+      "icon": "game_idiom",
+      "board": "exp_board_idiom",
+      "family": "wood"
+    },
+    {
+      "id": "wordtower",
+      "name": "文字合成塔防",
+      "icon": "game_wordtower",
+      "board": "exp_board_wordtower",
+      "family": "ceramic"
+    },
+    {
+      "id": "beatjump",
+      "name": "节拍跳跃",
+      "icon": "game_beatjump",
+      "board": "exp_board_beatjump",
+      "family": "space"
+    },
+    {
+      "id": "melody",
+      "name": "旋律记忆",
+      "icon": "game_melody",
+      "board": "exp_board_melody",
+      "family": "space"
+    },
+    {
+      "id": "farm",
+      "name": "迷你农场",
+      "icon": "game_farm",
+      "board": "exp_board_farm",
+      "family": "garden"
+    },
+    {
+      "id": "decorate",
+      "name": "家居装饰",
+      "icon": "game_decorate",
+      "board": "exp_board_decorate",
+      "family": "room"
+    },
+    {
+      "id": "fishing",
+      "name": "休闲钓鱼",
+      "icon": "game_fishing",
+      "board": "exp_board_fishing",
+      "family": "water"
+    }
+  ],
+  "assets": [
+    {
+      "name": "exp_tile_0",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_bubble_0",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_block_0",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_bus_0",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_car_0",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_yarn_0",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_reel_0",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_sand_0",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_nozzle_0",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_fish_0",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_person_0",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_water_0",
+      "width": 100,
+      "height": 30
+    },
+    {
+      "name": "exp_sportball_0",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_tile_1",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_bubble_1",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_block_1",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_bus_1",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_car_1",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_yarn_1",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_reel_1",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_sand_1",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_nozzle_1",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_fish_1",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_person_1",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_water_1",
+      "width": 100,
+      "height": 30
+    },
+    {
+      "name": "exp_sportball_1",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_tile_2",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_bubble_2",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_block_2",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_bus_2",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_car_2",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_yarn_2",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_reel_2",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_sand_2",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_nozzle_2",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_fish_2",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_person_2",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_water_2",
+      "width": 100,
+      "height": 30
+    },
+    {
+      "name": "exp_sportball_2",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_tile_3",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_bubble_3",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_block_3",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_bus_3",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_car_3",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_yarn_3",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_reel_3",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_sand_3",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_nozzle_3",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_fish_3",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_person_3",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_water_3",
+      "width": 100,
+      "height": 30
+    },
+    {
+      "name": "exp_sportball_3",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_tile_4",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_bubble_4",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_block_4",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_bus_4",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_car_4",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_yarn_4",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_reel_4",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_sand_4",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_nozzle_4",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_fish_4",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_person_4",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_water_4",
+      "width": 100,
+      "height": 30
+    },
+    {
+      "name": "exp_sportball_4",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_tile_5",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_bubble_5",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_block_5",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_bus_5",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_car_5",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_yarn_5",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_reel_5",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_sand_5",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_nozzle_5",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_fish_5",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_person_5",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_water_5",
+      "width": 100,
+      "height": 30
+    },
+    {
+      "name": "exp_sportball_5",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_tube",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_empty",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_floor",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_wall",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_crate",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_goal",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_arrow_0",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_arrow_1",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_arrow_2",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_arrow_3",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_pipe_0",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_pipe_1",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_pipe_2",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_pipe_3",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_pipe_4",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_pipe_5",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_pipe_6",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_pipe_7",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_pipe_8",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_pipe_9",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_pipe_10",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_pipe_11",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_pipe_12",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_pipe_13",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_pipe_14",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_pipe_15",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_robot",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_runner",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_coin",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_barrier",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_hole",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_door",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_tower",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_enemy",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_hoop",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_basketball",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_note",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_screw",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_plate",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_platform",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_anchor",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_flag",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_bird",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_bomb",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_plane",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_tank",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_bullet",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_ball",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_soccer",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_pin",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_cueball",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_bowlingball",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_gate",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_book",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_brush",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_paddle",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_puck",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_striker",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_glove",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_fruit_0",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_fruit_1",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_fruit_2",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_fruit_3",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_fruit_4",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_fruit_5",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_fruit_6",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_fruit_7",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_fruit_8",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_fruit_9",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_object_0",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_object_1",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_object_2",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_object_3",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_object_4",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_object_5",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_object_6",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_object_7",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_object_8",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_dog",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_bee",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_soil",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_seedling",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_watered",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_crop",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_sofa",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_table",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_plant",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_lamp",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_bobber",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_bite",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_sword",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_shield",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_potion",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_boots",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_food_0",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_food_1",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_food_2",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_card_front",
+      "width": 100,
+      "height": 132
+    },
+    {
+      "name": "exp_card_back",
+      "width": 100,
+      "height": 132
+    },
+    {
+      "name": "exp_mahjong",
+      "width": 100,
+      "height": 132
+    },
+    {
+      "name": "exp_chip",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_chess_0_0",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_chess_0_1",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_chess_0_2",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_chess_0_3",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_chess_0_4",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_chess_0_5",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_chess_1_0",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_chess_1_1",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_chess_1_2",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_chess_1_3",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_chess_1_4",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_chess_1_5",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_spark",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_ripple",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_trophy",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "exp_board_blockfit",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_tilestack",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_bubbleshooter",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_fruitmerge",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_watersort",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_arrowclear",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_screwout",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_parkingjam",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_runner",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_blackhole",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_fisheat",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_sokoban",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_pipes",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_differences",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_roomdefense",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_basketball",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_solitaire",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_characters",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_rhythm",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_restaurant",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_linktiles",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_mahjongsolitaire",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_groupclear",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_slotpair",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_buscolor",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_yarn",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_sand",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_untangle",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_platformer",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_grapple",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_flappy",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_fruitslice",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_rollingball",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_shooter",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_tanks",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_fortress",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_survival",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_backpack",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_billiards",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_penalty",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_pingpong",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_bowling",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_golf",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_drift",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_hillclimb",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_airhockey",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_tug",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_dots",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_doudizhu",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_guandan",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_mahjong",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_xiangqi",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_chess",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_ludo",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_spider",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_freecell",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_onestroke",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_hiddenobjects",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_linerescue",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_picturepuzzle",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_idiom",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_wordtower",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_beatjump",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_melody",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_farm",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_decorate",
+      "width": 360,
+      "height": 460
+    },
+    {
+      "name": "exp_board_fishing",
+      "width": 360,
+      "height": 460
+    }
+  ],
+  "iconGenerator": "scripts/generate-game-icons.cjs"
+}

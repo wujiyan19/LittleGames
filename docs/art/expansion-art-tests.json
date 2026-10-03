@@ -1,0 +1,47 @@
+[
+  {
+    "script": "test-expansion",
+    "status": 0,
+    "summary": "336/336 expansion checks passed"
+  },
+  {
+    "script": "test-expansion-completion",
+    "status": 0,
+    "summary": "190/190 completion checks passed"
+  },
+  {
+    "script": "test-expansion-art",
+    "status": 0,
+    "summary": "7/7 art and feedback checks passed"
+  },
+  {
+    "script": "test-performance",
+    "status": 0,
+    "summary": "159/159 passed (26 performance regressions, 10 settings regressions)."
+  },
+  {
+    "script": "test-collection",
+    "status": 0,
+    "summary": "82/82 collection regressions passed."
+  },
+  {
+    "script": "test-continuation",
+    "status": 0,
+    "summary": "72/72 continuation regressions passed."
+  },
+  {
+    "script": "test-generation-logic",
+    "status": 0,
+    "summary": "26/26 generation/difficulty regressions passed."
+  },
+  {
+    "script": "test-window-sizing",
+    "status": 0,
+    "summary": "8/8 window sizing regressions passed."
+  },
+  {
+    "script": "test-klotski-ui-state",
+    "status": 0,
+    "summary": "3/3 Klotski UI-state regressions passed"
+  }
+]

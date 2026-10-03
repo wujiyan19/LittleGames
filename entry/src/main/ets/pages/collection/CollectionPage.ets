@@ -188,7 +188,8 @@ export struct CollectionPage {
       if (this.vm.state.outcome !== 0) {
         GameResultDialog({ title: this.resultTitle(), detail: this.resultDetail(), showDetail: true,
           primaryText: $r('app.string.result_play_again'), onPrimary: () => { this.vm.startGame(); },
-          showSecondary: true, secondaryText: $r('app.string.exit_confirm_leave'), onSecondary: () => { this.pathStack.pop(); }, cardStyle: true })
+          showSecondary: true, secondaryText: $r('app.string.exit_confirm_leave'), onSecondary: () => { this.pathStack.pop(); }, cardStyle: true,
+          celebrate: this.vm.state.outcome === 1 || (this.vm.isDuel() && this.vm.state.outcome === 2) })
       }
       if (this.vm.confirmExit) {
         ExitConfirmDialog({ onConfirm: () => { this.vm.dismissExitConfirm(); this.pathStack.pop(); },

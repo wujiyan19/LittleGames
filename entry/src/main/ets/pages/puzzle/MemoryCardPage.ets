@@ -192,7 +192,7 @@ export struct MemoryCardPage {
           showDetail: true,
           primaryText: $r('app.string.result_play_again'),
           onPrimary: () => { this.viewModel.startGame(); },
-          cardStyle: true
+          cardStyle: true, celebrate: true
         })
       }
 

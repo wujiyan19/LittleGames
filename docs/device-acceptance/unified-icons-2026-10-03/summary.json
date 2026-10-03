@@ -1,0 +1,184 @@
+{
+  "at": "2026-10-03T05:49:43.259Z",
+  "device": "FMR0224521016052",
+  "packageSha256": "fa479fd9b7edb68f485b587203c16eaed836212867643b074810b22210992d6e",
+  "selectedGames": 16,
+  "catalogChecks": 32,
+  "passed": [
+    {
+      "mode": "light",
+      "id": "snake",
+      "name": "贪吃蛇"
+    },
+    {
+      "mode": "light",
+      "id": "tetris",
+      "name": "俄罗斯方块"
+    },
+    {
+      "mode": "light",
+      "id": "2048",
+      "name": "2048"
+    },
+    {
+      "mode": "light",
+      "id": "whackmole",
+      "name": "打地鼠"
+    },
+    {
+      "mode": "light",
+      "id": "memorycard",
+      "name": "记忆翻牌"
+    },
+    {
+      "mode": "light",
+      "id": "tictactoe",
+      "name": "井字棋"
+    },
+    {
+      "mode": "light",
+      "id": "gomoku",
+      "name": "五子棋"
+    },
+    {
+      "mode": "light",
+      "id": "arithmetic",
+      "name": "心算十题"
+    },
+    {
+      "mode": "light",
+      "id": "memorysequence",
+      "name": "顺序记忆"
+    },
+    {
+      "mode": "light",
+      "id": "reaction",
+      "name": "信号反应"
+    },
+    {
+      "mode": "light",
+      "id": "blockfit",
+      "name": "方块拼填"
+    },
+    {
+      "mode": "light",
+      "id": "watersort",
+      "name": "倒水排序"
+    },
+    {
+      "mode": "light",
+      "id": "fruitslice",
+      "name": "切水果"
+    },
+    {
+      "mode": "light",
+      "id": "chess",
+      "name": "国际象棋"
+    },
+    {
+      "mode": "light",
+      "id": "guandan",
+      "name": "掼蛋"
+    },
+    {
+      "mode": "light",
+      "id": "decorate",
+      "name": "家居装饰"
+    },
+    {
+      "mode": "dark",
+      "id": "snake",
+      "name": "贪吃蛇"
+    },
+    {
+      "mode": "dark",
+      "id": "tetris",
+      "name": "俄罗斯方块"
+    },
+    {
+      "mode": "dark",
+      "id": "2048",
+      "name": "2048"
+    },
+    {
+      "mode": "dark",
+      "id": "whackmole",
+      "name": "打地鼠"
+    },
+    {
+      "mode": "dark",
+      "id": "memorycard",
+      "name": "记忆翻牌"
+    },
+    {
+      "mode": "dark",
+      "id": "tictactoe",
+      "name": "井字棋"
+    },
+    {
+      "mode": "dark",
+      "id": "gomoku",
+      "name": "五子棋"
+    },
+    {
+      "mode": "dark",
+      "id": "arithmetic",
+      "name": "心算十题"
+    },
+    {
+      "mode": "dark",
+      "id": "memorysequence",
+      "name": "顺序记忆"
+    },
+    {
+      "mode": "dark",
+      "id": "reaction",
+      "name": "信号反应"
+    },
+    {
+      "mode": "dark",
+      "id": "blockfit",
+      "name": "方块拼填"
+    },
+    {
+      "mode": "dark",
+      "id": "watersort",
+      "name": "倒水排序"
+    },
+    {
+      "mode": "dark",
+      "id": "fruitslice",
+      "name": "切水果"
+    },
+    {
+      "mode": "dark",
+      "id": "chess",
+      "name": "国际象棋"
+    },
+    {
+      "mode": "dark",
+      "id": "guandan",
+      "name": "掼蛋"
+    },
+    {
+      "mode": "dark",
+      "id": "decorate",
+      "name": "家居装饰"
+    }
+  ],
+  "settingsRestored": {
+    "theme": "跟随系统",
+    "toggles": [
+      "false",
+      "true",
+      "true"
+    ],
+    "verified": true
+  },
+  "pages": [
+    "精选",
+    "分类",
+    "我的"
+  ],
+  "scope": "Representative icon display; gameplay and full 100-game device coverage are not claimed."
+}

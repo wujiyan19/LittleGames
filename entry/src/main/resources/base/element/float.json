@@ -95,6 +95,58 @@
     {
       "name": "collection_art_tower_height",
       "value": "232vp"
+    },
+    {
+      "name": "expansion_arena_width",
+      "value": "360vp"
+    },
+    {
+      "name": "expansion_arena_height",
+      "value": "460vp"
+    },
+    {
+      "name": "expansion_control_height",
+      "value": "52vp"
+    },
+    {
+      "name": "expansion_board_max",
+      "value": "520vp"
+    },
+    {
+      "name": "expansion_tube_height",
+      "value": "172vp"
+    },
+    {
+      "name": "art_feedback_ring",
+      "value": "70vp"
+    },
+    {
+      "name": "art_feedback_particle",
+      "value": "18vp"
+    },
+    {
+      "name": "art_feedback_width",
+      "value": "220vp"
+    },
+    {
+      "name": "art_feedback_height",
+      "value": "130vp"
+    },
+    {
+      "name": "art_feedback_top",
+      "value": "100vp"
+    },
+    {
+      "name": "art_win_particle",
+      "value": "24vp"
+    },
+    {
+      "name": "art_banner_height",
+      "value": "120vp"
+    },
+    {
+      "name": "art_tug_character",
+      "value": "64vp"
     }
   ]
 }

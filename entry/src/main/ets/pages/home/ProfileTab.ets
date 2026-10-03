@@ -4,7 +4,7 @@
  * 统计数据（总数 / 最高分 / 排行榜）由父组件算好通过 @Param 传入，
  * 不再在 build 过程中调用数据层。
  */
-import { SemanticColors, FontTokens, RadiusTokens, SpacingTokens, GameBadgeColors } from '../../common/DesignTokens';
+import { SemanticColors, FontTokens, RadiusTokens, SpacingTokens } from '../../common/DesignTokens';
 import { GameInfo } from '../../common/GameConstants';
 import { resolveString } from '../../common/I18nUtils';
 import { ProfileStatsCard } from '../../components/ProfileStatsCard';
@@ -157,10 +157,7 @@ export struct ProfileTab {
                   }
                   .width(44).height(44)
                   .borderRadius(RadiusTokens.base)
-                  .linearGradient({
-                    angle: 135,
-                    colors: GameBadgeColors.getGradient(game.id)
-                  })
+                  .backgroundColor(SemanticColors.gameIconBackground)
                   .justifyContent(FlexAlign.Center)
 
                   Text(game.name)
@@ -260,10 +257,7 @@ export struct ProfileTab {
                 }
                 .width(36).height(36)
                 .borderRadius(RadiusTokens.sm)
-                .linearGradient({
-                  angle: 135,
-                  colors: GameBadgeColors.getGradient(game.id)
-                })
+                .backgroundColor(SemanticColors.gameIconBackground)
                 .justifyContent(FlexAlign.Center)
                 .margin({ left: SpacingTokens.sm })
 

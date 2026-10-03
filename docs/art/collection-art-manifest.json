@@ -366,103 +366,104 @@
     },
     {
       "name": "game_tictactoe",
-      "width": 256,
-      "height": 256
+      "width": 120,
+      "height": 120
     },
     {
       "name": "game_gomoku",
-      "width": 256,
-      "height": 256
+      "width": 120,
+      "height": 120
     },
     {
       "name": "game_reversi",
-      "width": 256,
-      "height": 256
+      "width": 120,
+      "height": 120
     },
     {
       "name": "game_fourline",
-      "width": 256,
-      "height": 256
+      "width": 120,
+      "height": 120
     },
     {
       "name": "game_nim",
-      "width": 256,
-      "height": 256
+      "width": 120,
+      "height": 120
     },
     {
       "name": "game_lights",
-      "width": 256,
-      "height": 256
+      "width": 120,
+      "height": 120
     },
     {
       "name": "game_flood",
-      "width": 256,
-      "height": 256
+      "width": 120,
+      "height": 120
     },
     {
       "name": "game_maze",
-      "width": 256,
-      "height": 256
+      "width": 120,
+      "height": 120
     },
     {
       "name": "game_hanoi",
-      "width": 256,
-      "height": 256
+      "width": 120,
+      "height": 120
     },
     {
       "name": "game_peg",
-      "width": 256,
-      "height": 256
+      "width": 120,
+      "height": 120
     },
     {
       "name": "game_nonogram",
-      "width": 256,
-      "height": 256
+      "width": 120,
+      "height": 120
     },
     {
       "name": "game_arithmetic",
-      "width": 256,
-      "height": 256
+      "width": 120,
+      "height": 120
     },
     {
       "name": "game_compare",
-      "width": 256,
-      "height": 256
+      "width": 120,
+      "height": 120
     },
     {
       "name": "game_sequence",
-      "width": 256,
-      "height": 256
+      "width": 120,
+      "height": 120
     },
     {
       "name": "game_binary",
-      "width": 256,
-      "height": 256
+      "width": 120,
+      "height": 120
     },
     {
       "name": "game_targetsum",
-      "width": 256,
-      "height": 256
+      "width": 120,
+      "height": 120
     },
     {
       "name": "game_schulte",
-      "width": 256,
-      "height": 256
+      "width": 120,
+      "height": 120
     },
     {
       "name": "game_memorysequence",
-      "width": 256,
-      "height": 256
+      "width": 120,
+      "height": 120
     },
     {
       "name": "game_missing",
-      "width": 256,
-      "height": 256
+      "width": 120,
+      "height": 120
     },
     {
       "name": "game_reaction",
-      "width": 256,
-      "height": 256
+      "width": 120,
+      "height": 120
     }
-  ]
+  ],
+  "iconGenerator": "scripts/generate-game-icons.cjs"
 }

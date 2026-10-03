@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026-10-03T04:30:10.2051023Z",
+  "device": "FMR0224521016052",
+  "software": "ALN-AL00 7.0.0.109(SP6C00E105R5P3)",
+  "bundle": "com.littlegames.collection",
+  "updateTime": 1791001649381,
+  "compileSdk": "6.1.1.125",
+  "targetApi": 60101024,
+  "packageSha256": "77005b32ab24e4a6275f50b809509ea5c72617b2ce69627e8ac4d9692b4fb936",
+  "packageBytes": 7826568,
+  "build": "successful",
+  "collectionRegressions": 82,
+  "artChecks": 7
+}

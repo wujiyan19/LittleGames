@@ -40,7 +40,7 @@ export struct GameCard {
       }
       .width(52).height(52)
       .borderRadius(RadiusTokens.base)
-      .backgroundColor(SemanticColors.primaryLight)
+      .backgroundColor(SemanticColors.gameIconBackground)
       .justifyContent(FlexAlign.Center)
 
       Text(this.game.name)

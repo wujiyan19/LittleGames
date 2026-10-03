@@ -1,0 +1,197 @@
+> hvigor [32mUP-TO-DATE :entry:default@PreBuild...  [39m
+> hvigor [32mFinished :entry:default@CreateModuleInfo... after 1 ms [39m
+> hvigor [32mUP-TO-DATE :entry:default@GenerateMetadata...  [39m
+> hvigor [32mFinished :entry:default@ConfigureCmake... after 1 ms [39m
+> hvigor [32mUP-TO-DATE :entry:default@MergeProfile...  [39m
+> hvigor [32mUP-TO-DATE :entry:default@CreateBuildProfile...  [39m
+> hvigor [32mFinished :entry:default@PreCheckSyscap... after 1 ms [39m
+> hvigor [32mFinished :entry:default@GeneratePkgContextInfo... after 6 ms [39m
+> hvigor [32mUP-TO-DATE :entry:default@GeneratePkgSdkInfo...  [39m
+> hvigor [32mFinished :entry:default@ProcessIntegratedHsp... after 1 ms [39m
+> hvigor [32mFinished :entry:default@BuildNativeWithCmake... after 1 ms [39m
+> hvigor [32mUP-TO-DATE :entry:default@MakePackInfo...  [39m
+> hvigor [32mFinished :entry:default@SyscapTransform... after 10 ms [39m
+> hvigor [32mUP-TO-DATE :entry:default@ProcessProfile...  [39m
+> hvigor [32mUP-TO-DATE :entry:default@ProcessRouterMap...  [39m
+> hvigor [32mUP-TO-DATE :entry:default@ProcessShareConfig...  [39m
+> hvigor [32mFinished :entry:default@ProcessStartupConfig... after 1 ms [39m
+> hvigor [32mFinished :entry:default@BuildNativeWithNinja... after 1 ms [39m
+> hvigor [32mUP-TO-DATE :entry:default@ProcessResource...  [39m
+> hvigor [32mUP-TO-DATE :entry:default@GenerateLoaderJson...  [39m
+> hvigor [32mUP-TO-DATE :entry:default@ProcessLibs...  [39m
+> hvigor [32mFinished :entry:default@CompileResource... after 467 ms [39m
+> hvigor [32mUP-TO-DATE :entry:default@DoNativeStrip...  [39m
+> hvigor [32mFinished :entry:default@BuildJS... after 3 ms [39m
+> hvigor [32mUP-TO-DATE :entry:default@CacheNativeLibs...  [39m
+> hvigor WARN: WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/model/GameData.ets:183:23
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/model/GameData.ets:184:23
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/model/GameData.ets:187:24
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/model/GameData.ets:199:26
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/common/I18nUtils.ets:14:12
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/common/I18nUtils.ets:14:36
+ 'getStringSync' has been deprecated.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/common/I18nUtils.ets:29:24
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/common/I18nUtils.ets:29:48
+ 'getStringSync' has been deprecated.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/components/ControlPad.ets:37:14
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/components/ControlPad.ets:37:38
+ 'getStringSync' has been deprecated.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/classic/Game2048Page.ets:74:29
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/classic/Game2048Page.ets:74:53
+ 'getStringSync' has been deprecated.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/classic/WhackMolePage.ets:35:29
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/classic/WhackMolePage.ets:35:53
+ 'getStringSync' has been deprecated.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/classic/WhackMolePage.ets:36:26
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/classic/WhackMolePage.ets:36:50
+ 'getStringSync' has been deprecated.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/classic/WhackMolePage.ets:37:24
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/classic/WhackMolePage.ets:37:48
+ 'getStringSync' has been deprecated.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/classic/MinesweeperPage.ets:40:31
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/classic/MinesweeperPage.ets:40:55
+ 'getStringSync' has been deprecated.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/classic/MinesweeperPage.ets:41:26
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/classic/MinesweeperPage.ets:41:50
+ 'getStringSync' has been deprecated.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/classic/MinesweeperPage.ets:42:25
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/classic/MinesweeperPage.ets:42:49
+ 'getStringSync' has been deprecated.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/classic/MinesweeperPage.ets:43:25
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/classic/MinesweeperPage.ets:43:49
+ 'getStringSync' has been deprecated.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/classic/MinesweeperPage.ets:44:31
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/classic/MinesweeperPage.ets:44:55
+ 'getStringSync' has been deprecated.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/classic/MinesweeperPage.ets:45:24
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/classic/MinesweeperPage.ets:45:48
+ 'getStringSync' has been deprecated.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/puzzle/SudokuPage.ets:45:24
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/puzzle/SudokuPage.ets:45:48
+ 'getStringSync' has been deprecated.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/puzzle/SudokuPage.ets:46:24
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/puzzle/SudokuPage.ets:46:48
+ 'getStringSync' has been deprecated.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/puzzle/SudokuPage.ets:47:31
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/puzzle/SudokuPage.ets:47:55
+ 'getStringSync' has been deprecated.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/puzzle/SudokuPage.ets:48:31
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/puzzle/SudokuPage.ets:48:55
+ 'getStringSync' has been deprecated.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/puzzle/SlidePuzzlePage.ets:34:29
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/puzzle/SlidePuzzlePage.ets:34:53
+ 'getStringSync' has been deprecated.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/puzzle/KlotskiPage.ets:36:30
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/puzzle/KlotskiPage.ets:36:54
+ 'getStringSync' has been deprecated.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/puzzle/KlotskiPage.ets:42:26
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/puzzle/KlotskiPage.ets:42:46
+ 'getStringSync' has been deprecated.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/puzzle/GuessNumberPage.ets:85:16
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/puzzle/GuessNumberPage.ets:85:40
+ 'getStringSync' has been deprecated.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/puzzle/GuessNumberPage.ets:92:16
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/puzzle/GuessNumberPage.ets:92:40
+ 'getStringSync' has been deprecated.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/puzzle/MemoryCardPage.ets:40:36
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/puzzle/MemoryCardPage.ets:40:60
+ 'getStringSync' has been deprecated.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/puzzle/MemoryCardPage.ets:41:35
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/puzzle/MemoryCardPage.ets:41:59
+ 'getStringSync' has been deprecated.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/puzzle/Match3Page.ets:38:28
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/pages/puzzle/Match3Page.ets:38:52
+ 'getStringSync' has been deprecated.
+
+
+> hvigor [32mFinished :entry:default@CompileArkTS... after 5 s 144 ms [39m
+> hvigor [32mFinished :entry:default@GeneratePkgModuleJson... after 2 ms [39m
+> hvigor [32mFinished :entry:default@ProcessCompiledResources... after 1 ms [39m
+> hvigor [32mFinished :entry:default@PackageHap... after 6 s 890 ms [39m
+> hvigor [32mFinished :entry:default@PackingCheck... after 12 ms [39m
+> hvigor [32mFinished :entry:default@SignHap... after 1 s 475 ms [39m
+> hvigor [32mFinished :entry:default@CollectDebugSymbol... after 1 ms [39m
+> hvigor [32mFinished :entry:assembleHap... after 1 ms [39m
+> hvigor [32mBUILD SUCCESSFUL in 16 s 773 ms [39m

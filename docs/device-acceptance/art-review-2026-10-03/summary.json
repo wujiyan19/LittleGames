@@ -1,0 +1,60 @@
+{
+  "checkedAt": "2026-10-03T04:43:43.214Z",
+  "device": "FMR0224521016052",
+  "software": "ALN-AL00 7.0.0.109(SP6C00E105R5P3)",
+  "bundle": "com.littlegames.collection",
+  "scope": "原有 33 款游戏美术首屏及 11 款选定交互",
+  "fronts": {
+    "light": 33,
+    "dark": 33,
+    "reviewed": 66
+  },
+  "interactions": {
+    "games": 11,
+    "uniqueCases": 33,
+    "caseExecutions": 45,
+    "scenarioRuns": 14,
+    "incomplete": 0
+  },
+  "phases": [
+    {
+      "packageSha256": "b263d2231a4b556b6a753d7da2468461ee0c121fed5ba7ea12301c52ce70e13b",
+      "fronts": 33,
+      "interactionRuns": 10,
+      "caseExecutions": 29
+    },
+    {
+      "packageSha256": "77005b32ab24e4a6275f50b809509ea5c72617b2ce69627e8ac4d9692b4fb936",
+      "fronts": 33,
+      "interactionRuns": 4,
+      "caseExecutions": 16
+    }
+  ],
+  "finalPackage": {
+    "sha256": "77005b32ab24e4a6275f50b809509ea5c72617b2ce69627e8ac4d9692b4fb936",
+    "bytes": 7826568,
+    "installedUpdateTime": 1791001649381,
+    "build": "successful"
+  },
+  "regressions": {
+    "collection": 82,
+    "art": 7
+  },
+  "preferencesRestored": {
+    "theme": "跟随系统",
+    "rememberDifficulty": "false",
+    "haptics": "true",
+    "confirmExit": "true",
+    "verified": true
+  },
+  "finalPage": "精选",
+  "fixes": [
+    "扫雷胜利庆祝",
+    "双人游戏玩家 2 胜利庆祝"
+  ],
+  "limitations": [
+    "未测帧率及长局性能",
+    "远程 UI 输入不能代替真实触感确认",
+    "未覆盖全部 100 款游戏及全部难度"
+  ]
+}

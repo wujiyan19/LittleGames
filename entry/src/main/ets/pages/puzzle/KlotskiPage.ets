@@ -142,6 +142,7 @@ export struct KlotskiPage {
       if (this.viewModel.status === GameStatus.OVER) {
         GameResultDialog({
           symbol: $r('sys.symbol.checkmark_circle'),
+          celebrate: true,
           symbolColor: SemanticColors.success,
           title: $r('app.string.result_klotski_success'),
           detail: $r('app.string.result_detail_steps_complete_format', this.viewModel.stepCount),

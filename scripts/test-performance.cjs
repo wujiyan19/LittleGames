@@ -386,16 +386,27 @@ test('failed asynchronous persistence retries the dirty data', async () => {
   data.flushNow(); assert.equal(f.store.writes, 8); assert.equal(f.store.synchronousFlushes, 1);
 });
 
-test('optimized images retain alpha and small decoding dimensions; loading strings exist in all locales', () => {
+test('vector icons and the remaining bitmap retain small decoding dimensions; loading strings exist in all locales', () => {
   const media = path.join(root, 'entry/src/main/resources/base/media'); let total = 0; let count = 0;
   for (const name of fs.readdirSync(media)) {
-    if (!/^game_.*\.png$/.test(name) && name !== 'play_mole.png') { continue; }
+    if (name !== 'play_mole.png') { continue; }
     const data = fs.readFileSync(path.join(media, name)); total += data.length; count++;
-    const maximum = name === 'play_mole.png' ? 512 : 256;
+    const maximum = 512;
     assert.ok(data.readUInt32BE(16) <= maximum && data.readUInt32BE(20) <= maximum);
     assert.equal(data[25], 6, 'RGBA transparency must be retained');
   }
-  assert.equal(count, 14); assert.ok(total < 1.5 * 1024 * 1024);
+  assert.equal(count, 1); assert.ok(total < 512 * 1024);
+  const games=fixture().data().getAllGames(); assert.equal(games.length,100);
+  for (const theme of ['base','dark']) {
+    let vectorBytes=0;
+    for (const game of games) {
+      const name=game.icon.replace('app.media.','');
+      assert(!fs.existsSync(path.join(root,`entry/src/main/resources/${theme}/media/${name}.png`)));
+      const svg=fs.readFileSync(path.join(root,`entry/src/main/resources/${theme}/media/${name}.svg`),'utf8');
+      assert(svg.includes('viewBox="0 0 120 120"')); vectorBytes+=Buffer.byteLength(svg);
+    }
+    assert.ok(vectorBytes<1024*1024,'catalog icon resource budget');
+  }
   for (const locale of ['base', 'zh_CN', 'en_US']) {
     const resources = JSON.parse(fs.readFileSync(path.join(root, `entry/src/main/resources/${locale}/element/string.json`)));
     for (const name of ['sudoku_generating', 'sudoku_generation_failed']) {

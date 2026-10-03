@@ -1,10 +1,6 @@
 {
   "string": [
     {
-      "name": "module_desc",
-      "value": "LittleGames - 33 offline games across six categories"
-    },
-    {
       "name": "EntryAbility_desc",
       "value": "玩趣盒 Main Entry"
     },
@@ -15,10 +11,6 @@
     {
       "name": "app_splash_title",
       "value": "玩趣盒"
-    },
-    {
-      "name": "app_splash_subtitle",
-      "value": "33 mini-games. Pick one and play."
     },
     {
       "name": "tab_featured",
@@ -861,10 +853,6 @@
       "value": "Version unavailable"
     },
     {
-      "name": "settings_about_tagline",
-      "value": "33 little games across six categories"
-    },
-    {
       "name": "settings_statement_title",
       "value": "App statement"
     },
@@ -1359,6 +1347,1402 @@
     {
       "name": "collection_art_card",
       "value": "Memory card %d"
+    },
+    {
+      "name": "game_blockfit_name",
+      "value": "Block Fit"
+    },
+    {
+      "name": "game_blockfit_desc",
+      "value": "Select a piece, then tap its top-left position on the board"
+    },
+    {
+      "name": "game_blockfit_rules",
+      "value": "Select a piece, then tap its top-left position on the board. Full rows and columns clear together. Use all three pieces to refill. Reach the target score to win; no legal placement ends the game."
+    },
+    {
+      "name": "game_tilestack_name",
+      "value": "Tile Stack"
+    },
+    {
+      "name": "game_tilestack_desc",
+      "value": "Tap the top tile of a stack to put it in the seven-slot tray"
+    },
+    {
+      "name": "game_tilestack_rules",
+      "value": "Tap the top tile of a stack to put it in the seven-slot tray. Three identical tiles clear. Clear every stack to win; filling the tray loses. The badge shows the remaining stack depth."
+    },
+    {
+      "name": "game_bubbleshooter_name",
+      "value": "Bubble Shooter"
+    },
+    {
+      "name": "game_bubbleshooter_desc",
+      "value": "Tap the arena to aim and fire"
+    },
+    {
+      "name": "game_bubbleshooter_rules",
+      "value": "Tap the arena to aim and fire. Shots bounce off side walls. Connect at least three bubbles of one color to clear them; detached bubbles fall too. Clear the board to win. Reaching the bottom line or running out of shots loses."
+    },
+    {
+      "name": "game_fruitmerge_name",
+      "value": "Fruit Merge"
+    },
+    {
+      "name": "game_fruitmerge_desc",
+      "value": "Tap the top of the container to drop a fruit"
+    },
+    {
+      "name": "game_fruitmerge_rules",
+      "value": "Tap the top of the container to drop a fruit. Touching fruits of the same tier merge into a larger one. Make the highest tier to win; fruit remaining above the warning line loses."
+    },
+    {
+      "name": "game_watersort_name",
+      "value": "Water Sort"
+    },
+    {
+      "name": "game_watersort_desc",
+      "value": "Tap a source tube, then a destination to pour one top layer into an empty tube or onto the same color"
+    },
+    {
+      "name": "game_watersort_rules",
+      "value": "Tap a source tube, then a destination to pour one top layer into an empty tube or onto the same color. Each tube holds four layers. Fill each nonempty tube with a single color to win. Undo is available."
+    },
+    {
+      "name": "game_arrowclear_name",
+      "value": "Arrow Clear"
+    },
+    {
+      "name": "game_arrowclear_desc",
+      "value": "Tap an arrow to send it out of the board"
+    },
+    {
+      "name": "game_arrowclear_rules",
+      "value": "Tap an arrow to send it out of the board. Another arrow in its path blocks it. Clear the board to win. Three blocked attempts lose."
+    },
+    {
+      "name": "game_screwout_name",
+      "value": "Screw Out"
+    },
+    {
+      "name": "game_screwout_desc",
+      "value": "Tap an uncovered screw to move it into one of three temporary holes"
+    },
+    {
+      "name": "game_screwout_rules",
+      "value": "Tap an uncovered screw to move it into one of three temporary holes. Removing all three screws of a plate clears that plate and its parked screws, freeing the holes. Remove every plate to win."
+    },
+    {
+      "name": "game_parkingjam_name",
+      "value": "Parking Jam"
+    },
+    {
+      "name": "game_parkingjam_desc",
+      "value": "Tap a car to drive it out in its arrow direction"
+    },
+    {
+      "name": "game_parkingjam_rules",
+      "value": "Tap a car to drive it out in its arrow direction. Cars ahead block the exit. Plan the exit order and clear the parking lot to win."
+    },
+    {
+      "name": "game_runner_name",
+      "value": "Endless Runner"
+    },
+    {
+      "name": "game_runner_desc",
+      "value": "Switch between three lanes with the left and right buttons"
+    },
+    {
+      "name": "game_runner_rules",
+      "value": "Switch between three lanes with the left and right buttons. Avoid roadblocks and collect coins as speed increases. Reach the target score to win; hitting a roadblock ends the run."
+    },
+    {
+      "name": "game_blackhole_name",
+      "value": "Growing Hole"
+    },
+    {
+      "name": "game_blackhole_desc",
+      "value": "Tap or drag to guide a growing hole"
+    },
+    {
+      "name": "game_blackhole_rules",
+      "value": "Tap or drag to guide a growing hole. Swallow smaller objects to grow enough for larger ones. Clear every object before time runs out to win."
+    },
+    {
+      "name": "game_fisheat_name",
+      "value": "Fish Feast"
+    },
+    {
+      "name": "game_fisheat_desc",
+      "value": "Tap or drag to guide your fish"
+    },
+    {
+      "name": "game_fisheat_rules",
+      "value": "Tap or drag to guide your fish. Eat smaller fish to grow. A substantially larger fish ends the game. Eat the target number to win."
+    },
+    {
+      "name": "game_sokoban_name",
+      "value": "Sokoban"
+    },
+    {
+      "name": "game_sokoban_desc",
+      "value": "Move with the direction buttons and push every box onto a marked goal"
+    },
+    {
+      "name": "game_sokoban_rules",
+      "value": "Move with the direction buttons and push every box onto a marked goal. Push one box at a time; boxes cannot be pulled. Undo or restart if stuck."
+    },
+    {
+      "name": "game_pipes_name",
+      "value": "Pipe Connect"
+    },
+    {
+      "name": "game_pipes_desc",
+      "value": "Tap a pipe to rotate it clockwise"
+    },
+    {
+      "name": "game_pipes_rules",
+      "value": "Tap a pipe to rotate it clockwise. Connect the blue source to the outlet through every pipe with no open leaks. Blue marks the connected flow."
+    },
+    {
+      "name": "game_differences_name",
+      "value": "Spot the Difference"
+    },
+    {
+      "name": "game_differences_desc",
+      "value": "Compare the two scenes and tap changed objects in the right scene"
+    },
+    {
+      "name": "game_differences_rules",
+      "value": "Compare the two scenes and tap changed objects in the right scene. Find every difference to win. Three incorrect taps end the game. Found differences receive a border."
+    },
+    {
+      "name": "game_roomdefense_name",
+      "value": "Room Defense"
+    },
+    {
+      "name": "game_roomdefense_desc",
+      "value": "Build towers in six slots to defend the room"
+    },
+    {
+      "name": "game_roomdefense_rules",
+      "value": "Build towers in six slots to defend the room. Earn coins every second, upgrade towers and repair the door. Defeat every enemy while keeping the room intact to win."
+    },
+    {
+      "name": "game_basketball_name",
+      "value": "Basketball Shots"
+    },
+    {
+      "name": "game_basketball_desc",
+      "value": "Tap near the hoop to aim a high arc"
+    },
+    {
+      "name": "game_basketball_rules",
+      "value": "Tap near the hoop to aim a high arc. The ball must pass down through the hoop to score. The hoop moves on normal and hard modes. Make the target number of baskets within sixteen shots."
+    },
+    {
+      "name": "game_solitaire_name",
+      "value": "Klondike Solitaire"
+    },
+    {
+      "name": "game_solitaire_desc",
+      "value": "Draw one card from the stock"
+    },
+    {
+      "name": "game_solitaire_rules",
+      "value": "Draw one card from the stock. Select a face-up card and tap a destination column. Build columns in alternating colors and descending ranks; only kings fill empty columns. Use Foundation to build each suit from ace to king. Collect all cards to win."
+    },
+    {
+      "name": "game_characters_name",
+      "value": "Character Builder"
+    },
+    {
+      "name": "game_characters_desc",
+      "value": "Study the target Chinese character and choose its components"
+    },
+    {
+      "name": "game_characters_rules",
+      "value": "Study the target Chinese character and choose its components. A component can be chosen more than once. Check the combination to advance. Complete eight characters to win; three mistakes end the game."
+    },
+    {
+      "name": "game_rhythm_name",
+      "value": "Falling Beats"
+    },
+    {
+      "name": "game_rhythm_desc",
+      "value": "Start the sequence and tap the matching lane key as a note reaches the line"
+    },
+    {
+      "name": "game_rhythm_rules",
+      "value": "Start the sequence and tap the matching lane key as a note reaches the line. Closer timing earns more points. Complete the sequence to win; five missed or incorrect taps end the game."
+    },
+    {
+      "name": "game_restaurant_name",
+      "value": "Mini Restaurant"
+    },
+    {
+      "name": "game_restaurant_desc",
+      "value": "Spend two coins to cook a dish and wait for it to enter the serving stock"
+    },
+    {
+      "name": "game_restaurant_rules",
+      "value": "Spend two coins to cook a dish and wait for it to enter the serving stock. Tap a customer to serve the requested dish and earn ten coins. Complete the target orders within two minutes. Losing five customers ends the game."
+    },
+    {
+      "name": "game_linktiles_name",
+      "value": "Tile Connect"
+    },
+    {
+      "name": "game_linktiles_desc",
+      "value": "Tap two matching tiles"
+    },
+    {
+      "name": "game_linktiles_rules",
+      "value": "Tap two matching tiles. Their connecting path may turn at most twice and must avoid other tiles. Paths can go around the board border. Clear every tile to win. Rearrange provides a playable pair and a hint."
+    },
+    {
+      "name": "game_mahjongsolitaire_name",
+      "value": "Mahjong Solitaire"
+    },
+    {
+      "name": "game_mahjongsolitaire_desc",
+      "value": "Pair two matching free tiles: no tile covers either one, and at least one horizontal side is open"
+    },
+    {
+      "name": "game_mahjongsolitaire_rules",
+      "value": "Pair two matching free tiles: no tile covers either one, and at least one horizontal side is open. Clear all layers to win. Dimmed tiles are blocked. Rearrange the remaining tiles or undo if stuck."
+    },
+    {
+      "name": "game_groupclear_name",
+      "value": "Cluster Clear"
+    },
+    {
+      "name": "game_groupclear_desc",
+      "value": "Tap a group of at least two orthogonally adjacent blocks of one color"
+    },
+    {
+      "name": "game_groupclear_rules",
+      "value": "Tap a group of at least two orthogonally adjacent blocks of one color. Larger groups earn squared bonuses. Blocks fall down and empty columns slide left. Clear the board or meet the target when no groups remain to win."
+    },
+    {
+      "name": "game_slotpair_name",
+      "value": "Drop Pairs"
+    },
+    {
+      "name": "game_slotpair_desc",
+      "value": "Tap a column to drop the next block"
+    },
+    {
+      "name": "game_slotpair_rules",
+      "value": "Tap a column to drop the next block. Adjacent groups of at least two matching blocks clear and cascade. Finish the sequence with an empty board to win. A full board or leftover blocks at the end loses."
+    },
+    {
+      "name": "game_buscolor_name",
+      "value": "Passenger Boarding"
+    },
+    {
+      "name": "game_buscolor_desc",
+      "value": "Passengers board matching buses in queue order"
+    },
+    {
+      "name": "game_buscolor_rules",
+      "value": "Passengers board matching buses in queue order. A bus leaves when its three seats fill. Tap the front bus of a lane to send it to one of three waiting slots. Board everyone to win. Undo to change the dispatch order if slots are blocked."
+    },
+    {
+      "name": "game_yarn_name",
+      "value": "Yarn Reels"
+    },
+    {
+      "name": "game_yarn_desc",
+      "value": "Choose a reel, then tap a yarn column to wind its exposed run of one color"
+    },
+    {
+      "name": "game_yarn_rules",
+      "value": "Choose a reel, then tap a yarn column to wind its exposed run of one color. Empty reels accept any color; partially filled reels accept only their color. Eight units complete a reel. Wind all yarn to win."
+    },
+    {
+      "name": "game_sand_name",
+      "value": "Sand Vacuum"
+    },
+    {
+      "name": "game_sand_desc",
+      "value": "Select a colored nozzle and tap matching sand"
+    },
+    {
+      "name": "game_sand_rules",
+      "value": "Select a colored nozzle and tap matching sand. Collect connected grains, up to the remaining space in an eight-grain can. Sand falls down afterward. Fill two cans per color and clear the picture to win."
+    },
+    {
+      "name": "game_untangle_name",
+      "value": "Untangle"
+    },
+    {
+      "name": "game_untangle_desc",
+      "value": "Drag the numbered nodes until ropes with separate endpoints no longer cross, touch or overlap"
+    },
+    {
+      "name": "game_untangle_rules",
+      "value": "Drag the numbered nodes until ropes with separate endpoints no longer cross, touch or overlap. Orange ropes still have intersections. Reduce the intersection count to zero to win. Undo reverses a complete drag."
+    },
+    {
+      "name": "game_platformer_name",
+      "value": "Platform Quest"
+    },
+    {
+      "name": "game_platformer_desc",
+      "value": "Hold left or right to move and tap Jump to cross platform gaps"
+    },
+    {
+      "name": "game_platformer_rules",
+      "value": "Hold left or right to move and tap Jump to cross platform gaps. Land before jumping again. Reach the flag to win; falling below the course loses."
+    },
+    {
+      "name": "game_grapple_name",
+      "value": "Grapple Swing"
+    },
+    {
+      "name": "game_grapple_desc",
+      "value": "Hook onto the next anchor and swing under gravity"
+    },
+    {
+      "name": "game_grapple_rules",
+      "value": "Hook onto the next anchor and swing under gravity. Release to launch forward, then connect to another anchor. Platforms provide landing spots. Reach the flag to win; falling loses."
+    },
+    {
+      "name": "game_flappy_name",
+      "value": "Wing Gates"
+    },
+    {
+      "name": "game_flappy_desc",
+      "value": "Start and tap Flap to rise against gravity"
+    },
+    {
+      "name": "game_flappy_rules",
+      "value": "Start and tap Flap to rise against gravity. Fly through the gaps in the moving gates. Pass the target number to win; hitting a gate or the arena boundary loses."
+    },
+    {
+      "name": "game_fruitslice_name",
+      "value": "Fruit Slice"
+    },
+    {
+      "name": "game_fruitslice_desc",
+      "value": "Start and swipe through flying fruit"
+    },
+    {
+      "name": "game_fruitslice_rules",
+      "value": "Start and swipe through flying fruit. A swipe can slice several fruit, earning fifty points each. Slicing a bomb, missing five fruit or missing the target within sixty seconds loses."
+    },
+    {
+      "name": "game_rollingball_name",
+      "value": "Rolling Maze"
+    },
+    {
+      "name": "game_rollingball_desc",
+      "value": "Tap or drag a destination to guide the ball with momentum"
+    },
+    {
+      "name": "game_rollingball_rules",
+      "value": "Tap or drag a destination to guide the ball with momentum. It bounces off walls. Avoid the black holes and roll to the green flag to win."
+    },
+    {
+      "name": "game_shooter_name",
+      "value": "Sky Squadron"
+    },
+    {
+      "name": "game_shooter_desc",
+      "value": "Start and drag your plane to avoid enemies while firing upward automatically"
+    },
+    {
+      "name": "game_shooter_rules",
+      "value": "Start and drag your plane to avoid enemies while firing upward automatically. Clear every wave to win. Enemy contact or an enemy crossing the defense line costs a life; losing three lives ends the run."
+    },
+    {
+      "name": "game_tanks_name",
+      "value": "Tank Arena"
+    },
+    {
+      "name": "game_tanks_desc",
+      "value": "Drag your tank while its turret targets the nearest enemy"
+    },
+    {
+      "name": "game_tanks_rules",
+      "value": "Drag your tank while its turret targets the nearest enemy. Avoid pursuing tanks and their shells. Defeat every attacker to win; losing three health points ends the battle."
+    },
+    {
+      "name": "game_fortress_name",
+      "value": "Fortress Cannon"
+    },
+    {
+      "name": "game_fortress_desc",
+      "value": "Tap near an enemy to fire a shell with splash damage"
+    },
+    {
+      "name": "game_fortress_rules",
+      "value": "Tap near an enemy to fire a shell with splash damage. Defeated enemies award coins; spend twenty to upgrade firepower. Defeat the army to win. The castle falling to zero health loses."
+    },
+    {
+      "name": "game_survival_name",
+      "value": "Survival Arena"
+    },
+    {
+      "name": "game_survival_desc",
+      "value": "Drag to escape pursuers while your weapon targets the nearest enemy"
+    },
+    {
+      "name": "game_survival_rules",
+      "value": "Drag to escape pursuers while your weapon targets the nearest enemy. Defeat every wave to win. Contact costs a health point; losing all health ends the run."
+    },
+    {
+      "name": "game_backpack_name",
+      "value": "Backpack Battle"
+    },
+    {
+      "name": "game_backpack_desc",
+      "value": "Choose a sword, shield, potion or boots and place it in the four-by-four backpack"
+    },
+    {
+      "name": "game_backpack_rules",
+      "value": "Choose a sword, shield, potion or boots and place it in the four-by-four backpack. Items have different sizes and costs. Fight five rounds: swords add attack, shields reduce damage, potions heal and boots add speed. Zero health loses. Undo is available."
+    },
+    {
+      "name": "game_billiards_name",
+      "value": "Pocket Billiards"
+    },
+    {
+      "name": "game_billiards_desc",
+      "value": "Tap a direction to strike the cue ball"
+    },
+    {
+      "name": "game_billiards_rules",
+      "value": "Tap a direction to strike the cue ball. Balls transfer momentum in collisions and bounce off cushions. Pocket all five colored balls to win. Four cue-ball scratches lose. Wait for all balls to stop before another shot."
+    },
+    {
+      "name": "game_penalty_name",
+      "value": "Penalty Kicks"
+    },
+    {
+      "name": "game_penalty_desc",
+      "value": "Start, watch the moving keeper and tap a target inside the goal to shoot"
+    },
+    {
+      "name": "game_penalty_rules",
+      "value": "Start, watch the moving keeper and tap a target inside the goal to shoot. Cross the line clear of the keeper to score. Make five goals within eight attempts to win."
+    },
+    {
+      "name": "game_pingpong_name",
+      "value": "Paddle Rally"
+    },
+    {
+      "name": "game_pingpong_desc",
+      "value": "Start and drag the lower paddle to return the ball"
+    },
+    {
+      "name": "game_pingpong_rules",
+      "value": "Start and drag the lower paddle to return the ball. Passing the opponent baseline scores; passing your baseline gives the opponent a point. First to seven wins. Off-center hits change the return angle."
+    },
+    {
+      "name": "game_bowling_name",
+      "value": "Bowling Lane"
+    },
+    {
+      "name": "game_bowling_desc",
+      "value": "Tap toward the pins to bowl"
+    },
+    {
+      "name": "game_bowling_rules",
+      "value": "Tap toward the pins to bowl. Hits can knock down neighboring pins. The ball resets after leaving the lane. Knock down the target within three rolls; hard mode requires all ten pins."
+    },
+    {
+      "name": "game_golf_name",
+      "value": "Mini Golf"
+    },
+    {
+      "name": "game_golf_desc",
+      "value": "Tap a direction to putt; farther targets produce stronger shots"
+    },
+    {
+      "name": "game_golf_rules",
+      "value": "Tap a direction to putt; farther targets produce stronger shots. The ball slows and bounces off walls. Navigate the barriers and enter the green cup at low speed. You have twenty strokes."
+    },
+    {
+      "name": "game_drift_name",
+      "value": "One Button Drift"
+    },
+    {
+      "name": "game_drift_desc",
+      "value": "Start and tap Drift to reverse the car's sideways motion"
+    },
+    {
+      "name": "game_drift_rules",
+      "value": "Start and tap Drift to reverse the car's sideways motion. Keep it inside the curving road until the timer finishes. Leaving the road loses."
+    },
+    {
+      "name": "game_hillclimb_name",
+      "value": "Hill Climb"
+    },
+    {
+      "name": "game_hillclimb_desc",
+      "value": "Hold the accelerator or brake to control speed over rolling hills"
+    },
+    {
+      "name": "game_hillclimb_rules",
+      "value": "Hold the accelerator or brake to control speed over rolling hills. Reach the target distance to win. Running out of fuel or a hard landing loses. Releasing a button stops accelerating."
+    },
+    {
+      "name": "game_airhockey_name",
+      "value": "Air Hockey"
+    },
+    {
+      "name": "game_airhockey_desc",
+      "value": "Start and drag your mallet in the lower half to strike the puck"
+    },
+    {
+      "name": "game_airhockey_rules",
+      "value": "Start and drag your mallet in the lower half to strike the puck. Send it through the opponent's central goal to score. Your goal concedes a point. First to five wins; side walls rebound the puck."
+    },
+    {
+      "name": "game_tug_name",
+      "value": "Two Player Tug"
+    },
+    {
+      "name": "game_tug_desc",
+      "value": "Two players tap their own buttons to pull the marker"
+    },
+    {
+      "name": "game_tug_rules",
+      "value": "Two players tap their own buttons to pull the marker. Blue wins at one hundred; red wins at zero. Play together on one device."
+    },
+    {
+      "name": "game_dots_name",
+      "value": "Dots and Boxes"
+    },
+    {
+      "name": "game_dots_desc",
+      "value": "Take turns drawing edges between neighboring dots"
+    },
+    {
+      "name": "game_dots_rules",
+      "value": "Take turns drawing edges between neighboring dots. Completing a box claims it and grants another turn. When every box is claimed, the player with more boxes wins."
+    },
+    {
+      "name": "game_doudizhu_name",
+      "value": "Landlord Cards"
+    },
+    {
+      "name": "game_doudizhu_desc",
+      "value": "A single offline round with you as landlord against two computer farmers"
+    },
+    {
+      "name": "game_doudizhu_rules",
+      "value": "A single offline round with you as landlord against two computer farmers. Play singles, pairs, triples with attachments, straights, pair runs, airplanes, four-with-two, bombs and the joker rocket. Select cards and play a stronger matching pattern, or use a bomb. Empty your hand first to win."
+    },
+    {
+      "name": "game_guandan_name",
+      "value": "Team Climbing"
+    },
+    {
+      "name": "game_guandan_desc",
+      "value": "A single offline four-player partnership round"
+    },
+    {
+      "name": "game_guandan_rules",
+      "value": "A single offline four-player partnership round. You partner with player three; twos are fixed level cards, with no tribute or multi-round leveling. Heart twos are wild. Play singles, pairs, triples, full houses, five-card straights, three-pair runs, two-triple runs, bombs, straight flushes and four jokers. Partners inherit a finished teammate's lead. The first finisher's team wins."
+    },
+    {
+      "name": "game_mahjong_name",
+      "value": "Four Player Mahjong"
+    },
+    {
+      "name": "game_mahjong_desc",
+      "value": "Offline four-player mahjong with 136 tiles and no flowers or scoring multipliers"
+    },
+    {
+      "name": "game_mahjong_rules",
+      "value": "Offline four-player mahjong with 136 tiles and no flowers or scoring multipliers. Tap a tile twice to discard. Chow the previous player, pong, or declare open and closed kongs with replacement draws. Four melds and a pair, or seven pairs, wins. An exhausted wall draws the game."
+    },
+    {
+      "name": "game_xiangqi_name",
+      "value": "Chinese Chess"
+    },
+    {
+      "name": "game_xiangqi_desc",
+      "value": "Play red against the computer"
+    },
+    {
+      "name": "game_xiangqi_rules",
+      "value": "Play red against the computer. Select a piece and a highlighted legal destination. Horse legs, elephant eyes, cannon screens, river crossing and palace limits are enforced. Your general must remain safe and may not face the other general. Checkmate or stalemate wins; three repetitions draw."
+    },
+    {
+      "name": "game_chess_name",
+      "value": "Chess"
+    },
+    {
+      "name": "game_chess_desc",
+      "value": "Play white against the computer"
+    },
+    {
+      "name": "game_chess_rules",
+      "value": "Play white against the computer. Select a piece and a highlighted move. Castling, en passant and promotion are supported; choose queen, rook, bishop or knight before promotion. Your king must remain safe. Checkmate wins. Stalemate, three repetitions, fifty moves without a pawn move or capture, or basic insufficient material draw automatically."
+    },
+    {
+      "name": "game_ludo_name",
+      "value": "Flight Race"
+    },
+    {
+      "name": "game_ludo_desc",
+      "value": "Race four blue planes against three computer players"
+    },
+    {
+      "name": "game_ludo_rules",
+      "value": "Race four blue planes against three computer players. Roll six to launch and play again. Matching outer squares jump four steps; landing on an opponent sends it home. Overshooting the finish bounces back. Finish all four planes first to win."
+    },
+    {
+      "name": "game_spider_name",
+      "value": "Spider Solitaire"
+    },
+    {
+      "name": "game_spider_desc",
+      "value": "One-suit spider with 104 cards"
+    },
+    {
+      "name": "game_spider_rules",
+      "value": "One-suit spider with 104 cards. Select a descending face-up sequence and a destination one rank higher, or an empty column. Complete king-to-ace sequences clear automatically. Collect eight runs to win. Deal one card to every column only when no column is empty."
+    },
+    {
+      "name": "game_freecell_name",
+      "value": "FreeCell"
+    },
+    {
+      "name": "game_freecell_desc",
+      "value": "Move 52 cards between eight columns in alternating colors and descending ranks"
+    },
+    {
+      "name": "game_freecell_rules",
+      "value": "Move 52 cards between eight columns in alternating colors and descending ranks. Four free cells hold single cards. Empty cells and columns determine the maximum movable sequence. Build four foundations by suit from ace to king to win."
+    },
+    {
+      "name": "game_onestroke_name",
+      "value": "One Stroke"
+    },
+    {
+      "name": "game_onestroke_desc",
+      "value": "Choose a starting node and follow connected nodes in one continuous trail"
+    },
+    {
+      "name": "game_onestroke_rules",
+      "value": "Choose a starting node and follow connected nodes in one continuous trail. Traverse every edge exactly once; revisiting a node is allowed. Complete all edges to win. Undo if you reach a dead end."
+    },
+    {
+      "name": "game_hiddenobjects_name",
+      "value": "Hidden Objects"
+    },
+    {
+      "name": "game_hiddenobjects_desc",
+      "value": "Study the target objects and find one of each in the scene"
+    },
+    {
+      "name": "game_hiddenobjects_rules",
+      "value": "Study the target objects and find one of each in the scene. Any instance of the matching symbol counts. Find six types to win. Three incorrect taps lose; repeated finds do not score."
+    },
+    {
+      "name": "game_linerescue_name",
+      "value": "Draw to Rescue"
+    },
+    {
+      "name": "game_linerescue_desc",
+      "value": "Draw a fixed barrier by dragging, then start"
+    },
+    {
+      "name": "game_linerescue_rules",
+      "value": "Draw a fixed barrier by dragging, then start. The line blocks bees pursuing the dog; the total drawing length is limited to 650 units. Protect the dog for ten seconds to win. Bee contact loses. Clear and redraw before starting."
+    },
+    {
+      "name": "game_picturepuzzle_name",
+      "value": "Picture Puzzle"
+    },
+    {
+      "name": "game_picturepuzzle_desc",
+      "value": "Use the complete image as a reference"
+    },
+    {
+      "name": "game_picturepuzzle_rules",
+      "value": "Use the complete image as a reference. Tap two fragments to swap them; any pair may be exchanged. Restore the scene to win. Higher difficulties use more fragments, and fewer swaps earn more points."
+    },
+    {
+      "name": "game_idiom_name",
+      "value": "Idiom Fill"
+    },
+    {
+      "name": "game_idiom_desc",
+      "value": "Complete the missing character in a four-character Chinese idiom from four choices"
+    },
+    {
+      "name": "game_idiom_rules",
+      "value": "Complete the missing character in a four-character Chinese idiom from four choices. Answer eight questions to win. Three mistakes end the game. Normal and hard modes vary the blank position."
+    },
+    {
+      "name": "game_wordtower_name",
+      "value": "Word Towers"
+    },
+    {
+      "name": "game_wordtower_desc",
+      "value": "Choose wood, fire, water or metal and spend six coins to build in an empty slot"
+    },
+    {
+      "name": "game_wordtower_rules",
+      "value": "Choose wood, fire, water or metal and spend six coins to build in an empty slot. Select three matching basic character towers to merge them into a stronger triple-character tower. Start defending; towers fire automatically and coins accrue over time. Clear every wave to win; zero defense health loses."
+    },
+    {
+      "name": "game_beatjump_name",
+      "value": "Beat Hop"
+    },
+    {
+      "name": "game_beatjump_desc",
+      "value": "Watch the upcoming left, center or right cue and tap its button as the countdown reaches zero"
+    },
+    {
+      "name": "game_beatjump_rules",
+      "value": "Watch the upcoming left, center or right cue and tap its button as the countdown reaches zero. The ball jumps to that platform. Complete every beat to win. Five wrong, early, late or missed taps lose."
+    },
+    {
+      "name": "game_melody_name",
+      "value": "Melody Memory"
+    },
+    {
+      "name": "game_melody_desc",
+      "value": "Play, listen to and observe the four pitches, then tap the keys in the same order"
+    },
+    {
+      "name": "game_melody_rules",
+      "value": "Play, listen to and observe the four pitches, then tap the keys in the same order. Each successful round adds one note. Complete five rounds to win. Replay the current melody when needed; three mistakes end the game."
+    },
+    {
+      "name": "game_farm_name",
+      "value": "Mini Farm"
+    },
+    {
+      "name": "game_farm_desc",
+      "value": "Choose a planting, watering or harvesting tool, then tap a plot"
+    },
+    {
+      "name": "game_farm_rules",
+      "value": "Choose a planting, watering or harvesting tool, then tap a plot. Seeds cost two coins. Watered plants mature the next day; unwatered seeds wither. A harvest earns five coins. Complete twelve harvests to win."
+    },
+    {
+      "name": "game_decorate_name",
+      "value": "Room Decorator"
+    },
+    {
+      "name": "game_decorate_desc",
+      "value": "Decorate a five-by-five room with a sofa, table, plants and lamp, each with a different footprint and price"
+    },
+    {
+      "name": "game_decorate_rules",
+      "value": "Decorate a five-by-five room with a sofa, table, plants and lamp, each with a different footprint and price. With twenty coins, place a sofa, two plants, a lamp and a table beside the sofa to win. Sell removes furniture and refunds its cost."
+    },
+    {
+      "name": "game_fishing_name",
+      "value": "Relaxed Fishing"
+    },
+    {
+      "name": "game_fishing_desc",
+      "value": "Cast and wait for the bite cue, then set the hook promptly"
+    },
+    {
+      "name": "game_fishing_rules",
+      "value": "Cast and wait for the bite cue, then set the hook promptly. Hold to reel, increasing progress and tension; release to ease the line. Tension below five or above ninety-five loses the fish. Catch five to win; three missed hooks or broken lines end the trip."
+    },
+    {
+      "name": "art_try_again",
+      "value": "Try again"
+    },
+    {
+      "name": "art_ludo_token",
+      "value": "Player %d, plane %d"
+    },
+    {
+      "name": "expansion_rearrange",
+      "value": "Rearrange and hint"
+    },
+    {
+      "name": "expansion_next_tile",
+      "value": "Next block"
+    },
+    {
+      "name": "expansion_drop_column",
+      "value": "Drop in column %d"
+    },
+    {
+      "name": "expansion_mahjong_tile",
+      "value": "Tile %d, symbol %s, layer %d"
+    },
+    {
+      "name": "expansion_passenger_queue",
+      "value": "Passenger queue · board from left to right"
+    },
+    {
+      "name": "expansion_parking_slots",
+      "value": "Waiting slots %d / 3"
+    },
+    {
+      "name": "expansion_launch_bus",
+      "value": "Lane %d, bus %d"
+    },
+    {
+      "name": "expansion_bus_stuck",
+      "value": "Waiting slots are full. Undo and change the dispatch order."
+    },
+    {
+      "name": "expansion_unwind_column",
+      "value": "Wind yarn from column %d"
+    },
+    {
+      "name": "expansion_choose_reel",
+      "value": "Choose a reel, then tap a yarn column"
+    },
+    {
+      "name": "expansion_reel",
+      "value": "Reel %d"
+    },
+    {
+      "name": "expansion_capacity",
+      "value": "%d / %d"
+    },
+    {
+      "name": "expansion_choose_pump",
+      "value": "Choose a nozzle, then tap matching sand"
+    },
+    {
+      "name": "expansion_crossings",
+      "value": "Intersections left %d"
+    },
+    {
+      "name": "expansion_node",
+      "value": "Drag node %d"
+    },
+    {
+      "name": "module_desc",
+      "value": "LittleGames - 100 offline games across six categories"
+    },
+    {
+      "name": "app_splash_subtitle",
+      "value": "100 mini-games. Pick one and play."
+    },
+    {
+      "name": "settings_about_tagline",
+      "value": "100 little games across six categories"
+    },
+    {
+      "name": "expansion_target",
+      "value": "Target score %d"
+    },
+    {
+      "name": "expansion_remaining",
+      "value": "Remaining %d · Moves %d"
+    },
+    {
+      "name": "expansion_errors",
+      "value": "Mistakes %d / 3"
+    },
+    {
+      "name": "expansion_shots",
+      "value": "Shots left %d"
+    },
+    {
+      "name": "expansion_tray",
+      "value": "Tray %d / 7"
+    },
+    {
+      "name": "expansion_undo",
+      "value": "Undo last move"
+    },
+    {
+      "name": "expansion_ready",
+      "value": "Tap to start"
+    },
+    {
+      "name": "expansion_resume",
+      "value": "Resume"
+    },
+    {
+      "name": "expansion_paused",
+      "value": "Paused"
+    },
+    {
+      "name": "expansion_restart",
+      "value": "Restart"
+    },
+    {
+      "name": "expansion_drop",
+      "value": "Next fruit: %d"
+    },
+    {
+      "name": "expansion_next_ball",
+      "value": "Next bubble"
+    },
+    {
+      "name": "expansion_warning",
+      "value": "Warning line"
+    },
+    {
+      "name": "expansion_piece",
+      "value": "Piece %d"
+    },
+    {
+      "name": "expansion_stack",
+      "value": "Stack %d, symbol %d, depth %d"
+    },
+    {
+      "name": "expansion_tube",
+      "value": "Tube %d, bottom to top: %s"
+    },
+    {
+      "name": "expansion_screw",
+      "value": "Screw of plate %d"
+    },
+    {
+      "name": "expansion_car",
+      "value": "Car %d, direction %s"
+    },
+    {
+      "name": "expansion_empty",
+      "value": "Empty"
+    },
+    {
+      "name": "expansion_selected",
+      "value": "Selected"
+    },
+    {
+      "name": "expansion_cell",
+      "value": "Row %d, column %d: %s"
+    },
+    {
+      "name": "expansion_blocked",
+      "value": "Blocked. Try another position."
+    },
+    {
+      "name": "expansion_full",
+      "value": "All temporary holes are full. Undo to change the removal order."
+    },
+    {
+      "name": "expansion_finished",
+      "value": "Game over"
+    },
+    {
+      "name": "expansion_controls_hint",
+      "value": "Select a piece, then tap the board"
+    },
+    {
+      "name": "expansion_left",
+      "value": "Left"
+    },
+    {
+      "name": "expansion_right",
+      "value": "Right"
+    },
+    {
+      "name": "expansion_move",
+      "value": "Move: %s"
+    },
+    {
+      "name": "expansion_time",
+      "value": "Time left: %d s"
+    },
+    {
+      "name": "expansion_progress",
+      "value": "Progress %d / %d"
+    },
+    {
+      "name": "expansion_reference",
+      "value": "Reference"
+    },
+    {
+      "name": "expansion_changed",
+      "value": "Find differences"
+    },
+    {
+      "name": "expansion_coins",
+      "value": "Coins %d · Door %d"
+    },
+    {
+      "name": "expansion_tower",
+      "value": "Tower %d: build or upgrade"
+    },
+    {
+      "name": "expansion_repair",
+      "value": "Repair door (25 coins)"
+    },
+    {
+      "name": "expansion_stock",
+      "value": "Stock %d"
+    },
+    {
+      "name": "expansion_foundation",
+      "value": "Foundation"
+    },
+    {
+      "name": "expansion_clear",
+      "value": "Clear selection"
+    },
+    {
+      "name": "expansion_check",
+      "value": "Check combination"
+    },
+    {
+      "name": "expansion_character",
+      "value": "Target character: %s"
+    },
+    {
+      "name": "expansion_key",
+      "value": "Lane %d"
+    },
+    {
+      "name": "expansion_food_0",
+      "value": "Rice ball"
+    },
+    {
+      "name": "expansion_food_1",
+      "value": "Noodles"
+    },
+    {
+      "name": "expansion_food_2",
+      "value": "Skewers"
+    },
+    {
+      "name": "expansion_food_stock",
+      "value": "Ready %d"
+    },
+    {
+      "name": "expansion_customer",
+      "value": "Customer %d · %d s left"
+    },
+    {
+      "name": "expansion_money",
+      "value": "Coins %d"
+    },
+    {
+      "name": "expansion_cooking",
+      "value": "Cooking"
+    },
+    {
+      "name": "expansion_color_1",
+      "value": "Blue"
+    },
+    {
+      "name": "expansion_color_2",
+      "value": "Coral"
+    },
+    {
+      "name": "expansion_color_3",
+      "value": "Gold"
+    },
+    {
+      "name": "expansion_color_4",
+      "value": "Green"
+    },
+    {
+      "name": "expansion_color_5",
+      "value": "Violet"
+    },
+    {
+      "name": "expansion_color_6",
+      "value": "Cyan"
+    },
+    {
+      "name": "expansion_penalty_score",
+      "value": "Shots %d / 8 · Goals %d / 5"
+    },
+    {
+      "name": "expansion_fortress_coins",
+      "value": "Coins %d"
+    },
+    {
+      "name": "expansion_pack_sword",
+      "value": "Sword: 2 × 1 · 3 coins · Adds attack"
+    },
+    {
+      "name": "expansion_pack_shield",
+      "value": "Shield: 1 × 2 · 3 coins · Reduces damage"
+    },
+    {
+      "name": "expansion_pack_potion",
+      "value": "Potion: 2 × 2 · 4 coins · Heals each round"
+    },
+    {
+      "name": "expansion_pack_boots",
+      "value": "Boots: 1 × 1 · 2 coins · Adds attack speed"
+    },
+    {
+      "name": "expansion_tower_cost",
+      "value": "Each tower costs 6 coins"
+    },
+    {
+      "name": "expansion_audio_retry",
+      "value": "Notes failed to load. Tap to retry"
+    },
+    {
+      "name": "expansion_moves",
+      "value": "Moves %d"
+    },
+    {
+      "name": "expansion_clear_line",
+      "value": "Clear drawing"
+    },
+    {
+      "name": "expansion_beat_time",
+      "value": "Beat in %d ms"
+    },
+    {
+      "name": "expansion_find_objects",
+      "value": "Find one of each object shown below"
+    },
+    {
+      "name": "expansion_listen",
+      "value": "Listen to the notes"
+    },
+    {
+      "name": "expansion_repeat_melody",
+      "value": "Repeat the melody in order"
+    },
+    {
+      "name": "expansion_play_melody",
+      "value": "Play / replay"
+    },
+    {
+      "name": "expansion_audio_loading",
+      "value": "Preparing notes"
+    },
+    {
+      "name": "expansion_plant",
+      "value": "Plant (2 coins)"
+    },
+    {
+      "name": "expansion_water",
+      "value": "Water"
+    },
+    {
+      "name": "expansion_harvest",
+      "value": "Harvest (5 coins)"
+    },
+    {
+      "name": "expansion_day",
+      "value": "Day %d"
+    },
+    {
+      "name": "expansion_next_day",
+      "value": "Next day"
+    },
+    {
+      "name": "expansion_sofa",
+      "value": "Sofa (6)"
+    },
+    {
+      "name": "expansion_table",
+      "value": "Table (3)"
+    },
+    {
+      "name": "expansion_room_plant",
+      "value": "Plant (3)"
+    },
+    {
+      "name": "expansion_lamp",
+      "value": "Lamp (2)"
+    },
+    {
+      "name": "expansion_sell",
+      "value": "Sell / remove"
+    },
+    {
+      "name": "expansion_room_quest_0",
+      "value": "Place a sofa"
+    },
+    {
+      "name": "expansion_room_quest_1",
+      "value": "Place two plants"
+    },
+    {
+      "name": "expansion_room_quest_2",
+      "value": "Place a lamp"
+    },
+    {
+      "name": "expansion_room_quest_3",
+      "value": "Put a table beside the sofa"
+    },
+    {
+      "name": "expansion_cast_hint",
+      "value": "Cast and wait for a bite"
+    },
+    {
+      "name": "expansion_wait_bite",
+      "value": "Waiting for a bite…"
+    },
+    {
+      "name": "expansion_hook_now",
+      "value": "Bite! Hook it now!"
+    },
+    {
+      "name": "expansion_reel_hint",
+      "value": "Keep tension between 5 and 95"
+    },
+    {
+      "name": "expansion_tension",
+      "value": "Line tension %d"
+    },
+    {
+      "name": "expansion_reel_hold",
+      "value": "Hold to reel; release to ease"
+    },
+    {
+      "name": "expansion_cast",
+      "value": "Cast"
+    },
+    {
+      "name": "expansion_hook_fish",
+      "value": "Set hook"
+    },
+    {
+      "name": "expansion_hand_count",
+      "value": "Player %d: %d cards"
+    },
+    {
+      "name": "expansion_landlord",
+      "value": "You are the landlord; the two computer players are farmers"
+    },
+    {
+      "name": "expansion_guandan_team",
+      "value": "You partner with player 3 · Level card: 2"
+    },
+    {
+      "name": "expansion_last_play",
+      "value": "Last play"
+    },
+    {
+      "name": "expansion_play_cards",
+      "value": "Play cards"
+    },
+    {
+      "name": "expansion_pass",
+      "value": "Pass"
+    },
+    {
+      "name": "expansion_hint",
+      "value": "Hint"
+    },
+    {
+      "name": "expansion_board_opponent",
+      "value": "You play the lower side; the computer plays the upper side"
+    },
+    {
+      "name": "expansion_promotion",
+      "value": "Promote a pawn to:"
+    },
+    {
+      "name": "expansion_wall",
+      "value": "Wall: %d tiles left"
+    },
+    {
+      "name": "expansion_discard",
+      "value": "Latest discard: %s"
+    },
+    {
+      "name": "expansion_mahjong_win",
+      "value": "Win"
+    },
+    {
+      "name": "expansion_pong",
+      "value": "Pong"
+    },
+    {
+      "name": "expansion_chi",
+      "value": "Chow %d"
+    },
+    {
+      "name": "expansion_kong",
+      "value": "Open kong"
+    },
+    {
+      "name": "expansion_closed_kong",
+      "value": "Closed kong"
+    },
+    {
+      "name": "expansion_die",
+      "value": "Die: %d"
+    },
+    {
+      "name": "expansion_roll",
+      "value": "Roll die"
+    },
+    {
+      "name": "expansion_draw_game",
+      "value": "Draw"
+    },
+    {
+      "name": "expansion_player_wins",
+      "value": "Player %d wins"
+    },
+    {
+      "name": "expansion_jump",
+      "value": "Jump"
+    },
+    {
+      "name": "expansion_hook",
+      "value": "Hook"
+    },
+    {
+      "name": "expansion_release",
+      "value": "Release"
+    },
+    {
+      "name": "expansion_flap",
+      "value": "Flap"
+    },
+    {
+      "name": "expansion_upgrade",
+      "value": "Upgrade (20 coins)"
+    },
+    {
+      "name": "expansion_drift",
+      "value": "Reverse drift"
+    },
+    {
+      "name": "expansion_brake",
+      "value": "Brake"
+    },
+    {
+      "name": "expansion_gas",
+      "value": "Accelerate"
+    },
+    {
+      "name": "expansion_fight",
+      "value": "Fight"
+    },
+    {
+      "name": "expansion_pack_stats",
+      "value": "Coins %d · Health %d · Rounds %d / %d"
+    },
+    {
+      "name": "expansion_player",
+      "value": "Player %d"
+    },
+    {
+      "name": "expansion_turn",
+      "value": "Player %d to move"
+    },
+    {
+      "name": "expansion_health",
+      "value": "Health %d"
+    },
+    {
+      "name": "expansion_match_score",
+      "value": "You %d · Opponent %d"
+    },
+    {
+      "name": "expansion_strokes",
+      "value": "Strokes %d / %d"
+    },
+    {
+      "name": "expansion_tug_position",
+      "value": "Rope position %d"
     }
   ]
 }

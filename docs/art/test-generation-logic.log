@@ -1,0 +1,2 @@
+26/26 generation/difficulty regressions passed.
+{"maze/easy":{"boards":1000,"deadEnds":1209,"shortest":8,"longest":16},"sudoku/easy":{"puzzles":50,"minimumClues":45,"maximumClues":45},"maze/normal":{"boards":1000,"deadEnds":1929,"shortest":12,"longest":28},"sudoku/normal":{"puzzles":50,"minimumClues":29,"maximumClues":29},"maze/hard":{"boards":1000,"deadEnds":2864,"shortest":16,"longest":48},"sudoku/hard":{"puzzles":50,"minimumClues":23,"maximumClues":27},"klotski":{"minimumUnitMoves":[5,9,116]}}

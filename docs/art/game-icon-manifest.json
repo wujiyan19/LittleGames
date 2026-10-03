@@ -1,0 +1,613 @@
+{
+  "generator": "scripts/generate-game-icons.cjs",
+  "style": "soft tactile miniatures",
+  "canvas": 120,
+  "themes": [
+    "base",
+    "dark"
+  ],
+  "background": "transparent; shared ArkUI badge surface",
+  "source": "First-party SVG geometry and reusable gameplay pieces",
+  "games": [
+    {
+      "id": "snake",
+      "name": "贪吃蛇",
+      "icon": "game_snake",
+      "group": "classic"
+    },
+    {
+      "id": "tetris",
+      "name": "俄罗斯方块",
+      "icon": "game_tetris",
+      "group": "classic"
+    },
+    {
+      "id": "2048",
+      "name": "2048",
+      "icon": "game_2048",
+      "group": "classic"
+    },
+    {
+      "id": "whackmole",
+      "name": "打地鼠",
+      "icon": "game_whackmole",
+      "group": "classic"
+    },
+    {
+      "id": "minesweeper",
+      "name": "扫雷",
+      "icon": "game_minesweeper",
+      "group": "classic"
+    },
+    {
+      "id": "jumpjump",
+      "name": "跳一跳",
+      "icon": "game_jumpjump",
+      "group": "classic"
+    },
+    {
+      "id": "brickbreaker",
+      "name": "打砖块",
+      "icon": "game_brickbreaker",
+      "group": "classic"
+    },
+    {
+      "id": "sudoku",
+      "name": "数独",
+      "icon": "game_sudoku",
+      "group": "classic"
+    },
+    {
+      "id": "slidepuzzle",
+      "name": "滑动拼图",
+      "icon": "game_slidepuzzle",
+      "group": "classic"
+    },
+    {
+      "id": "klotski",
+      "name": "华容道",
+      "icon": "game_klotski",
+      "group": "classic"
+    },
+    {
+      "id": "guessnumber",
+      "name": "猜数字",
+      "icon": "game_guessnumber",
+      "group": "classic"
+    },
+    {
+      "id": "memorycard",
+      "name": "记忆翻牌",
+      "icon": "game_memorycard",
+      "group": "classic"
+    },
+    {
+      "id": "match3",
+      "name": "消消乐",
+      "icon": "game_match3",
+      "group": "classic"
+    },
+    {
+      "id": "tictactoe",
+      "name": "井字棋",
+      "icon": "game_tictactoe",
+      "group": "collection"
+    },
+    {
+      "id": "gomoku",
+      "name": "五子棋",
+      "icon": "game_gomoku",
+      "group": "collection"
+    },
+    {
+      "id": "reversi",
+      "name": "翻转棋",
+      "icon": "game_reversi",
+      "group": "collection"
+    },
+    {
+      "id": "fourline",
+      "name": "落子四连",
+      "icon": "game_fourline",
+      "group": "collection"
+    },
+    {
+      "id": "nim",
+      "name": "取石子",
+      "icon": "game_nim",
+      "group": "collection"
+    },
+    {
+      "id": "lights",
+      "name": "十字熄灯",
+      "icon": "game_lights",
+      "group": "collection"
+    },
+    {
+      "id": "flood",
+      "name": "色块归一",
+      "icon": "game_flood",
+      "group": "collection"
+    },
+    {
+      "id": "maze",
+      "name": "迷宫寻路",
+      "icon": "game_maze",
+      "group": "collection"
+    },
+    {
+      "id": "hanoi",
+      "name": "汉诺塔",
+      "icon": "game_hanoi",
+      "group": "collection"
+    },
+    {
+      "id": "peg",
+      "name": "跳子独留",
+      "icon": "game_peg",
+      "group": "collection"
+    },
+    {
+      "id": "nonogram",
+      "name": "数字绘格",
+      "icon": "game_nonogram",
+      "group": "collection"
+    },
+    {
+      "id": "arithmetic",
+      "name": "心算十题",
+      "icon": "game_arithmetic",
+      "group": "collection"
+    },
+    {
+      "id": "compare",
+      "name": "算式比大小",
+      "icon": "game_compare",
+      "group": "collection"
+    },
+    {
+      "id": "sequence",
+      "name": "数列推演",
+      "icon": "game_sequence",
+      "group": "collection"
+    },
+    {
+      "id": "binary",
+      "name": "二进制解码",
+      "icon": "game_binary",
+      "group": "collection"
+    },
+    {
+      "id": "targetsum",
+      "name": "补数求和",
+      "icon": "game_targetsum",
+      "group": "collection"
+    },
+    {
+      "id": "schulte",
+      "name": "数字寻序",
+      "icon": "game_schulte",
+      "group": "collection"
+    },
+    {
+      "id": "memorysequence",
+      "name": "顺序记忆",
+      "icon": "game_memorysequence",
+      "group": "collection"
+    },
+    {
+      "id": "missing",
+      "name": "记忆缺项",
+      "icon": "game_missing",
+      "group": "collection"
+    },
+    {
+      "id": "reaction",
+      "name": "信号反应",
+      "icon": "game_reaction",
+      "group": "collection"
+    },
+    {
+      "id": "blockfit",
+      "name": "方块拼填",
+      "icon": "game_blockfit",
+      "group": "expansion"
+    },
+    {
+      "id": "tilestack",
+      "name": "堆叠三消",
+      "icon": "game_tilestack",
+      "group": "expansion"
+    },
+    {
+      "id": "bubbleshooter",
+      "name": "泡泡龙",
+      "icon": "game_bubbleshooter",
+      "group": "expansion"
+    },
+    {
+      "id": "fruitmerge",
+      "name": "落果合成",
+      "icon": "game_fruitmerge",
+      "group": "expansion"
+    },
+    {
+      "id": "watersort",
+      "name": "倒水排序",
+      "icon": "game_watersort",
+      "group": "expansion"
+    },
+    {
+      "id": "arrowclear",
+      "name": "箭头清除",
+      "icon": "game_arrowclear",
+      "group": "expansion"
+    },
+    {
+      "id": "screwout",
+      "name": "拆螺丝",
+      "icon": "game_screwout",
+      "group": "expansion"
+    },
+    {
+      "id": "parkingjam",
+      "name": "停车场挪车",
+      "icon": "game_parkingjam",
+      "group": "expansion"
+    },
+    {
+      "id": "runner",
+      "name": "无尽跑酷",
+      "icon": "game_runner",
+      "group": "expansion"
+    },
+    {
+      "id": "blackhole",
+      "name": "黑洞吞噬",
+      "icon": "game_blackhole",
+      "group": "expansion"
+    },
+    {
+      "id": "fisheat",
+      "name": "大鱼吃小鱼",
+      "icon": "game_fisheat",
+      "group": "expansion"
+    },
+    {
+      "id": "sokoban",
+      "name": "推箱子",
+      "icon": "game_sokoban",
+      "group": "expansion"
+    },
+    {
+      "id": "pipes",
+      "name": "管道连通",
+      "icon": "game_pipes",
+      "group": "expansion"
+    },
+    {
+      "id": "differences",
+      "name": "找不同",
+      "icon": "game_differences",
+      "group": "expansion"
+    },
+    {
+      "id": "roomdefense",
+      "name": "房间塔防",
+      "icon": "game_roomdefense",
+      "group": "expansion"
+    },
+    {
+      "id": "basketball",
+      "name": "篮球投篮",
+      "icon": "game_basketball",
+      "group": "expansion"
+    },
+    {
+      "id": "solitaire",
+      "name": "经典纸牌",
+      "icon": "game_solitaire",
+      "group": "expansion"
+    },
+    {
+      "id": "characters",
+      "name": "汉字拆组",
+      "icon": "game_characters",
+      "group": "expansion"
+    },
+    {
+      "id": "rhythm",
+      "name": "节奏落键",
+      "icon": "game_rhythm",
+      "group": "expansion"
+    },
+    {
+      "id": "restaurant",
+      "name": "迷你餐厅",
+      "icon": "game_restaurant",
+      "group": "expansion"
+    },
+    {
+      "id": "linktiles",
+      "name": "连连看",
+      "icon": "game_linktiles",
+      "group": "expansion"
+    },
+    {
+      "id": "mahjongsolitaire",
+      "name": "麻将接龙",
+      "icon": "game_mahjongsolitaire",
+      "group": "expansion"
+    },
+    {
+      "id": "groupclear",
+      "name": "点击群消",
+      "icon": "game_groupclear",
+      "group": "expansion"
+    },
+    {
+      "id": "slotpair",
+      "name": "落槽配对消除",
+      "icon": "game_slotpair",
+      "group": "expansion"
+    },
+    {
+      "id": "buscolor",
+      "name": "乘客上车",
+      "icon": "game_buscolor",
+      "group": "expansion"
+    },
+    {
+      "id": "yarn",
+      "name": "毛线收卷",
+      "icon": "game_yarn",
+      "group": "expansion"
+    },
+    {
+      "id": "sand",
+      "name": "沙画吸色",
+      "icon": "game_sand",
+      "group": "expansion"
+    },
+    {
+      "id": "untangle",
+      "name": "绳结解开",
+      "icon": "game_untangle",
+      "group": "expansion"
+    },
+    {
+      "id": "platformer",
+      "name": "横版跳跃闯关",
+      "icon": "game_platformer",
+      "group": "expansion"
+    },
+    {
+      "id": "grapple",
+      "name": "钩索摆荡",
+      "icon": "game_grapple",
+      "group": "expansion"
+    },
+    {
+      "id": "flappy",
+      "name": "飞行穿柱",
+      "icon": "game_flappy",
+      "group": "expansion"
+    },
+    {
+      "id": "fruitslice",
+      "name": "切水果",
+      "icon": "game_fruitslice",
+      "group": "expansion"
+    },
+    {
+      "id": "rollingball",
+      "name": "滚动球闯关",
+      "icon": "game_rollingball",
+      "group": "expansion"
+    },
+    {
+      "id": "shooter",
+      "name": "雷电战机",
+      "icon": "game_shooter",
+      "group": "expansion"
+    },
+    {
+      "id": "tanks",
+      "name": "坦克对战",
+      "icon": "game_tanks",
+      "group": "expansion"
+    },
+    {
+      "id": "fortress",
+      "name": "射击守城",
+      "icon": "game_fortress",
+      "group": "expansion"
+    },
+    {
+      "id": "survival",
+      "name": "自动攻击生存",
+      "icon": "game_survival",
+      "group": "expansion"
+    },
+    {
+      "id": "backpack",
+      "name": "背包战斗",
+      "icon": "game_backpack",
+      "group": "expansion"
+    },
+    {
+      "id": "billiards",
+      "name": "台球",
+      "icon": "game_billiards",
+      "group": "expansion"
+    },
+    {
+      "id": "penalty",
+      "name": "足球点球",
+      "icon": "game_penalty",
+      "group": "expansion"
+    },
+    {
+      "id": "pingpong",
+      "name": "乒乓球",
+      "icon": "game_pingpong",
+      "group": "expansion"
+    },
+    {
+      "id": "bowling",
+      "name": "保龄球",
+      "icon": "game_bowling",
+      "group": "expansion"
+    },
+    {
+      "id": "golf",
+      "name": "迷你高尔夫",
+      "icon": "game_golf",
+      "group": "expansion"
+    },
+    {
+      "id": "drift",
+      "name": "单键漂移",
+      "icon": "game_drift",
+      "group": "expansion"
+    },
+    {
+      "id": "hillclimb",
+      "name": "爬坡越野",
+      "icon": "game_hillclimb",
+      "group": "expansion"
+    },
+    {
+      "id": "airhockey",
+      "name": "空气曲棍球",
+      "icon": "game_airhockey",
+      "group": "expansion"
+    },
+    {
+      "id": "tug",
+      "name": "双人拔河",
+      "icon": "game_tug",
+      "group": "expansion"
+    },
+    {
+      "id": "dots",
+      "name": "点格棋",
+      "icon": "game_dots",
+      "group": "expansion"
+    },
+    {
+      "id": "doudizhu",
+      "name": "斗地主",
+      "icon": "game_doudizhu",
+      "group": "expansion"
+    },
+    {
+      "id": "guandan",
+      "name": "掼蛋",
+      "icon": "game_guandan",
+      "group": "expansion"
+    },
+    {
+      "id": "mahjong",
+      "name": "四人麻将",
+      "icon": "game_mahjong",
+      "group": "expansion"
+    },
+    {
+      "id": "xiangqi",
+      "name": "中国象棋",
+      "icon": "game_xiangqi",
+      "group": "expansion"
+    },
+    {
+      "id": "chess",
+      "name": "国际象棋",
+      "icon": "game_chess",
+      "group": "expansion"
+    },
+    {
+      "id": "ludo",
+      "name": "飞行棋",
+      "icon": "game_ludo",
+      "group": "expansion"
+    },
+    {
+      "id": "spider",
+      "name": "蜘蛛纸牌",
+      "icon": "game_spider",
+      "group": "expansion"
+    },
+    {
+      "id": "freecell",
+      "name": "空当接龙",
+      "icon": "game_freecell",
+      "group": "expansion"
+    },
+    {
+      "id": "onestroke",
+      "name": "一笔画",
+      "icon": "game_onestroke",
+      "group": "expansion"
+    },
+    {
+      "id": "hiddenobjects",
+      "name": "隐藏物品",
+      "icon": "game_hiddenobjects",
+      "group": "expansion"
+    },
+    {
+      "id": "linerescue",
+      "name": "画线救援",
+      "icon": "game_linerescue",
+      "group": "expansion"
+    },
+    {
+      "id": "picturepuzzle",
+      "name": "图片拼图",
+      "icon": "game_picturepuzzle",
+      "group": "expansion"
+    },
+    {
+      "id": "idiom",
+      "name": "成语填字",
+      "icon": "game_idiom",
+      "group": "expansion"
+    },
+    {
+      "id": "wordtower",
+      "name": "文字合成塔防",
+      "icon": "game_wordtower",
+      "group": "expansion"
+    },
+    {
+      "id": "beatjump",
+      "name": "节拍跳跃",
+      "icon": "game_beatjump",
+      "group": "expansion"
+    },
+    {
+      "id": "melody",
+      "name": "旋律记忆",
+      "icon": "game_melody",
+      "group": "expansion"
+    },
+    {
+      "id": "farm",
+      "name": "迷你农场",
+      "icon": "game_farm",
+      "group": "expansion"
+    },
+    {
+      "id": "decorate",
+      "name": "家居装饰",
+      "icon": "game_decorate",
+      "group": "expansion"
+    },
+    {
+      "id": "fishing",
+      "name": "休闲钓鱼",
+      "icon": "game_fishing",
+      "group": "expansion"
+    }
+  ]
+}

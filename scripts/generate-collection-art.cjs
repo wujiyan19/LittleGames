@@ -1,6 +1,6 @@
 /* First-party vector game art. Basic SVG geometry only: no fonts, filters, masks,
  * external images or game-brand assets. Shared materials, game-specific silhouettes.
- * Run with Node; source of truth for both light and dark resources and the 20 icons. */
+ * Run with Node; source of truth for Collection gameplay materials; icons use generate-game-icons.cjs. */
 const fs = require('node:fs');
 const path = require('node:path');
 const root = path.resolve(__dirname, '..');
@@ -111,48 +111,9 @@ for(const theme of ['base','dark']) {
     [22,478].map(x=>circle(x,32,5,'#B2A0E0')+circle(x,166,5,'#B2A0E0')).join('')+
     line('M55 15H445M55 179H445','#A999D0',2,.3));
 
-  // Icon scenes: transparent toy-like miniatures, matching the established 13-game icon treatment.
-  const small=(body,x,y,s=.55)=>group(body,x,y,s);
-  const iconBase=(material='paper',edge=p.edge)=>ellipse(128,227,99,14,'#183251',.18)+
-    group(bevel(218,210,'url(#'+material+')',edge,24),19,16,1);
-  const grid=(n,color,inset=43,extent=170)=>Array.from({length:n+1},(_,i)=>{
-    const v=inset+i*extent/n;return line(`M${inset} ${v}H${inset+extent}M${v} ${inset}V${inset+extent}`,color,2,.7);
-  }).join('');
-  const scenes={};
-  scenes.tictactoe=iconBase()+grid(3,p.edge)+small(cross,44,43)+small(ring,101,101)+small(cross,158,156)+small(ring,158,43);
-  scenes.gomoku=iconBase('wood',p.woodEdge)+grid(5,p.woodEdge)+small(disc('darkstone'),34,35,.62)+small(disc('darkstone'),102,103,.62)+small(disc('whitestone'),102,35,.62)+small(disc('whitestone'),170,103,.62)+small(disc('darkstone'),170,171,.62);
-  scenes.reversi=iconBase('jade','#397666')+grid(4,'#A0CCAF')+small(disc('darkstone'),59,58,.72)+small(disc('whitestone'),118,58,.72)+small(disc('whitestone'),59,117,.72)+small(disc('darkstone'),118,117,.72);
-  scenes.fourline=iconBase('blue','#2E6099')+Array.from({length:16},(_,i)=>{
-    const x=33+i%4*47,y=28+Math.floor(i/4)*47;return small(i>10?chip(i%2?'coral':'blue'):circle(50,50,37,'#1F4F88','#A2CAF2',3),x,y,.48);
-  }).join('');
-  scenes.nim=ellipse(128,226,96,13,'#183251',.18)+group(bevel(218,140,'url(#wood)',p.woodEdge,26),19,84)+
-    [[40,100],[90,100],[142,100],[68,50],[120,50],[95,0]].map(v=>small(stone,v[0],v[1],.8)).join('');
-  scenes.lights=iconBase('night','#54718E')+Array.from({length:9},(_,i)=>small(lamp([1,3,4,5,7].includes(i)),35+i%3*63,28+Math.floor(i/3)*63,.6)).join('');
-  scenes.flood=iconBase()+Array.from({length:9},(_,i)=>small(pill(['blue','mint','gold','coral'][[0,0,2,0,1,2,1,1,3][i]]),35+i%3*63,28+Math.floor(i/3)*63,.6)).join('');
-  scenes.maze=iconBase('jade','#487E69')+rect(37,33,184,178,12,dark?'#53635A':'#E5E3C7')+
-    line('M64 33V92H137V154H217M37 181H96V120H37M176 33V93H216','#6B9D7D',17)+small(robot,42,119,.77)+small(portal,152,130,.73);
-  scenes.hanoi=ellipse(128,225,103,13,'#183251',.18)+group(bevel(224,37,'url(#wood)',p.woodEdge,14),16,185)+
-    rect(60,42,12,152,6,'url(#wood)',p.woodEdge)+rect(122,21,12,172,6,'url(#wood)',p.woodEdge)+rect(184,42,12,152,6,'url(#wood)',p.woodEdge)+
-    group(bevel(140,32,'url(#blue)','#45648D'),58,150)+group(bevel(114,32,'url(#mint)','#527E71'),71,123)+group(bevel(86,32,'url(#gold)','#BA8D53'),85,96)+group(bevel(60,30,'url(#coral)','#B97460'),98,70);
-  scenes.peg=iconBase('wood',p.woodEdge)+Array.from({length:9},(_,i)=>small(i===4?hole:peg,35+i%3*63,24+Math.floor(i/3)*63,.6)).join('');
-  scenes.nonogram=iconBase()+grid(5,p.edge)+[1,3,5,6,7,8,9,10,11,12,13,14,16,17,18,22].map(i=>rect(45+i%5*34,45+Math.floor(i/5)*34,29,29,4,'#608BCC')).join('');
-  const book=ellipse(128,228,98,10,'#193D6C',.15)+rect(31,25,192,205,22,'#4676B4')+rect(36,18,183,197,17,'url(#paper)',p.edge)+line('M65 25V203',p.blue,3)+[45,85,125,165].map(y=>line(`M48 ${y}H24`,p.ink,5)).join('');
-  scenes.arithmetic=book+small(cross,69,57,.68)+small(ring,131,53,.66)+line('M95 161H131M113 143V179',p.blue,10)+line('M159 151H189M159 168H189',p.coral,9);
-  const scale=rect(116,51,23,136,10,'url(#blue)','#315F97')+rect(73,188,113,25,12,'url(#blue)','#315F97')+
-    line('M50 90L205 65','#CC944A',11)+line('M62 91L40 143H88ZM191 69L169 121H217Z',p.ink,3)+
-    `<path d="M33 143H95Q90 174 64 174Q38 174 33 143Z" fill="url(#gold)"/><path d="M162 121H224Q219 152 193 152Q167 152 162 121Z" fill="url(#coral)"/>`;
-  scenes.compare=ellipse(128,225,100,12,'#183251',.18)+scale+small(gem('gold'),24,84,.75)+small(gem('coral'),163,56,.64);
-  scenes.sequence=ellipse(128,224,100,13,'#183251',.18)+[[24,150,58,65,'blue'],[90,104,58,111,'mint'],[156,53,58,162,'gold']].map(v=>group(bevel(v[2],v[3],'url(#'+v[4]+')','#56829A',12),v[0],v[1])).join('')+line('M46 124L111 77L181 26M159 28L181 26L179 49',p.blue,7);
-  scenes.binary=iconBase('night','#6082A2')+rect(64,65,130,123,18,'url(#blue)','#ABD2F4',3)+
-    [77,107,137,167].map(v=>line(`M${v} 44V64M${v} 189V211M44 ${v}H63M196 ${v}H217`,'#83BBD9',7)).join('')+
-    rect(84,88,35,72,12,'none','#EBF9FF',8)+line('M153 89V158','#FFDB8C',9);
-  scenes.targetsum=book+rect(83,64,103,104,18,'url(#gold)','#B99764',3)+line('M110 101C110 76 162 76 162 101C162 119 135 112 135 138','#263E60',9)+circle(135,153,5,'#263E60');
-  scenes.schulte=iconBase()+Array.from({length:9},(_,i)=>small(pill(i===4?'gold':'blue'),35+i%3*63,28+Math.floor(i/3)*63,.6)).join('')+
-    line('M128 99V151M117 107L128 99','#263E60',7);
-  scenes.memorysequence=small(card(true),27,49,1.15)+small(card(true),102,18,1.15)+small(gem('gold'),130,143,.87);
-  scenes.missing=small(card(false),26,36,1.17)+small(card(true),105,59,1.17)+line('M66 63C66 39 109 44 109 64C109 77 89 76 89 92',p.blue,7)+circle(89,108,4,p.blue);
-  scenes.reaction=group(lantern(2),24,15,2.05)+line('M10 63L22 70M235 60L245 53M122 0V9',p.gold,5);
-  for(const id of ids)put('game_'+id,256,256,scenes[id]);
+  // Icon geometry is owned by the shared 100-game generator.
+  for(const id of ids)assets.set('game_'+id,{name:'game_'+id,width:120,height:120});
+
 }
 const manifest={style:'LittleGames / soft tactile miniatures',source:'First-party SVG geometry; no external assets',games:ids.map((id,i)=>({id,name:labels[i],icon:'game_'+id})),assets:[...assets.values()]};
 const updateElements=(theme,type,values)=>{
@@ -174,3 +135,5 @@ fs.mkdirSync(path.join(root,'docs/art'),{recursive:true});fs.writeFileSync(path.
 console.log(`Generated ${assets.size} SVG resources × 2 themes (including 20 game-specific icons).`);
 
 module.exports={ids,labels};
+
+require('./generate-game-icons.cjs').generate();

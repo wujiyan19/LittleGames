@@ -214,6 +214,7 @@ export struct MinesweeperPage {
 
       if (this.viewModel.status !== GameStatus.PLAYING) {
         GameResultDialog({
+          celebrate: this.viewModel.gameResult,
           symbol: this.getResultSymbol(),
           symbolColor: this.getResultColor(),
           title: this.getResultText(),

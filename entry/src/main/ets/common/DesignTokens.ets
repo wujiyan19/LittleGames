@@ -34,6 +34,7 @@ export class SemanticColors {
   static primaryHover: Resource = $r('sys.color.ohos_id_color_emphasize');
   static primaryActive: Resource = $r('sys.color.ohos_id_color_emphasize');
   static primaryLight: Resource = $r('sys.color.ohos_id_color_component_activated');
+  static gameIconBackground: Resource = $r('app.color.game_icon_background');
   static accent: Resource = $r('sys.color.ohos_id_color_emphasize');
   static accentLight: Resource = $r('sys.color.ohos_id_color_component_activated');
   static success: Resource = $r('app.color.success');

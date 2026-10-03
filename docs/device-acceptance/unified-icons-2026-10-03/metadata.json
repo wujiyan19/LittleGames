@@ -1,0 +1,17 @@
+{
+  "at": "2026-10-03T05:42:52.840Z",
+  "device": "FMR0224521016052",
+  "bundle": "com.littlegames.collection",
+  "compileSdk": "6.1.1 / API 24",
+  "packageSha256": "fa479fd9b7edb68f485b587203c16eaed836212867643b074810b22210992d6e",
+  "packageBytes": 7090560,
+  "build": "successful",
+  "assetRenders": 200,
+  "regressions": {
+    "art": 7,
+    "collection": 82,
+    "performance": 159
+  },
+  "installedUpdateTime": 1791006081741,
+  "software": "ALN-AL00 7.0.0.109(SP6C00E105R5P3)"
+}

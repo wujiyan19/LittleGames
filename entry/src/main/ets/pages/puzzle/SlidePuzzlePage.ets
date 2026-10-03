@@ -158,6 +158,7 @@ export struct SlidePuzzlePage {
       if (this.viewModel.status === GameStatus.OVER) {
         GameResultDialog({
           symbol: $r('sys.symbol.checkmark_circle'),
+          celebrate: true,
           symbolColor: SemanticColors.success,
           title: $r('app.string.result_puzzle_complete'),
           detail: $r('app.string.result_detail_steps_format', this.viewModel.steps),

@@ -13,6 +13,7 @@
  */
 import { SemanticColors, FontTokens, RadiusTokens, ShadowTokens, SpacingTokens } from '../common/DesignTokens';
 import { Haptics } from '../common/Haptics';
+import { range } from '../common/Range';
 
 @ComponentV2
 export struct GameResultDialog {
@@ -37,6 +38,10 @@ export struct GameResultDialog {
   @Param onSecondary: () => void = () => {};
   /** true = 紧凑内容间距；两种形态均有整页遮罩 */
   @Param cardStyle: boolean = false;
+  @Param celebrate: boolean = false;
+  @Local entrance: number = 0;
+  @Local burst: number = 0;
+  private entranceTimer: number = -1;
 
   @Styles
   pressedFeedback() {
@@ -47,29 +52,55 @@ export struct GameResultDialog {
   aboutToAppear(): void {
     Haptics.success();
   }
+  appear(): void {
+    this.entranceTimer = setTimeout(() => {
+      this.entranceTimer = -1;
+      this.getUIContext().animateTo({ duration: 300, curve: Curve.FastOutSlowIn }, () => { this.entrance = 1; });
+      if (this.celebrate) { this.getUIContext().animateTo({ duration: 1000, curve: Curve.EaseOut }, () => { this.burst = 1; }); }
+    }, 16);
+  }
+  aboutToDisappear(): void { if (this.entranceTimer >= 0) { clearTimeout(this.entranceTimer); this.entranceTimer = -1; } }
 
   build() {
     Column() {
-      Column() { this.DialogContent() }
+      Stack() {
+        if (this.celebrate) {
+          ForEach(range(10), (index: number) => {
+            Image($r('app.media.exp_spark')).width($r('app.float.art_win_particle')).height($r('app.float.art_win_particle'))
+              .translate({ x: Math.cos(index * Math.PI / 5) * this.burst * 150, y: Math.sin(index * Math.PI / 5) * this.burst * 180 })
+              .rotate({ angle: index * 36 + this.burst * 120 }).opacity(1 - this.burst)
+              .hitTestBehavior(HitTestMode.None).accessibilityLevel('no');
+          }, (index: number) => index.toString());
+        }
+        this.DialogContent()
+      }
         .width('86%').padding(SpacingTokens.lg)
         .borderRadius(RadiusTokens.xl)
         .backgroundColor($r('app.color.surface'))
         .shadow(ShadowTokens.float)
+        .renderGroup(true)
+        .scale({ x: 0.9 + this.entrance * 0.1, y: 0.9 + this.entrance * 0.1 })
+        .translate({ y: (1 - this.entrance) * 18 }).opacity(this.entrance)
     }
       .width('100%').height('100%')
       .backgroundColor(SemanticColors.scrim)
       .justifyContent(FlexAlign.Center)
       .onClick(() => {})
+      .onAppear(() => { this.appear(); })
   }
 
   @Builder
   DialogContent() {
     Column() {
       Column() {
-        SymbolGlyph(this.symbol)
+        if (this.celebrate) {
+          Image($r('app.media.exp_trophy')).width(64).height(64).objectFit(ImageFit.Contain).accessibilityLevel('no');
+        } else {
+          SymbolGlyph(this.symbol)
           .fontSize(40)
           .fontWeight(FontWeight.Medium)
           .fontColor([this.symbolColor])
+        }
       }
       .width(72).height(72)
       .borderRadius(RadiusTokens.full)

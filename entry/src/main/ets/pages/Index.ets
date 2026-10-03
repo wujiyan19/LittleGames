@@ -120,7 +120,7 @@ struct Index {
     this.dataStatus = 0;
     try {
       this.newGames = GameDataManager.getAllGames().filter((game: GameInfo) =>
-        ['tictactoe', 'lights', 'maze', 'arithmetic', 'memorysequence', 'reaction'].includes(game.id));
+        ['fruitslice', 'backpack', 'billiards', 'guandan', 'xiangqi', 'linerescue', 'melody', 'farm'].includes(game.id));
       this.allGamesPinyin = this.sortByPinyin(GameDataManager.getAllGames());
       this.totalGames = this.allGamesPinyin.length;
       this.refreshScores();

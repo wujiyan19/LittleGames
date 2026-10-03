@@ -19,6 +19,8 @@
  */
 import { SnakeGamePage } from '../pages/classic/SnakeGamePage';
 import { CollectionPage } from '../pages/collection/CollectionPage';
+import { ExpansionPage } from '../pages/collection/ExpansionPage';
+import { EXPANSION_IDS } from '../model/ExpansionCatalog';
 import { GameRoutes } from './GameRouteRegistry';
 import { COLLECTION_IDS } from '../model/game/CollectionModel';
 import { TetrisGamePage } from '../pages/classic/TetrisGamePage';
@@ -74,6 +76,8 @@ export function GamePageMap(name: string, pathStack: NavPathStack, onDataChanged
       BrickBreakerPage({ pathStack: pathStack })
     } else if (name === 'Match3Page') {
       Match3Page({ pathStack: pathStack })
+    } else if (EXPANSION_IDS.includes(GameRoutes.gameIdForRoute(name))) {
+      ExpansionPage({ gameId: GameRoutes.gameIdForRoute(name), pathStack: pathStack })
     } else if (COLLECTION_IDS.includes(GameRoutes.gameIdForRoute(name))) {
       CollectionPage({ gameId: GameRoutes.gameIdForRoute(name), pathStack: pathStack })
     }

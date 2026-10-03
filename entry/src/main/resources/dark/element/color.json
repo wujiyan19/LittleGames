@@ -1,6 +1,10 @@
 {
   "color": [
     {
+      "name": "game_icon_background",
+      "value": "#24395A"
+    },
+    {
       "name": "start_window_background",
       "value": "#000000"
     },
@@ -447,6 +451,30 @@
     {
       "name": "collection_art_ink",
       "value": "#DAE8FF"
+    },
+    {
+      "name": "expansion_color_1",
+      "value": "#88B7FF"
+    },
+    {
+      "name": "expansion_color_2",
+      "value": "#FF9CAD"
+    },
+    {
+      "name": "expansion_color_3",
+      "value": "#FFD078"
+    },
+    {
+      "name": "expansion_color_4",
+      "value": "#7BDFC0"
+    },
+    {
+      "name": "expansion_color_5",
+      "value": "#CBA5F5"
+    },
+    {
+      "name": "expansion_color_6",
+      "value": "#7AD4EA"
     }
   ]
 }

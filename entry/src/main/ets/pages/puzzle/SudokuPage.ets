@@ -234,6 +234,7 @@ export struct SudokuPage {
       if (this.viewModel.status === GameStatus.OVER) {
         GameResultDialog({
           symbol: $r('sys.symbol.checkmark_circle'),
+          celebrate: true,
           symbolColor: SemanticColors.success,
           title: $r('app.string.result_sudoku_complete'),
           primaryText: $r('app.string.result_new_game'),

@@ -1,25 +1,11 @@
 # LittleGames 游戏图标
 
-本套图标使用内置 imagegen 工具生成，文件位于 `entry/src/main/resources/base/media/game_*.png`。所有图标均为透明背景 PNG，已替换游戏列表和“我的”页面中的 Emoji。
+2026-10-03：新老 100 款游戏统一为柔和立体的透明 SVG 小模型，全部提供浅色、深色版本。造型、颜色、留白和投影共用一套规范；玩法保留独立轮廓。首页、分类页及“我的”页共用主题图标底色。
 
-13 款游戏的对局素材及预览见 [对局美术](gameplay-art.md)。
+[统一图标交付记录](art/unified-icons.md) · [浅色全览](art/game-icons-light.png) · [深色全览](art/game-icons-dark.png) · [手机验证](device-acceptance/unified-icons-2026-10-03/README.md)
 
-## 预览
+图标资源为 entry/src/main/resources/{base,dark}/media/game_*.svg，各目录 100 个，画布均为 120×120。保留原来的资源名称，目录、最近游戏和排行榜自动引用统一版本。
 
-| 经典休闲 | 图标 | 益智解谜 | 图标 |
-| --- | --- | --- | --- |
-| 贪吃蛇 | <img src="../entry/src/main/resources/base/media/game_snake.png" width="64" alt="贪吃蛇"> | 数独 | <img src="../entry/src/main/resources/base/media/game_sudoku.png" width="64" alt="数独"> |
-| 俄罗斯方块 | <img src="../entry/src/main/resources/base/media/game_tetris.png" width="64" alt="俄罗斯方块"> | 滑动拼图 | <img src="../entry/src/main/resources/base/media/game_slidepuzzle.png" width="64" alt="滑动拼图"> |
-| 2048 | <img src="../entry/src/main/resources/base/media/game_2048.png" width="64" alt="2048"> | 华容道 | <img src="../entry/src/main/resources/base/media/game_klotski.png" width="64" alt="华容道"> |
-| 打地鼠 | <img src="../entry/src/main/resources/base/media/game_whackmole.png" width="64" alt="打地鼠"> | 猜数字 | <img src="../entry/src/main/resources/base/media/game_guessnumber.png" width="64" alt="猜数字"> |
-| 扫雷 | <img src="../entry/src/main/resources/base/media/game_minesweeper.png" width="64" alt="扫雷"> | 记忆翻牌 | <img src="../entry/src/main/resources/base/media/game_memorycard.png" width="64" alt="记忆翻牌"> |
-| 跳一跳 | <img src="../entry/src/main/resources/base/media/game_jumpjump.png" width="64" alt="跳一跳"> | 消消乐 | <img src="../entry/src/main/resources/base/media/game_match3.png" width="64" alt="消消乐"> |
-| 打砖块 | <img src="../entry/src/main/resources/base/media/game_brickbreaker.png" width="64" alt="打砖块"> | | |
+唯一图标生成入口为 node scripts/generate-game-icons.cjs。Collection 和 Expansion 的美术生成器均在末尾调用此入口，重建目录或对局美术不会恢复旧图标。无需外部图片、字体或网络。
 
-## 生成提示词
-
-每张图标使用以下共同提示词，并追加对应题材描述：
-
-> Use case: stylized-concept. Asset type: one square game catalog icon for a HarmonyOS casual-game collection. Style: cohesive premium 2.5D toy-like illustration, simplified geometry, smooth matte finish, soft studio highlights, bright but controlled colors, designed to remain legible at 44–52 vp on a blue UI tile. Composition: exactly one centered subject filling about 75 percent of the square with generous transparent padding. Background: genuinely transparent alpha, no colored square, no environment, no floor. Constraints: original artwork, no text, no watermark, no border, no extra objects, no emoji imitation.
-
-题材描述依次为：绿色盘曲小蛇、彩色下落积木、带数字的 2048 方块棋盘、探出地洞的鼹鼠、深蓝色扫雷地雷、九宫格数独棋盘、留有空格的滑动拼图、木质华容道棋盘、问号线索代币、翻开的记忆卡牌、跃起的青蛙、击碎砖块的弹球与挡板、三颗彩色宝石。2048 图标最终版改用明确的 2、4、8、16 数字方块提示词生成。
+原 13 款 PNG、最初生成说明及提示词已保留在[历史图标归档](art/legacy-icons/README.md)，不再进入应用资源包。13 款游戏的对局素材说明仍见[对局美术](gameplay-art.md)。

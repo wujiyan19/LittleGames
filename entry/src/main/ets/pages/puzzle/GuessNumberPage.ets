@@ -177,6 +177,7 @@ export struct GuessNumberPage {
       if (this.viewModel.isWin) {
         GameResultDialog({
           symbol: $r('sys.symbol.checkmark_circle'),
+          celebrate: true,
           symbolColor: SemanticColors.success,
           title: $r('app.string.result_guess_win'),
           detail: $r('app.string.result_detail_guess_win_format', this.viewModel.secret, this.viewModel.tries),

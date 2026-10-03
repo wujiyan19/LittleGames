@@ -1,4 +1,5 @@
 import { COLLECTION_IDS } from '../model/game/CollectionModel';
+import { EXPANSION_IDS } from '../model/ExpansionCatalog';
 
 export class GameRoutes {
   /** 原有页面的游戏 ID → 路由名；新增合集由 routeName 的 COLLECTION_IDS 分支处理。 */
@@ -20,6 +21,7 @@ export class GameRoutes {
 
   /** 查路由名。未登记的 ID 返回空串，调用方应据此拒绝导航（而非静默跳错页） */
   static routeName(gameId: string): string {
+    if (EXPANSION_IDS.includes(gameId)) { return 'Expansion_' + gameId; }
     if (COLLECTION_IDS.includes(gameId)) { return 'Collection_' + gameId; }
     const name: string | undefined = GameRoutes.PATHS[gameId];
     if (name === undefined) {
@@ -29,6 +31,9 @@ export class GameRoutes {
   }
 
   static gameIdForRoute(route: string): string {
+    for (let i = 0; i < EXPANSION_IDS.length; i++) {
+      if (route === 'Expansion_' + EXPANSION_IDS[i]) { return EXPANSION_IDS[i]; }
+    }
     for (let i = 0; i < COLLECTION_IDS.length; i++) {
       if (route === 'Collection_' + COLLECTION_IDS[i]) { return COLLECTION_IDS[i]; }
     }

@@ -1,0 +1,337 @@
+PASS blockfit/0: valid state and rejected invalid input
+PASS blockfit/1: valid state and rejected invalid input
+PASS blockfit/2: valid state and rejected invalid input
+PASS tilestack/0: valid state and rejected invalid input
+PASS tilestack/1: valid state and rejected invalid input
+PASS tilestack/2: valid state and rejected invalid input
+PASS bubbleshooter/0: valid state and rejected invalid input
+PASS bubbleshooter/1: valid state and rejected invalid input
+PASS bubbleshooter/2: valid state and rejected invalid input
+PASS fruitmerge/0: valid state and rejected invalid input
+PASS fruitmerge/1: valid state and rejected invalid input
+PASS fruitmerge/2: valid state and rejected invalid input
+PASS watersort/0: valid state and rejected invalid input
+PASS watersort/1: valid state and rejected invalid input
+PASS watersort/2: valid state and rejected invalid input
+PASS arrowclear/0: valid state and rejected invalid input
+PASS arrowclear/1: valid state and rejected invalid input
+PASS arrowclear/2: valid state and rejected invalid input
+PASS screwout/0: valid state and rejected invalid input
+PASS screwout/1: valid state and rejected invalid input
+PASS screwout/2: valid state and rejected invalid input
+PASS parkingjam/0: valid state and rejected invalid input
+PASS parkingjam/1: valid state and rejected invalid input
+PASS parkingjam/2: valid state and rejected invalid input
+PASS runner/0: valid state and rejected invalid input
+PASS runner/1: valid state and rejected invalid input
+PASS runner/2: valid state and rejected invalid input
+PASS blackhole/0: valid state and rejected invalid input
+PASS blackhole/1: valid state and rejected invalid input
+PASS blackhole/2: valid state and rejected invalid input
+PASS fisheat/0: valid state and rejected invalid input
+PASS fisheat/1: valid state and rejected invalid input
+PASS fisheat/2: valid state and rejected invalid input
+PASS sokoban/0: valid state and rejected invalid input
+PASS sokoban/1: valid state and rejected invalid input
+PASS sokoban/2: valid state and rejected invalid input
+PASS pipes/0: valid state and rejected invalid input
+PASS pipes/1: valid state and rejected invalid input
+PASS pipes/2: valid state and rejected invalid input
+PASS differences/0: valid state and rejected invalid input
+PASS differences/1: valid state and rejected invalid input
+PASS differences/2: valid state and rejected invalid input
+PASS roomdefense/0: valid state and rejected invalid input
+PASS roomdefense/1: valid state and rejected invalid input
+PASS roomdefense/2: valid state and rejected invalid input
+PASS basketball/0: valid state and rejected invalid input
+PASS basketball/1: valid state and rejected invalid input
+PASS basketball/2: valid state and rejected invalid input
+PASS solitaire/0: valid state and rejected invalid input
+PASS solitaire/1: valid state and rejected invalid input
+PASS solitaire/2: valid state and rejected invalid input
+PASS characters/0: valid state and rejected invalid input
+PASS characters/1: valid state and rejected invalid input
+PASS characters/2: valid state and rejected invalid input
+PASS rhythm/0: valid state and rejected invalid input
+PASS rhythm/1: valid state and rejected invalid input
+PASS rhythm/2: valid state and rejected invalid input
+PASS restaurant/0: valid state and rejected invalid input
+PASS restaurant/1: valid state and rejected invalid input
+PASS restaurant/2: valid state and rejected invalid input
+PASS linktiles/0: valid state and rejected invalid input
+PASS linktiles/1: valid state and rejected invalid input
+PASS linktiles/2: valid state and rejected invalid input
+PASS mahjongsolitaire/0: valid state and rejected invalid input
+PASS mahjongsolitaire/1: valid state and rejected invalid input
+PASS mahjongsolitaire/2: valid state and rejected invalid input
+PASS groupclear/0: valid state and rejected invalid input
+PASS groupclear/1: valid state and rejected invalid input
+PASS groupclear/2: valid state and rejected invalid input
+PASS slotpair/0: valid state and rejected invalid input
+PASS slotpair/1: valid state and rejected invalid input
+PASS slotpair/2: valid state and rejected invalid input
+PASS buscolor/0: valid state and rejected invalid input
+PASS buscolor/1: valid state and rejected invalid input
+PASS buscolor/2: valid state and rejected invalid input
+PASS yarn/0: valid state and rejected invalid input
+PASS yarn/1: valid state and rejected invalid input
+PASS yarn/2: valid state and rejected invalid input
+PASS sand/0: valid state and rejected invalid input
+PASS sand/1: valid state and rejected invalid input
+PASS sand/2: valid state and rejected invalid input
+PASS untangle/0: valid state and rejected invalid input
+PASS untangle/1: valid state and rejected invalid input
+PASS untangle/2: valid state and rejected invalid input
+PASS platformer/0: valid state and rejected invalid input
+PASS platformer/1: valid state and rejected invalid input
+PASS platformer/2: valid state and rejected invalid input
+PASS grapple/0: valid state and rejected invalid input
+PASS grapple/1: valid state and rejected invalid input
+PASS grapple/2: valid state and rejected invalid input
+PASS flappy/0: valid state and rejected invalid input
+PASS flappy/1: valid state and rejected invalid input
+PASS flappy/2: valid state and rejected invalid input
+PASS fruitslice/0: valid state and rejected invalid input
+PASS fruitslice/1: valid state and rejected invalid input
+PASS fruitslice/2: valid state and rejected invalid input
+PASS rollingball/0: valid state and rejected invalid input
+PASS rollingball/1: valid state and rejected invalid input
+PASS rollingball/2: valid state and rejected invalid input
+PASS shooter/0: valid state and rejected invalid input
+PASS shooter/1: valid state and rejected invalid input
+PASS shooter/2: valid state and rejected invalid input
+PASS tanks/0: valid state and rejected invalid input
+PASS tanks/1: valid state and rejected invalid input
+PASS tanks/2: valid state and rejected invalid input
+PASS fortress/0: valid state and rejected invalid input
+PASS fortress/1: valid state and rejected invalid input
+PASS fortress/2: valid state and rejected invalid input
+PASS survival/0: valid state and rejected invalid input
+PASS survival/1: valid state and rejected invalid input
+PASS survival/2: valid state and rejected invalid input
+PASS backpack/0: valid state and rejected invalid input
+PASS backpack/1: valid state and rejected invalid input
+PASS backpack/2: valid state and rejected invalid input
+PASS billiards/0: valid state and rejected invalid input
+PASS billiards/1: valid state and rejected invalid input
+PASS billiards/2: valid state and rejected invalid input
+PASS penalty/0: valid state and rejected invalid input
+PASS penalty/1: valid state and rejected invalid input
+PASS penalty/2: valid state and rejected invalid input
+PASS pingpong/0: valid state and rejected invalid input
+PASS pingpong/1: valid state and rejected invalid input
+PASS pingpong/2: valid state and rejected invalid input
+PASS bowling/0: valid state and rejected invalid input
+PASS bowling/1: valid state and rejected invalid input
+PASS bowling/2: valid state and rejected invalid input
+PASS golf/0: valid state and rejected invalid input
+PASS golf/1: valid state and rejected invalid input
+PASS golf/2: valid state and rejected invalid input
+PASS drift/0: valid state and rejected invalid input
+PASS drift/1: valid state and rejected invalid input
+PASS drift/2: valid state and rejected invalid input
+PASS hillclimb/0: valid state and rejected invalid input
+PASS hillclimb/1: valid state and rejected invalid input
+PASS hillclimb/2: valid state and rejected invalid input
+PASS airhockey/0: valid state and rejected invalid input
+PASS airhockey/1: valid state and rejected invalid input
+PASS airhockey/2: valid state and rejected invalid input
+PASS tug/0: valid state and rejected invalid input
+PASS tug/1: valid state and rejected invalid input
+PASS tug/2: valid state and rejected invalid input
+PASS dots/0: valid state and rejected invalid input
+PASS dots/1: valid state and rejected invalid input
+PASS dots/2: valid state and rejected invalid input
+PASS doudizhu/0: valid state and rejected invalid input
+PASS doudizhu/1: valid state and rejected invalid input
+PASS doudizhu/2: valid state and rejected invalid input
+PASS guandan/0: valid state and rejected invalid input
+PASS guandan/1: valid state and rejected invalid input
+PASS guandan/2: valid state and rejected invalid input
+PASS mahjong/0: valid state and rejected invalid input
+PASS mahjong/1: valid state and rejected invalid input
+PASS mahjong/2: valid state and rejected invalid input
+PASS xiangqi/0: valid state and rejected invalid input
+PASS xiangqi/1: valid state and rejected invalid input
+PASS xiangqi/2: valid state and rejected invalid input
+PASS chess/0: valid state and rejected invalid input
+PASS chess/1: valid state and rejected invalid input
+PASS chess/2: valid state and rejected invalid input
+PASS ludo/0: valid state and rejected invalid input
+PASS ludo/1: valid state and rejected invalid input
+PASS ludo/2: valid state and rejected invalid input
+PASS spider/0: valid state and rejected invalid input
+PASS spider/1: valid state and rejected invalid input
+PASS spider/2: valid state and rejected invalid input
+PASS freecell/0: valid state and rejected invalid input
+PASS freecell/1: valid state and rejected invalid input
+PASS freecell/2: valid state and rejected invalid input
+PASS onestroke/0: valid state and rejected invalid input
+PASS onestroke/1: valid state and rejected invalid input
+PASS onestroke/2: valid state and rejected invalid input
+PASS hiddenobjects/0: valid state and rejected invalid input
+PASS hiddenobjects/1: valid state and rejected invalid input
+PASS hiddenobjects/2: valid state and rejected invalid input
+PASS linerescue/0: valid state and rejected invalid input
+PASS linerescue/1: valid state and rejected invalid input
+PASS linerescue/2: valid state and rejected invalid input
+PASS picturepuzzle/0: valid state and rejected invalid input
+PASS picturepuzzle/1: valid state and rejected invalid input
+PASS picturepuzzle/2: valid state and rejected invalid input
+PASS idiom/0: valid state and rejected invalid input
+PASS idiom/1: valid state and rejected invalid input
+PASS idiom/2: valid state and rejected invalid input
+PASS wordtower/0: valid state and rejected invalid input
+PASS wordtower/1: valid state and rejected invalid input
+PASS wordtower/2: valid state and rejected invalid input
+PASS beatjump/0: valid state and rejected invalid input
+PASS beatjump/1: valid state and rejected invalid input
+PASS beatjump/2: valid state and rejected invalid input
+PASS melody/0: valid state and rejected invalid input
+PASS melody/1: valid state and rejected invalid input
+PASS melody/2: valid state and rejected invalid input
+PASS farm/0: valid state and rejected invalid input
+PASS farm/1: valid state and rejected invalid input
+PASS farm/2: valid state and rejected invalid input
+PASS decorate/0: valid state and rejected invalid input
+PASS decorate/1: valid state and rejected invalid input
+PASS decorate/2: valid state and rejected invalid input
+PASS fishing/0: valid state and rejected invalid input
+PASS fishing/1: valid state and rejected invalid input
+PASS fishing/2: valid state and rejected invalid input
+PASS tilestack/0: 80 generated boards have a legal complete solution
+PASS tilestack/1: 80 generated boards have a legal complete solution
+PASS tilestack/2: 80 generated boards have a legal complete solution
+PASS watersort/0: 80 generated boards have a legal complete solution
+PASS watersort/1: 80 generated boards have a legal complete solution
+PASS watersort/2: 80 generated boards have a legal complete solution
+PASS arrowclear/0: 80 generated boards have a legal complete solution
+PASS arrowclear/1: 80 generated boards have a legal complete solution
+PASS arrowclear/2: 80 generated boards have a legal complete solution
+PASS screwout/0: 80 generated boards have a legal complete solution
+PASS screwout/1: 80 generated boards have a legal complete solution
+PASS screwout/2: 80 generated boards have a legal complete solution
+PASS parkingjam/0: 80 generated boards have a legal complete solution
+PASS parkingjam/1: 80 generated boards have a legal complete solution
+PASS parkingjam/2: 80 generated boards have a legal complete solution
+PASS sokoban/pipes/0: legal generated solutions across 100 seeds
+PASS sokoban/pipes/1: legal generated solutions across 100 seeds
+PASS sokoban/pipes/2: legal generated solutions across 100 seeds
+PASS differences reject repeats and fail only after three errors
+PASS runner collisions, fish predation and hole growth have distinct outcomes
+PASS constant random sources terminate with solvable boards
+PASS solitaire deals 52 unique cards, enforces sequence rules, reveals covered cards and completes foundations
+PASS character builder supports repeated radicals and eight complete combinations
+PASS basketball scores only descending hoop crossings and has a playable five-basket solution
+PASS rhythm admits a full timed sequence and five misses fail
+PASS restaurant orders consume prepared dishes, earn coins and finish before the clock expires
+PASS room defense costs coins, caps upgrades, kills attackers and repairs only damaged doors
+PASS block fit clears row/column simultaneously and rejects occupied or out-of-bounds shapes
+PASS tray failure, blocked arrows and turn undo do not duplicate points
+PASS bubble physics matches, drops unanchored clusters, waits for the final shot and rejects duplicate fire
+PASS fruit collisions merge once, conserve finite bounds, allow cooldown and do not lose during free fall
+PASS settled fruit stops its frame loop and dropping the next fruit wakes it
+PASS catalog and resources are complete for every registered expansion
+PASS blockfit: continuation rejects malformed saves atomically and does not count another play
+PASS tilestack: continuation rejects malformed saves atomically and does not count another play
+PASS bubbleshooter: continuation rejects malformed saves atomically and does not count another play
+PASS fruitmerge: continuation rejects malformed saves atomically and does not count another play
+PASS watersort: continuation rejects malformed saves atomically and does not count another play
+PASS arrowclear: continuation rejects malformed saves atomically and does not count another play
+PASS screwout: continuation rejects malformed saves atomically and does not count another play
+PASS parkingjam: continuation rejects malformed saves atomically and does not count another play
+PASS runner: continuation rejects malformed saves atomically and does not count another play
+PASS blackhole: continuation rejects malformed saves atomically and does not count another play
+PASS fisheat: continuation rejects malformed saves atomically and does not count another play
+PASS sokoban: continuation rejects malformed saves atomically and does not count another play
+PASS pipes: continuation rejects malformed saves atomically and does not count another play
+PASS differences: continuation rejects malformed saves atomically and does not count another play
+PASS roomdefense: continuation rejects malformed saves atomically and does not count another play
+PASS basketball: continuation rejects malformed saves atomically and does not count another play
+PASS solitaire: continuation rejects malformed saves atomically and does not count another play
+PASS characters: continuation rejects malformed saves atomically and does not count another play
+PASS rhythm: continuation rejects malformed saves atomically and does not count another play
+PASS restaurant: continuation rejects malformed saves atomically and does not count another play
+PASS linktiles: continuation rejects malformed saves atomically and does not count another play
+PASS mahjongsolitaire: continuation rejects malformed saves atomically and does not count another play
+PASS groupclear: continuation rejects malformed saves atomically and does not count another play
+PASS slotpair: continuation rejects malformed saves atomically and does not count another play
+PASS buscolor: continuation rejects malformed saves atomically and does not count another play
+PASS yarn: continuation rejects malformed saves atomically and does not count another play
+PASS sand: continuation rejects malformed saves atomically and does not count another play
+PASS untangle: continuation rejects malformed saves atomically and does not count another play
+PASS platformer: continuation rejects malformed saves atomically and does not count another play
+PASS grapple: continuation rejects malformed saves atomically and does not count another play
+PASS flappy: continuation rejects malformed saves atomically and does not count another play
+PASS fruitslice: continuation rejects malformed saves atomically and does not count another play
+PASS rollingball: continuation rejects malformed saves atomically and does not count another play
+PASS shooter: continuation rejects malformed saves atomically and does not count another play
+PASS tanks: continuation rejects malformed saves atomically and does not count another play
+PASS fortress: continuation rejects malformed saves atomically and does not count another play
+PASS survival: continuation rejects malformed saves atomically and does not count another play
+PASS backpack: continuation rejects malformed saves atomically and does not count another play
+PASS billiards: continuation rejects malformed saves atomically and does not count another play
+PASS penalty: continuation rejects malformed saves atomically and does not count another play
+PASS pingpong: continuation rejects malformed saves atomically and does not count another play
+PASS bowling: continuation rejects malformed saves atomically and does not count another play
+PASS golf: continuation rejects malformed saves atomically and does not count another play
+PASS drift: continuation rejects malformed saves atomically and does not count another play
+PASS hillclimb: continuation rejects malformed saves atomically and does not count another play
+PASS airhockey: continuation rejects malformed saves atomically and does not count another play
+PASS tug: continuation rejects malformed saves atomically and does not count another play
+PASS dots: continuation rejects malformed saves atomically and does not count another play
+PASS doudizhu: continuation rejects malformed saves atomically and does not count another play
+PASS guandan: continuation rejects malformed saves atomically and does not count another play
+PASS mahjong: continuation rejects malformed saves atomically and does not count another play
+PASS xiangqi: continuation rejects malformed saves atomically and does not count another play
+PASS chess: continuation rejects malformed saves atomically and does not count another play
+PASS ludo: continuation rejects malformed saves atomically and does not count another play
+PASS spider: continuation rejects malformed saves atomically and does not count another play
+PASS freecell: continuation rejects malformed saves atomically and does not count another play
+PASS onestroke: continuation rejects malformed saves atomically and does not count another play
+PASS hiddenobjects: continuation rejects malformed saves atomically and does not count another play
+PASS linerescue: continuation rejects malformed saves atomically and does not count another play
+PASS picturepuzzle: continuation rejects malformed saves atomically and does not count another play
+PASS idiom: continuation rejects malformed saves atomically and does not count another play
+PASS wordtower: continuation rejects malformed saves atomically and does not count another play
+PASS beatjump: continuation rejects malformed saves atomically and does not count another play
+PASS melody: continuation rejects malformed saves atomically and does not count another play
+PASS farm: continuation rejects malformed saves atomically and does not count another play
+PASS decorate: continuation rejects malformed saves atomically and does not count another play
+PASS fishing: continuation rejects malformed saves atomically and does not count another play
+PASS all registered games transfer after actual input, including live physics and selected cards
+PASS all new routes and game payloads work through application-level continuation
+PASS live frames pause in background and confirmation, resume correctly, and stop on disposal
+PASS linktiles/0: 100 generated boards complete through legal input
+PASS linktiles/1: 100 generated boards complete through legal input
+PASS linktiles/2: 100 generated boards complete through legal input
+PASS mahjongsolitaire/0: 100 generated boards complete through legal input
+PASS mahjongsolitaire/1: 100 generated boards complete through legal input
+PASS mahjongsolitaire/2: 100 generated boards complete through legal input
+PASS slotpair/0: 100 generated boards complete through legal input
+PASS slotpair/1: 100 generated boards complete through legal input
+PASS slotpair/2: 100 generated boards complete through legal input
+PASS buscolor/0: 100 generated boards complete through legal input
+PASS buscolor/1: 100 generated boards complete through legal input
+PASS buscolor/2: 100 generated boards complete through legal input
+PASS yarn/0: 100 generated boards complete through legal input
+PASS yarn/1: 100 generated boards complete through legal input
+PASS yarn/2: 100 generated boards complete through legal input
+PASS sand/0: 100 generated boards complete through legal input
+PASS sand/1: 100 generated boards complete through legal input
+PASS sand/2: 100 generated boards complete through legal input
+PASS untangle/0: 100 generated boards complete through legal input
+PASS untangle/1: 100 generated boards complete through legal input
+PASS untangle/2: 100 generated boards complete through legal input
+PASS matching paths support zero, one and two turns including the outside border
+PASS mahjong checks coverage and both side neighbors; shuffle preserves removed tiles
+PASS group clear rejects singletons and compacts down then left with squared scoring
+PASS drop pairs cascade after gravity and reject full columns
+PASS bus capacity respects FIFO, waits on other colors, and undo restores dispatch
+PASS yarn reels reject other colors, collect runs, finish at eight and undo
+PASS sand vacuum obeys selected color and can capacity, preserves every grain and undo
+PASS untangle counts crossing/touching edges, rejects node collapse, and undo covers a drag
+PASS new sorting and matching saves reject corrupted conservation and graph topology
+PASS untangle ends the drag on background/exit and cannot move through a stale selection
+PASS extreme random sources create playable matching and sorting boards
+336/336 expansion checks passed
