@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-03",
+  "target": "FMR0224521016052",
+  "packageSha256": "b9225c031f7e629d350a5ce41ba7368b9be7abf0f2d366c4423731e43d83c1b9",
+  "resourceChecks": "7/7",
+  "checks": [
+    {
+      "id": "light-featured",
+      "passed": true,
+      "evidence": "light-featured.jpeg"
+    },
+    {
+      "id": "light-profile",
+      "passed": true,
+      "evidence": "light-profile.jpeg"
+    },
+    {
+      "id": "light-category",
+      "passed": true,
+      "evidence": "light-category.jpeg"
+    },
+    {
+      "id": "dark-category",
+      "passed": true,
+      "evidence": "dark-category.jpeg"
+    },
+    {
+      "id": "dark-featured",
+      "passed": true,
+      "evidence": "dark-featured.jpeg"
+    },
+    {
+      "id": "dark-profile",
+      "passed": true,
+      "evidence": "dark-profile.jpeg"
+    },
+    {
+      "id": "restore-theme",
+      "passed": true,
+      "evidence": "settings-restore.jpeg"
+    }
+  ],
+  "originalTheme": "跟随系统"
+}

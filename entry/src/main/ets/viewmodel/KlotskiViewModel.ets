@@ -8,6 +8,7 @@
 import { GameDifficulty, GameStatus } from '../common/GameConstants';
 import { ContinuationValidation as V } from '../common/GameSessionTransfer';
 import { GameDataManager } from '../model/GameData';
+import { GameSoundEvent, gameSound } from '../common/GameSound';
 import { GameLifecycleObserver } from '../common/GameLifecycleBus';
 import { KlotskiBlock, KlotskiRules } from '../model/game/KlotskiModel';
 
@@ -64,7 +65,8 @@ export class KlotskiViewModel implements GameLifecycleObserver {
   private rules: KlotskiRules = new KlotskiRules(BW, BH);
 
   startGame(): void {
-    GameDataManager.incrementPlayCount(GAME_ID);
+    gameSound.stop(GAME_ID);
+    GameDataManager.recordGamePlayed(GAME_ID);
     this.blocks = this.rules.layout(this.difficulty);
     this.grid = this.rules.buildGrid(this.blocks);
     this.stepCount = 0;
@@ -95,9 +97,11 @@ export class KlotskiViewModel implements GameLifecycleObserver {
     this.blocks = this.rules.apply(this.blocks, this.selId, dx, dy);
     this.grid = this.rules.buildGrid(this.blocks);
     this.stepCount++;
+    gameSound.play(GAME_ID);
     this.syncPieceViews();
     const moved = this.rules.find(this.blocks, this.selId);
     if (moved && this.rules.isWin(moved)) {
+      gameSound.play(GAME_ID, GameSoundEvent.WIN);
       this.status = GameStatus.OVER;
       // 步数越少得分越高
       GameDataManager.updateHighScore(GAME_ID, this.rules.score(this.stepCount));
@@ -155,6 +159,7 @@ export class KlotskiViewModel implements GameLifecycleObserver {
 
   // —— GameLifecycleObserver（完成才计分、无定时器：切后台无需暂停/结算）——
   onAppHidden(): void {
+    gameSound.stop(GAME_ID);
   }
 
   onAppShown(): void {
@@ -169,7 +174,7 @@ export class KlotskiViewModel implements GameLifecycleObserver {
   requestBack(): boolean {
     if (!GameDataManager.getSetting('confirmExitEnabled', true)) { return false; }
     if (this.status === GameStatus.PLAYING) {
-      this.confirmExit = true;
+      gameSound.stop(GAME_ID); this.confirmExit = true;
       return true;
     }
     return false;
@@ -182,6 +187,10 @@ export class KlotskiViewModel implements GameLifecycleObserver {
   /** 页面销毁：无定时器可停（保持全部 VM 的 dispose 形态统一） */
   dispose(): void {
   }
+
+  isPlayTimeActive(): boolean { return this.status === GameStatus.PLAYING && !this.confirmExit; }
+
+  hasProgress(): boolean { return this.status !== GameStatus.OVER && this.stepCount > 0; }
 
   continuationGameId(): string { return GAME_ID; }
 

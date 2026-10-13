@@ -21,6 +21,7 @@ export const PLAYABLE_EXPANSION_IDS: string[] = ['blockfit', 'tilestack', 'bubbl
 
 export class ExpansionModel {
   state: ExpansionState = new ExpansionState();
+  deferComputerTurns: boolean = false;
   puzzle: ExpansionPuzzle;
   physics: ExpansionPhysics;
   adventure: ExpansionAdventure;
@@ -67,7 +68,7 @@ export class ExpansionModel {
     if (this.state.id === 'runner') { this.adventure.tap(this.state, index); return; }
     const previous: string = JSON.stringify(this.state);
     if (BRAIN_IDS.includes(this.state.id)) { this.brain.tap(this.state, index); } else if (LIFE_IDS.includes(this.state.id)) { this.life.tap(this.state, index);
-    } else if (CHESS_IDS.includes(this.state.id)) { this.chess.tap(this.state, index); } else if (POKER_IDS.includes(this.state.id)) { this.poker.tap(this.state, index); } else if (CARD_IDS.includes(this.state.id)) { this.cards.tap(this.state, index);
+    } else if (CHESS_IDS.includes(this.state.id)) { this.chess.tap(this.state, index, !this.deferComputerTurns); } else if (POKER_IDS.includes(this.state.id)) { this.poker.tap(this.state, index, !this.deferComputerTurns); } else if (CARD_IDS.includes(this.state.id)) { this.cards.tap(this.state, index, !this.deferComputerTurns);
     } else if (ACTION_IDS.includes(this.state.id)) { this.actionGames.tap(this.state, index); } else if (SPORTS_IDS.includes(this.state.id)) { this.sports.tap(this.state, index);
     } else if (MATCHING_IDS.includes(this.state.id)) { this.matching.tap(this.state, index); } else if (SORTING_IDS.includes(this.state.id)) { this.sorting.tap(this.state, index);
     } else if (this.isTable()) { this.table.tap(this.state, index); } else if (this.isAdventure()) { this.adventure.tap(this.state, index); } else { this.puzzle.tap(this.state, index); }
@@ -112,8 +113,30 @@ export class ExpansionModel {
     } else if (this.isArcade()) { this.arcade.step(this.state, dt); } else if (this.isAdventure()) { this.adventure.step(this.state, dt); } else { this.physics.step(this.state, dt); }
   }
   canUndo(): boolean { return this.history.length > 0 && this.state.outcome === 0; }
+  needsComputerTurn(): boolean {
+    if (this.state.outcome !== 0) { return false; }
+    if (CHESS_IDS.includes(this.state.id)) { return this.chess.needsComputerTurn(this.state); }
+    if (POKER_IDS.includes(this.state.id)) { return this.poker.needsComputerTurn(this.state); }
+    if (this.state.id === 'mahjong' || this.state.id === 'ludo') { return this.cards.needsComputerTurn(this.state); }
+    return false;
+  }
+  computerPlayer(): number {
+    return this.state.id === 'ludo' ? this.state.next : this.state.id === 'mahjong' ? this.state.next + 1 : this.state.cursor + 1;
+  }
+  computerTurn(): void {
+    if (!this.needsComputerTurn()) { return; }
+    if (CHESS_IDS.includes(this.state.id)) { this.chess.computerTurn(this.state); }
+    else if (POKER_IDS.includes(this.state.id)) { this.poker.computerTurn(this.state); }
+    else { this.cards.computerTurn(this.state); }
+  }
   undo(): void { if (this.canUndo()) { this.state = JSON.parse(this.history.pop() ?? '') as ExpansionState; } }
-  restore(s: ExpansionState): void { this.state = s; this.history = []; }
+  restore(s: ExpansionState): void {
+    // Older automatic Mahjong snapshots kept next=1 after drawing for the human.
+    // A pending computer turn instead leaves the human one tile short.
+    if (s.id === 'mahjong' && s.outcome === 0 && s.data[0] === 0 && s.next !== 0 &&
+      s.piles[0].cards.length === 14 - s.data[4] * 3) { s.next = 0; }
+    this.state = s; this.history = [];
+  }
 
   valid(s: ExpansionState): boolean {
     if (s === null || !PLAYABLE_EXPANSION_IDS.includes(s.id) || s.id !== this.state.id || !V.integer(s.level, 0, 2) ||

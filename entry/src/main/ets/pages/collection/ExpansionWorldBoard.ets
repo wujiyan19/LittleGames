@@ -1,4 +1,5 @@
 import { ExpansionViewModel } from '../../viewmodel/ExpansionViewModel';
+import { ExpansionRenderPiece } from '../../viewmodel/ExpansionRenderPiece';
 import { ExpansionPiece } from '../../model/game/ExpansionState';
 import { SemanticColors, FontTokens, SpacingTokens, RadiusTokens } from '../../common/DesignTokens';
 import { range } from '../../common/Range';
@@ -92,29 +93,29 @@ export struct ExpansionWorldBoard {
       }
       if (this.gameId === 'drift') {
         ForEach(range(10), (i: number) => {
-          Line().width('100%').height('100%').startPoint(this.roadPoint(i, -1)).endPoint(this.roadPoint(i + 1, -1)).strokeWidth(4).stroke(SemanticColors.border).hitTestBehavior(HitTestMode.None)
-          Line().width('100%').height('100%').startPoint(this.roadPoint(i, 1)).endPoint(this.roadPoint(i + 1, 1)).strokeWidth(4).stroke(SemanticColors.border).hitTestBehavior(HitTestMode.None)
+          Line().width('100%').height('100%').startPoint(this.roadPoint(i, -1)).endPoint(this.roadPoint(i + 1, -1)).strokeWidth(4).stroke($r('app.color.expansion_road_edge')).hitTestBehavior(HitTestMode.None)
+          Line().width('100%').height('100%').startPoint(this.roadPoint(i, 1)).endPoint(this.roadPoint(i + 1, 1)).strokeWidth(4).stroke($r('app.color.expansion_road_edge')).hitTestBehavior(HitTestMode.None)
         }, (i: number) => i.toString())
       }
-      ForEach(this.vm.state.pieces, (p: ExpansionPiece) => {
-        if (p.kind === 29) {
-          Image($r('app.media.exp_gate')).objectFit(ImageFit.Fill).width(p.w * this.arenaScale()).height((p.y - p.h / 2) * this.arenaScale()).scale({ y: -1 })
-            .translate({ x: (p.x - p.w / 2) * this.arenaScale() }).hitTestBehavior(HitTestMode.None)
-          Image($r('app.media.exp_gate')).objectFit(ImageFit.Fill).width(p.w * this.arenaScale()).height((460 - p.y - p.h / 2) * this.arenaScale())
-            .translate({ x: (p.x - p.w / 2) * this.arenaScale(), y: (p.y + p.h / 2) * this.arenaScale() }).hitTestBehavior(HitTestMode.None)
+      ForEach(this.vm.worldPieces, (rendered: ExpansionRenderPiece) => {
+        if (rendered.piece.kind === 29) {
+          Image($r('app.media.exp_gate')).objectFit(ImageFit.Fill).width(rendered.piece.w * this.arenaScale()).height((rendered.piece.y - rendered.piece.h / 2) * this.arenaScale()).scale({ y: -1 })
+            .translate({ x: (rendered.piece.x - rendered.piece.w / 2) * this.arenaScale() }).hitTestBehavior(HitTestMode.None)
+          Image($r('app.media.exp_gate')).objectFit(ImageFit.Fill).width(rendered.piece.w * this.arenaScale()).height((460 - rendered.piece.y - rendered.piece.h / 2) * this.arenaScale())
+            .translate({ x: (rendered.piece.x - rendered.piece.w / 2) * this.arenaScale(), y: (rendered.piece.y + rendered.piece.h / 2) * this.arenaScale() }).hitTestBehavior(HitTestMode.None)
         } else {
-          Image(ExpansionArt.piece(this.gameId, p)).width(this.pieceWidth(p) * this.arenaScale()).height(this.pieceHeight(p) * this.arenaScale())
-            .objectFit(p.kind === 25 || p.kind === 26 || p.kind === 39 ? ImageFit.Fill : ImageFit.Contain)
-            .rotate({ angle: p.kind === 36 && this.gameId === 'hillclimb' ? Math.atan2(this.vm.terrain(p.x + 8) - this.vm.terrain(p.x - 8), 16) * 180 / Math.PI + 90 : p.kind === 33 && this.gameId === 'tanks' ? 180 : 0 })
-            .translate({ x: this.pieceX(p) * this.arenaScale(), y: this.pieceY(p) * this.arenaScale() }).hitTestBehavior(HitTestMode.None)
+          Image(ExpansionArt.piece(this.gameId, rendered.piece)).width(this.pieceWidth(rendered.piece) * this.arenaScale()).height(this.pieceHeight(rendered.piece) * this.arenaScale())
+            .objectFit(rendered.piece.kind === 25 || rendered.piece.kind === 26 || rendered.piece.kind === 39 ? ImageFit.Fill : ImageFit.Contain)
+            .rotate({ angle: rendered.piece.kind === 36 && this.gameId === 'hillclimb' ? Math.atan2(this.vm.terrain(rendered.piece.x + 8) - this.vm.terrain(rendered.piece.x - 8), 16) * 180 / Math.PI + 90 : rendered.piece.kind === 33 && this.gameId === 'tanks' ? 180 : 0 })
+            .translate({ x: this.pieceX(rendered.piece) * this.arenaScale(), y: this.pieceY(rendered.piece) * this.arenaScale() }).hitTestBehavior(HitTestMode.None)
         }
-      }, (p: ExpansionPiece) => p.id.toString())
+      }, (rendered: ExpansionRenderPiece) => rendered.id.toString())
       if (this.gameId === 'grapple' && this.vm.state.selected >= 0) {
-        ForEach(this.vm.state.pieces.filter((p: ExpansionPiece) => p.id === this.vm.state.selected), (anchor: ExpansionPiece) => {
-          Line().width('100%').height('100%').startPoint([(anchor.x - this.camera()) * this.arenaScale(), anchor.y * this.arenaScale()])
+        ForEach(this.vm.worldPieces.filter((rendered: ExpansionRenderPiece) => rendered.id === this.vm.state.selected), (anchor: ExpansionRenderPiece) => {
+          Line().width('100%').height('100%').startPoint([(anchor.piece.x - this.camera()) * this.arenaScale(), anchor.piece.y * this.arenaScale()])
             .endPoint([(this.vm.state.pieces[0].x - this.camera()) * this.arenaScale(), this.vm.state.pieces[0].y * this.arenaScale()])
             .strokeWidth(2).stroke(SemanticColors.primary).hitTestBehavior(HitTestMode.None)
-        }, (anchor: ExpansionPiece) => anchor.id.toString())
+        }, (anchor: ExpansionRenderPiece) => anchor.id.toString())
       }
     }.width('100%').aspectRatio(360 / 460).clip(true).backgroundColor(SemanticColors.boardBg).backgroundImage(ExpansionArt.board(this.gameId)).backgroundImageSize({ width: '100%', height: '100%' }).borderRadius(RadiusTokens.base)
       .onAreaChange((oldArea: Area, area: Area) => { this.measure(area); }).onTouch((event: TouchEvent) => { this.touch(event); })
@@ -160,8 +161,10 @@ export struct ExpansionWorldBoard {
       }.width('100%').height($r('app.float.art_banner_height')).clip(true).borderRadius(RadiusTokens.base).hitTestBehavior(HitTestMode.None)
       Progress({ value: this.vm.state.data[0], total: 100, type: ProgressType.Linear }).width('100%').color(SemanticColors.primary)
       Row({ space: SpacingTokens.sm }) {
-        Button($r('app.string.expansion_player', 1)).layoutWeight(1).height($r('app.float.expansion_control_height')).onClick(() => { this.vm.tap(0); })
-        Button($r('app.string.expansion_player', 2)).layoutWeight(1).height($r('app.float.expansion_control_height')).onClick(() => { this.vm.tap(1); })
+        Button($r('app.string.expansion_player', 1)).layoutWeight(1).height($r('app.float.expansion_control_height'))
+          .onClick(() => { this.vm.tap(0); })
+        Button($r('app.string.expansion_player', 2)).layoutWeight(1).height($r('app.float.expansion_control_height'))
+          .onClick(() => { this.vm.tap(1); })
       }.width('100%')
     }.width('100%')
   }

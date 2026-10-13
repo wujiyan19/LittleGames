@@ -3,6 +3,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const assert = require('node:assert/strict');
+const artStyle = require('./game-art-palette.cjs');
 const root = path.resolve(__dirname, '..');
 const classic = ['snake','tetris','2048','whackmole','minesweeper','jumpjump','brickbreaker',
   'sudoku','slidepuzzle','klotski','guessnumber','memorycard','match3'];
@@ -16,7 +17,6 @@ const ellipse = (x,y,rx,ry,fill,opacity=1) => `<ellipse cx="${x}" cy="${y}" rx="
 const line = (d,stroke,width=3,opacity=1) => `<path d="${d}" fill="none" stroke="${stroke}" stroke-width="${width}" stroke-linecap="round" stroke-linejoin="round" opacity="${opacity}"/>`;
 const shape = (d,fill,stroke='none',width=2) => `<path d="${d}" fill="${fill}" stroke="${stroke}" stroke-width="${width}" stroke-linejoin="round"/>`;
 const group = (body,x=0,y=0,s=1,angle=0) => `<g transform="translate(${x} ${y}) scale(${s}) rotate(${angle} 50 50)">${body}</g>`;
-const gradient = (id,a,b) => `<linearGradient id="${id}" x1="0" y1="0" x2=".25" y2="1"><stop stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient>`;
 const writeChanged = (file,contents) => {
   if(fs.existsSync(file)&&fs.readFileSync(file,'utf8')===contents)return;
   fs.writeFileSync(file,contents);
@@ -27,12 +27,8 @@ function generate() {
   const strings = JSON.parse(fs.readFileSync(path.join(root,'entry/src/main/resources/zh_CN/element/string.json'))).string;
   for (const theme of ['base','dark']) {
     const dark = theme === 'dark';
-    const p = {ink:dark?'#DAE8FF':'#304A69',edge:dark?'#516884':'#9CB7D0',low:dark?'#1C2B42':'#DCE8F1',
-      paper:dark?'#30445F':'#FFFAF0',wood:dark?'#6C4F3C':'#D5AC7C',blue:'#438ADF',coral:'#EB857C',gold:'#EABB63',mint:'#6CBFA4',violet:'#9988D3'};
-    const defs = gradient('paper',p.paper,p.low)+gradient('blue','#9AD2F7','#397ACB')+gradient('coral','#FFC0A5','#CF645F')+
-      gradient('gold','#FFE7AD','#D7A04A')+gradient('mint','#B7EACD','#4D9E85')+gradient('violet','#DCD2FA','#8470C2')+
-      gradient('cyan','#B8EDF1','#4AA3BF')+gradient('wood',dark?'#9F7754':'#F0D1A2',p.wood)+gradient('metal','#DBEAF2','#6386A8')+
-      gradient('ink','#62788E','#20364F')+gradient('ivory','#FFF8E7','#C9D8E6');
+    const p = artStyle.palette(theme);
+    const defs = artStyle.gradients(theme);
     const tile = (x,y,w,h,color='paper',r=7) => rect(x,y+3,w,h,r,p.edge)+rect(x,y,w,h,r,'url(#'+color+')',p.edge)+line(`M${x+7} ${y+5}H${x+w-7}`,'#FFFFFF',2,.5);
     const asset = name => {
       const svg = fs.readFileSync(path.join(root,`entry/src/main/resources/${theme}/media/exp_${name}.svg`),'utf8');
@@ -146,7 +142,20 @@ function generate() {
     scenes.doudizhu=group(cardFace('coral'),2,1,.77,-9)+small('tile_4',57,52,.45);
     scenes.guandan=group(cardFace('blue'),2,1,.77,-9)+group(cardFace('gold'),40,32,.56,7);
     scenes.mahjong=group(asset('mahjong'),-3,0,.78,-7)+group(asset('mahjong'),42,27,.62,7)+[46,58,70].map(x=>circle(x,60,3,p.mint)).join('');
-    scenes.xiangqi=asset('chip')+line('M32 30H68M37 41H63M50 30V67M32 68H68M38 51L31 63M62 51L69 63',p.coral,4);
+    // Xiangqi uses an actual river-separated board and red/black general pieces.
+    // Draw the simplified 帅 / 将 as geometry so small icons never depend on a font.
+    const xiangqiGrid=dark?'#D6AD74':'#8E5B3A';
+    const xiangqiRed='#B64035',xiangqiBlack='#26364B';
+    const xiangqiPiece=(x,y,r,color,glyph,s)=>circle(x,y+3,r,'#A9733F')+
+      circle(x,y,r,'url(#gold)','#A9733F',1.5)+circle(x,y,r-3,'#FFF2D7')+
+      circle(x,y,r-6,'none',color,1.8)+group(line(glyph,color,3.4),x,y,s);
+    const marshalGlyph='M-14 -12V6M-7 -14V0Q-7 12 -14 17M1 -8H17V12Q17 15 13 15M1 -8V14M9 -16V18';
+    const generalGlyph='M-11 -16V18M-19 -9L-14 -4M-19 9L-14 4M-1 -16L-7 -7M-3 -11H15L8 -3L-1 1M0 -7L4 -4M-6 6H17M8 3V17Q8 19 3 19M-1 10L2 14';
+    scenes.xiangqi=tile(8,7,84,86,'wood',9)+
+      line('M18 15H82V88H18ZM18 23H82M18 31H82M18 39H82M18 47H82M18 56H82M18 64H82M18 72H82M18 80H82',xiangqiGrid,1.3,.75)+
+      [26,34,42,50,58,66,74].map(x=>line(`M${x} 15V47M${x} 56V88`,xiangqiGrid,1.3,.75)).join('')+
+      line('M42 15L58 31M58 15L42 31M42 72L58 88M58 72L42 88',xiangqiGrid,1.4,.8)+
+      xiangqiPiece(74,31,21,xiangqiBlack,generalGlyph,.72)+xiangqiPiece(35,64,28,xiangqiRed,marshalGlyph,1);
     scenes.chess=group(asset('chess_0_1'),4,1,.88)+small('chess_1_5',56,54,.42);
     scenes.ludo=group(asset('plane'),-2,5,.82,45)+small('tile_2',59,59,.38);
     scenes.solitaire=group(asset('card_back'),4,2,.8,-8)+small('tile_1',55,55,.45);

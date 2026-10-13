@@ -1,0 +1,49 @@
+{
+  "mediaChanged": [
+    {
+      "path": "entry/src/main/resources/base/media/exp_board_tug.svg",
+      "beforeSha256": "999a6fcefff635b31da284e1235129f72fea38d0a01b358b311aa81c2990243e",
+      "afterSha256": "0934f8ccd89d4f2485c63678245003e672e4e5fdd7f40cd7a335b7f8f9b08224"
+    },
+    {
+      "path": "entry/src/main/resources/base/media/exp_cueball.svg",
+      "beforeSha256": "75d02149bb5aed3d35f3b40a2f6cba733d637ce8e0856c5b37ad9fc4787b3ad7",
+      "afterSha256": "27c750b925f29c7c827e8045ed071c813880a331b984ed2eaed14881ba885aa4"
+    },
+    {
+      "path": "entry/src/main/resources/base/media/exp_pin.svg",
+      "beforeSha256": "1085242b1c445d22a4c16a8602d2e78503097c373858e5b51f6021327fe947d5",
+      "afterSha256": "642eaa4c4531a238a09b3523345e975a23d48a9c2c136b6de89b89472d6f4777"
+    },
+    {
+      "path": "entry/src/main/resources/dark/media/exp_board_tug.svg",
+      "beforeSha256": "2129216c62616a8bff3c984a09c847cefa48fc3bfcc0a47132fcf70e1a938e5b",
+      "afterSha256": "0a0641288f90a8946259bb008f645097b84001f9aa3f5fbef85befaa6e8caaac"
+    },
+    {
+      "path": "entry/src/main/resources/dark/media/exp_cueball.svg",
+      "beforeSha256": "68b276df13e48afceeb0f0f422ab697225abf394521bcd674daa6f356c0519f4",
+      "afterSha256": "0d050ff4450456447181f5f0f5c4a755fad7722669bb63d933f1981dddfca1d8"
+    },
+    {
+      "path": "entry/src/main/resources/dark/media/exp_pin.svg",
+      "beforeSha256": "4a2f7256e80ee0af1f7f9d8f60238c7cf88a969dee60377f91bebc05b63c1448",
+      "afterSha256": "7565e83639ad670e6966feb6707bcfe11344e3e269ea2d91a1569a3a9e29c3fc"
+    }
+  ],
+  "hap": [
+    {
+      "path": "E:\\lianxi\\LittleGames\\entry\\build\\default\\outputs\\default\\entry-default-signed.hap",
+      "beforeSha256": "e14b33644f6a0f72964c96e56f0a692c70680db11437152601f9a241e4911757",
+      "afterSha256": "e14b33644f6a0f72964c96e56f0a692c70680db11437152601f9a241e4911757",
+      "unchanged": true
+    },
+    {
+      "path": "E:\\lianxi\\LittleGames\\entry\\build\\default\\outputs\\default\\entry-default-unsigned.hap",
+      "beforeSha256": "a8a1b8802a45f6802a955b9e85f30a04cb959d5f125b003e8f6b66b5f43ab7e6",
+      "afterSha256": "a8a1b8802a45f6802a955b9e85f30a04cb959d5f125b003e8f6b66b5f43ab7e6",
+      "unchanged": true
+    }
+  ],
+  "deviceAcceptance": "pending; local asset previews only"
+}

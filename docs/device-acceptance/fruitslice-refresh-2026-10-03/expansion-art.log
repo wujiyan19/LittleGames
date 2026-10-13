@@ -1,0 +1,8 @@
+PASS all 100 game icons exist, with 67 complete dedicated gameplay resource mappings
+PASS every generated SVG is self-contained with valid local paint references
+PASS all media references resolve and new strings cover every locale
+PASS legal scoring produces one gain burst; invalid input produces none
+PASS wrong answers produce an error burst; undo and restart clear transient feedback
+PASS pause, background, exit confirmation and disposal disable feedback
+PASS continuation restores gameplay without replaying a score burst; terminal state disables effects
+7/7 art and feedback checks passed

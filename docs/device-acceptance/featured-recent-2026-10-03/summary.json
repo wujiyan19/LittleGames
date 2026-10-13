@@ -1,0 +1,80 @@
+{
+  "date": "2026-10-03",
+  "target": "FMR0224521016052",
+  "packageSha256": "1aa6c7469253bcf8c43c4874f138e1efb850feb9725726b83b56b0fb02f893f9",
+  "regression": "159/159",
+  "checks": [
+    {
+      "id": "light-display-scroll",
+      "passed": true,
+      "recentIds": [
+        "recent_game_tictactoe",
+        "recent_game_xiangqi",
+        "recent_game_billiards",
+        "recent_game_guandan",
+        "recent_game_snake"
+      ],
+      "evidence": [
+        "final-light-start.jpeg",
+        "final-light-scrolled.jpeg"
+      ]
+    },
+    {
+      "id": "light-open-return-reset",
+      "passed": true,
+      "latestId": "recent_game_billiards",
+      "left": 52,
+      "evidence": [
+        "final-light-game.jpeg",
+        "final-light-return.jpeg"
+      ]
+    },
+    {
+      "id": "dark-display-scroll",
+      "passed": true,
+      "recentIds": [
+        "recent_game_billiards",
+        "recent_game_tictactoe",
+        "recent_game_xiangqi",
+        "recent_game_guandan",
+        "recent_game_snake"
+      ],
+      "evidence": [
+        "final-dark-start.jpeg",
+        "final-dark-scrolled.jpeg"
+      ]
+    },
+    {
+      "id": "dark-open-return-reset",
+      "passed": true,
+      "latestId": "recent_game_xiangqi",
+      "left": 52,
+      "evidence": [
+        "final-dark-game.jpeg",
+        "final-dark-return.jpeg"
+      ]
+    },
+    {
+      "id": "restore-theme",
+      "passed": true,
+      "originalTheme": "跟随系统",
+      "evidence": [
+        "settings-restore.jpeg",
+        "final-restored-featured.jpeg"
+      ]
+    },
+    {
+      "id": "cold-start-history",
+      "passed": true,
+      "visibleIds": [
+        "recent_game_xiangqi",
+        "recent_game_billiards",
+        "recent_game_tictactoe",
+        "recent_game_guandan"
+      ],
+      "evidence": [
+        "final-relaunched-featured.jpeg"
+      ]
+    }
+  ]
+}

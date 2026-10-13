@@ -1,0 +1,364 @@
+{
+  "date": "2026-10-03",
+  "target": "FMR0224521016052",
+  "packageSha256": "112246a3ba272f6f97588e312c009910b3f304c689feb84d0cf2cf495a33cf93",
+  "checks": [
+    {
+      "id": "light-win-modal",
+      "behavior": "Winning result appears; scrim prevents covered restart controls receiving taps",
+      "evidence": [
+        "light-win.jpeg",
+        "light-win-blocked.jpeg",
+        "light-win-entry-0.jpeg",
+        "light-win-entry-1.jpeg",
+        "light-win-entry-2.jpeg",
+        "light-win-entry-3.jpeg",
+        "light-win-entry-4.jpeg",
+        "light-win-entry-5.jpeg",
+        "light-win-entry-6.jpeg"
+      ],
+      "at": "2026-10-03T11:03:58.171Z"
+    },
+    {
+      "id": "light-double-restart",
+      "behavior": "Double tapping result restart closes once and leaves an empty zero-move board",
+      "evidence": [
+        "light-double-restart.jpeg"
+      ],
+      "at": "2026-10-03T11:04:02.063Z"
+    },
+    {
+      "id": "light-result-variants",
+      "behavior": "Player 2 win and draw both settle, close and restart correctly",
+      "evidence": [
+        "light-player2-win.jpeg",
+        "light-draw.jpeg"
+      ],
+      "at": "2026-10-03T11:04:18.774Z"
+    },
+    {
+      "id": "light-exit-modal",
+      "behavior": "Exit opens/cancels 3 times, double cancel preserves progress, confirm returns to catalog",
+      "evidence": [
+        "light-exit-2.jpeg",
+        "light-exit-return.jpeg",
+        "light-exit-out-0.jpeg",
+        "light-exit-out-1.jpeg",
+        "light-exit-out-2.jpeg",
+        "light-exit-out-3.jpeg",
+        "light-exit-out-4.jpeg",
+        "light-exit-out-5.jpeg",
+        "light-exit-out-6.jpeg"
+      ],
+      "at": "2026-10-03T11:04:44.275Z"
+    },
+    {
+      "id": "light-direction-press",
+      "behavior": "Native direction button press and cancellation restore bounds while paused",
+      "evidence": [
+        "light-direction-held.jpeg",
+        "light-direction-released.jpeg"
+      ],
+      "before": [
+        318,
+        2200,
+        500,
+        2356
+      ],
+      "during": [
+        319,
+        2201,
+        498,
+        2354
+      ],
+      "after": [
+        318,
+        2200,
+        500,
+        2356
+      ],
+      "widthRatio": 0.9835164835164835,
+      "at": "2026-10-03T11:06:29.746Z"
+    },
+    {
+      "id": "light-pause-loss-restart",
+      "behavior": "Pause/resume works; natural wall collision settles and restart recovers a live board",
+      "evidence": [
+        "light-snake-paused.jpeg",
+        "light-loss.jpeg",
+        "light-loss-restart.jpeg"
+      ],
+      "at": "2026-10-03T11:06:42.012Z"
+    },
+    {
+      "id": "dark-win-modal",
+      "behavior": "Winning result appears; scrim prevents covered restart controls receiving taps",
+      "evidence": [
+        "dark-win.jpeg",
+        "dark-win-blocked.jpeg",
+        "dark-win-entry-0.jpeg",
+        "dark-win-entry-1.jpeg",
+        "dark-win-entry-2.jpeg",
+        "dark-win-entry-3.jpeg",
+        "dark-win-entry-4.jpeg",
+        "dark-win-entry-5.jpeg",
+        "dark-win-entry-6.jpeg"
+      ],
+      "at": "2026-10-03T11:07:22.030Z"
+    },
+    {
+      "id": "dark-double-restart",
+      "behavior": "Double tapping result restart closes once and leaves an empty zero-move board",
+      "evidence": [
+        "dark-double-restart.jpeg"
+      ],
+      "at": "2026-10-03T11:07:26.034Z"
+    },
+    {
+      "id": "dark-result-variants",
+      "behavior": "Player 2 win and draw both settle, close and restart correctly",
+      "evidence": [
+        "dark-player2-win.jpeg",
+        "dark-draw.jpeg"
+      ],
+      "at": "2026-10-03T11:07:43.148Z"
+    },
+    {
+      "id": "dark-exit-modal",
+      "behavior": "Exit opens/cancels 3 times, double cancel preserves progress, confirm returns to catalog",
+      "evidence": [
+        "dark-exit-2.jpeg",
+        "dark-exit-return.jpeg",
+        "dark-exit-out-0.jpeg",
+        "dark-exit-out-1.jpeg",
+        "dark-exit-out-2.jpeg",
+        "dark-exit-out-3.jpeg",
+        "dark-exit-out-4.jpeg",
+        "dark-exit-out-5.jpeg",
+        "dark-exit-out-6.jpeg"
+      ],
+      "at": "2026-10-03T11:08:09.214Z"
+    },
+    {
+      "id": "dark-direction-press",
+      "behavior": "Native direction button press and cancellation restore bounds while paused",
+      "evidence": [
+        "dark-direction-held.jpeg",
+        "dark-direction-released.jpeg"
+      ],
+      "before": [
+        318,
+        2200,
+        500,
+        2356
+      ],
+      "during": [
+        319,
+        2201,
+        498,
+        2354
+      ],
+      "after": [
+        318,
+        2200,
+        500,
+        2356
+      ],
+      "widthRatio": 0.9835164835164835,
+      "at": "2026-10-03T11:08:44.623Z"
+    },
+    {
+      "id": "dark-pause-loss-restart",
+      "behavior": "Pause/resume works; natural wall collision settles and restart recovers a live board",
+      "evidence": [
+        "dark-snake-paused.jpeg",
+        "dark-loss.jpeg",
+        "dark-loss-restart.jpeg"
+      ],
+      "at": "2026-10-03T11:08:56.933Z"
+    }
+  ],
+  "motionSamples": [
+    {
+      "tag": "light-win-entry",
+      "source": "real device snapshots during UI input; timestamps include capture overhead",
+      "samples": [
+        {
+          "file": "light-win-entry-0.jpeg",
+          "requestMs": 5,
+          "completionMs": 298
+        },
+        {
+          "file": "light-win-entry-1.jpeg",
+          "requestMs": 432,
+          "completionMs": 759
+        },
+        {
+          "file": "light-win-entry-2.jpeg",
+          "requestMs": 892,
+          "completionMs": 1424
+        },
+        {
+          "file": "light-win-entry-3.jpeg",
+          "requestMs": 1556,
+          "completionMs": 2134
+        },
+        {
+          "file": "light-win-entry-4.jpeg",
+          "requestMs": 2266,
+          "completionMs": 2818
+        },
+        {
+          "file": "light-win-entry-5.jpeg",
+          "requestMs": 2955,
+          "completionMs": 3485
+        },
+        {
+          "file": "light-win-entry-6.jpeg",
+          "requestMs": 3617,
+          "completionMs": 4124
+        }
+      ]
+    },
+    {
+      "tag": "light-exit-out",
+      "source": "real device snapshots during UI input; timestamps include capture overhead",
+      "samples": [
+        {
+          "file": "light-exit-out-0.jpeg",
+          "requestMs": 5,
+          "completionMs": 416
+        },
+        {
+          "file": "light-exit-out-1.jpeg",
+          "requestMs": 542,
+          "completionMs": 929
+        },
+        {
+          "file": "light-exit-out-2.jpeg",
+          "requestMs": 1058,
+          "completionMs": 1595
+        },
+        {
+          "file": "light-exit-out-3.jpeg",
+          "requestMs": 1727,
+          "completionMs": 2245
+        },
+        {
+          "file": "light-exit-out-4.jpeg",
+          "requestMs": 2375,
+          "completionMs": 2864
+        },
+        {
+          "file": "light-exit-out-5.jpeg",
+          "requestMs": 2982,
+          "completionMs": 3500
+        },
+        {
+          "file": "light-exit-out-6.jpeg",
+          "requestMs": 3630,
+          "completionMs": 4150
+        }
+      ]
+    },
+    {
+      "tag": "dark-win-entry",
+      "source": "real device snapshots during UI input; timestamps include capture overhead",
+      "samples": [
+        {
+          "file": "dark-win-entry-0.jpeg",
+          "requestMs": 8,
+          "completionMs": 357
+        },
+        {
+          "file": "dark-win-entry-1.jpeg",
+          "requestMs": 488,
+          "completionMs": 821
+        },
+        {
+          "file": "dark-win-entry-2.jpeg",
+          "requestMs": 951,
+          "completionMs": 1506
+        },
+        {
+          "file": "dark-win-entry-3.jpeg",
+          "requestMs": 1652,
+          "completionMs": 2178
+        },
+        {
+          "file": "dark-win-entry-4.jpeg",
+          "requestMs": 2307,
+          "completionMs": 2845
+        },
+        {
+          "file": "dark-win-entry-5.jpeg",
+          "requestMs": 2985,
+          "completionMs": 3527
+        },
+        {
+          "file": "dark-win-entry-6.jpeg",
+          "requestMs": 3667,
+          "completionMs": 4214
+        }
+      ]
+    },
+    {
+      "tag": "dark-exit-out",
+      "source": "real device snapshots during UI input; timestamps include capture overhead",
+      "samples": [
+        {
+          "file": "dark-exit-out-0.jpeg",
+          "requestMs": 6,
+          "completionMs": 448
+        },
+        {
+          "file": "dark-exit-out-1.jpeg",
+          "requestMs": 582,
+          "completionMs": 1025
+        },
+        {
+          "file": "dark-exit-out-2.jpeg",
+          "requestMs": 1164,
+          "completionMs": 1739
+        },
+        {
+          "file": "dark-exit-out-3.jpeg",
+          "requestMs": 1877,
+          "completionMs": 2367
+        },
+        {
+          "file": "dark-exit-out-4.jpeg",
+          "requestMs": 2509,
+          "completionMs": 3068
+        },
+        {
+          "file": "dark-exit-out-5.jpeg",
+          "requestMs": 3204,
+          "completionMs": 3724
+        },
+        {
+          "file": "dark-exit-out-6.jpeg",
+          "requestMs": 3862,
+          "completionMs": 4407
+        }
+      ]
+    }
+  ],
+  "completedStages": [
+    "dialogs light",
+    "controls light",
+    "dialogs dark",
+    "controls dark",
+    "restore"
+  ],
+  "settingsRestored": {
+    "theme": "跟随系统",
+    "toggles": [
+      "false",
+      "true",
+      "true"
+    ],
+    "verified": true
+  },
+  "finishedAt": "2026-10-03T11:10:09.001Z"
+}

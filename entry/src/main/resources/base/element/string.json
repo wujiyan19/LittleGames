@@ -1,5 +1,49 @@
 {
   "string": [
+    { "name": "home_daily_greeting", "value": "今日寄语" },
+    { "name": "home_daily_recommendation", "value": "今日推荐" },
+    { "name": "home_daily_subtitle", "value": "每天有新选择" },
+    { "name": "home_daily_refresh", "value": "换一批" },
+    { "name": "home_daily_refresh_a11y", "value": "换一批推荐游戏" },
+    { "name": "linerescue_draw_hint", "value": "先在小狗周围画一条保护线，再点击开始。线会固定，保护小狗10秒。" },
+    { "name": "daily_inspiration_01", "value": "愿你今天平安喜乐，万事顺意。" },
+    { "name": "daily_inspiration_02", "value": "慢慢来，每一步都算数。" },
+    { "name": "daily_inspiration_03", "value": "愿今天的小惊喜，刚好遇见你。" },
+    { "name": "daily_inspiration_04", "value": "给自己一点空闲，也给快乐留个位置。" },
+    { "name": "daily_inspiration_05", "value": "愿你手里有热茶，心里有期待。" },
+    { "name": "daily_inspiration_06", "value": "今天也值得被温柔对待。" },
+    { "name": "daily_inspiration_07", "value": "一局小快乐，送给认真生活的你。" },
+    { "name": "daily_inspiration_08", "value": "愿你遇见好事，也记得自己的好。" },
+    { "name": "daily_inspiration_09", "value": "休息不是停步，是为下一程蓄力。" },
+    { "name": "daily_inspiration_10", "value": "愿你的努力有回应，等待有结果。" },
+    { "name": "daily_inspiration_11", "value": "今天可以从一件小事的顺利开始。" },
+    { "name": "daily_inspiration_12", "value": "把烦恼放一放，给自己一个微笑。" },
+    { "name": "daily_inspiration_13", "value": "愿生活有趣，愿你常有笑意。" },
+    { "name": "daily_inspiration_14", "value": "不必急着赢，享受过程也很好。" },
+    { "name": "daily_inspiration_15", "value": "愿你眼里有光，脚下有路。" },
+    { "name": "daily_inspiration_16", "value": "小小的进步，也值得庆祝。" },
+    { "name": "daily_inspiration_17", "value": "愿今天的风，带来轻松的好心情。" },
+    { "name": "daily_inspiration_18", "value": "给忙碌按下暂停，快乐一会儿。" },
+    { "name": "daily_inspiration_19", "value": "愿你所遇皆暖，所行皆坦。" },
+    { "name": "daily_inspiration_20", "value": "这一刻，允许自己轻松一点。" },
+    { "name": "daily_inspiration_21", "value": "愿你有重新开始的勇气，也有从容的耐心。" },
+    { "name": "daily_inspiration_22", "value": "让今天多一点好奇，少一点着急。" },
+    { "name": "daily_inspiration_23", "value": "愿你的日子，藏着许多小确幸。" },
+    { "name": "daily_inspiration_24", "value": "认真玩一局，轻轻松一口气。" },
+    { "name": "daily_inspiration_25", "value": "愿你忙有所获，闲有所乐。" },
+    { "name": "daily_inspiration_26", "value": "不需要完美，也可以拥有美好的一天。" },
+    { "name": "daily_inspiration_27", "value": "愿你心里的期待，慢慢开成花。" },
+    { "name": "daily_inspiration_28", "value": "今天的你，也有属于自己的闪光点。" },
+    { "name": "daily_inspiration_29", "value": "愿你一路有伴，独处也自在。" },
+    { "name": "daily_inspiration_30", "value": "留一点时间，做让自己开心的事。" },
+    { "name": "daily_inspiration_31", "value": "愿你每次出发，都带着一点希望。" },
+    { "name": "daily_inspiration_32", "value": "新的一天，愿快乐与你不期而遇。" },
+    { "name": "save_resume_title", "value": "继续上次对局？" },
+    { "name": "save_resume_desc", "value": "上次的棋盘、难度和进度已保留。你可以继续游玩，或新开一局替换存档。" },
+    { "name": "save_continue", "value": "继续对局" },
+    { "name": "save_new_game", "value": "新开一局" },
+    { "name": "save_exit_desc", "value": "退出后可从上次保存的进度继续。确定退出吗？" },
+    { "name": "save_restore_failed", "value": "上次的存档无法恢复，已为你开始新对局。" },
     {
       "name": "EntryAbility_desc",
       "value": "玩趣盒主入口"
@@ -37,12 +81,56 @@
       "value": "热门推荐"
     },
     {
+      "name": "home_recent_title",
+      "value": "最近游玩"
+    },
+    {
+      "name": "home_recent_action",
+      "value": "点击再玩一局"
+    },
+    {
+      "name": "home_recent_view_all",
+      "value": "查看全部"
+    },
+    {
+      "name": "play_history_title",
+      "value": "游玩记录"
+    },
+    {
+      "name": "play_history_count",
+      "value": "共 %1$d 款 · 按最近游玩时间排序"
+    },
+    {
+      "name": "play_history_last_played",
+      "value": "最近游玩：%1$s"
+    },
+    {
+      "name": "play_history_time_unknown",
+      "value": "时间未记录"
+    },
+    {
+      "name": "play_history_total_time",
+      "value": "累计游玩：%1$s"
+    },
+    {
+      "name": "play_history_empty_title",
+      "value": "还没有游玩记录"
+    },
+    {
+      "name": "play_history_empty_desc",
+      "value": "玩过的游戏会出现在这里，快去开启第一局吧。"
+    },
+    {
       "name": "home_featured_subtitle",
       "value": "为你精选"
     },
     {
       "name": "search_placeholder",
       "value": "搜索游戏名称或描述"
+    },
+    {
+      "name": "search_clear",
+      "value": "清空搜索"
     },
     {
       "name": "cat_all",
@@ -481,8 +569,16 @@
       "value": "%1$s，%2$s"
     },
     {
-      "name": "card_played_count",
-      "value": "已玩 %1$d 次"
+      "name": "card_played_time",
+      "value": "已玩 %1$s 小时"
+    },
+    {
+      "name": "play_time_hours",
+      "value": "%1$s 小时"
+    },
+    {
+      "name": "profile_stat_play_time",
+      "value": "累计时长"
     },
     {
       "name": "profile_level_newbie",
@@ -818,11 +914,11 @@
     },
     {
       "name": "settings_clear_desc",
-      "value": "删除最高分、游玩次数和最近玩过记录"
+      "value": "删除战绩、游玩记录及数独和2048的本地存档"
     },
     {
       "name": "settings_clear_confirm",
-      "value": "将删除全部游戏的最高分、游玩次数和最近玩过记录，无法撤销。你的主题和游戏偏好会保留。确定清空吗？"
+      "value": "将删除全部游戏的战绩、游玩记录及数独和2048的本地存档，无法撤销。你的主题和游戏偏好会保留。确定清空吗？"
     },
     {
       "name": "settings_clear_action",
@@ -858,7 +954,7 @@
     },
     {
       "name": "settings_statement_content",
-      "value": "玩趣盒是一款本地休闲小游戏合集。游戏分数用于记录个人游玩表现，不同游戏的计分规则不同，分数不代表统一竞技排名。请合理安排游玩时间。"
+      "value": "玩趣盒是一款本地单人休闲小游戏合集，象棋和国际象棋提供离线电脑对手。游戏分数用于记录个人游玩表现，不同游戏的计分规则不同，分数不代表统一竞技排名。请合理安排游玩时间。"
     },
     {
       "name": "settings_privacy_title",
@@ -866,7 +962,7 @@
     },
     {
       "name": "settings_privacy_content",
-      "value": "当前版本无需账号登录，也不上传游玩数据。最高分、游玩次数、最近玩过记录及设置保存在本机，不提供应用内云同步。在设置中清空游玩数据会删除战绩与最近记录；恢复默认设置仅重置偏好。卸载或清除应用数据可能导致本地记录丢失。"
+      "value": "当前版本无需账号登录，不向服务器上传游玩数据。战绩、游玩记录、数独和2048的未完成对局及设置保存在本机，不提供应用内云同步。在设置中清空游玩数据会删除战绩、游玩记录与本地存档；恢复默认设置仅重置偏好。卸载或清除应用数据可能导致本地记录丢失。"
     },
     {
       "name": "settings_permission_title",
@@ -882,7 +978,7 @@
     },
     {
       "name": "settings_help_content",
-      "value": "在游戏标题栏选择难度，可重新开始当前游戏。默认难度对下一次进入的游戏生效；开启难度记忆后，每款游戏优先使用你上次选择的难度。返回退出不会保存未完成的棋盘或关卡进度。语言和字体大小跟随系统设置。"
+      "value": "在游戏标题栏选择难度，可重新开始当前游戏。默认难度对下一次进入的游戏生效；开启难度记忆后，每款游戏优先使用你上次选择的难度。数独和2048自动保存本局进度，再次进入可选择继续或新开一局；其余游戏退出后不保留本局进度。语言和字体大小跟随系统设置。"
     },
     {
       "name": "settings_selected",
@@ -2222,15 +2318,15 @@
     },
     {
       "name": "module_desc",
-      "value": "玩趣盒 - 六大分类，100 款离线小游戏"
+      "value": "玩趣盒 - 六大分类，89 款单人小游戏"
     },
     {
       "name": "app_splash_subtitle",
-      "value": "100 款小游戏，随手开一局。"
+      "value": "89 款单人小游戏，随手开一局。"
     },
     {
       "name": "settings_about_tagline",
-      "value": "六大分类，100 款小游戏"
+      "value": "六大分类，89 款单人小游戏"
     },
     {
       "name": "expansion_target",
@@ -2243,6 +2339,10 @@
     {
       "name": "expansion_errors",
       "value": "失误 %d / 3"
+    },
+    {
+      "name": "expansion_fruitslice_errors",
+      "value": "失误 %d / 5"
     },
     {
       "name": "expansion_shots",
@@ -2743,6 +2843,302 @@
     {
       "name": "expansion_tug_position",
       "value": "绳标位置 %d"
+    },
+    {
+      "name": "game_settings_title",
+      "value": "游戏设置"
+    },
+    {
+      "name": "game_settings_difficulty",
+      "value": "难度"
+    },
+    {
+      "name": "game_settings_difficulty_desc",
+      "value": "切换难度会重新开始当前游戏"
+    },
+    {
+      "name": "game_settings_rules",
+      "value": "游戏玩法说明"
+    },
+    {
+      "name": "game_settings_page",
+      "value": "设置"
+    },
+    {
+      "name": "game_settings_page_desc",
+      "value": "主题外观、默认难度、振动反馈等"
+    },
+    {
+      "name": "game_settings_return",
+      "value": "返回游戏"
+    },
+    {
+      "name": "game_settings_paused_hint",
+      "value": "在右上角设置中继续游戏"
+    },
+    {
+      "name": "game_snake_rules",
+      "value": "点击方向键开始并控制小蛇移动，吃到食物可得分并变长。不能直接反向转弯，撞到边界或自身会结束游戏。难度越高，移动越快。可在设置中暂停、继续或重开。"
+    },
+    {
+      "name": "game_tetris_rules",
+      "value": "用左右按钮移动方块，旋转按钮调整方向，点击快速下落立即落地。填满一整行即可消除并得分；堆到顶部时游戏结束。可在设置中调整难度、暂停或重开。"
+    },
+    {
+      "name": "game_2048_rules",
+      "value": "向上、下、左、右滑动棋盘，相同数字相遇会合并并得分。每次有效移动后会出现新方块，尝试合成更大的数字。棋盘填满且无法合并时游戏结束。可在设置中切换难度或重开。"
+    },
+    {
+      "name": "game_whackmole_rules",
+      "value": "在倒计时结束前点击冒出的地鼠得分，点击空洞会扣分。难度越高，地鼠出现和消失越快。可在设置中暂停倒计时、继续或重新开始。"
+    },
+    {
+      "name": "game_minesweeper_rules",
+      "value": "点击格子翻开，数字表示周围八个格子中的地雷数量。长按未翻开的格子可插旗或取消标记。翻开所有安全格即可获胜，踩到地雷则失败。可在设置中调整难度或重开。"
+    },
+    {
+      "name": "game_sudoku_rules",
+      "value": "选中空格后用数字按钮填入1至9，让每行、每列和每个3×3宫都不重复。固定数字不能修改，可用清除按钮删除填写的数字。支持双指缩放棋盘。在设置中可调整难度、重新开始当前题目或生成新游戏。"
+    },
+    {
+      "name": "game_slidepuzzle_rules",
+      "value": "点击空白格旁的数字方块，将它移动到空白位置。按从左到右、从上到下的顺序排列所有数字，并将空白格放在最后即可完成。尽量减少移动步数。可在设置中调整难度或重开。"
+    },
+    {
+      "name": "game_klotski_rules",
+      "value": "点击方块选中，再用方向按钮将它移到空位。方块不能重叠，也不能越过棋盘边界。将最大的曹操方块移到棋盘底部出口即可获胜。可在设置中调整难度或重新开始。"
+    },
+    {
+      "name": "game_guessnumber_rules",
+      "value": "输入互不重复的数字并提交，密码长度和尝试次数随难度变化。反馈中A表示数字和位置都正确，B表示数字正确但位置不对。根据每次提示，在次数用完前猜出密码。可在设置中调整难度或重开。"
+    },
+    {
+      "name": "game_memorycard_rules",
+      "value": "每次点击翻开两张卡片，相同的卡片会保持翻开，不同的卡片会重新盖上。记住图案的位置，找齐所有配对即可完成，尝试用更少的次数获胜。可在设置中调整难度或重开。"
+    },
+    {
+      "name": "game_jumpjump_rules",
+      "value": "按住蓄力，松手跳向下一座平台；按住越久，跳得越远。落在平台上可得分，落空则游戏结束。可在设置中调整难度或重开。"
+    },
+    {
+      "name": "game_brickbreaker_rules",
+      "value": "点击棋盘发球，左右拖动挡板接住小球，让小球反弹击碎砖块。清空砖块即可进入下一关，漏接小球会消耗生命，生命用完则游戏结束。可在设置中暂停、继续或重开。"
+    },
+    {
+      "name": "game_match3_rules",
+      "value": "依次点击相邻的两个宝石交换位置，横向或纵向连成三个及以上相同宝石即可消除得分。不能形成连线的交换会还原，连锁消除可获得更多分数。在步数用完前达到目标分数即可获胜。可在设置中重新开始。"
+    },
+    {
+      "name": "game_settings_restart_confirm",
+      "value": "重新开始会清除本局进度，确定重新开始吗？"
+    },
+    {
+      "name": "game_settings_new_game_confirm",
+      "value": "开始新游戏会清除当前题目的进度，确定开始吗？"
+    },
+    {
+      "name": "game_settings_change_difficulty",
+      "value": "切换难度"
+    },
+    {
+      "name": "game_settings_difficulty_confirm",
+      "value": "切换难度会开始新的一局并清除当前进度，确定切换吗？"
+    },
+    {
+      "name": "game_settings_change_action",
+      "value": "切换并重开"
+    },
+    {
+      "name": "settings_sound",
+      "value": "声音"
+    },
+    {
+      "name": "settings_sound_desc",
+      "value": "控制游戏音效和旋律，关闭后保留视觉提示"
+    },
+    {
+      "name": "settings_sound_muted",
+      "value": "声音已关闭，请观察按键高亮并重复顺序"
+    },
+    {
+      "name": "lan_title",
+      "value": "局域网联机"
+    },
+    {
+      "name": "lan_description",
+      "value": "两台设备连接同一 Wi-Fi，并打开同一款游戏。使用热点时，由连接热点的设备创建房间。将房间的 IPv4 地址告诉对方加入。"
+    },
+    {
+      "name": "lan_collapse",
+      "value": "收起"
+    },
+    {
+      "name": "lan_host",
+      "value": "创建房间"
+    },
+    {
+      "name": "lan_join",
+      "value": "加入"
+    },
+    {
+      "name": "lan_address_label",
+      "value": "房主 IPv4 地址"
+    },
+    {
+      "name": "lan_address_placeholder",
+      "value": "例如 192.168.1.10"
+    },
+    {
+      "name": "lan_hosting",
+      "value": "等待对手加入"
+    },
+    {
+      "name": "lan_hosting_hint",
+      "value": "让对方打开同一款游戏，输入以下任一地址加入。"
+    },
+    {
+      "name": "lan_connecting",
+      "value": "正在连接…"
+    },
+    {
+      "name": "lan_connected_player",
+      "value": "已联机 · 你是玩家 %1$d"
+    },
+    {
+      "name": "lan_connected_hint",
+      "value": "操作自己的一方，双方会同步当前棋局。"
+    },
+    {
+      "name": "lan_pending",
+      "value": "正在同步回合…"
+    },
+    {
+      "name": "lan_cancel",
+      "value": "取消联机"
+    },
+    {
+      "name": "lan_leave",
+      "value": "退出联机"
+    },
+    {
+      "name": "lan_back_local",
+      "value": "返回同屏"
+    },
+    {
+      "name": "lan_disconnected",
+      "value": "连接已断开"
+    },
+    {
+      "name": "lan_disconnected_hint",
+      "value": "请重新创建或加入房间，或返回同屏双人模式。"
+    },
+    {
+      "name": "lan_error",
+      "value": "连接失败"
+    },
+    {
+      "name": "lan_error_invalid_address",
+      "value": "请输入有效的 IPv4 地址，例如 192.168.1.10。"
+    },
+    {
+      "name": "lan_error_network",
+      "value": "请检查两台设备处于同一局域网，房主仍在等待加入，然后重试。"
+    },
+    {
+      "name": "lan_error_mismatch",
+      "value": "双方游戏或版本不一致，请打开同一款游戏并更新到相同版本。"
+    },
+    {
+      "name": "lan_error_protocol",
+      "value": "收到异常联机数据，连接已关闭。请重新创建或加入房间。"
+    },
+    {
+      "name": "lan_error_background",
+      "value": "应用进入后台，联机已结束。请重新创建或加入房间。"
+    },
+    {
+      "name": "lan_error_no_address",
+      "value": "未找到局域网 IPv4 地址。请连接 Wi-Fi；使用热点时，由连接热点的设备创建房间。"
+    },
+    {
+      "name": "lan_error_busy",
+      "value": "房间已有对手，无法加入。请加入其他房间。"
+    },
+    {
+      "name": "lan_restart_request",
+      "value": "请求再来一局"
+    },
+    {
+      "name": "lan_restart_waiting",
+      "value": "已请求再来一局，等待对方同意"
+    },
+    {
+      "name": "lan_restart_requested",
+      "value": "对方希望再来一局"
+    },
+    {
+      "name": "lan_restart_accept",
+      "value": "同意再来一局"
+    },
+    {
+      "name": "lan_replay_wait",
+      "value": "等待对方同意"
+    },
+    {
+      "name": "lan_permission_reason",
+      "value": "用于在同一 Wi-Fi 或热点下创建或加入游戏房间。"
+    },
+    {
+      "name": "computer_mode",
+      "value": "人机对战"
+    },
+    {
+      "name": "computer_thinking",
+      "value": "电脑 %d 正在思考…"
+    },
+    {
+      "name": "computer_your_turn",
+      "value": "轮到你操作"
+    },
+    {
+      "name": "computer_mahjong_reaction",
+      "value": "请选择和牌、吃碰杠，或跳过"
+    },
+    {
+      "name": "computer_doudizhu",
+      "value": "你是地主，另外两位由电脑控制。"
+    },
+    {
+      "name": "computer_guandan",
+      "value": "你与电脑 3 组队，对战电脑 2 和电脑 4。"
+    },
+    {
+      "name": "computer_mahjong",
+      "value": "你控制玩家 1，其余三家由电脑控制。"
+    },
+    {
+      "name": "computer_xiangqi",
+      "value": "你执红棋，电脑执黑棋。"
+    },
+    {
+      "name": "computer_chess",
+      "value": "你执白棋，电脑执黑棋。"
+    },
+    {
+      "name": "computer_ludo",
+      "value": "你控制玩家 1 的四架飞机，其余三队由电脑控制。"
+    },
+    {
+      "name": "computer_hand_count",
+      "value": "电脑 %d：%d 张"
+    },
+    {
+      "name": "computer_last_play",
+      "value": "电脑 %d 的出牌"
+    },
+    {
+      "name": "computer_your_last_play",
+      "value": "你的出牌"
     }
   ]
 }

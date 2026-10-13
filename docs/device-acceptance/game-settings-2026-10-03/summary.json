@@ -1,0 +1,25 @@
+{
+  "target": "49X0224C24001554",
+  "packageSha256": "1af04a71422d2a9f9470b14bbc59587cf811e13ced17a872c2bef9a08449d445",
+  "checks": [
+    {
+      "id": "app-settings-and-difficulty",
+      "evidence": [
+        "tablet-app-settings.jpeg",
+        "tablet-app-settings-return.jpeg",
+        "tablet-difficulty-hard.jpeg"
+      ],
+      "detail": "System back returns to unchanged game; difficulty changes and selection updates",
+      "at": "2026-10-03T14:45:19.635Z"
+    },
+    {
+      "id": "pause-and-resume",
+      "evidence": [
+        "tablet-manual-pause.jpeg",
+        "tablet-resumed-settings.jpeg"
+      ],
+      "detail": "Sheet freezes countdown, deliberate pause survives dismissal and Resume restores play",
+      "at": "2026-10-03T14:46:02.163Z"
+    }
+  ]
+}

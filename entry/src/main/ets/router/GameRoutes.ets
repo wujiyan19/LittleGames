@@ -12,7 +12,7 @@
  *      .navDestination(this.PageMap)
  *
  * 新增一款游戏的登记步骤：
- *   ① model/GameData.ets 的 games 数组加数据
+ *   ① model/GameData.ets 的 catalog 数组加数据，并检查 GameAvailability 上架策略
  *   ② GameRouteRegistry.PATHS 加一条「id → 路由名」；合集游戏通过 COLLECTION_IDS 注册
  *   ③ GamePageMap 的 if-else 里加一个组件分支（ArkTS 不支持把组件当值存表，此链无法消除）
  *   ④ 首页 Tab 卡片由数据驱动；合集玩法共用 CollectionPage 分支
@@ -20,9 +20,7 @@
 import { SnakeGamePage } from '../pages/classic/SnakeGamePage';
 import { CollectionPage } from '../pages/collection/CollectionPage';
 import { ExpansionPage } from '../pages/collection/ExpansionPage';
-import { EXPANSION_IDS } from '../model/ExpansionCatalog';
 import { GameRoutes } from './GameRouteRegistry';
-import { COLLECTION_IDS } from '../model/game/CollectionModel';
 import { TetrisGamePage } from '../pages/classic/TetrisGamePage';
 import { Game2048Page } from '../pages/classic/Game2048Page';
 import { WhackMolePage } from '../pages/classic/WhackMolePage';
@@ -76,14 +74,23 @@ export function GamePageMap(name: string, pathStack: NavPathStack, onDataChanged
       BrickBreakerPage({ pathStack: pathStack })
     } else if (name === 'Match3Page') {
       Match3Page({ pathStack: pathStack })
-    } else if (EXPANSION_IDS.includes(GameRoutes.gameIdForRoute(name))) {
+    } else if (GameRoutes.isExpansionRoute(name)) {
       ExpansionPage({ gameId: GameRoutes.gameIdForRoute(name), pathStack: pathStack })
-    } else if (COLLECTION_IDS.includes(GameRoutes.gameIdForRoute(name))) {
+    } else if (GameRoutes.isCollectionRoute(name)) {
       CollectionPage({ gameId: GameRoutes.gameIdForRoute(name), pathStack: pathStack })
     }
   }
   .hideTitleBar(true)
+  .onShown(() => {
+    const gameId: string = GameRoutes.gameIdForRoute(name);
+    if (gameId.length > 0) { GameLifecycleBus.setPageVisible(gameId, true); }
+  })
+  .onHidden(() => {
+    const gameId: string = GameRoutes.gameIdForRoute(name);
+    if (gameId.length > 0) { GameLifecycleBus.setPageVisible(gameId, false); }
+  })
   .onBackPressed(() => {
+    if (GameRoutes.gameIdForRoute(name).length === 0) { return false; }
     return GameLifecycleBus.notifyBackRequested();
   })
 }

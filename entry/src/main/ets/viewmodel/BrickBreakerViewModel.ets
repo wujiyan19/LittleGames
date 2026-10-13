@@ -13,6 +13,7 @@ import { GameLifecycleObserver } from '../common/GameLifecycleBus';
 import { RandomSource, RealRandom } from '../model/game/RandomSource';
 import { BrickBreakerRules, BrickLayout, BallState } from '../model/game/BrickBreakerModel';
 import { FrameLoop } from '../common/FrameLoop';
+import { GameSoundEvent, gameSound } from '../common/GameSound';
 
 const GAME_ID = 'brickbreaker';
 const PHYSICS_STEP_MS = 30; // 保留原球速与物理步长，显示位置按帧插值。
@@ -71,6 +72,7 @@ export class BrickBreakerViewModel implements GameLifecycleObserver {
   private ball: BallState = new BallState(0, 0, 0, 0, BrickBreakerRules.BALL_RADIUS);
   private layouts: BrickLayout[] = [];
   private bricksAlive: boolean[] = [];
+  private brickIdCounter: number = 0;
   private frames: FrameLoop | null = null;
   private accumulator: number = 0;
   private previousBallX: number = 0;
@@ -101,10 +103,11 @@ export class BrickBreakerViewModel implements GameLifecycleObserver {
 
   /** 只铺开局数据，不启动定时器 */
   newGame(): void {
+    gameSound.stop(GAME_ID);
     this.cancelLevelTransition();
     this.stopTimer();
     this.autoPaused = false;
-    GameDataManager.incrementPlayCount(GAME_ID);
+    GameDataManager.recordGamePlayed(GAME_ID);
     this.score = 0;
     this.lives = 3;
     this.level = 1;
@@ -118,6 +121,7 @@ export class BrickBreakerViewModel implements GameLifecycleObserver {
 
   /** 开局，等待玩家发射后才启动帧循环 */
   startGame(): void {
+    gameSound.stop(GAME_ID);
     if (this.score > 0) { GameDataManager.updateHighScore(GAME_ID, this.score); }
     this.newGame();
   }
@@ -130,7 +134,7 @@ export class BrickBreakerViewModel implements GameLifecycleObserver {
     for (let i = 0; i < this.layouts.length; i++) {
       this.bricksAlive.push(true);
       const layout = this.layouts[i];
-      newBricks.push(new BrickViewData(i, layout.row, layout.col, layout.scoreValue, true));
+      newBricks.push(new BrickViewData(++this.brickIdCounter, layout.row, layout.col, layout.scoreValue, true));
     }
     this.bricks = newBricks;
     this.resetBall();
@@ -188,6 +192,7 @@ export class BrickBreakerViewModel implements GameLifecycleObserver {
     this.ballY = this.ball.y;
 
     if (result.brickHitIndex >= 0) {
+      gameSound.play(GAME_ID, GameSoundEvent.REWARD);
       this.bricksAlive[result.brickHitIndex] = false;
       // 原地修改 BrickViewData.alive，触发 @Trace 更新
       this.bricks[result.brickHitIndex].alive = false;
@@ -207,6 +212,7 @@ export class BrickBreakerViewModel implements GameLifecycleObserver {
       if (this.lives <= 0) {
         this.gameOver();
       } else {
+        gameSound.play(GAME_ID, GameSoundEvent.ERROR);
         this.resetBall();
       }
     }
@@ -214,6 +220,7 @@ export class BrickBreakerViewModel implements GameLifecycleObserver {
 
   /** 进入下一关 */
   private nextLevel(): void {
+    gameSound.play(GAME_ID, GameSoundEvent.WIN);
     this.stopTimer();
     this.level += 1;
     this.levelClearMsg = true;
@@ -282,12 +289,14 @@ export class BrickBreakerViewModel implements GameLifecycleObserver {
       this.previousBallY = this.ball.y;
       this.accumulator = 0;
       this.started = true;
+      gameSound.play(GAME_ID);
       this.startTimer();
     }
   }
 
   /** 手动暂停/恢复 */
   togglePause(): void {
+    gameSound.stop(GAME_ID);
     if (this.status === GameStatus.PLAYING) {
       this.status = GameStatus.PAUSED;
       this.stopTimer();
@@ -302,6 +311,7 @@ export class BrickBreakerViewModel implements GameLifecycleObserver {
   }
 
   private gameOver(): void {
+    gameSound.play(GAME_ID, GameSoundEvent.LOSE);
     this.cancelLevelTransition();
     this.status = GameStatus.OVER;
     this.stopTimer();
@@ -312,6 +322,7 @@ export class BrickBreakerViewModel implements GameLifecycleObserver {
   // GameLifecycleObserver 实现
 
   onAppHidden(): void {
+    gameSound.stop(GAME_ID);
     this.appVisible = false;
     this.stopTimer();
     this.settleCurrentScore();
@@ -343,8 +354,8 @@ export class BrickBreakerViewModel implements GameLifecycleObserver {
 
   requestBack(): boolean {
     if (!GameDataManager.getSetting('confirmExitEnabled', true)) { return false; }
-    if (this.status === GameStatus.PLAYING) {
-      this.confirmExit = true;
+    if (this.status === GameStatus.PLAYING || this.status === GameStatus.PAUSED) {
+      gameSound.stop(GAME_ID); this.confirmExit = true;
       this.stopTimer();
       return true;
     }
@@ -364,6 +375,10 @@ export class BrickBreakerViewModel implements GameLifecycleObserver {
     this.frames = null;
     this.settleCurrentScore();
   }
+
+  isPlayTimeActive(): boolean { return this.status === GameStatus.PLAYING && !this.confirmExit && this.started; }
+
+  hasProgress(): boolean { return this.started && this.status !== GameStatus.OVER; }
 
   continuationGameId(): string { return GAME_ID; }
 
@@ -425,7 +440,7 @@ export class BrickBreakerViewModel implements GameLifecycleObserver {
       this.confirmExit = false;
       this.ball = new BallState(s.ball.x, s.ball.y, s.ball.vx, s.ball.vy, s.ball.radius);
       this.layouts = s.layouts.map((b: BrickLayout): BrickLayout => new BrickLayout(b.row, b.col, b.scoreValue));
-      this.bricks = this.layouts.map((b: BrickLayout, i: number): BrickViewData => new BrickViewData(i, b.row, b.col, b.scoreValue, s.bricksAlive[i]));
+      this.bricks = this.layouts.map((b: BrickLayout, i: number): BrickViewData => new BrickViewData(++this.brickIdCounter, b.row, b.col, b.scoreValue, s.bricksAlive[i]));
       this.ballX = this.ball.x;
       this.ballY = this.ball.y;
       this.previousBallX = this.ball.x;

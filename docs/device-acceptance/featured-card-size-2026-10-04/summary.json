@@ -1,0 +1,261 @@
+{
+  "target": "49X0224C24001554",
+  "packageSha256": "82cac37bae2a9ead04afba86ab42dd593612c5e6337a3be13a709460910f1289",
+  "checks": [
+    {
+      "id": "light-new-games",
+      "sizes": [
+        {
+          "name": "切水果",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "背包战斗",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "台球",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "掼蛋",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "中国象棋",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "画线救援",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "旋律记忆",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "迷你农场",
+          "width": 680,
+          "height": 322
+        }
+      ],
+      "detail": "All eight cards have equal width and height, including one/two-line descriptions and played/unplayed games."
+    },
+    {
+      "id": "light-hot-games",
+      "sizes": [
+        {
+          "name": "切水果",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "中国象棋",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "数独",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "2048",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "打地鼠",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "猜数字",
+          "width": 680,
+          "height": 322
+        }
+      ],
+      "detail": "All six hot recommendation cards have equal width and height after scrolling."
+    },
+    {
+      "id": "shared-category-cards",
+      "sizes": [
+        {
+          "name": "2048",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "保龄球",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "背包战斗",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "补数求和",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "猜数字",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "拆螺丝",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "成语填字",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "乘客上车",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "打地鼠",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "打砖块",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "大鱼吃小鱼",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "单键漂移",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "倒水排序",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "点格棋",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "点击群消",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "斗地主",
+          "width": 680,
+          "height": 322
+        }
+      ],
+      "detail": "The shared card component remains uniform in the category grid."
+    },
+    {
+      "id": "dark-new-games",
+      "sizes": [
+        {
+          "name": "切水果",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "背包战斗",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "台球",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "掼蛋",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "中国象棋",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "画线救援",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "旋律记忆",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "迷你农场",
+          "width": 680,
+          "height": 322
+        }
+      ],
+      "detail": "All eight cards have equal width and height, including one/two-line descriptions and played/unplayed games."
+    },
+    {
+      "id": "dark-hot-games",
+      "sizes": [
+        {
+          "name": "切水果",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "中国象棋",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "数独",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "2048",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "打地鼠",
+          "width": 680,
+          "height": 322
+        },
+        {
+          "name": "猜数字",
+          "width": 680,
+          "height": 322
+        }
+      ],
+      "detail": "All six hot recommendation cards have equal width and height after scrolling."
+    },
+    {
+      "id": "restore-theme",
+      "sizes": [],
+      "detail": "Original theme restored; device left on Featured."
+    }
+  ]
+}

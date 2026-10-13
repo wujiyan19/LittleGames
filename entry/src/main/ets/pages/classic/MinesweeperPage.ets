@@ -34,6 +34,9 @@ export struct MinesweeperPage {
   @Local a11yAroundFormat: string = '';
   @Local a11yBlank: string = '';
 
+  @Monitor('viewModel.status', 'viewModel.confirmExit')
+  playTimeStateChanged(): void { GameLifecycleBus.updatePlayTime(this.viewModel); }
+
   aboutToAppear(): void {
     const context = this.getUIContext().getHostContext();
     if (context) {
@@ -47,6 +50,7 @@ export struct MinesweeperPage {
     this.cellSize = ScreenUtils.calcCell(COLS, 520, 20, 24);
     GameLifecycleBus.attach(this.viewModel);
     if (!GameSessionTransfer.restore(this.viewModel)) { this.viewModel.startGame(); }
+    this.playTimeStateChanged();
   }
 
   aboutToDisappear(): void {
@@ -83,12 +87,12 @@ export struct MinesweeperPage {
   }
 
   getCellBg(row: number, col: number): ResourceColor {
-    if (this.viewModel.isFlagged(row, col)) { return SemanticColors.accentLight; }
+    if (this.viewModel.isFlagged(row, col)) { return $r('app.color.play_selection_background'); }
     if (this.viewModel.isRevealed(row, col)) {
-      if (this.viewModel.isMine(row, col)) { return SemanticColors.error; }
-      return SemanticColors.cellRevealed;
+      if (this.viewModel.isMine(row, col)) { return $r('app.color.play_mine_revealed_background'); }
+      return $r('app.color.play_cell_background');
     }
-    return SemanticColors.cellHidden;
+    return $r('app.color.play_board_background');
   }
 
   getResultSymbol(): Resource {
@@ -129,7 +133,7 @@ export struct MinesweeperPage {
         .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
 
       Column() {
-        GameHeader({
+        GameHeader({ gameId: 'minesweeper', pathStack: this.pathStack, hasProgress: (): boolean => this.viewModel.hasProgress(),
           gameTitle: $r('app.string.game_minesweeper_name'),
           showScore: false,
           showPause: false,
@@ -151,7 +155,7 @@ export struct MinesweeperPage {
             Text(this.viewModel.flagCount + '/' + this.viewModel.getMineCount()).fontSize(FontTokens.sizeHeadline)
               .fontWeight(FontTokens.weightBold).fontColor(SemanticColors.warning)
           }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface)
-          .borderRadius(RadiusTokens.base).alignItems(HorizontalAlign.Center).margin({ left: 16 })
+          .borderRadius(RadiusTokens.lg).alignItems(HorizontalAlign.Center).margin({ left: 16 })
 
           Column() {
             Row({ space: SpacingTokens.xs }) {
@@ -162,7 +166,7 @@ export struct MinesweeperPage {
             Text(this.viewModel.elapsed + 's').fontSize(FontTokens.sizeHeadline)
               .fontWeight(FontTokens.weightBold).fontColor(SemanticColors.accent)
           }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface)
-          .borderRadius(RadiusTokens.base).alignItems(HorizontalAlign.Center).margin({ left: 8, right: 16 })
+          .borderRadius(RadiusTokens.lg).alignItems(HorizontalAlign.Center).margin({ left: 8, right: 16 })
         }.margin({ top: 12, bottom: 12 })
 
         Column() {
@@ -170,7 +174,12 @@ export struct MinesweeperPage {
             ForEach(this.idx9, (row: number) => {
               Row() {
                 ForEach(this.idx9, (col: number) => {
-                  Column() {
+                  Stack() {
+                    if (!this.viewModel.isRevealed(row, col)) {
+                      Image($r('app.media.play_2048_surface'))
+                        .width(this.cellSize).height(this.cellSize).objectFit(ImageFit.Fill)
+                        .draggable(false).hitTestBehavior(HitTestMode.None)
+                    }
                     if (this.viewModel.isRevealed(row, col)) {
                       if (this.viewModel.isMine(row, col)) {
                         Image($r('app.media.play_mine'))
@@ -188,7 +197,7 @@ export struct MinesweeperPage {
                     }
                   }.width(this.cellSize).height(this.cellSize)
                   .backgroundColor(this.getCellBg(row, col))
-                  .border({ width: 1, color: SemanticColors.boardBorder }).borderRadius(RadiusTokens.xs)
+                  .border({ width: 1, color: $r('app.color.play_piece_border') }).borderRadius(RadiusTokens.xs)
                   .accessibilityText(this.cellA11y(row, col))
                   .stateStyles({ pressed: this.pressedFeedback }).onClick(() => { if (!this.viewModel.isFlagged(row, col)) { this.viewModel.reveal(row, col); } })
                   .gesture(LongPressGesture().onAction(() => this.viewModel.toggleFlag(row, col)))
@@ -196,7 +205,7 @@ export struct MinesweeperPage {
               }
             }, (row: number) => row.toString())
           }.padding(2)
-          .backgroundColor(SemanticColors.boardBg).borderRadius(RadiusTokens.md)
+          .backgroundColor($r('app.color.play_board_background')).borderRadius(RadiusTokens.md)
         }.width('100%').layoutWeight(1).justifyContent(FlexAlign.Center)
           .onAreaChange((oldValue: Area, newValue: Area) => {
             const width: number = parseFloat(newValue.width as string);

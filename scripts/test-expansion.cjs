@@ -162,10 +162,10 @@ test('settled fruit stops its frame loop and dropping the next fruit wakes it', 
 test('catalog and resources are complete for every registered expansion', () => {
   const ids = f.load('entry/src/main/ets/model/ExpansionCatalog.ets').EXPANSION_IDS;
   assert.deepEqual(ids, PLAYABLE_EXPANSION_IDS);
-  const games = f.data().getAllGames(); assert.equal(games.length, 33 + ids.length);
+  const games = f.data().getAllGames(); assert.equal(games.length, 89);
   assert.equal(new Set(games.map(g => g.id)).size, games.length);
   const routes = f.load('entry/src/main/ets/router/GameRouteRegistry.ets').GameRoutes;
-  for (const id of ids) assert.equal(routes.gameIdForRoute(routes.routeName(id)), id);
+  for (const id of ids.filter(id => f.data().getGameById(id) !== undefined)) assert.equal(routes.gameIdForRoute(routes.routeName(id)), id);
   for (const locale of ['base', 'zh_CN', 'en_US']) {
     const strings = JSON.parse(fs.readFileSync(`entry/src/main/resources/${locale}/element/string.json`)).string;
     assert.equal(strings.length, new Set(strings.map(s => s.name)).size);
@@ -174,12 +174,12 @@ test('catalog and resources are complete for every registered expansion', () => 
   for (const theme of ['base', 'dark']) for (const id of ids) assert(fs.existsSync(`entry/src/main/resources/${theme}/media/game_${id}.svg`));
 });
 
-for (const id of PLAYABLE_EXPANSION_IDS) test(`${id}: continuation rejects malformed saves atomically and does not count another play`, () => {
+for (const id of PLAYABLE_EXPANSION_IDS.filter(id => f.data().getGameById(id) !== undefined)) test(`${id}: continuation rejects malformed saves atomically and does not count another play`, () => {
   const source = f.vm('ExpansionViewModel'); source.init(id); source.startGame();
   const target = f.vm('ExpansionViewModel'); target.init(id);
-  const plays = f.data().getGameById(id).playCount; assert(target.importContinuation(source.exportContinuation()));
+  const plays = f.data().getGameById(id).playTimeMs; assert(target.importContinuation(source.exportContinuation()));
   assert.deepEqual(JSON.parse(target.exportContinuation()), JSON.parse(source.exportContinuation()));
-  assert.equal(f.data().getGameById(id).playCount, plays);
+  assert.equal(f.data().getGameById(id).playTimeMs, plays);
   const before = target.exportContinuation();
   for (const value of ['null', '{}', '[]', '{bad', 'x'.repeat(65537)]) { assert.equal(target.importContinuation(value), false); assert.equal(target.exportContinuation(), before); }
   for (const field of ['cols', 'rows', 'phase', 'outcome', 'serial', 'level']) {
@@ -190,7 +190,7 @@ for (const id of PLAYABLE_EXPANSION_IDS) test(`${id}: continuation rejects malfo
   source.dispose(); target.dispose();
 });
 test('all registered games transfer after actual input, including live physics and selected cards', () => {
-  for(const id of PLAYABLE_EXPANSION_IDS) {
+  for(const id of PLAYABLE_EXPANSION_IDS.filter(id => f.data().getGameById(id) !== undefined)) {
     const source=f.vm('ExpansionViewModel'); source.init(id); source.startGame();
     if(['fruitmerge','bubbleshooter','basketball','blackhole','fisheat'].includes(id)) { source.aim(180,150); source.advance(160); }
     else if(['runner','roomdefense','rhythm','restaurant'].includes(id)) { source.activate(); source.advance(160); }
@@ -210,7 +210,7 @@ test('all new routes and game payloads work through application-level continuati
   const App=f.load('entry/src/main/ets/common/AppContinuation.ets').AppContinuation;
   const Bus=f.load('entry/src/main/ets/common/GameLifecycleBus.ets').GameLifecycleBus;
   const routes=f.load('entry/src/main/ets/router/GameRouteRegistry.ets').GameRoutes;
-  for(const id of PLAYABLE_EXPANSION_IDS) {
+  for(const id of PLAYABLE_EXPANSION_IDS.filter(id => f.data().getGameById(id) !== undefined)) {
     const vm=f.vm('ExpansionViewModel'); vm.init(id); vm.startGame(); Bus.attach(vm);
     App.connect(()=>({tab:0, paths:[routes.routeName(id)]}),()=>{});
     const payload=App.capture(); assert(payload.length<App.MAX_PAYLOAD_LENGTH,id); assert(App.receive(payload),id);

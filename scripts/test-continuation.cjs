@@ -23,14 +23,14 @@ for (const name of games) {
       const source = game(name, difficulty);
       const target = game(name, 'normal');
       const id = source.vm.continuationGameId();
-      const count = target.f.data().getGameById(id).playCount;
+      const count = target.f.data().getGameById(id).playTimeMs;
       const payload = source.vm.exportContinuation();
       assert.equal(target.vm.importContinuation(payload), true);
       const expected = JSON.parse(payload);
       const actual = JSON.parse(target.vm.exportContinuation());
       if (['WhackMole', 'Tetris'].includes(name)) { expected.status = 'paused'; }
       assert.deepEqual(actual, expected);
-      assert.equal(target.f.data().getGameById(id).playCount, count);
+      assert.equal(target.f.data().getGameById(id).playTimeMs, count);
       assert.equal(Buffer.byteLength(payload), Buffer.byteLength(source.vm.exportContinuation()));
       source.vm.dispose(); target.vm.dispose();
     });
@@ -182,6 +182,83 @@ test('Continuation: game snapshots fit Want and exporting keeps the source alive
   }
 });
 
+test('Continuation: app settings and About retain the covered game snapshot', () => {
+  for (const suffix of [['SettingsPage'], ['SettingsPage', 'AboutPage']]) {
+    const source = game('Game2048'), f = source.f;
+    source.vm.swipeLeft(); source.vm.swipeDown();
+    const app = f.load(base + 'common/AppContinuation.ets').AppContinuation;
+    const bus = f.load(base + 'common/GameLifecycleBus.ets').GameLifecycleBus;
+    bus.attach(source.vm); bus.setPageVisible('2048', false);
+    const paths = ['Game2048Page', ...suffix];
+    const restored = []; app.connect(() => ({ tab: 1, paths }), state => restored.push(state));
+    const payload = app.capture(), state = JSON.parse(payload);
+    assert.deepEqual(state.paths, paths); assert.equal(state.gameId, '2048');
+    const target = game('Game2048'); assert.equal(target.vm.importContinuation(state.gamePayload), true);
+    assert.deepEqual(target.vm.board, source.vm.board); assert.equal(target.vm.score, source.vm.score);
+    assert.equal(app.receive(payload), true); assert.deepEqual(restored[0], state);
+    for (const invalid of [['Game2048Page','AboutPage'], ['Game2048Page','SnakeGamePage'],
+      ['Game2048Page','SettingsPage','SettingsPage'], ['SettingsPage','AboutPage','AboutPage']]) {
+      assert.equal(app.receive(JSON.stringify({ ...state, paths: invalid })), false);
+    }
+    app.disconnect(); source.vm.dispose(); target.vm.dispose();
+  }
+});
+
+test('Continuation: play history restores as navigation without exporting a game session', () => {
+  const f = fixture(); const app = f.load(base + 'common/AppContinuation.ets').AppContinuation;
+  const routes = f.load(base + 'router/GameRouteRegistry.ets').GameRoutes;
+  assert.equal(routes.gameIdForRoute('PlayHistoryPage'), '');
+  assert.equal(routes.isKnownRoute('PlayHistoryPage'), true);
+  for (const paths of [['PlayHistoryPage'], ['PlayHistoryPage', 'SettingsPage'],
+    ['PlayHistoryPage', 'SettingsPage', 'AboutPage']]) {
+    const restored = []; app.connect(() => ({ tab: 0, paths }), state => restored.push(state));
+    const payload = app.capture(), state = JSON.parse(payload);
+    assert.deepEqual(state.paths, paths); assert.equal(state.gameId, ''); assert.equal(state.gamePayload, '');
+    assert.equal(app.receive(payload), true); assert.deepEqual(restored[0], state);
+    assert.equal(app.receive(JSON.stringify({ ...state, gameId: '2048', gamePayload: '{}' })), false);
+    assert.equal(app.receive(JSON.stringify({ ...state, gamePayload: '{}' })), false);
+    app.disconnect();
+  }
+});
+
+test('Continuation: history beneath a game preserves the full stack and covered game snapshot', () => {
+  for (const suffix of [[], ['SettingsPage'], ['SettingsPage', 'AboutPage']]) {
+    const source = game('Game2048'), f = source.f;
+    source.vm.swipeLeft(); source.vm.swipeDown();
+    const app = f.load(base + 'common/AppContinuation.ets').AppContinuation;
+    const bus = f.load(base + 'common/GameLifecycleBus.ets').GameLifecycleBus;
+    bus.attach(source.vm); bus.setPageVisible('2048', suffix.length === 0);
+    const paths = ['PlayHistoryPage', 'Game2048Page', ...suffix];
+    app.connect(() => ({ tab: 0, paths }), () => {});
+    const payload = app.capture(), state = JSON.parse(payload);
+    assert.deepEqual(state.paths, paths); assert.equal(state.gameId, '2048');
+    const target = game('Game2048'); assert.equal(target.vm.importContinuation(state.gamePayload), true);
+    assert.deepEqual(target.vm.board, source.vm.board); assert.equal(target.vm.score, source.vm.score);
+    app.disconnect();
+    assert.equal(app.receive(payload), true); assert.equal(app.hasPending(), true);
+    const restored = []; app.connect(() => ({ tab: 0, paths: [] }), incoming => restored.push(incoming));
+    assert.deepEqual(restored, [state]); assert.equal(app.hasPending(), false);
+    assert.equal(app.receive(payload), true); assert.deepEqual(restored[1], state);
+    app.disconnect(); source.vm.dispose(); target.vm.dispose();
+  }
+});
+
+test('Continuation: a history prefix retains the route order and stack length restrictions', () => {
+  const f = fixture(); const app = f.load(base + 'common/AppContinuation.ets').AppContinuation;
+  const state = { version: 1, tab: 0, paths: [], gameId: '2048', gamePayload: '{}' };
+  for (const paths of [['PlayHistoryPage', 'Game2048Page', 'AboutPage'],
+    ['PlayHistoryPage', 'Game2048Page', 'SnakeGamePage'],
+    ['PlayHistoryPage', 'Game2048Page', 'SettingsPage', 'SettingsPage'],
+    ['PlayHistoryPage', 'Game2048Page', 'SettingsPage', 'AboutPage', 'AboutPage'],
+    ['Game2048Page', 'SettingsPage', 'AboutPage', 'AboutPage'],
+    ['Game2048Page', 'PlayHistoryPage'], ['PlayHistoryPage', 'PlayHistoryPage'],
+    ['SettingsPage', 'PlayHistoryPage'], ['PlayHistoryPage', 'AboutPage', 'SettingsPage'],
+    ['PlayHistoryPage', 'SettingsPage', 'AboutPage', 'AboutPage']]) {
+    assert.equal(app.receive(JSON.stringify({ ...state, paths })), false);
+    assert.equal(app.receive(JSON.stringify({ ...state, paths, gameId: '', gamePayload: '' })), false);
+  }
+});
+
 test('Continuation: pending state is consumed once and never restored into a different game', () => {
   const f = fixture(); const transfer = f.load(base + 'common/GameSessionTransfer.ets').GameSessionTransfer;
   const target = game('SlidePuzzle', 'hard'); const payload = target.vm.exportContinuation();
@@ -254,6 +331,9 @@ test('JumpJump: rebases a mid-air jump to a different target window without chan
 
 test('UIAbility: native handoff captures data and handles both cold and warm continuation launches', () => {
   const source = game('Game2048'); const f = source.f;
+  f.native['@kit.MediaKit'] = {};
+  f.native['@kit.AudioKit'] = {};
+  f.native['@kit.LocalizationKit'] = {};
   const ability = f.native['@kit.AbilityKit'];
   ability.UIAbility = class { constructor() { this.context = { setMissionContinueState() { return Promise.resolve(); } }; } };
   ability.AbilityConstant = { LaunchReason: { CONTINUATION: 1 }, ContinueState: { ACTIVE: 1, INACTIVE: 0 },

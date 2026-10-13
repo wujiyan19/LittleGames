@@ -1,0 +1,34 @@
+{
+  "checks": [
+    {
+      "theme": "base",
+      "clippedPixels": 0,
+      "visiblePixels": 8061,
+      "small": [
+        {
+          "size": 42,
+          "visiblePixels": 995
+        },
+        {
+          "size": 32,
+          "visiblePixels": 590
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "clippedPixels": 0,
+      "visiblePixels": 8085,
+      "small": [
+        {
+          "size": 42,
+          "visiblePixels": 1007
+        },
+        {
+          "size": 32,
+          "visiblePixels": 594
+        }
+      ]
+    }
+  ]
+}

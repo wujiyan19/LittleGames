@@ -29,12 +29,16 @@ export struct SnakeGamePage {
   @Local cell: number = 16;
   private idx20: number[] = range(COLS);
 
+  @Monitor('viewModel.status', 'viewModel.confirmExit', 'viewModel.started')
+  playTimeStateChanged(): void { GameLifecycleBus.updatePlayTime(this.viewModel); }
+
   aboutToAppear(): void {
     this.cell = ScreenUtils.calcCell(COLS, 560, 24, 8);
     // 挂到生命周期总线：切后台暂停/恢复、系统侧滑返回拦截都经总线转发
     // （页面 onPageHide/onPageShow 仅对 @Entry 生效，本页是 @ComponentV2，不可依赖）
     GameLifecycleBus.attach(this.viewModel);
     if (!GameSessionTransfer.restore(this.viewModel)) { this.viewModel.startGame(); }
+    this.playTimeStateChanged();
   }
 
   aboutToDisappear(): void {
@@ -51,9 +55,9 @@ export struct SnakeGamePage {
   }
 
   getCellColor(col: number, row: number): ResourceColor {
-    if (this.viewModel.isFood(col, row)) { return SemanticColors.cellRevealed; }
-    if ((row + col) % 2 === 0) { return SemanticColors.cellHidden; }
-    return SemanticColors.cellRevealed;
+    if (this.viewModel.isFood(col, row)) { return $r('app.color.play_cell_background'); }
+    if ((row + col) % 2 === 0) { return $r('app.color.play_cell_alternate'); }
+    return $r('app.color.play_cell_background');
   }
 
   getSnakeImage(col: number, row: number): Resource {
@@ -74,7 +78,7 @@ export struct SnakeGamePage {
         .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
 
       Column() {
-        GameHeader({ gameTitle: $r('app.string.game_snake_name'), // 得分/最高分已由下方大字指标卡展示，关闭标题栏的小字重复显示
+        GameHeader({ gameId: 'snake', pathStack: this.pathStack, hasProgress: (): boolean => this.viewModel.hasProgress(), gameTitle: $r('app.string.game_snake_name'), // 得分/最高分已由下方大字指标卡展示，关闭标题栏的小字重复显示
           showScore: false,
           isPaused: this.viewModel.status === GameStatus.PAUSED,
           difficulty: this.viewModel.difficulty,
@@ -87,13 +91,13 @@ export struct SnakeGamePage {
           Column() {
             Text($r('app.string.score_label')).fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
             Text('' + this.viewModel.score).fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold).fontColor(SemanticColors.accent)
-          }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
+          }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.lg)
           .alignItems(HorizontalAlign.Center).margin({ left: 16 })
 
           Column() {
             Text($r('app.string.high_score_label')).fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
             Text('' + this.viewModel.highScore).fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold).fontColor(SemanticColors.textPrimary)
-          }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
+          }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.lg)
           .alignItems(HorizontalAlign.Center).margin({ left: 8, right: 16 })
         }.margin({ top: 12, bottom: 12 })
 
@@ -116,8 +120,8 @@ export struct SnakeGamePage {
               }
             }, (row: number) => row.toString())
           }.width(this.cell * COLS).height(this.cell * ROWS)
-          .borderRadius(RadiusTokens.sm)
-          .backgroundColor(SemanticColors.boardBg)
+          .borderRadius(RadiusTokens.md)
+          .backgroundColor($r('app.color.play_board_background'))
 
           if (!this.viewModel.started) {
             Text('按方向键开始')

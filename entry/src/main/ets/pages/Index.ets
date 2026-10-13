@@ -4,7 +4,7 @@
  * 本文件原本 855 行、承担 6 类职责（路由表 / 闪屏 / Tab 容器 / 精选 / 分类 / 我的），
  * 已按职责拆分为：
  * - router/GameRoutes.ets    — Navigation 的 navDestination 路由映射
- * - pages/home/FeaturedTab.ets — 精选 Tab（横幅 + 热门推荐）
+ * - pages/home/FeaturedTab.ets — 精选 Tab（横幅 + 最近游玩 + 热门推荐）
  * - pages/home/CategoryTab.ets — 分类 Tab（搜索 + 筛选 + 空态）
  * - pages/home/ProfileTab.ets  — 我的 Tab（数据 + 排行榜）
  * - components/GameCard.ets    — 精选/分类共用的游戏卡片
@@ -18,14 +18,17 @@ import { AppContinuation, AppContinuationState, ContinuationNavigationState } fr
 import { GameSessionTransfer } from '../common/GameSessionTransfer';
 import { ImmersiveLight } from '../common/ImmersiveLight';
 import { GameLifecycleBus } from '../common/GameLifecycleBus';
-import { GameDataManager } from '../model/GameData';
+import { GameDataManager, PlayedGameRecord } from '../model/GameData';
 import { GameInfo } from '../common/GameConstants';
 import { SemanticColors, SpacingTokens, FontTokens } from '../common/DesignTokens';
 import { resolveString } from '../common/I18nUtils';
 import { GamePageMap, GameRoutes } from '../router/GameRoutes';
 import { FeaturedTab } from './home/FeaturedTab';
+import { PlayHistoryPage } from './home/PlayHistoryPage';
 import { CategoryTab } from './home/CategoryTab';
 import { ProfileTab } from './home/ProfileTab';
+import { HarmonyMotion } from '../common/HarmonyMotion';
+import { DailyFeaturedViewModel } from '../viewmodel/DailyFeaturedViewModel';
 
 /** 拼音排序器：构造是重操作，模块级单例，避免每次排序都新建（P2-6） */
 const PINYIN_COLLATOR: intl.Collator = new intl.Collator('zh-CN', { usage: 'sort', collation: 'pinyin' });
@@ -36,13 +39,16 @@ struct Index {
   pathStack: NavPathStack = new NavPathStack();
   @Local currentTab: number = 0;
   @Local featuredGames: GameInfo[] = [];
+  @Local dailyFeatured: DailyFeaturedViewModel = new DailyFeaturedViewModel();
+  private dailyRefreshTimer: number = -1;
   @Local newGames: GameInfo[] = [];
   @Local rankedGames: GameInfo[] = [];
   @Local totalGames: number = 0;
   @Local bestScoreText: string = '--';
   @Local recentGames: GameInfo[] = [];
+  @Local playHistory: PlayedGameRecord[] = [];
   @Local playedGameCount: number = 0;
-  @Local totalPlayCount: number = 0;
+  @Local totalPlayTimeMs: number = 0;
   /** 0 加载中，1 已就绪，2 无数据，3 加载异常 */
   @Local dataStatus: number = 0;
   // 全部游戏按拼音排序；清空数据后替换列表，分类页同步刷新。
@@ -51,11 +57,6 @@ struct Index {
   private firstShow: boolean = true;
   private floatingTabStyle: HdsTabsFloatingStyle = ImmersiveLight.floatingTabs();
   @Local navigationGeneration: number = 0;
-
-  @Styles
-  pressedFeedback() {
-    .opacity(0.72)
-  }
 
   aboutToAppear(): void {
     this.loadAll();
@@ -74,6 +75,7 @@ struct Index {
   }
 
   aboutToDisappear(): void {
+    if (this.dailyRefreshTimer >= 0) { clearTimeout(this.dailyRefreshTimer); this.dailyRefreshTimer = -1; }
     AppContinuation.disconnect();
   }
 
@@ -89,7 +91,7 @@ struct Index {
 
   private restoreContinuation(state: AppContinuationState): void {
     AppContinuation.setRestoring(true);
-    GameLifecycleBus.notifyHidden();
+    GameLifecycleBus.suspendSession();
     GameDataManager.flushNow();
     this.currentTab = state.tab;
     GameSessionTransfer.prepare(state.gameId, state.gamePayload);
@@ -111,7 +113,7 @@ struct Index {
       this.firstShow = false;
       return;
     }
-    // 从游戏页返回时最高分/游玩次数可能变化，只刷新受其影响的两块 + 概要
+    // 返回主页时刷新最近顺序、每日推荐、排行与概要。
     this.refreshScores();
   }
 
@@ -131,18 +133,22 @@ struct Index {
   }
 
   /**
-   * 刷新受最高分/游玩次数影响的部分。
-   * 精选 = 最常玩（热门），排行 = 最高分——两者口径不同，各有意义（P2-8）。
+   * 刷新最近游玩、最高分与累计游玩时长影响的部分。
+   * 精选随日期与手动批次变化；排行榜沿用最高分口径。
    */
   refreshScores(): void {
-    this.featuredGames = GameDataManager.getMostPlayed(6);
+    GameLifecycleBus.flushPlayTime();
+    this.dailyFeatured.update(GameDataManager.getAllGames());
+    this.featuredGames = this.dailyFeatured.recommendations;
+    this.scheduleDailyRefresh();
     this.rankedGames = GameDataManager.getTopGames(6);
-    this.recentGames = GameDataManager.getRecentlyPlayed(5);
+    this.playHistory = GameDataManager.getPlayHistory();
+    this.recentGames = this.playHistory.slice(0, 5).map((record: PlayedGameRecord) => record.game);
     this.playedGameCount = GameDataManager.getPlayedGameCount();
-    let playCount = 0;
-    const games: GameInfo[] = GameDataManager.getAllGames();
-    for (let i = 0; i < games.length; i++) { playCount += games[i].playCount; }
-    this.totalPlayCount = playCount;
+    this.totalPlayTimeMs = GameDataManager.getTotalPlayTimeMs();
+    // GameInfo 是普通接口，替换数组并以时长作为卡片 key，确保返回后展示新时长。
+    this.newGames = this.newGames.slice();
+    this.allGamesPinyin = this.allGamesPinyin.slice();
     const top: GameInfo[] = GameDataManager.getTopGames(1);
     if (top.length > 0 && top[0].highScore > 0) {
       const context = this.getUIContext().getHostContext();
@@ -186,7 +192,26 @@ struct Index {
    */
   @Builder
   PageMap(name: string) {
-    GamePageMap(name, this.pathStack, () => { this.loadAll(); })
+    if (name === 'PlayHistoryPage') {
+      // 直接绑定本组件的响应式记录，避免全局 Builder 按值参数保留旧数组。
+      NavDestination() {
+        PlayHistoryPage({ pathStack: this.pathStack, records: this.playHistory })
+      }
+      .hideTitleBar(true)
+      .onShown(() => { this.refreshScores(); })
+    } else {
+      GamePageMap(name, this.pathStack, () => { this.loadAll(); })
+    }
+  }
+
+  private scheduleDailyRefresh(): void {
+    if (this.dailyRefreshTimer >= 0) { clearTimeout(this.dailyRefreshTimer); }
+    const now: Date = new Date();
+    const midnight: Date = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+    this.dailyRefreshTimer = setTimeout(() => {
+      this.dailyRefreshTimer = -1;
+      this.refreshScores();
+    }, Math.max(1000, midnight.getTime() - now.getTime()));
   }
 
   build() {
@@ -205,7 +230,15 @@ struct Index {
             TabContent() {
               FeaturedTab({
                 games: this.featuredGames,
+                encouragement: this.dailyFeatured.inspiration,
+                onRefreshClick: () => {
+                  this.dailyFeatured.refresh(GameDataManager.getAllGames());
+                  this.featuredGames = this.dailyFeatured.recommendations;
+                },
                 newGames: this.newGames,
+                recentGames: this.recentGames,
+                onSettingsClick: () => { this.pathStack.pushPathByName('SettingsPage', null); },
+                onHistoryClick: () => { this.pathStack.pushPathByName('PlayHistoryPage', null); },
                 onGameClick: (game: GameInfo) => { this.navigateToGame(game); }
               })
             }
@@ -213,6 +246,7 @@ struct Index {
             TabContent() {
               CategoryTab({
                 allGames: this.allGamesPinyin,
+                onSettingsClick: () => { this.pathStack.pushPathByName('SettingsPage', null); },
                 onGameClick: (game: GameInfo) => { this.navigateToGame(game); }
               })
             }
@@ -224,7 +258,7 @@ struct Index {
                 rankedGames: this.rankedGames,
                 recentGames: this.recentGames,
                 playedGameCount: this.playedGameCount,
-                totalPlayCount: this.totalPlayCount,
+                totalPlayTimeMs: this.totalPlayTimeMs,
                 onSettingsClick: () => { this.pathStack.pushPathByName('SettingsPage', null); }
               })
             }
@@ -318,7 +352,7 @@ struct Index {
         .backgroundColor(SemanticColors.primary)
         .borderRadius(24)
         .margin({ top: SpacingTokens.md })
-        .stateStyles({ pressed: this.pressedFeedback })
+        .clickEffect(HarmonyMotion.press(this.getUIContext()))
         .onClick(() => { this.loadAll(); })
     }
     .width('100%').layoutWeight(1)
@@ -346,9 +380,15 @@ struct Index {
   TabBuilder(index: number, title: Resource | string) {
     Column() {
       SymbolGlyph(this.getTabSymbol(index))
-        .fontSize(this.currentTab === index ? 24 : 22)
+        .fontSize($r('app.float.motion_tab_symbol_size'))
         .fontWeight(FontWeight.Regular)
         .fontColor([this.getTabColor(index)])
+        .scale({
+          x: HarmonyMotion.tabScale(this.getUIContext(), this.currentTab === index),
+          y: HarmonyMotion.tabScale(this.getUIContext(), this.currentTab === index)
+        })
+        .translate({ y: HarmonyMotion.tabOffset(this.getUIContext(), this.currentTab === index) })
+        .animation(HarmonyMotion.selection(this.getUIContext()))
       Text(title)
         .fontFamily(FontTokens.family)
         .fontSize(FontTokens.sizeCaption)
@@ -358,6 +398,6 @@ struct Index {
     }
     .width('100%').height('100%')
     .justifyContent(FlexAlign.Center)
-    .stateStyles({ pressed: this.pressedFeedback })
+    .clickEffect(HarmonyMotion.press(this.getUIContext()))
   }
 }

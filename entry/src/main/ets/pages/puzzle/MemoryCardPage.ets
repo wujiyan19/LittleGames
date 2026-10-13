@@ -34,6 +34,9 @@ export struct MemoryCardPage {
   @Local a11yCardFlippedFormat: string = '';
   @Local a11yCardHiddenFormat: string = '';
 
+  @Monitor('viewModel.status', 'viewModel.confirmExit')
+  playTimeStateChanged(): void { GameLifecycleBus.updatePlayTime(this.viewModel); }
+
   aboutToAppear(): void {
     const context = this.getUIContext().getHostContext();
     if (context) {
@@ -43,6 +46,7 @@ export struct MemoryCardPage {
     GameLifecycleBus.attach(this.viewModel);
     if (!GameSessionTransfer.restore(this.viewModel)) { this.viewModel.startGame(); }
     this.refreshLayout();
+    this.playTimeStateChanged();
   }
 
   aboutToDisappear(): void {
@@ -77,9 +81,9 @@ export struct MemoryCardPage {
   }
 
   getCardBg(idx: number): ResourceColor {
-    if (this.viewModel.isMatched(idx)) { return SemanticColors.success; }
-    if (this.viewModel.isFlipped(idx)) { return SemanticColors.accent; }
-    return SemanticColors.surface;
+    if (this.viewModel.isMatched(idx)) { return $r('app.color.play_success_background'); }
+    if (this.viewModel.isFlipped(idx)) { return $r('app.color.play_cell_background'); }
+    return $r('app.color.play_cell_alternate');
   }
 
   getCardOpacity(idx: number): number {
@@ -117,13 +121,14 @@ export struct MemoryCardPage {
         .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
 
       Column() {
-        GameHeader({
+        GameHeader({ gameId: 'memorycard', pathStack: this.pathStack, hasProgress: (): boolean => this.viewModel.hasProgress(),
           gameTitle: $r('app.string.game_memorycard_name'),
           showScore: false,
           subtitle: $r('app.string.game_memorycard_subtitle_format', this.viewModel.matchedCount, this.viewModel.getPairCount()),
           difficulty: this.viewModel.difficulty,
           onDifficultyChange: (d: GameDifficulty) => { this.changeDifficulty(d); },
           onBack: () => { this.requestExit(); },
+          showPause: false,
           onPauseToggle: () => {},
           onRestart: () => { this.viewModel.startGame(); }
         })

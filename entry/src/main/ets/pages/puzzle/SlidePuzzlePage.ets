@@ -28,6 +28,9 @@ export struct SlidePuzzlePage {
   // 无障碍字符串缓存
   @Local a11yTileFormat: string = '';
 
+  @Monitor('viewModel.status', 'viewModel.confirmExit')
+  playTimeStateChanged(): void { GameLifecycleBus.updatePlayTime(this.viewModel); }
+
   aboutToAppear(): void {
     const context = this.getUIContext().getHostContext();
     if (context) {
@@ -36,6 +39,7 @@ export struct SlidePuzzlePage {
     GameLifecycleBus.attach(this.viewModel);
     if (!GameSessionTransfer.restore(this.viewModel)) { this.viewModel.startGame(); }
     this.refreshLayout();
+    this.playTimeStateChanged();
   }
 
   aboutToDisappear(): void {
@@ -68,9 +72,9 @@ export struct SlidePuzzlePage {
 
   getCellBg(r: number, c: number): ResourceColor {
     const v = this.viewModel.cellAt(r, c);
-    if (v === 0) { return SemanticColors.boardBg; }
-    if (v === r * this.viewModel.getSize() + c + 1) { return SemanticColors.success; }
-    return SemanticColors.accent;
+    if (v === 0) { return $r('app.color.play_board_background'); }
+    if (v === r * this.viewModel.getSize() + c + 1) { return $r('app.color.play_success_background'); }
+    return $r('app.color.play_selection_background');
   }
 
   getCellOpacity(r: number, c: number): number {
@@ -90,7 +94,7 @@ export struct SlidePuzzlePage {
         .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
 
       Column() {
-        GameHeader({ gameTitle: $r('app.string.game_slidepuzzle_name'),
+        GameHeader({ gameId: 'slidepuzzle', pathStack: this.pathStack, hasProgress: (): boolean => this.viewModel.hasProgress(), gameTitle: $r('app.string.game_slidepuzzle_name'),
           showScore: false,
           showPause: false,
           subtitle: $r('app.string.game_slidepuzzle_subtitle'),
@@ -125,8 +129,8 @@ export struct SlidePuzzlePage {
                         .width(this.cell).height(this.cell).objectFit(ImageFit.Fill)
                       Text('' + this.viewModel.cellAt(r, c)).fontSize(Math.max(22, this.cell * 0.34))
                         .fontWeight(FontWeight.Bold)
-                        // 拼图块底色为 accent / success，白字在两套主题下均可读
-                        .fontColor($r('app.color.tile_text_high'))
+                        // 柔蓝与柔绿拼块使用独立文字色，数字随深浅主题保持清晰。
+                        .fontColor($r('app.color.play_piece_text'))
                     }
                   }.width(this.cell).height(this.cell).margin(2)
                   .backgroundColor(this.getCellBg(r, c))
@@ -142,7 +146,7 @@ export struct SlidePuzzlePage {
                 }, (c: number) => c.toString())
               }
             }, (r: number) => r.toString())
-          }.backgroundColor(SemanticColors.boardBg).borderRadius(RadiusTokens.base).padding(4)
+          }.backgroundColor($r('app.color.play_board_background')).borderRadius(RadiusTokens.base).padding(4)
         }.width('100%').layoutWeight(1).justifyContent(FlexAlign.Center)
           .onAreaChange((oldValue: Area, newValue: Area) => {
             const width: number = parseFloat(newValue.width as string);

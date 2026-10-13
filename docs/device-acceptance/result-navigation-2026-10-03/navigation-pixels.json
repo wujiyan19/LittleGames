@@ -1,0 +1,198 @@
+[
+  {
+    "file": "light-win.jpeg",
+    "above": [
+      101,
+      107,
+      121
+    ],
+    "navigation": [
+      108,
+      112,
+      124
+    ],
+    "maxChannelDifference": 7
+  },
+  {
+    "file": "light-player2-win.jpeg",
+    "above": [
+      101,
+      107,
+      121
+    ],
+    "navigation": [
+      108,
+      112,
+      124
+    ],
+    "maxChannelDifference": 7
+  },
+  {
+    "file": "light-draw.jpeg",
+    "above": [
+      101,
+      107,
+      121
+    ],
+    "navigation": [
+      108,
+      112,
+      124
+    ],
+    "maxChannelDifference": 7
+  },
+  {
+    "file": "light-loss.jpeg",
+    "above": [
+      101,
+      107,
+      121
+    ],
+    "navigation": [
+      108,
+      112,
+      124
+    ],
+    "maxChannelDifference": 7
+  },
+  {
+    "file": "light-exit-2.jpeg",
+    "above": [
+      101,
+      107,
+      121
+    ],
+    "navigation": [
+      108,
+      112,
+      124
+    ],
+    "maxChannelDifference": 7
+  },
+  {
+    "file": "light-double-restart.jpeg",
+    "baseline": [
+      255,
+      255,
+      255
+    ],
+    "navigation": [
+      255,
+      255,
+      255
+    ],
+    "restored": true
+  },
+  {
+    "file": "light-exit-return.jpeg",
+    "baseline": [
+      228,
+      229,
+      231
+    ],
+    "navigation": [
+      228,
+      229,
+      231
+    ],
+    "restored": true
+  },
+  {
+    "file": "dark-win.jpeg",
+    "above": [
+      4,
+      5,
+      10
+    ],
+    "navigation": [
+      4,
+      5,
+      10
+    ],
+    "maxChannelDifference": 0
+  },
+  {
+    "file": "dark-player2-win.jpeg",
+    "above": [
+      4,
+      5,
+      10
+    ],
+    "navigation": [
+      4,
+      5,
+      10
+    ],
+    "maxChannelDifference": 0
+  },
+  {
+    "file": "dark-draw.jpeg",
+    "above": [
+      4,
+      5,
+      10
+    ],
+    "navigation": [
+      4,
+      5,
+      10
+    ],
+    "maxChannelDifference": 0
+  },
+  {
+    "file": "dark-loss.jpeg",
+    "above": [
+      4,
+      5,
+      10
+    ],
+    "navigation": [
+      4,
+      5,
+      10
+    ],
+    "maxChannelDifference": 0
+  },
+  {
+    "file": "dark-exit-2.jpeg",
+    "above": [
+      4,
+      5,
+      10
+    ],
+    "navigation": [
+      4,
+      5,
+      10
+    ],
+    "maxChannelDifference": 0
+  },
+  {
+    "file": "dark-double-restart.jpeg",
+    "baseline": [
+      0,
+      0,
+      0
+    ],
+    "navigation": [
+      0,
+      0,
+      0
+    ],
+    "restored": true
+  },
+  {
+    "file": "dark-exit-return.jpeg",
+    "baseline": [
+      228,
+      229,
+      231
+    ],
+    "navigation": [
+      228,
+      229,
+      231
+    ],
+    "restored": true
+  }
+]

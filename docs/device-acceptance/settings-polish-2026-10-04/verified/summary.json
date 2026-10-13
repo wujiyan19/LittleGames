@@ -1,0 +1,60 @@
+{
+  "target": "49X0224C24001554",
+  "packageSha256": "1924c7a826dc53f5717da50629c0e4ad29b095747c057a0640e11c3f69a1b9ca",
+  "checks": [
+    {
+      "id": "progress-protection",
+      "evidence": [
+        "tablet-restart-confirm.jpeg",
+        "tablet-difficulty-confirm.jpeg"
+      ],
+      "detail": "An unsubmitted guess is protected; cancel and system Back preserve it; confirmed restart clears it; untouched game restarts directly.",
+      "at": "2026-10-03T16:38:46.978Z"
+    },
+    {
+      "id": "sound-preference",
+      "evidence": [
+        "tablet-melody-sound-off.jpeg",
+        "tablet-muted-melody-visual-cues.jpeg",
+        "tablet-app-settings-sound-off.jpeg"
+      ],
+      "detail": "Game and app settings share sound preference; mute retains visual playback, survives app restart, and original preference is restored.",
+      "at": "2026-10-03T16:40:32.223Z"
+    },
+    {
+      "id": "fixed-footer",
+      "evidence": [
+        "tablet-2048-settings.jpeg",
+        "tablet-sudoku-rules-fixed-footer.jpeg",
+        "tablet-fruitslice-rules-fixed-footer.jpeg"
+      ],
+      "detail": "Return stays fully visible and in the same position with rules expanded in three representative games.",
+      "at": "2026-10-03T16:43:07.863Z"
+    },
+    {
+      "id": "new-puzzle-protection",
+      "evidence": [
+        "tablet-new-game-confirm.jpeg"
+      ],
+      "detail": "A filled Sudoku cell triggers new-game confirmation; cancel retains the puzzle and entry.",
+      "at": "2026-10-03T16:44:11.812Z"
+    },
+    {
+      "id": "pause-and-resume",
+      "evidence": [
+        "tablet-manual-pause.jpeg",
+        "tablet-resumed-settings.jpeg"
+      ],
+      "detail": "Sheet freezes countdown, deliberate pause survives dismissal and Resume restores play",
+      "at": "2026-10-03T16:44:47.738Z"
+    },
+    {
+      "id": "dark-theme",
+      "evidence": [
+        "tablet-dark-fixed-footer.jpeg"
+      ],
+      "detail": "Dark-mode rules and footer checked; original theme restored.",
+      "at": "2026-10-03T16:45:48.248Z"
+    }
+  ]
+}

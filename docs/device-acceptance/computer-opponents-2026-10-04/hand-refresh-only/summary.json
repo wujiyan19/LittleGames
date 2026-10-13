@@ -1,0 +1,131 @@
+{
+  "date": "2026-10-04",
+  "target": "FMR0224521016052",
+  "packageSha256": "2d3b68245613ded26428e5d164b0dfd89fb344f0be8595e52cb3a95ba9504238",
+  "originalDifficulty": {
+    "mahjong": "普通",
+    "doudizhu": "普通",
+    "guandan": "普通"
+  },
+  "checks": [
+    {
+      "id": "mahjong-easy",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-mahjong-easy-ready.jpeg",
+        "light-mahjong-easy-thinking.jpeg",
+        "light-mahjong-easy-replied.jpeg"
+      ],
+      "at": "2026-10-04T10:29:15.847Z"
+    },
+    {
+      "id": "mahjong-normal",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-mahjong-normal-ready.jpeg",
+        "light-mahjong-normal-thinking.jpeg",
+        "light-mahjong-normal-replied.jpeg"
+      ],
+      "at": "2026-10-04T10:29:54.847Z"
+    },
+    {
+      "id": "mahjong-hard",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-mahjong-hard-ready.jpeg",
+        "light-mahjong-hard-thinking.jpeg",
+        "light-mahjong-hard-replied.jpeg"
+      ],
+      "at": "2026-10-04T10:30:38.864Z"
+    },
+    {
+      "id": "doudizhu-easy",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-doudizhu-easy-ready.jpeg",
+        "light-doudizhu-easy-thinking.jpeg",
+        "light-doudizhu-easy-replied.jpeg"
+      ],
+      "at": "2026-10-04T10:31:36.677Z"
+    },
+    {
+      "id": "doudizhu-normal",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-doudizhu-normal-ready.jpeg",
+        "light-doudizhu-normal-thinking.jpeg",
+        "light-doudizhu-normal-replied.jpeg"
+      ],
+      "at": "2026-10-04T10:32:18.408Z"
+    },
+    {
+      "id": "doudizhu-hard",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-doudizhu-hard-ready.jpeg",
+        "light-doudizhu-hard-thinking.jpeg",
+        "light-doudizhu-hard-replied.jpeg"
+      ],
+      "at": "2026-10-04T10:33:05.620Z"
+    }
+  ],
+  "samples": [
+    {
+      "tag": "light-mahjong-easy",
+      "afterTouchMs": 2578,
+      "sampleMs": 4400,
+      "status": "轮到你操作",
+      "moves": 4,
+      "thinkingObserved": false,
+      "disabledBoardButtons": 1
+    },
+    {
+      "tag": "light-mahjong-normal",
+      "afterTouchMs": 2584,
+      "sampleMs": 4402,
+      "status": "轮到你操作",
+      "moves": 4,
+      "thinkingObserved": false,
+      "disabledBoardButtons": 1
+    },
+    {
+      "tag": "light-mahjong-hard",
+      "afterTouchMs": 2560,
+      "sampleMs": 4403,
+      "status": "电脑 4 正在思考…",
+      "moves": 3,
+      "thinkingObserved": true,
+      "disabledBoardButtons": 1
+    },
+    {
+      "tag": "light-doudizhu-easy",
+      "afterTouchMs": 5536,
+      "sampleMs": 7339,
+      "status": "轮到你操作",
+      "moves": 3,
+      "thinkingObserved": false,
+      "disabledBoardButtons": 0
+    },
+    {
+      "tag": "light-doudizhu-normal",
+      "afterTouchMs": 5569,
+      "sampleMs": 7281,
+      "status": "轮到你操作",
+      "moves": 2,
+      "thinkingObserved": false,
+      "disabledBoardButtons": 0
+    },
+    {
+      "tag": "light-doudizhu-hard",
+      "afterTouchMs": 5488,
+      "sampleMs": 7175,
+      "status": "轮到你操作",
+      "moves": 2,
+      "thinkingObserved": false,
+      "disabledBoardButtons": 0
+    }
+  ],
+  "model": "ALN-AL00",
+  "api": "26",
+  "os": "OpenHarmony-7.0.0.105"
+}

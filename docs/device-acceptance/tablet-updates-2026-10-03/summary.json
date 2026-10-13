@@ -1,0 +1,68 @@
+{
+  "at": "2026-10-03T13:25:18.386Z",
+  "target": "49X0224C24001554",
+  "model": "WEB-W00",
+  "packageHash": "92bd5536573a51a17c04300fcc8b48c7bc5367ad183d7dd4877d2b0f4e6df9b1",
+  "checks": [
+    {
+      "mode": "light",
+      "check": "xiangqi category icon and one-decimal hours after game return",
+      "passed": true
+    },
+    {
+      "mode": "light",
+      "check": "five complete recent cards with latest xiangqi first on 2880px landscape",
+      "passed": true
+    },
+    {
+      "mode": "light",
+      "check": "latest recent card opens xiangqi and returns successfully",
+      "passed": true
+    },
+    {
+      "mode": "light",
+      "check": "four statistics share one row without clipping",
+      "passed": true
+    },
+    {
+      "mode": "dark",
+      "check": "xiangqi category icon and one-decimal hours after game return",
+      "passed": true
+    },
+    {
+      "mode": "dark",
+      "check": "five complete recent cards with latest xiangqi first on 2880px landscape",
+      "passed": true
+    },
+    {
+      "mode": "dark",
+      "check": "latest recent card opens xiangqi and returns successfully",
+      "passed": true
+    },
+    {
+      "mode": "dark",
+      "check": "four statistics share one row without clipping",
+      "passed": true
+    },
+    {
+      "check": "original theme restored",
+      "passed": true
+    },
+    {
+      "check": "narrow floating window uses two columns without clipped statistic labels",
+      "passed": true
+    },
+    {
+      "check": "floating window restored to original full landscape",
+      "passed": true
+    }
+  ],
+  "desktop": {
+    "performanceAndSettings": 159,
+    "windowSizing": 8
+  },
+  "narrowWindow": {
+    "bounds": "[2026,321][2823,1659]",
+    "origBounds": "[2026,243][2823,1659]"
+  }
+}

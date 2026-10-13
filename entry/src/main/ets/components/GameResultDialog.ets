@@ -14,6 +14,7 @@
 import { SemanticColors, FontTokens, RadiusTokens, ShadowTokens, SpacingTokens } from '../common/DesignTokens';
 import { Haptics } from '../common/Haptics';
 import { range } from '../common/Range';
+import { HarmonyMotion } from '../common/HarmonyMotion';
 
 @ComponentV2
 export struct GameResultDialog {
@@ -25,8 +26,8 @@ export struct GameResultDialog {
   @Param title: Resource | string = '';
   /** 副标题（成绩详情），showDetail 为 true 时渲染 */
   @Param detail: Resource | string = '';
-  /** 副标题颜色：成绩类用 accent，提示类用 warning */
-  @Param detailColor: ResourceColor = SemanticColors.accent;
+  /** 副标题默认使用二级文字色，可由调用方传入成绩或提示语义色。 */
+  @Param detailColor: ResourceColor = SemanticColors.textSecondary;
   /** 是否显示副标题（Resource 类型无 length 属性，需显式控制） */
   @Param showDetail: boolean = false;
   /** 主按钮文案 */
@@ -39,27 +40,38 @@ export struct GameResultDialog {
   /** true = 紧凑内容间距；两种形态均有整页遮罩 */
   @Param cardStyle: boolean = false;
   @Param celebrate: boolean = false;
-  @Local entrance: number = 0;
   @Local burst: number = 0;
-  private entranceTimer: number = -1;
-
-  @Styles
-  pressedFeedback() {
-    .opacity(0.72)
-    .scale({ x: 0.96, y: 0.96 })
-  }
+  @Local actionTaken: boolean = false;
+  private burstTimer: number = -1;
+  private actionTimer: number = -1;
 
   aboutToAppear(): void {
     Haptics.success();
   }
   appear(): void {
-    this.entranceTimer = setTimeout(() => {
-      this.entranceTimer = -1;
-      this.getUIContext().animateTo({ duration: 300, curve: Curve.FastOutSlowIn }, () => { this.entrance = 1; });
-      if (this.celebrate) { this.getUIContext().animateTo({ duration: 1000, curve: Curve.EaseOut }, () => { this.burst = 1; }); }
+    if (!this.celebrate) { return; }
+    this.burstTimer = setTimeout(() => {
+      this.burstTimer = -1;
+      this.getUIContext().animateTo({
+        duration: HarmonyMotion.value(this.getUIContext(), $r('app.float.motion_celebration_duration'), 680),
+        curve: Curve.EaseOut
+      }, () => { this.burst = 1; });
     }, 16);
   }
-  aboutToDisappear(): void { if (this.entranceTimer >= 0) { clearTimeout(this.entranceTimer); this.entranceTimer = -1; } }
+  aboutToDisappear(): void {
+    if (this.burstTimer >= 0) { clearTimeout(this.burstTimer); this.burstTimer = -1; }
+    if (this.actionTimer >= 0) { clearTimeout(this.actionTimer); this.actionTimer = -1; }
+  }
+
+  private choose(primary: boolean): void {
+    if (this.actionTaken) { return; }
+    this.actionTaken = true;
+    // 先退场但保留触摸遮罩。立即删除组件会使双击的第二次触摸穿到新棋盘。
+    this.actionTimer = setTimeout(() => {
+      this.actionTimer = -1;
+      if (primary) { this.onPrimary(); } else { this.onSecondary(); }
+    }, HarmonyMotion.value(this.getUIContext(), $r('app.float.motion_action_guard_duration'), 320));
+  }
 
   build() {
     Column() {
@@ -74,17 +86,29 @@ export struct GameResultDialog {
         }
         this.DialogContent()
       }
-        .width('86%').padding(SpacingTokens.lg)
+        .width('86%').padding(SpacingTokens.xl)
+        .constraintSize({ maxWidth: $r('app.float.motion_dialog_max_width') })
         .borderRadius(RadiusTokens.xl)
         .backgroundColor($r('app.color.surface'))
         .shadow(ShadowTokens.float)
         .renderGroup(true)
-        .scale({ x: 0.9 + this.entrance * 0.1, y: 0.9 + this.entrance * 0.1 })
-        .translate({ y: (1 - this.entrance) * 18 }).opacity(this.entrance)
+        .scale({
+          x: HarmonyMotion.closeScale(this.getUIContext(), this.actionTaken),
+          y: HarmonyMotion.closeScale(this.getUIContext(), this.actionTaken)
+        })
+        .translate({ y: HarmonyMotion.closeOffset(this.getUIContext(), this.actionTaken) })
+        .opacity(this.actionTaken ? 0 : 1)
+        .animation(HarmonyMotion.exit(this.getUIContext()))
+        .transition(HarmonyMotion.dialog(this.getUIContext()))
     }
       .width('100%').height('100%')
       .backgroundColor(SemanticColors.scrim)
+      // 遮罩绘制延伸至系统导航区，避免浅色主题下露出一截亮白底。
+      .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.BOTTOM])
       .justifyContent(FlexAlign.Center)
+      .opacity(this.actionTaken ? 0 : 1)
+      .animation(HarmonyMotion.exit(this.getUIContext()))
+      .transition(HarmonyMotion.scrim(this.getUIContext()))
       .onClick(() => {})
       .onAppear(() => { this.appear(); })
   }
@@ -104,13 +128,14 @@ export struct GameResultDialog {
       }
       .width(72).height(72)
       .borderRadius(RadiusTokens.full)
-      .backgroundColor(SemanticColors.primaryLight)
+      .backgroundColor(SemanticColors.surfaceHover)
       .justifyContent(FlexAlign.Center)
 
       Text(this.title)
         .fontFamily(FontTokens.family)
         .fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold)
         .fontColor(SemanticColors.textPrimary)
+        .width('100%').textAlign(TextAlign.Center)
         .margin({
           top: SpacingTokens.md,
           bottom: this.showDetail ? SpacingTokens.xs : SpacingTokens.base
@@ -119,33 +144,47 @@ export struct GameResultDialog {
       if (this.showDetail) {
         Text(this.detail)
           .fontFamily(FontTokens.family)
-          .fontSize(FontTokens.sizeSubtitle).fontColor(this.detailColor)
+          .fontSize(FontTokens.sizeBody).fontColor(this.detailColor)
+          .width('100%').textAlign(TextAlign.Center)
           .margin({ bottom: this.cardStyle ? SpacingTokens.base : SpacingTokens.lg })
       }
 
       Row({ space: SpacingTokens.base }) {
-        Button(this.primaryText)
-          .height(44).padding({ left: SpacingTokens.lg, right: SpacingTokens.lg })
-          .fontFamily(FontTokens.family)
-          .fontSize(FontTokens.sizeBody)
-          .fontColor(SemanticColors.textOnPrimary)
-          .backgroundColor(SemanticColors.primary).borderRadius(RadiusTokens.full)
-          .stateStyles({ pressed: this.pressedFeedback })
+        Button() {
+          Text(this.primaryText).fontFamily(FontTokens.family).fontSize(FontTokens.sizeBody)
+            .fontWeight(FontTokens.weightSemibold).fontColor(SemanticColors.textOnPrimary)
+            .width('100%').textAlign(TextAlign.Center)
+        }
+          .type(ButtonType.Normal).layoutWeight(1)
+          .constraintSize({ minHeight: $r('app.float.home_action_min_height') })
+          .padding({ left: SpacingTokens.md, right: SpacingTokens.md, top: SpacingTokens.md, bottom: SpacingTokens.md })
+          .backgroundColor(SemanticColors.primary).borderRadius(RadiusTokens.md)
+          .clickEffect(HarmonyMotion.press(this.getUIContext()))
+          .enabled(!this.actionTaken)
 
           .accessibilityText($r('app.string.a11y_dialog_play_again'))
-          .onClick(() => this.onPrimary())
+          .onClick(() => { this.choose(true); })
 
         if (this.showSecondary) {
-          Button(this.secondaryText)
-            .height(44).padding({ left: SpacingTokens.lg, right: SpacingTokens.lg })
-            .fontFamily(FontTokens.family)
-            .fontColor(SemanticColors.textPrimary).backgroundColor(SemanticColors.surface)
-            .borderRadius(RadiusTokens.full)
-            .stateStyles({ pressed: this.pressedFeedback })
+          Button() {
+            Text(this.secondaryText).fontFamily(FontTokens.family).fontSize(FontTokens.sizeBody)
+              .fontWeight(FontTokens.weightMedium).fontColor(SemanticColors.textPrimary)
+              .width('100%').textAlign(TextAlign.Center)
+          }
+            .type(ButtonType.Normal).layoutWeight(1)
+            .constraintSize({ minHeight: $r('app.float.home_action_min_height') })
+            .padding({ left: SpacingTokens.md, right: SpacingTokens.md, top: SpacingTokens.md, bottom: SpacingTokens.md })
+            .backgroundColor(SemanticColors.surfaceHover)
+            .borderRadius(RadiusTokens.md)
+            .clickEffect(HarmonyMotion.press(this.getUIContext()))
+            .enabled(!this.actionTaken)
             .accessibilityText($r('app.string.a11y_dialog_back'))
-            .onClick(() => this.onSecondary())
+            .onClick(() => { this.choose(false); })
         }
       }
+      .width('100%')
     }
+    .width('100%')
+    .alignItems(HorizontalAlign.Center)
   }
 }

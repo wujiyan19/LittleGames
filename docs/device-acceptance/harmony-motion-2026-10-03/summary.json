@@ -1,0 +1,164 @@
+{
+  "date": "2026-10-03",
+  "target": "FMR0224521016052",
+  "packageSha256": "91e984ab218f9330dc22de107fd9f9055b544c73420e7e17677fc1b8def8c06a",
+  "checks": [
+    {
+      "id": "light-rapid-tabs",
+      "behavior": "12 consecutive native tab taps end on Category with live content",
+      "evidence": [
+        "light-tabs-fast.jpeg"
+      ],
+      "at": "2026-10-03T10:27:17.910Z"
+    },
+    {
+      "id": "light-categories",
+      "behavior": "All 7 categories select correctly; rapid switching returns all 100 games with stable card widths",
+      "evidence": [
+        "light-categories.jpeg"
+      ],
+      "widths": [
+        {
+          "label": "全部",
+          "width": 552
+        },
+        {
+          "label": "街机休闲",
+          "width": 552
+        },
+        {
+          "label": "逻辑解谜",
+          "width": 552
+        },
+        {
+          "label": "棋盘对弈",
+          "width": 552
+        },
+        {
+          "label": "数字训练",
+          "width": 552
+        },
+        {
+          "label": "记忆专注",
+          "width": 552
+        },
+        {
+          "label": "反应节奏",
+          "width": 552
+        }
+      ],
+      "at": "2026-10-03T10:27:36.630Z"
+    },
+    {
+      "id": "light-card-press-cancel",
+      "behavior": "Held card compresses near 98%, release outside cancels navigation and restores size",
+      "evidence": [
+        "light-card-held.jpeg",
+        "light-card-released.jpeg"
+      ],
+      "before": [
+        52,
+        1005,
+        604,
+        1529
+      ],
+      "during": [
+        54,
+        1007,
+        601,
+        1526
+      ],
+      "after": [
+        52,
+        1005,
+        604,
+        1529
+      ],
+      "widthRatio": 0.9909420289855072,
+      "at": "2026-10-03T10:27:46.493Z"
+    },
+    {
+      "id": "light-card-scroll",
+      "behavior": "Dragging from a card scrolls the catalog without opening a game",
+      "evidence": [
+        "light-card-scroll-cancel.jpeg"
+      ],
+      "at": "2026-10-03T10:27:51.068Z"
+    },
+    {
+      "id": "light-profile",
+      "behavior": "Profile and ranking remain readable after rapid navigation",
+      "evidence": [
+        "light-profile.jpeg"
+      ],
+      "at": "2026-10-03T10:27:58.234Z"
+    },
+    {
+      "id": "light-win-modal",
+      "behavior": "Winning result appears; scrim prevents covered restart controls receiving taps",
+      "evidence": [
+        "light-win.jpeg",
+        "light-win-blocked.jpeg",
+        "light-win-entry-0.jpeg",
+        "light-win-entry-1.jpeg",
+        "light-win-entry-2.jpeg",
+        "light-win-entry-3.jpeg",
+        "light-win-entry-4.jpeg",
+        "light-win-entry-5.jpeg",
+        "light-win-entry-6.jpeg"
+      ],
+      "at": "2026-10-03T10:31:07.790Z"
+    }
+  ],
+  "motionSamples": [
+    {
+      "tag": "light-win-entry",
+      "source": "real device snapshots during UI input; timestamps include capture overhead",
+      "samples": [
+        {
+          "file": "light-win-entry-0.jpeg",
+          "requestMs": 5,
+          "completionMs": 312
+        },
+        {
+          "file": "light-win-entry-1.jpeg",
+          "requestMs": 457,
+          "completionMs": 811
+        },
+        {
+          "file": "light-win-entry-2.jpeg",
+          "requestMs": 934,
+          "completionMs": 1511
+        },
+        {
+          "file": "light-win-entry-3.jpeg",
+          "requestMs": 1658,
+          "completionMs": 2211
+        },
+        {
+          "file": "light-win-entry-4.jpeg",
+          "requestMs": 2337,
+          "completionMs": 2885
+        },
+        {
+          "file": "light-win-entry-5.jpeg",
+          "requestMs": 3027,
+          "completionMs": 3613
+        },
+        {
+          "file": "light-win-entry-6.jpeg",
+          "requestMs": 3751,
+          "completionMs": 4285
+        }
+      ]
+    }
+  ],
+  "incomplete": {
+    "stage": [
+      "dialogs",
+      "light"
+    ],
+    "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  c.assert(c.text(ns).some(t => t.includes('玩家 1 回合')))\n\n    at emptyDuel (E:\\lianxi\\LittleGames\\scripts\\device-harmony-motion.cjs:85:5)\n    at dialogs (E:\\lianxi\\LittleGames\\scripts\\device-harmony-motion.cjs:148:41)\n    at async main (E:\\lianxi\\LittleGames\\scripts\\device-harmony-motion.cjs:204:33)",
+    "at": "2026-10-03T10:31:09.717Z"
+  }
+}

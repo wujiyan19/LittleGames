@@ -1,0 +1,9 @@
+PASS a reused fruit child receives new positions without changing its UI identity
+PASS stable IDs update image resources and size when a new snapshot reuses an ID
+PASS pause and background freeze the displayed fruit; resume updates the same child
+PASS cut fruit disappears immediately, scores once, and exports a valid continuation
+PASS winning fruit and hit bomb disappear even though their terminal frame loop stops
+PASS missed fruit removes its child; restarting creates a fresh child for reused IDs
+PASS world rendering observes snapshots while keeping keys independent of frame positions
+PASS fruit mistake text agrees with the five-miss rule in every locale
+8/8 world piece refresh checks passed

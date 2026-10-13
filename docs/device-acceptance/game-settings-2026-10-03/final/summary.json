@@ -1,0 +1,116 @@
+{
+  "target": "49X0224C24001554",
+  "packageSha256": "ce2185b14cbd6fba65119d950697afeb0acec978f253a84fba6b60a191720196",
+  "checks": [
+    {
+      "id": "panel-2048",
+      "evidence": [
+        "tablet-2048-rules.jpeg"
+      ],
+      "detail": "Unified settings, complete rules, supported pause and restart",
+      "at": "2026-10-03T14:47:49.247Z"
+    },
+    {
+      "id": "panel-snake",
+      "evidence": [
+        "tablet-snake-rules.jpeg"
+      ],
+      "detail": "Unified settings, complete rules, supported pause and restart",
+      "at": "2026-10-03T14:48:19.625Z"
+    },
+    {
+      "id": "panel-tetris",
+      "evidence": [
+        "tablet-tetris-rules.jpeg"
+      ],
+      "detail": "Unified settings, complete rules, supported pause and restart",
+      "at": "2026-10-03T14:48:49.967Z"
+    },
+    {
+      "id": "panel-sudoku",
+      "evidence": [
+        "tablet-sudoku-rules.jpeg"
+      ],
+      "detail": "Unified settings, complete rules, supported pause and restart",
+      "at": "2026-10-03T14:49:19.678Z"
+    },
+    {
+      "id": "panel-guessnumber",
+      "evidence": [
+        "tablet-guessnumber-rules.jpeg"
+      ],
+      "detail": "Unified settings, complete rules, supported pause and restart",
+      "at": "2026-10-03T14:49:48.512Z"
+    },
+    {
+      "id": "panel-memorycard",
+      "evidence": [
+        "tablet-memorycard-rules.jpeg"
+      ],
+      "detail": "Unified settings, complete rules, supported pause and restart",
+      "at": "2026-10-03T14:50:16.692Z"
+    },
+    {
+      "id": "panel-match3",
+      "evidence": [
+        "tablet-match3-rules.jpeg"
+      ],
+      "detail": "Unified settings, complete rules, supported pause and restart",
+      "at": "2026-10-03T14:50:46.471Z"
+    },
+    {
+      "id": "panel-tictactoe",
+      "evidence": [
+        "tablet-tictactoe-rules.jpeg"
+      ],
+      "detail": "Unified settings, complete rules, supported pause and restart",
+      "at": "2026-10-03T14:51:14.530Z"
+    },
+    {
+      "id": "panel-xiangqi",
+      "evidence": [
+        "tablet-xiangqi-rules.jpeg"
+      ],
+      "detail": "Unified settings, complete rules, supported pause and restart",
+      "at": "2026-10-03T14:51:44.540Z"
+    },
+    {
+      "id": "panel-fruitslice",
+      "evidence": [
+        "tablet-fruitslice-rules.jpeg"
+      ],
+      "detail": "Unified settings, complete rules, supported pause and restart",
+      "at": "2026-10-03T14:52:12.974Z"
+    },
+    {
+      "id": "app-settings-and-difficulty",
+      "evidence": [
+        "tablet-app-settings.jpeg",
+        "tablet-game-app-about.jpeg",
+        "tablet-app-settings-return.jpeg",
+        "tablet-difficulty-hard.jpeg"
+      ],
+      "detail": "Game to app settings to About and back preserves board; difficulty changes and selection updates",
+      "at": "2026-10-03T14:54:43.487Z"
+    },
+    {
+      "id": "pause-and-resume",
+      "evidence": [
+        "tablet-manual-pause.jpeg",
+        "tablet-resumed-settings.jpeg"
+      ],
+      "detail": "Sheet freezes countdown, deliberate pause survives dismissal and Resume restores play",
+      "at": "2026-10-03T14:55:36.570Z"
+    },
+    {
+      "id": "dark-theme-and-restore",
+      "evidence": [
+        "tablet-dark-2048-rules.jpeg",
+        "tablet-dark-fruitslice-settings.jpeg",
+        "tablet-final-featured.jpeg"
+      ],
+      "detail": "Dark settings are readable; original theme restored and left on Featured",
+      "at": "2026-10-03T14:57:50.541Z"
+    }
+  ]
+}

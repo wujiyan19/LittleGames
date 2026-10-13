@@ -1,0 +1,144 @@
+{
+  "packageSha256": "e14b33644f6a0f72964c96e56f0a692c70680db11437152601f9a241e4911757",
+  "target": "FMR0224521016052",
+  "checks": [
+    {
+      "id": "theme-light",
+      "detail": "Theme selected through UI: 浅色",
+      "evidence": [
+        "settings-light.jpeg"
+      ],
+      "at": "2026-10-08T14:25:30.577Z"
+    },
+    {
+      "id": "fronts-light",
+      "detail": "Three native tabs and fixed headers visible; screenshots captured.",
+      "evidence": [
+        "light-featured.jpeg",
+        "light-category.jpeg",
+        "light-profile.jpeg"
+      ],
+      "at": "2026-10-08T14:25:52.405Z"
+    },
+    {
+      "id": "all-filters",
+      "detail": "All seven choices reachable with one selection. Counts: 21 款游戏, 35 款游戏, 15 款游戏, 8 款游戏, 5 款游戏, 16 款游戏. Gestures at both list ends kept main Categories tab.",
+      "evidence": [
+        "category-last-filter.jpeg",
+        "category-all-filters.jpeg"
+      ],
+      "at": "2026-10-08T14:27:34.865Z"
+    },
+    {
+      "id": "search",
+      "detail": "Name search, category intersection, empty state, and clear restoring current category passed.",
+      "evidence": [
+        "search-2048.jpeg",
+        "search-category-intersection.jpeg",
+        "search-empty.jpeg"
+      ],
+      "at": "2026-10-08T14:28:53.230Z"
+    },
+    {
+      "id": "scroll-state",
+      "detail": "Same filter and main-tab roundtrip retain position; changing filter returns content to top.",
+      "evidence": [
+        "category-switched-top.jpeg"
+      ],
+      "at": "2026-10-08T14:37:08.742Z"
+    },
+    {
+      "id": "history",
+      "detail": "History opens, existing record launches game, and navigation returns to Featured.",
+      "evidence": [
+        "play-history.jpeg",
+        "history-game.jpeg"
+      ],
+      "at": "2026-10-08T14:37:29.950Z"
+    },
+    {
+      "id": "exit-dialog-light",
+      "detail": "Exit confirmation shown; cancel returns to game and confirm returns to catalog.",
+      "evidence": [
+        "light-exit-confirm.jpeg"
+      ],
+      "at": "2026-10-08T14:38:13.656Z"
+    },
+    {
+      "id": "game-settings-light",
+      "detail": "Game header, sheet/rules and fixed fully visible return button passed; catalog state restored.",
+      "evidence": [
+        "light-2048.jpeg",
+        "light-game-settings.jpeg"
+      ],
+      "at": "2026-10-08T14:38:16.660Z"
+    },
+    {
+      "id": "result-dialog-light",
+      "detail": "Completed a reaction game, replayed through result action and exited a second result.",
+      "evidence": [
+        "light-result.jpeg"
+      ],
+      "at": "2026-10-08T14:39:02.869Z"
+    },
+    {
+      "id": "about-light",
+      "detail": "Settings to About and two-level return passed.",
+      "evidence": [
+        "light-about.jpeg"
+      ],
+      "at": "2026-10-08T14:39:23.781Z"
+    },
+    {
+      "id": "theme-dark",
+      "detail": "Theme selected through UI: 深色",
+      "evidence": [
+        "settings-dark.jpeg"
+      ],
+      "at": "2026-10-09T13:22:24.027Z"
+    },
+    {
+      "id": "fronts-dark",
+      "detail": "Three native tabs and fixed headers visible; screenshots captured.",
+      "evidence": [
+        "dark-featured.jpeg",
+        "dark-category.jpeg",
+        "dark-profile.jpeg"
+      ],
+      "at": "2026-10-09T13:22:44.853Z"
+    },
+    {
+      "id": "exit-dialog-dark",
+      "detail": "Exit confirmation shown; cancel returns to game and confirm returns to catalog.",
+      "evidence": [
+        "dark-exit-confirm.jpeg"
+      ],
+      "at": "2026-10-09T13:23:28.949Z"
+    },
+    {
+      "id": "game-settings-dark",
+      "detail": "Game header, sheet/rules and fixed fully visible return button passed; catalog state restored.",
+      "evidence": [
+        "dark-2048.jpeg",
+        "dark-game-settings.jpeg"
+      ],
+      "at": "2026-10-09T13:23:31.744Z"
+    },
+    {
+      "id": "result-dialog-dark",
+      "detail": "Completed a reaction game, replayed through result action and exited a second result.",
+      "evidence": [
+        "dark-result.jpeg"
+      ],
+      "at": "2026-10-09T13:24:16.306Z"
+    },
+    {
+      "id": "about-dark",
+      "detail": "Settings to About and two-level return passed.",
+      "evidence": [
+        "dark-about.jpeg"
+      ],
+      "at": "2026-10-09T13:24:36.681Z"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "processId": 9842,
+  "note": "No lines returned by the filtered query; this is a bounded log snapshot.",
+  "scope": "Current app process hilog E,F snapshot after acceptance",
+  "returnedLines": 0
+}

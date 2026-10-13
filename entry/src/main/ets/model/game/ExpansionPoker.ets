@@ -81,7 +81,83 @@ export class ExpansionPoker {
       if (this.beats(pattern, last) && (best.kind === 0 || pattern.bomb < best.bomb || (pattern.bomb === best.bomb && pattern.strength < best.strength))) { best = pattern; }
     } } return best;
   }
+  private groups(hand: number[]): number[][] {
+    const groups: number[][] = [];
+    for (let i: number = 0; i < 18; i++) { groups.push([]); }
+    for (let i: number = 0; i < hand.length; i++) { groups[this.rank(hand[i])].push(hand[i]); }
+    return groups;
+  }
+  private fill(groups: number[][], ranks: number[], counts: number[], wild: number[]): number[] {
+    const cards: number[] = []; let missing: number = 0;
+    for (let i: number = 0; i < ranks.length; i++) {
+      const group: number[] = groups[ranks[i]];
+      const count: number = Math.min(group.length, counts[i]);
+      cards.push(...group.slice(0, count)); missing += counts[i] - count;
+    }
+    if (missing > wild.length) { return []; }
+    cards.push(...wild.slice(0, missing)); return cards;
+  }
+  private wings(choices: number[][], hand: number[], core: number[], singles: number, pairs: number): void {
+    const coreRanks: number[] = core.map((card: number) => this.rank(card));
+    const remaining: number[] = hand.filter((card: number) => !coreRanks.includes(this.rank(card)));
+    if (singles > 0 && remaining.length >= singles) {
+      choices.push([...core, ...remaining.slice(0, singles)]);
+      choices.push([...core, ...remaining.slice(remaining.length - singles)]);
+    }
+    if (pairs === 0) { return; }
+    const groups: number[][] = this.groups(remaining);
+    const pairRanks: number[] = [];
+    for (let rank: number = 2; rank <= 17; rank++) { if (groups[rank].length >= 2) { pairRanks.push(rank); } }
+    if (pairRanks.length < pairs) { return; }
+    const low: number[] = core.slice(); const high: number[] = core.slice();
+    for (let i: number = 0; i < pairs; i++) {
+      low.push(...groups[pairRanks[i]].slice(0, 2));
+      high.push(...groups[pairRanks[pairRanks.length - 1 - i]].slice(0, 2));
+    }
+    choices.push(low); choices.push(high);
+  }
+  private runs(choices: number[][], hand: number[], groups: number[][], guandan: boolean, wild: number[]): void {
+    for (let count: number = 1; count <= 3; count++) {
+      const minimum: number = count === 1 ? 5 : count === 2 ? 3 : 2;
+      const maximum: number = guandan ? minimum : count === 1 ? 12 : Math.floor(hand.length / count);
+      for (let length: number = minimum; length <= maximum; length++) {
+        for (let start: number = guandan ? 2 : 3; start + length - 1 <= 14; start++) {
+          const ranks: number[] = [];
+          for (let i: number = 0; i < length; i++) { ranks.push(start + i); }
+          const run: number[] = this.fill(groups, ranks, new Array<number>(length).fill(count), wild);
+          if (run.length === 0) { continue; }
+          choices.push(run);
+          if (!guandan && count === 3 && length <= 5) { this.wings(choices, hand, run, length, length); }
+        }
+      }
+      if (guandan) {
+        const ranks: number[] = [14];
+        for (let i: number = 1; i < minimum; i++) { ranks.push(i + 1); }
+        const lowAce: number[] = this.fill(groups, ranks, new Array<number>(minimum).fill(count), wild);
+        if (lowAce.length > 0) { choices.push(lowAce); }
+      }
+    }
+  }
+  private fragmentation(hand: number[], choice: number[]): number {
+    const before: number[][] = this.groups(hand); const after: number[][] = this.groups(hand.filter((card: number) => !choice.includes(card)));
+    let cost: number = 0;
+    for (let rank: number = 2; rank <= 17; rank++) {
+      if (before[rank].length >= 4 && after[rank].length > 0 && after[rank].length < 4) { cost += 90; }
+      else if (before[rank].length >= 2 && after[rank].length === 1) { cost += 18; }
+    }
+    return cost;
+  }
+  private enemyNearFinish(s: ExpansionState, player: number, cards: number): boolean {
+    const players: number = s.id === 'guandan' ? 4 : 3;
+    for (let seat: number = 0; seat < players; seat++) {
+      const enemy: boolean = s.id === 'guandan' ? seat % 2 !== player % 2 : (seat === 0) !== (player === 0);
+      // Hand sizes are public information. Never inspect an opponent's card ranks.
+      if (enemy && s.piles[seat].cards.length > 0 && s.piles[seat].cards.length <= cards) { return true; }
+    }
+    return false;
+  }
   candidate(s: ExpansionState, player: number): number[] {
+    if (!V.integer(player, 0, s.id === 'guandan' ? 3 : 2) || !POKER_IDS.includes(s.id)) { return []; }
     const hand: number[] = s.piles[player].cards; const last: PokerPattern = this.last(s); const choices: number[][] = [];
     hand.forEach((card: number) => { choices.push([card]); });
     for (let rank: number = 2; rank <= 17; rank++) {
@@ -91,24 +167,58 @@ export class ExpansionPoker {
         for (let other: number = 2; other <= 17; other++) { if (rank === other) { continue; } const pair: number[] = hand.filter((card: number) => this.rank(card) === other); if (pair.length >= 2) { choices.push([...same.slice(0, 3), ...pair.slice(0, 2)]); } if (s.id === 'doudizhu' && pair.length > 0) { choices.push([...same.slice(0, 3), pair[0]]); } }
       }
     }
-    for (let count: number = 1; count <= 3; count++) { for (let start: number = s.id === 'guandan' ? 2 : 3; start <= 10; start++) {
-      const run: number[] = [];
-      for (let rank: number = start; rank <= 14; rank++) {
-        const group: number[] = hand.filter((card: number) => this.rank(card) === rank); if (group.length < count) { break; } run.push(...group.slice(0, count));
-        if (run.length >= (count === 1 ? 5 : 6)) { choices.push(run.slice()); }
-      }
-    } }
     if (s.id === 'doudizhu') { const jokers: number[] = hand.filter((card: number) => this.rank(card) >= 16); if (jokers.length === 2) { choices.push(jokers); } }
     else { const jokers: number[] = hand.filter((card: number) => this.rank(card) >= 16); if (jokers.length === 4) { choices.push(jokers); } }
     const wild: number[] = hand.filter((card: number) => card % 54 === 14);
-    if (s.id === 'guandan' && wild.length > 0) {
-      for (let rank: number = 2; rank <= 14; rank++) { const same: number[] = hand.filter((card: number) => this.rank(card) === rank && !wild.includes(card)); for (let n: number = 1; n <= same.length; n++) { choices.push([...same.slice(0, n), ...wild]); } }
+    const groups: number[][] = this.groups(hand);
+    choices.push(hand.slice());
+    this.runs(choices, hand, groups, s.id === 'guandan', []);
+    if (s.id === 'doudizhu') {
+      for (let rank: number = 2; rank <= 17; rank++) {
+        if (groups[rank].length === 4) { this.wings(choices, hand, groups[rank].slice(0, 4), 2, 2); }
+      }
+    } else {
+      const natural: number[][] = this.groups(hand.filter((card: number) => !wild.includes(card)));
+      if (wild.length > 0) {
+        this.runs(choices, hand, natural, true, wild);
+        for (let rank: number = 2; rank <= 14; rank++) {
+          for (let other: number = 2; other <= 17; other++) {
+            if (rank === other) { continue; }
+            const fullHouse: number[] = this.fill(natural, [rank, other], [3, 2], wild);
+            if (fullHouse.length === 5) { choices.push(fullHouse); }
+          }
+          for (let used: number = 1; used <= wild.length; used++) {
+            for (let count: number = 1; count <= natural[rank].length; count++) {
+              choices.push([...natural[rank].slice(0, count), ...wild.slice(0, used)]);
+            }
+          }
+        }
+      }
+      // A natural straight flush can require different physical cards from a rank-only run.
+      for (let suit: number = 0; suit < 4; suit++) {
+        const suited: number[] = hand.filter((card: number) => card % 54 < 52 &&
+          Math.floor(card % 54 / 13) === suit && !wild.includes(card));
+        const suitedGroups: number[][] = this.groups(suited);
+        for (let start: number = 2; start <= 10; start++) {
+          const run: number[] = this.fill(suitedGroups, [start, start + 1, start + 2, start + 3, start + 4], [1, 1, 1, 1, 1], wild);
+          if (run.length === 5) { choices.push(run); }
+        }
+        const lowAce: number[] = this.fill(suitedGroups, [14, 2, 3, 4, 5], [1, 1, 1, 1, 1], wild);
+        if (lowAce.length === 5) { choices.push(lowAce); }
+      }
     }
-    let best: number[] = []; let value: number = 100000;
+    let best: number[] = []; let value: number = 1000000000;
     choices.forEach((choice: number[]) => {
       const pattern: PokerPattern = this.pattern(choice, s.id === 'guandan', last); if (pattern.kind === 0) { return; }
-      const score: number = pattern.bomb * 100 + pattern.strength - (last.kind === 0 ? choice.length * 30 : 0);
-      if (score < value || choice.length === hand.length) { best = choice; value = choice.length === hand.length ? -100000 : score; }
+      let score: number = pattern.bomb * 100 + pattern.strength;
+      if (s.level > 0) { score -= last.kind === 0 ? choice.length * 30 : 0; }
+      if (s.level === 2) {
+        score += this.fragmentation(hand, choice);
+        if (last.kind === 0) { score -= choice.length * 20; }
+        else if (pattern.bomb === 0 && this.enemyNearFinish(s, player, last.size)) { score -= pattern.strength * 3; }
+      }
+      if (choice.length === hand.length) { score = -1000000; }
+      if (score < value) { best = choice; value = score; }
     }); return best;
   }
   private finished(s: ExpansionState, player: number): void {
@@ -136,18 +246,31 @@ export class ExpansionPoker {
     s.data = [s.cursor, 0, pattern.kind, pattern.strength, pattern.size, pattern.bomb]; s.moves++; s.tray = []; this.finished(s, s.cursor); if (s.outcome === 0) { this.next(s); } return true;
   }
   private pass(s: ExpansionState): boolean { if (s.data[2] === 0) { return false; } s.data[1]++; this.next(s); return true; }
+  needsComputerTurn(s: ExpansionState): boolean {
+    return POKER_IDS.includes(s.id) && s.outcome === 0 &&
+      (s.cursor !== 0 || s.piles[0].cards.length === 0);
+  }
+  computerTurn(s: ExpansionState): void {
+    if (!this.needsComputerTurn(s)) { return; }
+    const partnerLeads: boolean = s.data[2] !== 0 &&
+      (s.id === 'guandan' ? s.data[0] % 2 === s.cursor % 2 : s.data[0] > 0 && s.cursor > 0);
+    const candidate: number[] = this.candidate(s, s.cursor);
+    // Finishing one's own hand helps the team; otherwise preserve a partner's winning play.
+    if (s.level > 0 && partnerLeads && candidate.length !== s.piles[s.cursor].cards.length) {
+      this.pass(s);
+    } else if (candidate.length > 0) { this.play(s, candidate); }
+    else { this.pass(s); }
+  }
   private bots(s: ExpansionState): void {
-    for (let guard: number = 0; guard < 500 && s.outcome === 0 && (s.cursor !== 0 || s.piles[0].cards.length === 0); guard++) {
-      const partnerLeads: boolean = s.id === 'guandan' && s.data[2] !== 0 && s.data[0] % 2 === s.cursor % 2;
-      const candidate: number[] = partnerLeads ? [] : this.candidate(s, s.cursor);
-      if (candidate.length > 0) { this.play(s, candidate); } else { this.pass(s); }
+    for (let guard: number = 0; guard < 500 && this.needsComputerTurn(s); guard++) {
+      this.computerTurn(s);
     }
   }
-  tap(s: ExpansionState, at: number): void {
-    if (s.cursor !== 0) { return; }
+  tap(s: ExpansionState, at: number, automatic: boolean = true): void {
+    if (!V.integer(at, 0, 1000) || s.outcome !== 0 || s.cursor !== 0 || s.piles[0].cards.length === 0) { return; }
     if (at === 902) { s.tray = this.candidate(s, 0); return; }
-    if (at === 900) { if (this.play(s, s.tray)) { this.bots(s); } return; }
-    if (at === 901) { if (this.pass(s)) { s.tray = []; this.bots(s); } return; }
+    if (at === 900) { if (this.play(s, s.tray) && automatic) { this.bots(s); } return; }
+    if (at === 901) { if (this.pass(s)) { s.tray = []; if (automatic) { this.bots(s); } } return; }
     if (s.piles[0].cards.includes(at)) { s.tray = s.tray.includes(at) ? s.tray.filter((card: number) => card !== at) : [...s.tray, at]; }
   }
   valid(s: ExpansionState): boolean {

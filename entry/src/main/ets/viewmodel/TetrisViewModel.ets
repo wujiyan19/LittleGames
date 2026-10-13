@@ -10,6 +10,7 @@ import { GameDataManager } from '../model/GameData';
 import { GameLifecycleObserver } from '../common/GameLifecycleBus';
 import { ActivePiece, TetrisRules } from '../model/game/TetrisModel';
 import { RandomSource, RealRandom } from '../model/game/RandomSource';
+import { GameSoundEvent, gameSound } from '../common/GameSound';
 
 const COLS = 10;
 const ROWS = 20;
@@ -84,10 +85,11 @@ export class TetrisViewModel implements GameLifecycleObserver {
 
   /** 只铺开局数据，不启动定时器（初始化/单测用） */
   newGame(): void {
+    gameSound.stop(GAME_ID);
     this.stopTimer();
     this.autoPaused = false;
     this.confirmExit = false;
-    GameDataManager.incrementPlayCount(GAME_ID);
+    GameDataManager.recordGamePlayed(GAME_ID);
     this.board = this.rules.emptyBoard();
     this.score = 0;
     this.level = 1;
@@ -97,6 +99,7 @@ export class TetrisViewModel implements GameLifecycleObserver {
 
   /** 开局并启动定时器 */
   startGame(): void {
+    gameSound.stop(GAME_ID);
     if (this.score > 0) { GameDataManager.updateHighScore(GAME_ID, this.score); }
     this.newGame();
     this.startTimer();
@@ -142,6 +145,7 @@ export class TetrisViewModel implements GameLifecycleObserver {
     const locked = this.rules.lock(this.board, p);
     const result = this.rules.clearRows(locked);
     this.board = result.board;
+    gameSound.play(GAME_ID, result.lines > 0 ? GameSoundEvent.REWARD : GameSoundEvent.ACTION);
     if (result.lines > 0) {
       this.score += this.rules.scoreForLines(result.lines, this.level);
       const newLevel = Math.floor(this.score / 1000) + 1;
@@ -158,6 +162,7 @@ export class TetrisViewModel implements GameLifecycleObserver {
     if (!this.appVisible || this.confirmExit || this.status !== GameStatus.PLAYING || !this.piece) { return; }
     if (this.rules.canPlace(this.board, this.piece, -1, 0)) {
       this.piece = new ActivePiece(this.piece.idx, this.piece.rot, this.piece.x - 1, this.piece.y);
+      gameSound.play(GAME_ID);
       this.updateCells();
     }
   }
@@ -166,13 +171,16 @@ export class TetrisViewModel implements GameLifecycleObserver {
     if (!this.appVisible || this.confirmExit || this.status !== GameStatus.PLAYING || !this.piece) { return; }
     if (this.rules.canPlace(this.board, this.piece, 1, 0)) {
       this.piece = new ActivePiece(this.piece.idx, this.piece.rot, this.piece.x + 1, this.piece.y);
+      gameSound.play(GAME_ID);
       this.updateCells();
     }
   }
 
   rotateBlock(): void {
     if (!this.appVisible || this.confirmExit || this.status !== GameStatus.PLAYING || !this.piece) { return; }
+    const previous: ActivePiece = this.piece;
     this.piece = this.rules.rotated(this.board, this.piece);
+    if (this.piece.rot !== previous.rot || this.piece.x !== previous.x || this.piece.y !== previous.y) { gameSound.play(GAME_ID); }
     this.updateCells();
   }
 
@@ -193,6 +201,7 @@ export class TetrisViewModel implements GameLifecycleObserver {
 
   /** 手动暂停/恢复。只在「进行中 ⇄ 暂停」间切换 */
   togglePause(): void {
+    gameSound.stop(GAME_ID);
     if (this.status === GameStatus.PLAYING) {
       this.status = GameStatus.PAUSED;
       this.stopTimer();
@@ -208,6 +217,7 @@ export class TetrisViewModel implements GameLifecycleObserver {
    * 必须走总线（原 onPageHide/onPageShow 钩子从未被调用过）。
    */
   onAppHidden(): void {
+    gameSound.stop(GAME_ID);
     this.appVisible = false;
     this.stopTimer();
     this.settleCurrentScore();
@@ -231,11 +241,11 @@ export class TetrisViewModel implements GameLifecycleObserver {
     return this.requestBack();
   }
 
-  /** 页面返回按钮与系统侧滑共用：进行中弹确认，其余放行 */
+  /** 页面返回按钮与系统侧滑共用：进行中或暂停弹确认，其余放行 */
   requestBack(): boolean {
     if (!GameDataManager.getSetting('confirmExitEnabled', true)) { return false; }
-    if (this.status === GameStatus.PLAYING) {
-      this.confirmExit = true;
+    if (this.status === GameStatus.PLAYING || this.status === GameStatus.PAUSED) {
+      gameSound.stop(GAME_ID); this.confirmExit = true;
       this.stopTimer();
       return true;
     }
@@ -263,6 +273,7 @@ export class TetrisViewModel implements GameLifecycleObserver {
   }
 
   private gameOver(): void {
+    gameSound.play(GAME_ID, GameSoundEvent.LOSE);
     this.status = GameStatus.OVER;
     this.stopTimer();
     if (this.score > this.highScore) { this.highScore = this.score; }
@@ -276,6 +287,10 @@ export class TetrisViewModel implements GameLifecycleObserver {
     this.stopTimer();
     this.settleCurrentScore();
   }
+
+  isPlayTimeActive(): boolean { return this.status === GameStatus.PLAYING && !this.confirmExit; }
+
+  hasProgress(): boolean { return this.status === GameStatus.PLAYING || this.status === GameStatus.PAUSED; }
 
   continuationGameId(): string { return GAME_ID; }
 

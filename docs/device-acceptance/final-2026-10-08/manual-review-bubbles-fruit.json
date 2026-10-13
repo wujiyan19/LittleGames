@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "packageSha256": "e14b33644f6a0f72964c96e56f0a692c70680db11437152601f9a241e4911757",
+  "target": "FMR0224521016052",
+  "sourceReport": "worlds.json",
+  "method": "Visual inspection of the original real-device fast screenshots through view_image; no device operations, image edits or model/state inspection.",
+  "reviews": [
+    {
+      "id": "bubbleshooter",
+      "attemptId": "mv0zyxhl-0e419b-8",
+      "check": "rendered-motion",
+      "sourceStatus": "requires-visual-review",
+      "status": "passed-visual-inspection",
+      "at": "2026-10-09T13:42:58Z",
+      "confirmingTrial": 2,
+      "sameNativeNodeEstablished": false,
+      "evidence": [
+        "world-bubbleshooter-mv0zyxhl-0e419b-8-motion-trial-2-fast-0.jpeg",
+        "world-bubbleshooter-mv0zyxhl-0e419b-8-motion-trial-2-fast-1.jpeg",
+        "world-bubbleshooter-mv0zyxhl-0e419b-8-motion-trial-2-fast-2.jpeg",
+        "world-bubbleshooter-mv0zyxhl-0e419b-8-motion-trial-2-fast-3.jpeg"
+      ],
+      "observations": [
+        {
+          "file": "world-bubbleshooter-mv0zyxhl-0e419b-8-motion-trial-2-fast-0.jpeg",
+          "capturedAt": "2026-10-09T13:35:11.124Z",
+          "observed": "金色星形球独立位于场地下半部，远离上方泡泡阵列；顶部下一球预览也为金色。"
+        },
+        {
+          "file": "world-bubbleshooter-mv0zyxhl-0e419b-8-motion-trial-2-fast-1.jpeg",
+          "capturedAt": "2026-10-09T13:35:11.694Z",
+          "observed": "场地下半部的球已不在原位置；金色星形球出现在阵列底部左侧，明显比上一帧更高、更靠左。顶部下一球预览已切为蓝色。"
+        },
+        {
+          "file": "world-bubbleshooter-mv0zyxhl-0e419b-8-motion-trial-2-fast-2.jpeg",
+          "capturedAt": "2026-10-09T13:35:12.242Z",
+          "observed": "金色星形球保留在上一帧阵列底部左侧的挂靠位置。"
+        },
+        {
+          "file": "world-bubbleshooter-mv0zyxhl-0e419b-8-motion-trial-2-fast-3.jpeg",
+          "capturedAt": "2026-10-09T13:35:12.871Z",
+          "observed": "金色星形球仍在挂靠位置，场地下半部没有停留在旧位置的该球。"
+        }
+      ],
+      "additionalInspectedEvidence": [
+        "world-bubbleshooter-mv0zyxhl-0e419b-8-motion-trial-1-fast-0.jpeg",
+        "world-bubbleshooter-mv0zyxhl-0e419b-8-motion-trial-1-fast-1.jpeg",
+        "world-bubbleshooter-mv0zyxhl-0e419b-8-motion-trial-1-fast-2.jpeg",
+        "world-bubbleshooter-mv0zyxhl-0e419b-8-motion-trial-1-fast-3.jpeg"
+      ],
+      "additionalObservation": "Trial 1 shows a blue projectile in the lower arena, then its disappearance with a cleared blue pair and a +60 visual effect. Trial 1 alone is not used as the two-position motion proof; the confirming proof is trial 2 fast-0 to fast-1.",
+      "observed": "本轮试射的金色球从场地下半部移动到泡泡阵列底部左侧，真实截图显示位置变化和挂靠后的稳定画面。",
+      "limits": [
+        "The screenshots do not establish a shared native image hashcode across the flight and attached board tile.",
+        "This confirms visible position changes for this short shot, not frame rate, every intermediate animation frame, full target completion or random win rates.",
+        "Trial 3 was not needed to establish this specific visual pass and was not inspected for this review."
+      ],
+      "evidenceSha256": {
+        "world-bubbleshooter-mv0zyxhl-0e419b-8-motion-trial-2-fast-0.jpeg": "adce1a5aaa2b591832038654eb31f99d61cf1c803cddee31171cd21cff202556",
+        "world-bubbleshooter-mv0zyxhl-0e419b-8-motion-trial-2-fast-1.jpeg": "cf636906343cbe85c397dcfddc7c17b399b1ef4626ee2c0e2d9c70c63803e83c",
+        "world-bubbleshooter-mv0zyxhl-0e419b-8-motion-trial-2-fast-2.jpeg": "cf636906343cbe85c397dcfddc7c17b399b1ef4626ee2c0e2d9c70c63803e83c",
+        "world-bubbleshooter-mv0zyxhl-0e419b-8-motion-trial-2-fast-3.jpeg": "b436c98ee28da00a5508ce7e5766b1977ac15399ad61d43206da8983a1449ddf",
+        "world-bubbleshooter-mv0zyxhl-0e419b-8-motion-trial-1-fast-0.jpeg": "97941010c9b0bb7d138a8accd7fc0046e819645bec9a63a627813ec2ffd7b731",
+        "world-bubbleshooter-mv0zyxhl-0e419b-8-motion-trial-1-fast-1.jpeg": "9c3c6c184d9c29453e54c1f700d91b4621c3393e98279e22037948024d046fd2",
+        "world-bubbleshooter-mv0zyxhl-0e419b-8-motion-trial-1-fast-2.jpeg": "65055e45d0e4714ce250082cd67e6c81ae9dd63dbdb06a73440a01819af40fbc",
+        "world-bubbleshooter-mv0zyxhl-0e419b-8-motion-trial-1-fast-3.jpeg": "07c20008549d177e626326aaf073a7fd7266891e4a102facc68f9513c327b22c"
+      }
+    },
+    {
+      "id": "fruitmerge",
+      "attemptId": "mv0zyxhl-0e419b-9",
+      "check": "rendered-motion",
+      "sourceStatus": "requires-visual-review",
+      "status": "passed-visual-inspection",
+      "at": "2026-10-09T13:42:58Z",
+      "confirmingTrial": 1,
+      "sameNativeNodeEstablished": false,
+      "evidence": [
+        "world-fruitmerge-mv0zyxhl-0e419b-9-motion-trial-1-fast-0.jpeg",
+        "world-fruitmerge-mv0zyxhl-0e419b-9-motion-trial-1-fast-1.jpeg",
+        "world-fruitmerge-mv0zyxhl-0e419b-9-motion-trial-1-fast-2.jpeg",
+        "world-fruitmerge-mv0zyxhl-0e419b-9-motion-trial-1-fast-3.jpeg"
+      ],
+      "observations": [
+        {
+          "file": "world-fruitmerge-mv0zyxhl-0e419b-9-motion-trial-1-fast-0.jpeg",
+          "capturedAt": "2026-10-09T13:36:55.588Z",
+          "observed": "容器左侧的双樱桃位于警戒线附近；下一颗水果预览为葡萄。"
+        },
+        {
+          "file": "world-fruitmerge-mv0zyxhl-0e419b-9-motion-trial-1-fast-1.jpeg",
+          "capturedAt": "2026-10-09T13:36:56.156Z",
+          "observed": "双樱桃横向位置保持在容器左侧，但已下降到容器中部下方，明显低于警戒线。"
+        },
+        {
+          "file": "world-fruitmerge-mv0zyxhl-0e419b-9-motion-trial-1-fast-2.jpeg",
+          "capturedAt": "2026-10-09T13:36:56.746Z",
+          "observed": "双樱桃继续下降到容器左下方，接近底边。"
+        },
+        {
+          "file": "world-fruitmerge-mv0zyxhl-0e419b-9-motion-trial-1-fast-3.jpeg",
+          "capturedAt": "2026-10-09T13:36:57.361Z",
+          "observed": "双樱桃位于容器左下角底部；没有保持在警戒线或中部的旧位置。"
+        }
+      ],
+      "observed": "同轮单颗樱桃在连续真实截图中由警戒线附近下降至中部、再下降至底部，水果位置确实刷新。",
+      "limits": [
+        "Fast screenshots establish visible position changes, not a shared native image hashcode.",
+        "This does not establish merge behavior, a full target win, frame rate, or every intermediate animation frame.",
+        "Trials 2 and 3 were not needed to establish this specific visual pass and were not inspected for this review."
+      ],
+      "evidenceSha256": {
+        "world-fruitmerge-mv0zyxhl-0e419b-9-motion-trial-1-fast-0.jpeg": "a74f7eee9b3daf78bf4b80a33a76cbb119d14bb3ad288a7f353d4c5553660e08",
+        "world-fruitmerge-mv0zyxhl-0e419b-9-motion-trial-1-fast-1.jpeg": "749fe7017a58d78c2a894252c1ec3b9fce5c9e337984e70c6df45f37f915171d",
+        "world-fruitmerge-mv0zyxhl-0e419b-9-motion-trial-1-fast-2.jpeg": "c376f7c4c0db069e17688feaa80df7379e5f19c973f3158499cdf47d99d6b09c",
+        "world-fruitmerge-mv0zyxhl-0e419b-9-motion-trial-1-fast-3.jpeg": "8395ab6c96a48ac8be39c40f59204e4d6b0be335525605baa17ae23e14bbd0af"
+      }
+    }
+  ]
+}

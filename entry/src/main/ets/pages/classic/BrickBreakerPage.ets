@@ -5,7 +5,7 @@ import { GameSessionTransfer } from '../../common/GameSessionTransfer';
  * 只持有 @Local viewModel，读取其 @Trace 状态、转发用户操作；
  * 不包含任何游戏规则/计时/持久化，也不 import Model 类型。
  */
-import { SemanticColors, RadiusTokens, FontTokens, SpacingTokens, ShadowTokens } from '../../common/DesignTokens';
+import { SemanticColors, RadiusTokens, FontTokens, SpacingTokens } from '../../common/DesignTokens';
 import { GameHeader } from '../../components/GameHeader';
 import { GameResultDialog } from '../../components/GameResultDialog';
 import { ExitConfirmDialog } from '../../components/ExitConfirmDialog';
@@ -26,10 +26,14 @@ export struct BrickBreakerPage {
 
   private boardLength(value: number): number { return value * this.boardScale; }
 
+  @Monitor('viewModel.status', 'viewModel.confirmExit', 'viewModel.started')
+  playTimeStateChanged(): void { GameLifecycleBus.updatePlayTime(this.viewModel); }
+
   aboutToAppear(): void {
     this.viewModel.setFrameLoop(new DisplayFrameLoop(this.getUIContext()));
     GameLifecycleBus.attach(this.viewModel);
     if (!GameSessionTransfer.restore(this.viewModel)) { this.viewModel.startGame(); }
+    this.playTimeStateChanged();
   }
 
   aboutToDisappear(): void {
@@ -71,7 +75,7 @@ export struct BrickBreakerPage {
         })
 
       Column() {
-        GameHeader({
+        GameHeader({ gameId: 'brickbreaker', pathStack: this.pathStack, hasProgress: (): boolean => this.viewModel.hasProgress(),
           gameTitle: $r('app.string.game_brickbreaker_name'),
           showScore: false,
           showDifficulty: false,
@@ -112,11 +116,12 @@ export struct BrickBreakerPage {
         Column() {
           Stack({ alignContent: Alignment.TopStart }) {
             // 游戏区域背景
-            Column()
+            Image($r('app.media.play_brick_scene'))
               .width(this.boardLength(this.viewModel.gameWidth()))
               .height(this.boardLength(this.viewModel.gameHeight()))
-              .backgroundColor(SemanticColors.boardBg)
+              .objectFit(ImageFit.Fill)
               .borderRadius(RadiusTokens.sm)
+              .hitTestBehavior(HitTestMode.None).accessibilityLevel('no')
 
             // 砖块层
             ForEach(this.viewModel.bricks, (brick: BrickViewData) => {

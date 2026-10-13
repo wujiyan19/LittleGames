@@ -23,7 +23,7 @@ export class ExpansionCards {
     }
     if (s.id === 'mahjong') {
       this.piles(s, 9); s.board = this.deck(136); s.data = [0, 0, 0, 0, 0, 0, 0, 0]; s.goal = 136;
-      for (let i: number = 0; i < 52; i++) { s.piles[i % 4].cards.push(s.board[i]); } s.cursor = 52; this.draw(s, 0); return;
+      for (let i: number = 0; i < 52; i++) { s.piles[i % 4].cards.push(s.board[i]); } s.cursor = 52; s.next = 0; this.draw(s, 0); return;
     }
     const spider: boolean = s.id === 'spider'; s.goal = spider ? 104 : 52; this.cardPieces(s, s.goal, spider ? 0 : 1); this.piles(s, spider ? 12 : 16);
     const deck: number[] = this.deck(s.goal);
@@ -81,27 +81,59 @@ export class ExpansionCards {
     else if (this.tail(s, pile, s.piles[pile].cards.indexOf(at))) { s.selected = s.selected === at ? -1 : at; }
   }
   private ludoLegal(s: ExpansionState, player: number): ExpansionPiece[] { return s.pieces.filter((p: ExpansionPiece) => p.owner === player && p.x < 57 && (p.x >= 0 || s.data[0] === 6)); }
+  private ludoDestination(token: ExpansionPiece, die: number): number {
+    let destination: number = token.x < 0 ? 0 : token.x + die;
+    if (destination > 57) { destination = 114 - destination; }
+    if (destination < 50 && destination % 4 === 0 && destination > 0) { destination = Math.min(51, destination + 4); }
+    return destination;
+  }
   private ludoMove(s: ExpansionState, token: ExpansionPiece): void {
     const die: number = s.data[0]; if (die === 0 || !this.ludoLegal(s, s.next - 1).some((p: ExpansionPiece) => p.id === token.id)) { return; }
-    let destination: number = token.x < 0 ? 0 : token.x + die; if (destination > 57) { destination = 114 - destination; }
-    if (destination < 50 && destination % 4 === 0 && destination > 0) { destination = Math.min(51, destination + 4); }
+    const destination: number = this.ludoDestination(token, die);
     token.x = destination;
     if (destination < 52) { const shared: number = (destination + token.owner * 13) % 52; s.pieces.forEach((p: ExpansionPiece) => { if (p.owner !== token.owner && p.x >= 0 && p.x < 52 && (p.x + p.owner * 13) % 52 === shared) { p.x = -1; } }); }
     s.moves++; s.score = s.pieces.filter((p: ExpansionPiece) => p.owner === 0).reduce((sum: number, p: ExpansionPiece) => sum + Math.max(0, p.x) * 10, 0);
     if (s.pieces.filter((p: ExpansionPiece) => p.owner === token.owner).every((p: ExpansionPiece) => p.x === 57)) { s.outcome = token.owner === 0 ? 1 : 2; }
     s.data[0] = 0; if (die !== 6) { s.next = s.next % 4 + 1; }
   }
-  private ludoBots(s: ExpansionState): void {
-    for (let guard: number = 0; guard < 100 && s.next !== 1 && s.outcome === 0; guard++) {
-      s.data[0] = 1 + this.pick(6); const legal: ExpansionPiece[] = this.ludoLegal(s, s.next - 1);
-      if (legal.length === 0) { s.data[0] = 0; s.next = s.next % 4 + 1; } else { legal.sort((a: ExpansionPiece, b: ExpansionPiece) => b.x - a.x); this.ludoMove(s, legal[0]); }
+  private ludoValue(s: ExpansionState, token: ExpansionPiece): number {
+    const destination: number = this.ludoDestination(token, s.data[0]);
+    let value: number = destination + (destination === 57 ? 200 : 0);
+    if (s.level < 2 || destination >= 52) { return value; }
+    const shared: number = (destination + token.owner * 13) % 52;
+    for (const opponent of s.pieces) {
+      if (opponent.owner === token.owner || opponent.x < 0 || opponent.x >= 52) { continue; }
+      if ((opponent.x + opponent.owner * 13) % 52 === shared) { value += 80; continue; }
+      // Every opponent position is visible; never inspect a hidden roll.
+      for (let die: number = 1; die <= 6; die++) {
+        const threat: number = this.ludoDestination(opponent, die);
+        if (threat < 52 && (threat + opponent.owner * 13) % 52 === shared) { value -= 10; }
+      }
     }
+    if (token.x < 0) { value += 8; }
+    return value;
   }
-  private ludoTap(s: ExpansionState, at: number): void {
+  private ludoComputer(s: ExpansionState): void {
+    s.data[0] = 1 + this.pick(6);
+    const legal: ExpansionPiece[] = this.ludoLegal(s, s.next - 1);
+    if (legal.length === 0) { s.data[0] = 0; s.next = s.next % 4 + 1; return; }
+    let token: ExpansionPiece = legal[0];
+    if (s.level === 0) { token = legal[this.pick(legal.length)]; }
+    else {
+      for (let i: number = 1; i < legal.length; i++) {
+        if (this.ludoValue(s, legal[i]) > this.ludoValue(s, token)) { token = legal[i]; }
+      }
+    }
+    this.ludoMove(s, token);
+  }
+  private ludoBots(s: ExpansionState): void {
+    for (let guard: number = 0; guard < 100 && this.needsComputerTurn(s); guard++) { this.computerTurn(s); }
+  }
+  private ludoTap(s: ExpansionState, at: number, automatic: boolean): void {
     if (s.next !== 1) { return; }
-    if (at === 900 && s.data[0] === 0) { s.data[0] = 1 + this.pick(6); if (this.ludoLegal(s, 0).length === 0) { s.data[0] = 0; s.next = 2; this.ludoBots(s); } return; }
+    if (at === 900 && s.data[0] === 0) { s.data[0] = 1 + this.pick(6); if (this.ludoLegal(s, 0).length === 0) { s.data[0] = 0; s.next = 2; if (automatic) { this.ludoBots(s); } } return; }
     const token: ExpansionPiece | undefined = s.pieces.find((p: ExpansionPiece) => p.id === at && p.owner === 0);
-    if (token) { this.ludoMove(s, token); this.ludoBots(s); }
+    if (token) { this.ludoMove(s, token); if (automatic) { this.ludoBots(s); } }
   }
   private sortTiles(cards: number[]): void { cards.sort((a: number, b: number) => Math.floor(a / 4) - Math.floor(b / 4) || a - b); }
   private draw(s: ExpansionState, player: number): boolean {
@@ -121,6 +153,7 @@ export class ExpansionCards {
     for (let pair: number = 0; pair < 34; pair++) { if (counts[pair] >= 2) { counts[pair] -= 2; const won: boolean = this.melds(counts, 4 - declared); counts[pair] += 2; if (won) { return true; } } } return false;
   }
   mahjongCan(s: ExpansionState, command: number): boolean {
+    if (s.outcome !== 0 || (s.next !== 0 && s.data[0] !== 1)) { return false; }
     const hand: number[] = s.piles[0].cards; const reaction: boolean = s.data[0] === 1; const card: number = s.data[2] - 1; const type: number = Math.floor(card / 4);
     if (command === 900) { return this.mahjongWin(reaction ? [...hand, card] : hand, s.data[4]); }
     if (!reaction || card < 0 || s.data[4] >= 4) { return false; }
@@ -128,25 +161,76 @@ export class ExpansionCards {
     const start: number = type - (command - 902); if (command < 902 || command > 904 || s.data[1] !== 3 || type >= 27 || start < 0 || Math.floor(start / 9) !== Math.floor(type / 9) || start % 9 > 6) { return false; }
     return [start, start + 1, start + 2].filter((v: number) => v !== type).every((v: number) => hand.some((tile: number) => Math.floor(tile / 4) === v));
   }
-  private mahjongAdvance(s: ExpansionState): void {
-    for (let guard: number = 0; guard < 4 && s.outcome === 0; guard++) {
-      const player: number = s.next % 4; s.next = player;
-      if (!this.draw(s, player)) { return; }
-      if (player === 0) { s.data[0] = 0; return; }
-      const hand: number[] = s.piles[player].cards; if (this.mahjongWin(hand, s.data[4 + player])) { s.outcome = 2; return; }
-      const discard: number = hand.slice().sort((a: number, b: number) => hand.filter((v: number) => Math.floor(v / 4) === Math.floor(a / 4)).length - hand.filter((v: number) => Math.floor(v / 4) === Math.floor(b / 4)).length || b - a)[0];
-      hand.splice(hand.indexOf(discard), 1); s.piles[8].cards.push(discard); s.data[1] = player; s.data[2] = discard + 1; s.next = (player + 1) % 4; s.data[0] = 1;
-      if ([900, 901, 902, 903, 904, 905].some((command: number) => this.mahjongCan(s, command))) { return; } s.data[0] = 0;
+  private mahjongRetention(hand: number[], type: number, hard: boolean): number {
+    const counts: number[] = new Array<number>(34).fill(0);
+    hand.forEach((card: number) => { counts[Math.floor(card / 4)]++; });
+    const count: number = counts[type];
+    let value: number = count >= 3 ? 12 : count === 2 ? 8 : 0;
+    if (type >= 27) { return value; }
+    const suit: number = Math.floor(type / 9);
+    for (let offset: number = -2; offset <= 2; offset++) {
+      if (offset === 0) { continue; }
+      const neighbour: number = type + offset;
+      if (neighbour >= 0 && neighbour < 27 && Math.floor(neighbour / 9) === suit && counts[neighbour] > 0) {
+        value += Math.abs(offset) === 1 ? 2 : 1;
+      }
     }
+    if (hard) {
+      for (let start: number = type - 2; start <= type; start++) {
+        if (start >= 0 && start < 27 && Math.floor(start / 9) === suit && start % 9 <= 6 &&
+          counts[start] > 0 && counts[start + 1] > 0 && counts[start + 2] > 0) { value += 12; }
+      }
+      if (type % 9 > 0 && type % 9 < 8 && counts[type - 1] > 0 && counts[type + 1] > 0) { value += 4; }
+    }
+    return value;
   }
-  private mahjongTap(s: ExpansionState, at: number): void {
+  private mahjongDiscard(s: ExpansionState, hand: number[]): number {
+    if (s.level === 0) { return hand[this.pick(hand.length)]; }
+    let discard: number = hand[0];
+    let minimum: number = Number.POSITIVE_INFINITY;
+    // Decisions depend on this player's own tiles and the public discard pile only.
+    for (const card of hand) {
+      const type: number = Math.floor(card / 4);
+      let retention: number = this.mahjongRetention(hand, type, s.level === 2);
+      if (s.level === 2) {
+        const visible: number = s.piles[8].cards.filter((tile: number) => Math.floor(tile / 4) === type).length;
+        if (hand.filter((tile: number) => Math.floor(tile / 4) === type).length === 1) { retention -= visible; }
+      }
+      if (retention < minimum || (retention === minimum && card > discard)) { minimum = retention; discard = card; }
+    }
+    return discard;
+  }
+  private mahjongComputer(s: ExpansionState): void {
+    // A human discard may be claimed for a win by any computer before the next draw.
+    const last: number = s.data[2] - 1;
+    if (s.data[1] === 0 && last >= 0 && s.piles[8].cards[s.piles[8].cards.length - 1] === last) {
+      for (let seat: number = 1; seat < 4; seat++) {
+        if (this.mahjongWin([...s.piles[seat].cards, last], s.data[4 + seat])) { s.next = seat; s.outcome = 2; return; }
+      }
+    }
+    const player: number = s.next;
+    if (!this.draw(s, player)) { return; }
+    const hand: number[] = s.piles[player].cards;
+    if (this.mahjongWin(hand, s.data[4 + player])) { s.outcome = 2; return; }
+    const discard: number = this.mahjongDiscard(s, hand);
+    hand.splice(hand.indexOf(discard), 1); s.piles[8].cards.push(discard); s.moves++;
+    s.data[1] = player; s.data[2] = discard + 1; s.next = (player + 1) % 4; s.data[0] = 1;
+    if ([900, 901, 902, 903, 904, 905].some((command: number) => this.mahjongCan(s, command))) { return; }
+    s.data[0] = 0;
+    if (s.next === 0) { this.draw(s, 0); }
+  }
+  private mahjongAdvance(s: ExpansionState): void {
+    for (let guard: number = 0; guard < 4 && this.needsComputerTurn(s); guard++) { this.computerTurn(s); }
+  }
+  private mahjongTap(s: ExpansionState, at: number, automatic: boolean): void {
+    if (s.next !== 0 && s.data[0] !== 1) { return; }
     if (at === 900 && this.mahjongCan(s, at)) { if (s.data[0] === 1) { s.piles[0].cards.push(s.piles[8].cards.pop() ?? 0); } s.data[0] = 0; s.outcome = 1; s.score = 1500; return; }
     if (s.data[0] === 1) {
-      if (at === 907) { s.data[0] = 0; this.mahjongAdvance(s); return; }
+      if (at === 907) { s.data[0] = 0; s.selected = -1; if (s.next === 0) { this.draw(s, 0); } else if (automatic) { this.mahjongAdvance(s); } return; }
       if (!this.mahjongCan(s, at)) { return; }
       const card: number = s.piles[8].cards.pop() ?? 0; const type: number = Math.floor(card / 4); const types: number[] = at === 901 ? [type, type] : at === 905 ? [type, type, type] : [type - (at - 902), type - (at - 902) + 1, type - (at - 902) + 2].filter((v: number) => v !== type);
       const hand: number[] = s.piles[0].cards; const meld: number[] = [card]; types.forEach((v: number) => { const i: number = hand.findIndex((tile: number) => Math.floor(tile / 4) === v); meld.push(hand.splice(i, 1)[0]); });
-      s.piles[4].cards.push(...meld); s.data[4]++; s.data[0] = 0; s.next = 0; s.moves++; if (at === 905) { this.draw(s, 0); } return;
+      s.piles[4].cards.push(...meld); s.data[4]++; s.data[0] = 0; s.next = 0; s.selected = -1; s.moves++; if (at === 905) { this.draw(s, 0); } return;
     }
     if (at === 906 && s.selected >= 0 && s.data[4] < 4) {
       const type: number = Math.floor(s.selected / 4); const tiles: number[] = s.piles[0].cards.filter((v: number) => Math.floor(v / 4) === type);
@@ -155,10 +239,23 @@ export class ExpansionCards {
     if (!s.piles[0].cards.includes(at)) { return; }
     if (s.selected !== at) { s.selected = at; return; }
     s.piles[0].cards.splice(s.piles[0].cards.indexOf(at), 1); s.piles[8].cards.push(at); s.selected = -1; s.moves++;
-    for (let player: number = 1; player < 4; player++) { if (this.mahjongWin([...s.piles[player].cards, at], s.data[4 + player])) { s.outcome = 2; return; } }
-    s.next = 1; this.mahjongAdvance(s);
+    s.data[0] = 0; s.data[1] = 0; s.data[2] = at + 1; s.next = 1;
+    if (automatic) { this.mahjongAdvance(s); }
   }
-  tap(s: ExpansionState, at: number): void { if (s.id === 'ludo') { this.ludoTap(s, at); } else if (s.id === 'mahjong') { this.mahjongTap(s, at); } else { this.cardsTap(s, at); } }
+  needsComputerTurn(s: ExpansionState): boolean {
+    if (s.outcome !== 0) { return false; }
+    return s.id === 'ludo' ? s.next >= 2 && s.next <= 4 :
+      s.id === 'mahjong' && s.next >= 1 && s.next <= 3 && s.data[0] !== 1;
+  }
+  computerTurn(s: ExpansionState): void {
+    if (!this.needsComputerTurn(s)) { return; }
+    if (s.id === 'ludo') { this.ludoComputer(s); } else { this.mahjongComputer(s); }
+  }
+  tap(s: ExpansionState, at: number, automatic: boolean = true): void {
+    if (!V.integer(at, 0, 1000) || s.outcome !== 0) { return; }
+    if (s.id === 'ludo') { this.ludoTap(s, at, automatic); }
+    else if (s.id === 'mahjong') { this.mahjongTap(s, at, automatic); } else { this.cardsTap(s, at); }
+  }
   valid(s: ExpansionState): boolean {
     if (!CARD_IDS.includes(s.id) || s.cols !== 6 || s.rows !== 6 || s.phase !== 0 || s.tray.length !== 0 || s.target.length !== 0) { return false; }
     if (s.id === 'ludo') { return s.goal === 4 && s.piles.length === 0 && s.board.length === 0 && V.numbers(s.data, 2, 0, 6) && V.integer(s.next, 1, 4) && s.pieces.length === 16 && s.pieces.every((p: ExpansionPiece, i: number) => p.id === i && p.kind === 52 && p.owner === Math.floor(i / 4) && V.integer(p.x, -1, 57)); }

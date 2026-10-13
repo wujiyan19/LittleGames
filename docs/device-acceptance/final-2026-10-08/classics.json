@@ -1,0 +1,1222 @@
+{
+  "schemaVersion": 1,
+  "packageSha256": "e14b33644f6a0f72964c96e56f0a692c70680db11437152601f9a241e4911757",
+  "target": "FMR0224521016052",
+  "scope": "Selected real UI lifecycle/rendering checks. No claim of full game completion, random win rates or frame rate.",
+  "games": [
+    {
+      "id": "snake",
+      "name": "贪吃蛇",
+      "attemptId": "20261009134113473",
+      "status": "passed-selected-checks",
+      "startedAt": "2026-10-09T13:41:13.474Z",
+      "checks": [
+        {
+          "name": "real-page-opened",
+          "at": "2026-10-09T13:41:24.973Z",
+          "title": "贪吃蛇"
+        },
+        {
+          "name": "manual-pause-freezes",
+          "at": "2026-10-09T13:42:01.599Z",
+          "frames": [
+            {
+              "file": "classic-snake-20261009134113473-paused-before.json",
+              "at": "2026-10-09T13:41:56.585Z",
+              "images": [
+                {
+                  "bounds": "[572,1302][631,1361]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                },
+                {
+                  "bounds": "[630,1302][689,1361]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                },
+                {
+                  "bounds": "[630,1361][689,1420]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                },
+                {
+                  "bounds": "[806,776][865,835]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                }
+              ],
+              "text": [
+                "0",
+                "10"
+              ],
+              "holes": []
+            },
+            {
+              "file": "classic-snake-20261009134113473-paused-after.json",
+              "at": "2026-10-09T13:42:01.599Z",
+              "images": [
+                {
+                  "bounds": "[572,1302][631,1361]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                },
+                {
+                  "bounds": "[630,1302][689,1361]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                },
+                {
+                  "bounds": "[630,1361][689,1420]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                },
+                {
+                  "bounds": "[806,776][865,835]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                }
+              ],
+              "text": [
+                "0",
+                "10"
+              ],
+              "holes": []
+            }
+          ],
+          "waitMs": 1200
+        },
+        {
+          "name": "paused-exit-confirm-cancel-keeps-pause",
+          "at": "2026-10-09T13:42:15.603Z",
+          "before": {
+            "file": "classic-snake-20261009134113473-paused-before.json",
+            "at": "2026-10-09T13:41:56.585Z",
+            "images": [
+              {
+                "bounds": "[572,1302][631,1361]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[630,1302][689,1361]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[630,1361][689,1420]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[806,776][865,835]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              }
+            ],
+            "text": [
+              "0",
+              "10"
+            ],
+            "holes": []
+          },
+          "after": {
+            "file": "classic-snake-20261009134113473-paused-exit-cancel.json",
+            "at": "2026-10-09T13:42:15.603Z",
+            "images": [
+              {
+                "bounds": "[572,1302][631,1361]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[630,1302][689,1361]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[630,1361][689,1420]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[806,776][865,835]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              }
+            ],
+            "text": [
+              "0",
+              "10"
+            ],
+            "holes": []
+          }
+        },
+        {
+          "name": "manual-pause-background-3s",
+          "at": "2026-10-09T13:42:28.577Z",
+          "before": {
+            "file": "classic-snake-20261009134113473-paused-before.json",
+            "at": "2026-10-09T13:41:56.585Z",
+            "images": [
+              {
+                "bounds": "[572,1302][631,1361]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[630,1302][689,1361]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[630,1361][689,1420]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[806,776][865,835]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              }
+            ],
+            "text": [
+              "0",
+              "10"
+            ],
+            "holes": []
+          },
+          "after": {
+            "file": "classic-snake-20261009134113473-paused-background-return.json",
+            "at": "2026-10-09T13:42:26.696Z",
+            "images": [
+              {
+                "bounds": "[572,1302][631,1361]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[630,1302][689,1361]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[630,1361][689,1420]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[806,776][865,835]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              }
+            ],
+            "text": [
+              "0",
+              "10"
+            ],
+            "holes": []
+          },
+          "waitMs": 3000
+        },
+        {
+          "name": "manual-resume-visible-updates",
+          "at": "2026-10-09T13:42:35.762Z",
+          "before": {
+            "file": "classic-snake-20261009134113473-paused-before.json",
+            "at": "2026-10-09T13:41:56.585Z",
+            "images": [
+              {
+                "bounds": "[572,1302][631,1361]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[630,1302][689,1361]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[630,1361][689,1420]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[806,776][865,835]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              }
+            ],
+            "text": [
+              "0",
+              "10"
+            ],
+            "holes": []
+          },
+          "after": {
+            "file": "classic-snake-20261009134113473-resumed-0-0.json",
+            "at": "2026-10-09T13:42:33.672Z",
+            "images": [
+              {
+                "bounds": "[630,1302][689,1361]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[630,1361][689,1420]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[630,1419][689,1478]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[806,776][865,835]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              }
+            ],
+            "text": [
+              "0",
+              "10"
+            ],
+            "holes": []
+          },
+          "observed": "rendered game image position/occupancy changed"
+        },
+        {
+          "name": "restart-score-zero",
+          "at": "2026-10-09T13:42:41.441Z",
+          "text": [
+            "贪吃蛇",
+            "得分",
+            "0",
+            "最高",
+            "10",
+            "按方向键开始"
+          ]
+        }
+      ],
+      "evidence": [
+        "classic-snake-20261009134113473-opened.jpeg",
+        "classic-snake-20261009134113473-paused.jpeg",
+        "classic-snake-20261009134113473-paused-exit-confirm.jpeg",
+        "classic-snake-20261009134113473-paused-background-return.jpeg",
+        "classic-snake-20261009134113473-resumed.jpeg",
+        "classic-snake-20261009134113473-restart.jpeg"
+      ],
+      "observations": [
+        {
+          "name": "natural-outcome-before-restart",
+          "at": "2026-10-09T13:42:37.298Z",
+          "text": [
+            "贪吃蛇",
+            "得分",
+            "0",
+            "最高",
+            "10",
+            "游戏结束",
+            "得分 0",
+            "再来一局",
+            "返回"
+          ]
+        }
+      ],
+      "originalDifficulty": "普通",
+      "restoredDifficulty": "普通",
+      "finishedAt": "2026-10-09T13:42:58.221Z"
+    },
+    {
+      "id": "tetris",
+      "name": "俄罗斯方块",
+      "attemptId": "20261009134258279",
+      "status": "passed-selected-checks",
+      "startedAt": "2026-10-09T13:42:58.280Z",
+      "checks": [
+        {
+          "name": "real-page-opened",
+          "at": "2026-10-09T13:43:10.615Z",
+          "title": "俄罗斯方块"
+        },
+        {
+          "name": "manual-pause-freezes",
+          "at": "2026-10-09T13:43:47.860Z",
+          "frames": [
+            {
+              "file": "classic-tetris-20261009134258279-paused-before.json",
+              "at": "2026-10-09T13:43:43.145Z",
+              "images": [
+                {
+                  "bounds": "[480,688][555,763]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                },
+                {
+                  "bounds": "[555,688][630,763]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                },
+                {
+                  "bounds": "[630,688][705,763]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                },
+                {
+                  "bounds": "[705,688][780,763]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                }
+              ],
+              "text": [
+                "1",
+                "0"
+              ],
+              "holes": []
+            },
+            {
+              "file": "classic-tetris-20261009134258279-paused-after.json",
+              "at": "2026-10-09T13:43:47.859Z",
+              "images": [
+                {
+                  "bounds": "[480,688][555,763]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                },
+                {
+                  "bounds": "[555,688][630,763]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                },
+                {
+                  "bounds": "[630,688][705,763]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                },
+                {
+                  "bounds": "[705,688][780,763]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                }
+              ],
+              "text": [
+                "1",
+                "0"
+              ],
+              "holes": []
+            }
+          ],
+          "waitMs": 1200
+        },
+        {
+          "name": "paused-exit-confirm-cancel-keeps-pause",
+          "at": "2026-10-09T13:44:01.072Z",
+          "before": {
+            "file": "classic-tetris-20261009134258279-paused-before.json",
+            "at": "2026-10-09T13:43:43.145Z",
+            "images": [
+              {
+                "bounds": "[480,688][555,763]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[555,688][630,763]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[630,688][705,763]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[705,688][780,763]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              }
+            ],
+            "text": [
+              "1",
+              "0"
+            ],
+            "holes": []
+          },
+          "after": {
+            "file": "classic-tetris-20261009134258279-paused-exit-cancel.json",
+            "at": "2026-10-09T13:44:01.072Z",
+            "images": [
+              {
+                "bounds": "[480,688][555,763]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[555,688][630,763]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[630,688][705,763]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[705,688][780,763]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              }
+            ],
+            "text": [
+              "1",
+              "0"
+            ],
+            "holes": []
+          }
+        },
+        {
+          "name": "manual-pause-background-3s",
+          "at": "2026-10-09T13:44:14.394Z",
+          "before": {
+            "file": "classic-tetris-20261009134258279-paused-before.json",
+            "at": "2026-10-09T13:43:43.145Z",
+            "images": [
+              {
+                "bounds": "[480,688][555,763]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[555,688][630,763]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[630,688][705,763]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[705,688][780,763]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              }
+            ],
+            "text": [
+              "1",
+              "0"
+            ],
+            "holes": []
+          },
+          "after": {
+            "file": "classic-tetris-20261009134258279-paused-background-return.json",
+            "at": "2026-10-09T13:44:12.248Z",
+            "images": [
+              {
+                "bounds": "[480,688][555,763]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[555,688][630,763]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[630,688][705,763]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[705,688][780,763]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              }
+            ],
+            "text": [
+              "1",
+              "0"
+            ],
+            "holes": []
+          },
+          "waitMs": 3000
+        },
+        {
+          "name": "manual-resume-visible-updates",
+          "at": "2026-10-09T13:44:23.232Z",
+          "before": {
+            "file": "classic-tetris-20261009134258279-paused-before.json",
+            "at": "2026-10-09T13:43:43.145Z",
+            "images": [
+              {
+                "bounds": "[480,688][555,763]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[555,688][630,763]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[630,688][705,763]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[705,688][780,763]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              }
+            ],
+            "text": [
+              "1",
+              "0"
+            ],
+            "holes": []
+          },
+          "after": {
+            "file": "classic-tetris-20261009134258279-resumed-0-1.json",
+            "at": "2026-10-09T13:44:21.133Z",
+            "images": [
+              {
+                "bounds": "[480,912][555,987]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[555,912][630,987]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[630,912][705,987]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[705,912][780,987]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              }
+            ],
+            "text": [
+              "1",
+              "0"
+            ],
+            "holes": []
+          },
+          "observed": "rendered game image position/occupancy changed"
+        },
+        {
+          "name": "restart-score-zero",
+          "at": "2026-10-09T13:44:31.937Z",
+          "text": [
+            "俄罗斯方块",
+            "级别",
+            "1",
+            "得分",
+            "0",
+            "加速下落"
+          ]
+        }
+      ],
+      "evidence": [
+        "classic-tetris-20261009134258279-opened.jpeg",
+        "classic-tetris-20261009134258279-paused.jpeg",
+        "classic-tetris-20261009134258279-paused-exit-confirm.jpeg",
+        "classic-tetris-20261009134258279-paused-background-return.jpeg",
+        "classic-tetris-20261009134258279-resumed.jpeg",
+        "classic-tetris-20261009134258279-restart.jpeg"
+      ],
+      "observations": [],
+      "originalDifficulty": "普通",
+      "restoredDifficulty": "普通",
+      "finishedAt": "2026-10-09T13:44:49.663Z"
+    },
+    {
+      "id": "whackmole",
+      "name": "打地鼠",
+      "attemptId": "20261009134449717",
+      "status": "passed-selected-checks",
+      "startedAt": "2026-10-09T13:44:49.718Z",
+      "checks": [
+        {
+          "name": "real-page-opened",
+          "at": "2026-10-09T13:45:00.503Z",
+          "title": "打地鼠"
+        },
+        {
+          "name": "manual-pause-freezes",
+          "at": "2026-10-09T13:45:34.100Z",
+          "frames": [
+            {
+              "file": "classic-whackmole-20261009134449717-paused-before.json",
+              "at": "2026-10-09T13:45:29.906Z",
+              "images": [
+                {
+                  "bounds": "[0,585][1260,2538]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                },
+                {
+                  "bounds": "[35,1138][387,1334]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                },
+                {
+                  "bounds": "[35,1594][387,1790]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                },
+                {
+                  "bounds": "[35,2049][387,2245]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                },
+                {
+                  "bounds": "[454,1138][806,1334]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                },
+                {
+                  "bounds": "[454,1594][806,1790]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                },
+                {
+                  "bounds": "[454,2049][806,2245]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                },
+                {
+                  "bounds": "[874,1138][1226,1334]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                },
+                {
+                  "bounds": "[874,1594][1226,1790]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                },
+                {
+                  "bounds": "[874,2049][1226,2245]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                }
+              ],
+              "text": [
+                "0",
+                "40s"
+              ],
+              "holes": []
+            },
+            {
+              "file": "classic-whackmole-20261009134449717-paused-after.json",
+              "at": "2026-10-09T13:45:34.099Z",
+              "images": [
+                {
+                  "bounds": "[0,585][1260,2538]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                },
+                {
+                  "bounds": "[35,1138][387,1334]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                },
+                {
+                  "bounds": "[35,1594][387,1790]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                },
+                {
+                  "bounds": "[35,2049][387,2245]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                },
+                {
+                  "bounds": "[454,1138][806,1334]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                },
+                {
+                  "bounds": "[454,1594][806,1790]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                },
+                {
+                  "bounds": "[454,2049][806,2245]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                },
+                {
+                  "bounds": "[874,1138][1226,1334]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                },
+                {
+                  "bounds": "[874,1594][1226,1790]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                },
+                {
+                  "bounds": "[874,2049][1226,2245]",
+                  "opacity": "1.000000",
+                  "backgroundImage": "empty source"
+                }
+              ],
+              "text": [
+                "0",
+                "40s"
+              ],
+              "holes": []
+            }
+          ],
+          "waitMs": 1200
+        },
+        {
+          "name": "paused-exit-confirm-cancel-keeps-pause",
+          "at": "2026-10-09T13:45:45.607Z",
+          "before": {
+            "file": "classic-whackmole-20261009134449717-paused-before.json",
+            "at": "2026-10-09T13:45:29.906Z",
+            "images": [
+              {
+                "bounds": "[0,585][1260,2538]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[35,1138][387,1334]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[35,1594][387,1790]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[35,2049][387,2245]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[454,1138][806,1334]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[454,1594][806,1790]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[454,2049][806,2245]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[874,1138][1226,1334]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[874,1594][1226,1790]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[874,2049][1226,2245]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              }
+            ],
+            "text": [
+              "0",
+              "40s"
+            ],
+            "holes": []
+          },
+          "after": {
+            "file": "classic-whackmole-20261009134449717-paused-exit-cancel.json",
+            "at": "2026-10-09T13:45:45.607Z",
+            "images": [
+              {
+                "bounds": "[0,585][1260,2538]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[35,1138][387,1334]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[35,1594][387,1790]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[35,2049][387,2245]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[454,1138][806,1334]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[454,1594][806,1790]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[454,2049][806,2245]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[874,1138][1226,1334]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[874,1594][1226,1790]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[874,2049][1226,2245]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              }
+            ],
+            "text": [
+              "0",
+              "40s"
+            ],
+            "holes": []
+          }
+        },
+        {
+          "name": "manual-pause-background-3s",
+          "at": "2026-10-09T13:45:57.904Z",
+          "before": {
+            "file": "classic-whackmole-20261009134449717-paused-before.json",
+            "at": "2026-10-09T13:45:29.906Z",
+            "images": [
+              {
+                "bounds": "[0,585][1260,2538]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[35,1138][387,1334]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[35,1594][387,1790]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[35,2049][387,2245]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[454,1138][806,1334]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[454,1594][806,1790]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[454,2049][806,2245]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[874,1138][1226,1334]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[874,1594][1226,1790]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[874,2049][1226,2245]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              }
+            ],
+            "text": [
+              "0",
+              "40s"
+            ],
+            "holes": []
+          },
+          "after": {
+            "file": "classic-whackmole-20261009134449717-paused-background-return.json",
+            "at": "2026-10-09T13:45:55.952Z",
+            "images": [
+              {
+                "bounds": "[0,585][1260,2538]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[35,1138][387,1334]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[35,1594][387,1790]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[35,2049][387,2245]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[454,1138][806,1334]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[454,1594][806,1790]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[454,2049][806,2245]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[874,1138][1226,1334]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[874,1594][1226,1790]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[874,2049][1226,2245]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              }
+            ],
+            "text": [
+              "0",
+              "40s"
+            ],
+            "holes": []
+          },
+          "waitMs": 3000
+        },
+        {
+          "name": "manual-resume-visible-updates",
+          "at": "2026-10-09T13:46:04.077Z",
+          "before": {
+            "file": "classic-whackmole-20261009134449717-paused-before.json",
+            "at": "2026-10-09T13:45:29.906Z",
+            "images": [
+              {
+                "bounds": "[0,585][1260,2538]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[35,1138][387,1334]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[35,1594][387,1790]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[35,2049][387,2245]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[454,1138][806,1334]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[454,1594][806,1790]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[454,2049][806,2245]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[874,1138][1226,1334]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[874,1594][1226,1790]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[874,2049][1226,2245]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              }
+            ],
+            "text": [
+              "0",
+              "40s"
+            ],
+            "holes": []
+          },
+          "after": {
+            "file": "classic-whackmole-20261009134449717-resumed-0-0.json",
+            "at": "2026-10-09T13:46:02.187Z",
+            "images": [
+              {
+                "bounds": "[0,585][1260,2538]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[35,1138][387,1334]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[35,1594][387,1790]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[35,2049][387,2245]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[454,1138][806,1334]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[454,1594][806,1790]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[454,2049][806,2245]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[874,1138][1226,1334]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[874,1594][1226,1790]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              },
+              {
+                "bounds": "[874,2049][1226,2245]",
+                "opacity": "1.000000",
+                "backgroundImage": "empty source"
+              }
+            ],
+            "text": [
+              "0",
+              "39s"
+            ],
+            "holes": []
+          },
+          "observed": "hole occupancy or countdown changed"
+        },
+        {
+          "name": "restart-score-zero",
+          "at": "2026-10-09T13:46:11.884Z",
+          "text": [
+            "打地鼠",
+            "得分",
+            "0",
+            "时间",
+            "40s"
+          ]
+        },
+        {
+          "name": "actual-visible-mole-hit-score",
+          "at": "2026-10-09T13:46:21.140Z",
+          "before": 0,
+          "after": 10,
+          "observedHole": "[840,878][1259,1334]"
+        }
+      ],
+      "evidence": [
+        "classic-whackmole-20261009134449717-opened.jpeg",
+        "classic-whackmole-20261009134449717-paused.jpeg",
+        "classic-whackmole-20261009134449717-paused-exit-confirm.jpeg",
+        "classic-whackmole-20261009134449717-paused-background-return.jpeg",
+        "classic-whackmole-20261009134449717-resumed.jpeg",
+        "classic-whackmole-20261009134449717-restart.jpeg",
+        "classic-whackmole-20261009134449717-actual-whack-score.jpeg"
+      ],
+      "observations": [
+        {
+          "name": "mole-expired-before-real-touch",
+          "at": "2026-10-09T13:46:14.638Z",
+          "attempt": 0,
+          "observedHole": "[420,1334][840,1790]"
+        },
+        {
+          "name": "mole-expired-before-real-touch",
+          "at": "2026-10-09T13:46:16.137Z",
+          "attempt": 1,
+          "observedHole": "[1,1789][420,2245]"
+        },
+        {
+          "name": "mole-expired-before-real-touch",
+          "at": "2026-10-09T13:46:17.717Z",
+          "attempt": 2,
+          "observedHole": "[9,1798][411,2235]"
+        }
+      ],
+      "originalDifficulty": "普通",
+      "restoredDifficulty": "普通",
+      "finishedAt": "2026-10-09T13:46:42.874Z"
+    },
+    {
+      "id": "brickbreaker",
+      "name": "打砖块",
+      "attemptId": "20261009134642924",
+      "status": "running",
+      "startedAt": "2026-10-09T13:46:42.924Z",
+      "checks": [],
+      "evidence": [],
+      "observations": []
+    }
+  ],
+  "updatedAt": "2026-10-09T13:46:42.924Z"
+}

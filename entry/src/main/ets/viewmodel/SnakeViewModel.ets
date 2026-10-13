@@ -13,6 +13,7 @@ import { GameDataManager } from '../model/GameData';
 import { GameLifecycleObserver } from '../common/GameLifecycleBus';
 import { Direction, Point, SnakeRules } from '../model/game/SnakeModel';
 import { RandomSource, RealRandom } from '../model/game/RandomSource';
+import { GameSoundEvent, gameSound } from '../common/GameSound';
 
 
 const COLS = 20;
@@ -162,10 +163,11 @@ export class SnakeViewModel implements GameLifecycleObserver {
 
   /** 只铺开局数据，不启动定时器（初始化/单测用） */
   newGame(): void {
+    gameSound.stop(GAME_ID);
     this.stopTimer();
     this.autoPaused = false;
     this.confirmExit = false;
-    GameDataManager.incrementPlayCount(GAME_ID);
+    GameDataManager.recordGamePlayed(GAME_ID);
     this.snake = this.rules.initialSnake();
     this.occupied = this.rules.occupancy(this.snake);
     this.food = this.rules.spawnFoodFromOccupancy(this.occupied, this.rng);
@@ -179,6 +181,7 @@ export class SnakeViewModel implements GameLifecycleObserver {
 
   /** 开局并启动定时器 */
   startGame(): void {
+    gameSound.stop(GAME_ID);
     if (this.score > 0) { GameDataManager.updateHighScore(GAME_ID, this.score); }
     this.newGame();
     // 不立即启动定时器——等玩家按第一个方向键后再开始移动
@@ -213,6 +216,7 @@ export class SnakeViewModel implements GameLifecycleObserver {
     this.occupied.add(this.snake[0].y * COLS + this.snake[0].x);
     this.score = outcome.score;
     if (outcome.ate) {
+      gameSound.play(GAME_ID, GameSoundEvent.REWARD);
       this.food = this.rules.spawnFoodFromOccupancy(this.occupied, this.rng);
       // 棋盘占满：无处生成食物，直接结束（原实现如此，避免死循环）
       if (this.food.x < 0) { this.gameOver(); }
@@ -231,6 +235,7 @@ export class SnakeViewModel implements GameLifecycleObserver {
 
   /** 手动暂停/恢复。只在「进行中 ⇄ 暂停」间切换，已结束的对局不会被误切换 */
   togglePause(): void {
+    gameSound.stop(GAME_ID);
     if (this.status === GameStatus.PLAYING) {
       this.status = GameStatus.PAUSED;
       this.stopTimer();
@@ -248,6 +253,7 @@ export class SnakeViewModel implements GameLifecycleObserver {
   private turn(dir: Direction): void {
     if (this.status !== GameStatus.PLAYING || !this.appVisible || this.confirmExit) { return; }
     if (!this.started && dir === this.direction) {
+      gameSound.play(GAME_ID);
       this.started = true;
       this.startTimer();
       return;
@@ -255,6 +261,7 @@ export class SnakeViewModel implements GameLifecycleObserver {
     if (this.pendingTurn !== null) { return; }
     if (!this.rules.turnAllowed(this.direction, dir)) { return; }
     this.pendingTurn = dir;
+    gameSound.play(GAME_ID);
     // 首次按方向键时启动定时器（开局不自动移动，等玩家操作）
     if (!this.started) {
       this.started = true;
@@ -282,6 +289,7 @@ export class SnakeViewModel implements GameLifecycleObserver {
    * @ComponentV2，该钩子永远不会被调用（切后台自动暂停曾因此整体失效）。
    */
   onAppHidden(): void {
+    gameSound.stop(GAME_ID);
     this.appVisible = false;
     this.stopTimer();
     this.settleCurrentScore();
@@ -307,13 +315,12 @@ export class SnakeViewModel implements GameLifecycleObserver {
 
   /**
    * 页面返回按钮与系统侧滑共用的退出请求。
-   * 进行中 → 置 confirmExit 弹确认并拦截；暂停/已结束 → 放行
-   * （暂停与退出路径的分数结算由 dispose()/onAppHidden() 兜底，无需再打扰）。
+   * 进行中或暂停 → 置 confirmExit 弹确认并拦截；已结束 → 放行。
    */
   requestBack(): boolean {
     if (!GameDataManager.getSetting('confirmExitEnabled', true)) { return false; }
-    if (this.status === GameStatus.PLAYING) {
-      this.confirmExit = true;
+    if (this.status === GameStatus.PLAYING || this.status === GameStatus.PAUSED) {
+      gameSound.stop(GAME_ID); this.confirmExit = true;
       this.stopTimer();
       return true;
     }
@@ -326,7 +333,7 @@ export class SnakeViewModel implements GameLifecycleObserver {
   }
 
   private gameOver(): void {
-
+    gameSound.play(GAME_ID, this.food.x < 0 ? GameSoundEvent.WIN : GameSoundEvent.LOSE);
     this.status = GameStatus.OVER;
     this.stopTimer();
     if (this.score > this.highScore) { this.highScore = this.score; }
@@ -340,6 +347,10 @@ export class SnakeViewModel implements GameLifecycleObserver {
     this.stopTimer();
     this.settleCurrentScore();
   }
+
+  isPlayTimeActive(): boolean { return this.status === GameStatus.PLAYING && !this.confirmExit && this.started; }
+
+  hasProgress(): boolean { return this.started && this.status !== GameStatus.OVER; }
 
   continuationGameId(): string { return GAME_ID; }
 

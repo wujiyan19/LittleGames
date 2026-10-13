@@ -1,6 +1,6 @@
 # 13 款游戏对局美术
 
-对局素材位于 `entry/src/main/resources/base/media/play_*`，已接入 13 个游戏页面。SVG 为可缩放矢量资源，两个角色使用透明 PNG。运行 `node scripts/generate-gameplay-art.mjs` 可以重新生成 SVG 源文件。
+对局素材位于 `entry/src/main/resources/base/media/play_*` 与 `dark/media/play_*`，已接入 13 个游戏页面。2026-10-08已按当前入口图标重绘为统一的柔和玩具矢量风格，46个资源名均有深浅版本；角色也使用SVG。运行 `node scripts/generate-gameplay-art.mjs` 可重建素材和对应游戏配色。
 
 | 游戏 | 对局素材 |
 | --- | --- |
@@ -24,6 +24,10 @@
 
 ## 其他素材预览
 
-<img src="../entry/src/main/resources/base/media/play_mole.png" width="80" alt="鼹鼠"> <img src="../entry/src/main/resources/base/media/play_snake_head.png" width="80" alt="蛇头"> <img src="../entry/src/main/resources/base/media/play_memory_back.svg" width="60" alt="卡背"> <img src="../entry/src/main/resources/base/media/play_gem_0.svg" width="60" alt="宝石">
+<img src="../entry/src/main/resources/base/media/play_mole.svg" width="80" alt="鼹鼠"> <img src="../entry/src/main/resources/base/media/play_snake_head.svg" width="80" alt="蛇头"> <img src="../entry/src/main/resources/base/media/play_memory_back.svg" width="60" alt="卡背"> <img src="../entry/src/main/resources/base/media/play_gem_0.svg" width="60" alt="宝石">
 
-对局资源延续蓝色、珊瑚色与木质暖色的玩具式视觉。数字、计分与操作文字仍由 ArkUI 绘制，以保持清晰度和可访问性。
+图标、原13款及另外20款合集对局资源共用 `scripts/game-art-palette.cjs` 的纸色、mint、珊瑚、金色、木色和蓝灰边缘。数字、计分与操作文字仍由ArkUI绘制，选中、归位、揭开等状态继续使用明确的底色和文字，玩法与碰撞算法保持。
+
+新增低对比度场景用于跳一跳、打地鼠和打砖块，装饰不接收输入。蛇头/体/弯/尾保留连接方向并改为平滑轮廓；华容道木块在深色使用浅字、浅彩色块使用深墨字。旧鼹鼠PNG保存在 `docs/art/legacy-gameplay/`，应用资源中移除同名PNG以避免重复资源。
+
+本轮[交付与验证](art/legacy-gameplay-2026-10-08/README.md)、[浅色对照](art/legacy-gameplay-2026-10-08/base.png)、[深色对照](art/legacy-gameplay-2026-10-08/dark.png)。对照图是素材组合预览，不是设备截图。

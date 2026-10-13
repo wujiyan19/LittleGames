@@ -11,6 +11,7 @@ import { GameLifecycleObserver } from '../common/GameLifecycleBus';
 import { Match3Rules, ChainResult } from '../model/game/Match3Model';
 import { RandomSource, RealRandom } from '../model/game/RandomSource';
 import { Haptics } from '../common/Haptics';
+import { GameSoundEvent, gameSound } from '../common/GameSound';
 
 const GAME_ID = 'match3';
 const MAX_MOVES = 30;
@@ -49,10 +50,11 @@ export class Match3ViewModel implements GameLifecycleObserver {
   rows(): number { return this.rules.getRows(); }
   cols(): number { return this.rules.getCols(); }
 
-  /** 开局：生成棋盘、重置指标、增加游玩次数 */
+  /** 开局：生成棋盘、重置指标、记录最近游玩 */
   startGame(): void {
+    gameSound.stop(GAME_ID);
     if (this.score > 0) { GameDataManager.updateHighScore(GAME_ID, this.score); }
-    GameDataManager.incrementPlayCount(GAME_ID);
+    GameDataManager.recordGamePlayed(GAME_ID);
     this.board = this.rules.generateBoard(this.rng);
     this.score = 0;
     this.movesLeft = MAX_MOVES;
@@ -99,6 +101,7 @@ export class Match3ViewModel implements GameLifecycleObserver {
     const swapResult = this.rules.trySwap(this.board, r1, c1, r2, c2);
 
     if (!swapResult.hasMatch) {
+      gameSound.play(GAME_ID, GameSoundEvent.ERROR);
       // 无连线：回退（棋盘不变，不扣步数）
       return;
     }
@@ -111,6 +114,7 @@ export class Match3ViewModel implements GameLifecycleObserver {
     const chainResult: ChainResult = this.rules.resolveChain(this.board, this.rng);
     this.board = chainResult.board;
     this.score += chainResult.totalGained;
+    gameSound.play(GAME_ID, GameSoundEvent.REWARD);
 
     if (this.score > this.highScore) {
       this.highScore = this.score;
@@ -118,6 +122,7 @@ export class Match3ViewModel implements GameLifecycleObserver {
 
     // 步数归零：结算并结束
     if (this.movesLeft === 0) {
+      gameSound.play(GAME_ID, GameSoundEvent.DRAW);
       this.status = GameStatus.OVER;
       GameDataManager.updateHighScore(GAME_ID, this.score);
     }
@@ -140,6 +145,7 @@ export class Match3ViewModel implements GameLifecycleObserver {
 
   /** 切后台：结算当前分 */
   onAppHidden(): void {
+    gameSound.stop(GAME_ID);
     this.settleCurrentScore();
   }
 
@@ -155,7 +161,7 @@ export class Match3ViewModel implements GameLifecycleObserver {
   requestBack(): boolean {
     if (!GameDataManager.getSetting('confirmExitEnabled', true)) { return false; }
     if (this.status === GameStatus.PLAYING) {
-      this.confirmExit = true;
+      gameSound.stop(GAME_ID); this.confirmExit = true;
       return true;
     }
     return false;
@@ -169,6 +175,10 @@ export class Match3ViewModel implements GameLifecycleObserver {
   dispose(): void {
     this.settleCurrentScore();
   }
+
+  isPlayTimeActive(): boolean { return this.status === GameStatus.PLAYING && !this.confirmExit; }
+
+  hasProgress(): boolean { return this.status !== GameStatus.OVER && this.movesLeft < MAX_MOVES; }
 
   continuationGameId(): string { return GAME_ID; }
 

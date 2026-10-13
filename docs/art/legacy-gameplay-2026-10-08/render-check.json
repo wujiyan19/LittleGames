@@ -1,0 +1,649 @@
+{
+  "resources": 92,
+  "checks": [
+    {
+      "theme": "base",
+      "name": "play_snake_head",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 5864
+    },
+    {
+      "theme": "base",
+      "name": "play_snake_body",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 5200
+    },
+    {
+      "theme": "base",
+      "name": "play_snake_corner",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 5073
+    },
+    {
+      "theme": "base",
+      "name": "play_snake_tail",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 3966
+    },
+    {
+      "theme": "base",
+      "name": "play_snake_food",
+      "width": 64,
+      "height": 64,
+      "visiblePixels": 1830
+    },
+    {
+      "theme": "base",
+      "name": "play_tetris_gloss",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 1213
+    },
+    {
+      "theme": "base",
+      "name": "play_2048_surface",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 1178
+    },
+    {
+      "theme": "base",
+      "name": "play_sudoku_cell",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 816
+    },
+    {
+      "theme": "base",
+      "name": "play_slide_tile",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 1213
+    },
+    {
+      "theme": "base",
+      "name": "play_guess_key",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 1213
+    },
+    {
+      "theme": "base",
+      "name": "play_klotski_board",
+      "width": 320,
+      "height": 400,
+      "visiblePixels": 124718
+    },
+    {
+      "theme": "base",
+      "name": "play_klotski_target",
+      "width": 128,
+      "height": 128,
+      "visiblePixels": 15200
+    },
+    {
+      "theme": "base",
+      "name": "play_klotski_vertical",
+      "width": 80,
+      "height": 160,
+      "visiblePixels": 11768
+    },
+    {
+      "theme": "base",
+      "name": "play_klotski_horizontal",
+      "width": 160,
+      "height": 80,
+      "visiblePixels": 11768
+    },
+    {
+      "theme": "base",
+      "name": "play_klotski_soldier",
+      "width": 80,
+      "height": 80,
+      "visiblePixels": 5688
+    },
+    {
+      "theme": "base",
+      "name": "play_mole",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 4003
+    },
+    {
+      "theme": "base",
+      "name": "play_whack_hole",
+      "width": 128,
+      "height": 92,
+      "visiblePixels": 6150
+    },
+    {
+      "theme": "base",
+      "name": "play_mine",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 3852
+    },
+    {
+      "theme": "base",
+      "name": "play_flag",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 2010
+    },
+    {
+      "theme": "base",
+      "name": "play_memory_back",
+      "width": 100,
+      "height": 120,
+      "visiblePixels": 10960
+    },
+    {
+      "theme": "base",
+      "name": "play_memory_sun",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 6482
+    },
+    {
+      "theme": "base",
+      "name": "play_memory_moon",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 6482
+    },
+    {
+      "theme": "base",
+      "name": "play_memory_star",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 6482
+    },
+    {
+      "theme": "base",
+      "name": "play_memory_heart",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 6482
+    },
+    {
+      "theme": "base",
+      "name": "play_memory_clover",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 6482
+    },
+    {
+      "theme": "base",
+      "name": "play_memory_bolt",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 6482
+    },
+    {
+      "theme": "base",
+      "name": "play_memory_crown",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 6482
+    },
+    {
+      "theme": "base",
+      "name": "play_memory_diamond",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 6482
+    },
+    {
+      "theme": "base",
+      "name": "play_memory_spiral",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 6482
+    },
+    {
+      "theme": "base",
+      "name": "play_memory_leaf",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 6482
+    },
+    {
+      "theme": "base",
+      "name": "play_memory_shell",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 6482
+    },
+    {
+      "theme": "base",
+      "name": "play_memory_flame",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 6482
+    },
+    {
+      "theme": "base",
+      "name": "play_jump_frog",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 3423
+    },
+    {
+      "theme": "base",
+      "name": "play_jump_platform",
+      "width": 160,
+      "height": 52,
+      "visiblePixels": 7340
+    },
+    {
+      "theme": "base",
+      "name": "play_brick_gloss",
+      "width": 160,
+      "height": 64,
+      "visiblePixels": 1689
+    },
+    {
+      "theme": "base",
+      "name": "play_brick_paddle",
+      "width": 160,
+      "height": 32,
+      "visiblePixels": 4244
+    },
+    {
+      "theme": "base",
+      "name": "play_brick_ball",
+      "width": 64,
+      "height": 64,
+      "visiblePixels": 2614
+    },
+    {
+      "theme": "base",
+      "name": "play_gem_0",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 5505
+    },
+    {
+      "theme": "base",
+      "name": "play_gem_1",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 4524
+    },
+    {
+      "theme": "base",
+      "name": "play_gem_2",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 5968
+    },
+    {
+      "theme": "base",
+      "name": "play_gem_3",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 5946
+    },
+    {
+      "theme": "base",
+      "name": "play_gem_4",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 5464
+    },
+    {
+      "theme": "base",
+      "name": "play_gem_5",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 6390
+    },
+    {
+      "theme": "base",
+      "name": "play_jump_scene",
+      "width": 400,
+      "height": 500,
+      "visiblePixels": 199786
+    },
+    {
+      "theme": "base",
+      "name": "play_whack_scene",
+      "width": 400,
+      "height": 400,
+      "visiblePixels": 159786
+    },
+    {
+      "theme": "base",
+      "name": "play_brick_scene",
+      "width": 400,
+      "height": 500,
+      "visiblePixels": 199704
+    },
+    {
+      "theme": "dark",
+      "name": "play_snake_head",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 5864
+    },
+    {
+      "theme": "dark",
+      "name": "play_snake_body",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 5200
+    },
+    {
+      "theme": "dark",
+      "name": "play_snake_corner",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 5073
+    },
+    {
+      "theme": "dark",
+      "name": "play_snake_tail",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 3966
+    },
+    {
+      "theme": "dark",
+      "name": "play_snake_food",
+      "width": 64,
+      "height": 64,
+      "visiblePixels": 1830
+    },
+    {
+      "theme": "dark",
+      "name": "play_tetris_gloss",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 1213
+    },
+    {
+      "theme": "dark",
+      "name": "play_2048_surface",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 1178
+    },
+    {
+      "theme": "dark",
+      "name": "play_sudoku_cell",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 816
+    },
+    {
+      "theme": "dark",
+      "name": "play_slide_tile",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 1213
+    },
+    {
+      "theme": "dark",
+      "name": "play_guess_key",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 1213
+    },
+    {
+      "theme": "dark",
+      "name": "play_klotski_board",
+      "width": 320,
+      "height": 400,
+      "visiblePixels": 124718
+    },
+    {
+      "theme": "dark",
+      "name": "play_klotski_target",
+      "width": 128,
+      "height": 128,
+      "visiblePixels": 15200
+    },
+    {
+      "theme": "dark",
+      "name": "play_klotski_vertical",
+      "width": 80,
+      "height": 160,
+      "visiblePixels": 11768
+    },
+    {
+      "theme": "dark",
+      "name": "play_klotski_horizontal",
+      "width": 160,
+      "height": 80,
+      "visiblePixels": 11768
+    },
+    {
+      "theme": "dark",
+      "name": "play_klotski_soldier",
+      "width": 80,
+      "height": 80,
+      "visiblePixels": 5688
+    },
+    {
+      "theme": "dark",
+      "name": "play_mole",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 4003
+    },
+    {
+      "theme": "dark",
+      "name": "play_whack_hole",
+      "width": 128,
+      "height": 92,
+      "visiblePixels": 6150
+    },
+    {
+      "theme": "dark",
+      "name": "play_mine",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 3852
+    },
+    {
+      "theme": "dark",
+      "name": "play_flag",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 2010
+    },
+    {
+      "theme": "dark",
+      "name": "play_memory_back",
+      "width": 100,
+      "height": 120,
+      "visiblePixels": 10960
+    },
+    {
+      "theme": "dark",
+      "name": "play_memory_sun",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 6482
+    },
+    {
+      "theme": "dark",
+      "name": "play_memory_moon",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 6482
+    },
+    {
+      "theme": "dark",
+      "name": "play_memory_star",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 6482
+    },
+    {
+      "theme": "dark",
+      "name": "play_memory_heart",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 6482
+    },
+    {
+      "theme": "dark",
+      "name": "play_memory_clover",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 6482
+    },
+    {
+      "theme": "dark",
+      "name": "play_memory_bolt",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 6482
+    },
+    {
+      "theme": "dark",
+      "name": "play_memory_crown",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 6482
+    },
+    {
+      "theme": "dark",
+      "name": "play_memory_diamond",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 6482
+    },
+    {
+      "theme": "dark",
+      "name": "play_memory_spiral",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 6482
+    },
+    {
+      "theme": "dark",
+      "name": "play_memory_leaf",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 6482
+    },
+    {
+      "theme": "dark",
+      "name": "play_memory_shell",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 6482
+    },
+    {
+      "theme": "dark",
+      "name": "play_memory_flame",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 6482
+    },
+    {
+      "theme": "dark",
+      "name": "play_jump_frog",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 3423
+    },
+    {
+      "theme": "dark",
+      "name": "play_jump_platform",
+      "width": 160,
+      "height": 52,
+      "visiblePixels": 7340
+    },
+    {
+      "theme": "dark",
+      "name": "play_brick_gloss",
+      "width": 160,
+      "height": 64,
+      "visiblePixels": 1689
+    },
+    {
+      "theme": "dark",
+      "name": "play_brick_paddle",
+      "width": 160,
+      "height": 32,
+      "visiblePixels": 4244
+    },
+    {
+      "theme": "dark",
+      "name": "play_brick_ball",
+      "width": 64,
+      "height": 64,
+      "visiblePixels": 2614
+    },
+    {
+      "theme": "dark",
+      "name": "play_gem_0",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 5505
+    },
+    {
+      "theme": "dark",
+      "name": "play_gem_1",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 4524
+    },
+    {
+      "theme": "dark",
+      "name": "play_gem_2",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 5968
+    },
+    {
+      "theme": "dark",
+      "name": "play_gem_3",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 5946
+    },
+    {
+      "theme": "dark",
+      "name": "play_gem_4",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 5464
+    },
+    {
+      "theme": "dark",
+      "name": "play_gem_5",
+      "width": 100,
+      "height": 100,
+      "visiblePixels": 6390
+    },
+    {
+      "theme": "dark",
+      "name": "play_jump_scene",
+      "width": 400,
+      "height": 500,
+      "visiblePixels": 199786
+    },
+    {
+      "theme": "dark",
+      "name": "play_whack_scene",
+      "width": 400,
+      "height": 400,
+      "visiblePixels": 159786
+    },
+    {
+      "theme": "dark",
+      "name": "play_brick_scene",
+      "width": 400,
+      "height": 500,
+      "visiblePixels": 199704
+    }
+  ]
+}

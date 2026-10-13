@@ -21,9 +21,13 @@ export struct GuessNumberPage {
   @Local safeBottom: number = SafeAreaInsets.bottom;
   @Local viewModel: GuessNumberViewModel = new GuessNumberViewModel();
 
+  @Monitor('viewModel.status', 'viewModel.confirmExit')
+  playTimeStateChanged(): void { GameLifecycleBus.updatePlayTime(this.viewModel); }
+
   aboutToAppear(): void {
     GameLifecycleBus.attach(this.viewModel);
     if (!GameSessionTransfer.restore(this.viewModel)) { this.viewModel.startGame(); }
+    this.playTimeStateChanged();
   }
 
   aboutToDisappear(): void {
@@ -59,16 +63,17 @@ export struct GuessNumberPage {
       if (this.viewModel.isInputComplete()) { return SemanticColors.textOnPrimary; }
       return SemanticColors.textTertiary;
     }
-    return SemanticColors.textPrimary;
+    if (key === '⌫') { return SemanticColors.error; }
+    return $r('app.color.play_piece_text');
   }
 
   getKeyBgColor(key: string): ResourceColor {
     if (key === 'submit') {
       if (this.viewModel.isInputComplete()) { return SemanticColors.primary; }
-      return SemanticColors.surfaceHover;
+      return $r('app.color.play_cell_alternate');
     }
-    if (key === '⌫') { return SemanticColors.error; }
-    return SemanticColors.surface;
+    if (key === '⌫') { return SemanticColors.selectionSurface; }
+    return $r('app.color.play_cell_background');
   }
 
   getKeyShadow(key: string): ShadowOptions | undefined {
@@ -108,13 +113,14 @@ export struct GuessNumberPage {
         .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
 
       Column() {
-        GameHeader({ gameTitle: $r('app.string.game_guessnumber_name'),
+        GameHeader({ gameId: 'guessnumber', pathStack: this.pathStack, hasProgress: (): boolean => this.viewModel.hasProgress(), gameTitle: $r('app.string.game_guessnumber_name'),
           // subtitle 仅在 showScore 为 false 时显示，不关掉的话「尝试 N / M」永远被吃掉
           showScore: false,
           subtitle: $r('app.string.game_guessnumber_subtitle_format', this.viewModel.tries, this.viewModel.getMaxTries()),
           difficulty: this.viewModel.difficulty,
           onDifficultyChange: (d: GameDifficulty) => { this.viewModel.changeDifficulty(d); },
           onBack: () => { this.requestExit(); },
+          showPause: false,
           onPauseToggle: () => {},
           onRestart: () => { this.viewModel.startGame(); } })
 
@@ -122,9 +128,6 @@ export struct GuessNumberPage {
           Text($r('app.string.guess_hint_length_format', this.viewModel.getSecretLength()))
             .fontFamily(FontTokens.family).fontSize(FontTokens.sizeBodySmall)
             .fontColor(SemanticColors.textTertiary).margin({ top: SpacingTokens.sm })
-          Text($r('app.string.guess_hint_submit_format', this.viewModel.getSecretLength()))
-            .fontFamily(FontTokens.family).fontSize(FontTokens.sizeBodySmall)
-            .fontColor(SemanticColors.textTertiary)
           Text($r('app.string.guess_tries_format', this.viewModel.tries, this.viewModel.getMaxTries()))
             .fontFamily(FontTokens.family).fontSize(FontTokens.sizeBodySmall)
             .fontColor(SemanticColors.warning).margin({ top: SpacingTokens.xs })
@@ -140,7 +143,7 @@ export struct GuessNumberPage {
           }.width('100%').margin({ left: SpacingTokens.base, right: SpacingTokens.base, bottom: 4 })
 
           List() {
-            ForEach(this.viewModel.records.slice(0, 6), (rec: GuessRecord, index: number) => {
+            ForEach(this.viewModel.records, (rec: GuessRecord, index: number) => {
               ListItem() {
                 Row() {
                   Text('#' + (this.viewModel.records.length - index))
@@ -223,7 +226,7 @@ export struct GuessNumberPage {
               .width('100%').height('100%').objectFit(ImageFit.Fill)
             if (key === '⌫') {
               SymbolGlyph($r('sys.symbol.delete_left'))
-                .fontSize(20).fontColor([SemanticColors.textOnPrimary])
+                .fontSize(20).fontColor([this.getKeyFontColor(key)])
             } else if (key === 'submit') {
               Text($r('app.string.guess_confirm'))
                 .fontFamily(FontTokens.family)

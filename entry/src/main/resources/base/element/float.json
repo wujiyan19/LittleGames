@@ -1,5 +1,66 @@
 {
   "float": [
+    { "name": "linerescue_line_width", "value": "5vp" },
+    {
+      "name": "play_grid_line_width",
+      "value": "0.5vp"
+    },
+    {
+      "name": "home_stat_value_height",
+      "value": "32fp"
+    },
+    {
+      "name": "home_detail_max_width",
+      "value": "640vp"
+    },
+    {
+      "name": "home_settings_row_min_height",
+      "value": "56vp"
+    },
+    {
+      "name": "home_page_title_size",
+      "value": "28fp"
+    },
+    {
+      "name": "home_header_action_icon_size",
+      "value": "22fp"
+    },
+    {
+      "name": "home_action_min_height",
+      "value": "44vp"
+    },
+    {
+      "name": "home_search_height",
+      "value": "48fp"
+    },
+    {
+      "name": "home_search_icon_size",
+      "value": "20fp"
+    },
+    {
+      "name": "home_filter_bar_height",
+      "value": "52fp"
+    },
+    {
+      "name": "home_grid_gap_horizontal",
+      "value": "12vp"
+    },
+    {
+      "name": "home_grid_gap_vertical",
+      "value": "16vp"
+    },
+    {
+      "name": "home_section_gap",
+      "value": "24vp"
+    },
+    {
+      "name": "home_section_title_size",
+      "value": "18fp"
+    },
+    {
+      "name": "home_group_divider_height",
+      "value": "0.5vp"
+    },
     {
       "name": "whack_board_max",
       "value": "520vp"
@@ -39,6 +100,26 @@
     {
       "name": "home_tab_content_inset",
       "value": "104vp"
+    },
+    {
+      "name": "home_recent_card_width",
+      "value": "104vp"
+    },
+    {
+      "name": "home_recent_card_min_height",
+      "value": "120vp"
+    },
+    {
+      "name": "home_recent_icon_size",
+      "value": "42vp"
+    },
+    {
+      "name": "home_recent_icon_container_size",
+      "value": "52vp"
+    },
+    {
+      "name": "play_history_action_min_height",
+      "value": "44vp"
     },
     {
       "name": "collection_signal_height",
@@ -147,6 +228,86 @@
     {
       "name": "art_tug_character",
       "value": "64vp"
+    },
+    {
+      "name": "motion_card_press_scale",
+      "value": "0.98"
+    },
+    {
+      "name": "motion_button_press_scale",
+      "value": "0.96"
+    },
+    {
+      "name": "motion_selection_scale",
+      "value": "1.03"
+    },
+    {
+      "name": "motion_selection_response",
+      "value": "0.28"
+    },
+    {
+      "name": "motion_dialog_response",
+      "value": "0.38"
+    },
+    {
+      "name": "motion_spring_damping",
+      "value": "0.88"
+    },
+    {
+      "name": "motion_tab_rest_scale",
+      "value": "0.92"
+    },
+    {
+      "name": "motion_tab_lift",
+      "value": "-1.5vp"
+    },
+    {
+      "name": "motion_tab_symbol_size",
+      "value": "24fp"
+    },
+    {
+      "name": "motion_scrim_duration",
+      "value": "180"
+    },
+    {
+      "name": "motion_exit_duration",
+      "value": "140"
+    },
+    {
+      "name": "motion_action_guard_duration",
+      "value": "320"
+    },
+    {
+      "name": "motion_dialog_start_scale",
+      "value": "0.94"
+    },
+    {
+      "name": "motion_dialog_end_scale",
+      "value": "0.98"
+    },
+    {
+      "name": "motion_dialog_enter_offset",
+      "value": "16vp"
+    },
+    {
+      "name": "motion_dialog_exit_offset",
+      "value": "8vp"
+    },
+    {
+      "name": "motion_dialog_max_width",
+      "value": "420vp"
+    },
+    {
+      "name": "motion_content_offset",
+      "value": "8vp"
+    },
+    {
+      "name": "motion_content_duration",
+      "value": "180"
+    },
+    {
+      "name": "motion_celebration_duration",
+      "value": "680"
     }
   ]
 }

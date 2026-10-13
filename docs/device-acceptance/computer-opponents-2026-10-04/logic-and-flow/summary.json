@@ -1,0 +1,554 @@
+{
+  "date": "2026-10-04",
+  "target": "FMR0224521016052",
+  "packageSha256": "0b1df8bf9585944e14035a11f36acd7fd77e9622d420d5fa545a95dce21b49a1",
+  "originalDifficulty": {
+    "ludo": "普通",
+    "mahjong": "普通",
+    "doudizhu": "普通",
+    "guandan": "普通",
+    "xiangqi": "普通",
+    "chess": "普通"
+  },
+  "checks": [
+    {
+      "id": "ludo-movement-light",
+      "detail": "Natural dice six and human plane takeoff update the rendered coordinates",
+      "evidence": [
+        "light-ludo-movement-before.jpeg",
+        "light-ludo-movement-six.jpeg",
+        "light-ludo-movement-takeoff.jpeg"
+      ],
+      "at": "2026-10-04T10:39:34.611Z"
+    },
+    {
+      "id": "mahjong-easy",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-mahjong-easy-ready.jpeg",
+        "light-mahjong-easy-thinking.jpeg",
+        "light-mahjong-easy-replied.jpeg"
+      ],
+      "at": "2026-10-04T10:40:17.990Z"
+    },
+    {
+      "id": "mahjong-normal",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-mahjong-normal-ready.jpeg",
+        "light-mahjong-normal-thinking.jpeg",
+        "light-mahjong-normal-replied.jpeg"
+      ],
+      "at": "2026-10-04T10:40:45.968Z"
+    },
+    {
+      "id": "mahjong-hard",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-mahjong-hard-ready.jpeg",
+        "light-mahjong-hard-thinking.jpeg",
+        "light-mahjong-hard-replied.jpeg"
+      ],
+      "at": "2026-10-04T10:41:14.606Z"
+    },
+    {
+      "id": "doudizhu-easy",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-doudizhu-easy-ready.jpeg",
+        "light-doudizhu-easy-thinking.jpeg",
+        "light-doudizhu-easy-replied.jpeg"
+      ],
+      "at": "2026-10-04T10:42:02.711Z"
+    },
+    {
+      "id": "doudizhu-normal",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-doudizhu-normal-ready.jpeg",
+        "light-doudizhu-normal-thinking.jpeg",
+        "light-doudizhu-normal-replied.jpeg"
+      ],
+      "at": "2026-10-04T10:42:33.738Z"
+    },
+    {
+      "id": "doudizhu-hard",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-doudizhu-hard-ready.jpeg",
+        "light-doudizhu-hard-thinking.jpeg",
+        "light-doudizhu-hard-replied.jpeg"
+      ],
+      "at": "2026-10-04T10:43:05.115Z"
+    },
+    {
+      "id": "guandan-easy",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-guandan-easy-ready.jpeg",
+        "light-guandan-easy-thinking.jpeg",
+        "light-guandan-easy-replied.jpeg"
+      ],
+      "at": "2026-10-04T10:43:53.612Z"
+    },
+    {
+      "id": "guandan-normal",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-guandan-normal-ready.jpeg",
+        "light-guandan-normal-thinking.jpeg",
+        "light-guandan-normal-replied.jpeg"
+      ],
+      "at": "2026-10-04T10:44:26.303Z"
+    },
+    {
+      "id": "guandan-hard",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-guandan-hard-ready.jpeg",
+        "light-guandan-hard-thinking.jpeg",
+        "light-guandan-hard-replied.jpeg"
+      ],
+      "at": "2026-10-04T10:44:58.817Z"
+    },
+    {
+      "id": "xiangqi-easy",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-xiangqi-easy-ready.jpeg",
+        "light-xiangqi-easy-thinking.jpeg",
+        "light-xiangqi-easy-replied.jpeg"
+      ],
+      "at": "2026-10-04T10:45:45.439Z"
+    },
+    {
+      "id": "xiangqi-normal",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-xiangqi-normal-ready.jpeg",
+        "light-xiangqi-normal-thinking.jpeg",
+        "light-xiangqi-normal-replied.jpeg"
+      ],
+      "at": "2026-10-04T10:46:15.899Z"
+    },
+    {
+      "id": "xiangqi-hard",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-xiangqi-hard-ready.jpeg",
+        "light-xiangqi-hard-thinking.jpeg",
+        "light-xiangqi-hard-replied.jpeg"
+      ],
+      "at": "2026-10-04T10:46:46.480Z"
+    },
+    {
+      "id": "chess-easy",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-chess-easy-ready.jpeg",
+        "light-chess-easy-thinking.jpeg",
+        "light-chess-easy-replied.jpeg"
+      ],
+      "at": "2026-10-04T10:47:32.407Z"
+    },
+    {
+      "id": "chess-normal",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-chess-normal-ready.jpeg",
+        "light-chess-normal-thinking.jpeg",
+        "light-chess-normal-replied.jpeg"
+      ],
+      "at": "2026-10-04T10:48:01.849Z"
+    },
+    {
+      "id": "chess-hard",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-chess-hard-ready.jpeg",
+        "light-chess-hard-thinking.jpeg",
+        "light-chess-hard-replied.jpeg"
+      ],
+      "at": "2026-10-04T10:48:31.225Z"
+    },
+    {
+      "id": "ludo-easy",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-ludo-easy-ready.jpeg",
+        "light-ludo-easy-thinking.jpeg",
+        "light-ludo-easy-replied.jpeg"
+      ],
+      "at": "2026-10-04T10:49:16.312Z"
+    },
+    {
+      "id": "ludo-normal",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-ludo-normal-ready.jpeg",
+        "light-ludo-normal-thinking.jpeg",
+        "light-ludo-normal-replied.jpeg"
+      ],
+      "at": "2026-10-04T10:49:46.033Z"
+    },
+    {
+      "id": "ludo-hard",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-ludo-hard-ready.jpeg",
+        "light-ludo-hard-thinking.jpeg",
+        "light-ludo-hard-replied.jpeg"
+      ],
+      "at": "2026-10-04T10:50:15.180Z"
+    },
+    {
+      "id": "mahjong-lifecycle",
+      "detail": "Pause and Home/foreground preserve the UI; Resume returns control; Undo and confirmed Restart restore a human initial turn",
+      "evidence": [
+        "lifecycle-mahjong-paused.jpeg",
+        "lifecycle-mahjong-background-return.jpeg",
+        "lifecycle-mahjong-resumed.jpeg",
+        "lifecycle-mahjong-undo.jpeg",
+        "lifecycle-mahjong-restart.jpeg"
+      ],
+      "at": "2026-10-04T10:51:37.632Z"
+    },
+    {
+      "id": "doudizhu-lifecycle",
+      "detail": "Pause and Home/foreground preserve the UI; Resume returns control; Undo and confirmed Restart restore a human initial turn",
+      "evidence": [
+        "lifecycle-doudizhu-paused.jpeg",
+        "lifecycle-doudizhu-background-return.jpeg",
+        "lifecycle-doudizhu-resumed.jpeg",
+        "lifecycle-doudizhu-undo.jpeg",
+        "lifecycle-doudizhu-restart.jpeg"
+      ],
+      "at": "2026-10-04T10:52:49.989Z"
+    },
+    {
+      "id": "guandan-lifecycle",
+      "detail": "Pause and Home/foreground preserve the UI; Resume returns control; Undo and confirmed Restart restore a human initial turn",
+      "evidence": [
+        "lifecycle-guandan-paused.jpeg",
+        "lifecycle-guandan-background-return.jpeg",
+        "lifecycle-guandan-resumed.jpeg",
+        "lifecycle-guandan-undo.jpeg",
+        "lifecycle-guandan-restart.jpeg"
+      ],
+      "at": "2026-10-04T10:58:29.636Z"
+    },
+    {
+      "id": "xiangqi-lifecycle",
+      "detail": "Pause and Home/foreground preserve the UI; Resume returns control; Undo and confirmed Restart restore a human initial turn",
+      "evidence": [
+        "lifecycle-xiangqi-paused.jpeg",
+        "lifecycle-xiangqi-background-return.jpeg",
+        "lifecycle-xiangqi-resumed.jpeg",
+        "lifecycle-xiangqi-undo.jpeg",
+        "lifecycle-xiangqi-restart.jpeg"
+      ],
+      "at": "2026-10-04T10:59:46.313Z"
+    },
+    {
+      "id": "chess-lifecycle",
+      "detail": "Pause and Home/foreground preserve the UI; Resume returns control; Undo and confirmed Restart restore a human initial turn",
+      "evidence": [
+        "lifecycle-chess-paused.jpeg",
+        "lifecycle-chess-background-return.jpeg",
+        "lifecycle-chess-resumed.jpeg",
+        "lifecycle-chess-undo.jpeg",
+        "lifecycle-chess-restart.jpeg"
+      ],
+      "at": "2026-10-04T11:01:00.359Z"
+    },
+    {
+      "id": "ludo-lifecycle",
+      "detail": "Pause and Home/foreground preserve the UI; Resume returns control; Undo and confirmed Restart restore a human initial turn",
+      "evidence": [
+        "lifecycle-ludo-paused.jpeg",
+        "lifecycle-ludo-background-return.jpeg",
+        "lifecycle-ludo-resumed.jpeg",
+        "lifecycle-ludo-undo.jpeg",
+        "lifecycle-ludo-restart.jpeg"
+      ],
+      "at": "2026-10-04T11:03:26.508Z"
+    },
+    {
+      "id": "mahjong-dark",
+      "detail": "Dark identity, status, board and controls rendered after real computer reply",
+      "evidence": [
+        "dark-mahjong-ready.jpeg",
+        "dark-mahjong-replied.jpeg"
+      ],
+      "at": "2026-10-04T11:04:09.213Z"
+    },
+    {
+      "id": "doudizhu-dark",
+      "detail": "Dark identity, status, board and controls rendered after real computer reply",
+      "evidence": [
+        "dark-doudizhu-ready.jpeg",
+        "dark-doudizhu-replied.jpeg"
+      ],
+      "at": "2026-10-04T11:04:40.065Z"
+    },
+    {
+      "id": "guandan-dark",
+      "detail": "Dark identity, status, board and controls rendered after real computer reply",
+      "evidence": [
+        "dark-guandan-ready.jpeg",
+        "dark-guandan-replied.jpeg"
+      ],
+      "at": "2026-10-04T11:05:12.889Z"
+    },
+    {
+      "id": "xiangqi-dark",
+      "detail": "Dark identity, status, board and controls rendered after real computer reply",
+      "evidence": [
+        "dark-xiangqi-ready.jpeg",
+        "dark-xiangqi-replied.jpeg"
+      ],
+      "at": "2026-10-04T11:05:40.386Z"
+    },
+    {
+      "id": "chess-dark",
+      "detail": "Dark identity, status, board and controls rendered after real computer reply",
+      "evidence": [
+        "dark-chess-ready.jpeg",
+        "dark-chess-replied.jpeg"
+      ],
+      "at": "2026-10-04T11:06:07.454Z"
+    },
+    {
+      "id": "ludo-dark",
+      "detail": "Dark identity, status, board and controls rendered after real computer reply",
+      "evidence": [
+        "dark-ludo-ready.jpeg",
+        "dark-ludo-replied.jpeg"
+      ],
+      "at": "2026-10-04T11:06:35.585Z"
+    },
+    {
+      "id": "ludo-movement-dark",
+      "detail": "Natural dice six and human plane takeoff update the rendered coordinates",
+      "evidence": [
+        "dark-ludo-movement-before.jpeg",
+        "dark-ludo-movement-six.jpeg",
+        "dark-ludo-movement-takeoff.jpeg"
+      ],
+      "at": "2026-10-04T11:07:50.371Z"
+    }
+  ],
+  "samples": [
+    {
+      "tag": "light-ludo-movement",
+      "rolls": 2,
+      "before": "[170,967][262,1059]",
+      "after": "[584,1013][676,1105]"
+    },
+    {
+      "tag": "light-mahjong-easy",
+      "afterTouchMs": 2644,
+      "sampleMs": 4283,
+      "status": "电脑 4 正在思考…",
+      "moves": 3,
+      "thinkingObserved": true,
+      "disabledBoardButtons": 1
+    },
+    {
+      "tag": "light-mahjong-normal",
+      "afterTouchMs": 2668,
+      "sampleMs": 4448,
+      "status": "请选择和牌、吃碰杠，或跳过",
+      "moves": 2,
+      "thinkingObserved": false,
+      "disabledBoardButtons": 5
+    },
+    {
+      "tag": "light-mahjong-hard",
+      "afterTouchMs": 2611,
+      "sampleMs": 4268,
+      "status": "电脑 4 正在思考…",
+      "moves": 3,
+      "thinkingObserved": true,
+      "disabledBoardButtons": 1
+    },
+    {
+      "tag": "light-doudizhu-easy",
+      "afterTouchMs": 5649,
+      "sampleMs": 7477,
+      "status": "轮到你操作",
+      "moves": 3,
+      "thinkingObserved": false,
+      "disabledBoardButtons": 0
+    },
+    {
+      "tag": "light-doudizhu-normal",
+      "afterTouchMs": 5266,
+      "sampleMs": 7040,
+      "status": "轮到你操作",
+      "moves": 1,
+      "thinkingObserved": false,
+      "disabledBoardButtons": 1
+    },
+    {
+      "tag": "light-doudizhu-hard",
+      "afterTouchMs": 5602,
+      "sampleMs": 7373,
+      "status": "轮到你操作",
+      "moves": 1,
+      "thinkingObserved": false,
+      "disabledBoardButtons": 1
+    },
+    {
+      "tag": "light-guandan-easy",
+      "afterTouchMs": 5690,
+      "sampleMs": 7519,
+      "status": "电脑 4 正在思考…",
+      "moves": 3,
+      "thinkingObserved": true,
+      "disabledBoardButtons": 0
+    },
+    {
+      "tag": "light-guandan-normal",
+      "afterTouchMs": 5611,
+      "sampleMs": 7514,
+      "status": "电脑 4 正在思考…",
+      "moves": 3,
+      "thinkingObserved": true,
+      "disabledBoardButtons": 0
+    },
+    {
+      "tag": "light-guandan-hard",
+      "afterTouchMs": 5642,
+      "sampleMs": 7414,
+      "status": "电脑 4 正在思考…",
+      "moves": 3,
+      "thinkingObserved": true,
+      "disabledBoardButtons": 0
+    },
+    {
+      "tag": "light-xiangqi-easy",
+      "afterTouchMs": 667,
+      "sampleMs": 2684,
+      "status": "轮到你操作",
+      "moves": 2,
+      "thinkingObserved": false,
+      "disabledBoardButtons": 0
+    },
+    {
+      "tag": "light-xiangqi-normal",
+      "afterTouchMs": 688,
+      "sampleMs": 2683,
+      "status": "轮到你操作",
+      "moves": 2,
+      "thinkingObserved": false,
+      "disabledBoardButtons": 0
+    },
+    {
+      "tag": "light-xiangqi-hard",
+      "afterTouchMs": 673,
+      "sampleMs": 2739,
+      "status": "轮到你操作",
+      "moves": 2,
+      "thinkingObserved": false,
+      "disabledBoardButtons": 0
+    },
+    {
+      "tag": "light-chess-easy",
+      "afterTouchMs": 710,
+      "sampleMs": 2630,
+      "status": "轮到你操作",
+      "moves": 2,
+      "thinkingObserved": false,
+      "disabledBoardButtons": 0
+    },
+    {
+      "tag": "light-chess-normal",
+      "afterTouchMs": 691,
+      "sampleMs": 2644,
+      "status": "轮到你操作",
+      "moves": 2,
+      "thinkingObserved": false,
+      "disabledBoardButtons": 0
+    },
+    {
+      "tag": "light-chess-hard",
+      "afterTouchMs": 702,
+      "sampleMs": 2618,
+      "status": "轮到你操作",
+      "moves": 2,
+      "thinkingObserved": false,
+      "disabledBoardButtons": 0
+    },
+    {
+      "tag": "light-ludo-easy",
+      "afterTouchMs": 2908,
+      "sampleMs": 4859,
+      "status": "轮到你操作",
+      "moves": 2,
+      "thinkingObserved": false,
+      "disabledBoardButtons": 0
+    },
+    {
+      "tag": "light-ludo-normal",
+      "afterTouchMs": 2953,
+      "sampleMs": 4953,
+      "status": "轮到你操作",
+      "moves": 0,
+      "thinkingObserved": false,
+      "disabledBoardButtons": 0
+    },
+    {
+      "tag": "light-ludo-hard",
+      "afterTouchMs": 2970,
+      "sampleMs": 4989,
+      "status": "轮到你操作",
+      "moves": 0,
+      "thinkingObserved": false,
+      "disabledBoardButtons": 0
+    },
+    {
+      "tag": "lifecycle-mahjong",
+      "pendingComputerAtPause": true
+    },
+    {
+      "tag": "lifecycle-doudizhu",
+      "pendingComputerAtPause": true
+    },
+    {
+      "tag": "lifecycle-guandan",
+      "pendingComputerAtPause": true
+    },
+    {
+      "tag": "lifecycle-xiangqi",
+      "pendingComputerAtPause": true
+    },
+    {
+      "tag": "lifecycle-chess",
+      "pendingComputerAtPause": true
+    },
+    {
+      "tag": "lifecycle-ludo",
+      "pendingComputerAtPause": true
+    },
+    {
+      "tag": "dark-ludo-movement",
+      "rolls": 6,
+      "before": "[170,967][262,1059]",
+      "after": "[584,1013][676,1105]"
+    }
+  ],
+  "model": "ALN-AL00",
+  "api": "26",
+  "os": "OpenHarmony-7.0.0.105",
+  "restoredSettings": {
+    "theme": "跟随系统",
+    "toggles": [
+      "false",
+      "true",
+      "true",
+      "true"
+    ]
+  },
+  "finishedAt": "2026-10-04T11:10:33.512Z"
+}

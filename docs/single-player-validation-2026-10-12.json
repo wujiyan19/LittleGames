@@ -1,0 +1,248 @@
+{
+  "date": "2026-10-12",
+  "scope": "89-game single-player catalog; desktop rule, ViewModel, persistence, route and continuation checks. Retained withdrawn-game model checks are included; no native UI or device acceptance is claimed.",
+  "head": "7ac157fc313c3b853e4ecbfcec218e0e344bcb96",
+  "workingTreeHasUncommittedChanges": true,
+  "publishedGames": 89,
+  "withdrawnGames": [
+    "tictactoe",
+    "gomoku",
+    "reversi",
+    "fourline",
+    "nim",
+    "dots",
+    "tug",
+    "doudizhu",
+    "guandan",
+    "mahjong",
+    "ludo"
+  ],
+  "categoryCounts": {
+    "classic": 21,
+    "puzzle": 35,
+    "board": 5,
+    "number": 8,
+    "memory": 5,
+    "reaction": 15
+  },
+  "suites": 21,
+  "passed": 1267,
+  "total": 1267,
+  "results": [
+    {
+      "script": "test-card-ai",
+      "exitCode": 0,
+      "summary": "Passed 29 card AI regression checks.",
+      "passed": 29,
+      "total": 29,
+      "log": "entry/build/single-player-20261012/test-card-ai.log"
+    },
+    {
+      "script": "test-chess-ai",
+      "exitCode": 0,
+      "summary": "21/21 chess AI regressions passed.",
+      "passed": 21,
+      "total": 21,
+      "log": "entry/build/single-player-20261012/test-chess-ai.log"
+    },
+    {
+      "script": "test-classic-logic-audit",
+      "exitCode": 0,
+      "summary": "32/32 classic logic audit regressions passed.",
+      "passed": 32,
+      "total": 32,
+      "log": "entry/build/single-player-20261012/test-classic-logic-audit.log"
+    },
+    {
+      "script": "test-collection",
+      "exitCode": 0,
+      "passed": 67,
+      "total": 67,
+      "summary": "67/67 passed",
+      "evidence": "Executed during this session."
+    },
+    {
+      "script": "test-computer-opponents",
+      "exitCode": 0,
+      "passed": 54,
+      "total": 54,
+      "summary": "54/54 passed",
+      "evidence": "Executed during this session; the continuation and computer-opponent results were independently provided by the implementation agent."
+    },
+    {
+      "script": "test-continuation",
+      "exitCode": 0,
+      "passed": 76,
+      "total": 76,
+      "summary": "76/76 passed",
+      "evidence": "Executed during this session; the continuation and computer-opponent results were independently provided by the implementation agent."
+    },
+    {
+      "script": "test-expansion",
+      "exitCode": 0,
+      "passed": 330,
+      "total": 330,
+      "summary": "330/330 passed",
+      "evidence": "Executed during this session."
+    },
+    {
+      "script": "test-expansion-art",
+      "exitCode": 0,
+      "summary": "7/7 art and feedback checks passed",
+      "passed": 7,
+      "total": 7,
+      "log": "entry/build/single-player-20261012/test-expansion-art.log"
+    },
+    {
+      "script": "test-expansion-completion",
+      "exitCode": 0,
+      "summary": "190/190 completion checks passed",
+      "passed": 190,
+      "total": 190,
+      "log": "entry/build/single-player-20261012/test-expansion-completion.log"
+    },
+    {
+      "script": "test-expansion-gameplay-audit",
+      "exitCode": 0,
+      "summary": "159/159 expansion gameplay audit checks passed",
+      "passed": 159,
+      "total": 159,
+      "log": "entry/build/single-player-20261012/test-expansion-gameplay-audit.log"
+    },
+    {
+      "script": "test-expansion-render-audit",
+      "exitCode": 0,
+      "summary": "14/14 expansion render audit checks passed",
+      "passed": 14,
+      "total": 14,
+      "log": "entry/build/single-player-20261012/test-expansion-render-audit.log"
+    },
+    {
+      "script": "test-game-settings",
+      "exitCode": 0,
+      "summary": "9/9 game settings regressions passed.",
+      "passed": 9,
+      "total": 9,
+      "log": "entry/build/single-player-20261012/test-game-settings.log"
+    },
+    {
+      "script": "test-generation-logic",
+      "exitCode": 0,
+      "summary": "26/26 generation/difficulty regressions passed.",
+      "passed": 26,
+      "total": 26,
+      "log": "entry/build/single-player-20261012/test-generation-logic.log"
+    },
+    {
+      "script": "test-klotski-ui-state",
+      "exitCode": 0,
+      "summary": "3/3 Klotski UI-state regressions passed",
+      "passed": 3,
+      "total": 3,
+      "log": "entry/build/single-player-20261012/test-klotski-ui-state.log"
+    },
+    {
+      "script": "test-performance",
+      "exitCode": 0,
+      "passed": 162,
+      "total": 162,
+      "summary": "162/162 passed",
+      "evidence": "Executed during this session."
+    },
+    {
+      "script": "test-play-history",
+      "exitCode": 0,
+      "summary": "10/10 play-history regressions passed.",
+      "passed": 10,
+      "total": 10,
+      "log": "entry/build/single-player-20261012/test-play-history.log"
+    },
+    {
+      "script": "test-play-time",
+      "exitCode": 0,
+      "summary": "34/34 play-time regressions passed.",
+      "passed": 34,
+      "total": 34,
+      "log": "entry/build/single-player-20261012/test-play-time.log"
+    },
+    {
+      "script": "test-poker-ai",
+      "exitCode": 0,
+      "summary": "11/11 poker AI checks passed",
+      "passed": 11,
+      "total": 11,
+      "log": "entry/build/single-player-20261012/test-poker-ai.log"
+    },
+    {
+      "script": "test-single-player-catalog",
+      "exitCode": 0,
+      "passed": 17,
+      "total": 17,
+      "summary": "17/17 passed",
+      "evidence": "Executed during this session."
+    },
+    {
+      "script": "test-window-sizing",
+      "exitCode": 0,
+      "summary": "8/8 window sizing regressions passed.",
+      "passed": 8,
+      "total": 8,
+      "log": "entry/build/single-player-20261012/test-window-sizing.log"
+    },
+    {
+      "script": "test-world-piece-refresh",
+      "exitCode": 0,
+      "summary": "8/8 world piece refresh checks passed",
+      "passed": 8,
+      "total": 8,
+      "log": "entry/build/single-player-20261012/test-world-piece-refresh.log"
+    }
+  ],
+  "staticChecks": {
+    "runtimeArkTSFiles": 122,
+    "reachableLanOrNetworkKitImports": 0,
+    "permissions": [
+      "ohos.permission.VIBRATE"
+    ],
+    "productLocales": [
+      "base",
+      "zh_CN",
+      "en_US"
+    ],
+    "changedFilesDiffCheck": "passed"
+  },
+  "excludedSuites": [
+    {
+      "script": "test-lan-multiplayer",
+      "reason": "The former LAN ViewModel adapters and UI are withdrawn from the application."
+    },
+    {
+      "script": "test-lan-transport",
+      "reason": "Retained network infrastructure is unreachable from this single-player application and was not modified."
+    }
+  ],
+  "nativeBuild": {
+    "executed": false,
+    "reason": "No DevEco Studio SDK/hvigor or Windows C: mount is available in this execution environment."
+  },
+  "deviceAcceptance": {
+    "executed": false,
+    "existingHapIsHistorical": true
+  },
+  "productionSourceSha256": {
+    "entry/src/main/ets/common/GameAvailability.ets": "868ede35c32ce21a1b9e97b9642d1245d2d1990c9062cae68e4bc09d2c10e0ec",
+    "entry/src/main/ets/common/AppContinuation.ets": "d832e454ee47c163e265ba3175fe899634e9790f073efb15b7e74eb21d47b23c",
+    "entry/src/main/ets/model/GameData.ets": "74151e5d670c6d5005cb2d78d6ad5fa41b83e2a632465040b804dbe9fb1068a8",
+    "entry/src/main/ets/router/GameRouteRegistry.ets": "8eaf6f9b6b6ba8778ac30a44d3cee31061b9dc56a85af0f30bec35d76206a61b",
+    "entry/src/main/ets/router/GameRoutes.ets": "035295155ef7a20e9cd6c6ef980a24ce80ceb48811b2aff6b6288bbfa9257530",
+    "entry/src/main/ets/pages/collection/CollectionPage.ets": "a0fad1e1c24d54127a946141f2294787af02d410fd01ad4ea823e84accff7cb4",
+    "entry/src/main/ets/pages/collection/ExpansionPage.ets": "648d6187eff3539e3cb94e836b95329285c2b17b2a85a1af853b00d95a4f8518",
+    "entry/src/main/ets/pages/collection/ExpansionWorldBoard.ets": "690cd5a5c81e8f95d4ad3ec484f5d7efec981e4cc6629aab8375532e7a7e91dc",
+    "entry/src/main/ets/viewmodel/CollectionViewModel.ets": "9338e2445094a5c7466bc456a63b8d04412008824c8ce31cf45e4b38978bace5",
+    "entry/src/main/ets/viewmodel/ExpansionViewModel.ets": "0edc7fcb6bb2d23ac35b0e97422408c86923fb2c3478f713b55e4ed0d3c18e97",
+    "entry/src/main/module.json5": "a299c8e6bf775d38f657f46424a0097912c30d076c952f10c5291659ed881175",
+    "entry/src/main/resources/base/element/string.json": "b3ca5fdefd975897fb77b019b81d4f7aa77579aa9c7e52a25715383d7b30d110",
+    "entry/src/main/resources/zh_CN/element/string.json": "b3ca5fdefd975897fb77b019b81d4f7aa77579aa9c7e52a25715383d7b30d110",
+    "entry/src/main/resources/en_US/element/string.json": "088197e532318f5f6d7e4ac2502434a362ea3bffe5a15436a1efc43193b6eb16"
+  }
+}

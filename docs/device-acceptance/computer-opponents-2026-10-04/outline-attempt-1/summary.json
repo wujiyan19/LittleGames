@@ -1,0 +1,130 @@
+{
+  "date": "2026-10-04",
+  "target": "FMR0224521016052",
+  "packageSha256": "531edab9b26b389760a298960ec44d109bdfae9583129acf64e704a453f42c7e",
+  "originalDifficulty": {
+    "chess": "普通",
+    "xiangqi": "普通"
+  },
+  "checks": [
+    {
+      "id": "chess-easy",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-chess-easy-ready.jpeg",
+        "light-chess-easy-thinking.jpeg",
+        "light-chess-easy-replied.jpeg"
+      ],
+      "at": "2026-10-04T10:03:28.933Z"
+    },
+    {
+      "id": "chess-normal",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-chess-normal-ready.jpeg",
+        "light-chess-normal-thinking.jpeg",
+        "light-chess-normal-replied.jpeg"
+      ],
+      "at": "2026-10-04T10:04:06.949Z"
+    },
+    {
+      "id": "chess-hard",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-chess-hard-ready.jpeg",
+        "light-chess-hard-thinking.jpeg",
+        "light-chess-hard-replied.jpeg"
+      ],
+      "at": "2026-10-04T10:04:52.128Z"
+    },
+    {
+      "id": "xiangqi-easy",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-xiangqi-easy-ready.jpeg",
+        "light-xiangqi-easy-thinking.jpeg",
+        "light-xiangqi-easy-replied.jpeg"
+      ],
+      "at": "2026-10-04T10:05:38.870Z"
+    },
+    {
+      "id": "xiangqi-normal",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-xiangqi-normal-ready.jpeg",
+        "light-xiangqi-normal-thinking.jpeg",
+        "light-xiangqi-normal-replied.jpeg"
+      ],
+      "at": "2026-10-04T10:06:19.047Z"
+    },
+    {
+      "id": "xiangqi-hard",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-xiangqi-hard-ready.jpeg",
+        "light-xiangqi-hard-thinking.jpeg",
+        "light-xiangqi-hard-replied.jpeg"
+      ],
+      "at": "2026-10-04T10:07:05.628Z"
+    }
+  ],
+  "samples": [
+    {
+      "tag": "light-chess-easy",
+      "afterTouchMs": 705,
+      "sampleMs": 2685,
+      "status": "轮到你操作",
+      "moves": 2,
+      "thinkingObserved": false,
+      "disabledBoardButtons": 0
+    },
+    {
+      "tag": "light-chess-normal",
+      "afterTouchMs": 698,
+      "sampleMs": 2540,
+      "status": "轮到你操作",
+      "moves": 2,
+      "thinkingObserved": false,
+      "disabledBoardButtons": 0
+    },
+    {
+      "tag": "light-chess-hard",
+      "afterTouchMs": 687,
+      "sampleMs": 2582,
+      "status": "轮到你操作",
+      "moves": 2,
+      "thinkingObserved": false,
+      "disabledBoardButtons": 0
+    },
+    {
+      "tag": "light-xiangqi-easy",
+      "afterTouchMs": 704,
+      "sampleMs": 2657,
+      "status": "轮到你操作",
+      "moves": 2,
+      "thinkingObserved": false,
+      "disabledBoardButtons": 0
+    },
+    {
+      "tag": "light-xiangqi-normal",
+      "afterTouchMs": 681,
+      "sampleMs": 2676,
+      "status": "轮到你操作",
+      "moves": 2,
+      "thinkingObserved": false,
+      "disabledBoardButtons": 0
+    },
+    {
+      "tag": "light-xiangqi-hard",
+      "afterTouchMs": 668,
+      "sampleMs": 2645,
+      "status": "轮到你操作",
+      "moves": 2,
+      "thinkingObserved": false,
+      "disabledBoardButtons": 0
+    }
+  ],
+  "model": "ALN-AL00",
+  "api": "26",
+  "os": "OpenHarmony-7.0.0.105"
+}

@@ -11,22 +11,21 @@
 import { SemanticColors, FontTokens, RadiusTokens, SpacingTokens } from '../../common/DesignTokens';
 import { GameInfo, GameCategory, GAME_CATEGORIES, getCategoryLabel } from '../../common/GameConstants';
 import { GameCard } from '../../components/GameCard';
+import { HomeHeader } from '../../components/HomeHeader';
 import { resolveString } from '../../common/I18nUtils';
+import { HarmonyMotion } from '../../common/HarmonyMotion';
 
 @ComponentV2
 export struct CategoryTab {
   /** 全部游戏（已按拼音排序），「全部」分类使用 */
   @Param allGames: GameInfo[] = [];
   @Param onGameClick: (game: GameInfo) => void = () => {};
+  @Param onSettingsClick: () => void = () => {};
   // -1 为全部，其余索引对应 GAME_CATEGORIES。
   @Local currentCategory: number = -1;
   @Local searchText: string = '';
-
-  @Styles
-  pressedFeedback() {
-    .opacity(0.72)
-    .scale({ x: 0.96, y: 0.96 })
-  }
+  private categoryScroller: ListScroller = new ListScroller();
+  private gameScroller: Scroller = new Scroller();
 
   /** 当前分类 + 搜索词过滤后的展示列表，随状态自动重算 */
   @Computed
@@ -61,8 +60,8 @@ export struct CategoryTab {
   }
 
   getCategoryTextColor(index: number): Resource {
-    if (this.currentCategory === index) { return SemanticColors.textOnPrimary; }
-    return SemanticColors.textPrimary;
+    if (this.currentCategory === index) { return SemanticColors.primary; }
+    return SemanticColors.textSecondary;
   }
 
   getCategoryWeight(index: number): number {
@@ -71,7 +70,7 @@ export struct CategoryTab {
   }
 
   getCategoryBgColor(index: number): Resource {
-    if (this.currentCategory === index) { return SemanticColors.primary; }
+    if (this.currentCategory === index) { return SemanticColors.selectionSurface; }
     return SemanticColors.surface;
   }
 
@@ -81,19 +80,34 @@ export struct CategoryTab {
       resolveString($r('app.string.search_no_result_suffix'), context);
   }
 
+  changeSearch(value: string): void {
+    if (this.searchText === value) { return; }
+    this.searchText = value;
+    this.gameScroller.scrollTo({ xOffset: 0, yOffset: 0, animation: false });
+  }
+
+  selectCategory(index: number): void {
+    this.categoryScroller.scrollToIndex(index + 1, true, ScrollAlign.AUTO);
+    if (this.currentCategory === index) { return; }
+    this.currentCategory = index;
+    this.gameScroller.scrollTo({ xOffset: 0, yOffset: 0, animation: false });
+  }
+
   build() {
     Column() {
+      HomeHeader({ title: $r('app.string.tab_category'), onSettingsClick: this.onSettingsClick })
       // 搜索栏
       Column() {
         Row({ space: SpacingTokens.sm }) {
           SymbolGlyph($r('sys.symbol.magnifyingglass'))
-          .fontSize(18)
+          .fontSize($r('app.float.home_search_icon_size'))
           .fontWeight(FontWeight.Regular)
           .fontColor([SemanticColors.textTertiary])
           .margin({ left: SpacingTokens.md })
           TextInput({ text: this.searchText, placeholder: $r('app.string.search_placeholder') })
+          .id('home_category_search')
           .layoutWeight(1)
-          .height(40)
+          .height($r('app.float.home_search_height'))
           .fontFamily(FontTokens.family)
           .fontSize(FontTokens.sizeBody)
           .fontColor(SemanticColors.textPrimary)
@@ -102,7 +116,7 @@ export struct CategoryTab {
           .backgroundColor(Color.Transparent)
           .caretColor(SemanticColors.primary)
           .enterKeyType(EnterKeyType.Search)
-          .onChange((value: string) => { this.searchText = value; })
+          .onChange((value: string) => { this.changeSearch(value); })
           if (this.searchText.length > 0) {
             Button() {
               SymbolGlyph($r('sys.symbol.xmark_circle'))
@@ -110,14 +124,17 @@ export struct CategoryTab {
               .fontColor([SemanticColors.textTertiary])
             }
             .type(ButtonType.Circle)
-            .width(32).height(32)
+            .id('home_search_clear')
+            .width($r('app.float.home_action_min_height'))
+            .height($r('app.float.home_action_min_height'))
             .backgroundColor(Color.Transparent)
-            .stateStyles({ pressed: this.pressedFeedback })
-            .onClick(() => { this.searchText = ''; })
+            .clickEffect(HarmonyMotion.press(this.getUIContext()))
+            .accessibilityText($r('app.string.search_clear'))
+            .onClick(() => { this.changeSearch(''); })
           }
         }
         .width('100%')
-        .height(44)
+        .height($r('app.float.home_search_height'))
         .padding({ right: SpacingTokens.xs })
         .backgroundColor(SemanticColors.surface)
         .borderRadius(RadiusTokens.full)
@@ -126,26 +143,33 @@ export struct CategoryTab {
       .padding({
         left: SpacingTokens.pageHorizontal,
         right: SpacingTokens.pageHorizontal,
-        top: SpacingTokens.base
+        top: SpacingTokens.sm
       })
 
-      Flex({ wrap: FlexWrap.Wrap }) {
-        this.CategoryChip(-1, $r('app.string.cat_all'))
+      List({ space: SpacingTokens.sm, scroller: this.categoryScroller }) {
+        ListItem() { this.CategoryChip(-1, $r('app.string.cat_all')) }
         ForEach(GAME_CATEGORIES, (category: GameCategory, index: number) => {
-          this.CategoryChip(index, getCategoryLabel(category))
+          ListItem() { this.CategoryChip(index, getCategoryLabel(category)) }
         }, (category: GameCategory) => category)
       }
       .width('100%')
-      .padding({ left: SpacingTokens.pageHorizontal, top: SpacingTokens.base })
+      .id('home_category_filters')
+      .height($r('app.float.home_filter_bar_height'))
+      .listDirection(Axis.Horizontal)
+      .scrollBar(BarState.Off)
+      .edgeEffect(EdgeEffect.Spring)
+      .padding({ left: SpacingTokens.pageHorizontal, right: SpacingTokens.pageHorizontal,
+        top: SpacingTokens.xs, bottom: SpacingTokens.xs })
+      .margin({ top: SpacingTokens.md })
 
       Text($r('app.string.collection_count', this.categoryGames.length))
         .fontSize(FontTokens.sizeBodySmall).fontColor(SemanticColors.textSecondary)
-        .width('100%').padding({ left: SpacingTokens.pageHorizontal, top: SpacingTokens.xs })
+        .width('100%').padding({ left: SpacingTokens.pageHorizontal, top: SpacingTokens.sm })
 
-      Scroll() {
+      Scroll(this.gameScroller) {
         Column() {
           GridRow({
-            gutter: { x: SpacingTokens.base, y: SpacingTokens.base },
+            gutter: { x: $r('app.float.home_grid_gap_horizontal'), y: $r('app.float.home_grid_gap_vertical') },
             columns: { sm: 4, md: 8, lg: 12 },
             breakpoints: { value: ['320vp', '600vp', '840vp'], reference: BreakpointsReference.WindowSize }
           }) {
@@ -153,7 +177,7 @@ export struct CategoryTab {
               GridCol({ span: { sm: 2, md: 2, lg: 3 } }) {
                 GameCard({ game: game, onTap: () => { this.onGameClick(game); } })
               }
-            }, (game: GameInfo) => game.id + '_' + game.playCount.toString())
+            }, (game: GameInfo) => game.id + '_' + game.playTimeMs.toString())
           }
           .width('100%')
           .padding({
@@ -191,6 +215,7 @@ export struct CategoryTab {
         .padding({ bottom: $r('app.float.home_tab_content_inset') })
       }
       .layoutWeight(1)
+      .id('home_category_games')
       .scrollBar(BarState.Off)
       .edgeEffect(EdgeEffect.Spring)
       .align(Alignment.Top)
@@ -201,7 +226,8 @@ export struct CategoryTab {
 
   @Builder
   CategoryChip(index: number, title: Resource | string) {
-    Row({ space: SpacingTokens.xs }) {
+    Button() {
+      Row({ space: SpacingTokens.xs }) {
       SymbolGlyph(this.getCategorySymbol(index))
         .fontSize(16)
         .fontWeight(FontWeight.Medium)
@@ -211,20 +237,23 @@ export struct CategoryTab {
         .fontSize(FontTokens.sizeBody)
         .fontWeight(this.getCategoryWeight(index))
         .fontColor(this.getCategoryTextColor(index))
+        .maxLines(1)
       Text((index === -1 ? this.allGames.length : this.allGames.filter((game: GameInfo) => game.category === GAME_CATEGORIES[index]).length).toString())
         .fontSize(FontTokens.sizeCaption).fontColor(this.getCategoryTextColor(index))
+      }
     }
+    .id(index === -1 ? 'category_filter_all' : 'category_filter_' + index.toString())
+    .type(ButtonType.Normal)
+    .constraintSize({ minHeight: $r('app.float.home_action_min_height') })
     .padding({ left: SpacingTokens.base, right: SpacingTokens.base, top: SpacingTokens.sm, bottom: SpacingTokens.sm })
     .borderRadius(RadiusTokens.full)
     .backgroundColor(this.getCategoryBgColor(index))
-    .margin({ right: SpacingTokens.sm, bottom: SpacingTokens.sm })
-    .scale({ x: this.currentCategory === index ? 1.05 : 1.0, y: this.currentCategory === index ? 1.05 : 1.0 })
-    .animation({ duration: 200, curve: Curve.FastOutSlowIn })
-    .stateStyles({ pressed: this.pressedFeedback })
+    .animation(HarmonyMotion.selection(this.getUIContext()))
+    .clickEffect(HarmonyMotion.press(this.getUIContext()))
+    .accessibilityDescription(this.currentCategory === index ? $r('app.string.settings_selected') : $r('app.string.settings_unselected'))
     .onClick(() => {
-      this.getUIContext().animateTo({ duration: 200, curve: Curve.FastOutSlowIn }, () => {
-        this.currentCategory = index;
-      });
+      // 仅筛选控件参与动效；两个滚动区域分别保持自己的位置。
+      this.selectCategory(index);
     })
   }
 }

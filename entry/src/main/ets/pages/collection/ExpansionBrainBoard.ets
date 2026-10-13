@@ -1,11 +1,12 @@
 import { ExpansionViewModel } from '../../viewmodel/ExpansionViewModel';
-import { ExpansionPiece } from '../../model/game/ExpansionState';
+import { ExpansionRenderPiece } from '../../viewmodel/ExpansionRenderPiece';
 import { IDIOMS, IDIOM_PARTS } from '../../model/game/ExpansionBrain';
 import { ExpansionTonePlayer } from '../../common/ExpansionTonePlayer';
 import { SemanticColors, FontTokens, SpacingTokens, RadiusTokens } from '../../common/DesignTokens';
 import { range } from '../../common/Range';
 import { ExpansionArt } from '../../common/ExpansionArt';
 import { GameArtTile } from '../../components/GameArtTile';
+import { GameSound, gameSound } from '../../common/GameSound';
 
 @ComponentV2
 export struct ExpansionBrainBoard {
@@ -14,12 +15,19 @@ export struct ExpansionBrainBoard {
   @Local arenaWidth: number = 320;
   @Local audioReady: boolean = false;
   @Local audioFailed: boolean = false;
+  @Local sound: GameSound = gameSound;
   private tones: ExpansionTonePlayer = new ExpansionTonePlayer();
   aboutToAppear(): void {
     if (this.gameId === 'melody') {
-      this.prepareAudio();
+      if (this.sound.enabled) { this.prepareAudio(); }
       this.vm.setToneCallbacks((note: number): void => { this.tones.play(note); }, (): void => { this.tones.stop(); });
     }
+  }
+  @Monitor('sound.enabled')
+  soundChanged(): void {
+    if (this.gameId !== 'melody') { return; }
+    if (!this.sound.enabled) { this.tones.stop(); }
+    else if (!this.audioReady) { this.prepareAudio(); }
   }
   prepareAudio(): void {
     this.tones.dispose(); this.tones = new ExpansionTonePlayer(); this.audioReady = false; this.audioFailed = false;
@@ -34,10 +42,12 @@ export struct ExpansionBrainBoard {
   object(value: number): string { return ['🌲', '🌷', '🍄', '🦋', '🐈', '🐦', '🪁', '🍎', '🏠'][value - 1]; }
   word(value: number): string { return ['', '木', '火', '水', '金', '森', '焱', '淼', '鑫'][value]; }
   phrase(): string { return IDIOMS[this.vm.state.data[0]].split('').map((v: string, i: number) => i === this.vm.state.data[1] ? '□' : v).join(''); }
-  touch(event: TouchEvent): void {
-    if (event.type === TouchType.Up || event.type === TouchType.Cancel) { this.vm.setDragging(false); return; } if (event.touches.length === 0) { return; }
-    if (event.type === TouchType.Down) { this.vm.setDragging(true); }
-    if (this.vm.dragging && (event.type === TouchType.Down || event.type === TouchType.Move)) { this.vm.aim(event.touches[0].x / this.arenaScale(), event.touches[0].y / this.arenaScale()); }
+  drawRescue(event: GestureEvent): void {
+    if (!this.vm.dragging || this.vm.state.phase !== 0 || event.fingerList.length === 0) { return; }
+    const finger: FingerInfo = event.fingerList[0];
+    const x: number = Math.max(0, Math.min(360, finger.localX / this.arenaScale()));
+    const y: number = Math.max(0, Math.min(460, finger.localY / this.arenaScale()));
+    this.vm.aim(x, y);
   }
   build() {
     Column({ space: SpacingTokens.base }) {
@@ -45,10 +55,19 @@ export struct ExpansionBrainBoard {
       if (this.gameId === 'hiddenobjects') { this.Hidden() }
       if (this.gameId === 'picturepuzzle') { this.Picture() }
       if (this.gameId === 'idiom') { this.Idiom() }
-      if (this.gameId === 'linerescue' || this.gameId === 'wordtower' || this.gameId === 'beatjump') { this.Arena() }
+      if (this.gameId === 'linerescue') {
+        Text($r('app.string.linerescue_draw_hint')).fontSize(FontTokens.sizeBody).fontColor(SemanticColors.textSecondary)
+        this.RescueArena()
+        if (this.vm.state.phase === 0) {
+          Button($r('app.string.expansion_ready')).id('linerescue-start')
+            .enabled(this.vm.state.target.length >= 4 && !this.vm.dragging).onClick(() => { this.vm.activate(); })
+          Button($r('app.string.expansion_clear_line')).id('linerescue-clear')
+            .enabled(this.vm.state.target.length > 0).onClick(() => { this.vm.tap(900); })
+        }
+      }
+      if (this.gameId === 'wordtower' || this.gameId === 'beatjump') { this.Arena() }
       if (this.gameId === 'melody') { this.Melody() }
-      if (['linerescue', 'wordtower', 'beatjump'].includes(this.gameId) && this.vm.state.phase === 0) { Button($r('app.string.expansion_ready')).onClick(() => { this.vm.activate(); }) }
-      if (this.gameId === 'linerescue' && this.vm.state.phase === 0) { Button($r('app.string.expansion_clear_line')).onClick(() => { this.vm.tap(900); }) }
+      if (['wordtower', 'beatjump'].includes(this.gameId) && this.vm.state.phase === 0) { Button($r('app.string.expansion_ready')).onClick(() => { this.vm.activate(); }) }
       if (this.gameId === 'wordtower') {
         Text($r('app.string.expansion_pack_stats', this.vm.state.data[0], this.vm.state.data[1], this.vm.state.moves, this.vm.state.goal)).fontColor(SemanticColors.textPrimary)
         Text($r('app.string.expansion_tower_cost')).fontColor(SemanticColors.textSecondary)
@@ -123,14 +142,37 @@ export struct ExpansionBrainBoard {
     }.width('100%')
   }
   @Builder
+  RescueArena() {
+    Stack({ alignContent: Alignment.TopStart }) {
+      ForEach(range(Math.max(0, this.vm.state.target.length / 2 - 1)), (segment: number) => {
+        Line().width('100%').height('100%')
+          .startPoint([this.vm.state.target[segment * 2] * this.arenaScale(), this.vm.state.target[segment * 2 + 1] * this.arenaScale()])
+          .endPoint([this.vm.state.target[segment * 2 + 2] * this.arenaScale(), this.vm.state.target[segment * 2 + 3] * this.arenaScale()])
+          .strokeWidth($r('app.float.linerescue_line_width')).stroke(SemanticColors.primary).hitTestBehavior(HitTestMode.None)
+      }, (segment: number) => segment.toString())
+      this.ArenaPieces()
+    }
+    .id('linerescue-drawing-area')
+    .width('100%').aspectRatio(360 / 460).clip(true)
+    .backgroundColor(SemanticColors.boardBg).backgroundImage(ExpansionArt.board(this.gameId))
+    .backgroundImageSize({ width: '100%', height: '100%' }).borderRadius(RadiusTokens.base)
+    .onAreaChange((oldArea: Area, area: Area) => { this.measure(area); })
+    .priorityGesture(PanGesture({ fingers: 1, direction: this.vm.state.phase === 0 ? PanDirection.All : PanDirection.None, distance: 0 })
+      .onActionStart((event: GestureEvent) => { this.vm.setDragging(true); this.drawRescue(event); })
+      .onActionUpdate((event: GestureEvent) => { this.drawRescue(event); })
+      .onActionEnd((event: GestureEvent) => { this.drawRescue(event); this.vm.setDragging(false); })
+      .onActionCancel(() => { this.vm.setDragging(false); }))
+  }
+  @Builder
+  ArenaPieces() {
+    ForEach(this.vm.worldPieces.filter((rendered: ExpansionRenderPiece) => rendered.piece.kind !== 57), (rendered: ExpansionRenderPiece) => {
+      Image(ExpansionArt.piece(this.gameId, rendered.piece)).width(rendered.piece.r * 2 * this.arenaScale()).height(rendered.piece.r * 2 * this.arenaScale()).objectFit(ImageFit.Contain)
+        .translate({ x: (rendered.piece.x - rendered.piece.r) * this.arenaScale(), y: (rendered.piece.y - rendered.piece.r) * this.arenaScale() }).hitTestBehavior(HitTestMode.None)
+    }, (rendered: ExpansionRenderPiece) => rendered.id.toString())
+  }
+  @Builder
   Arena() {
     Stack({ alignContent: Alignment.TopStart }) {
-      if (this.gameId === 'linerescue') {
-        ForEach(range(Math.max(0, this.vm.state.target.length / 2 - 1)), (segment: number) => {
-          Line().width('100%').height('100%').startPoint([this.vm.state.target[segment * 2] * this.arenaScale(), this.vm.state.target[segment * 2 + 1] * this.arenaScale()])
-            .endPoint([this.vm.state.target[segment * 2 + 2] * this.arenaScale(), this.vm.state.target[segment * 2 + 3] * this.arenaScale()]).strokeWidth(5).stroke(SemanticColors.primary).hitTestBehavior(HitTestMode.None)
-        }, (segment: number) => segment.toString())
-      }
       if (this.gameId === 'wordtower') {
         ForEach(range(6), (slot: number) => {
           Button(this.word(this.vm.state.board[slot]), { type: ButtonType.Normal }).width(60 * this.arenaScale()).height(60 * this.arenaScale()).padding(0)
@@ -140,12 +182,9 @@ export struct ExpansionBrainBoard {
         }, (slot: number) => slot.toString())
       }
       if (this.gameId === 'beatjump') { ForEach(range(3), (lane: number) => { Column().width(72 * this.arenaScale()).height(18 * this.arenaScale()).backgroundColor(this.color(lane)).translate({ x: (24 + lane * 120) * this.arenaScale(), y: 370 * this.arenaScale() }) }, (lane: number) => lane.toString()) }
-      ForEach(this.vm.state.pieces.filter((p: ExpansionPiece) => p.kind !== 57), (p: ExpansionPiece) => {
-        Image(ExpansionArt.piece(this.gameId, p)).width(p.r * 2 * this.arenaScale()).height(p.r * 2 * this.arenaScale()).objectFit(ImageFit.Contain)
-          .translate({ x: (p.x - p.r) * this.arenaScale(), y: (p.y - p.r) * this.arenaScale() }).hitTestBehavior(HitTestMode.None)
-      }, (p: ExpansionPiece) => p.id.toString())
+      this.ArenaPieces()
     }.width('100%').aspectRatio(360 / 460).clip(true).backgroundColor(SemanticColors.boardBg).backgroundImage(ExpansionArt.board(this.gameId)).backgroundImageSize({ width: '100%', height: '100%' }).borderRadius(RadiusTokens.base)
-      .onAreaChange((oldArea: Area, area: Area) => { this.measure(area); }).onTouch((event: TouchEvent) => { if (this.gameId === 'linerescue') { this.touch(event); } })
+      .onAreaChange((oldArea: Area, area: Area) => { this.measure(area); })
   }
   @Builder
   Melody() {
@@ -158,12 +197,13 @@ export struct ExpansionBrainBoard {
             .scale({ x: this.vm.state.selected === note ? 1.03 : 1, y: this.vm.state.selected === note ? 1.03 : 1 })
             .animation({ duration: 150, curve: Curve.FastOutSlowIn })
             .backgroundImage(ExpansionArt.block(note)).backgroundImageSize(ImageSize.Cover)
-            .enabled(this.vm.state.phase === 0 && this.audioReady).onClick(() => { this.vm.tap(note); })
+            .enabled(this.vm.state.phase === 0 && (this.audioReady || !this.sound.enabled)).onClick(() => { this.vm.tap(note); })
         }, (note: number) => note.toString())
       }.width('100%')
-      if (this.audioFailed) { Button($r('app.string.expansion_audio_retry')).onClick(() => { this.prepareAudio(); }) }
+      if (!this.sound.enabled) { Text($r('app.string.settings_sound_muted')).fontColor(SemanticColors.textSecondary) }
+      else if (this.audioFailed) { Button($r('app.string.expansion_audio_retry')).onClick(() => { this.prepareAudio(); }) }
       else if (!this.audioReady) { Text($r('app.string.expansion_audio_loading')).fontColor(SemanticColors.textSecondary) }
-      Button($r('app.string.expansion_play_melody')).enabled(this.vm.state.phase === 0 && this.audioReady).onClick(() => { this.vm.tap(900); })
+      Button($r('app.string.expansion_play_melody')).enabled(this.vm.state.phase === 0 && (this.audioReady || !this.sound.enabled)).onClick(() => { this.vm.tap(900); })
     }.width('100%')
   }
   hiddenArt(value: number): Resource {

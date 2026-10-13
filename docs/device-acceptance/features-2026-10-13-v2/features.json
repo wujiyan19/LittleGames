@@ -1,0 +1,69 @@
+{
+  "packageSha256": "d72cf4ccd30d8fef5648975ed33d9a80eb503ad7c3a334ee12d1c28d82ea98e7",
+  "target": "127.0.0.1:5555",
+  "scope": "Selected feature interactions on API 24 emulator; development test package",
+  "passed": [
+    {
+      "name": "daily-refresh-and-persistence",
+      "details": {
+        "quote": "给自己一点空闲，也给快乐留个位置。",
+        "before": [
+          "2048",
+          "chess",
+          "fruitmerge",
+          "klotski",
+          "melody",
+          "rhythm"
+        ],
+        "after": [
+          "flappy",
+          "guessnumber",
+          "match3",
+          "memorysequence",
+          "solitaire",
+          "tanks"
+        ]
+      },
+      "at": "2026-10-13T01:53:16.873Z"
+    },
+    {
+      "name": "line-rescue-drawing-win-loss-restart",
+      "details": {
+        "denseRenderedLines": 60,
+        "boardBounds": [
+          84,
+          760,
+          1172,
+          2150
+        ]
+      },
+      "at": "2026-10-13T02:01:02.871Z"
+    }
+  ],
+  "failures": [
+    {
+      "action": "daily",
+      "error": "AssertionError [ERR_ASSERTION]: Application UI is not foreground\n    at Object.layout (E:\\lianxi\\LittleGames\\scripts\\device-art-review.cjs:47:3)\n    at home (E:\\lianxi\\LittleGames\\scripts\\device-feature-iteration.cjs:16:12)\n    at top (E:\\lianxi\\LittleGames\\scripts\\device-feature-iteration.cjs:32:23)\n    at daily (E:\\lianxi\\LittleGames\\scripts\\device-feature-iteration.cjs:39:10)\n    at Object.<anonymous> (E:\\lianxi\\LittleGames\\scripts\\device-feature-iteration.cjs:83:25)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:128:12)",
+      "at": "2026-10-13T01:52:03.849Z",
+      "resolvedAt": "2026-10-13T01:53:16.873Z"
+    },
+    {
+      "action": "rescue",
+      "error": "AssertionError [ERR_ASSERTION]: Application UI is not foreground\n    at layout (E:\\lianxi\\LittleGames\\scripts\\device-art-review.cjs:47:3)\n    at wait (E:\\lianxi\\LittleGames\\scripts\\device-art-review.cjs:63:19)\n    at Object.open (E:\\lianxi\\LittleGames\\scripts\\device-art-review.cjs:91:8)\n    at open (E:\\lianxi\\LittleGames\\scripts\\device-feature-iteration.cjs:47:39)\n    at rescue (E:\\lianxi\\LittleGames\\scripts\\device-feature-iteration.cjs:49:10)\n    at Object.<anonymous> (E:\\lianxi\\LittleGames\\scripts\\device-feature-iteration.cjs:83:67)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)",
+      "at": "2026-10-13T01:53:40.096Z",
+      "resolvedAt": "2026-10-13T02:01:02.871Z"
+    },
+    {
+      "action": "rescue",
+      "error": "AssertionError [ERR_ASSERTION]: Application UI is not foreground\n    at Object.layout (E:\\lianxi\\LittleGames\\scripts\\device-art-review.cjs:47:3)\n    at home (E:\\lianxi\\LittleGames\\scripts\\device-feature-iteration.cjs:16:12)\n    at start (E:\\lianxi\\LittleGames\\scripts\\device-feature-iteration.cjs:25:115)\n    at Object.<anonymous> (E:\\lianxi\\LittleGames\\scripts\\device-feature-iteration.cjs:96:5)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:128:12)\n    at node:internal/main/run_main_module:28:49",
+      "at": "2026-10-13T01:58:53.157Z",
+      "resolvedAt": "2026-10-13T02:01:02.871Z"
+    },
+    {
+      "action": "saves",
+      "error": "AssertionError [ERR_ASSERTION]: Observed board descriptions missing\n    at saves (E:\\lianxi\\LittleGames\\scripts\\device-feature-iteration.cjs:89:74)\n    at Object.<anonymous> (E:\\lianxi\\LittleGames\\scripts\\device-feature-iteration.cjs:96:101)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:128:12)\n    at node:internal/main/run_main_module:28:49",
+      "at": "2026-10-13T02:02:42.765Z"
+    }
+  ],
+  "updatedAt": "2026-10-13T02:02:42.765Z"
+}

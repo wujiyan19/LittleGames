@@ -3,6 +3,7 @@ import { GameLifecycleObserver } from '../common/GameLifecycleBus';
 import { ContinuationValidation as V } from '../common/GameSessionTransfer';
 import { GameDataManager } from '../model/GameData';
 import { CollectionModel, CollectionState, COLLECTION_IDS } from '../model/game/CollectionModel';
+import { GameSoundEvent, gameSound } from '../common/GameSound';
 
 interface CollectionSnapshot {
   version: number;
@@ -15,6 +16,7 @@ export class CollectionViewModel implements GameLifecycleObserver {
   @Trace state: CollectionState = new CollectionState();
   @Trace difficulty: GameDifficulty = GameDifficulty.NORMAL;
   @Trace confirmExit: boolean = false;
+  @Trace isFinished: boolean = false;
   @Trace checked: boolean = false;
   @Trace feedback: string = '';
   @Trace lastCorrect: boolean = false;
@@ -22,20 +24,38 @@ export class CollectionViewModel implements GameLifecycleObserver {
   private timer: number = -1;
   private recorded: boolean = false;
   private id: string = '';
+  private initialProgress: string = '';
 
-  init(id: string): void { this.id = id; this.difficulty = GameDataManager.getInitialDifficulty(id); }
+  init(id: string): void {
+    this.id = id; this.difficulty = GameDataManager.getInitialDifficulty(id);
+  }
   startGame(): void {
+    gameSound.stop(this.id);
     this.dispose(); this.confirmExit = false; this.checked = false; this.recorded = false; this.feedback = '';
     const level: number = this.difficulty === GameDifficulty.EASY ? 0 : this.difficulty === GameDifficulty.HARD ? 2 : 1;
-    this.model.start(this.id, level); GameDataManager.incrementPlayCount(this.id); this.sync();
+    this.model.start(this.id, level); GameDataManager.recordGamePlayed(this.id); this.sync(false);
+    this.initialProgress = JSON.stringify(this.state);
   }
   changeDifficulty(d: GameDifficulty): void {
     if (d === this.difficulty) { return; }
     this.difficulty = d; GameDataManager.rememberGameDifficulty(this.id, d); this.startGame();
   }
-  private sync(): void {
+  private sync(feedback: boolean = true): void {
+    const previous: CollectionState = this.state;
     // Replace the snapshot so ArkUI observes mutations of arrays and scalar model fields.
     this.state = JSON.parse(JSON.stringify(this.model.state)) as CollectionState;
+    if (feedback && previous.id === this.id && previous.outcome === 0) {
+      if (this.state.outcome !== 0) {
+        gameSound.play(this.id, this.model.isDuel() ? (this.state.outcome === 3 ? GameSoundEvent.DRAW : GameSoundEvent.WIN) :
+          this.state.outcome === 1 ? GameSoundEvent.WIN : GameSoundEvent.LOSE);
+      } else if (this.model.isQuiz() && this.state.round > previous.round) {
+        gameSound.play(this.id, this.state.score > previous.score ? GameSoundEvent.REWARD : GameSoundEvent.ERROR);
+      } else if (this.state.score > previous.score || this.state.phase === 2 && previous.phase === 1 && this.id === 'reaction') {
+        gameSound.play(this.id, GameSoundEvent.REWARD);
+      } else if (this.state.moves !== previous.moves || this.state.selected !== previous.selected ||
+        this.state.cursor !== previous.cursor || this.state.phase !== previous.phase) { gameSound.play(this.id); }
+    }
+    this.isFinished = this.state.outcome !== 0;
     if (this.state.outcome !== 0 && !this.recorded) {
       this.recorded = true; this.dispose();
       const game = GameDataManager.getGameById(this.id);
@@ -63,7 +83,11 @@ export class CollectionViewModel implements GameLifecycleObserver {
     }
     this.sync();
   }
-  action(): void { this.model.action(); this.checked = this.state.id === 'nonogram'; this.sync(); }
+  action(): void {
+    if (this.confirmExit) { return; }
+    this.model.action(); this.checked = this.state.id === 'nonogram'; this.sync();
+    if (this.checked && this.state.outcome === 0) { gameSound.play(this.id, GameSoundEvent.ERROR); }
+  }
   move(direction: number): void { this.tap(this.model.neighbor(this.state.cursor, direction)); }
   isDuel(): boolean { return this.model.isDuel(); }
   isQuiz(): boolean { return this.model.isQuiz(); }
@@ -79,17 +103,24 @@ export class CollectionViewModel implements GameLifecycleObserver {
     return discs.join('\n');
   }
   onAppHidden(): void {
+    gameSound.stop(this.id);
     this.dispose();
-    if (this.id === 'reaction' && this.state.outcome === 0) { this.model.state.phase = 0; this.model.state.signalAt = 0; this.sync(); }
+    if (this.id === 'reaction' && this.state.outcome === 0) { this.model.state.phase = 0; this.model.state.signalAt = 0; this.sync(false); }
   }
   onAppShown(): void {}
   onBackRequested(): boolean { return this.requestBack(); }
   requestBack(): boolean {
     if (this.state.outcome !== 0 || !GameDataManager.getSetting('confirmExitEnabled', true)) { return false; }
-    this.onAppHidden(); this.confirmExit = true; return true;
+    this.onAppHidden(); gameSound.stop(this.id); this.confirmExit = true; return true;
   }
   dismissExitConfirm(): void { this.confirmExit = false; }
   dispose(): void { if (this.timer >= 0) { clearTimeout(this.timer); this.timer = -1; } }
+  isPlayTimeActive(): boolean {
+    return this.state.id.length > 0 && this.state.outcome === 0 && !this.confirmExit;
+  }
+
+  hasProgress(): boolean { return this.state.outcome === 0 && JSON.stringify(this.state) !== this.initialProgress; }
+
   continuationGameId(): string { return this.id; }
   exportContinuation(): string {
     const snapshot: CollectionSnapshot = { version: 1, state: this.state, recorded: this.recorded };
@@ -144,7 +175,7 @@ export class CollectionViewModel implements GameLifecycleObserver {
       // A restored result must not award its score a second time.
       this.recorded = snapshot.recorded || s.outcome !== 0;
       if (s.id === 'reaction' && s.outcome === 0) { s.phase = 0; s.signalAt = 0; }
-      this.confirmExit = false; this.checked = false; this.feedback = ''; this.sync(); return true;
+      this.confirmExit = false; this.checked = false; this.feedback = ''; this.sync(false); return true;
     } catch (e) { return false; }
   }
 }

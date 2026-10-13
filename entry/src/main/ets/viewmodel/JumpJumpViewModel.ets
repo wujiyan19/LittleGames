@@ -20,6 +20,7 @@ import { GameLifecycleObserver } from '../common/GameLifecycleBus';
 import { ScreenUtils } from '../common/ScreenUtils';
 import { FrameLoop } from '../common/FrameLoop';
 import { JumpJumpRules, JumpPlatform, JumpOutcome } from '../model/game/JumpJumpModel';
+import { GameSoundEvent, gameSound } from '../common/GameSound';
 
 
 const GAME_ID = 'jumpjump';
@@ -79,6 +80,7 @@ export class JumpJumpViewModel implements GameLifecycleObserver {
   @Trace confirmExit: boolean = false;
 
   @Trace platforms: PlatformData[] = [];
+  @Trace platformRevision: number = 0;
   @Trace currentIndex: number = 0;
   /** 角色中心屏幕 x（归一化后世界坐标 == 屏幕坐标） */
   @Trace playerX: number = 0;
@@ -138,14 +140,16 @@ export class JumpJumpViewModel implements GameLifecycleObserver {
 
   /** 开局：结算上一局 → 记一次游玩 → 重置对局 */
   startGame(): void {
+    gameSound.stop(GAME_ID);
     this.frames?.stop();
     this.settleCurrentScore();
-    GameDataManager.incrementPlayCount(GAME_ID);
+    GameDataManager.recordGamePlayed(GAME_ID);
     this.newGame();
   }
 
-  /** 只铺开局数据（初始化/单测用），不记游玩次数 */
+  /** 只铺开局数据（初始化/单测用），不记录最近游玩 */
   newGame(): void {
+    gameSound.stop(GAME_ID);
     this.frames?.stop();
     this.pendingTarget = null;
     this.pendingFall = false;
@@ -164,10 +168,10 @@ export class JumpJumpViewModel implements GameLifecycleObserver {
   }
 
   private buildPlatforms(): void {
+    this.platformId = 0;
     const cfgWidth: number = JumpJumpRules.configFor(this.difficulty).width;
     const base: number = this.baseScreenX();
     const list: PlatformData[] = [];
-    this.platformId = 0;
     let cur: JumpPlatform = new JumpPlatform(base, cfgWidth);
     list.push(new PlatformData(++this.platformId, cur.centerX, cur.width));
     for (let i = 1; i < INITIAL_PLATFORMS; i++) {
@@ -175,6 +179,7 @@ export class JumpJumpViewModel implements GameLifecycleObserver {
       list.push(new PlatformData(++this.platformId, cur.centerX, cur.width));
     }
     this.platforms = list;
+    this.platformRevision++;
     this.currentIndex = 0;
     this.playerX = base;
   }
@@ -269,6 +274,7 @@ export class JumpJumpViewModel implements GameLifecycleObserver {
   private launchJump(ratio: number): void {
     const target: PlatformData | undefined = this.platforms[this.currentIndex + 1];
     if (target === undefined) { return; }
+    gameSound.play(GAME_ID);
     const distance: number = JumpJumpRules.jumpDistance(ratio, this.difficulty);
     const landingX: number = this.playerX + distance;
     const outcome: JumpOutcome =
@@ -330,6 +336,7 @@ export class JumpJumpViewModel implements GameLifecycleObserver {
     this.playerJumpY = 0;
     this.chargeRatio = 0;
     if (landed) {
+      gameSound.play(GAME_ID, GameSoundEvent.REWARD);
       // 成功：吸附到目标平台中心，得分 +1，推进平台序列
       this.playerX = target.centerX;
       this.currentIndex++;
@@ -354,6 +361,7 @@ export class JumpJumpViewModel implements GameLifecycleObserver {
   }
 
   private endGame(): void {
+    gameSound.play(GAME_ID, GameSoundEvent.LOSE);
     this.isJumping = false;
     this.status = GameStatus.OVER;
     GameDataManager.updateHighScore(GAME_ID, this.score);
@@ -377,7 +385,7 @@ export class JumpJumpViewModel implements GameLifecycleObserver {
   requestBack(): boolean {
     if (!GameDataManager.getSetting('confirmExitEnabled', true)) { return false; }
     if (this.status === GameStatus.PLAYING) {
-      this.confirmExit = true;
+      gameSound.stop(GAME_ID); this.confirmExit = true;
       this.abortCharge();
       this.frames?.stop();
       return true;
@@ -397,6 +405,7 @@ export class JumpJumpViewModel implements GameLifecycleObserver {
 
   /** 后台/遮挡时冻结运动；前台恢复从原进度继续，不补后台经过的时间。 */
   onAppHidden(): void {
+    gameSound.stop(GAME_ID);
     this.appVisible = false;
     this.abortCharge();
     this.frames?.stop();
@@ -417,6 +426,10 @@ export class JumpJumpViewModel implements GameLifecycleObserver {
     this.pendingFall = false;
     this.settleCurrentScore();
   }
+
+  isPlayTimeActive(): boolean { return this.status === GameStatus.PLAYING && !this.confirmExit; }
+
+  hasProgress(): boolean { return this.status !== GameStatus.OVER && (this.score > 0 || this.isCharging || this.isJumping); }
 
   continuationGameId(): string { return GAME_ID; }
 
@@ -483,7 +496,6 @@ export class JumpJumpViewModel implements GameLifecycleObserver {
       GameDataManager.updateHighScore(GAME_ID, this.highScore);
       this.status = s.status;
       this.difficulty = s.difficulty;
-      this.platforms = s.platforms;
       this.currentIndex = s.currentIndex;
       this.playerX = s.playerX;
       this.playerJumpX = s.playerJumpX;
@@ -499,6 +511,7 @@ export class JumpJumpViewModel implements GameLifecycleObserver {
       this.pendingFall = s.pendingFall;
       this.confirmExit = false;
       this.platforms = s.platforms.map((p: PlatformData): PlatformData => new PlatformData(p.id, p.centerX, p.width));
+      this.platformRevision++;
       // Preserve distances and the in-flight trajectory while anchoring to the target window.
       const shift: number = this.baseScreenX() - this.platforms[this.currentIndex].centerX;
       for (let i = 0; i < this.platforms.length; i++) { this.platforms[i].centerX += shift; }

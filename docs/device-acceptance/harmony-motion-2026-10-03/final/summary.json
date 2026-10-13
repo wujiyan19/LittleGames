@@ -1,0 +1,546 @@
+{
+  "date": "2026-10-03",
+  "target": "FMR0224521016052",
+  "packageSha256": "f6ca73771e0f35f35bd786801672b2b75e92b8da2a3089e90e9de120efc4def5",
+  "checks": [
+    {
+      "id": "light-win-modal",
+      "behavior": "Winning result appears; scrim prevents covered restart controls receiving taps",
+      "evidence": [
+        "light-win.jpeg",
+        "light-win-blocked.jpeg",
+        "light-win-entry-0.jpeg",
+        "light-win-entry-1.jpeg",
+        "light-win-entry-2.jpeg",
+        "light-win-entry-3.jpeg",
+        "light-win-entry-4.jpeg",
+        "light-win-entry-5.jpeg",
+        "light-win-entry-6.jpeg"
+      ],
+      "at": "2026-10-03T10:39:15.934Z"
+    },
+    {
+      "id": "light-double-restart",
+      "behavior": "Double tapping result restart closes once and leaves an empty zero-move board",
+      "evidence": [
+        "light-double-restart.jpeg"
+      ],
+      "at": "2026-10-03T10:39:19.898Z"
+    },
+    {
+      "id": "light-result-variants",
+      "behavior": "Player 2 win and draw both settle, close and restart correctly",
+      "evidence": [
+        "light-player2-win.jpeg",
+        "light-draw.jpeg"
+      ],
+      "at": "2026-10-03T10:39:36.546Z"
+    },
+    {
+      "id": "light-exit-modal",
+      "behavior": "Exit opens/cancels 3 times, double cancel preserves progress, confirm returns to catalog",
+      "evidence": [
+        "light-exit-2.jpeg",
+        "light-exit-return.jpeg",
+        "light-exit-out-0.jpeg",
+        "light-exit-out-1.jpeg",
+        "light-exit-out-2.jpeg",
+        "light-exit-out-3.jpeg",
+        "light-exit-out-4.jpeg",
+        "light-exit-out-5.jpeg",
+        "light-exit-out-6.jpeg"
+      ],
+      "at": "2026-10-03T10:40:02.823Z"
+    },
+    {
+      "id": "light-rapid-tabs",
+      "behavior": "12 consecutive native tab taps end on Category with live content",
+      "evidence": [
+        "light-tabs-fast.jpeg"
+      ],
+      "at": "2026-10-03T10:41:57.209Z"
+    },
+    {
+      "id": "light-categories",
+      "behavior": "All 7 categories select correctly; rapid switching returns all 100 games with stable card widths",
+      "evidence": [
+        "light-categories.jpeg"
+      ],
+      "widths": [
+        {
+          "label": "全部",
+          "width": 552
+        },
+        {
+          "label": "街机休闲",
+          "width": 552
+        },
+        {
+          "label": "逻辑解谜",
+          "width": 552
+        },
+        {
+          "label": "棋盘对弈",
+          "width": 552
+        },
+        {
+          "label": "数字训练",
+          "width": 552
+        },
+        {
+          "label": "记忆专注",
+          "width": 552
+        },
+        {
+          "label": "反应节奏",
+          "width": 552
+        }
+      ],
+      "at": "2026-10-03T10:42:15.797Z"
+    },
+    {
+      "id": "light-card-press-cancel",
+      "behavior": "Held card gently compresses; release outside cancels navigation and restores size",
+      "evidence": [
+        "light-card-held.jpeg",
+        "light-card-released.jpeg"
+      ],
+      "before": [
+        52,
+        1005,
+        604,
+        1529
+      ],
+      "during": [
+        54,
+        1007,
+        601,
+        1526
+      ],
+      "after": [
+        52,
+        1005,
+        604,
+        1529
+      ],
+      "widthRatio": 0.9909420289855072,
+      "at": "2026-10-03T10:42:25.691Z"
+    },
+    {
+      "id": "light-card-scroll",
+      "behavior": "Dragging from a card scrolls the catalog without opening a game",
+      "evidence": [
+        "light-card-scroll-cancel.jpeg"
+      ],
+      "at": "2026-10-03T10:42:30.203Z"
+    },
+    {
+      "id": "light-profile",
+      "behavior": "Profile and ranking remain readable after rapid navigation",
+      "evidence": [
+        "light-profile.jpeg"
+      ],
+      "at": "2026-10-03T10:42:37.345Z"
+    },
+    {
+      "id": "light-direction-press",
+      "behavior": "Native direction button press and cancellation restore bounds while paused",
+      "evidence": [
+        "light-direction-held.jpeg",
+        "light-direction-released.jpeg"
+      ],
+      "before": [
+        318,
+        2200,
+        500,
+        2356
+      ],
+      "during": [
+        319,
+        2201,
+        498,
+        2354
+      ],
+      "after": [
+        318,
+        2200,
+        500,
+        2356
+      ],
+      "widthRatio": 0.9835164835164835,
+      "at": "2026-10-03T10:46:09.316Z"
+    },
+    {
+      "id": "light-pause-loss-restart",
+      "behavior": "Pause/resume works; natural wall collision settles and restart recovers a live board",
+      "evidence": [
+        "light-snake-paused.jpeg",
+        "light-loss.jpeg",
+        "light-loss-restart.jpeg"
+      ],
+      "at": "2026-10-03T10:46:22.038Z"
+    },
+    {
+      "id": "dark-rapid-tabs",
+      "behavior": "12 consecutive native tab taps end on Category with live content",
+      "evidence": [
+        "dark-tabs-fast.jpeg"
+      ],
+      "at": "2026-10-03T10:47:18.166Z"
+    },
+    {
+      "id": "dark-categories",
+      "behavior": "All 7 categories select correctly; rapid switching returns all 100 games with stable card widths",
+      "evidence": [
+        "dark-categories.jpeg"
+      ],
+      "widths": [
+        {
+          "label": "全部",
+          "width": 552
+        },
+        {
+          "label": "街机休闲",
+          "width": 552
+        },
+        {
+          "label": "逻辑解谜",
+          "width": 552
+        },
+        {
+          "label": "棋盘对弈",
+          "width": 552
+        },
+        {
+          "label": "数字训练",
+          "width": 552
+        },
+        {
+          "label": "记忆专注",
+          "width": 552
+        },
+        {
+          "label": "反应节奏",
+          "width": 552
+        }
+      ],
+      "at": "2026-10-03T10:47:37.315Z"
+    },
+    {
+      "id": "dark-card-press-cancel",
+      "behavior": "Held card gently compresses; release outside cancels navigation and restores size",
+      "evidence": [
+        "dark-card-held.jpeg",
+        "dark-card-released.jpeg"
+      ],
+      "before": [
+        52,
+        1005,
+        604,
+        1529
+      ],
+      "during": [
+        54,
+        1007,
+        601,
+        1526
+      ],
+      "after": [
+        52,
+        1005,
+        604,
+        1529
+      ],
+      "widthRatio": 0.9909420289855072,
+      "at": "2026-10-03T10:47:47.508Z"
+    },
+    {
+      "id": "dark-card-scroll",
+      "behavior": "Dragging from a card scrolls the catalog without opening a game",
+      "evidence": [
+        "dark-card-scroll-cancel.jpeg"
+      ],
+      "at": "2026-10-03T10:47:52.209Z"
+    },
+    {
+      "id": "dark-profile",
+      "behavior": "Profile and ranking remain readable after rapid navigation",
+      "evidence": [
+        "dark-profile.jpeg"
+      ],
+      "at": "2026-10-03T10:47:59.636Z"
+    },
+    {
+      "id": "dark-win-modal",
+      "behavior": "Winning result appears; scrim prevents covered restart controls receiving taps",
+      "evidence": [
+        "dark-win.jpeg",
+        "dark-win-blocked.jpeg",
+        "dark-win-entry-0.jpeg",
+        "dark-win-entry-1.jpeg",
+        "dark-win-entry-2.jpeg",
+        "dark-win-entry-3.jpeg",
+        "dark-win-entry-4.jpeg",
+        "dark-win-entry-5.jpeg",
+        "dark-win-entry-6.jpeg"
+      ],
+      "at": "2026-10-03T10:48:37.471Z"
+    },
+    {
+      "id": "dark-double-restart",
+      "behavior": "Double tapping result restart closes once and leaves an empty zero-move board",
+      "evidence": [
+        "dark-double-restart.jpeg"
+      ],
+      "at": "2026-10-03T10:48:41.400Z"
+    },
+    {
+      "id": "dark-result-variants",
+      "behavior": "Player 2 win and draw both settle, close and restart correctly",
+      "evidence": [
+        "dark-player2-win.jpeg",
+        "dark-draw.jpeg"
+      ],
+      "at": "2026-10-03T10:48:58.487Z"
+    },
+    {
+      "id": "dark-exit-modal",
+      "behavior": "Exit opens/cancels 3 times, double cancel preserves progress, confirm returns to catalog",
+      "evidence": [
+        "dark-exit-2.jpeg",
+        "dark-exit-return.jpeg",
+        "dark-exit-out-0.jpeg",
+        "dark-exit-out-1.jpeg",
+        "dark-exit-out-2.jpeg",
+        "dark-exit-out-3.jpeg",
+        "dark-exit-out-4.jpeg",
+        "dark-exit-out-5.jpeg",
+        "dark-exit-out-6.jpeg"
+      ],
+      "at": "2026-10-03T10:49:25.045Z"
+    },
+    {
+      "id": "dark-direction-press",
+      "behavior": "Native direction button press and cancellation restore bounds while paused",
+      "evidence": [
+        "dark-direction-held.jpeg",
+        "dark-direction-released.jpeg"
+      ],
+      "before": [
+        318,
+        2200,
+        500,
+        2356
+      ],
+      "during": [
+        319,
+        2201,
+        498,
+        2354
+      ],
+      "after": [
+        318,
+        2200,
+        500,
+        2356
+      ],
+      "widthRatio": 0.9835164835164835,
+      "at": "2026-10-03T10:50:00.269Z"
+    },
+    {
+      "id": "dark-pause-loss-restart",
+      "behavior": "Pause/resume works; natural wall collision settles and restart recovers a live board",
+      "evidence": [
+        "dark-snake-paused.jpeg",
+        "dark-loss.jpeg",
+        "dark-loss-restart.jpeg"
+      ],
+      "at": "2026-10-03T10:50:12.898Z"
+    }
+  ],
+  "motionSamples": [
+    {
+      "tag": "light-win-entry",
+      "source": "real device snapshots during UI input; timestamps include capture overhead",
+      "samples": [
+        {
+          "file": "light-win-entry-0.jpeg",
+          "requestMs": 8,
+          "completionMs": 326
+        },
+        {
+          "file": "light-win-entry-1.jpeg",
+          "requestMs": 475,
+          "completionMs": 842
+        },
+        {
+          "file": "light-win-entry-2.jpeg",
+          "requestMs": 966,
+          "completionMs": 1525
+        },
+        {
+          "file": "light-win-entry-3.jpeg",
+          "requestMs": 1668,
+          "completionMs": 2176
+        },
+        {
+          "file": "light-win-entry-4.jpeg",
+          "requestMs": 2314,
+          "completionMs": 2860
+        },
+        {
+          "file": "light-win-entry-5.jpeg",
+          "requestMs": 3018,
+          "completionMs": 3591
+        },
+        {
+          "file": "light-win-entry-6.jpeg",
+          "requestMs": 3732,
+          "completionMs": 4263
+        }
+      ]
+    },
+    {
+      "tag": "light-exit-out",
+      "source": "real device snapshots during UI input; timestamps include capture overhead",
+      "samples": [
+        {
+          "file": "light-exit-out-0.jpeg",
+          "requestMs": 4,
+          "completionMs": 428
+        },
+        {
+          "file": "light-exit-out-1.jpeg",
+          "requestMs": 574,
+          "completionMs": 974
+        },
+        {
+          "file": "light-exit-out-2.jpeg",
+          "requestMs": 1141,
+          "completionMs": 1643
+        },
+        {
+          "file": "light-exit-out-3.jpeg",
+          "requestMs": 1770,
+          "completionMs": 2250
+        },
+        {
+          "file": "light-exit-out-4.jpeg",
+          "requestMs": 2392,
+          "completionMs": 2962
+        },
+        {
+          "file": "light-exit-out-5.jpeg",
+          "requestMs": 3117,
+          "completionMs": 3674
+        },
+        {
+          "file": "light-exit-out-6.jpeg",
+          "requestMs": 3826,
+          "completionMs": 4389
+        }
+      ]
+    },
+    {
+      "tag": "dark-win-entry",
+      "source": "real device snapshots during UI input; timestamps include capture overhead",
+      "samples": [
+        {
+          "file": "dark-win-entry-0.jpeg",
+          "requestMs": 7,
+          "completionMs": 311
+        },
+        {
+          "file": "dark-win-entry-1.jpeg",
+          "requestMs": 462,
+          "completionMs": 778
+        },
+        {
+          "file": "dark-win-entry-2.jpeg",
+          "requestMs": 937,
+          "completionMs": 1492
+        },
+        {
+          "file": "dark-win-entry-3.jpeg",
+          "requestMs": 1669,
+          "completionMs": 2215
+        },
+        {
+          "file": "dark-win-entry-4.jpeg",
+          "requestMs": 2379,
+          "completionMs": 2928
+        },
+        {
+          "file": "dark-win-entry-5.jpeg",
+          "requestMs": 3095,
+          "completionMs": 3651
+        },
+        {
+          "file": "dark-win-entry-6.jpeg",
+          "requestMs": 3824,
+          "completionMs": 4368
+        }
+      ]
+    },
+    {
+      "tag": "dark-exit-out",
+      "source": "real device snapshots during UI input; timestamps include capture overhead",
+      "samples": [
+        {
+          "file": "dark-exit-out-0.jpeg",
+          "requestMs": 6,
+          "completionMs": 397
+        },
+        {
+          "file": "dark-exit-out-1.jpeg",
+          "requestMs": 567,
+          "completionMs": 1008
+        },
+        {
+          "file": "dark-exit-out-2.jpeg",
+          "requestMs": 1142,
+          "completionMs": 1666
+        },
+        {
+          "file": "dark-exit-out-3.jpeg",
+          "requestMs": 1812,
+          "completionMs": 2273
+        },
+        {
+          "file": "dark-exit-out-4.jpeg",
+          "requestMs": 2425,
+          "completionMs": 2987
+        },
+        {
+          "file": "dark-exit-out-5.jpeg",
+          "requestMs": 3168,
+          "completionMs": 3731
+        },
+        {
+          "file": "dark-exit-out-6.jpeg",
+          "requestMs": 3888,
+          "completionMs": 4464
+        }
+      ]
+    }
+  ],
+  "completedStages": [
+    "dialogs light",
+    "catalog light",
+    "controls light",
+    "catalog dark",
+    "dialogs dark",
+    "controls dark",
+    "restore"
+  ],
+  "settingsRestored": {
+    "theme": "跟随系统",
+    "toggles": [
+      "false",
+      "true",
+      "true"
+    ],
+    "verified": true
+  },
+  "finishedAt": "2026-10-03T10:51:03.152Z"
+}

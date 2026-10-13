@@ -1,0 +1,134 @@
+{
+  "packageSha256": "76532c18a7927bdf35c020e4467d7df110a3d8a9e0c0bd49a4082844aab84272",
+  "target": "127.0.0.1:5555",
+  "scope": "Selected feature interactions on API 24 emulator; development test package",
+  "passed": [
+    {
+      "name": "2048-local-save-after-process-restart",
+      "details": {
+        "observedBoard": [
+          "0:0:4",
+          "1:0:8",
+          "1:1:2",
+          "2:0:4",
+          "3:0:16",
+          "3:1:4",
+          "3:3:4"
+        ]
+      },
+      "at": "2026-10-13T02:15:00.446Z"
+    },
+    {
+      "name": "sudoku-local-save-after-process-restart",
+      "details": {
+        "observedBoard": [
+          "0:0:5",
+          "0:1:8",
+          "0:3:5",
+          "0:6:2",
+          "0:8:7",
+          "1:0:1",
+          "1:2:6",
+          "1:4:7",
+          "1:8:3",
+          "2:1:2",
+          "2:4:3",
+          "2:5:4",
+          "3:1:4",
+          "3:2:7",
+          "3:5:8",
+          "3:6:9",
+          "4:2:2",
+          "4:4:6",
+          "4:8:8",
+          "5:2:3",
+          "5:3:7",
+          "5:6:5",
+          "5:8:4",
+          "6:1:3",
+          "6:3:6",
+          "6:4:4",
+          "7:4:9",
+          "7:7:7",
+          "7:8:5",
+          "8:7:2"
+        ]
+      },
+      "at": "2026-10-13T02:24:26.705Z"
+    },
+    {
+      "name": "daily-refresh-and-persistence",
+      "details": {
+        "quote": "给自己一点空闲，也给快乐留个位置。",
+        "before": [
+          "flappy",
+          "guessnumber",
+          "match3",
+          "memorysequence",
+          "solitaire",
+          "tanks"
+        ],
+        "after": [
+          "arithmetic",
+          "characters",
+          "missing",
+          "rollingball",
+          "whackmole",
+          "xiangqi"
+        ]
+      },
+      "at": "2026-10-13T02:27:38.454Z"
+    },
+    {
+      "name": "line-rescue-drawing-win-loss-restart",
+      "details": {
+        "denseRenderedLines": 60,
+        "boardBounds": [
+          84,
+          760,
+          1172,
+          2150
+        ]
+      },
+      "at": "2026-10-13T02:28:33.325Z"
+    },
+    {
+      "name": "dark-feature-screens-and-theme-restoration",
+      "details": {
+        "screens": [
+          "dark-daily",
+          "dark-sudoku-save-prompt",
+          "dark-rescue-ready"
+        ]
+      },
+      "at": "2026-10-13T02:33:09.302Z"
+    }
+  ],
+  "failures": [
+    {
+      "action": "saves",
+      "error": "Error: Expected UI not observed: 精选 | 今日寄语 | 给自己一点空闲，也给快乐留个位置。 | 最近游玩 | 查看全部 | 2048 | 0.2 小时 | 画线救援 | 0.0 小时 | 今日推荐 | 每天有新选择 | 坦克对战 | 拖动坦克移动，炮台会自动瞄准最近的敌军 | 消消乐 | 交换相邻宝石，连线消除得分 | 经典纸牌 | 猜数字 | 精选 | 分类 | 我的\n    at Object.wait (E:\\lianxi\\LittleGames\\scripts\\device-art-review.cjs:64:9)\n    at enterGame (E:\\lianxi\\LittleGames\\scripts\\device-feature-iteration.cjs:58:85)\n    at open (E:\\lianxi\\LittleGames\\scripts\\device-feature-iteration.cjs:60:26)\n    at saves (E:\\lianxi\\LittleGames\\scripts\\device-feature-iteration.cjs:91:12)\n    at Object.<anonymous> (E:\\lianxi\\LittleGames\\scripts\\device-feature-iteration.cjs:107:101)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:128:12)",
+      "at": "2026-10-13T02:15:31.564Z",
+      "resolvedAt": "2026-10-13T02:24:26.705Z"
+    },
+    {
+      "action": "saves",
+      "error": "Error: Expected UI not observed: 精选 | 今日寄语 | 给自己一点空闲，也给快乐留个位置。 | 最近游玩 | 查看全部 | 2048 | 0.2 小时 | 画线救援 | 0.0 小时 | 今日推荐 | 每天有新选择 | 坦克对战 | 拖动坦克移动，炮台会自动瞄准最近的敌军 | 消消乐 | 交换相邻宝石，连线消除得分 | 经典纸牌 | 猜数字 | 精选 | 分类 | 我的\n    at Object.wait (E:\\lianxi\\LittleGames\\scripts\\device-art-review.cjs:64:9)\n    at enterGame (E:\\lianxi\\LittleGames\\scripts\\device-feature-iteration.cjs:58:113)\n    at open (E:\\lianxi\\LittleGames\\scripts\\device-feature-iteration.cjs:60:26)\n    at saves (E:\\lianxi\\LittleGames\\scripts\\device-feature-iteration.cjs:91:12)\n    at Object.<anonymous> (E:\\lianxi\\LittleGames\\scripts\\device-feature-iteration.cjs:107:101)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:128:12)",
+      "at": "2026-10-13T02:22:39.963Z",
+      "resolvedAt": "2026-10-13T02:24:26.705Z"
+    },
+    {
+      "action": "daily",
+      "error": "Error: Expected UI not observed: 精选 | 坦克对战 | 拖动坦克移动，炮台会自动瞄准最近的敌军 | 消消乐 | 交换相邻宝石，连线消除得分 | 经典纸牌 | 翻开牌库抽一张牌 | 猜数字 | 通过提示猜测4位数字密码 | 顺序记忆 | 记住数字顺序，隐藏后依次复现。 | 飞行穿柱 | 点击开始后，点击振翅向上飞，松开后受重力下落 | 新玩法 · 换个挑战 | 切水果 | 开始后在游戏区滑动切开抛出的水果 | 背包战斗 | 选择剑、盾、药剂或靴子，点击四乘四背包空位放入 | 精选 | 分类 | 我的\n    at Object.wait (E:\\lianxi\\LittleGames\\scripts\\device-art-review.cjs:64:9)\n    at home (E:\\lianxi\\LittleGames\\scripts\\device-feature-iteration.cjs:22:27)\n    at top (E:\\lianxi\\LittleGames\\scripts\\device-feature-iteration.cjs:32:23)\n    at daily (E:\\lianxi\\LittleGames\\scripts\\device-feature-iteration.cjs:40:32)\n    at Object.<anonymous> (E:\\lianxi\\LittleGames\\scripts\\device-feature-iteration.cjs:107:33)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:128:12)",
+      "at": "2026-10-13T02:25:38.612Z",
+      "resolvedAt": "2026-10-13T02:27:38.454Z"
+    },
+    {
+      "action": "appearance",
+      "error": "AssertionError [ERR_ASSERTION]: Observed UI target absent\n    at Object.click (E:\\lianxi\\LittleGames\\scripts\\device-art-review.cjs:55:3)\n    at enterGame (E:\\lianxi\\LittleGames\\scripts\\device-feature-iteration.cjs:53:5)\n    at open (E:\\lianxi\\LittleGames\\scripts\\device-feature-iteration.cjs:60:26)\n    at appearance (E:\\lianxi\\LittleGames\\scripts\\device-feature-iteration.cjs:112:51)\n    at Object.<anonymous> (E:\\lianxi\\LittleGames\\scripts\\device-feature-iteration.cjs:117:139)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:128:12)",
+      "at": "2026-10-13T02:30:28.258Z",
+      "resolvedAt": "2026-10-13T02:33:09.302Z"
+    }
+  ],
+  "updatedAt": "2026-10-13T02:33:09.302Z"
+}

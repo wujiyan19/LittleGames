@@ -24,7 +24,9 @@ export struct ExpansionCardBoard {
   }
   cardColor(card: number): Resource {
     if (this.gameId === 'mahjong') { return Math.floor(card / 4) < 9 ? SemanticColors.error : Math.floor(card / 4) < 27 ? SemanticColors.primary : SemanticColors.textPrimary; }
-    const suit: number = Math.floor((POKER_IDS.includes(this.gameId) ? card % 54 : card) / 13); return suit === 1 || suit === 2 ? SemanticColors.error : SemanticColors.textPrimary;
+    const suit: number = Math.floor((POKER_IDS.includes(this.gameId) ? card % 54 : card) / 13);
+    if (POKER_IDS.includes(this.gameId)) { return suit === 1 || suit === 2 ? $r('app.color.playing_card_red') : $r('app.color.playing_card_ink'); }
+    return suit === 1 || suit === 2 ? SemanticColors.error : SemanticColors.textPrimary;
   }
   chessText(piece: number): string {
     if (piece === 0) { return ''; } const side: number = piece > 10 ? 2 : 1; const type: number = piece % 10;
@@ -45,19 +47,21 @@ export struct ExpansionCardBoard {
       if (this.gameId === 'ludo') { this.Ludo() }
       if (this.gameId === 'spider' || this.gameId === 'freecell') { this.Solitaire() }
     }.width('100%').padding(SpacingTokens.sm).backgroundImage(ExpansionArt.board(this.gameId)).backgroundImageSize({ width: '100%', height: '100%' }).borderRadius(RadiusTokens.base)
+      .enabled(!this.vm.computerThinking)
   }
   @Builder
   Card(card: number) {
     Column() {
-      GameArtTile({ image: this.gameId === 'mahjong' ? $r('app.media.exp_mahjong') : this.gameId === 'spider' && this.vm.state.pieces[card].w === 0 ? $r('app.media.exp_card_back') : $r('app.media.exp_card_front'),
+      GameArtTile({ image: this.gameId === 'mahjong' ? $r('app.media.exp_mahjong') : POKER_IDS.includes(this.gameId) ? $r('app.media.exp_poker_front') : this.gameId === 'spider' && this.vm.state.pieces[card].w === 0 ? $r('app.media.exp_card_back') : $r('app.media.exp_card_front'),
         label: this.gameId === 'spider' && this.vm.state.pieces[card].w === 0 ? '' : this.cardText(card), description: this.cardText(card), textColor: this.cardColor(card),
         selected: this.vm.state.selected === card || this.vm.state.tray.includes(card), onTap: () => { this.vm.tap(card); } })
     }.width(48).height(62)
   }
   @Builder
-  Hand(cards: number[]) {
+  Hand(pile: number) {
     Flex({ wrap: FlexWrap.Wrap, justifyContent: FlexAlign.Center }) {
-      ForEach(cards, (card: number) => { Column() { this.Card(card) }.margin(SpacingTokens.xs) }, (card: number) => card.toString())
+      // Restart replaces the hand array; read observed state instead of retaining a builder value argument.
+      ForEach(this.vm.state.piles[pile].cards, (card: number) => { Column() { this.Card(card) }.margin(SpacingTokens.xs) }, (card: number) => card.toString())
     }.width('100%')
   }
   @Builder
@@ -65,13 +69,15 @@ export struct ExpansionCardBoard {
     Column({ space: SpacingTokens.base }) {
       Row({ space: SpacingTokens.sm }) {
         ForEach(range(this.gameId === 'guandan' ? 3 : 2), (opponent: number) => {
-          Text($r('app.string.expansion_hand_count', opponent + 2, this.vm.state.piles[opponent + 1].cards.length)).fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textSecondary).layoutWeight(1)
+          Text($r('app.string.computer_hand_count', opponent + 2, this.vm.state.piles[opponent + 1].cards.length)).fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textSecondary).layoutWeight(1)
         }, (opponent: number) => opponent.toString())
       }.width('100%')
       Text(this.gameId === 'doudizhu' ? $r('app.string.expansion_landlord') : $r('app.string.expansion_guandan_team')).fontColor(SemanticColors.textSecondary)
-      Text($r('app.string.expansion_last_play')).fontColor(SemanticColors.textSecondary)
-      this.Hand(this.vm.state.piles[4].cards)
-      this.Hand(this.vm.state.piles[0].cards)
+      Text(this.vm.state.piles[4].cards.length === 0 ? $r('app.string.expansion_last_play') :
+        this.vm.state.data[0] === 0 ? $r('app.string.computer_your_last_play') :
+          $r('app.string.computer_last_play', this.vm.state.data[0] + 1)).fontColor(SemanticColors.textSecondary)
+      this.Hand(4)
+      this.Hand(0)
       Row({ space: SpacingTokens.sm }) {
         Button($r('app.string.expansion_hint')).layoutWeight(1).onClick(() => { this.vm.tap(902); })
         Button($r('app.string.expansion_pass')).layoutWeight(1).enabled(this.vm.state.data[2] !== 0).onClick(() => { this.vm.tap(901); })
@@ -118,11 +124,11 @@ export struct ExpansionCardBoard {
     Column({ space: SpacingTokens.base }) {
       Text($r('app.string.expansion_wall', 136 - this.vm.state.cursor)).fontColor(SemanticColors.textSecondary)
       Row({ space: SpacingTokens.sm }) {
-        ForEach(range(3), (seat: number) => { Text($r('app.string.expansion_hand_count', seat + 2, this.vm.state.piles[seat + 1].cards.length)).fontColor(SemanticColors.textSecondary).fontSize(FontTokens.sizeCaption) }, (seat: number) => seat.toString())
+        ForEach(range(3), (seat: number) => { Text($r('app.string.computer_hand_count', seat + 2, this.vm.state.piles[seat + 1].cards.length)).fontColor(SemanticColors.textSecondary).fontSize(FontTokens.sizeCaption) }, (seat: number) => seat.toString())
       }.width('100%')
       if (this.vm.state.piles[8].cards.length > 0) { Text($r('app.string.expansion_discard', this.cardText(this.vm.state.piles[8].cards[this.vm.state.piles[8].cards.length - 1]))).fontColor(SemanticColors.textPrimary) }
-      this.Hand(this.vm.state.piles[0].cards)
-      if (this.vm.state.piles[4].cards.length > 0) { this.Hand(this.vm.state.piles[4].cards) }
+      this.Hand(0)
+      if (this.vm.state.piles[4].cards.length > 0) { this.Hand(4) }
       Flex({ wrap: FlexWrap.Wrap, justifyContent: FlexAlign.Center }) {
         Button($r('app.string.expansion_mahjong_win')).margin(SpacingTokens.xs).enabled(this.vm.mahjongCan(900)).onClick(() => { this.vm.tap(900); })
         if (this.vm.state.data[0] === 1) {
@@ -150,11 +156,14 @@ export struct ExpansionCardBoard {
           Column() { GameArtTile({ image: $r('app.media.exp_plane'), label: (token.id % 4 + 1).toString(),
             description: $r('app.string.art_ludo_token', token.owner + 1, token.id % 4 + 1), onTap: () => { this.vm.tap(token.id); } }) }
             .width(30 * this.arenaWidth / 360).height(30 * this.arenaWidth / 360).backgroundColor(this.color(token.owner)).borderRadius(RadiusTokens.sm)
-            .translate({ x: this.ludoPoint(token)[0] * this.arenaWidth / 360, y: this.ludoPoint(token)[1] * this.arenaWidth / 360 })
+            .enabled(token.owner === 0)
+            // Reused ForEach nodes must position the current snapshot, not the first token object.
+            .translate({ x: this.ludoPoint(this.vm.state.pieces[token.id])[0] * this.arenaWidth / 360,
+              y: this.ludoPoint(this.vm.state.pieces[token.id])[1] * this.arenaWidth / 360 })
         }, (token: ExpansionPiece) => token.id.toString())
       }.width('100%').aspectRatio(360 / 460).backgroundColor(SemanticColors.boardBg).backgroundImage(ExpansionArt.board(this.gameId)).backgroundImageSize({ width: '100%', height: '100%' }).borderRadius(RadiusTokens.base)
         .onAreaChange((oldArea: Area, area: Area) => { this.measure(area); })
-      Button($r('app.string.expansion_roll')).enabled(this.vm.state.data[0] === 0).onClick(() => { this.vm.tap(900); })
+      Button($r('app.string.expansion_roll')).enabled(this.vm.state.next === 1 && this.vm.state.data[0] === 0).onClick(() => { this.vm.tap(900); })
     }.width('100%')
   }
   @Builder

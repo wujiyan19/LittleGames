@@ -5,18 +5,33 @@
  * 取消则回到对局。视觉沿用 GameResultDialog 的居中卡片语言。
  */
 import { SemanticColors, FontTokens, RadiusTokens, ShadowTokens, SpacingTokens } from '../common/DesignTokens';
+import { HarmonyMotion } from '../common/HarmonyMotion';
 
 @ComponentV2
 export struct ExitConfirmDialog {
+  @Param title: Resource | string = $r('app.string.exit_confirm_title');
+  @Param description: Resource | string = $r('app.string.exit_confirm_desc');
+  @Param confirmText: Resource | string = $r('app.string.exit_confirm_leave');
+  @Param cancelText: Resource | string = $r('app.string.exit_confirm_stay');
   /** 确认退出：关闭弹窗并返回首页（分数由 ViewModel 的 dispose/onAppHidden 结算） */
   @Param onConfirm: () => void = () => {};
   /** 继续对局：仅关闭弹窗 */
   @Param onCancel: () => void = () => {};
 
-  @Styles
-  pressedFeedback() {
-    .opacity(0.72)
-    .scale({ x: 0.96, y: 0.96 })
+  @Local actionTaken: boolean = false;
+  private actionTimer: number = -1;
+
+  aboutToDisappear(): void {
+    if (this.actionTimer >= 0) { clearTimeout(this.actionTimer); this.actionTimer = -1; }
+  }
+
+  private choose(confirm: boolean): void {
+    if (this.actionTaken) { return; }
+    this.actionTaken = true;
+    this.actionTimer = setTimeout(() => {
+      this.actionTimer = -1;
+      if (confirm) { this.onConfirm(); } else { this.onCancel(); }
+    }, HarmonyMotion.value(this.getUIContext(), $r('app.float.motion_action_guard_duration'), 320));
   }
 
   build() {
@@ -30,61 +45,87 @@ export struct ExitConfirmDialog {
         }
         .width(64).height(64)
         .borderRadius(RadiusTokens.full)
-        .backgroundColor(SemanticColors.primaryLight)
+        .backgroundColor(SemanticColors.surfaceHover)
         .justifyContent(FlexAlign.Center)
 
-        Text($r('app.string.exit_confirm_title'))
+        Text(this.title)
           .fontFamily(FontTokens.family)
           .fontSize(FontTokens.sizeHeadline)
           .fontWeight(FontTokens.weightBold)
           .fontColor(SemanticColors.textPrimary)
+          .width('100%').textAlign(TextAlign.Center)
 
-        Text($r('app.string.exit_confirm_desc'))
+        Text(this.description)
           .fontFamily(FontTokens.family)
           .fontSize(FontTokens.sizeBody)
-          .fontColor(SemanticColors.textTertiary)
+          .fontColor(SemanticColors.textSecondary)
+          .width('100%')
           .textAlign(TextAlign.Center)
 
         Row({ space: SpacingTokens.base }) {
           Button() {
-            Text($r('app.string.exit_confirm_stay'))
+            Text(this.cancelText)
               .fontFamily(FontTokens.family)
               .fontSize(FontTokens.sizeBody)
+              .fontWeight(FontTokens.weightMedium)
               .fontColor(SemanticColors.textPrimary)
+              .width('100%').textAlign(TextAlign.Center)
           }
-          .layoutWeight(1).height(44)
-          .backgroundColor(SemanticColors.surface)
-          .borderRadius(RadiusTokens.full)
-          .stateStyles({ pressed: this.pressedFeedback })
+          .type(ButtonType.Normal).layoutWeight(1)
+          .constraintSize({ minHeight: $r('app.float.home_action_min_height') })
+          .padding({ left: SpacingTokens.md, right: SpacingTokens.md, top: SpacingTokens.md, bottom: SpacingTokens.md })
+          .backgroundColor(SemanticColors.surfaceHover)
+          .borderRadius(RadiusTokens.md)
+          .clickEffect(HarmonyMotion.press(this.getUIContext()))
+          .enabled(!this.actionTaken)
 
-          .onClick(() => this.onCancel())
+          .onClick(() => { this.choose(false); })
 
           Button() {
-            Text($r('app.string.exit_confirm_leave'))
+            Text(this.confirmText)
               .fontFamily(FontTokens.family)
               .fontSize(FontTokens.sizeBody)
+              .fontWeight(FontTokens.weightSemibold)
               .fontColor(SemanticColors.textOnPrimary)
+              .width('100%').textAlign(TextAlign.Center)
           }
-          .layoutWeight(1).height(44)
+          .type(ButtonType.Normal).layoutWeight(1)
+          .constraintSize({ minHeight: $r('app.float.home_action_min_height') })
+          .padding({ left: SpacingTokens.md, right: SpacingTokens.md, top: SpacingTokens.md, bottom: SpacingTokens.md })
           .backgroundColor(SemanticColors.primary)
-          .borderRadius(RadiusTokens.full)
-          .stateStyles({ pressed: this.pressedFeedback })
+          .borderRadius(RadiusTokens.md)
+          .clickEffect(HarmonyMotion.press(this.getUIContext()))
+          .enabled(!this.actionTaken)
 
-          .onClick(() => this.onConfirm())
+          .onClick(() => { this.choose(true); })
         }
         .width('100%')
         .margin({ top: SpacingTokens.sm })
       }
       .width('86%')
-      .padding(SpacingTokens.lg)
+      .constraintSize({ maxWidth: $r('app.float.motion_dialog_max_width') })
+      .padding(SpacingTokens.xl)
       .borderRadius(RadiusTokens.xl)
       .backgroundColor($r('app.color.surface'))
       .shadow(ShadowTokens.float)
       .alignItems(HorizontalAlign.Center)
+      .renderGroup(true)
+      .scale({
+        x: HarmonyMotion.closeScale(this.getUIContext(), this.actionTaken),
+        y: HarmonyMotion.closeScale(this.getUIContext(), this.actionTaken)
+      })
+      .translate({ y: HarmonyMotion.closeOffset(this.getUIContext(), this.actionTaken) })
+      .opacity(this.actionTaken ? 0 : 1)
+      .animation(HarmonyMotion.exit(this.getUIContext()))
+      .transition(HarmonyMotion.dialog(this.getUIContext()))
     }
     .width('100%').height('100%')
     .backgroundColor(SemanticColors.scrim)
+    .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.BOTTOM])
     .justifyContent(FlexAlign.Center)
+    .opacity(this.actionTaken ? 0 : 1)
+    .animation(HarmonyMotion.exit(this.getUIContext()))
+    .transition(HarmonyMotion.scrim(this.getUIContext()))
     .onClick(() => {})
   }
 }

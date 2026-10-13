@@ -1,0 +1,21 @@
+{
+  "source": "Crops of actual phone screenshots; left column is left gesture, right column is right gesture",
+  "files": [
+    "world-fisheat-mv0zyxhl-0e419b-4-fish-left.jpeg",
+    "world-fisheat-mv0zyxhl-0e419b-4-fish-right.jpeg"
+  ],
+  "bounds": [
+    [
+      151,
+      1400,
+      240,
+      1489
+    ],
+    [
+      993,
+      1397,
+      1088,
+      1492
+    ]
+  ]
+}

@@ -1,6 +1,7 @@
 import { media } from '@kit.MediaKit';
 import { audio } from '@kit.AudioKit';
 import { resourceManager } from '@kit.LocalizationKit';
+import { gameSound } from './GameSound';
 
 export class ExpansionTonePlayer {
   onReady: (ready: boolean) => void = (ready: boolean): void => {};
@@ -25,11 +26,11 @@ export class ExpansionTonePlayer {
   }
   private ready(): void { if (!this.disposed && this.sounds.length === 4 && this.sounds.every((id: number) => this.loaded.includes(id))) { this.onReady(true); } }
   async play(note: number): Promise<void> {
-    if (this.disposed || !this.pool || note < 0 || note >= this.sounds.length || !this.loaded.includes(this.sounds[note])) { return; }
+    if (!gameSound.enabled || this.disposed || !this.pool || note < 0 || note >= this.sounds.length || !this.loaded.includes(this.sounds[note])) { return; }
     const pool: media.SoundPool = this.pool; const generation: number = this.generation;
     try {
       const stream: number = await pool.play(this.sounds[note]);
-      if (this.disposed || generation !== this.generation) { try { await pool.stop(stream); } catch (e) {} return; }
+      if (!gameSound.enabled || this.disposed || generation !== this.generation) { try { await pool.stop(stream); } catch (e) {} return; }
       this.streams.push(stream); if (this.streams.length > 8) { this.streams.shift(); }
     } catch (e) {}
   }

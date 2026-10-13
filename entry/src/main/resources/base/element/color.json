@@ -1,6 +1,10 @@
 {
   "color": [
     {
+      "name": "selection_surface",
+      "value": "#E8F0FF"
+    },
+    {
       "name": "game_icon_background",
       "value": "#DDEBFA"
     },
@@ -10,7 +14,7 @@
     },
     {
       "name": "bg",
-      "value": "#F4F6FB"
+      "value": "#F1F3F5"
     },
     {
       "name": "bg_elevated",
@@ -22,7 +26,7 @@
     },
     {
       "name": "surface_hover",
-      "value": "#EBF0FA"
+      "value": "#F1F3F5"
     },
     {
       "name": "surface_translucent",
@@ -90,7 +94,7 @@
     },
     {
       "name": "divider",
-      "value": "#E4E9F3"
+      "value": "#E4E7EB"
     },
     {
       "name": "border",
@@ -162,87 +166,87 @@
     },
     {
       "name": "tile_2",
-      "value": "#EEE4DA"
+      "value": "#FFE7AD"
     },
     {
       "name": "tile_4",
-      "value": "#EDE0C8"
+      "value": "#FFD0BC"
     },
     {
       "name": "tile_8",
-      "value": "#F2B179"
+      "value": "#ADD5EF"
     },
     {
       "name": "tile_16",
-      "value": "#F59563"
+      "value": "#B7EACD"
     },
     {
       "name": "tile_32",
-      "value": "#F67C5F"
+      "value": "#DCD2FA"
     },
     {
       "name": "tile_64",
-      "value": "#F65E3B"
+      "value": "#B8EDF1"
     },
     {
       "name": "tile_128",
-      "value": "#EDCF72"
+      "value": "#E6C98F"
     },
     {
       "name": "tile_256",
-      "value": "#EDCC61"
+      "value": "#E4A395"
     },
     {
       "name": "tile_512",
-      "value": "#EDC850"
+      "value": "#8CB9E0"
     },
     {
       "name": "tile_1024",
-      "value": "#EDC53F"
+      "value": "#91CBAE"
     },
     {
       "name": "tile_2048",
-      "value": "#EDC22E"
+      "value": "#D7AE65"
     },
     {
       "name": "tile_large",
-      "value": "#3C3A32"
+      "value": "#BDA5DF"
     },
     {
       "name": "tile_text_low",
-      "value": "#776E65"
+      "value": "#20364F"
     },
     {
       "name": "tile_text_high",
-      "value": "#FFFFFF"
+      "value": "#20364F"
     },
     {
       "name": "shape_1",
-      "value": "#FF6B6B"
+      "value": "#ECA291"
     },
     {
       "name": "shape_2",
-      "value": "#FFAA33"
+      "value": "#E4C18A"
     },
     {
       "name": "shape_3",
-      "value": "#2DD482"
+      "value": "#91CBB0"
     },
     {
       "name": "shape_4",
-      "value": "#3399FF"
+      "value": "#82B5D9"
     },
     {
       "name": "shape_5",
-      "value": "#8675F8"
+      "value": "#B1A1D8"
     },
     {
       "name": "shape_6",
-      "value": "#FF6B9D"
+      "value": "#D8A3BF"
     },
     {
       "name": "shape_7",
-      "value": "#00D4B4"
+      "value": "#8CC9D2"
     },
     {
       "name": "klotski_target",
@@ -270,35 +274,35 @@
     },
     {
       "name": "mine_num_1",
-      "value": "#3399FF"
+      "value": "#3971A0"
     },
     {
       "name": "mine_num_2",
-      "value": "#2DD482"
+      "value": "#447B60"
     },
     {
       "name": "mine_num_3",
-      "value": "#FF6666"
+      "value": "#A45150"
     },
     {
       "name": "mine_num_4",
-      "value": "#8675F8"
+      "value": "#6B5798"
     },
     {
       "name": "mine_num_5",
-      "value": "#FF6B6B"
+      "value": "#905C44"
     },
     {
       "name": "mine_num_6",
-      "value": "#00D4B4"
+      "value": "#327783"
     },
     {
       "name": "mine_num_7",
-      "value": "#2A3550"
+      "value": "#304A69"
     },
     {
       "name": "mine_num_8",
-      "value": "#6B7280"
+      "value": "#657D93"
     },
     {
       "name": "mine_num_invalid",
@@ -402,23 +406,23 @@
     },
     {
       "name": "brick_row_0",
-      "value": "#FF6B6B"
+      "value": "#EB857C"
     },
     {
       "name": "brick_row_1",
-      "value": "#FFAA33"
+      "value": "#EABB63"
     },
     {
       "name": "brick_row_2",
-      "value": "#2DD482"
+      "value": "#6CBFA4"
     },
     {
       "name": "brick_row_3",
-      "value": "#3399FF"
+      "value": "#4AA3BF"
     },
     {
       "name": "brick_row_4",
-      "value": "#8675F8"
+      "value": "#9988D3"
     },
     {
       "name": "badge_match3_start",
@@ -450,7 +454,15 @@
     },
     {
       "name": "collection_art_ink",
-      "value": "#263E60"
+      "value": "#304A69"
+    },
+    {
+      "name": "playing_card_ink",
+      "value": "#1B2533"
+    },
+    {
+      "name": "playing_card_red",
+      "value": "#B53345"
     },
     {
       "name": "expansion_color_1",
@@ -475,6 +487,50 @@
     {
       "name": "expansion_color_6",
       "value": "#268EAA"
+    },
+    {
+      "name": "expansion_road_edge",
+      "value": "#6386A8"
+    },
+    {
+      "name": "play_board_background",
+      "value": "#DCE8F1"
+    },
+    {
+      "name": "play_cell_background",
+      "value": "#FFFAF0"
+    },
+    {
+      "name": "play_cell_alternate",
+      "value": "#EEF5F7"
+    },
+    {
+      "name": "play_selection_background",
+      "value": "#BFDDF3"
+    },
+    {
+      "name": "play_success_background",
+      "value": "#CBE6D8"
+    },
+    {
+      "name": "play_piece_text",
+      "value": "#304A69"
+    },
+    {
+      "name": "play_fixed_digit",
+      "value": "#8C5D2C"
+    },
+    {
+      "name": "play_piece_border",
+      "value": "#9CB7D0"
+    },
+    {
+      "name": "play_color_piece_text",
+      "value": "#20364F"
+    },
+    {
+      "name": "play_mine_revealed_background",
+      "value": "#F1C7BD"
     }
   ]
 }

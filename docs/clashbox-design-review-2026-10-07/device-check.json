@@ -1,0 +1,58 @@
+{
+  "checkedOn": "2026-10-07",
+  "referenceApp": "ClashBox",
+  "versionName": "2.1.0",
+  "versionCode": 2010016,
+  "screenshotWidthPx": 1260,
+  "screenshotHeightPx": 2720,
+  "oldSourceCommit": "e036a6a3097192ff74987ce7306eea2a03d6a3ac",
+  "checks": {
+    "homeSurfaces": "confirmed",
+    "moreList": "confirmed",
+    "searchSheet": "confirmed",
+    "settingsSheetAndAppearanceSubpage": "confirmed",
+    "darkAppearance": "confirmed",
+    "primaryPageSwipeAndNavigationSelection": "confirmed",
+    "navigationCollapseOnForwardScroll": "confirmed",
+    "navigationExpansionOnReverseScroll": "confirmed",
+    "multipleInnerGroupPages": "not_checked_only_one_group_visible",
+    "fontAndCornerResourceValuesOnInstalledVersion": "not_exposed_by_ui_tree",
+    "animationFrameRate": "not_measured"
+  },
+  "clashBoxObservedColorsArgb": {
+    "page": "#FFF1F3F5",
+    "mainCard": "#FFFFFFFF",
+    "accent": "#FF0A59F7",
+    "innerSurface": "#0D000000"
+  },
+  "homeGeometryPx": {
+    "smallCardWidth": 561,
+    "smallCardHeight": 561,
+    "horizontalGap": 48,
+    "verticalGap": 39,
+    "largeCardWidth": 1170,
+    "largeCardHeight": 565
+  },
+  "listGeometryPx": {
+    "width": 1176,
+    "height": 182,
+    "verticalGap": 39
+  },
+  "installedAppearanceOptions": {
+    "materialLabel": "沉浸光感材质",
+    "materialValue": "沉浸光感",
+    "topBarBlurValue": "背景色",
+    "originalTheme": "跟随系统",
+    "restoredTheme": "跟随系统"
+  },
+  "littleGamesComparison": {
+    "pageArgb": "#FFF1F3F5",
+    "contentSurfaceArgb": "#19000000",
+    "visibleContentSurfaceCount": 11,
+    "firstPriority": "use distinct light and dark main card surfaces"
+  },
+  "finalPhonePage": "ClashBox home",
+  "appSourceChanged": false,
+  "networkControlsOperated": false,
+  "rawEvidenceDirectory": "entry/build/design-research/device-20261007"
+}

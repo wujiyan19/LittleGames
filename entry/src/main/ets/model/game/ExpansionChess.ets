@@ -7,6 +7,15 @@ export class BoardMove {
   from: number; to: number;
   constructor(from: number, to: number) { this.from = from; this.to = to; }
 }
+class ChessCandidate {
+  move: BoardMove;
+  score: number;
+  check: boolean;
+  safe: boolean;
+  constructor(move: BoardMove, score: number, check: boolean, safe: boolean) {
+    this.move = move; this.score = score; this.check = check; this.safe = safe;
+  }
+}
 export class ExpansionChess {
   private random: RandomSource;
   constructor(random: RandomSource) { this.random = random; }
@@ -103,23 +112,114 @@ export class ExpansionChess {
     if (s.target.filter((v: number) => v === hash).length >= 3 || (s.id === 'chess' && (s.data[7] >= 100 || insufficient))) { s.data[8] = 1; s.outcome = 1; }
   }
   private move(s: ExpansionState, from: number, to: number): void { this.apply(s, from, to, true); s.selected = -1; s.moves++; s.cursor = 1 - s.cursor; this.finish(s); }
-  private bot(s: ExpansionState): void {
-    const legal: BoardMove[] = this.moves(s, 2); if (legal.length === 0) { return; }
-    let best: BoardMove = legal[0]; let bestScore: number = -100000;
-    const values: number[] = s.id === 'chess' ? [0, 10000, 900, 500, 330, 320, 100] : [0, 10000, 120, 120, 350, 650, 350, 100];
-    legal.forEach((move: BoardMove) => {
-      let value: number = values[this.type(s.board[move.to])] * 10 + this.random.next() * 6;
-      const saved: number[] = s.board.slice(); const moving: number = this.type(s.board[move.from]); this.apply(s, move.from, move.to, false);
-      if (this.attacked(s, move.to, 1)) { value -= values[moving] * (s.level === 0 ? 3 : 8); }
-      if (this.checked(s, 1)) { value += 80; }
-      value += 5 - Math.abs(move.to % s.cols - (s.cols - 1) / 2); s.board = saved;
-      if (value > bestScore) { bestScore = value; best = move; }
-    }); this.move(s, best.from, best.to);
+  needsComputerTurn(s: ExpansionState): boolean { return s.outcome === 0 && s.cursor === 1; }
+  private values(s: ExpansionState): number[] {
+    return s.id === 'chess' ? [0, 10000, 900, 500, 330, 320, 100] : [0, 10000, 120, 120, 350, 650, 350, 100];
   }
-  tap(s: ExpansionState, at: number): void {
-    if (at >= s.board.length || s.cursor !== 0) { return; }
+  private candidate(s: ExpansionState, move: BoardMove, side: number): ChessCandidate {
+    const values: number[] = this.values(s);
+    const savedBoard: number[] = s.board.slice(); const savedData: number[] = s.data.slice();
+    const moving: number = this.type(s.board[move.from]);
+    const captured: number = s.id === 'chess' && moving === 6 && move.from % 8 !== move.to % 8 && s.board[move.to] === 0 ? 100 : values[this.type(s.board[move.to])];
+    // Commit only inside a saved trial: replies need the new castling and en-passant rights.
+    this.apply(s, move.from, move.to, true);
+    const safe: boolean = !this.attacked(s, move.to, 3 - side);
+    const check: boolean = this.checked(s, 3 - side);
+    let score: number = captured * 10 + (values[this.type(s.board[move.to])] - values[moving]) * 10;
+    if (!safe) { score -= values[this.type(s.board[move.to])] * 8; }
+    if (check) { score += 80; }
+    score += 5 - Math.abs(move.to % s.cols - (s.cols - 1) / 2);
+    s.board = savedBoard; s.data = savedData;
+    return new ChessCandidate(move, score, check, safe);
+  }
+  private ranked(s: ExpansionState, legal: BoardMove[], side: number): ChessCandidate[] {
+    const candidates: ChessCandidate[] = legal.map((move: BoardMove) => this.candidate(s, move, side));
+    candidates.sort((a: ChessCandidate, b: ChessCandidate) => b.score - a.score);
+    return candidates;
+  }
+  private tacticalCandidates(ranked: ChessCandidate[], main: number, checks: number): ChessCandidate[] {
+    const result: ChessCandidate[] = ranked.slice(0, main);
+    let added: number = 0;
+    for (let i: number = main; i < ranked.length && added < checks; i++) {
+      if (ranked[i].check) { result.push(ranked[i]); added++; }
+    }
+    return result;
+  }
+  private evaluate(s: ExpansionState): number {
+    const values: number[] = this.values(s); let result: number = 0;
+    for (let i: number = 0; i < s.board.length; i++) {
+      const piece: number = s.board[i]; if (piece === 0) { continue; }
+      const side: number = this.side(piece); const type: number = this.type(piece);
+      const sign: number = side === 2 ? 1 : -1;
+      result += sign * values[type];
+      if (type !== 1) {
+        result += sign * (s.cols / 2 - Math.abs(i % s.cols - (s.cols - 1) / 2)) * 2;
+        if (this.attacked(s, i, 3 - side) && !this.attacked(s, i, side)) { result -= sign * values[type] * 0.2; }
+      }
+    }
+    if (this.checked(s, 2)) { result -= 150; }
+    if (this.checked(s, 1)) { result += 30; }
+    return result;
+  }
+  private hardMove(s: ExpansionState, ranked: ChessCandidate[]): BoardMove {
+    // At most 12 candidate moves and 14 replies each; never recurse on the UI thread.
+    const candidates: ChessCandidate[] = this.tacticalCandidates(ranked, 8, 4);
+    const savedBoard: number[] = s.board.slice(); const savedData: number[] = s.data.slice(); const savedCursor: number = s.cursor;
+    let best: BoardMove = candidates[0].move; let bestScore: number = -1000000000;
+    for (let i: number = 0; i < candidates.length; i++) {
+      const candidate: ChessCandidate = candidates[i];
+      s.board = savedBoard.slice(); s.data = savedData.slice();
+      this.apply(s, candidate.move.from, candidate.move.to, true); s.cursor = 0;
+      const replies: BoardMove[] = this.moves(s, 1);
+      let worst: number = this.evaluate(s);
+      if (replies.length === 0) { worst = this.checked(s, 1) || s.id === 'xiangqi' ? 100000000 : 0; }
+      else {
+        const replyBoard: number[] = s.board.slice(); const replyData: number[] = s.data.slice();
+        const responses: ChessCandidate[] = this.tacticalCandidates(this.ranked(s, replies, 1), 10, 4);
+        worst = 1000000000;
+        let mateChecks: number = 0;
+        for (let j: number = 0; j < responses.length; j++) {
+          s.board = replyBoard.slice(); s.data = replyData.slice();
+          const reply: BoardMove = responses[j].move;
+          this.apply(s, reply.from, reply.to, true); s.cursor = 1;
+          let score: number = this.evaluate(s);
+          if (responses[j].check && mateChecks < 4) {
+            mateChecks++;
+            if (this.moves(s, 2).length === 0) { score = -100000000; }
+          }
+          worst = Math.min(worst, score);
+        }
+      }
+      const score: number = worst + candidate.score * 0.01;
+      if (score > bestScore) { bestScore = score; best = candidate.move; }
+    }
+    s.board = savedBoard; s.data = savedData; s.cursor = savedCursor;
+    return best;
+  }
+  computerTurn(s: ExpansionState): void {
+    if (!this.needsComputerTurn(s)) { return; }
+    const legal: BoardMove[] = this.moves(s, 2);
+    if (legal.length === 0) { this.finish(s); return; }
+    const ranked: ChessCandidate[] = this.ranked(s, legal, 2);
+    let best: BoardMove = ranked[0].move;
+    if (s.level === 0) {
+      const safe: ChessCandidate[] = ranked.filter((candidate: ChessCandidate) => candidate.safe);
+      const choices: ChessCandidate[] = safe.length > 0 ? safe : ranked;
+      best = choices[Math.min(choices.length - 1, Math.floor(this.random.next() * choices.length))].move;
+    } else if (s.level === 2) { best = this.hardMove(s, ranked); }
+    else {
+      let bestScore: number = -1000000000;
+      ranked.forEach((candidate: ChessCandidate) => {
+        const score: number = candidate.score + this.random.next() * 6;
+        if (score > bestScore) { bestScore = score; best = candidate.move; }
+      });
+    }
+    this.move(s, best.from, best.to);
+  }
+  tap(s: ExpansionState, at: number, automatic: boolean = true): void {
+    if (!V.integer(at, 0, s.board.length - 1) || s.outcome !== 0 || s.cursor !== 0) { return; }
     if (this.side(s.board[at]) === 1) { s.selected = s.selected === at ? -1 : at; return; }
-    if (s.selected >= 0 && this.legal(s, s.selected, at)) { this.move(s, s.selected, at); if (s.outcome === 0) { this.bot(s); } }
+    if (s.selected >= 0 && this.legal(s, s.selected, at)) { this.move(s, s.selected, at); if (automatic && this.needsComputerTurn(s)) { this.computerTurn(s); } }
   }
   choose(s: ExpansionState, index: number): void { if (s.id === 'chess' && index < 4) { s.data[9] = [2, 3, 4, 5][index]; } }
   valid(s: ExpansionState): boolean {

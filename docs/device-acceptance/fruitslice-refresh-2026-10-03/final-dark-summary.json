@@ -1,0 +1,40 @@
+{
+  "target": "49X0224C24001554",
+  "packageHash": "dd9683492333eb9a01ab5fd91dd344081d17d69d6bd643f705333315bb8efc7d",
+  "mode": "dark",
+  "checks": [
+    {
+      "name": "five-miss counter and empty new game",
+      "sprites": []
+    },
+    {
+      "name": "same native fruit image updates its position",
+      "hashcode": "72:5434",
+      "before": "[1413,1429][1521,1537]",
+      "after": "[1460,1241][1568,1349]"
+    },
+    {
+      "name": "pause freezes fruit images",
+      "sprites": [
+        {
+          "hashcode": "72:5451",
+          "bounds": "[1730,1142][1838,1250]"
+        },
+        {
+          "hashcode": "72:5454",
+          "bounds": "[1116,1369][1224,1477]"
+        }
+      ]
+    },
+    {
+      "name": "resume refreshes fruit images"
+    },
+    {
+      "name": "real swipe cuts fruit and updates score",
+      "score": 150
+    },
+    {
+      "name": "restart clears previous fruit images and progress"
+    }
+  ]
+}

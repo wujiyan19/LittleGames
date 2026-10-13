@@ -1,0 +1,236 @@
+{
+  "style": "Shared icon palette; soft vector toy materials; base and dark",
+  "games": 13,
+  "assets": [
+    {
+      "name": "play_snake_head",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "play_snake_body",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "play_snake_corner",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "play_snake_tail",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "play_snake_food",
+      "width": 64,
+      "height": 64
+    },
+    {
+      "name": "play_tetris_gloss",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "play_2048_surface",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "play_sudoku_cell",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "play_slide_tile",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "play_guess_key",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "play_klotski_board",
+      "width": 320,
+      "height": 400
+    },
+    {
+      "name": "play_klotski_target",
+      "width": 128,
+      "height": 128
+    },
+    {
+      "name": "play_klotski_vertical",
+      "width": 80,
+      "height": 160
+    },
+    {
+      "name": "play_klotski_horizontal",
+      "width": 160,
+      "height": 80
+    },
+    {
+      "name": "play_klotski_soldier",
+      "width": 80,
+      "height": 80
+    },
+    {
+      "name": "play_mole",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "play_whack_hole",
+      "width": 128,
+      "height": 92
+    },
+    {
+      "name": "play_mine",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "play_flag",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "play_memory_back",
+      "width": 100,
+      "height": 120
+    },
+    {
+      "name": "play_memory_sun",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "play_memory_moon",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "play_memory_star",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "play_memory_heart",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "play_memory_clover",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "play_memory_bolt",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "play_memory_crown",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "play_memory_diamond",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "play_memory_spiral",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "play_memory_leaf",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "play_memory_shell",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "play_memory_flame",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "play_jump_frog",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "play_jump_platform",
+      "width": 160,
+      "height": 52
+    },
+    {
+      "name": "play_brick_gloss",
+      "width": 160,
+      "height": 64
+    },
+    {
+      "name": "play_brick_paddle",
+      "width": 160,
+      "height": 32
+    },
+    {
+      "name": "play_brick_ball",
+      "width": 64,
+      "height": 64
+    },
+    {
+      "name": "play_gem_0",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "play_gem_1",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "play_gem_2",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "play_gem_3",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "play_gem_4",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "play_gem_5",
+      "width": 100,
+      "height": 100
+    },
+    {
+      "name": "play_jump_scene",
+      "width": 400,
+      "height": 500
+    },
+    {
+      "name": "play_whack_scene",
+      "width": 400,
+      "height": 400
+    },
+    {
+      "name": "play_brick_scene",
+      "width": 400,
+      "height": 500
+    }
+  ]
+}

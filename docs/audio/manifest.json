@@ -1,0 +1,1463 @@
+{
+  "format": "PCM WAV",
+  "sampleRate": 44100,
+  "channels": 1,
+  "bitsPerSample": 16,
+  "source": "Original deterministic synthesis in scripts/generate-game-sounds.cjs",
+  "games": [
+    {
+      "id": "snake",
+      "family": "pop",
+      "action": {
+        "path": "sounds/snake_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "5a5f5a38a5225094830229b8861fed158fb0b86590c9da0045367092b975d71d"
+      },
+      "reward": {
+        "path": "sounds/snake_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "4f3b853382f2e7eaa0706471f5e44c3b26a742d99ba75576df87e4b364dab975"
+      }
+    },
+    {
+      "id": "tetris",
+      "family": "tile",
+      "action": {
+        "path": "sounds/tetris_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "874ad972972a0a7ee22db5c68a8d60ab87d247b4da1e7c7ec2e1a44a8097c59f"
+      },
+      "reward": {
+        "path": "sounds/tetris_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "b4c460fa8634a44452bd58a11c8530e99c083db269eb4c865041ffb77b8a4af2"
+      }
+    },
+    {
+      "id": "2048",
+      "family": "tile",
+      "action": {
+        "path": "sounds/2048_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "959d4401fc2f6826d8256c51b3dd6f8cf9366f17b72d4e8829b6e8f137b09c1b"
+      },
+      "reward": {
+        "path": "sounds/2048_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "1532096948a449495cfc8e820c5889e0428c37b04aa5fdb9bb1cbae6733c9b1b"
+      }
+    },
+    {
+      "id": "whackmole",
+      "family": "hit",
+      "action": {
+        "path": "sounds/whackmole_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "b19124685a1b8e0fd51e3d01174a98212a3ad022d8ab7a0062cd6c51342819f7"
+      },
+      "reward": {
+        "path": "sounds/whackmole_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "7b7eb54adde6013ae52c5f1fb31d36341f78d81f858459a4d2cfea8b59bb63b6"
+      }
+    },
+    {
+      "id": "minesweeper",
+      "family": "tile",
+      "action": {
+        "path": "sounds/minesweeper_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "29ae3b7283960defb8dbcf69275e0fcc3a5ad04907d143717fda20667f6110a0"
+      },
+      "reward": {
+        "path": "sounds/minesweeper_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "7d76ed46cb57588ee0675cba8e82968b6f005a24132d270874d365a7f820b93e"
+      }
+    },
+    {
+      "id": "sudoku",
+      "family": "bell",
+      "action": {
+        "path": "sounds/sudoku_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "4787ae3b8b869a132afa6dcfa8b580e7fa2df4f12d78344e23c33b68068dfa0c"
+      },
+      "reward": {
+        "path": "sounds/sudoku_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "7cca23c49f7b124ffc7b281d45e0c878ee40a9c220474ed0a5ea5815ea65f7b0"
+      }
+    },
+    {
+      "id": "slidepuzzle",
+      "family": "tile",
+      "action": {
+        "path": "sounds/slidepuzzle_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "2ee0186a1b4728966f2534a73b11e21adec91a96044caf802b6ec1225e19e7d7"
+      },
+      "reward": {
+        "path": "sounds/slidepuzzle_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "8f02ccbf6ce58111669c6d2707a6e32a0b6ba58c11ed02f3bb19e8f937754951"
+      }
+    },
+    {
+      "id": "klotski",
+      "family": "wood",
+      "action": {
+        "path": "sounds/klotski_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "a4f0347a47813fcfacaedce5dfba74f796c13cd023d98b364f5d7e62aed80d29"
+      },
+      "reward": {
+        "path": "sounds/klotski_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "b40f6f149fbde9765d64bd178a396e6d40cd21c85188e38496b985634b6bf640"
+      }
+    },
+    {
+      "id": "guessnumber",
+      "family": "bell",
+      "action": {
+        "path": "sounds/guessnumber_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "9332d7fc7248b78da25b68c1e2ce80f8d5b858a0706af3e9044194854ebf01a7"
+      },
+      "reward": {
+        "path": "sounds/guessnumber_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "c7be2cd2f5c2d9677dbe9c7ef9ec140100adbbf58245b22ca09f5ebded7df7eb"
+      }
+    },
+    {
+      "id": "memorycard",
+      "family": "paper",
+      "action": {
+        "path": "sounds/memorycard_action.wav",
+        "durationMs": 130,
+        "bytes": 11510,
+        "sha256": "082173e521954db2e24e5a9f73c57441d38674fb54674bcd9ddef626afbbc088"
+      },
+      "reward": {
+        "path": "sounds/memorycard_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "6b406ec4a861b191d1a9eecbc73b08f84a3b2f171265192ab046da5a042cbd22"
+      }
+    },
+    {
+      "id": "jumpjump",
+      "family": "jump",
+      "action": {
+        "path": "sounds/jumpjump_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "fd6716ef4d2674e1a1f33ccad00b3864eabc0a9604b44a4bc52646edc877617e"
+      },
+      "reward": {
+        "path": "sounds/jumpjump_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "50845ead0b618392ab501dff43f611ab1de77f7c10154fbba0c53ffb41410c54"
+      }
+    },
+    {
+      "id": "brickbreaker",
+      "family": "hit",
+      "action": {
+        "path": "sounds/brickbreaker_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "9e33f44be5f97be3fa4bb03c4daad0423e42b224bb3bc375b239099f46c77af5"
+      },
+      "reward": {
+        "path": "sounds/brickbreaker_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "0e1dbe65d2877f8f64095517b741b04a49192ac3901cb79277f8a5024c8e9e93"
+      }
+    },
+    {
+      "id": "match3",
+      "family": "pop",
+      "action": {
+        "path": "sounds/match3_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "78d5505508566a22151c9a0bb00f5667495e1f0f4ebe577bf9691ec168f8ac55"
+      },
+      "reward": {
+        "path": "sounds/match3_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "26fb798564b4a68a5343ee4f73b7d855de1e823c2aaae1c3c2c18cdc0378ce7e"
+      }
+    },
+    {
+      "id": "lights",
+      "family": "bell",
+      "action": {
+        "path": "sounds/lights_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "bad4fa08ca2752eb06fddfa5493002ce8e71f2cb9ecd3ee3fd637529b0281e01"
+      },
+      "reward": {
+        "path": "sounds/lights_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "46de707c03fa94483ad53574c61bd389a869e43a57a39dd1f70a4334dddc236a"
+      }
+    },
+    {
+      "id": "flood",
+      "family": "bell",
+      "action": {
+        "path": "sounds/flood_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "28e99d82b4356877d03e99800d6ed4a430a83ff8962eada5fbd4234edb43b584"
+      },
+      "reward": {
+        "path": "sounds/flood_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "ff8b3692dc633f4f80b16b6edbf6adfaa9c4a93bb901a4c9e2b384059f0c8838"
+      }
+    },
+    {
+      "id": "maze",
+      "family": "bell",
+      "action": {
+        "path": "sounds/maze_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "0f6d4f1c4e2124dff75afe0ec3441b5648a4ed469e1e4cfb04076c7da1009bef"
+      },
+      "reward": {
+        "path": "sounds/maze_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "18df199d23a42215b7d3c757235a464f535add85202869c349d1d40f58d2dfd3"
+      }
+    },
+    {
+      "id": "hanoi",
+      "family": "wood",
+      "action": {
+        "path": "sounds/hanoi_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "bf864b1d8900ee9a17788f79bd185f6850abb78796d983be47dc676c903e93fb"
+      },
+      "reward": {
+        "path": "sounds/hanoi_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "2d69d2f2c1d6d62fb02c02108c0e608bad928838d562a39f8c571acee54815e5"
+      }
+    },
+    {
+      "id": "peg",
+      "family": "wood",
+      "action": {
+        "path": "sounds/peg_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "595af2b54612dcddb4a7306746e3c226c47c2e6065ba923d57dc91673bdbf1d7"
+      },
+      "reward": {
+        "path": "sounds/peg_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "03c89687e696f7af018dfcf09a97af62b37d4456f8764a3eb23a6fed331a579b"
+      }
+    },
+    {
+      "id": "nonogram",
+      "family": "bell",
+      "action": {
+        "path": "sounds/nonogram_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "533a531561844b5cdb05f96d0d045e3d03ae3766e8335ac6a2cf48ef6ec54711"
+      },
+      "reward": {
+        "path": "sounds/nonogram_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "6cdb84d0aed4206b19c10cb38a36d1ca7cbc703ad132acba7a129658f17fc885"
+      }
+    },
+    {
+      "id": "arithmetic",
+      "family": "bell",
+      "action": {
+        "path": "sounds/arithmetic_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "4cdb09b57b8b3faada79905a960b9b76863aaf2720e2791890a592576b79d426"
+      },
+      "reward": {
+        "path": "sounds/arithmetic_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "91817574a003eae5e6602016d3ec799586d4fe0b23f20b9e396f3fe4776d3746"
+      }
+    },
+    {
+      "id": "compare",
+      "family": "bell",
+      "action": {
+        "path": "sounds/compare_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "f8db46ec7673d00e57691eb535f91001356b5ff7fd1bd7a277c8152e543b04dc"
+      },
+      "reward": {
+        "path": "sounds/compare_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "32f739b3966c86a7e24513597044a4197ff9a26326b07191c3095f411177f78e"
+      }
+    },
+    {
+      "id": "sequence",
+      "family": "bell",
+      "action": {
+        "path": "sounds/sequence_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "8a4caae848002e635903c8d84b99859baefb9ad90a0f3944c3f91c3e43f7d3ec"
+      },
+      "reward": {
+        "path": "sounds/sequence_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "d323772520763ed122040be5f9c8196755e9aca84443d6e58574dc00c2f398b1"
+      }
+    },
+    {
+      "id": "binary",
+      "family": "bell",
+      "action": {
+        "path": "sounds/binary_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "1eccc8487bdfe80d039e9beaa255c5f6a7d9a64c86b7a8f28e104b149dfd1bbe"
+      },
+      "reward": {
+        "path": "sounds/binary_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "73b4b03defe7606bcea0de7a71846dba997378f4d04760d56d96e6adc0ef272e"
+      }
+    },
+    {
+      "id": "targetsum",
+      "family": "bell",
+      "action": {
+        "path": "sounds/targetsum_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "9d33c6f8732e8039fe0f09fba8df8657295419a4a2e6d1a51f18d6d2ce474eea"
+      },
+      "reward": {
+        "path": "sounds/targetsum_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "fb1e0322928c94b1ae921aa7c9df33f3cddc9b6cf2eda91e7d8709c3f2691ef0"
+      }
+    },
+    {
+      "id": "schulte",
+      "family": "bell",
+      "action": {
+        "path": "sounds/schulte_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "598efe6e833ee12b5aa639a010d612ba8ff3741db03f1c3d94b84bc1ee9fab36"
+      },
+      "reward": {
+        "path": "sounds/schulte_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "0a3b90a769b9b3ae37f1472f78381d3926d6438fd051be01e3917da217fe1732"
+      }
+    },
+    {
+      "id": "memorysequence",
+      "family": "bell",
+      "action": {
+        "path": "sounds/memorysequence_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "bc2e68371e02595c83e2688d3f2672d133bdcb74c6fe0b9741e4a8cb68a6fc21"
+      },
+      "reward": {
+        "path": "sounds/memorysequence_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "f659bfe9cfadecf0d93c970e187da757f0f2255de6cc8a9c0990b2af5e9b1b88"
+      }
+    },
+    {
+      "id": "missing",
+      "family": "bell",
+      "action": {
+        "path": "sounds/missing_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "b804c17f17945cf25a0adf27e44c67066461782fa34aed31b41f5a6b80effee6"
+      },
+      "reward": {
+        "path": "sounds/missing_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "6b5208c15c6bb45e983ea0df137576424cd5d8c27a68a746fb6bc7081e6d0dbb"
+      }
+    },
+    {
+      "id": "reaction",
+      "family": "bell",
+      "action": {
+        "path": "sounds/reaction_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "729685ee0bd2fc7312d1a59661d3202e569261b59d5dc5cc078afe281b691d12"
+      },
+      "reward": {
+        "path": "sounds/reaction_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "8cd24c9f1a23c4276e77289e9c9bcbb6759f281ecbab5d7c52e0e55b97af18a3"
+      }
+    },
+    {
+      "id": "blockfit",
+      "family": "tile",
+      "action": {
+        "path": "sounds/blockfit_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "d56fb45d6973a9041d0deccb69035a4b4752a6a6bd6bed1458998321aa20c820"
+      },
+      "reward": {
+        "path": "sounds/blockfit_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "c3827ad27aa44300255fa28961e4e95aef5711f296369285c1da0d36472acf66"
+      }
+    },
+    {
+      "id": "tilestack",
+      "family": "tile",
+      "action": {
+        "path": "sounds/tilestack_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "117fd859911692d97bdd6a0588bfb9ce68c026e27ffa99421d464e890013b4b8"
+      },
+      "reward": {
+        "path": "sounds/tilestack_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "cddf0dd8af9843ad9c6c06919c29341df8dd6902115556d293581a3e6e531921"
+      }
+    },
+    {
+      "id": "bubbleshooter",
+      "family": "pop",
+      "action": {
+        "path": "sounds/bubbleshooter_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "f4f70f74206ad57f3d06192c46f937bdbd36c49b55d6041aea0759ecc5261e1f"
+      },
+      "reward": {
+        "path": "sounds/bubbleshooter_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "c1ebf9335dd80465422084a0bc2a39be3a544e9ffe549d49f8250428e8a4abfc"
+      }
+    },
+    {
+      "id": "fruitmerge",
+      "family": "pop",
+      "action": {
+        "path": "sounds/fruitmerge_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "80447c21f36cdd6c01cc584e5de9174f96bc4742926d4346641bb843de1f2f4d"
+      },
+      "reward": {
+        "path": "sounds/fruitmerge_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "2861da3508ab4891f2453e254708de5cc16585a8ae9c061dcf1f3d9ad7506f20"
+      }
+    },
+    {
+      "id": "watersort",
+      "family": "water",
+      "action": {
+        "path": "sounds/watersort_action.wav",
+        "durationMs": 200,
+        "bytes": 17684,
+        "sha256": "bc77e206029867bc6b7c9219a39c78595f2d22fd7d94f92cdb2c0f0c295e3437"
+      },
+      "reward": {
+        "path": "sounds/watersort_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "6c4352a21fad63eb24fe07f965b3ce7c90adf3ece06fd0c8646fa4d4691e00fd"
+      }
+    },
+    {
+      "id": "arrowclear",
+      "family": "pop",
+      "action": {
+        "path": "sounds/arrowclear_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "e77b8d65eec230eb1433fd16d1c4ac2bb99b6d4855ee21176e223265034962cb"
+      },
+      "reward": {
+        "path": "sounds/arrowclear_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "b93734478aedc57b6319c7f8d1fecc22ffc47b20ec0b709c99db02e54d2df132"
+      }
+    },
+    {
+      "id": "screwout",
+      "family": "tile",
+      "action": {
+        "path": "sounds/screwout_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "faa50c1feee9bc552b1f8a9f53760cb9d72e5264ac20f972216a94330dfec246"
+      },
+      "reward": {
+        "path": "sounds/screwout_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "1e930816193e557749d42743baf433d9f9ddf6da9240076adc825a421334cf42"
+      }
+    },
+    {
+      "id": "parkingjam",
+      "family": "tile",
+      "action": {
+        "path": "sounds/parkingjam_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "6bfdf58b35dafa1451130fd929a1fa27e8411729368dd02ac374a24f7a0268aa"
+      },
+      "reward": {
+        "path": "sounds/parkingjam_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "042cd25c0f61fa7cfb31fafdaf8b974193787e295f721af6ad07b26e9d72cf20"
+      }
+    },
+    {
+      "id": "runner",
+      "family": "jump",
+      "action": {
+        "path": "sounds/runner_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "b3a92d7f38b40d41b5fafe6f825bfdc14a749d213b9b34b90ed0598cedcc56eb"
+      },
+      "reward": {
+        "path": "sounds/runner_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "ce8ffa07a004228976d7d9b1bec5ca3d5a74eadc6ff9437175a8a0194a4cd8d9"
+      }
+    },
+    {
+      "id": "blackhole",
+      "family": "pop",
+      "action": {
+        "path": "sounds/blackhole_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "833a62ee11b2d00fb1189be4ad8029238466675acabab3c45d0aae73c18d6adb"
+      },
+      "reward": {
+        "path": "sounds/blackhole_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "c42df7e69c9d9177f7916dab57ab40b957cf5c0d39e9840844705a5590d62264"
+      }
+    },
+    {
+      "id": "fisheat",
+      "family": "pop",
+      "action": {
+        "path": "sounds/fisheat_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "329383cb5507afa2169088cdc1288755199fc4d5b16e5566f3da0008f6080f40"
+      },
+      "reward": {
+        "path": "sounds/fisheat_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "ac3a6df5ea5a7f2ccf285252c86d68fde3cd2139c79f2a40188886b141a18e92"
+      }
+    },
+    {
+      "id": "sokoban",
+      "family": "tile",
+      "action": {
+        "path": "sounds/sokoban_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "7c5f4eb7565d7101fcab4f6a263abf0c4b1c26654802bc764b7bf60395bba52a"
+      },
+      "reward": {
+        "path": "sounds/sokoban_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "5be34e42fb73b393f1192c616f356d650ebe03b96a873f44e2428d608abdc290"
+      }
+    },
+    {
+      "id": "pipes",
+      "family": "tile",
+      "action": {
+        "path": "sounds/pipes_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "8c47796834f587656353163d947fd45110933fe9e30563185d22adfb62f2f532"
+      },
+      "reward": {
+        "path": "sounds/pipes_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "a0d105d774e482a088446f421372142b13169681b230a27257964f913e5c720b"
+      }
+    },
+    {
+      "id": "differences",
+      "family": "bell",
+      "action": {
+        "path": "sounds/differences_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "32d97e7b351d07b227645f4636b20ea929d4f29a74902564fffe0f1cb8a763d1"
+      },
+      "reward": {
+        "path": "sounds/differences_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "42f1fb214967cbe189be00fbda23922c898a55962280a9dfb7128cf0d90e9554"
+      }
+    },
+    {
+      "id": "roomdefense",
+      "family": "laser",
+      "action": {
+        "path": "sounds/roomdefense_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "bf841a9d482761d89b3ad72afc777b08e9eac87b99cbb5b167f2d6a960c6c445"
+      },
+      "reward": {
+        "path": "sounds/roomdefense_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "c5b5ca9f2f64c0750331fd7f2ae9c10638bf50ecb278df3f2c02bd772ad3ba61"
+      }
+    },
+    {
+      "id": "basketball",
+      "family": "hit",
+      "action": {
+        "path": "sounds/basketball_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "ebdde2de5df32daf21461579e193af26e5edff37e41a317ac91b3ac7a40ebc87"
+      },
+      "reward": {
+        "path": "sounds/basketball_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "3c7c16652cd01216ceb86eedbfdb83ebbc77b24671130d064ac6f33855c318d2"
+      }
+    },
+    {
+      "id": "solitaire",
+      "family": "paper",
+      "action": {
+        "path": "sounds/solitaire_action.wav",
+        "durationMs": 130,
+        "bytes": 11510,
+        "sha256": "5d1503ef96e1d00d3b60e96a5f2975a81488d2b0b0ae584b669a9fcd970b572a"
+      },
+      "reward": {
+        "path": "sounds/solitaire_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "941b01216af681226808f35011fc1070944376596b77e870f2ea0ef48e335f4a"
+      }
+    },
+    {
+      "id": "characters",
+      "family": "bell",
+      "action": {
+        "path": "sounds/characters_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "b3d916e47a2e24532030fcdd7e948a8a024a9f7bb18add8d252c3555297f337b"
+      },
+      "reward": {
+        "path": "sounds/characters_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "698673ab6e4c146f93436342bcaf845edafa20fcd3b0878b08ab4fcb4d0c96e1"
+      }
+    },
+    {
+      "id": "rhythm",
+      "family": "bell",
+      "action": {
+        "path": "sounds/rhythm_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "58b5642647554bbcda2ae95f58c693eb82a8f7f5d56c21cfeea1b9bd7c648f3f"
+      },
+      "reward": {
+        "path": "sounds/rhythm_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "0d2c6d29bb55bb29bdc86181ddb778f27a1fb0d785fe4767c7cf8d7633bfe12a"
+      }
+    },
+    {
+      "id": "restaurant",
+      "family": "bell",
+      "action": {
+        "path": "sounds/restaurant_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "f00e3adc54d6105e0a45b63164fc07b31674794f3f7c6b2ac9574aa65a64bcd2"
+      },
+      "reward": {
+        "path": "sounds/restaurant_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "8743f15fe7c45acb08152a5b72a92f5e525b9148559339a823cc2b852ab39811"
+      }
+    },
+    {
+      "id": "linktiles",
+      "family": "pop",
+      "action": {
+        "path": "sounds/linktiles_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "850263bca5e718fc217f9fc399471506410b3b8fcccd1d2218d7cd8e3bc431fb"
+      },
+      "reward": {
+        "path": "sounds/linktiles_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "c93d9ec4eb7442e1fe8c0bf0996794caeaa00c41333e1a38b39be3ddbe7ef094"
+      }
+    },
+    {
+      "id": "mahjongsolitaire",
+      "family": "pop",
+      "action": {
+        "path": "sounds/mahjongsolitaire_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "4a9b13cf7b14e57dfbfa84e4fee4eaffe4f7bea96fc4a79f90f0fdfa8b9867cb"
+      },
+      "reward": {
+        "path": "sounds/mahjongsolitaire_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "d10488b206054dabbd53c2b89cb4c50ca35661c3437a031bf5d80983c6ea895f"
+      }
+    },
+    {
+      "id": "groupclear",
+      "family": "pop",
+      "action": {
+        "path": "sounds/groupclear_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "21306ac3103fb426b6ae524f6e476c790112cc45d3930c838f33fb428ba033d8"
+      },
+      "reward": {
+        "path": "sounds/groupclear_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "855c2903ff9d78bb7c76df376e15ceba56bff59b2a270742e022384ddbb826e7"
+      }
+    },
+    {
+      "id": "slotpair",
+      "family": "pop",
+      "action": {
+        "path": "sounds/slotpair_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "eee3dec3d971207d0ba5d22960343d015e87664a8f6d3d0846ec1a137c59e79f"
+      },
+      "reward": {
+        "path": "sounds/slotpair_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "17a8c88039d800a9fbfcd194cd4fbe3b9e9732a4964b0f6340d8464e14df6511"
+      }
+    },
+    {
+      "id": "buscolor",
+      "family": "pop",
+      "action": {
+        "path": "sounds/buscolor_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "1b6e1cebb2b67064dcd4188cb6bba358dedc7dfc2fbd35f85c5570d8c91a0c42"
+      },
+      "reward": {
+        "path": "sounds/buscolor_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "765b579de9cbe52b977f64d752fe7744cfb1542fc08174ae1a4b2f9097857a09"
+      }
+    },
+    {
+      "id": "yarn",
+      "family": "pop",
+      "action": {
+        "path": "sounds/yarn_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "50f4c7f0884e5a579566aabd57845ca152bc1a27a416448b085d2c368397f931"
+      },
+      "reward": {
+        "path": "sounds/yarn_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "d489b91c535d8a25efcb5c32664f9e9e8f809400f22137d3e231b74b41bb32b8"
+      }
+    },
+    {
+      "id": "sand",
+      "family": "water",
+      "action": {
+        "path": "sounds/sand_action.wav",
+        "durationMs": 200,
+        "bytes": 17684,
+        "sha256": "b29a959d2628a9c912639a3798f6ab7d794c5a0d0d953f4ac6e04897eaa746ce"
+      },
+      "reward": {
+        "path": "sounds/sand_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "ff57caf050f7b999d8b71e594de984d953c546a3c29ca73b0b57f0a455d86b90"
+      }
+    },
+    {
+      "id": "untangle",
+      "family": "bell",
+      "action": {
+        "path": "sounds/untangle_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "548a9cc968ecaea4e609ab8464c6c003ea1e9d011b316ddf761dc2ca7e0d5e13"
+      },
+      "reward": {
+        "path": "sounds/untangle_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "2b7d5ba1920163270327885242c017ea96a7e318d71feb0a9f353805b4acc218"
+      }
+    },
+    {
+      "id": "platformer",
+      "family": "jump",
+      "action": {
+        "path": "sounds/platformer_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "875bad8bf8828e11e627bd165e44aaac478e3d9244d6a2023f14fce0e5c03624"
+      },
+      "reward": {
+        "path": "sounds/platformer_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "ad766e2b1ba178b0bc57431f1f336e3ba23b75c2e992ca9a81a4f4754f25db1c"
+      }
+    },
+    {
+      "id": "grapple",
+      "family": "jump",
+      "action": {
+        "path": "sounds/grapple_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "aa542f30ec7d59edab163db1ab83218186d3462e023ae82b51ea6b1e26d1981c"
+      },
+      "reward": {
+        "path": "sounds/grapple_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "3dd4f2afb747cb8c63af7f0a62e1b9362077d2850bceaedba14b2bfb83c774b1"
+      }
+    },
+    {
+      "id": "flappy",
+      "family": "jump",
+      "action": {
+        "path": "sounds/flappy_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "b40a37b7e50c5477348d36f867d893bec8b63a615cf5c90c36f3906cd8334e13"
+      },
+      "reward": {
+        "path": "sounds/flappy_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "7ca090bbdd68f7295e0161414dfd0146f86f7429d1abdbfa7cce7f9876e26294"
+      }
+    },
+    {
+      "id": "fruitslice",
+      "family": "hit",
+      "action": {
+        "path": "sounds/fruitslice_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "cd1da50622a75c7abfe8de97ed52bba5d9cf7bf6a909be43ee596e190001b8e7"
+      },
+      "reward": {
+        "path": "sounds/fruitslice_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "6dfbaa56e4e5ed26fd9dbf0948b4d7f00555b8b81ccb5aee65923988288488fe"
+      }
+    },
+    {
+      "id": "rollingball",
+      "family": "jump",
+      "action": {
+        "path": "sounds/rollingball_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "dd758bbbf065894ffbae80af0e31858f8ae4415ebcdcad7fe99df26f1e3620a3"
+      },
+      "reward": {
+        "path": "sounds/rollingball_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "7cca5ba56212e0dbb867cc13e41ce21d5250ea19c71d316dcba547912e67d19c"
+      }
+    },
+    {
+      "id": "shooter",
+      "family": "laser",
+      "action": {
+        "path": "sounds/shooter_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "a452e2cd9627f3ccb5bdc2b97fd183fd4d90350ce90f93f2d70d168dd79c74b5"
+      },
+      "reward": {
+        "path": "sounds/shooter_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "b1f337ce561a633a8e547391cb47d900d085411b752190a9b8702d0d913301d1"
+      }
+    },
+    {
+      "id": "tanks",
+      "family": "laser",
+      "action": {
+        "path": "sounds/tanks_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "7088da99d78753105465cdf8b9498b974077be2f2838bd4f2085b1bf1c3f8d5f"
+      },
+      "reward": {
+        "path": "sounds/tanks_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "3117fdbb6bb0dde8091325dffc6b85d46c0ac9f35f1ccfad314b0733d67c6a64"
+      }
+    },
+    {
+      "id": "fortress",
+      "family": "laser",
+      "action": {
+        "path": "sounds/fortress_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "2307782879faa8b91b5e85b2dec5976bf0110c579f59f343934108743f6169d0"
+      },
+      "reward": {
+        "path": "sounds/fortress_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "5af4a43677dd5e492e94e3f502c7f45db568964eb37be1d1a3ecf1cd33d1040d"
+      }
+    },
+    {
+      "id": "survival",
+      "family": "laser",
+      "action": {
+        "path": "sounds/survival_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "aece96a5d5d3e2a82cbaa28a5da81e1ee17d75c19493754a057ffa6b89e7c80f"
+      },
+      "reward": {
+        "path": "sounds/survival_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "528e6ee027862f73c57dcec64a0be2b2dbaee441aeeafc71384f27a1791d1613"
+      }
+    },
+    {
+      "id": "backpack",
+      "family": "laser",
+      "action": {
+        "path": "sounds/backpack_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "ac003e805d98b4706087d481167f29a6f70d2e2db0e64913b64fef4789fd83c6"
+      },
+      "reward": {
+        "path": "sounds/backpack_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "5c4d7e5ee9710c187696d9f401455fe4c270c26e111987c18a2f198542669bcd"
+      }
+    },
+    {
+      "id": "billiards",
+      "family": "hit",
+      "action": {
+        "path": "sounds/billiards_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "36913612a0da01e3f3171b9d77b4aa747e3164127ed3d7e47108ec87e16410c2"
+      },
+      "reward": {
+        "path": "sounds/billiards_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "3bbc34be3c47e3a7d321320b46322e7de882ad881d85f5dc6f51eb02f3a37e12"
+      }
+    },
+    {
+      "id": "penalty",
+      "family": "hit",
+      "action": {
+        "path": "sounds/penalty_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "2b3412143ce2fabcb0b48fae4b7461e38798be82f120b458a64d72f590373f13"
+      },
+      "reward": {
+        "path": "sounds/penalty_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "774312090bfe139ddbea4540e2ec6c85855c106d09e1c3201b7684e0d379915b"
+      }
+    },
+    {
+      "id": "pingpong",
+      "family": "hit",
+      "action": {
+        "path": "sounds/pingpong_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "5d3a13b8b7a88737003e3a3d623a5420781ee5753a38161035c38bba882d117a"
+      },
+      "reward": {
+        "path": "sounds/pingpong_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "120ae31741ab36e6cdb2026ec4cf98e29458b777fc49991ed07f79b01f6c2159"
+      }
+    },
+    {
+      "id": "bowling",
+      "family": "hit",
+      "action": {
+        "path": "sounds/bowling_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "02baeaf3b21eb66ca1f4a671664f76ba10ce5bae52ca454f785acca1b3542059"
+      },
+      "reward": {
+        "path": "sounds/bowling_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "4821cccce2a691b46c87d981e61fd3b135f57d4fb151eb1358bf8974d2936425"
+      }
+    },
+    {
+      "id": "golf",
+      "family": "hit",
+      "action": {
+        "path": "sounds/golf_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "78c361a9f08bb3781ec444ffdfb3319ee7aaeaa183e09836df724a8c88da6348"
+      },
+      "reward": {
+        "path": "sounds/golf_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "e53159b597021f42545fa3c59ee8c034f0267968941b107e751f76dae9a6cedf"
+      }
+    },
+    {
+      "id": "drift",
+      "family": "jump",
+      "action": {
+        "path": "sounds/drift_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "f2792290f89fbccefa37fbb04c8c8c2e6e08856d6e07315e7b5798495ccd62c0"
+      },
+      "reward": {
+        "path": "sounds/drift_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "ac57cbed60842992f38c19d6cee80fba67ec5d3d7de3470ecf2799e26307539f"
+      }
+    },
+    {
+      "id": "hillclimb",
+      "family": "jump",
+      "action": {
+        "path": "sounds/hillclimb_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "7b6b1a5bf5f07e708b0bb24e0b0d7df5427d6f6a741650d135850c55c0dc3b76"
+      },
+      "reward": {
+        "path": "sounds/hillclimb_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "88e366f18d96e6ca698de97c29adcf83004aaf15bac67c878fbd943bee1a5429"
+      }
+    },
+    {
+      "id": "airhockey",
+      "family": "hit",
+      "action": {
+        "path": "sounds/airhockey_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "e533ea10d691248649ec9a8452119f210802fbbffb1380cecc67d1242ed6500e"
+      },
+      "reward": {
+        "path": "sounds/airhockey_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "80170a84e39e791c2a20114f6738a11572e2f26356b07b0c76b5c9c60d8c2923"
+      }
+    },
+    {
+      "id": "xiangqi",
+      "family": "wood",
+      "action": {
+        "path": "sounds/xiangqi_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "f680d26f1e84d2060928871a8b8f5e9b5c4b7b797538b60fe0d9c1419a50d26e"
+      },
+      "reward": {
+        "path": "sounds/xiangqi_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "d6f99f05b07e6ea4af5d06f7eb795133c038125e098b19740c9a56b7b9367897"
+      }
+    },
+    {
+      "id": "chess",
+      "family": "wood",
+      "action": {
+        "path": "sounds/chess_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "f89e9498539b79f7c4c197ac522773cfd634950eb64f27fca5f5ebd48219b541"
+      },
+      "reward": {
+        "path": "sounds/chess_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "f0a645bd704c7ac3bf6a8a27fca511e394d608842ae8022669da81f1135d466e"
+      }
+    },
+    {
+      "id": "spider",
+      "family": "paper",
+      "action": {
+        "path": "sounds/spider_action.wav",
+        "durationMs": 130,
+        "bytes": 11510,
+        "sha256": "ea57714de8d8b47b63ec6cc2677a17333ce826157aae56f90d03e9823ef39b95"
+      },
+      "reward": {
+        "path": "sounds/spider_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "34890f0b8e0daf03672a71b39c93cafcfb86c7a11bd928c1db237cde555501a0"
+      }
+    },
+    {
+      "id": "freecell",
+      "family": "paper",
+      "action": {
+        "path": "sounds/freecell_action.wav",
+        "durationMs": 130,
+        "bytes": 11510,
+        "sha256": "fd90e5cc997b4866a29a6c912bcab0b7b4d502999a6d63a6fa84531ae0245e7f"
+      },
+      "reward": {
+        "path": "sounds/freecell_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "3ec4523ce3203424e2d2073852c8c4d1f8a9fc6c812ba46bc5869a679d49aa88"
+      }
+    },
+    {
+      "id": "onestroke",
+      "family": "bell",
+      "action": {
+        "path": "sounds/onestroke_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "3b51d1c18f9503a08f81e7d54e0c7d4e01735ba3799fa594a3db608af7a70177"
+      },
+      "reward": {
+        "path": "sounds/onestroke_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "7ca97154edf4ae75f5539d89c464f9b69689cf27c3ccc2f7444d3862e766396b"
+      }
+    },
+    {
+      "id": "hiddenobjects",
+      "family": "bell",
+      "action": {
+        "path": "sounds/hiddenobjects_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "92b4a90874dc26f6c253f9ce7585a1ff07c9310c6b9fcb3d40c1dd9e3115395a"
+      },
+      "reward": {
+        "path": "sounds/hiddenobjects_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "580d1b912af72faae3633b17371ab45b6b541a6c746fa16f222b82e7990c7f34"
+      }
+    },
+    {
+      "id": "linerescue",
+      "family": "bell",
+      "action": {
+        "path": "sounds/linerescue_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "d4cb79ce3eb252de1ae0ebfa4f513255366905331ff858b90742b856cdfca291"
+      },
+      "reward": {
+        "path": "sounds/linerescue_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "90e4d30748c21a76053f5b903e92be447514a8490b5ed88ab5971b789a564b1d"
+      }
+    },
+    {
+      "id": "picturepuzzle",
+      "family": "tile",
+      "action": {
+        "path": "sounds/picturepuzzle_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "b1932d44b874642fa3053e1671bd736cdc60d902e7689db061014612d85029db"
+      },
+      "reward": {
+        "path": "sounds/picturepuzzle_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "7d12be897a6a1cfc326cb1759a7ace479d4bd811fce6fb1b2d62e56ae2b43020"
+      }
+    },
+    {
+      "id": "idiom",
+      "family": "bell",
+      "action": {
+        "path": "sounds/idiom_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "b60fb16c92f6ef115250593a13bf801f63fed49386da9d387a4c235a1b100f6e"
+      },
+      "reward": {
+        "path": "sounds/idiom_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "53985a729a9b8815971722ba38139db906fe967a891659f06e9c677bed258a82"
+      }
+    },
+    {
+      "id": "wordtower",
+      "family": "bell",
+      "action": {
+        "path": "sounds/wordtower_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "934285ee1273bb0883e74f77a90889019c80635c663d117e5bba6aa45efeb0aa"
+      },
+      "reward": {
+        "path": "sounds/wordtower_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "a8a1296a556f63e01f45f2f243290a7a709f24fa3a965aeda297fb78146be9fc"
+      }
+    },
+    {
+      "id": "beatjump",
+      "family": "bell",
+      "action": {
+        "path": "sounds/beatjump_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "e1eb23d7dd8da325191919e010dbb350846a672e826a98c1e367eed6f2069851"
+      },
+      "reward": {
+        "path": "sounds/beatjump_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "d2225927cb9636690d1aa3f0e4c1828689afc90b7b68f092743add48044051cb"
+      }
+    },
+    {
+      "id": "melody",
+      "family": "bell",
+      "action": {
+        "path": "sounds/melody_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "f20a4e2861a5c7ad68bb281a93f64d154a2798cde83150f46e4f972c30c53959"
+      },
+      "reward": {
+        "path": "sounds/melody_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "704ebeb2577308994e1d2f8cbf3f0f7d8efed2c1b74787b566c7db2bd1a39c34"
+      }
+    },
+    {
+      "id": "farm",
+      "family": "bell",
+      "action": {
+        "path": "sounds/farm_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "b6818edf783b0ddf41f63ba8fa425ed1172eddc98b07984b2c6247e70e2590c9"
+      },
+      "reward": {
+        "path": "sounds/farm_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "662c5179e84dd9bcc27da267a55127d9f1f21a120b409d403119faa108b334c4"
+      }
+    },
+    {
+      "id": "decorate",
+      "family": "bell",
+      "action": {
+        "path": "sounds/decorate_action.wav",
+        "durationMs": 150,
+        "bytes": 13274,
+        "sha256": "7a831dafe3f3c9a8a5830e10c773a25b3813fec09405d95b366b08537362ce9f"
+      },
+      "reward": {
+        "path": "sounds/decorate_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "5d444e838b4b933a20ea82c2173470c1c6a8dc303f558ddef468a18a0d031ea1"
+      }
+    },
+    {
+      "id": "fishing",
+      "family": "water",
+      "action": {
+        "path": "sounds/fishing_action.wav",
+        "durationMs": 200,
+        "bytes": 17684,
+        "sha256": "2d45da1247c8057af5585ac66e841e6926db7a80e64ff00aa8e6e3032e135874"
+      },
+      "reward": {
+        "path": "sounds/fishing_reward.wav",
+        "durationMs": 300,
+        "bytes": 26504,
+        "sha256": "1d471f80fa59a5f7443481810db092c7b4a282b8dd7d55e4d3fcbca5451139e4"
+      }
+    }
+  ],
+  "shared": [
+    {
+      "event": "error",
+      "path": "sounds/common_error.wav",
+      "durationMs": 250,
+      "bytes": 22094,
+      "sha256": "1d682523fa1c564d7acefec2506224b98321ce3f0ab702a5995b3468d8629484"
+    },
+    {
+      "event": "win",
+      "path": "sounds/common_win.wav",
+      "durationMs": 600,
+      "bytes": 52964,
+      "sha256": "6c77d69691ca3dbe4a8f341b0677d004f1fbeb667751e1769a106243f606087e"
+    },
+    {
+      "event": "lose",
+      "path": "sounds/common_lose.wav",
+      "durationMs": 480,
+      "bytes": 42380,
+      "sha256": "8d55c05c2960361f5ea7e222dac680e3ece89c8dcc3dd40b6e42ef26b8ff695a"
+    },
+    {
+      "event": "draw",
+      "path": "sounds/common_draw.wav",
+      "durationMs": 360,
+      "bytes": 31796,
+      "sha256": "6fc022e33cf16cd981ea6717d039db1b0bdf2b0d5f8a1b6b87ba6fd7719b64e3"
+    }
+  ]
+}

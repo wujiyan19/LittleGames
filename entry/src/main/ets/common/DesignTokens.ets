@@ -14,26 +14,28 @@ export class BrandColors {
   static auroraPurple: Resource = $r('sys.color.ohos_id_color_emphasize');
   static auroraPurpleBright: Resource = $r('sys.color.ohos_id_color_emphasize');
   static deepSpace: Resource = $r('sys.color.ohos_id_color_sub_background');
-  static deepSpaceSurface: Resource = $r('sys.color.ohos_id_color_component_normal');
+  static deepSpaceSurface: Resource = $r('app.color.surface');
   static snowfieldBg: Resource = $r('sys.color.ohos_id_color_sub_background');
-  static snowfieldSurface: Resource = $r('sys.color.ohos_id_color_component_normal');
+  static snowfieldSurface: Resource = $r('app.color.surface');
   static snowfieldInk: Resource = $r('sys.color.ohos_id_color_text_primary');
 }
 
 /**
- * 语义色令牌。component_normal 在本地模拟器的深浅模式中均提供可读的卡片层级。
+ * 主内容表面使用独立的深浅资源；系统强调色与文字色继续跟随系统主题。
  */
 export class SemanticColors {
   static bg: Resource = $r('sys.color.ohos_id_color_sub_background');
-  static bgElevated: Resource = $r('sys.color.ohos_id_color_component_normal');
-  static surface: Resource = $r('sys.color.ohos_id_color_component_normal');
-  static surfaceHover: Resource = $r('sys.color.ohos_id_color_component_normal');
+  static bgElevated: Resource = $r('app.color.bg_elevated');
+  static surface: Resource = $r('app.color.surface');
+  static surfaceHover: Resource = $r('app.color.surface_hover');
   static surfaceTranslucent: Resource = $r('sys.color.ohos_id_color_bottom_tab_sub_bg_blur');
   static scrim: Resource = $r('app.color.scrim');
   static primary: Resource = $r('sys.color.ohos_id_color_emphasize');
   static primaryHover: Resource = $r('sys.color.ohos_id_color_emphasize');
   static primaryActive: Resource = $r('sys.color.ohos_id_color_emphasize');
   static primaryLight: Resource = $r('sys.color.ohos_id_color_component_activated');
+  /** 分类与设置选项的浅强调表面，避免蓝字叠在系统实心激活色上。 */
+  static selectionSurface: Resource = $r('app.color.selection_surface');
   static gameIconBackground: Resource = $r('app.color.game_icon_background');
   static accent: Resource = $r('sys.color.ohos_id_color_emphasize');
   static accentLight: Resource = $r('sys.color.ohos_id_color_component_activated');
@@ -45,7 +47,7 @@ export class SemanticColors {
   static textTertiary: Resource = $r('sys.color.ohos_id_color_text_tertiary');
   static textDisabled: Resource = $r('sys.color.ohos_id_color_text_tertiary');
   static textOnPrimary: Resource = $r('sys.color.ohos_id_color_text_primary_contrary');
-  static divider: Resource = $r('sys.color.ohos_id_color_component_normal');
+  static divider: Resource = $r('app.color.divider');
   static border: Resource = $r('app.color.border');
   static borderStrong: Resource = $r('app.color.border_strong');
   static gradientScreen: Resource[] = [
@@ -92,9 +94,9 @@ export class SpacingTokens {
 export class RadiusTokens {
   static xs = 4;
   static sm = 8;
-  static md = 8;
+  static md = 12;
   static base = 16;
-  static lg = 16;
+  static lg = 20;
   static xl = 24;
   static xxl = 32;
   static full = 9999;

@@ -8,6 +8,7 @@
 import { GameDifficulty, GameStatus } from '../common/GameConstants';
 import { ContinuationValidation as V } from '../common/GameSessionTransfer';
 import { GameDataManager } from '../model/GameData';
+import { GameSoundEvent, gameSound } from '../common/GameSound';
 import { GameLifecycleObserver } from '../common/GameLifecycleBus';
 import { PuzzleResult, SudokuRules } from '../model/game/SudokuModel';
 import { RandomSource, RealRandom } from '../model/game/RandomSource';
@@ -40,6 +41,9 @@ export class SudokuViewModel implements GameLifecycleObserver {
   @Trace confirmExit: boolean = false;
   @Trace isGenerating: boolean = false;
   @Trace generationFailed: boolean = false;
+  @Trace resumePending: boolean = false;
+  @Trace saveRestoreFailed: boolean = false;
+  private savedGameRevision: number = GameDataManager.getSavedGameRevision();
   private generation: number = 0;
   private generationTask: taskpool.Task | null = null;
 
@@ -59,6 +63,8 @@ export class SudokuViewModel implements GameLifecycleObserver {
   }
 
   newGame(): void {
+    gameSound.stop(GAME_ID);
+    this.savedGameRevision = GameDataManager.getSavedGameRevision();
     this.cancelGeneration();
     this.isGenerating = false;
     this.generationFailed = false;
@@ -69,6 +75,8 @@ export class SudokuViewModel implements GameLifecycleObserver {
 
   /** UI 入口：后台线程出题，令快速切难度、重开和退出后的旧结果失效。 */
   async newGameAsync(): Promise<void> {
+    this.resumePending = false;
+    this.savedGameRevision = GameDataManager.getSavedGameRevision();
     this.cancelGeneration();
     const generation: number = this.generation;
     this.isGenerating = true;
@@ -91,6 +99,7 @@ export class SudokuViewModel implements GameLifecycleObserver {
       if (generation === this.generation) {
         this.generationTask = null;
         this.isGenerating = false;
+        this.saveCurrentGame();
       }
     }
   }
@@ -105,6 +114,8 @@ export class SudokuViewModel implements GameLifecycleObserver {
   }
 
   restartGame(): void {
+    gameSound.stop(GAME_ID);
+    this.savedGameRevision = GameDataManager.getSavedGameRevision();
     if (this.puzzle.length !== 81 || this.puzzleDifficulty !== this.difficulty) {
       this.newGameAsync(); return;
     }
@@ -115,7 +126,9 @@ export class SudokuViewModel implements GameLifecycleObserver {
   }
 
   private startGame(puzzle: number[]): void {
-    GameDataManager.incrementPlayCount(GAME_ID);
+    this.resumePending = false;
+    this.confirmExit = false;
+    GameDataManager.recordGamePlayed(GAME_ID);
     const b = this.rules.copyGrid(puzzle);
     const f: boolean[] = [];
     for (let i = 0; i < 81; i++) { f.push(puzzle[i] !== 0); }
@@ -126,9 +139,11 @@ export class SudokuViewModel implements GameLifecycleObserver {
     this.status = GameStatus.PLAYING;
     this.selectedRow = -1;
     this.selectedCol = -1;
+    this.saveCurrentGame();
   }
 
   changeDifficulty(d: GameDifficulty): void {
+    if (this.resumePending) { return; }
     GameDataManager.rememberGameDifficulty(GAME_ID, d);
     if (this.difficulty === d) { return; }
     this.difficulty = d;
@@ -136,7 +151,8 @@ export class SudokuViewModel implements GameLifecycleObserver {
   }
 
   selectCell(r: number, c: number): void {
-    if (this.isGenerating || this.generationFailed || this.confirmExit) { return; }
+    if (this.isGenerating || this.generationFailed || this.confirmExit || this.resumePending) { return; }
+    if (!V.integer(r, 0, 8) || !V.integer(c, 0, 8)) { return; }
     this.selectedRow = r;
     this.selectedCol = c;
   }
@@ -148,28 +164,36 @@ export class SudokuViewModel implements GameLifecycleObserver {
   }
 
   setNumber(n: number): void {
-    if (this.isGenerating || this.generationFailed || this.confirmExit) { return; }
+    if (this.isGenerating || this.generationFailed || this.confirmExit || this.resumePending || !V.integer(n, 1, 9)) { return; }
     const r = this.selectedRow;
     const c = this.selectedCol;
     if (r < 0 || c < 0 || this.status === GameStatus.OVER) { return; }
     const idx = r * 9 + c;
     if (this.fixed[idx]) { return; }
+    if (this.board[idx] === n) { return; }
     this.setCell(idx, n);
+    gameSound.play(GAME_ID);
+    this.saveRestoreFailed = false;
     this.checkComplete();
+    this.saveCurrentGame();
   }
 
   erase(): void {
-    if (this.isGenerating || this.generationFailed || this.confirmExit) { return; }
+    if (this.isGenerating || this.generationFailed || this.confirmExit || this.resumePending || this.status === GameStatus.OVER) { return; }
     const r = this.selectedRow;
     const c = this.selectedCol;
     if (r < 0 || c < 0) { return; }
     const idx = r * 9 + c;
     if (this.fixed[idx]) { return; }
+    if (this.board[idx] === 0) { return; }
     this.setCell(idx, 0);
+    gameSound.play(GAME_ID);
+    this.saveCurrentGame();
   }
 
   private checkComplete(): void {
     if (!this.rules.isComplete(this.board)) { return; }
+    gameSound.play(GAME_ID, GameSoundEvent.WIN);
     this.status = GameStatus.OVER;
     // 难度越高完成得分越高
     let score = 100;
@@ -184,6 +208,9 @@ export class SudokuViewModel implements GameLifecycleObserver {
 
   // —— GameLifecycleObserver（完成才计分、无定时器：切后台无需暂停/结算）——
   onAppHidden(): void {
+    gameSound.stop(GAME_ID);
+    this.saveCurrentGame();
+    GameDataManager.flushNow();
   }
 
   onAppShown(): void {
@@ -194,11 +221,12 @@ export class SudokuViewModel implements GameLifecycleObserver {
     return this.requestBack();
   }
 
-  /** 页面返回按钮与系统侧滑共用：进行中弹确认（进度无保存机制，防误退），其余放行 */
+  /** 页面返回按钮与系统侧滑共用：进行中弹确认，其余放行。 */
   requestBack(): boolean {
+    if (this.resumePending) { return false; }
     if (!GameDataManager.getSetting('confirmExitEnabled', true)) { return false; }
     if (this.status === GameStatus.PLAYING) {
-      this.confirmExit = true;
+      gameSound.stop(GAME_ID); this.confirmExit = true;
       return true;
     }
     return false;
@@ -210,9 +238,47 @@ export class SudokuViewModel implements GameLifecycleObserver {
 
   /** 页面销毁：取消后台生成任务，并令可能晚到的结果失效。 */
   dispose(): void {
+    this.saveCurrentGame();
+    GameDataManager.flushNow();
     this.cancelGeneration();
     this.isGenerating = false;
   }
+
+  isPlayTimeActive(): boolean { return this.status === GameStatus.PLAYING && !this.confirmExit && !this.resumePending && !this.isGenerating && !this.generationFailed; }
+
+  offerSavedGame(): boolean {
+    const payload: string = GameDataManager.getSavedGame(GAME_ID);
+    if (payload.length === 0) { return false; }
+    try {
+      if (payload.length > 8192) { throw new Error('Oversized saved game'); }
+      const state: SudokuContinuationState = JSON.parse(payload) as SudokuContinuationState;
+      if (state === null || state.status !== GameStatus.PLAYING || !V.numbers(state.puzzle, 81, 0, 9) ||
+          state.puzzle.filter((value: number) => value > 0).length < 17 ||
+          !V.numbers(state.board, 81, 0, 9) || this.rules.isComplete(state.board) || !this.importContinuation(payload)) {
+        throw new Error('Invalid saved game');
+      }
+      this.resumePending = true;
+      return true;
+    } catch (e) {
+      this.saveRestoreFailed = true;
+      GameDataManager.setSavedGame(GAME_ID, '');
+      return false;
+    }
+  }
+
+  continueSavedGame(): void {
+    if (!this.resumePending) { return; }
+    this.resumePending = false;
+  }
+
+  saveCurrentGame(): void {
+    if (this.resumePending || this.savedGameRevision !== GameDataManager.getSavedGameRevision()) { return; }
+    if (this.status === GameStatus.OVER) { GameDataManager.setSavedGame(GAME_ID, ''); return; }
+    if (this.isGenerating || this.generationFailed || this.board.length !== 81 || this.puzzleDifficulty !== this.difficulty) { return; }
+    GameDataManager.setSavedGame(GAME_ID, this.exportContinuation());
+  }
+
+  hasProgress(): boolean { return !this.isGenerating && this.status !== GameStatus.OVER && this.board.some((value: number, index: number) => !this.fixed[index] && value !== 0); }
 
   continuationGameId(): string { return GAME_ID; }
 
@@ -259,6 +325,8 @@ export class SudokuViewModel implements GameLifecycleObserver {
       this.difficulty = s.difficulty;
       this.puzzleDifficulty = s.difficulty;
       this.confirmExit = false;
+      this.resumePending = false;
+      this.savedGameRevision = GameDataManager.getSavedGameRevision();
       this.isGenerating = false;
       this.generationFailed = false;
       return true;

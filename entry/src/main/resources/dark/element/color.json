@@ -1,6 +1,10 @@
 {
   "color": [
     {
+      "name": "selection_surface",
+      "value": "#182B49"
+    },
+    {
       "name": "game_icon_background",
       "value": "#24395A"
     },
@@ -10,23 +14,23 @@
     },
     {
       "name": "bg",
-      "value": "#0B1135"
+      "value": "#000000"
     },
     {
       "name": "bg_elevated",
-      "value": "#131C4D"
+      "value": "#242424"
     },
     {
       "name": "surface",
-      "value": "#182257"
+      "value": "#1A1A1A"
     },
     {
       "name": "surface_hover",
-      "value": "#212E6E"
+      "value": "#262626"
     },
     {
       "name": "surface_translucent",
-      "value": "#B3121B4D"
+      "value": "#CC1A1A1A"
     },
     {
       "name": "scrim",
@@ -90,7 +94,7 @@
     },
     {
       "name": "divider",
-      "value": "#202C60"
+      "value": "#303030"
     },
     {
       "name": "border",
@@ -162,87 +166,87 @@
     },
     {
       "name": "tile_2",
-      "value": "#3C3B47"
+      "value": "#FFE7AD"
     },
     {
       "name": "tile_4",
-      "value": "#454455"
+      "value": "#FFD0BC"
     },
     {
       "name": "tile_8",
-      "value": "#C8783C"
+      "value": "#ADD5EF"
     },
     {
       "name": "tile_16",
-      "value": "#D2693A"
+      "value": "#B7EACD"
     },
     {
       "name": "tile_32",
-      "value": "#D55A38"
+      "value": "#DCD2FA"
     },
     {
       "name": "tile_64",
-      "value": "#D8451F"
+      "value": "#B8EDF1"
     },
     {
       "name": "tile_128",
-      "value": "#C5A33A"
+      "value": "#E6C98F"
     },
     {
       "name": "tile_256",
-      "value": "#C7A12B"
+      "value": "#E4A395"
     },
     {
       "name": "tile_512",
-      "value": "#C99E1C"
+      "value": "#8CB9E0"
     },
     {
       "name": "tile_1024",
-      "value": "#CB9B0B"
+      "value": "#91CBAE"
     },
     {
       "name": "tile_2048",
-      "value": "#CD9900"
+      "value": "#D7AE65"
     },
     {
       "name": "tile_large",
-      "value": "#1E1C19"
+      "value": "#BDA5DF"
     },
     {
       "name": "tile_text_low",
-      "value": "#EDE6DA"
+      "value": "#20364F"
     },
     {
       "name": "tile_text_high",
-      "value": "#FFFFFF"
+      "value": "#20364F"
     },
     {
       "name": "shape_1",
-      "value": "#FF8080"
+      "value": "#F0B3A4"
     },
     {
       "name": "shape_2",
-      "value": "#FFB84D"
+      "value": "#EBCF9C"
     },
     {
       "name": "shape_3",
-      "value": "#4FDE9B"
+      "value": "#A6D8BF"
     },
     {
       "name": "shape_4",
-      "value": "#5CABFF"
+      "value": "#A0C8E8"
     },
     {
       "name": "shape_5",
-      "value": "#A08FFA"
+      "value": "#C1B4E6"
     },
     {
       "name": "shape_6",
-      "value": "#FF85B0"
+      "value": "#E5BAD0"
     },
     {
       "name": "shape_7",
-      "value": "#26DEC4"
+      "value": "#A4D7DD"
     },
     {
       "name": "klotski_target",
@@ -270,35 +274,35 @@
     },
     {
       "name": "mine_num_1",
-      "value": "#5CABFF"
+      "value": "#8FBCE5"
     },
     {
       "name": "mine_num_2",
-      "value": "#4FDE9B"
+      "value": "#8FC5A8"
     },
     {
       "name": "mine_num_3",
-      "value": "#FF8A8A"
+      "value": "#E6A098"
     },
     {
       "name": "mine_num_4",
-      "value": "#A895FF"
+      "value": "#B7A6E0"
     },
     {
       "name": "mine_num_5",
-      "value": "#FF8F8F"
+      "value": "#D3AE8D"
     },
     {
       "name": "mine_num_6",
-      "value": "#33E0C8"
+      "value": "#8DC7D0"
     },
     {
       "name": "mine_num_7",
-      "value": "#FFFFFF"
+      "value": "#D9E7F2"
     },
     {
       "name": "mine_num_8",
-      "value": "#98A2B8"
+      "value": "#B1C1D3"
     },
     {
       "name": "mine_num_invalid",
@@ -402,23 +406,23 @@
     },
     {
       "name": "brick_row_0",
-      "value": "#FF8080"
+      "value": "#EB857C"
     },
     {
       "name": "brick_row_1",
-      "value": "#FFB84D"
+      "value": "#EABB63"
     },
     {
       "name": "brick_row_2",
-      "value": "#4FDE9B"
+      "value": "#6CBFA4"
     },
     {
       "name": "brick_row_3",
-      "value": "#5CABFF"
+      "value": "#4AA3BF"
     },
     {
       "name": "brick_row_4",
-      "value": "#A08FFA"
+      "value": "#9988D3"
     },
     {
       "name": "badge_match3_start",
@@ -453,6 +457,14 @@
       "value": "#DAE8FF"
     },
     {
+      "name": "playing_card_ink",
+      "value": "#1B2533"
+    },
+    {
+      "name": "playing_card_red",
+      "value": "#B53345"
+    },
+    {
       "name": "expansion_color_1",
       "value": "#88B7FF"
     },
@@ -475,6 +487,50 @@
     {
       "name": "expansion_color_6",
       "value": "#7AD4EA"
+    },
+    {
+      "name": "expansion_road_edge",
+      "value": "#DAE8FF"
+    },
+    {
+      "name": "play_board_background",
+      "value": "#1C2B42"
+    },
+    {
+      "name": "play_cell_background",
+      "value": "#30445F"
+    },
+    {
+      "name": "play_cell_alternate",
+      "value": "#243851"
+    },
+    {
+      "name": "play_selection_background",
+      "value": "#284967"
+    },
+    {
+      "name": "play_success_background",
+      "value": "#285246"
+    },
+    {
+      "name": "play_piece_text",
+      "value": "#DAE8FF"
+    },
+    {
+      "name": "play_fixed_digit",
+      "value": "#EABB63"
+    },
+    {
+      "name": "play_piece_border",
+      "value": "#516884"
+    },
+    {
+      "name": "play_color_piece_text",
+      "value": "#20364F"
+    },
+    {
+      "name": "play_mine_revealed_background",
+      "value": "#5B3D45"
     }
   ]
 }

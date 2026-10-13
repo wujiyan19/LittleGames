@@ -1,0 +1,33 @@
+{
+  "checks": [
+    {
+      "id": "theme-light",
+      "detail": "Theme selected through UI: 浅色",
+      "evidence": [
+        "settings-light.jpeg"
+      ],
+      "at": "2026-10-07T14:44:39.726Z"
+    },
+    {
+      "id": "fronts-light",
+      "detail": "Three native tabs and fixed headers visible; screenshots captured.",
+      "evidence": [
+        "light-featured.jpeg",
+        "light-category.jpeg",
+        "light-profile.jpeg"
+      ],
+      "at": "2026-10-07T14:46:05.541Z"
+    },
+    {
+      "id": "all-filters",
+      "detail": "All seven choices reachable with one selection. Counts: 21 款游戏, 35 款游戏, 15 款游戏, 8 款游戏, 5 款游戏, 16 款游戏. Gestures at both list ends kept main Categories tab.",
+      "evidence": [
+        "category-last-filter.jpeg",
+        "category-all-filters.jpeg"
+      ],
+      "at": "2026-10-07T14:51:56.704Z"
+    }
+  ],
+  "packageSha256": "22e8e61b9c9074242586d82492c81415f9c3fafbff0f8d264ce920771c17d550",
+  "target": "FMR0224521016052"
+}

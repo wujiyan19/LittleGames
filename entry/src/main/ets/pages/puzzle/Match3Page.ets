@@ -31,6 +31,9 @@ export struct Match3Page {
   private colIdx: number[] = range(COLS);
   @Local a11yGemFormat: string = '';
 
+  @Monitor('viewModel.status', 'viewModel.confirmExit')
+  playTimeStateChanged(): void { GameLifecycleBus.updatePlayTime(this.viewModel); }
+
   aboutToAppear(): void {
     this.initBoardSize();
     const context = this.getUIContext().getHostContext();
@@ -39,6 +42,7 @@ export struct Match3Page {
     }
     GameLifecycleBus.attach(this.viewModel);
     if (!GameSessionTransfer.restore(this.viewModel)) { this.viewModel.startGame(); }
+    this.playTimeStateChanged();
   }
 
   aboutToDisappear(): void {
@@ -91,7 +95,7 @@ export struct Match3Page {
         .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
 
       Column() {
-        GameHeader({
+        GameHeader({ gameId: 'match3', pathStack: this.pathStack, hasProgress: (): boolean => this.viewModel.hasProgress(),
           gameTitle: $r('app.string.game_match3_name'),
           showScore: false,
           showPause: false,
@@ -133,7 +137,7 @@ export struct Match3Page {
                   Column()
                     .width(this.cell).height(this.cell)
                     .borderRadius(RadiusTokens.md)
-                    .backgroundColor(SemanticColors.cellHidden)
+                    .backgroundColor($r('app.color.play_cell_background'))
 
                   Image(this.getGemImage(this.viewModel.gemType(r, c)))
                     .width(this.cell * 0.88).height(this.cell * 0.88)
@@ -144,7 +148,7 @@ export struct Match3Page {
                     Column()
                       .width(this.cell).height(this.cell)
                       .borderRadius(RadiusTokens.md)
-                      .border({ width: 3, color: SemanticColors.textOnPrimary, radius: RadiusTokens.md })
+                      .border({ width: 3, color: SemanticColors.primary, radius: RadiusTokens.md })
                       .scale({ x: 1.1, y: 1.1 })
                       .animation({ duration: 150, curve: Curve.EaseOut, playMode: PlayMode.Normal })
                   }
@@ -164,7 +168,7 @@ export struct Match3Page {
           }
           .width(this.innerSize())
           .padding(4)
-          .backgroundColor(SemanticColors.boardBg)
+          .backgroundColor($r('app.color.play_board_background'))
           .borderRadius(RadiusTokens.base)
         }
         .width('100%').layoutWeight(1).justifyContent(FlexAlign.Center)
@@ -176,10 +180,6 @@ export struct Match3Page {
           }
         })
 
-        Text($r('app.string.game_match3_hint'))
-          .fontFamily(FontTokens.family)
-          .fontSize(FontTokens.sizeBodySmall).fontColor(SemanticColors.textTertiary)
-          .padding({ bottom: SpacingTokens.lg })
       }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
       // 步数用尽结算弹窗

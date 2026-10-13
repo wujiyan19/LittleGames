@@ -1,0 +1,3702 @@
+[
+  {
+    "path": "entry/src/main/resources/base/media/background.png",
+    "sha256": "497edeafc51af043c73e72ee8c4fbac4663357ef1ba275c0289f31a366b26239"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_blue_board.svg",
+    "sha256": "c156bf03211329eb5649cfdf7c10f6620a254a2208cb18be7bcbe450b1576126"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_card_back.svg",
+    "sha256": "31b361fb8b4c9ce13b2476f76543205f5234cf2f11cedc75fc1f6bd520cff54c"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_card_front.svg",
+    "sha256": "b3bf301e942a5975a32462e4a3247340c7782297235035dfc4ea08bfc4d0af9e"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_ceramic_board.svg",
+    "sha256": "ce056815bf1e176fa19b721545d358bde8c99631bb9d578b359e44674ea7637d"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_ceramic_cell.svg",
+    "sha256": "e55f263059b16087705516f7cd3fab756deff4460c08e628fe153582e4508d1c"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_chip_blue.svg",
+    "sha256": "fa643462f824c4a03f8d84831c756dfb94a795b706e723036cba9024dbe618d6"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_chip_coral.svg",
+    "sha256": "0905747ff65bf6f487fbde180677d0711b0196f8097f9e567d618e916a3d905e"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_cross.svg",
+    "sha256": "9ce75b7d489b1c95e79bd034d7a543c68899575e76a3ad046d378a49af8fed17"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_disc_0.svg",
+    "sha256": "d6ad105f896c0f6efc9f616d53747e553c0f666c3a1d3841545dfb146ff60557"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_disc_1.svg",
+    "sha256": "00ca20ee3a1b5d99f17c415b9a3022ad0af94ee8966c1074e0765233d99a1985"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_disc_2.svg",
+    "sha256": "2dc7525bc0bfcbb31597638842184ef71ccfc50d9c32b51862048d5e8cf1d19c"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_disc_3.svg",
+    "sha256": "c6458a845d713199e4fd4cf2e4bd727563a801157b553ac0e9d7d2c0fb406192"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_disc_4.svg",
+    "sha256": "1d29c7d9270a4a23bc3899ef06c9940e14160b549bef27fd817cf805b86e8b34"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_drop_hole.svg",
+    "sha256": "1041c37f95c7b3b41e719a8726867dd5c902342f791dd353e91944220ed8aa47"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_flood_0.svg",
+    "sha256": "6b88cfc35390d2501862fd498d59c0a8afa0869b9d1906c93333d0480b6c411a"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_flood_1.svg",
+    "sha256": "227e03e7dc79bb2eea5ea1d235dd5b541484330bd6b6b641f557f7745a24b3ba"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_flood_2.svg",
+    "sha256": "c427651fa999ff16f4c4a51c0fd8f01c6b8e2e12d830803a213ccd8d2c480f30"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_flood_3.svg",
+    "sha256": "af0ff255755c42ff18cdea78939a36aa25f6b959d0f0c173b83e842be3890f5c"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_garden_board.svg",
+    "sha256": "aebb78190058ffc9e4847554a88d13737f9fa2433a460044b8b599194c1b91e9"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_gem_blue.svg",
+    "sha256": "9f417dc0cd9c69c6a71a8825cb764fa51fee2f5acea703c23a7a552ce5992a6b"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_gem_coral.svg",
+    "sha256": "77da22416605dd0e7fef22d8578eb469bc16d9920f5edb6d82479cbc428074c5"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_gem_gold.svg",
+    "sha256": "c2d9bd70d3f3978e25c20e17df72c609f409f647926940dd2ca4b527afd4be10"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_gem_mint.svg",
+    "sha256": "f8f91bd17544c2b10958bf65eb254d20c673916d7ff61612e4a0c4d1540fcb7f"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_gem_violet.svg",
+    "sha256": "8d146ac38f3ac0cb0bd115e1f5cf22af9512be01c730d9f23320c0ae7230a683"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_go_cell.svg",
+    "sha256": "fb5b39b03373c91927a0c39d932660faa35e26cc5bf050c465bff239bcac348e"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_hanoi_post.svg",
+    "sha256": "d47d476e9f1065bc7709d96f90ac6d42f5f394b54d3874c6c6a511ab7a9806c4"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_ink_cell.svg",
+    "sha256": "3eef2b3501982b818dc2580a2791d0353d3ab90495ea9cac676f8f209fb103c9"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_jade_board.svg",
+    "sha256": "c16d02d2c21bb42c68fa87f033022be69bd01b3cc01ad72fa00a6fcee2c07853"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_jade_cell.svg",
+    "sha256": "8715bbec37ded2ed528ae653242e81f92ed8141e249f228c2f46ed440bc73a7a"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_light_off.svg",
+    "sha256": "3f40ec69813708b7e3d1cf1fd4721ebc8afabb704b71f50eea2ec261f510e459"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_light_on.svg",
+    "sha256": "c1334c574f6ff98471964e8a7e94046e31d1200403865e42b273743dc1bc35cd"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_night_board.svg",
+    "sha256": "3129d81d514f041cf9bb8654586c556360e2417359b59741950b96ce1ebef9c2"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_paper_board.svg",
+    "sha256": "8ceebf3ddc7fadf12d16f5dc709520f3c8e60d1cbd77ff3dbc433f793c2301be"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_paper_cell.svg",
+    "sha256": "461096116520ab85854d27896bc61caadd1203cbf72222ca73722c59e296eb2c"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_path.svg",
+    "sha256": "e7bd46f287e8b6e2257ea7d3264630958c39f8d100f74401184bfa269f7d4cb5"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_peg_hole.svg",
+    "sha256": "8c580edf0055d2473548e18741b6289ec889a47348c46b7bb75df065d8e60a8e"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_peg.svg",
+    "sha256": "c54ad9f06bee872623e626ef986f04d66d17ba3475e48ec6917d77c08a0bff14"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_portal.svg",
+    "sha256": "ca23f1063f9f47d6bf200c19226b4059ffff244a570a71f618b1fab8a0a9b6b8"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_question_binary.svg",
+    "sha256": "cfffb1c16192d54efb6ec0aba603675e5d2501f6aea580788d067f75a6e31b97"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_question_memory.svg",
+    "sha256": "aff1fc92a0abda502c42704a7929da14bb252c180c1fdeae1caac0a29e68e41b"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_question_paper.svg",
+    "sha256": "ffa8a8474d60389466a5eae6dbc1a7d5a156fdf1acf0c70ba1558aacbc9327ce"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_ring.svg",
+    "sha256": "ac038404e1f7cbaf81eea81b1cedf5043064d55b4114214641f321001456de79"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_robot.svg",
+    "sha256": "b80a8ba355bef2c3b37bb54a871aa4c5b6f505bd6bcf03d77e92726cb3a1caf4"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_signal_0.svg",
+    "sha256": "69652830f90a53672fa4a6e391c49f78d8b0f2b525742393f0a8c8716bc466c7"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_signal_1.svg",
+    "sha256": "07d93605feee12965948b64bff642ddd03f128cb6fc07e883571d9a9747b31da"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_signal_2.svg",
+    "sha256": "87c89dfc307f275285b7d7dc8142cd80be7de5f479f84e06b58b9c12d1f1fadb"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_stone_dark.svg",
+    "sha256": "e0c3856c8abf607ad276ae880780d989c91b056a7aa50597854b1c31d7fcc248"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_stone_light.svg",
+    "sha256": "dd169f003b365b6cc41bb02ef1b0111ee72031e541aca6d97fd132d688ec98c8"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_stone.svg",
+    "sha256": "ea3e6a32d6412d84bd3b6394a78173512d866517164cba27c8da8b4d35839041"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_table_board.svg",
+    "sha256": "709363eee05c709d95a17fdd14add2566cc2201dc6f421db42611b43bd152a2e"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_table_tray.svg",
+    "sha256": "544f2e923d35cb05752e0c9b5ce6f46e425452f4c2714e2c84e5d61f078a9c65"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/col_wall.svg",
+    "sha256": "4bd623ce7edaa0db13649240d15e857bb8cd9f52350eb28bd25eca992e9f6de1"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_anchor.svg",
+    "sha256": "24a6d99e87cd6a31691bdfdfe03596ee239210a0b89fdfc3e07dcef4cec5d15f"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_arrow_0.svg",
+    "sha256": "76673d8d9645ccc1181fcfb9866932294772d6912f5cb214a8896cc5bc5604e8"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_arrow_1.svg",
+    "sha256": "20e28b28210e43c0472f04c6b19ce6ffd53d0cb70b3abee5f1c65094c168923a"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_arrow_2.svg",
+    "sha256": "af368a826172668ce797b44d9981abd21912027635fa19871d3a4f320691c787"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_arrow_3.svg",
+    "sha256": "9c7ead5b471716b8c02fa9f6e2034ef24bbe40d702c78668f9fb7fe69a7bc5e0"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_ball.svg",
+    "sha256": "c98af7215b1bc3a08b0fa5ccbb83404f51ea8c436a89848e71246c61351c493d"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_barrier.svg",
+    "sha256": "607f9cbdf264e27a07d1030fa0067fef5b78a9daa7867b873f4a8904ad52e091"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_basketball.svg",
+    "sha256": "a84a9fafb5af9f7d4386bbf13d80977f388592b7a9eab872906e9ca691b4e9dc"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_bee.svg",
+    "sha256": "b0bb55e9631235944c7d8b0767bf21d2de26156e74001e84faf43b5e8d7d981e"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_bird.svg",
+    "sha256": "a19d22bb1d3e5839db8bb6906f3959b8285c8fa54b95639d8e9d8c0685cd3fd3"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_bite.svg",
+    "sha256": "0326bcd201e71bc7a5184d4c2451d001be9aa7679d4a2e9ad53cf6c8098cc9c6"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_block_0.svg",
+    "sha256": "5a83f22ad3ba97854fc379a7a25524be32f176e7ce7bbd41f781b5f3a83ae43d"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_block_1.svg",
+    "sha256": "a2b273c9c59a4d3447d3a66bd776a9b1e17038b779a3c88c298916f7986886e2"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_block_2.svg",
+    "sha256": "94c4baab156910ea13129105154ea7d14417e01b1c6301338aa557a5ca204f43"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_block_3.svg",
+    "sha256": "1951d7d8929ea590a6be3f4bb70653edc36fd203e354f5626c9296c7d68037f4"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_block_4.svg",
+    "sha256": "48b2082597182bcb3d1829d672b21c32918dc3f6f39711f6709f259c6aeea45c"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_block_5.svg",
+    "sha256": "0db01933e928d9388ff637f64a693f8db2e1fac4024bf65333e3db68c24e1e9a"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_airhockey.svg",
+    "sha256": "f33cce54a583f823746d7df299ab6df5e7d0350f6d80b4b9928a5778e60a0c34"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_arrowclear.svg",
+    "sha256": "5985c920096d741b8c0d1276e32c377744a7296b59f8cd3d729d1ab84b01a46b"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_backpack.svg",
+    "sha256": "530642e74bffb107751e9f34d1b1e57fff832c65d32eb704c3b8fbe170e1a4ac"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_basketball.svg",
+    "sha256": "612e377569c2d8644bac692f1f8bf44adf26934aa5ff82344589e0610644c866"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_beatjump.svg",
+    "sha256": "d59932b7a075691b9c3ca3253f31573985f6f4a7f831caae3ed78219251f8747"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_billiards.svg",
+    "sha256": "16465a05adab070bae291def8acd85e110c765eccea4f3bc992b7293d94b46bc"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_blackhole.svg",
+    "sha256": "66066d7889101374a0e273073311d334dc8840cb9d3039cefebd28e99515a0cf"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_blockfit.svg",
+    "sha256": "b5e55f4329542bc9d6a0e35c6771e9295b1d96f8bfabf21d93472c2be6cfb19a"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_bowling.svg",
+    "sha256": "926f8a414c23465de3565ee48c5ea9f48012dc98fd4145d1741559559a4561b5"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_bubbleshooter.svg",
+    "sha256": "fa009895d6ac15ed8acd656b957fdebf00fd4777ea7fa7943b375f1a7881e20c"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_buscolor.svg",
+    "sha256": "7f9242360636b33ce488d7809682031179020390e3e9a8a12c8c1f354b181abc"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_characters.svg",
+    "sha256": "34adfa2f05990452ba5fff9f8f83f159bff5dc62b0fb84443ec8b672b836a59f"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_chess.svg",
+    "sha256": "7ecb23256267bf5eec669271e05ab1a381154a8afdae2a895b6a36506c34864d"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_decorate.svg",
+    "sha256": "b01e443bf2043d55f5a5586062cdca0e90ff93105fcf5f663b963f2e2e8d2575"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_differences.svg",
+    "sha256": "db835a44d596ffc586a71d51a1ad3da07228a60a39689d583a7146dc305e0a26"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_dots.svg",
+    "sha256": "9fef5c81c6aa5697cfeb31d64ec77b5994d6afca498489820987f094b6b4c62b"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_doudizhu.svg",
+    "sha256": "c8f62f9f5a608706d6a55c3361221105b3dc36b7f3aaddf663fc4f6101305092"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_drift.svg",
+    "sha256": "7c73c6d184bf72b3fa5ef6fa5f295238925badd8ed666ccf7e15b1dda5c250c8"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_farm.svg",
+    "sha256": "b598e0867d9fafc348b8b28148c802e1b1ee25697ade9ce88fd17eb0afdd3c08"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_fisheat.svg",
+    "sha256": "d9c5850676684b711586ae79997c560f60ed12099e9ca0205b0d3206fab55b8f"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_fishing.svg",
+    "sha256": "7400ac9bc2ef1d59a5ebdf39a44d8288127306c1c4b350c653fa83511b4a6856"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_flappy.svg",
+    "sha256": "1939de3f1703a71f4012d1a14e2bc3a10a148177dc0fe7e3711c3cf75032ce43"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_fortress.svg",
+    "sha256": "7edb77ed7ab40321ddea0204df451076900aa685df702565db82464a8c34a9b5"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_freecell.svg",
+    "sha256": "c8f62f9f5a608706d6a55c3361221105b3dc36b7f3aaddf663fc4f6101305092"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_fruitmerge.svg",
+    "sha256": "c8f3000a49ff434aa8481f99a7ec4d093d9c9f9f6e0afd5fad2a4e345dd46318"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_fruitslice.svg",
+    "sha256": "e8d3c0d7eeb3c40d427868875f76773780450d5c57d0dde15ba810bc793abe40"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_golf.svg",
+    "sha256": "8cad4506941b6c121656d519c9f5c124ab31f84f526411b2c7417256c0878dbd"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_grapple.svg",
+    "sha256": "7775c3c589e8670f8a1dfeeeddea19941a7d8a6d49654a4efcc2b7df44b1ba76"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_groupclear.svg",
+    "sha256": "cc6491a8e882bc53c92f7e7f1d2968fc671750b580d51609d4a9e8ddd6eef0c1"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_guandan.svg",
+    "sha256": "c8f62f9f5a608706d6a55c3361221105b3dc36b7f3aaddf663fc4f6101305092"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_hiddenobjects.svg",
+    "sha256": "d902ebab8ca91de98a4a26e2e17cb9832c0c01307c3e4e96778b3f825390459c"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_hillclimb.svg",
+    "sha256": "551080360229594f1d73fc7e96f0552652ee5da9cc73a21d7c24e51cd7cdf91a"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_idiom.svg",
+    "sha256": "7dd75cdbdde1c2f2fb7da5731946f70167dc72ae345f8d4993e5d349e4521117"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_linerescue.svg",
+    "sha256": "17ad1e0aab2fe2a5679bde5d30a16869839ae29d220e55318698de8a0d9439e8"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_linktiles.svg",
+    "sha256": "7e9fabbf2df3a4671b13c9a553d8ac38221aace6ff80fd4f678e1a1850aaf681"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_ludo.svg",
+    "sha256": "9af5f991fb8ef8c900252e61344d37997d07d9b8b6c571883694035358c8b611"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_mahjong.svg",
+    "sha256": "8eb0345a203ef59d59e056b39560d386fe8fbb848b8e4fde5a1fe223af01a742"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_mahjongsolitaire.svg",
+    "sha256": "6e4c7aa6c98429a80203d5d4d26a68c1b350d060b1b712d77b61d54c1e1a1dc6"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_melody.svg",
+    "sha256": "f9b93ce3dac0350dc5049a3d17ac7aabcd17e471eb95ca621adc23bb224f4402"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_onestroke.svg",
+    "sha256": "d3cd95916cd6c18f5a9796f44f1483871f93fcfaa2142b6f89de91763fc768c8"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_parkingjam.svg",
+    "sha256": "87c60e86e4e741f57430a0afe9fa86e7b1163d74c43317bf5f112fafcf64dd1a"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_penalty.svg",
+    "sha256": "1f916af2e1e9184f2e2c4335872bca0dc4b58b392b292e7167cae7eff5cac478"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_picturepuzzle.svg",
+    "sha256": "b711544a5d8e5f5982282af6ec3f709d1299da0913f4b6c6eb7d351b73f6e638"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_pingpong.svg",
+    "sha256": "c830db61582b41f5664f0e3f1d4852689dcbe51082617c38fecdf7aa446820b1"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_pipes.svg",
+    "sha256": "9fdad6a294727fee020f82db746706b079ef001ca2699f81989be9e13fbf76b6"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_platformer.svg",
+    "sha256": "7775c3c589e8670f8a1dfeeeddea19941a7d8a6d49654a4efcc2b7df44b1ba76"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_restaurant.svg",
+    "sha256": "16539640f74848f7035101d3c5812c5ae685a9d1205f27fad0d41cc51618f8c6"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_rhythm.svg",
+    "sha256": "f9b93ce3dac0350dc5049a3d17ac7aabcd17e471eb95ca621adc23bb224f4402"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_rollingball.svg",
+    "sha256": "9a4a3b0dd4cf88ce14e80e6b9b5c994f40bbb85feba42de2ab34a09740138b30"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_roomdefense.svg",
+    "sha256": "7edb77ed7ab40321ddea0204df451076900aa685df702565db82464a8c34a9b5"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_runner.svg",
+    "sha256": "2aa0fe94ad281ee13d991ec376858ba7d1515b50a5956e51705d6e3fcc75bcb3"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_sand.svg",
+    "sha256": "54af8aa52d1debf89d8e9182f7ea39a4cb96ac1c81160ed94cd983239ec029f4"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_screwout.svg",
+    "sha256": "e5d204cf01333762e75fa2a750d0a8f68e9ed8902d267e1183322ea9ee04f40e"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_shooter.svg",
+    "sha256": "3c5b44cca361f62522fde1d19e92398cf97a77ef09b81045e901a0b34810a394"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_slotpair.svg",
+    "sha256": "5533538b0beb591bc1d053d8c9785bf52a7291e72a88ffa74fa75ee223d6d5dc"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_sokoban.svg",
+    "sha256": "1e8298951310876ac1642e6a6af5c3da9acb662eb8f1abe4b38dac2a428cb6ad"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_solitaire.svg",
+    "sha256": "83b9f4b0eb5ebbfca00b50c6c4f5bab186595814a52712f9a4c0696eac158a74"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_spider.svg",
+    "sha256": "83b9f4b0eb5ebbfca00b50c6c4f5bab186595814a52712f9a4c0696eac158a74"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_survival.svg",
+    "sha256": "400918b9e402d57318a570781903bd397a0c9beb542e8262fd23633476acfe92"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_tanks.svg",
+    "sha256": "098d7d07e327bcbda2c73d69c566df8f07dc1231727143865d69921fcc60e3d7"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_tilestack.svg",
+    "sha256": "9fcc49e14c7451ca247c48c78552972c74f8d7ec6acb6c0e9c39856aa67d276b"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_tug.svg",
+    "sha256": "999a6fcefff635b31da284e1235129f72fea38d0a01b358b311aa81c2990243e"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_untangle.svg",
+    "sha256": "d3cd95916cd6c18f5a9796f44f1483871f93fcfaa2142b6f89de91763fc768c8"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_watersort.svg",
+    "sha256": "16b8065bafeffd153e9d72273f1c4ead39715ad0339eb0efb7a16c4cf796b318"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_wordtower.svg",
+    "sha256": "0f5190815fc0d6e7fc29533e9360aca6e713dedb5a63c0fe58a6925a5390fbcb"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_xiangqi.svg",
+    "sha256": "f87bf6ed2aec9c3e2011a2e46645133e5bf0bbbb0b12dc1d62afd0b00a8badb0"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_board_yarn.svg",
+    "sha256": "4499d9f2b7cae46fe633d662e022cc46c3875c4a8304955c8bc9087725916fbb"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_bobber.svg",
+    "sha256": "554e25e7262183d9eff46056e11d3adb3c173e01f55381427f3f9e97d3337ffc"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_bomb.svg",
+    "sha256": "09a93efbc4fb9309e8ce70ebc3d4f868f6a041fd3f9e27cbe315c70909ec5e08"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_book.svg",
+    "sha256": "08a18055efdffe6556b0b6211c8ddfe8edd3b9876cc01c1ec0daa40810531a15"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_boots.svg",
+    "sha256": "c3e45e0238fca7b72ec99bb1215acd4665186e51553d719a45d4c8770f404b83"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_bowlingball.svg",
+    "sha256": "1ec5a29b07dcd5633f72c80580f56b4c159f8aa0ca2a1bc9b756963eeadbc544"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_brush.svg",
+    "sha256": "1612a10c91720b3e60eb714dbc2893afe81935ce94fdd0966ff7116b2c6006a1"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_bubble_0.svg",
+    "sha256": "42bb2aa387282cd4003ceae16a4f946a27d117467bfdb9eae87a5acfbf3111dc"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_bubble_1.svg",
+    "sha256": "309f8ed8e566fca741fd7893913778c3585af7a6eb7ceb6046c43a9b45ac7b22"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_bubble_2.svg",
+    "sha256": "9727809fe7f16b5dff570852d3b40d27bbc922a015c85d75143852b2a42d9393"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_bubble_3.svg",
+    "sha256": "9580aa41853006b7fff233c49b40083cb6a954e8291215cee855193a19403c83"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_bubble_4.svg",
+    "sha256": "e20daa07c63ba14513a00d894e3d68997414cf4bd901e1d8b1e9d97fac74b0b2"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_bubble_5.svg",
+    "sha256": "1c85319645d159bd212b8ccbf91ffb3cee26557f4f1a3b4a7e04306b833687ab"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_bullet.svg",
+    "sha256": "c937fd9cfbb6c16d40f294e380947954069ed1eac958f5cca2e2a14778add5c1"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_bus_0.svg",
+    "sha256": "c564a1d97f28edc47ea7e3b96f7fd29c83020fb72283c0d0ff5ead1f7a9a61ad"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_bus_1.svg",
+    "sha256": "122e14e39f3c1bf95e0d590c92f9edd0f99c327274dee05579abbd04b5fc83b5"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_bus_2.svg",
+    "sha256": "65f904ed67b35471e74627742a0aa9499baf6af55b16cca9f96976202b7c0c62"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_bus_3.svg",
+    "sha256": "c8f9d0d3a417d38027bea46af1f200e1eeb51c13bc0a6f7653207afa8712fe7c"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_bus_4.svg",
+    "sha256": "d964c278d6f0af9afe1d444a49eb4c9c82aa7c987053b9a032c62492516e0caa"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_bus_5.svg",
+    "sha256": "a1ae913ecc86273733fd48c023c7cc3fde49388946017070772bfd9e93b7d8d9"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_car_0.svg",
+    "sha256": "328f3f1425bfea6783050cc0febbb828cfbd2046aec3c0fcab92aad18812272f"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_car_1.svg",
+    "sha256": "c2ae1608eac85bd3fa6bdf1e3f26d48c469d9c9e5699e9eef0e9d06260451e18"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_car_2.svg",
+    "sha256": "96f1fa583bf5b6b4a2f4e8f58b271edc0fa495f4feefb9771c04fd572924a5ba"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_car_3.svg",
+    "sha256": "45e1e84cf4ff2d3cd371166c3d8925bf32b219e2855111cd3ddc035e9fd3f766"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_car_4.svg",
+    "sha256": "2d4451e28314f0846faea186c9cac5c8e829ff3e40780bc4581ede0e94ff2742"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_car_5.svg",
+    "sha256": "a383ea0a6aa13f5fdcdf8603d8c065dbb60e963a1c862783e430eebb818e53e6"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_card_back.svg",
+    "sha256": "126f56f5418ab158da8fab0593758fba315b1f4e1d71464abcdbd67198c1b9b2"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_card_front.svg",
+    "sha256": "d2afda3d75357e2e69a42ddc563bbdb39a615330c3e7a8179b4471df414109b0"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_chess_0_0.svg",
+    "sha256": "7062030de065054a978687554f6f3285acd37b8f034ec7b3ec7dc9859daeabf3"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_chess_0_1.svg",
+    "sha256": "88b53a6fdac610e5fef2d091306e1c0ea00368aa1bafd37765e88ac9efeda79a"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_chess_0_2.svg",
+    "sha256": "7c5395e85f9d2c4616596fdedc36c09d133d8d39baad2a369352cc42457d64f8"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_chess_0_3.svg",
+    "sha256": "d59703e5b23ec9b6939ea665e9d1ee44af4e61001036ba858878f5020cdf3576"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_chess_0_4.svg",
+    "sha256": "571ea936ddddcf0027679382898f75780f79434b8521abb58964ebaf94f60afe"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_chess_0_5.svg",
+    "sha256": "0d8a1f568f8ff0d902cb33162649d293f2670b30999016587da5b209ea46e806"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_chess_1_0.svg",
+    "sha256": "721141ff3b1424180cb667294fb2c5b0eb1feaabfc85ce3512a34ebdfcc7fb59"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_chess_1_1.svg",
+    "sha256": "915ac46fdb7fcf3eec09a283597a140119d20619b0be6155a90dc339220bf1a6"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_chess_1_2.svg",
+    "sha256": "d0f436cceb657f58a3df602f034add2422a4efe95326f9df18e218cc486d395c"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_chess_1_3.svg",
+    "sha256": "00781db9369e35f28db119befd1d96ac838bf12a511a574548cbac4d4ed7fb69"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_chess_1_4.svg",
+    "sha256": "257fa46e3fe1c2470d2a7a92d85544a238ed7d7f33bcec7fbdafcd932687248e"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_chess_1_5.svg",
+    "sha256": "b9bc000c97206fce4ad865630820183591eaa84d65a689b3890626043612466a"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_chip.svg",
+    "sha256": "a9f79b8021048c195a3e1de17fb73c0dba9c812befe9feb4dfc8874aeba1f1b8"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_coin.svg",
+    "sha256": "9919b9361ce91db9504393c1a0a4c2bf44d597ec78db3dc76ac2b9ba28f438d5"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_crate.svg",
+    "sha256": "48258db7d67bec06b1b8144b19bf76ff89060c16b09d765d494610ae816cafad"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_crop.svg",
+    "sha256": "7cb673b484ae480298b9d0f93ce8f458ce7b187b6de12981ed1cd47496d29dfc"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_cueball.svg",
+    "sha256": "75d02149bb5aed3d35f3b40a2f6cba733d637ce8e0856c5b37ad9fc4787b3ad7"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_dog.svg",
+    "sha256": "7a3cc95364140bceaa85c9b82dc36746ad5625a6e7ccf2f8ed6e45c459766c76"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_door.svg",
+    "sha256": "626ca52ba05d9fd9abf995bb7a52e1a5de70f7e7d8556d163757c30be890d225"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_empty.svg",
+    "sha256": "50ef3cbd906d7abc85624957231d4255ec0d9779658fa5227ecf6f223c95a8a9"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_enemy.svg",
+    "sha256": "3c2f8b22657331b523f2643a79c20a214fb0a8b9d879259e8dbb14e6104545a1"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_fish_0.svg",
+    "sha256": "8879c5b3374cc0a747123c47c442c395be559a80f02534930cbfb0f699e5caa0"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_fish_1.svg",
+    "sha256": "aa9bc07ae19fe3ee9d9dd6d98f73d4796788f0f388a576dc60668a2cfe87b148"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_fish_2.svg",
+    "sha256": "26c7274e25dc7acd9cf7257b0bd5b23e22e2cabca70c058d738784b5a9a17f3c"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_fish_3.svg",
+    "sha256": "95105323b0f5e8a9db0d8128eefd3c7a0ca14fb61b5abc0a8f79d8a358d15696"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_fish_4.svg",
+    "sha256": "2ee55f1d3a321cc7c9e38f55fcca9c30a4afefbcc67e7c9d34f619c25f568d90"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_fish_5.svg",
+    "sha256": "f99fc1163be22b362c2de1d57fcc1108ac585c328eddc25dc344357d111c0e59"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_flag.svg",
+    "sha256": "a6209e22e84b47b2b366b894db706e25568544c0aab61167b15441d4aa09f89f"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_floor.svg",
+    "sha256": "917b2f35fcd04b85b766dcdef000fd2a3076d5b3e700c16ed6c0d174bfd26391"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_food_0.svg",
+    "sha256": "1b75e1dacb0252d6d822d901b40b4c7a06282c1a0347727002d0f94693c9897f"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_food_1.svg",
+    "sha256": "54b8a203e9e215df44098c4c436077880b67f17809bf3b82d59a3d838c329ba9"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_food_2.svg",
+    "sha256": "4ff18eb06d7e5cd5f7de2171f043d182f4f717324970e09988f9e23195eff029"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_fruit_0.svg",
+    "sha256": "0ee038574b977db063441e85e77811a01afb428976ef52bcbb032478b5f63665"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_fruit_1.svg",
+    "sha256": "234a40f6de5e3e49842b698b2239b70477e5390da045cb2bbd2a0fda3dde9759"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_fruit_2.svg",
+    "sha256": "3218b2552c23bfa56db3651cfe432e997986f4e84f9a9990acaa9ca35e0c467d"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_fruit_3.svg",
+    "sha256": "dbcab4dcc5133697cec8e54567b9fdb240c97810f99f71c2f954d32f234a8dbb"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_fruit_4.svg",
+    "sha256": "2fc94868121c94dfed78c5dc88f0d75b8daefa3c130428ad6b2bbd2d6679b0fd"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_fruit_5.svg",
+    "sha256": "08abceb9a21596d283c5779ce4016f3942af2c86861d88d31add077c49a79da3"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_fruit_6.svg",
+    "sha256": "2fc94868121c94dfed78c5dc88f0d75b8daefa3c130428ad6b2bbd2d6679b0fd"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_fruit_7.svg",
+    "sha256": "dbcab4dcc5133697cec8e54567b9fdb240c97810f99f71c2f954d32f234a8dbb"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_fruit_8.svg",
+    "sha256": "fd309763dcea0ac015b69804d59c84a7f40bbb925ecf18ab0c13fb4b872811fb"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_fruit_9.svg",
+    "sha256": "fd309763dcea0ac015b69804d59c84a7f40bbb925ecf18ab0c13fb4b872811fb"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_gate.svg",
+    "sha256": "8c18a1a827fa6e14aa864babb138fe797f5261c38ba67d2770b86dbfa2a78777"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_glove.svg",
+    "sha256": "164a0607c159e871dc626a1c9c21de3078fb0e45892eda91c9b50742b6cc1d9a"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_goal.svg",
+    "sha256": "4312f90c09f4371b0ba0ba43e88e0212f4fc33e9d8c9732bbb0eb228c2ae54ac"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_hole.svg",
+    "sha256": "1035dc23836149c35b5fbfbf69a98e5fda3f4cc89b4d988b7b6c70a97f5a0712"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_hoop.svg",
+    "sha256": "26cf2b09524f2a3f3acf3cc499d6c2e7ce6d27a6dc524751f8b26207114e820a"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_lamp.svg",
+    "sha256": "610ffc268e2bf126da4a50723059c35d240d2dc6180d1cf0cec520782007ebb1"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_mahjong.svg",
+    "sha256": "36bb23a436a9e5862455daec136c46283484a0c50233763b9411c9a72de93313"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_note.svg",
+    "sha256": "ccb6276202ec60001b136d1b77bacc3e9ac7197a71435f33101fc6f148331012"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_nozzle_0.svg",
+    "sha256": "11604015daae6946cbb2664788222e35c9afcf1463f66351e2cf1cbb5ce1f384"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_nozzle_1.svg",
+    "sha256": "0684397cfb48d67e6845baf021fc448d7ed55a9a627e3ce102d63228aba48b02"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_nozzle_2.svg",
+    "sha256": "fe1e8452ca3d0ea7638aa476c0120536d7d65cb4bb93802380f81aed6ed94057"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_nozzle_3.svg",
+    "sha256": "903685ea179a50eb4af77f4cccf80dff57501b30ff236aefcda75f6821e12e60"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_nozzle_4.svg",
+    "sha256": "a277d77fb4c9fdc26962bde356b6ebdf392aad09d8d472aad7e07458835247d1"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_nozzle_5.svg",
+    "sha256": "a5fcf72098f2395087307b927bc466f2fbece33ce6daaf1a310e805936dd095a"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_object_0.svg",
+    "sha256": "ae74ec638c91dae71bc42f9695d4d1a5980aaf71a9a08faf1cc6d565f724a0cc"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_object_1.svg",
+    "sha256": "1d0bd379a81f97ab893f9d7b41de71473414471e4d37431087cd00036ef7b96f"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_object_2.svg",
+    "sha256": "64c99aadaf81b1735fddb5b37d6bd24062087077df29936757420d22a796419f"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_object_3.svg",
+    "sha256": "eb9fb378279fef33d2d78a49759442bba21b81796d6ba80d7b122851b0c3f271"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_object_4.svg",
+    "sha256": "3e49f70ad5355eb8a89b201bc79d0f16f81955562d40cf3b3019d74674357e36"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_object_5.svg",
+    "sha256": "7c70af9acb96b5d8263f35fa7042e88c5d8f7d54657d4266df168648de7fda0d"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_object_6.svg",
+    "sha256": "f250dcc9390d8b8a645d3c77d8a899e60c15a393dc75a76b55b1af064bdba2c3"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_object_7.svg",
+    "sha256": "a19d22bb1d3e5839db8bb6906f3959b8285c8fa54b95639d8e9d8c0685cd3fd3"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_object_8.svg",
+    "sha256": "a150650d21833bbc3c44566c8c0720345c09e97e71c8539db78f6e502f2cbf43"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_paddle.svg",
+    "sha256": "be244e9d13d7187e7483f6e41b7dfcca0b32092f7aef9e42b087234c54186ddc"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_person_0.svg",
+    "sha256": "7d9e243a596af0695eb830291f34f2aa8ad15168f527e862bb28946c8000c77d"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_person_1.svg",
+    "sha256": "e9497815e97be063782c0b4c33bf58b6c4c9ba2ce6f3acc36332840e59eb5688"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_person_2.svg",
+    "sha256": "a23ec0485391f6b3ae328943e6ae9987e7109c9d2243fd7f3c7441aa5245d12d"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_person_3.svg",
+    "sha256": "cb5552641219ce7ac922ae3c8fbeab94780d3145fe120d4e4ee98a753147cff3"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_person_4.svg",
+    "sha256": "1b83d06fb66d3050bdf072d9fa48e6ebeb2f16b0d9daad0082fe909b2ff3d868"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_person_5.svg",
+    "sha256": "f624d09435102c4f0052b75148a82cf447d0128086d4a7768be00edacab12e08"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_pin.svg",
+    "sha256": "1085242b1c445d22a4c16a8602d2e78503097c373858e5b51f6021327fe947d5"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_pipe_0.svg",
+    "sha256": "0e64e8228b9a134b4302ba5baab804e18f7cb176f8ce494360137bde92be5870"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_pipe_1.svg",
+    "sha256": "9b5c276651f79abbc4450853e6ed154cacd99defbe5b28729d7893a3cc55afc8"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_pipe_10.svg",
+    "sha256": "016c39a1f3c18e699fbc3e97a22b23592c705f377bd1f722c445422eef20c0bc"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_pipe_11.svg",
+    "sha256": "ca9a3c73d729c461a276e08ad09d6a4f251ec5ee8a9377b41dd08df7f545a1bb"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_pipe_12.svg",
+    "sha256": "d55aa2348f4828fb4de84850db25cd555f3b7ac132cb73613badce86b34b1a48"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_pipe_13.svg",
+    "sha256": "476b8821328bf2d501fbed2b9bba5da7bf7c76559bc8f09fba2d7c8433ccdabc"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_pipe_14.svg",
+    "sha256": "97a3baa319a79ea25cfd614a86ab8f73e8f23af719323dec8d7450ae227a3ec2"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_pipe_15.svg",
+    "sha256": "d88bc325876b3869620a3c3e07a5d94c30c648fafcaa693e94c1af1c6194840d"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_pipe_2.svg",
+    "sha256": "b4b8d6f3425676470f21f3d91fc8cfc9af8da7bf9d0cdc31ef496892afbd5e7f"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_pipe_3.svg",
+    "sha256": "95d9af66b22c4064f4c1ed5537a94bc0cbe9b9ed7163ede32b4bad67ec0c175a"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_pipe_4.svg",
+    "sha256": "b45b67c653f134499d2c35753f6d15dcbfb6cf8336e4718aa7ba41f5bc8c26f5"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_pipe_5.svg",
+    "sha256": "45df8fcf2061c26823b4b92891b2b8afa6045fa1db2925a8cae1fa29df5a6419"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_pipe_6.svg",
+    "sha256": "2fd7854a379816ada9e4d658924a7a4b09ca2cc11569bd9151f505f358e7c42b"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_pipe_7.svg",
+    "sha256": "0e4f7cecc426a0254abb91dd552872ec717cfcbe7069f201a999605e8e0aca10"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_pipe_8.svg",
+    "sha256": "58abc29bbe6cadd701822fa3c236aca11f36d88ca13b668429f835a66e193c13"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_pipe_9.svg",
+    "sha256": "18379811994e0202afa7633d942479161d63418fc140c1cbcd2bce6003de532d"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_plane.svg",
+    "sha256": "77201cc3879fa847be246e4fa7c42d61729819edc903c59817ac6fcd542616bd"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_plant.svg",
+    "sha256": "9b1e41dc3296d6dfbcb74e318f5275eda4a8f26fe9db4a4e82b5e276ae024bf2"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_plate.svg",
+    "sha256": "571659e328795132de672bbbafa2e8eea3826b66b6b44ff14d5708219f0a8b8a"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_platform.svg",
+    "sha256": "b6608ef38502eb36e60abdd610b031c0289d6dc8fdf1876c5f7f70f88ad550c0"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_poker_front.svg",
+    "sha256": "d2afda3d75357e2e69a42ddc563bbdb39a615330c3e7a8179b4471df414109b0"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_potion.svg",
+    "sha256": "6dc2fde91ae1ab54b47ec24f4b38a85050ef378c5543e400dc8861d420c49a64"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_puck.svg",
+    "sha256": "83b70e0b6779ed7f6bd2aed4101480aac028b4e43a19801ce839fb2091b675d3"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_reel_0.svg",
+    "sha256": "5d5e087695802b2ca2237572230639378effd5eecf2ea032f6ad05b2806e703d"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_reel_1.svg",
+    "sha256": "01e5956f3c2eb24650c77f909fb998415dde258824b6ecf2895b2faae04e57aa"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_reel_2.svg",
+    "sha256": "b64d2acd38408c379b3a2e2198531701d17af4bc21005c3152e4aa04e56687e7"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_reel_3.svg",
+    "sha256": "c19d3d1c46a4fb70cf0118600703323a31496e6e2588184e4581f27a142bb858"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_reel_4.svg",
+    "sha256": "b004f07b8588a98cd7fce8bd2b89e9ed63a11f02b63455e80131a746f7f0b098"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_reel_5.svg",
+    "sha256": "c169721f83419769d35181e91d113932ef2013922ff58e8e918b720d7eeeff47"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_ripple.svg",
+    "sha256": "ca76824a84393d26f6df7ff8619617e1b65a78ae79ec110cb2cd95b9f7f45a59"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_robot.svg",
+    "sha256": "1b498477305e3a9bb78522f59c949d8eca28f3d2ffef4c3aaa211a6ccdbb8263"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_runner.svg",
+    "sha256": "85fb74b7d9d7bcfc1cd77bcdd7d9d245d6312eb30c3e7cb666e166a8692b6768"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_sand_0.svg",
+    "sha256": "3c5af26fabfb2861028c8353c8f8cb0fecabfc17414274992609e481be7b64a8"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_sand_1.svg",
+    "sha256": "6324dd6f4e4e17d536ea696c1a45be965368d837cf878f0c78961ec96a7d7c97"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_sand_2.svg",
+    "sha256": "f3dd3fd8cc6e8d9b84965b41bca48154ee7f038df53c759d523c6b1979a0868d"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_sand_3.svg",
+    "sha256": "e74ba23393b6cfb15e30b04649aa94d3122166af6b612ae2b677fc14ae5ae503"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_sand_4.svg",
+    "sha256": "9a6e73b1ab22fa714858b4d690dcb49d70e82eff7698a17cff1ef3585fd8ba28"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_sand_5.svg",
+    "sha256": "3272d33deb72c010c41226d43e4495e805b09118f64f73b43ef649d796928713"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_screw.svg",
+    "sha256": "10d5ad251d6f6f25baf42666d428aef5878404d254b4e81e819397f5c1d4c24d"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_seedling.svg",
+    "sha256": "034d335cfd69dcaac4b42b46ea6b65acefa2e3da291d11366eb4c91ecfff40be"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_shield.svg",
+    "sha256": "4a665fc2b06e8fe8e5da79215cde08d9a8878dc395e891279a25a407eddbbd02"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_soccer.svg",
+    "sha256": "d012e63a13ad049e0b80b4e0c86dcc1644b3cef42cd868d06d6f53fed6201015"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_sofa.svg",
+    "sha256": "071abdc3b25f4df91e1f44ec7888d90df017d78acca0b8f6e1d484ad06065bab"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_soil.svg",
+    "sha256": "01a0e0cf0916dff701a5d6fdfbc3279ad0f99e64e9372c3c3dbb6f6a57ae67f1"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_spark.svg",
+    "sha256": "79c4776b77d4dc6d2f59de00537da5e2e8301540bed056d6b4e4a881366fa976"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_sportball_0.svg",
+    "sha256": "4bfe936fb396e6ce9267b79f6f8702216069e41ac945ec11499a6eb980e45d6d"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_sportball_1.svg",
+    "sha256": "484829e4dd62be20c9e91d64559c9148e2cd0c13a80e7150b7bf512680b3a6df"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_sportball_2.svg",
+    "sha256": "037e50121fa8e7de3c7b18e94364dffccab0374ccac132d74fefa494e401d135"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_sportball_3.svg",
+    "sha256": "7515f66a0b1fe3556cb2470efeddefdcad900a1f019c0cbf98c525cf790537bd"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_sportball_4.svg",
+    "sha256": "6dcc212bf48d77f99720424d641c17e8bcc2d0d0c0994557aa92e144c128af84"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_sportball_5.svg",
+    "sha256": "e350320b8a04380ad1455cad5a9b1068667ccf609f7900824e8f21a36753637a"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_striker.svg",
+    "sha256": "8e0298a684aeb16f3ede538bc6040048406ea797d9066d118c6d1ba352b257ef"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_sword.svg",
+    "sha256": "7bd524650bdbdef10dcc2403d9788f0dee047e4fa46ea0a2f856be8a24060fb2"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_table.svg",
+    "sha256": "5bb3d1b5fdb8df43350b16461e38e5fc2357d08f3d4ea7d00a178c61985067f6"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_tank.svg",
+    "sha256": "5e175c1d89e19d3420fe6fa0686272f86ad8700393b89f510b296810e42d91fd"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_tile_0.svg",
+    "sha256": "76382ebcf51de03a72df5bbf89996fce0cd1d26c336341e09dde11963f0c7be7"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_tile_1.svg",
+    "sha256": "5bec41cb85559ac874ddba2930696eafbe3abb840d468dcb4efd5793dbe9b40c"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_tile_2.svg",
+    "sha256": "1b05e102d0e89216a35b0f9d89918782aa18410bb8887247107d0819815e2ab7"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_tile_3.svg",
+    "sha256": "3dff3b369dc252beabf7314cce467a49646ffc42dd7e304615c3f96c15578f6e"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_tile_4.svg",
+    "sha256": "87f45f49caa7c18de679e6224a439d03b2d66bdc79a90e0d1a43ea6885f29d8b"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_tile_5.svg",
+    "sha256": "fa2e6b4748060e21ded64c4ea0890c3a210b8c96f18bfa1ed49b6acef9d435df"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_tower.svg",
+    "sha256": "98c9489ea11fc0f581fcabb6a721019b9487fb95abba3dab4219b67ce9b10bb6"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_trophy.svg",
+    "sha256": "f0a2b4c1c96ab094185427fba20dd39ba65180e95bacfd4d2fe3149775467367"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_tube.svg",
+    "sha256": "9ee05be7134d3fbd00ecc5f87ca175a449fd6664c5b8c5a0863ec11734508111"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_wall.svg",
+    "sha256": "5d0d12da8141de4101c5d6d00a7ccaf0d2954abe2183f0700dc602ed24f00f32"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_water_0.svg",
+    "sha256": "7bfceb1faf3710aaad3c1c43a38a285f30a732e18c285548d4a66d4f97d74c0e"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_water_1.svg",
+    "sha256": "6c9b902c92848d3bb2b0447ca5d6fcfc594472422b962385dec1397a064989e3"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_water_2.svg",
+    "sha256": "d8e042b185e99b9ee6e9ddf13b3910a60e261c3746ec0aef0664ea7da49104c6"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_water_3.svg",
+    "sha256": "5cfec39e8645bbfb81b52990bf5cc050c9fad51192ba8dde3da116e0fdd9752b"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_water_4.svg",
+    "sha256": "37e8373362cf923432933cda8aaf396a74d9313ec606812b131a073e64783420"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_water_5.svg",
+    "sha256": "1d95ca662b4a2350a4d874236d747bb046d70e624f267fef71e0c2c1d3968311"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_watered.svg",
+    "sha256": "397e8fe6cd81f1a648c05df7cf517857740668fe8336eac062979f0ba822a102"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_yarn_0.svg",
+    "sha256": "26824c6b86f5f22b8b40613330a8f63b20bfbc8c2e8b22fde76d939857a4e13a"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_yarn_1.svg",
+    "sha256": "38a82ddcd3b791fe98f3597200da9de2cf2e2291d5e9f7c987554e92f1858156"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_yarn_2.svg",
+    "sha256": "c2280b1517a5b940fe2058fd9de773a0a50c5d2a4bd3350bad95befbdd087fd0"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_yarn_3.svg",
+    "sha256": "07e3ca4fe4c548771bab63c92e735dbe8bd9af9d529906f3f519bccadc2f62e8"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_yarn_4.svg",
+    "sha256": "4de89b61154b6ef86bd71e068a967a2e915db96c82634e2c85196b6069a1d233"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/exp_yarn_5.svg",
+    "sha256": "382e7bffb5ebcb6a340a89004ca1ce8c2e5e4771e66701d4ffad2016086df9a1"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/expansion_puzzle_scene.svg",
+    "sha256": "0e5f30c6eadbc239ea8a488290c7f29b948a3a6eb9bdbf0bbff57a358dd8d552"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/foreground.png",
+    "sha256": "61a796d5a9fc5853e9cd0f1e3e730896a6bcb94a34a37765c4d1959bf64dfa43"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_2048.svg",
+    "sha256": "a7f75529bb3ce4a73373d6e1642f479bc82bebb8df65ebe3145d2d51186b56e8"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_airhockey.svg",
+    "sha256": "56ce8f15fa26ed671c2e448799970419a85bd79995beb3c62aba6f2c43c10407"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_arithmetic.svg",
+    "sha256": "337f1618c0bf40776c15c11b8ec649820740a92516f92126ab3bae3fa479bef1"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_arrowclear.svg",
+    "sha256": "1fa69dc5c6615fa1b79159657751e37dfbb90a65db2245c8a971c4f9f5a0343d"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_backpack.svg",
+    "sha256": "ea216d661fed94e1881b17add717b4699684b8bfc716c3175376609cf503d7ab"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_basketball.svg",
+    "sha256": "967b15ae297ab070d76acde5582a39972adf9d7860393c64cd957a0560aa7c4b"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_beatjump.svg",
+    "sha256": "bfd3d21a972e680ff9370f6882b7cf063d90133545d91763a5ce6e37ce11860f"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_billiards.svg",
+    "sha256": "8e0ec680559ffb65eac848b747c53086443b7dbffff77ea16906a1da98c750ef"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_binary.svg",
+    "sha256": "671308624165e2826d3059864efc2db4c06d313cdc54e79c99eab4a229addf79"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_blackhole.svg",
+    "sha256": "7e9811cf1c8eea55af1a3da96f8643c0009760edc7196f8d577f5d0ac47ed524"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_blockfit.svg",
+    "sha256": "0f98f3e03ff1d207357fad639c3fc36581234e553a0f9c88568f4dabbbae994b"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_bowling.svg",
+    "sha256": "c87dbabf6e20f1cb53cc4991d9be9903f53c8ee79b0ec4b59954aa3d35ff024e"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_brickbreaker.svg",
+    "sha256": "846c31e9d8969ba21b8cd597f08a8e9fbeaf2616fa70194ab25f6ee8b47d5ba1"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_bubbleshooter.svg",
+    "sha256": "336624f5b7ef3b9e8f17f8c725c110401cb5d6325b48782a9643fa5772f09573"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_buscolor.svg",
+    "sha256": "e07eca40137f45ce019600f96e3eb918732e203c7c54db434dd3d38a10073dbb"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_characters.svg",
+    "sha256": "b96a28212f98d63dbe8e1652b85718cef5303ad8011bcc29746064ff3ebc4b95"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_chess.svg",
+    "sha256": "8e5d6b8149d75dea8c0f7b1bc7dac0712c819a23c9c8796c47308b27a9b16c0b"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_compare.svg",
+    "sha256": "4b304e5720609d6f0cbdbbc6fd334b6cd6fdcb09ec682ea0a7f65c1a94fb429f"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_decorate.svg",
+    "sha256": "1fa139b68f7ce4bc18e1acd4d4f19a63df23ea1615c728d2d0f1d1ff7e7b4188"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_differences.svg",
+    "sha256": "2758457693b6410f2e455f951cb66200af90800af46de69f16ad1c7742c01860"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_dots.svg",
+    "sha256": "b6da2160410c5b32d5584df954c39900d6b7a3727bd7bed2c207c6d9dbc401c3"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_doudizhu.svg",
+    "sha256": "a09cc284b1804a3b2993df3ad316e2c1b98e38b099c818e947e119c12da4d545"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_drift.svg",
+    "sha256": "3d43a6a4f8b07415d7d735536490660f1a8249806a721e8c2bcc99aeeae8f491"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_farm.svg",
+    "sha256": "f2295be15a72b5cfc63ab37f4c3be96fd02b6782b6aecd5d825ad83f7bd6d7b1"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_fisheat.svg",
+    "sha256": "3430e5a05a99938aca408a6ea9cf79c783dfe6fb0fa6eed9da2af3aa1f6f6585"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_fishing.svg",
+    "sha256": "38d56142e90a5988b3619a8aa0524e8de8a06cfa28a429bac116a81d3fedd904"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_flappy.svg",
+    "sha256": "6065ee9557ab80d5a98331e5ee6d886fac08294c49901ff6ccd6c2e20e23492e"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_flood.svg",
+    "sha256": "74f4c41cc2b9c9a1c3601f50af21afd61b080fb3a8f3e418965e8ba51f7b501c"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_fortress.svg",
+    "sha256": "10dd0ec5b25ac9cb1ba0ef8bea453504cf232af9d5e752bf23134285e2a37f7a"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_fourline.svg",
+    "sha256": "13fe2bedd064e11f401b9c806eabf3bbcf713de9a82ef1ab1cbc68691f30ea50"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_freecell.svg",
+    "sha256": "32b239572d8ce87e10df537ff208b420cfe1ea6d787bcfe72ae9660a084fe0c0"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_fruitmerge.svg",
+    "sha256": "89d73742ac51697954c78e4a6021af13841bd7667417998f3e8690fc251433e8"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_fruitslice.svg",
+    "sha256": "d9d79e3bfeded234b00068eeef887818f8ab908e722137de142201763973b544"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_golf.svg",
+    "sha256": "19d21ced6ff5b55cf1b846a37194e4da23cf4b1857f5133e7706b7a5c95c13a9"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_gomoku.svg",
+    "sha256": "afbe7c8ab2f2e406cecf6b599c7d07e9fb6767e805db153fed245ae57d4ea862"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_grapple.svg",
+    "sha256": "fe3f89948f602bf26710ba013f2b4ec5af4ec8142ad2d7ae59dca0620b3b529f"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_groupclear.svg",
+    "sha256": "241224982969f04b8acc72d58c4db576d23acb448adcbfc089a7858a1f68bd35"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_guandan.svg",
+    "sha256": "8a8745b3e484d14f5ea0aed4557dd3bc625dc312d7c1ce608cf5f914d4fb17ca"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_guessnumber.svg",
+    "sha256": "7d810c2d3d4fdd745b93530297cbd03132e64eede8b0b5c9e77713ae2062ba81"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_hanoi.svg",
+    "sha256": "7f716b9b9ea505eb16be6c0b834185a779b197dbc60af20f7e5046f4d0a4e2a5"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_hiddenobjects.svg",
+    "sha256": "3a3270dce62338e4417f6780264c5915f61a060d7fadb2834c6a5d6cf7d3d1d7"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_hillclimb.svg",
+    "sha256": "a21f30dbf539c1b988eead845be055be6d0ce676fee2871b03a544a5d674f3a2"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_idiom.svg",
+    "sha256": "7290e0c86be2ac65c99a32723f0b6c0b3e9215892af1779da8b6a0a794a7317f"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_jumpjump.svg",
+    "sha256": "2573c47403f2bf1cc9fc52bd68a9a48ed42657d4e969f7ec66f0fbf179344c78"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_klotski.svg",
+    "sha256": "a1883febc5dc4e1675fc05243c7eda83f7f24a5770b8024e7f87f02f62808f68"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_lights.svg",
+    "sha256": "5cbd022183ee650734839cd93afc00a70d8af69bbfd3ddca2c33c3f1ccdf7f42"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_linerescue.svg",
+    "sha256": "136847d619c4133d5a17f1eef8fe181ae72858532f97bfd37a96edda453636c0"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_linktiles.svg",
+    "sha256": "ef4945f6d1d530024fd9656ec4ead527a37c6f011e3dba42c3f961c8e109c567"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_ludo.svg",
+    "sha256": "819ca228ee8ae214c7efdbdcbd9e4da7b5af3616783df085c0faa18cf7025fa0"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_mahjong.svg",
+    "sha256": "da0d7ebc3616b04012978d4ad4025768f2fa6981f5e34dc3c44fd6fa43403e59"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_mahjongsolitaire.svg",
+    "sha256": "d18307bd8f14d7af4efb64688666b6eb9be289e22cb8b0253858d2e080742576"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_match3.svg",
+    "sha256": "ec3f8b1e204deb35783559670bb68a0432cdeecfc10b7a39be4783dceb173233"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_maze.svg",
+    "sha256": "a069f7f9c3b9253d9e4e7e464b8974a2d876dad1b92d55a25d1a702c30d66cfe"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_melody.svg",
+    "sha256": "f6c8c6429cce50b30ba56402955034efa89fef9852bb85a319b7c21ed0108a3d"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_memorycard.svg",
+    "sha256": "d8ef0b503bb14f7d535d456f421c0d1e7bb27fd4bb2a8cb073f3f42f3093f18f"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_memorysequence.svg",
+    "sha256": "22dd9fd5bbfe75ea607d7664806eee6fe7273cedcb7c63391f272ce4a56dd04c"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_minesweeper.svg",
+    "sha256": "beaca9add03ea7a60aa51e0c672135cbbe0ba0e90569b0b4ababc10d126870fe"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_missing.svg",
+    "sha256": "ba0414214789c18a0685197c85adf5f37cd98389c892029c63d86945c39f55ea"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_nim.svg",
+    "sha256": "74624e76739e15a0b065b233f3e1b1ede95a675f15080acbf3b941dc3d5cf352"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_nonogram.svg",
+    "sha256": "a7606cf2aedc54c8c9a082fd3c0d48a1840f272a1056bd64ab5f435c670411a8"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_onestroke.svg",
+    "sha256": "633427ba93de48fb35329b8421e39ab1f036d680791fa4bac8fb385bccfb8f13"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_parkingjam.svg",
+    "sha256": "2be7b4e7ea96028995e6cdd49930a2a36f1566bfe9b31e5a27ba4376170c7e9f"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_peg.svg",
+    "sha256": "9e5620fb261253e73e5dfd644493926af64e6835e54d772521c6219840a30f82"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_penalty.svg",
+    "sha256": "040519904824c7b1d5d3643c01f2ff3b93eca3c83557c9051491db6f42a185a2"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_picturepuzzle.svg",
+    "sha256": "4bd067003bf10997ab1385775d56b446cb988b874f6d74d66a9cff6bf2d04a7c"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_pingpong.svg",
+    "sha256": "ff6ac6366302c143a2563aa3dab17a297dd22ab97c746f2c2e906399cbbf05d7"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_pipes.svg",
+    "sha256": "7cb1c58732a2da5fde321bf00d7ed4cddfcf812fc8bcc0b9f62a7f51f85ae9d5"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_platformer.svg",
+    "sha256": "e2043de99636139e411607f072274641c1d5a17e7cd5343ef82dbf139a22eb91"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_reaction.svg",
+    "sha256": "a60cddd1499f24480cb6e867b2bc2549944561b73e5f1754efccab3baa80a36d"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_restaurant.svg",
+    "sha256": "03e33a1e877f77889eb3775a2f72ca5a19c56c4bf2fb521bd10af7e6922bd22c"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_reversi.svg",
+    "sha256": "99ceeb59030c5ccc82e82075e1d847ea3bf1a1c4b59f416aef03cd11a3c7274c"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_rhythm.svg",
+    "sha256": "296476dfe2bd89c58afc2fa1defa1a64c72aca994c427d6dd4866b5d20314a6f"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_rollingball.svg",
+    "sha256": "80eb6c5ddb30b4cfa9374e5d654579a1eae457d37311c337109fc163d1fc22e3"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_roomdefense.svg",
+    "sha256": "9c4877bd566d37492b22342750a0d42c5a1573ff2384740e58805d3e8295708f"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_runner.svg",
+    "sha256": "9fd048bfce1fe0cc269e30d2440f64f2bf71af3da65645742c26fc4476dc9f14"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_sand.svg",
+    "sha256": "fbd3cd89280a1bbffc01931d882c96592ae2f990be510811c1334e8daf8ced9d"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_schulte.svg",
+    "sha256": "24bacef0287ab7c96440e9010ccc909d38565ef86cb26f1b50f075ff8fce4d8b"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_screwout.svg",
+    "sha256": "8464bea7aacc140ab32c608c978a1f2d1af1bf6e6016b85bad7ad740ebeda231"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_sequence.svg",
+    "sha256": "f1cafb3ce94e12d4c557bd7b62a4f4de9da3feaa15732de1b2ec3a5f41264067"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_shooter.svg",
+    "sha256": "322bef9f67a3269e8a5e0e0b556bec8bc19f354b4b7d7be7e6f6a8e6e326f333"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_slidepuzzle.svg",
+    "sha256": "a189d1afc9a530dc0478580e15087fa6ba0884fd6546e47702898cac5fad1ae3"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_slotpair.svg",
+    "sha256": "12cdda86b15b43e8148dd7850abd055cf122029b97a535e1b7977beec41fd051"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_snake.svg",
+    "sha256": "7b74aa1977d7d85db0376e7eac5db1dae8bf024fb7f95de0c3b5f941e6395dab"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_sokoban.svg",
+    "sha256": "1f1762d8f8eefa2bac4701c8d2097b5ec24efdb26b61e742360bf080d8bddfed"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_solitaire.svg",
+    "sha256": "163a1c91bb89ac9b156c59ce070d5293461782fc9330aa175be7528778015006"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_spider.svg",
+    "sha256": "8daa03974874a9f684a2471e6295060c66f4b009de7c0fb704f68c3b92907fc4"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_sudoku.svg",
+    "sha256": "eb386ecd34e73bf2b935d789a088976dcf05baa670df371d6635533986d028dd"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_survival.svg",
+    "sha256": "971a0961f17528d21e65c735b4526a0caef535b27ea2c667c3044d1975d368f5"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_tanks.svg",
+    "sha256": "9d3dad2a9e9f7a06b9bec98ce6313859d36010b94606d7efb3bd29fd1a8fafb4"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_targetsum.svg",
+    "sha256": "eefab02fb1d3d5fcca41c4e76d5db77e73956bcf7ea0806de82f89656630dbc2"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_tetris.svg",
+    "sha256": "3e3844b205c82b3d6d5cdaf891fbc1934a30fdf3baaecee397db1c8435617f09"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_tictactoe.svg",
+    "sha256": "39b6673e80738c453a41e410f53e294aa34225b3bd0411d44fc7f0272a3ed772"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_tilestack.svg",
+    "sha256": "2b039ac81455232f66c8cf61e05f8ee02e70be65d49ecb99c98a79356221d715"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_tug.svg",
+    "sha256": "d11c882b5a8b01e3ae3f96ffb2ce9e870beb25f0df4c3c7281c0ef2c2508a1bc"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_untangle.svg",
+    "sha256": "1f1695e8f91cc896f5171d7076820170b0b57d36bccb1c93d88fe9051fe565fa"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_watersort.svg",
+    "sha256": "89f8514a3bd3a0db6eddeba368ad0097f8263ea3fbf6d6e9f22b98ee3097c92f"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_whackmole.svg",
+    "sha256": "fb8cf47e2791b89457ab20b5f0a26283eea792ab7e67861de284fd5e83351e71"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_wordtower.svg",
+    "sha256": "a8e5be392f6f09bc1a4274578cdd7d974f621d2e8d21a1bb335dc702afb879dd"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_xiangqi.svg",
+    "sha256": "68f5d6e431c3d86abc29d891cbd520a9e2d47e0f1031623f5df43a66707d4f2b"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/game_yarn.svg",
+    "sha256": "492f3a540a09bda4f77dad38de493c689a55eb20625eb50cf800194b37c66de9"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/layered_image.json",
+    "sha256": "3d18dcd7ed9e7d3d2c54c20cb80a44eb4877c661131c68a46e20b6e19d0bb476"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_2048_surface.svg",
+    "sha256": "3cb886573525528d5445d0d9b78e0645553df0369122fdde7d976ba5a3054646"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_brick_ball.svg",
+    "sha256": "28b03d11a890ea500935d9e91c00d318c858f960b5ea0f0eb6186cbf9049e5ad"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_brick_gloss.svg",
+    "sha256": "5bafd136a0c57ea0edb16c6f4b47b97b7a230519e67821daff90e2b2e4459343"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_brick_paddle.svg",
+    "sha256": "2df68ca13d04bbcb87b13c66df01d878dd6ce91ffd539ba230ed55272f97ef81"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_brick_scene.svg",
+    "sha256": "1db7fe1e0ba1c1f0db6d1e55eceddee66053b1594ba3c25b7a636b2e52fe6f5b"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_flag.svg",
+    "sha256": "95c935d7248cb26fc0664c8703566fad17059307f9340446151da2cfa71484ca"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_gem_0.svg",
+    "sha256": "895a04764734e018f4e3098ad7f4d65e49ccd94f32168f1005dee4dcfbd5d760"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_gem_1.svg",
+    "sha256": "9ccc4327ff48024432b8fe9659067514351efa2dee32e3c5369a20c9718bacc8"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_gem_2.svg",
+    "sha256": "14f8f29edfe842ed0277f373cc58bcedb8fafa3b6d5bec8fdcce7ea41f09e019"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_gem_3.svg",
+    "sha256": "5093459ea1d423b209269fc696b7085c76db0390f23cb86c8e1f1ca3ae97e46a"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_gem_4.svg",
+    "sha256": "2524806b011eba5040c70e48cfd581ec6009770e6e572d61d16f1fde0cfd0865"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_gem_5.svg",
+    "sha256": "942810c84a176311bc5922771c1c0426567c2f5d9f9f03ed4b2003a2614134e2"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_guess_key.svg",
+    "sha256": "8b599dddb0b361c08b50a8a33503c9109ae095603f54442c69de78fe4b0a0544"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_jump_frog.svg",
+    "sha256": "61e2df742e38d2c391d2f61c98fa5d2070d81a29077573404546cbce56ea9062"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_jump_platform.svg",
+    "sha256": "a1371fcb084f144e490986ec67e710be3479b82ba5557146f84fb2fee3a8951c"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_jump_scene.svg",
+    "sha256": "31619c44c49cedb2cd55bca3aa0d664ec3ec73fdd8f29a9de37c700f5aec951e"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_klotski_board.svg",
+    "sha256": "8fa2bcb9ebb50f239d3825b91f68b6c3e062198d36312df145ecc130ca5a5443"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_klotski_horizontal.svg",
+    "sha256": "37ca7213a4e73b527a374216fce5ffaf56d07524bb137dafb9ae9dc28ead547d"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_klotski_soldier.svg",
+    "sha256": "0e6d6402b25afaa35f5fac4ec5daba0ea62e8b9a0d475b4cabb25acd1a2222b5"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_klotski_target.svg",
+    "sha256": "dec45b4f1ad1dbaa11360652dd165236fdd6204d0f3c6dcfa4e0deb4116dff1e"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_klotski_vertical.svg",
+    "sha256": "0fb22c2cc08ffefffa232ea4e2df4d0f21f40027ed8406928dd9a868ee117fdb"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_memory_back.svg",
+    "sha256": "a13565b1a82753e0babb0c234b82d50ace28f7684c6f9c754a49b388d0c6e059"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_memory_bolt.svg",
+    "sha256": "e01fee56638ff65f3199853aff66033a832ac907962a8214b71593d86271ab64"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_memory_clover.svg",
+    "sha256": "8bf1cd97eca98f80f015234915436ba5dddb533dfe48376f6ff2a0876b5951f8"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_memory_crown.svg",
+    "sha256": "32b1dc590a2be75fabc40ae3b69b3d4977582b45ab96e64b4d28cb84a7a66544"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_memory_diamond.svg",
+    "sha256": "71f050fb01cbd7dbd2281e8e6ab338d97ed1f9c16823bfd39777e3e1e1079880"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_memory_flame.svg",
+    "sha256": "e8ff0db55e4ad129d1ebdedc191b12deb8a1950a32fb5d603a9000256090790c"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_memory_heart.svg",
+    "sha256": "189769c50daecba6f8e1e8c6e9c84d185fa0304c7f365f44dd0420d27fd3be0a"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_memory_leaf.svg",
+    "sha256": "dd3f999b62e4443379249fa8f889a588d3812fb5dd001237e0ebfbc7ed56d987"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_memory_moon.svg",
+    "sha256": "ab17d1a676766f16b8148eb01a52ccce29ed9180253a032d6497e97a95a80a19"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_memory_shell.svg",
+    "sha256": "49b04d81530f4b9d03219b1d36f76f5f1b435e1b82eab6bc61eb6e091659a96f"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_memory_spiral.svg",
+    "sha256": "b7befc17a5dcddab349dcbcb06dcdacef51bc77ea521407f28af4cd3d2ca4974"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_memory_star.svg",
+    "sha256": "26c122593f4605bb0681f321558acd5a3773263215c66fb6c3229d1d784a0177"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_memory_sun.svg",
+    "sha256": "a56956b48fe4c31acfb30fd48263b61beb3436d0dc314f181e544b50452a8bb9"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_mine.svg",
+    "sha256": "9282fd421e5786f1a5461e4b6b50a27306401df3d998e02026783c7f49f02dbc"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_mole.svg",
+    "sha256": "7ec7c892e1e6e2ccc5b93d15645758ffd72634742d8d48cd5bb9e9fc24e44b4d"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_slide_tile.svg",
+    "sha256": "8b599dddb0b361c08b50a8a33503c9109ae095603f54442c69de78fe4b0a0544"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_snake_body.svg",
+    "sha256": "adafc9004f2c972ab1e7c1e3c5c7322c838f1f708b5c919bfecf4533cddb6ff5"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_snake_corner.svg",
+    "sha256": "e318d95f8896672b5db5a1654c17dfc5f39bda7c45e7d5c52c7e833e0da8cb91"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_snake_food.svg",
+    "sha256": "9df434f12617461defc1e7d7404bf31ce206d42269f82cd5bdae7c258ad22f5b"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_snake_head.svg",
+    "sha256": "640d432b295372cfe0436914de193ce13bfe76b1f5922268612c326d830221dc"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_snake_tail.svg",
+    "sha256": "062515ec6fd56474f684b5663eabe9ecf226ee238ec392a0371c7f2b92123ea2"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_sudoku_cell.svg",
+    "sha256": "da8f7e5d31256a72fa0061308cd0662f7350a5e4709e1df9214bc139640dfaf6"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_tetris_gloss.svg",
+    "sha256": "8b599dddb0b361c08b50a8a33503c9109ae095603f54442c69de78fe4b0a0544"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_whack_hole.svg",
+    "sha256": "27bd533e36ce8f26bed0293925e1e533fc088729353150d73a1ed1f149bb9e32"
+  },
+  {
+    "path": "entry/src/main/resources/base/media/play_whack_scene.svg",
+    "sha256": "d6f316a72f622ec09bd801b48b31b908404953448dc0775d290aa21059a8ad1a"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_blue_board.svg",
+    "sha256": "d711cb1e31506297ab98e6ddd22a6675c0a573615428047cb27c12829e7af75d"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_card_back.svg",
+    "sha256": "22bc4e51f9768b3b827b79ce2d5cb18b2359acc30de72daaf7d282c09308a994"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_card_front.svg",
+    "sha256": "1ef17c16269a8efbfbb7195933912e0207c3e067294020734831cae452677aae"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_ceramic_board.svg",
+    "sha256": "9958fd409e94ea517e2812b8a85050b4f23ee3b963a12de40ddcf792d8f5f6d6"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_ceramic_cell.svg",
+    "sha256": "eca7d0565b6c7489577c358c561b136267999c08239d141daedcd50d49934fef"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_chip_blue.svg",
+    "sha256": "a6c5885765512fede213919cde57c45988edf952210475933fc1fcedffa999d9"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_chip_coral.svg",
+    "sha256": "76fd3b02d223b0438b021f3b7b623b589df0965e4d626234148fcbb91ac3237a"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_cross.svg",
+    "sha256": "2eab32594c688093df31e5251f8252b36df574d32eb1629257a892dd1399c241"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_disc_0.svg",
+    "sha256": "13a368a220a693842ed69455cd43615da7007794af0327c1dea96f8071352a26"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_disc_1.svg",
+    "sha256": "c31decfc54b52a4a781ffad2d9ee6253d7b461a1b416781005bad9097e1fb7e2"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_disc_2.svg",
+    "sha256": "9d8c6d1445e7caface654d1c3914def5acdb4a3d3635a6e6bdf4878084f26853"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_disc_3.svg",
+    "sha256": "ba96b955379abe01cfcd8031d2cdd3e8a876447a3d1ed966fdbe6fa457ab31b2"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_disc_4.svg",
+    "sha256": "58eeb67d06fe059e69dcc9765d3549c23429d77cda10d7e321db03c5169a316c"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_drop_hole.svg",
+    "sha256": "8396360f75979ee451498cfe98351c3b9736a67a0950d638aaf88647b52fb7b3"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_flood_0.svg",
+    "sha256": "1a44d400268f84114fddf30495513c264e1da765ca3d2869e96936df82f9c69a"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_flood_1.svg",
+    "sha256": "4b35ac79174b0bdb30f9cc33fb4627488f7009d5b8cb037c90440cbe2e03608b"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_flood_2.svg",
+    "sha256": "0917fa13b2daa8c68eb7697d8175d5fde352ed1daa1ef37ccdf456959f7aa66e"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_flood_3.svg",
+    "sha256": "c9471e51c69094a69dc266f092ef4cbbfac4321bd7d087ba4622c3b59ab411c7"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_garden_board.svg",
+    "sha256": "c83776bc8d174aa421339bf44bdda1528b83be2ff8dbe18e4a5650d120f0c0a5"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_gem_blue.svg",
+    "sha256": "f6210160e497de2e44b09439d3ddccece58f37ac7d4a6540bdee58ac6dbdcb69"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_gem_coral.svg",
+    "sha256": "d5be112a92ac9aad02df96c5aaa3b11cbbec1c2badb4921d93368856c7b1f6c7"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_gem_gold.svg",
+    "sha256": "20d6ad68208b1f0819ea84c667473c5971d7722de2ff6e856000a1b603f002c2"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_gem_mint.svg",
+    "sha256": "b911df5ce85a6a8e5284386045e1b7f81c2ce95d539dccc99c59888302f859ef"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_gem_violet.svg",
+    "sha256": "d7488e5b8a7b7b65707e27f6e3cc03a152cec9538aad7b2741dc0f771e052615"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_go_cell.svg",
+    "sha256": "bfb3e4e3cad1be3e6fabcef90124a34f94f180202713dc12a69fe3becc022fa6"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_hanoi_post.svg",
+    "sha256": "a1830c875d49b2bf123729112821e4e5a8aef5f60a93201eac090609d41f958d"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_ink_cell.svg",
+    "sha256": "3fef3eb8527810bd40951f655d8da8b9394fbbaa74f302c73aeec705003be976"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_jade_board.svg",
+    "sha256": "57857c7b7758fe706fa8144d2c76c6b5931df3492be4ddf3ce64adf275fa7991"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_jade_cell.svg",
+    "sha256": "736b5fc2cf86ae26c22f3ff990f032542457b21f456b387fe4804685512504ca"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_light_off.svg",
+    "sha256": "e0862df12bf964fe3474bc7e6621aaa13472bddf87c24b1922c786490614f5ca"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_light_on.svg",
+    "sha256": "4c55bef8a734834eca6520082382559be29461407dd639181a855b4b9949e522"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_night_board.svg",
+    "sha256": "36c63d4c42d28fea29f0a2d73f71999bb56884db8f21fa20a90281692874514b"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_paper_board.svg",
+    "sha256": "6208e7ad02bc602e54041a5b46b5a6374c9752228d784ff6775bec2bfa85e504"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_paper_cell.svg",
+    "sha256": "5098f8dbea6b8a43d4640c0e872bd21a0431eeebd90df7e22b755d2af976c2fa"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_path.svg",
+    "sha256": "daf2b67399fabe4f262fe6ac9520df05e2ed736ac682db626a540086283fb92e"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_peg_hole.svg",
+    "sha256": "4afc5ac38b58eec2939c9269aea11de197c4db5e6bf9a10e904fe0c4bf51f935"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_peg.svg",
+    "sha256": "fd8b758e5059f72a74ca3ca771e28ea54cc8fc9351333be942c2ca78166cc9b6"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_portal.svg",
+    "sha256": "349ad4bf0e540e7dbbc49fef1702ae41e40a6b70da87d3109308b4ba4af226a1"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_question_binary.svg",
+    "sha256": "5b434a2696885972a2bb0608ebbd43716e7e40b9e4f15b48b8f202761cc00a84"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_question_memory.svg",
+    "sha256": "91c659431d2dd40a7fee21900f9a67e3c865f4de574d31bebc1be4176d242c6c"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_question_paper.svg",
+    "sha256": "853c0884a9b92e1c48d92681692cb46bf190f9bb61952b9d002e82427dbbde25"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_ring.svg",
+    "sha256": "e28e7c55949792baa899f44f2eb66684c3ae5fa263ae29c80d5f1b75a1a96ab8"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_robot.svg",
+    "sha256": "33cb57a6118b280fdd57a8ba1a69d99b693417cf7809e752a8916b021d9b8c93"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_signal_0.svg",
+    "sha256": "83e9f46516e3ffe719f27fc466ba19de280ccffd17d7d9163ca3a8182e0a56cc"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_signal_1.svg",
+    "sha256": "629739f45ff53ae5f6e469771e1c1d6bd2cbea193bdce1a42dd9c5edb13d659a"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_signal_2.svg",
+    "sha256": "62bf7474dcbb99fd36894a4cd568f979129cc93d02b3386f1a36cd4709d8c3e4"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_stone_dark.svg",
+    "sha256": "755c66e9f041d69e039c7d8b5b8397130d9aa2467f8876c3d37dcfe94d10be47"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_stone_light.svg",
+    "sha256": "1e462bea185580aff4852c5b9a4057b81170f475a13a5dd62152ab6332470dfb"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_stone.svg",
+    "sha256": "3caef9e5116da5f254cbf78a397601b5da6517b7602a9bab33d5e95f5443961d"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_table_board.svg",
+    "sha256": "6c5a8396b258c1ef158a952e903953669decdba3d1f9d5344d300498947eaace"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_table_tray.svg",
+    "sha256": "2aaef081c93303067f056285844072e37a34c1788f48a07885f72d1aa380d5f1"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/col_wall.svg",
+    "sha256": "5ad0604b29753c0f6c0431067bca40bae85a88559f86845878a0001c3d0f8dc6"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_anchor.svg",
+    "sha256": "c2ee6d0f49072adb7e370e58e0aa8adea9723358e3a9f2d44def0f322a721c26"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_arrow_0.svg",
+    "sha256": "1a24985c5d17f625db3a5f56960073532c1ea27adae218e00304ce185c6fefff"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_arrow_1.svg",
+    "sha256": "1441102142c1b536376851eb04bf5be07d91e0fe1063b04e6a77b7b3f793d797"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_arrow_2.svg",
+    "sha256": "8def1a183b2a774cc1d66b0d5d32da08f16eb1f3966d9a1807a0935fa60129c7"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_arrow_3.svg",
+    "sha256": "58c3c0f1a30321b5313efa856699cd41ff564ffdf22ede804d8bd716692d6372"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_ball.svg",
+    "sha256": "0009b1baf06739272852db776adedfc09bc2d8351fb470e5af1ca7c245e211d4"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_barrier.svg",
+    "sha256": "c340b74841c6a92a134a0a5d1958dd4a837cc6f5891709d732a930b6f50d3eb0"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_basketball.svg",
+    "sha256": "98fe7b378860a32acdc284933530cdca82b4df32d3de30e31a60c10338b0e2e7"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_bee.svg",
+    "sha256": "467c5e8b7e8e7cd9a81a14d78dd5aeb9e12def2d7bf8f3629545a6a288b108ea"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_bird.svg",
+    "sha256": "0af0cae68a87a2698d31cb9cbc3c383a61cb6d101e8cf4a76773096dbee23a3b"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_bite.svg",
+    "sha256": "6f1ca47cb42ae02808b1e4ecb278822fa89afecd3f73da5533e45e43b51d5225"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_block_0.svg",
+    "sha256": "b49cba76d9e284eb89c96d6ea227bdd52bac6df551795f14a6d6a76be733e65b"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_block_1.svg",
+    "sha256": "14b394b97409e764b465d356798045a29bc59419692796ce33625953841c0696"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_block_2.svg",
+    "sha256": "2603ba19fee6fc35c2804531f4b553f6e10f33628d75cc0c65ec884341e4b780"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_block_3.svg",
+    "sha256": "257902a30ba8ef7bfdaac60d444c2cc119df3800d8f890cce0ccd01b41f9ed4d"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_block_4.svg",
+    "sha256": "879950287ca50b7010a6f861604a2eff3a8eb31f0a9b7355bb7bac451968da8d"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_block_5.svg",
+    "sha256": "67086268b59a5321324a2f0557fa5d98872633d0e8acf04ad238dd923ce52126"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_airhockey.svg",
+    "sha256": "9a6c71ec9f6172287e05827705f6211481104958bd8b7a213928302733344068"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_arrowclear.svg",
+    "sha256": "46e5804bc8d2583f2e4b62692af49e1f63e6a932fa77f8a972839647c9abe9b4"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_backpack.svg",
+    "sha256": "12fc9d88d438912ee265239633a94c9f2c07b990c5fc776f1315c0cbc8cceb45"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_basketball.svg",
+    "sha256": "dbd67c8706933dd73fa6fd48cb5ac84e57a98c9cdd711d0c4de683f0e577a7cf"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_beatjump.svg",
+    "sha256": "18688e12eff1349f304b9c0bce13e68df15399a213354b8e1de768ce3d900435"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_billiards.svg",
+    "sha256": "7a8b4cb0edfdfdf93f6bb898c0a30a354093b95f00105a93727fa340bc92260d"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_blackhole.svg",
+    "sha256": "a68fc8c05899f0cd9f3c6a60044f2b0f2815f3b97bcf3267285e52f229487807"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_blockfit.svg",
+    "sha256": "5964e1160b1d2f9c9688c33d8621f69a2a83d3bc57226093f2868b93b3bdca35"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_bowling.svg",
+    "sha256": "51d547d715748287d162c08e7b36a0499c85be38019f207307d3467c4935cf11"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_bubbleshooter.svg",
+    "sha256": "3d2f0fc14830f86fbdaf7d2dd07217ea985d0cecd734f5a5eac38ffc23b2505f"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_buscolor.svg",
+    "sha256": "3a581cfee41e9fc32f3f417821667335f1a01c0aeb0e332c568061c738c6bf7e"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_characters.svg",
+    "sha256": "fa2cdfbb3ad74089fd31f47b66e2120be2b6720b06ba6712d7f4c5e1bd3a7b57"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_chess.svg",
+    "sha256": "85eee040fe229ac5c080bc65fecb7735f279fde7285b465a0f88f5fd365791d6"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_decorate.svg",
+    "sha256": "de3a0e74a8c39f0b809c77bb01c0face205bb111e4094ce34aef82724cb3cdf6"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_differences.svg",
+    "sha256": "be6dada922e5e74ae0044e077094bcd5d4722291e4223f4962104d0e8347d39f"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_dots.svg",
+    "sha256": "0ea1cc497eeaadcd9c4f35b4cf26096073627f7f8a87630ad4fe12c0bc018902"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_doudizhu.svg",
+    "sha256": "2a2e177b844dcbeae031059c4381eeb36cc7c8f2e42f3841cf7e6d75e5afa49f"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_drift.svg",
+    "sha256": "c8f0460cd8715d96487b55055873329f81631d56a3aee5b728ecd75c0336e430"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_farm.svg",
+    "sha256": "f6e5b17bec37bb8d0b0d8295ebb3b78ba7eb8a1d14086d36261c4526e6058fb2"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_fisheat.svg",
+    "sha256": "f78daf69a474d9010c0517059af8f267e9ee04d17b6b61a09272d3e6bc0d121b"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_fishing.svg",
+    "sha256": "f47ee28be5cef90361be4b5f20a7fbd09f9395dbee7059d7614ca588b83e94d6"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_flappy.svg",
+    "sha256": "9fc0c9d0f1d8cf3d96730b88d84f4d93db68d1680d547a3a2cb19179586b4bba"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_fortress.svg",
+    "sha256": "2c1dc4308d92f19f5ac2089dfc7d238157268703b41b7d047a70f73bddb6a561"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_freecell.svg",
+    "sha256": "2a2e177b844dcbeae031059c4381eeb36cc7c8f2e42f3841cf7e6d75e5afa49f"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_fruitmerge.svg",
+    "sha256": "3d91623275ffdfe571874b08fabccfa164555d9b8313a3492d5f5869c24feea4"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_fruitslice.svg",
+    "sha256": "97aab6adce7b97d2482f73784959433035d2b1b48d1771d7978895f777756c27"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_golf.svg",
+    "sha256": "15c8718a7cbf38aca957a79624cc469dda6a2c7acf5ebdba9dd65034fa53c862"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_grapple.svg",
+    "sha256": "568433f8fbc6c47845844eab18fbef708a0dacde4b9cf98004581aaccdb43f66"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_groupclear.svg",
+    "sha256": "f0fec0b9db3157ab08413ff36db756c6a69c88c9d96652ce4df7c0f9caf20842"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_guandan.svg",
+    "sha256": "2a2e177b844dcbeae031059c4381eeb36cc7c8f2e42f3841cf7e6d75e5afa49f"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_hiddenobjects.svg",
+    "sha256": "c00b2536f58fcf807ee74a2c04989b9026e313d64c429ab57cb61b088bf93815"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_hillclimb.svg",
+    "sha256": "3eb5ee275913e8dae9d0236dc5d7ef2a925c4857ab131c656eb7556facac026c"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_idiom.svg",
+    "sha256": "dad53111a1188dfcc5cfc088fafddcaeb8b2c2a02f7918f5fc6dc511c957c647"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_linerescue.svg",
+    "sha256": "4ca6695ef904157e3b7fcd7f2f4051a2f6f7cc84a9e21c16692a8fa3831ef510"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_linktiles.svg",
+    "sha256": "e36dc7460ec4e08637bf3c8257bb059729a38d6d6cebba13584cc25f2fae9a65"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_ludo.svg",
+    "sha256": "1a79d6ac5e5e549456e9ec831163087c3ec8112b16fd86c419f30b37e94af3e7"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_mahjong.svg",
+    "sha256": "e79a2088324cbcc51cfd90b27fe20494626595640c1fc042cdb8fe4d0091d514"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_mahjongsolitaire.svg",
+    "sha256": "95fb3b8248d95790a353c94e1d87585fe711aabfc53ba22bc0da6065367ee8f6"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_melody.svg",
+    "sha256": "6b6247b09ebe0875db7609b673a017a4da20c37539353697355a091b10c4173c"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_onestroke.svg",
+    "sha256": "7561e280d08e3e2f8aca1ca9fb2ea0371f035bf6b6bd59830992341a64e9509c"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_parkingjam.svg",
+    "sha256": "ff2567644ee8f304e6d5e4410d1984d0ee120920cd4a8d5008f6772b45e1f407"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_penalty.svg",
+    "sha256": "3eb17dae06f2507367b66daa97a9c7b98bbb0bf317683f3594563c175381b88a"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_picturepuzzle.svg",
+    "sha256": "875d1423455fb3f18e836e7c03ca92e4372775c561f9ecd0e7e587f2cc478f52"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_pingpong.svg",
+    "sha256": "b39c42042c7deab2d12a92662097bb827d498abec6faadd1f5294926d490227b"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_pipes.svg",
+    "sha256": "6c5517d6af6386a94f9eabd47754714591e8d0842525bb83c8920eb1e718867e"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_platformer.svg",
+    "sha256": "568433f8fbc6c47845844eab18fbef708a0dacde4b9cf98004581aaccdb43f66"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_restaurant.svg",
+    "sha256": "72aead1d76f7ef2409dce50de3b1035c9283a8bfc678ec7cfaed59b91135e6ba"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_rhythm.svg",
+    "sha256": "6b6247b09ebe0875db7609b673a017a4da20c37539353697355a091b10c4173c"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_rollingball.svg",
+    "sha256": "474f5cb949f152fe96bc839e13f3ec0a41b155a7355540ccf8c9d2a09e9367cd"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_roomdefense.svg",
+    "sha256": "2c1dc4308d92f19f5ac2089dfc7d238157268703b41b7d047a70f73bddb6a561"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_runner.svg",
+    "sha256": "c6160184d88023da0ee51b4ef9c4a6c434bda9218bbb8c39062eecc4e97552da"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_sand.svg",
+    "sha256": "80bb0d6170f8361e527b1e21af657fbdca27fe2291be3b8b9dc772ed3d1c71da"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_screwout.svg",
+    "sha256": "7ab27b413a882952f2435f8e350f9abc1fb0e735b805e611a5975c08b7beafb6"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_shooter.svg",
+    "sha256": "9b8256a13553a42de60eece74ba5c7b318ea2e3e29184e0b6a9c596b49ba4f55"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_slotpair.svg",
+    "sha256": "32ada5418d34d86b2fdeae88a6d74f8d513eb7896d501c4a25b773891e0a90de"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_sokoban.svg",
+    "sha256": "07a81774edc61875cc3496b55d2809ebeac9b36241bb0dcbc1751d770d2a183f"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_solitaire.svg",
+    "sha256": "0b4b5fce4cf25c0736a995a0f9c6510239b3cf1cb57d452c4451949d6d729db6"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_spider.svg",
+    "sha256": "0b4b5fce4cf25c0736a995a0f9c6510239b3cf1cb57d452c4451949d6d729db6"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_survival.svg",
+    "sha256": "6bc8c641630f9757572b8e5f16b67572a8ddc676a4720125020e1ec8d93c51b7"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_tanks.svg",
+    "sha256": "18114a4eaa288635ebb652c5fe320b7f2370ada5d67b7968fd862f98279d0fd8"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_tilestack.svg",
+    "sha256": "a9e0ba2dfb8c8daeef7daa41eec0415e3bdae344bd92efa6477c1378fde5ee85"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_tug.svg",
+    "sha256": "2129216c62616a8bff3c984a09c847cefa48fc3bfcc0a47132fcf70e1a938e5b"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_untangle.svg",
+    "sha256": "7561e280d08e3e2f8aca1ca9fb2ea0371f035bf6b6bd59830992341a64e9509c"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_watersort.svg",
+    "sha256": "1cb907eabccd212cb54610bb71eb1d1d8a1a6f487bdfad5831056bdf6e943a0c"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_wordtower.svg",
+    "sha256": "edebb8c968626620e7bf84165c2679b20375b3e1d78aedc785caca318424f436"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_xiangqi.svg",
+    "sha256": "a1f5f9e807e4cadea7deebdc9987b87d2f1497429e1dc0c34f1d62ac191b4e4f"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_board_yarn.svg",
+    "sha256": "867f82bf5076f6365d67345321ee0f48c7c423825971589508ede362dc17f747"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_bobber.svg",
+    "sha256": "a0f97122408eb0a903d3ff56e1f2b2a42a676613c821cf99e343978842ba1246"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_bomb.svg",
+    "sha256": "da07e71cdd60e28dd411f37aa78305c9aba0234ee7bec4ffc053150b6232370f"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_book.svg",
+    "sha256": "020a0fa102372fadbb0a3610bdeb34ea11e87f056c837464577e7ffec3505105"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_boots.svg",
+    "sha256": "c246b4c9fc55ef0fa4060a8ada2d29cee08ec6848f4125555ceb2648df958ff8"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_bowlingball.svg",
+    "sha256": "133ac13a9cdd4d6d757bd33019de775a8de5f158cd7a65a317e78b92e7a3da08"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_brush.svg",
+    "sha256": "f6ee3f672e21b7b25069b267d783f3983771703b5cd1f6088c00c435da78a156"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_bubble_0.svg",
+    "sha256": "5e67b850fbc86c8ac5517ef10d9d245feefccce3b5f87dd1f1e664a3529647f3"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_bubble_1.svg",
+    "sha256": "79001e928e75aba152044f4951d3f320f28d2198e32dded09354ce162a9cd1f9"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_bubble_2.svg",
+    "sha256": "f84e8bf775b6c300700321bda656995c3481c0dd64bbca22b953f3363b650a35"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_bubble_3.svg",
+    "sha256": "33bd903441c27dd9d2b0f22a153e6a83e93a1eef4b968725e34d1c125646b3f6"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_bubble_4.svg",
+    "sha256": "a424e10a40c143dc8c52a612634f8a237f7bd5f8c7d2c4882976a2b8f4bc1d30"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_bubble_5.svg",
+    "sha256": "f5224a418fffc56310d78979a0ad6bcb1b20d5aa9e303d37cd627bff7200b634"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_bullet.svg",
+    "sha256": "bdde97247fc377fb2b2277f8b6f9891b8720391083785b734d05d8b603ed69e0"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_bus_0.svg",
+    "sha256": "e160fcc969016d348ccb1d1de9704a89595318a0506129846dee101672396b4a"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_bus_1.svg",
+    "sha256": "921470093603b583c97b9178aba03819fd06ee11c65a981a7725a50b149d3ac8"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_bus_2.svg",
+    "sha256": "009919e1f8890760a1416331c0292fcdc70f935739f8f266a1d7af9e0b9ccf8e"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_bus_3.svg",
+    "sha256": "6780bb8b9d0ef8a7aec9843057bb7ac0c532e3fd39334c566843d52b52939e6a"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_bus_4.svg",
+    "sha256": "4a1788667b45c3f963f1dd188467f57a6e808a795a1e3a8d7aa09b8eb4ffc28f"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_bus_5.svg",
+    "sha256": "3b6c17e05e51ecf5a9b298daae99393007fe5eece4cd412524328a304c60f17c"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_car_0.svg",
+    "sha256": "77f60e403224181b142b727828d3f88203374238ec4ec83c0bc86470efc6e467"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_car_1.svg",
+    "sha256": "6a9fc711057bac698cbc3930b645adc6d7d3cdeb217dba81159b7fa9f8bf77fb"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_car_2.svg",
+    "sha256": "b960c36cc188bb24d1a5ed7625be72aec3cc82c8b69934b34f1e33efc477e71d"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_car_3.svg",
+    "sha256": "cf5cfb0eeb87e03936daf2dd0462b8a5e08fa919baf3a30e12d160df7e9d9661"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_car_4.svg",
+    "sha256": "d3682a5bad2ffd4c0ccba58546c36f44e31288ce42e72370b343033798b8c9fd"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_car_5.svg",
+    "sha256": "2f556f24dc7562bb6d6fd4f7956be2cf41d665dc8c2afc080d5257367c2317c2"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_card_back.svg",
+    "sha256": "01f8581844f8b39420faa1a4dbf3f02be3f2eebfe8097d3c37e43c27ac7846d3"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_card_front.svg",
+    "sha256": "9b474d3d62faa17157e4089b03360105f5bd9af1b74525857b0703d4d0c297f7"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_chess_0_0.svg",
+    "sha256": "d35d08390424689b546d2dd9cc9647ae6e0ed766ec7c9ab6cb7f39e6c802d3a8"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_chess_0_1.svg",
+    "sha256": "5e369db51a896820a7950b92ed20a872e0a1e0a73ef9f7895188c8162eb32a7f"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_chess_0_2.svg",
+    "sha256": "cbcaddf5f61d73413a52071637950864e518f7e7ba6ee8658d8086f6ff15fa54"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_chess_0_3.svg",
+    "sha256": "c0025b229388507117fdedc89b30e525eba674af390d1f16f77087c5ca494d87"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_chess_0_4.svg",
+    "sha256": "c08650b680f853e13e76c76b52886fb80cbf29c76d74a6935e80ef9b162598d7"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_chess_0_5.svg",
+    "sha256": "2b45506d2a469929c97a230d824eab662cf4912299114a2ec795e356a658d3dc"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_chess_1_0.svg",
+    "sha256": "04b408fac691a3c4b74564b362e6ba3f8bced71c0d934d0d88680e0dcf720734"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_chess_1_1.svg",
+    "sha256": "9c9826c42d16ac35e5583ff5d362e714e816e68d1a12d8920d0482cfeae71ed8"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_chess_1_2.svg",
+    "sha256": "8bda787851f0b716c6723df47f35785d8726dc646a4a451b5ef75451ff015bdf"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_chess_1_3.svg",
+    "sha256": "a4e033c2ab813ce080122e95eab0a05a28250115d96bbc52eb86354c56722d21"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_chess_1_4.svg",
+    "sha256": "3a12c24c693101b018a3d7dc4fa36f6f18d570c33e3e4af6046f71d0d2e46cd9"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_chess_1_5.svg",
+    "sha256": "4c891819d59b0935c109552fd196547781df7cd62d45a6f14d157bd3bbda23fd"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_chip.svg",
+    "sha256": "eb1b197b0da064be5f61d682fab4866bfd8bedb234e07373f81a7e7378a62c94"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_coin.svg",
+    "sha256": "a3e75429eaaec690ef41d6658bfaaacf0445fe4b363b32466dc79bc7a3ecbec8"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_crate.svg",
+    "sha256": "a0710cd080bab4801c5f911507e1c1f422962841f997cc469b8dbd19ca672fde"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_crop.svg",
+    "sha256": "3eb2deffa40d7dedd7a4fcf66aaccb3a493ac7f5f9fe80a417d43c7e3b2a7393"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_cueball.svg",
+    "sha256": "68b276df13e48afceeb0f0f422ab697225abf394521bcd674daa6f356c0519f4"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_dog.svg",
+    "sha256": "b88abff1fb96d0a2b27947b7c7752925ab38a81ac611c27b1b36be41e0034ec7"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_door.svg",
+    "sha256": "65cd9549743823c9b126f96b251f2502e63cfbdda9b18cd3b019b16166867616"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_empty.svg",
+    "sha256": "47e90d72b67d20146dcb2fb5f3fabbe7da3f64157ab2f9e2d5bbc0d2398751a3"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_enemy.svg",
+    "sha256": "67c50874b33d0c12787a05dd8226171693133b4dcc80f90f1be28cfdddf35d78"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_fish_0.svg",
+    "sha256": "598e520f4ca7baada3dc7ef87c446cdaf6aa201f422219e109bddd4b6f16ad27"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_fish_1.svg",
+    "sha256": "a1b7d768b91a42e84332fbb7d4371a588b5312b068476252ff8b430bcab5dc63"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_fish_2.svg",
+    "sha256": "ccdaf08ce84b074c2977f797f1e1dc68898b6a5b8f860697cae31f29df6d4da5"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_fish_3.svg",
+    "sha256": "c4be0aa6ea08eefd085c13d825461301bd4ab931629a8fd70a1c87a50d61b6ec"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_fish_4.svg",
+    "sha256": "59cd640c8f1bc333587da85cd2ebfa7d072ae97ed346a00aca4b07bf854ff64f"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_fish_5.svg",
+    "sha256": "550b8d667dd44027d22fc40175a9cd3fb92d0d016e6a411b17e19b8d4abd745d"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_flag.svg",
+    "sha256": "89a8a59847db84ec7ef4d76524ff878735f6bf997e5f4c1cd2661da0bd70896a"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_floor.svg",
+    "sha256": "8fe6d7e0404486d204670f4320d5a425cf9f5701b0725d33a49262bdfb804665"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_food_0.svg",
+    "sha256": "66b4dfbe25e7f9e76b6f3ca11d81d3011fd5b49b0b7e441a13b307abe5b9760f"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_food_1.svg",
+    "sha256": "f863e1e629975681b0ff207bc402c03f06382bfb53cc03c56b0e6248861a2f88"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_food_2.svg",
+    "sha256": "da6f85c3beaf2850035accc84a5d46aa135971e41253008ea694f90e5ce4c4a5"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_fruit_0.svg",
+    "sha256": "0ffa9f14cbfe66dcf8c4df29f1f4d4aa7c9928cbc986c686d6e4b93efee65a9a"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_fruit_1.svg",
+    "sha256": "7130a7615f469f154a1f047f006881270354ca5d9da64df3e17cc2cc961ca416"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_fruit_2.svg",
+    "sha256": "163874e6279df991f2d93deb1d5a5d161211187cb50767eea151d20ee3a86b36"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_fruit_3.svg",
+    "sha256": "8e8228b37abb2e6c242cd45becfc424f42700d3966a465389b56b423d2772b81"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_fruit_4.svg",
+    "sha256": "fd52f53bbc3dadef159163b196d70bf2a49de449b1e3566799c6e0e518ddca10"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_fruit_5.svg",
+    "sha256": "f14da0e8f48a4782fe8345b0d6ad2c7cdf25063289d893a9a33be3035c24bcb5"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_fruit_6.svg",
+    "sha256": "fd52f53bbc3dadef159163b196d70bf2a49de449b1e3566799c6e0e518ddca10"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_fruit_7.svg",
+    "sha256": "8e8228b37abb2e6c242cd45becfc424f42700d3966a465389b56b423d2772b81"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_fruit_8.svg",
+    "sha256": "64f04009274515113c3ba3a60024d18ad633e9af2e317a751e43792b3627b750"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_fruit_9.svg",
+    "sha256": "64f04009274515113c3ba3a60024d18ad633e9af2e317a751e43792b3627b750"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_gate.svg",
+    "sha256": "78e079561add87bcb1e0c6262ff57f0fd46c5677553641082fc4ee9e7f6ba85d"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_glove.svg",
+    "sha256": "826451bbadef317dd81b3b0e120fd1f4ac66a2b65a208716765d18ad01dad069"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_goal.svg",
+    "sha256": "6003a04364d6c74d281d8da36d5bec2ef633593dcc21c23066ff69e37a59298e"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_hole.svg",
+    "sha256": "97ba2b01ffd5f476e7eafc7467b2a21d7d1842fae1d75d0fbc62bd3360593d1b"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_hoop.svg",
+    "sha256": "f30e22f0ef4d69152f83c4b324b9551d10e15022201a8ab04ecf41a23eff5cc9"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_lamp.svg",
+    "sha256": "9b5da29c29383c90df0095761c499957dff88d34d42d8b7ff1beda901adcbb45"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_mahjong.svg",
+    "sha256": "b0b1e7297c87583b93b47fe4a68c9dba2a379ee8867389ec8c1cd4ff797fb009"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_note.svg",
+    "sha256": "18612b4df5bb9a24d3493b630c084601af6234108204b36a2880e81651258183"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_nozzle_0.svg",
+    "sha256": "68cacd9862857e77f648da384cbbca6b46811ee2ad1fee4398d9c3cdc31a6a95"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_nozzle_1.svg",
+    "sha256": "60658e4ef24325d6c20b6f56288d68142d9d75e02759d506bcbc4c7adb4e1d0e"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_nozzle_2.svg",
+    "sha256": "82cd3f2ead44e91fb276cf2ea162dd54f285fa1b8614a63b601c6c00cbb4201c"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_nozzle_3.svg",
+    "sha256": "2cd5d6b12674f99d8dc1d637c9e67a581e176c4b096b84224430d22878304956"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_nozzle_4.svg",
+    "sha256": "27ef0e328ed3227e95d544856529de8100cddea36c69b83eb128a6a97b383244"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_nozzle_5.svg",
+    "sha256": "865cc43c34ae6efa147019e0ff4a1dcb3b663ecfbf98ab909f3e0ae78c77fb33"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_object_0.svg",
+    "sha256": "49bc5eaeb1debc1ac51fc1226a37ca3d9c6e742e76a3d80e527fc117bbdd1a5b"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_object_1.svg",
+    "sha256": "953657120ff5bd1c051c46303449780e4e70b1bed77b20a0a5dd938214d8c350"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_object_2.svg",
+    "sha256": "3ad158f93cf5f2943c3c4b7f1d112ca5c8c84a3ba916a742400a202300ab054f"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_object_3.svg",
+    "sha256": "9b7438babbeb7a00cf786c19674f9c9db02ce3bcbd7ddd93aca4a791f39264a6"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_object_4.svg",
+    "sha256": "801e6d84cf0ec4f75afdbd5d7a716867c859edf666e7bab8726f906cf8ab3438"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_object_5.svg",
+    "sha256": "a4a724d2355d7f97e1a3921e28fc33e3ac157b52a8cb2bcc49c0d51ab81d974c"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_object_6.svg",
+    "sha256": "0283d291d39e2a01e4e4a26fc43e86de92760e702e105707219add033e38da9e"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_object_7.svg",
+    "sha256": "0af0cae68a87a2698d31cb9cbc3c383a61cb6d101e8cf4a76773096dbee23a3b"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_object_8.svg",
+    "sha256": "f1eb5452c4277d4e5069aa77d74205c854456d62ac1a7b7a0251d31b53fd5a57"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_paddle.svg",
+    "sha256": "6e9c5050b7d08c4a28a138bd1a4fd2e04c9c74273bf201733ac6e546b996936e"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_person_0.svg",
+    "sha256": "98119f6f0ce69eba874682fccc576295fc3b14f8789e622807451ee1b216b37d"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_person_1.svg",
+    "sha256": "72431573ef286cc639234ed785d21a279d03fc692facff46b793efa976734720"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_person_2.svg",
+    "sha256": "fb0562b7e233e26a137c64dc6912d88da95d4399b9da43cf9e57d09ff165e051"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_person_3.svg",
+    "sha256": "92ad088ac3bacce425b8a331f6659020eddca42f08c85c10e760571dfdd98ad5"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_person_4.svg",
+    "sha256": "6f2e6f7bf69e4493143c4155b53ed6db9ba72ebb1a6ade6e0f2aef07c647d127"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_person_5.svg",
+    "sha256": "50d306d3dff7908878e6c67a9de3a7ef89e614305bc93540d43d3da2edc6881f"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_pin.svg",
+    "sha256": "4a2f7256e80ee0af1f7f9d8f60238c7cf88a969dee60377f91bebc05b63c1448"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_pipe_0.svg",
+    "sha256": "63978219b00d2fbb98190d276cd636dd6eacd57f7eedc559757bdc6e1521dd29"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_pipe_1.svg",
+    "sha256": "30032d822cef0abd304df15eb141470bef4730287e25b23399a32e995272c760"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_pipe_10.svg",
+    "sha256": "fd807d15719ceb6e365db33c0efd018cd1dc98d3b140d6ebd5223eb580ca2ee2"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_pipe_11.svg",
+    "sha256": "d6b6b138bcd251d0dcc9f0a4947c64bc3ed56871ce56856b0da4f9db79ad4bbd"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_pipe_12.svg",
+    "sha256": "00c960f3d8ca1c3a8034347111e51896c152472b3e940223ebb669bd36ac65d9"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_pipe_13.svg",
+    "sha256": "63d41d22c634d40a1bc0981574330855958912775de8e210041839c4424dc4c8"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_pipe_14.svg",
+    "sha256": "0a960858835e685111578b4903d50693562856c4419903a74b9f134bab5b71d6"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_pipe_15.svg",
+    "sha256": "e39a650373d83f1ca672bc2e32bcb17cf9ec5fb7a102bada9d016ca8a8556466"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_pipe_2.svg",
+    "sha256": "7e1fa1ada9e0d27f9a5947a7eeaeb5b271dbb702fb0f6c11fb2648b335ba5f7e"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_pipe_3.svg",
+    "sha256": "0f854dd7483c60915981502b55c2bc3c086f66c5634f8c2f022ec4619e5eeaa3"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_pipe_4.svg",
+    "sha256": "847ec7218fb4aa6e13fd604dfe733769fa1b5ac456f5503b3012896a6d6043a2"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_pipe_5.svg",
+    "sha256": "f9b133d8f258511610f516e250e482e707d19a830dab9e9b9f83008f38ad593e"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_pipe_6.svg",
+    "sha256": "400983829e42587a0afecf4812cebbcecbfc35d5503f38c8bca22c741e04d347"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_pipe_7.svg",
+    "sha256": "e50ec2dab5aca68d6104e769ca534c78d3117a196a8e8725423cd2b4e7cb9041"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_pipe_8.svg",
+    "sha256": "a07124575469dd00bc9748a0bc5b269ea6563419533306cc517a037a14102578"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_pipe_9.svg",
+    "sha256": "2f9eb65e018fdba8adf4dc1e8d358cd4cc7262f73bccdadddb5a209f7dc677d0"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_plane.svg",
+    "sha256": "154d5ec7d6aa717a87e51dde69559c7a9619f50eb4098e91dd28373c5a9250ff"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_plant.svg",
+    "sha256": "72c1dae285568f8cc98b30793fdf82ee693ebc2c06096db3bf9bd8892c8a5201"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_plate.svg",
+    "sha256": "ba53e364ec432d58021f8b9d905f6c1e6570a75497b52158b22df103c25bbb7c"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_platform.svg",
+    "sha256": "c055c11b63958537a6ba7bbf145263aab86e7de2467f1856b14ee87e43ec9147"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_poker_front.svg",
+    "sha256": "d2afda3d75357e2e69a42ddc563bbdb39a615330c3e7a8179b4471df414109b0"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_potion.svg",
+    "sha256": "6dc09738a39a9cfbf52b4fa89205afbde90714e4534d150099792ea94723ceec"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_puck.svg",
+    "sha256": "4887f3f4f7b53ceee2c39fce6b06d85c5a26138daba4e5df7da811fa3f34f405"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_reel_0.svg",
+    "sha256": "e4f5718503adedcb90e7fd11dc2f9d6d8b9b5a12d6e084af04bd01a67d08ebd9"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_reel_1.svg",
+    "sha256": "56529e2bbf0e6a83bc5da4609f1fb888ccaeed0aa6f1a84582409f4d97ddbd18"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_reel_2.svg",
+    "sha256": "34f8cac5199b96be05370c4b59a6178008c43396b4411aa13e9e118c7d655eb4"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_reel_3.svg",
+    "sha256": "5ce6cdc9a0e169734f6c3876152f06b3e4bd55bfbfb24a9034133b8bdffdd798"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_reel_4.svg",
+    "sha256": "c11d0783a07e2f168b95830f2b5bce4da359b6dfcb332d92449f0ef3070b6449"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_reel_5.svg",
+    "sha256": "1cf2b98e6ec286c5ac52c1b29777aeebd737d2af9edf2f424df90ac9b32e1fed"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_ripple.svg",
+    "sha256": "4fa2fdf8eac974f07eb7a660b6231f267062f65a147b6a5f999bd88f0c7db0aa"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_robot.svg",
+    "sha256": "b9a0eb0bbd42f6f3f5c8437be0c3522f864f1a4bbad5956c81f06bbdeb65f52d"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_runner.svg",
+    "sha256": "51a7f16a0d10cad7e96c9da799b1700c5f91fad856c96363b084f3b488590e5b"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_sand_0.svg",
+    "sha256": "fe4a8ec9175093246d4c68e045ca370cecd8133871fdcff79cef2649d44d863c"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_sand_1.svg",
+    "sha256": "b074da7125de2ddf71660b1cde4fe5371df84f83b3f38b4e38e487df37a4d69f"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_sand_2.svg",
+    "sha256": "5a4444e93f69bde6418b663c03457817e8f7a77fb4182dd27c2c7b0296d41eb4"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_sand_3.svg",
+    "sha256": "32131b72aa3e1a67938821d51a7cedfe3d39099b967bca5918bdcc0195db3003"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_sand_4.svg",
+    "sha256": "dbd828753cefb446c1761e93285fc76acdc1222fa3f0788402fba57612327685"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_sand_5.svg",
+    "sha256": "17d8c097f80aa4f49a13eb43e6abc22afd755f36bee43633f63f8b7537551f54"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_screw.svg",
+    "sha256": "0107cebb502e4bd3c531127700b5dead741bd2a8635add28e7bbe4c15beda4ff"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_seedling.svg",
+    "sha256": "2ed4373508791670d47b40542b34847f351aa20d424c0a32f5c78dc62082f1fb"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_shield.svg",
+    "sha256": "fbe089c9fa4c2b4c2109b0a863e24ef92fe348a3d6fb8f60a510164c8b589241"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_soccer.svg",
+    "sha256": "5cc094a8ba5d90e3f3f853be90b1e4cd0d6d47508bd457a84cf0eba9ff36ef1c"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_sofa.svg",
+    "sha256": "51cdc2bf43d02e87528c8a1d859dde70bf709166eb4dc26663eca6295a4f3e9f"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_soil.svg",
+    "sha256": "f0aaa48c10c920b083faf95b871d2f499489c66f2ee16ecbe00e688fd91eb83a"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_spark.svg",
+    "sha256": "cee485079a07852046e7d3de3abd3cd4a0c9039651310c1a94d5962911f16fd8"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_sportball_0.svg",
+    "sha256": "7f16f0ce44668efdc016472274a97ebae333b867b7c13f2eaaa1911db83ea71d"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_sportball_1.svg",
+    "sha256": "094394e725fdbad0dbff233d7001ae2a00a3e189b488f77664fb85e9097d7b2d"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_sportball_2.svg",
+    "sha256": "2887a9f17fb2a611e02d18570cd9acd6501b9cdb48b0aecc4517bacee92a983e"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_sportball_3.svg",
+    "sha256": "fdf3761b7508b0bef446538b71ff9877a0d64a197736971800154dc27f7504de"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_sportball_4.svg",
+    "sha256": "14d7d2cabd84a62816b6ae0b08d662c26d31220318289bd12d12dc5efbc67485"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_sportball_5.svg",
+    "sha256": "f8c087e0bf76a90d2a50a6bcd691b235902ca9e9826790ada97e7feca57b9d7b"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_striker.svg",
+    "sha256": "8db385c3881a6ffd781e91e32c02da98722a764d21dbae7c2ed7e599b02aacf1"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_sword.svg",
+    "sha256": "e9a6c70ee95965f921ce36613655f72d02ff125cf9960a5ba64ae1161ce12f9f"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_table.svg",
+    "sha256": "84905880e82bc5c5382abd9482fc7562ff2b8a41e343cac5a63e44fb043b635a"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_tank.svg",
+    "sha256": "8379b6725e7a3ebbe56629c9f1428a9d7d92d4c7b39f147f36767679bffa6e69"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_tile_0.svg",
+    "sha256": "170bee62d0e3e3aa0acebbb3fbbaaecf31018a463e876864e595b0c6e6d5547b"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_tile_1.svg",
+    "sha256": "067e042d6ce276f0df3820a54617044924dcca2578baa7c56398f52f6b8767e2"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_tile_2.svg",
+    "sha256": "38a2183e11788e00263e8a3982c1defca1ee0e4bed36169812ceb9a010460a8e"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_tile_3.svg",
+    "sha256": "3a7a57258d5c27ee3a34b8a210c2ea480b0cc5242620ecdba6902e795b1c81f8"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_tile_4.svg",
+    "sha256": "53e089d06157cce1309443570ddb3299ede513edadcc5036afef612a970c4bca"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_tile_5.svg",
+    "sha256": "e05fb52b468841620c8261f6df9df1654ddc581b241e38dddcb8c3469dc978fe"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_tower.svg",
+    "sha256": "687d292bdf53f7eb695b2748194d3d64605811a364e88242e6af6d5b043b1852"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_trophy.svg",
+    "sha256": "c49a8cdf5dd17b1adf50747487865e3fc9895e37a512c714362a5ecf66e1c2cd"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_tube.svg",
+    "sha256": "e3bd47cf7b093a51655269a75bfa8861ef3dee8e92df9eb769d46962e490cd45"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_wall.svg",
+    "sha256": "ea991e0a4b7d4b24231da4725b19231b856212646d3d3351d8ef3281aa0c95e7"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_water_0.svg",
+    "sha256": "d4f6a063bf9e53f44d9bc7fec6256b360f20d90146bfedcd4b0b297dcc05cacf"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_water_1.svg",
+    "sha256": "59d2b57902130334d153ea8a85c52d35233cb81b1ff0882c2c7509461a805650"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_water_2.svg",
+    "sha256": "a188f27523ed2c01b08ca372274b4b67ca0ac100f0dce7145f7ee399e55a7585"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_water_3.svg",
+    "sha256": "69a271538823bbaec174f10f57f152573b521602317c971f9440bb9740bf2562"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_water_4.svg",
+    "sha256": "0880305fc14ef7df7737799b8a280b596ba958655272f1dab47caa30829433d0"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_water_5.svg",
+    "sha256": "0a7f6dc1232bddacc6351c87a4d5723b4c0e936a3382c65ea054ba162c4f07cd"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_watered.svg",
+    "sha256": "a2598daa2d486a65819151de32ad12c34003e53f6d6c3034f40ab2251492e502"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_yarn_0.svg",
+    "sha256": "9f671060fe65edd47bae9feb9888c304d9ff9c8fb25a5d6d7e217368d9394c08"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_yarn_1.svg",
+    "sha256": "d4cf65d6f79bd1480e4af351fc8d8a42b29a781d2c762270e10ed8b4f1ec2dd7"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_yarn_2.svg",
+    "sha256": "a62758668cca12503abadb155919e3f775c6cd64d34317fcc7861807617596f2"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_yarn_3.svg",
+    "sha256": "6ffd5cd876a41b521952d2b5e7cb5d6ca9de4155e3c3af0830190a193c85ba75"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_yarn_4.svg",
+    "sha256": "fd64b3e1c8f9c27fd5a859fc9b5dcf2ec2c98e1904503902290c5955bbf32a59"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/exp_yarn_5.svg",
+    "sha256": "43c8dbd8428bcdb7c57eb6246d2687703e75cf64d5b224c2ddfcb219bf4c3a8e"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/expansion_puzzle_scene.svg",
+    "sha256": "48b50a40ba7750c9d0067df6bc6365a2b2b8055198166fe12aa27538daa97f53"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_2048.svg",
+    "sha256": "6666b1804c8e352c9e4536c376ff50bf83078245b449b3f9cc1fd0f0ea9e6938"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_airhockey.svg",
+    "sha256": "5d52cbd87fb13b30b68ffa39f876a962d4c5f2efbc461a37ead334be9213a061"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_arithmetic.svg",
+    "sha256": "495f5a201f18fbdfa6ed88527f2fd34538df77a680dea0b687b1d2f43bbd0926"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_arrowclear.svg",
+    "sha256": "e341915cbdff6b136662857e1b819e227a246bf71462176013482401b0cf6234"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_backpack.svg",
+    "sha256": "b7780c789096bb92d3ead27259535cc9913d359ffc9de2453de808675b76e956"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_basketball.svg",
+    "sha256": "bdc2abefaee0fc66b5b15c7c99e89bc9b6c8bb784d92bf6bfee27b2901178761"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_beatjump.svg",
+    "sha256": "904bbf92ec2e8fc99c1364c17ee26993ff37cf1b497e6250b0454bef6cf632f7"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_billiards.svg",
+    "sha256": "707bfc0feab89110881768bfa38e8b60a38b5ca22fefd692b87403b0072f3f3e"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_binary.svg",
+    "sha256": "be2da34d0f3d919150efa00968c062bdcce8db3ffc86b8faad8d00e4cc70cd87"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_blackhole.svg",
+    "sha256": "6e3c265fef5e3c4afe7fa1d14718967b52692b36bca78af40b04a3c938f65846"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_blockfit.svg",
+    "sha256": "54d9c318c5152fac503da6b95d04331b5c4d2ad421c28f016dafa66a7c86e4aa"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_bowling.svg",
+    "sha256": "31ec73e4bb420928ac833be226a5b2b1fc84b97a7f0c90129a131cb1192a5806"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_brickbreaker.svg",
+    "sha256": "b1c6c72466a38ab008fe5e5b89cd8f27b4d3b3bc38ae6c84b850df631b4d6325"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_bubbleshooter.svg",
+    "sha256": "05e6f7ed8093af3fb8e10a19c3ad0cacf4195e33ad57af5bd85625ca15b082a1"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_buscolor.svg",
+    "sha256": "c18b084f52995e76defa213c9fe70cb2a03685e59b4676f809ceb66711f5a8f9"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_characters.svg",
+    "sha256": "4f08c8fece0ec4df2b6deea14d86c9428283d4433046fd580e14ba4f93c91338"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_chess.svg",
+    "sha256": "45060a1681a9beca744751b5ced0bdfec024d93b0f436daef7b547b894a23da4"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_compare.svg",
+    "sha256": "77da4cb3bff44da58056b47c88bc0f9b24cc64624dda99b57aadbe0f2a16235a"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_decorate.svg",
+    "sha256": "21bbe9a5a6845c6b2ede9fec4bd69cc5e7767a78f1ce6f8bfcb58d7ae2258a0d"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_differences.svg",
+    "sha256": "713053241f991a9bbe64fd87a43e606294b60ba2ce64bb74f392688e825203b1"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_dots.svg",
+    "sha256": "ce11aef54af10fda2f675e2ff381ef35150f40c0166fc503c6bea32b17144f7b"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_doudizhu.svg",
+    "sha256": "7423f6b1c54b4bcfd387a05b58b4b55eaf2a5a7b73dc3c78c77ed82c36e46d98"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_drift.svg",
+    "sha256": "d942ba5924cadf695967570a9f9d3294d647ea4ec202033105a4281458f0c09a"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_farm.svg",
+    "sha256": "28a0947f53fd68839ace7de086969799fb0603a12bb90bbff460208c73111dcf"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_fisheat.svg",
+    "sha256": "e0a406434d1afb565a98b23dde8d2bbd1185638e7e581e2a77e60b1ab4ea3c94"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_fishing.svg",
+    "sha256": "5aa2adcd09eb97a15619d66cdfe05ca57c18d9327d7aca583d0e1df6ef66a5f5"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_flappy.svg",
+    "sha256": "048d54604f0ee6d931cbcae4ace3456001c1a7e5dca9a296a42db023262e9371"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_flood.svg",
+    "sha256": "bada10ed3a6264c18891e58bc11d4395e1eaa5da5a1e85a3131807022ddc1abf"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_fortress.svg",
+    "sha256": "c546827b82506c8021a172d4acd846f1c64ee04a667a2e02c3fe46067b974b45"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_fourline.svg",
+    "sha256": "c75c134a144d5751ba26037b0bd02a9e55816c1ce12be1b1b119937abcd195e9"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_freecell.svg",
+    "sha256": "db30a2828a385e04d99b672b9c9e896781b7694c13013a85d6a8fb8d0281602b"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_fruitmerge.svg",
+    "sha256": "319d260a37cfc117fb5d4aa54a0f14009faff8dc1976a426defd5d553b8e4ce0"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_fruitslice.svg",
+    "sha256": "b56db058d70db3caaec169956a8015d3111ec857ee284e3b93a7c65070938760"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_golf.svg",
+    "sha256": "f69dd7751e1dc2ede3c0c4c09555989cb6cfa92076038942e19b438af6a9e69a"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_gomoku.svg",
+    "sha256": "5fd9883ba06b91ce91533451347729d2408991d3b1cd07e64cad2c5ca9708f64"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_grapple.svg",
+    "sha256": "4a6bc0d27a18fc9e5e41fd6894225c298923a32093b21bc2aa1f8d0e58295f0f"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_groupclear.svg",
+    "sha256": "57accc828b8bcc493ca1e8bcdd7d309ad84c785cdf5cd0cd523078cdd0428560"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_guandan.svg",
+    "sha256": "5bc0ff47171be0458c643aeaa1ffffdf7294ff8c8cc3c85392bf26dc6b5bc859"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_guessnumber.svg",
+    "sha256": "2abfcec906b58c023bdea7dc4e20c7029ca6acf078a005b0ee582d6761a905e0"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_hanoi.svg",
+    "sha256": "6cc7f8aed43af880d16f63bdfe96ab7c8344c9f7d7ed1115c9c285fed60e1aa4"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_hiddenobjects.svg",
+    "sha256": "5f76e21d485c104c8ee1ce7cc29f276910fe55062d172ea7ea7036f0fbd8781c"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_hillclimb.svg",
+    "sha256": "bdabeca81aae2c6f9897e760f923cc784b91db02ad01aee890b948963289c106"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_idiom.svg",
+    "sha256": "f09769a53566f819284d0cfef2b0c59c43837325ea5d9edef229a772506bb4ba"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_jumpjump.svg",
+    "sha256": "f1f4dc7741132634a09db389048625b3c99c5ef61c23bc2b08509d4261e49829"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_klotski.svg",
+    "sha256": "af775c3a6b3f4ae9f645cf3f4d894810097707432d35ed87483e527d874fde7e"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_lights.svg",
+    "sha256": "ac9e317b6d246fd629046b09029adf6341cf209a5806433bad59f4b8752a09f5"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_linerescue.svg",
+    "sha256": "199fa8e7b3e282cf476417404dd2bcfc94c90a95ef11078c0e3e4b4ad1daeda8"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_linktiles.svg",
+    "sha256": "a4d7131e7c7bc5b2ce7c8a0061b83a55108390ca806bdfd40010a25a9aced951"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_ludo.svg",
+    "sha256": "3cf9c85db54d9d59f54a5f09a99c459e1d06944930b1f8a85d37798864a0cb62"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_mahjong.svg",
+    "sha256": "2480304f528af22b9d1f65da60d5fda48444904e1c6445f1be96a5008e18af14"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_mahjongsolitaire.svg",
+    "sha256": "ccfa6dbba539b05bece2cf4dd8af7d5c15f5ba17966746215dfb05b5076e9d66"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_match3.svg",
+    "sha256": "023493383de22a9e1aa3b1ec08be4588b12f00d91566dff1fadec0d0076b61bb"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_maze.svg",
+    "sha256": "99ac6d12c60b5467c66c4c51544ec8083ee635ec8fad7d7d79d62eafbbb92f0c"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_melody.svg",
+    "sha256": "1782493e304e082cc826ece155bf74abed074168dce07e84265a9e1b52681ed4"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_memorycard.svg",
+    "sha256": "149f0c6b3ca151cad19a58c8440fd33f1399cc5b8c66d00eaec1498b8cff5aad"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_memorysequence.svg",
+    "sha256": "9937650f635bd4fc93a8152dae85f6c55322e68808f70233ced901d2702fa187"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_minesweeper.svg",
+    "sha256": "be25ade92921e36d63e822a6d7bd4f77fe0cb88d2863e8b8ca44878729d763aa"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_missing.svg",
+    "sha256": "3fd02d5bf13895a165cdf4ea5ede36156d2cb7854b7a276b4ecb8ba0fb55269f"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_nim.svg",
+    "sha256": "b86c95a6ea87a5abe4a44e7851fc85e77f39d544de20340b6b53d4544898a89a"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_nonogram.svg",
+    "sha256": "9b6c1636d6b7faae27056eed47c95192a75e491358a77db2e5707009e27c2c20"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_onestroke.svg",
+    "sha256": "e80c1ff9b5a0ffacde656549d54078de2d06379307df2397abff715de919abec"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_parkingjam.svg",
+    "sha256": "5c45ce4813c8b794b24499bee1ba4a6b0bd460ec8ac4f90a788f4f0401237a02"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_peg.svg",
+    "sha256": "958d0e30bf8c58228862b07659eae3b782b01e153c6f03290ae2eac83baec7d5"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_penalty.svg",
+    "sha256": "62b57cf7316b5475f857f2e11aa01bb8025c67328ece5d1a61ecb06ba3619213"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_picturepuzzle.svg",
+    "sha256": "3d195d79f6283aa198cc60c38e5942f823ad1b42eef76370859c182e4029dbad"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_pingpong.svg",
+    "sha256": "b39e3168c75e2a62a1b87edb55ad7bd274d7ef6c59d03ccaf0d8ca8acee27460"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_pipes.svg",
+    "sha256": "8961e458ca241658c8f56c6e29e9feefd6c706bb0a623bcd6a0a109d66fe8c85"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_platformer.svg",
+    "sha256": "aec4c9100b81cb714e1bf98bba48d188e2709b8a877ef9578ee9e308a8a8e7f7"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_reaction.svg",
+    "sha256": "d88cd713bb1286c2d7ae8d9fb22d7ec748ea1fad249955a1cedd473d8e3a3303"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_restaurant.svg",
+    "sha256": "f9a9df96a0ab03b9dff85aa471508b8c60f628d6b23cc7165a144b4aa15099d5"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_reversi.svg",
+    "sha256": "dc59e161933e76d555d49c289674364a7c9ce37c2a1b7d6eb40b74934f8da48c"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_rhythm.svg",
+    "sha256": "ff852d6375d23a90f2746bb3fe972e5bfcf6fde7515999d0e82b1b350acfbc32"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_rollingball.svg",
+    "sha256": "52cbb8193974e8c4798e8c75258c2ea3e719aa3bbf28c21b6a1654065524e33f"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_roomdefense.svg",
+    "sha256": "89b246949bf61835198515faaabd243bbec088bf20d45123b3624a4b55cb1d76"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_runner.svg",
+    "sha256": "49b71e7bad3cc0171d736603fa9e26a885e2945cef78cba3f44282baf9bb31d6"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_sand.svg",
+    "sha256": "8fb6550f7d58b143e4e54657bd17e0aa115df6aadce3be90d014c44e17a06280"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_schulte.svg",
+    "sha256": "c33c9a34fbceda4db539a3c9dfa837c40b7e512426b54494c776fc56541e8509"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_screwout.svg",
+    "sha256": "98abc6d29d4d9862b3430b8cdb20c95336cd383c1c9434b0bc48044a73bf3511"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_sequence.svg",
+    "sha256": "78819b3bd3b86d8d57f25dcf606cd370f28fa58f0a6fb2b5aa5310ee8b75a66c"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_shooter.svg",
+    "sha256": "4c6e911600e563c0a821fbf7ba13ed7dc75da898d0feaa2b17a69df704645ca6"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_slidepuzzle.svg",
+    "sha256": "1a65ff87d0c4aed7daa008bea0243052d9c51ee8c726bf1b7156f068f98db260"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_slotpair.svg",
+    "sha256": "035dc514b4d10fb9918cc9f7c6c854212becaa71f09ab2de2e81c87443eae0ba"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_snake.svg",
+    "sha256": "766bf94a5c4381d9893dd330a2b1daf15f9ed17f28f437abdb2d1a39e8615dde"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_sokoban.svg",
+    "sha256": "5c560b4925cc69c3b0c6967fbb42cfb309f6bf207f6b57afbb8165a484cbf015"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_solitaire.svg",
+    "sha256": "2ade190bd5fae43a54de9515b49660c1fc8fa0b1e86884c25faf9dacc8c349fd"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_spider.svg",
+    "sha256": "32d4f3aeaa279d5781a90bfad46a25088c4d828393203cd28207b4d31a22f07e"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_sudoku.svg",
+    "sha256": "153737f8e0c96f22840caeeea1662ff24f27fc549f63815ac307b50cc42c798d"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_survival.svg",
+    "sha256": "7787457562f02568ca85ffc3dc9c7b0ada3af890ae73f081ef7d9dd3874a58a9"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_tanks.svg",
+    "sha256": "2993a40fe0789c462f056a9d80522cc167b682382eff894ab5afcdabbb59cd2b"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_targetsum.svg",
+    "sha256": "d11129626fd1b86f041fdd593781b8defad78fde00e7693a9d15938267d3df10"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_tetris.svg",
+    "sha256": "c6000ea79fef46a4183cc4e510194c76cd35de1d1039be1f68b80520170f22b6"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_tictactoe.svg",
+    "sha256": "c83a9841dcd3fe75da06ca9d8c457396223b104e778c499281d62db895b135cc"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_tilestack.svg",
+    "sha256": "096ccde1a0ec46f292fea3352cd792c7b85fe5306eb98967314f8ebc5ec0c084"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_tug.svg",
+    "sha256": "b529108d94e6860d22e746a54d339a80adb0173c7d5a2d04cd97aa49431ad438"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_untangle.svg",
+    "sha256": "5ec6a64873c8b97096922bc17610a902ceb5f429c5dc84b571a1f4478dac2895"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_watersort.svg",
+    "sha256": "766a90a8dc84b2228c1eff01d0bdf68317eb00ba97a5c572e8ac30c7fb4d4023"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_whackmole.svg",
+    "sha256": "c0129edfb2f890296d729608044ca3e19885d5db08be6d63d99cd17d84ac1996"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_wordtower.svg",
+    "sha256": "025622da2862cc515c32c744b1dbc5a19940ab24c40848b82fe53a01948940db"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_xiangqi.svg",
+    "sha256": "3316a694e542699562a710cdb025e7b9f61d3cf1ce8b9f12c8d3ded485c1f643"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/game_yarn.svg",
+    "sha256": "cf2c988abf641202f9a8c44de945139aca37059b2f6bf4438db05349a1321cc6"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_2048_surface.svg",
+    "sha256": "7942d139edc3d04d9af29f8ce9c64464939a2343c4ed9187160c211749935866"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_brick_ball.svg",
+    "sha256": "651717666f0888eb4b95d70e76659cd3f284d97f74878c8db3475fc022a01929"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_brick_gloss.svg",
+    "sha256": "ff2e3307b2e3a82e16c8e498162e81b9282ac861fa80b59c91168e3d3fb55a71"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_brick_paddle.svg",
+    "sha256": "8cedb092fb99fd292cd92e00a21160d841817f137d518ec52f13e38b84655715"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_brick_scene.svg",
+    "sha256": "bfce6b48cc16028ec6f0ed88b7ecd250aee101305d2b368f9868008b567a796f"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_flag.svg",
+    "sha256": "551a185c977324db392b12802934d89357d5384236eecd95d387386bf1af8707"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_gem_0.svg",
+    "sha256": "2324307b68d4cae4491806a938d4b26cf3249d3333e8833470c6d7f2efc648bd"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_gem_1.svg",
+    "sha256": "9602b6aa0b1422658f9f285a895d9d9bd171207c9357d8ad8ab647a6583660bd"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_gem_2.svg",
+    "sha256": "ee508320847ace2ff78edf4d5ef349500afdfc0e2bbf287f742bbbc03929b05b"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_gem_3.svg",
+    "sha256": "f8c7684fa8c8abf20a5da5f6e89c005a31e0db2ecaf4f0aacad2a30f226d77d9"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_gem_4.svg",
+    "sha256": "2d53d02eadd7ffbe08acdef916a4520afd7169dad4e9dfdb7f2c557ff101bbe8"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_gem_5.svg",
+    "sha256": "feb5d6c91e1b84f6c2ca603f05f5aa87dc255ca9cde3f3a449b8eb6b8ad6aeaa"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_guess_key.svg",
+    "sha256": "69835b0ad03f85687ba07546051fcc03585bd358204f6f33083bcee1c0dbe107"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_jump_frog.svg",
+    "sha256": "585c5f53b6032e9ca99d53498f82e491f4310885c1f46d624cda733e32735c0f"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_jump_platform.svg",
+    "sha256": "f538a32b9d2e6e7effed5e18665e7fcadd89ada2b109c521d266c787da34ae87"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_jump_scene.svg",
+    "sha256": "64351fd25d4442631388d211c0c555ca28b5730b65b2af91eda863207b3de2da"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_klotski_board.svg",
+    "sha256": "806edde008de62985b3524270c8eeae9fa2d64f5a12d7d57adb449f83e15fbea"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_klotski_horizontal.svg",
+    "sha256": "5e27bc15a2afeaf8793ebdffc2a8c872ed467e37d469f842ad0855eb5a736dcb"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_klotski_soldier.svg",
+    "sha256": "a124b3a972453859ebce1b569e40eb53d4eb9783635e8033f00fb951638bb889"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_klotski_target.svg",
+    "sha256": "99f6ab7298e995a3a17bddf52e94ce4c822f62fd82d19c39e96a1029fb4d200e"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_klotski_vertical.svg",
+    "sha256": "18aca30c1d2c423e9bfbc9a1056db490f46ef2308ef76553e4f3f4f749dc70a5"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_memory_back.svg",
+    "sha256": "a25cf7481a60c3d7c187ce4ffba75d3ac449c207bb1f517ebb34b628709ccebe"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_memory_bolt.svg",
+    "sha256": "1f844a0567cba27c12b7fc6fa105321bf6036a63bfd19258adc9e220315b9fba"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_memory_clover.svg",
+    "sha256": "a3e7a148433bef933b0a1c3e6e0f7f8a503b6ddd923371ee9e825226f8f5749c"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_memory_crown.svg",
+    "sha256": "d1dd994683da1ae3a92a5f1596e32fd337b56cc7cdaf749e30739b54b3421a43"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_memory_diamond.svg",
+    "sha256": "b5978a99f6895d7cbacbee1a050060b4073248de9d9158b8ab521d10d8f7c687"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_memory_flame.svg",
+    "sha256": "a8d2d862b2d359da194425889685bc545f17b3f1705edce6a402d120a9f8feef"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_memory_heart.svg",
+    "sha256": "7b327a03fad42445cc80ecda0c14dca5ccef3db6c6c151800ac182da80230c99"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_memory_leaf.svg",
+    "sha256": "c7e8590199a651963c50ea33b01a7bc679ce98890903e7ab47f6fee7368acfd8"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_memory_moon.svg",
+    "sha256": "173021de2c7064955c98a5b5bd7c114906fc3760f6b2605277924740150c151e"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_memory_shell.svg",
+    "sha256": "d437e97d28e4c520c1b94fa2bde7ed55a61001a442354fe95ab30fcac77ea986"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_memory_spiral.svg",
+    "sha256": "223ab37ff775a36e84eff2228cadb0aefcf0daca283b04bda261166e3042d728"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_memory_star.svg",
+    "sha256": "183cbdb34773bd1c9e968c8ed23e243a070299e19e2d9e51a33b5b2e82ff36a2"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_memory_sun.svg",
+    "sha256": "d9f5fb15d2fd73ae62932a01c37af183efce7b7e48535a9567b35b1a689ec302"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_mine.svg",
+    "sha256": "8c7802018ed0e6f854c39a3751bd68031c9faee2e517c1c3dd7cd4d215721132"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_mole.svg",
+    "sha256": "e78617ffde500ab0bcea67a953e2e1f14882472eb2567249112db60d7f99bc00"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_slide_tile.svg",
+    "sha256": "69835b0ad03f85687ba07546051fcc03585bd358204f6f33083bcee1c0dbe107"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_snake_body.svg",
+    "sha256": "7444b9675c40086ad93f12a661da8a22250bb53046188e5c5fd142b34f388d87"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_snake_corner.svg",
+    "sha256": "1d9eca6a47dfccc54778af0f2360dfc542627305263c5d2cae44f6d0aad2c1a3"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_snake_food.svg",
+    "sha256": "fa96241c36b1c90d7e84212a80e69d6760453b74c17bade8cd6f1a5da37be622"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_snake_head.svg",
+    "sha256": "4f5fe574c4e14ddf51bc3d13d0980593f748efe061ff2377522efd0761c23379"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_snake_tail.svg",
+    "sha256": "2fd1a5e3c586eb6c8452fda4f0f9640027f78692fa208fa5faacab782b0dd002"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_sudoku_cell.svg",
+    "sha256": "8d7a12fc2f707e7665d1f883c3c537529dbd509fae5179ede1a5986f382cda4e"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_tetris_gloss.svg",
+    "sha256": "69835b0ad03f85687ba07546051fcc03585bd358204f6f33083bcee1c0dbe107"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_whack_hole.svg",
+    "sha256": "449d6cd25cbf05bc2469e43321c586151fcdd5b8ebfbb5c628a8241ca78263d6"
+  },
+  {
+    "path": "entry/src/main/resources/dark/media/play_whack_scene.svg",
+    "sha256": "9c11c2ec51109016ae2257c1f3316c34404148897963a1257d7fc7d3e022b382"
+  }
+]

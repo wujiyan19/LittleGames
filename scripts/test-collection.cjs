@@ -11,8 +11,7 @@ const before = m => JSON.stringify(m.state);
 test('catalog: all games are distinct with nonempty categories, bidirectional routes and localized assets', () => {
   const games = f.data().getAllGames(); const categories = f.load('entry/src/main/ets/common/GameConstants.ets').GAME_CATEGORIES;
   const routes = f.load('entry/src/main/ets/router/GameRouteRegistry.ets').GameRoutes;
-  const expansion = f.load('entry/src/main/ets/model/ExpansionCatalog.ets').EXPANSION_IDS;
-  assert.equal(games.length, 33 + expansion.length); assert.equal(new Set(games.map(g => g.id)).size, games.length); assert.equal(categories.length, 6);
+  assert.equal(games.length, 89); assert.equal(new Set(games.map(g => g.id)).size, games.length); assert.equal(categories.length, 6);
   for (const cat of categories) assert(games.some(g => g.category === cat));
   for (const g of games) { assert(routes.routeName(g.id)); assert.equal(routes.gameIdForRoute(routes.routeName(g.id)), g.id); }
   assert.equal(routes.routeName('invalid'), ''); assert.equal(routes.gameIdForRoute('Collection_invalid'), '');
@@ -26,7 +25,7 @@ test('catalog: all games are distinct with nonempty categories, bidirectional ro
   }
 });
 
-for (const id of COLLECTION_IDS) {
+for (const id of COLLECTION_IDS.filter(id => f.data().getGameById(id) !== undefined)) {
   for (const level of [0, 1, 2]) {
     test(`${id}/${level}: valid startup, rejected out-of-range input, continuation round trip`, () => {
       const model = create(id, level); const initial = before(model);
@@ -34,10 +33,10 @@ for (const id of COLLECTION_IDS) {
       assert.equal(before(model), initial);
       const source = f.vm('CollectionViewModel'); source.init(id); source.difficulty = ['easy', 'normal', 'hard'][level]; source.startGame();
       const target = f.vm('CollectionViewModel'); target.init(id);
-      const count = f.data().getGameById(id).playCount;
+      const count = f.data().getGameById(id).playTimeMs;
       assert.equal(target.importContinuation(source.exportContinuation()), true);
       assert.deepEqual(JSON.parse(target.exportContinuation()), JSON.parse(source.exportContinuation()));
-      assert.equal(f.data().getGameById(id).playCount, count);
+      assert.equal(f.data().getGameById(id).playTimeMs, count);
       const snapshot = target.exportContinuation();
       for (const invalid of ['null', '{}', '{bad', 'x'.repeat(16385)]) { assert.equal(target.importContinuation(invalid), false); assert.equal(target.exportContinuation(), snapshot); }
       const malformed = JSON.parse(snapshot); malformed.state.cols = 200;
@@ -156,10 +155,12 @@ test('reaction: early taps fail, signal timing scores, background/exit cancel ti
  vm.requestBack();assert.equal(vm.state.phase,0);assert.equal(f.clock.count(),0);vm.dismissExitConfirm();vm.tap(0);vm.dispose();assert.equal(f.clock.count(),0);
 });
 test('score/round persistence: result is counted once, replay and restoration never double-award',()=>{
- const f=fixture(),vm=f.vm('CollectionViewModel');vm.init('tictactoe');vm.startGame();for(const i of [0,3,1,4,2])vm.tap(i);
- const data=f.data();assert.equal(data.getGameById('tictactoe').highScore,1);vm.tap(8);assert.equal(data.getGameById('tictactoe').highScore,1);
- const target=f.vm('CollectionViewModel');target.init('tictactoe');assert(target.importContinuation(vm.exportContinuation()));assert.equal(data.getGameById('tictactoe').highScore,1);
- vm.startGame();assert.equal(data.getGameById('tictactoe').playCount,2);assert.equal(vm.state.outcome,0);
+ const f=fixture(),vm=f.vm('CollectionViewModel');vm.init('schulte');vm.startGame();
+ while(vm.state.outcome===0)vm.tap(vm.state.board.indexOf(vm.state.answer));
+ const data=f.data(),score=vm.state.score;assert(score>0);assert.equal(data.getGameById('schulte').highScore,score);
+ vm.tap(0);assert.equal(data.getGameById('schulte').highScore,score);
+ const target=f.vm('CollectionViewModel');target.init('schulte');assert(target.importContinuation(vm.exportContinuation()));assert.equal(data.getGameById('schulte').highScore,score);
+ vm.startGame();assert.equal(data.getGameById('schulte').playTimeMs,0);assert.equal(vm.state.outcome,0);
 });
 test('continuation rejects malformed choices and selected pieces without mutation',()=>{
  for(const id of ['flood','nim','hanoi','nonogram','peg','memorysequence','missing']){

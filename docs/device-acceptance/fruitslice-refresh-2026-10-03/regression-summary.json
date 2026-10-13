@@ -1,0 +1,13 @@
+{
+  "packageHash": "dd9683492333eb9a01ab5fd91dd344081d17d69d6bd643f705333315bb8efc7d",
+  "checks": {
+    "worldPieceRefresh": 8,
+    "expansion": 336,
+    "completion": 190,
+    "art": 7,
+    "continuation": 72,
+    "playTime": 27
+  },
+  "total": 640,
+  "build": "API 24 assembleHap passed"
+}

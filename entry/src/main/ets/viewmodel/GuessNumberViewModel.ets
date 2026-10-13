@@ -7,6 +7,7 @@
 import { GameDifficulty, GameStatus } from '../common/GameConstants';
 import { ContinuationValidation as V } from '../common/GameSessionTransfer';
 import { GameDataManager } from '../model/GameData';
+import { GameSoundEvent, gameSound } from '../common/GameSound';
 import { GameLifecycleObserver } from '../common/GameLifecycleBus';
 import { GuessFeedback, GuessNumberRules } from '../model/game/GuessNumberModel';
 import { RandomSource, RealRandom } from '../model/game/RandomSource';
@@ -68,7 +69,8 @@ export class GuessNumberViewModel implements GameLifecycleObserver {
   isInputComplete(): boolean { return this.input.length === this.getSecretLength(); }
 
   startGame(): void {
-    GameDataManager.incrementPlayCount(GAME_ID);
+    gameSound.stop(GAME_ID);
+    GameDataManager.recordGamePlayed(GAME_ID);
     this.secret = this.rules.generateSecret(this.getSecretLength(), this.rng);
     this.input = '';
     this.records = [];
@@ -90,6 +92,7 @@ export class GuessNumberViewModel implements GameLifecycleObserver {
         this.input.length >= this.getSecretLength()) { return; }
     if (this.input.indexOf(d) >= 0) { return; }
     this.input += d;
+    gameSound.play(GAME_ID);
   }
 
   deleteDigit(): void {
@@ -113,11 +116,14 @@ export class GuessNumberViewModel implements GameLifecycleObserver {
       GameDataManager.updateHighScore(GAME_ID, this.getScore());
     }
     if (this.tries >= this.getMaxTries()) { this.status = GameStatus.OVER; }
+    gameSound.play(GAME_ID, this.isWin ? GameSoundEvent.WIN : this.status === GameStatus.OVER ? GameSoundEvent.LOSE :
+      feedback.a > 0 || feedback.b > 0 ? GameSoundEvent.REWARD : GameSoundEvent.ERROR);
     this.input = '';
   }
 
   // —— GameLifecycleObserver（完成才计分、无定时器：切后台无需暂停/结算）——
   onAppHidden(): void {
+    gameSound.stop(GAME_ID);
   }
 
   onAppShown(): void {
@@ -132,7 +138,7 @@ export class GuessNumberViewModel implements GameLifecycleObserver {
   requestBack(): boolean {
     if (!GameDataManager.getSetting('confirmExitEnabled', true)) { return false; }
     if (this.status === GameStatus.PLAYING) {
-      this.confirmExit = true;
+      gameSound.stop(GAME_ID); this.confirmExit = true;
       return true;
     }
     return false;
@@ -145,6 +151,10 @@ export class GuessNumberViewModel implements GameLifecycleObserver {
   /** 页面销毁：无定时器可停（保持全部 VM 的 dispose 形态统一） */
   dispose(): void {
   }
+
+  isPlayTimeActive(): boolean { return this.status === GameStatus.PLAYING && !this.confirmExit; }
+
+  hasProgress(): boolean { return this.status !== GameStatus.OVER && (this.tries > 0 || this.input.length > 0); }
 
   continuationGameId(): string { return GAME_ID; }
 

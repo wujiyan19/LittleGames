@@ -21,6 +21,7 @@ const hypium = {
 
 function fixture(initialValues = {}) {
   let now = 100000;
+  let wallOffset = 0;
   let nextTimer = 1;
   const timers = new Map();
   const cache = new Map();
@@ -43,6 +44,7 @@ function fixture(initialValues = {}) {
   }
   const clock = {
     count() { return timers.size; },
+    shiftWallTime(ms) { wallOffset += ms; },
     advance(ms) {
       const end = now + ms;
       let guard = 0;
@@ -61,16 +63,21 @@ function fixture(initialValues = {}) {
       now = end;
     }
   };
-  class ClockDate extends Date { static now() { return now; } }
+  class ClockDate extends Date { static now() { return now + wallOffset; } }
   class Task {
     constructor(callback, ...args) { this.callback = callback; this.args = args; this.cancelled = false; }
   }
   const native = {
     '@ohos/hypium': hypium,
+    '@kit.NetworkKit': {},
     '@kit.ArkData': { preferences: { getPreferencesSync() { return store; } } },
     '@kit.AbilityKit': { ConfigurationConstant: { ColorMode: {
       COLOR_MODE_NOT_SET: -1, COLOR_MODE_DARK: 0, COLOR_MODE_LIGHT: 1
-    } } }, '@kit.BasicServicesKit': {},
+    } } }, '@kit.BasicServicesKit': { systemDateTime: {
+      TimeType: { STARTUP: 0 }, getUptime(type, nanoseconds) {
+        assert.equal(type, 0); assert.equal(nanoseconds, false); return now;
+      }
+    } },
     '@kit.PerformanceAnalysisKit': { hilog: { error() {}, debug() {}, info() {}, warn() {} } },
     '@kit.SensorServiceKit': { vibrator: { startVibration(effect, usage) { vibrations.push({ effect, usage }); } } },
     '@kit.ArkUI': { display: { getDefaultDisplaySync() { return { width: 400, height: 800, densityPixels: 1 }; } } },
@@ -370,33 +377,32 @@ test('sudoku disposal and restart invalidate pending generation; failure permits
 
 test('clean persistence writes nothing, dirty updates debounce, pending flush is completed synchronously', async () => {
   const f = fixture(); const data = f.data(); data.init({}); data.flushNow(); assert.equal(f.store.writes, 0);
-  data.incrementPlayCount('snake'); data.incrementPlayCount('snake'); data.updateHighScore('snake', 99);
+  data.recordGamePlayed('snake'); data.recordGamePlayed('snake'); data.updateHighScore('snake', 99);
   f.clock.advance(199); assert.equal(f.store.writes, 0); f.clock.advance(1);
-  assert.equal(f.store.writes, 4); assert.equal(f.flushes.length, 1);
-  data.flushNow(); assert.equal(f.store.writes, 4); assert.equal(f.store.synchronousFlushes, 1);
+  assert.equal(f.store.writes, 6); assert.equal(f.flushes.length, 1);
+  data.flushNow(); assert.equal(f.store.writes, 6); assert.equal(f.store.synchronousFlushes, 1);
   f.flushes[0].resolve(); await Promise.resolve(); await Promise.resolve();
   data.flushNow(); assert.equal(f.store.synchronousFlushes, 1);
   data.setSetting('hapticsEnabled', true); assert.equal(f.store.synchronousFlushes, 1);
-  data.setSetting('hapticsEnabled', false); assert.equal(f.store.writes, 8); assert.equal(f.store.synchronousFlushes, 2);
+  data.setSetting('hapticsEnabled', false); assert.equal(f.store.writes, 12); assert.equal(f.store.synchronousFlushes, 2);
 });
 
 test('failed asynchronous persistence retries the dirty data', async () => {
-  const f = fixture(); const data = f.data(); data.init({}); data.incrementPlayCount('snake'); f.clock.advance(200);
+  const f = fixture(); const data = f.data(); data.init({}); data.recordGamePlayed('snake'); f.clock.advance(200);
   f.flushes[0].reject(new Error('mock disk failure')); await Promise.resolve(); await Promise.resolve();
-  data.flushNow(); assert.equal(f.store.writes, 8); assert.equal(f.store.synchronousFlushes, 1);
+  data.flushNow(); assert.equal(f.store.writes, 12); assert.equal(f.store.synchronousFlushes, 1);
 });
 
-test('vector icons and the remaining bitmap retain small decoding dimensions; loading strings exist in all locales', () => {
-  const media = path.join(root, 'entry/src/main/resources/base/media'); let total = 0; let count = 0;
-  for (const name of fs.readdirSync(media)) {
-    if (name !== 'play_mole.png') { continue; }
-    const data = fs.readFileSync(path.join(media, name)); total += data.length; count++;
-    const maximum = 512;
-    assert.ok(data.readUInt32BE(16) <= maximum && data.readUInt32BE(20) <= maximum);
-    assert.equal(data[25], 6, 'RGBA transparency must be retained');
+test('catalog icons and original character vectors retain small resource budgets; loading strings exist in all locales', () => {
+  for (const theme of ['base','dark']) {
+    const media = path.join(root, `entry/src/main/resources/${theme}/media`);
+    assert(!fs.existsSync(path.join(media,'play_mole.png')));
+    const character = fs.readFileSync(path.join(media,'play_mole.svg'),'utf8');
+    assert(character.includes('viewBox="0 0 100 100"'));
+    assert(!character.includes('<image'), 'Character must remain vector geometry');
+    assert(Buffer.byteLength(character) < 24 * 1024);
   }
-  assert.equal(count, 1); assert.ok(total < 512 * 1024);
-  const games=fixture().data().getAllGames(); assert.equal(games.length,100);
+  const games=fixture().data().getAllGames(); assert.equal(games.length,89);
   for (const theme of ['base','dark']) {
     let vectorBytes=0;
     for (const game of games) {
@@ -492,18 +498,18 @@ settingsTest('all 13 games honor exit confirmation for toolbar and system back',
 settingsTest('clearing play data keeps preferences and remains cleared after restart and debounce', () => {
   const f = fixture(); const data = f.data(); data.init({});
   data.setTextSetting('themeMode', 'dark'); data.setSetting('hapticsEnabled', false);
-  data.incrementPlayCount('snake'); data.incrementPlayCount('sudoku'); data.updateHighScore('snake', 99);
+  data.recordGamePlayed('snake'); data.recordGamePlayed('sudoku'); data.updateHighScore('snake', 99);
   data.clearPlayData(); f.clock.advance(1000);
   assert.equal(data.getPlayedGameCount(), 0); assert.deepEqual(data.getRecentlyPlayed(), []);
   const restarted = fixture(Object.fromEntries(f.values)).data(); restarted.init({});
   assert.equal(restarted.getPlayedGameCount(), 0); assert.deepEqual(restarted.getRecentlyPlayed(), []);
-  assert.ok(restarted.getAllGames().every(game => game.highScore === 0 && game.playCount === 0));
+  assert.ok(restarted.getAllGames().every(game => game.highScore === 0 && game.playTimeMs === 0));
   assert.equal(restarted.getThemeMode(), 'dark'); assert.equal(restarted.getSetting('hapticsEnabled', true), false);
 });
 
 settingsTest('restoring preferences keeps scores and removes remembered difficulty after restart', () => {
   const f = fixture(); const data = f.data(); data.init({});
-  data.incrementPlayCount('snake'); data.updateHighScore('snake', 99);
+  data.recordGamePlayed('snake'); data.updateHighScore('snake', 99);
   data.setTextSetting('themeMode', 'dark'); data.setSetting('rememberDifficulty', true);
   data.rememberGameDifficulty('snake', 'hard'); data.setSetting('hapticsEnabled', false);
   data.resetSettings();
@@ -534,13 +540,28 @@ settingsTest('theme modes use native configuration and report application failur
 
 settingsTest('every settings string exists in all locales without duplicate resource names', () => {
   const source = ['pages/settings/SettingsPage', 'pages/settings/AboutPage', 'components/SettingsHeader',
-    'components/SettingsChoice', 'components/SettingsSwitchRow', 'components/ProfileStatsCard', 'pages/home/ProfileTab']
+    'components/SettingsChoice', 'components/SettingsSwitchRow', 'components/ProfileStatsCard', 'pages/home/ProfileTab',
+    'components/GameHeader', 'components/GameSettingsPanel', 'pages/collection/ExpansionBrainBoard', 'common/GameRules']
     .map(file => fs.readFileSync(path.join(root, `entry/src/main/ets/${file}.ets`), 'utf8')).join('\n');
   const names = [...source.matchAll(/\$r\('app\.string\.([^']+)'\)/g)].map(match => match[1]);
   for (const locale of ['base', 'zh_CN', 'en_US']) {
     const entries = JSON.parse(fs.readFileSync(path.join(root, `entry/src/main/resources/${locale}/element/string.json`))).string;
     assert.equal(new Set(entries.map(entry => entry.name)).size, entries.length, locale);
     for (const name of names) { assert.ok(entries.some(entry => entry.name === name && entry.value.length > 0), `${locale}:${name}`); }
+  }
+});
+
+settingsTest('all catalog games resolve complete rules in every locale', () => {
+  const f = fixture(), data = f.data(); data.init({});
+  const rules = f.load('entry/src/main/ets/common/GameRules.ets').gameRules;
+  for (const locale of ['base', 'zh_CN', 'en_US']) {
+    const entries = JSON.parse(fs.readFileSync(path.join(root, `entry/src/main/resources/${locale}/element/string.json`))).string;
+    const strings = new Map(entries.map(entry => [entry.name, entry.value]));
+    for (const game of data.getAllGames()) {
+      const name = rules(game.id).replace('app.string.', '');
+      assert.equal(name, `game_${game.id}_rules`);
+      assert.ok(strings.get(name)?.length > 10, `${locale}:${game.id}`);
+    }
   }
 });
 

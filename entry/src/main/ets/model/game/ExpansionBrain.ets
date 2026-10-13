@@ -5,6 +5,9 @@ import { ContinuationValidation as V } from '../../common/GameSessionTransfer';
 export const BRAIN_IDS: string[] = ['onestroke', 'hiddenobjects', 'linerescue', 'picturepuzzle', 'idiom', 'wordtower', 'beatjump', 'melody'];
 export const IDIOMS: string[] = ['一心一意', '画龙点睛', '守株待兔', '亡羊补牢', '掩耳盗铃', '井底之蛙', '刻舟求剑', '对牛弹琴', '水滴石穿', '狐假虎威', '画蛇添足', '胸有成竹', '愚公移山', '精卫填海', '杯弓蛇影', '叶公好龙'];
 export const IDIOM_PARTS: string[] = IDIOMS.join('').split('').filter((v: string, i: number, all: string[]) => all.indexOf(v) === i);
+const RESCUE_MAX_COORDINATES: number = 256;
+const RESCUE_LINE_MAX_LENGTH: number = 650;
+const RESCUE_MIN_SAMPLE_DISTANCE: number = 6;
 export class ExpansionBrain {
   private random: RandomSource;
   constructor(random: RandomSource) { this.random = random; }
@@ -102,11 +105,15 @@ export class ExpansionBrain {
   }
   choose(s: ExpansionState, index: number): void { if (s.id === 'wordtower' && index < 4) { s.next = index + 1; s.tray = []; } }
   aim(s: ExpansionState, x: number, y: number): void {
-    if (s.id !== 'linerescue' || s.phase !== 0 || s.target.length >= 48) { return; }
+    if (s.id !== 'linerescue' || s.phase !== 0 || s.target.length >= RESCUE_MAX_COORDINATES) { return; }
     const last: number = s.target.length - 2;
-    if (last >= 0 && Math.hypot(s.target[last] - x, s.target[last + 1] - y) < 10) { return; }
-    let length: number = 0; for (let i: number = 2; i < s.target.length; i += 2) { length += Math.hypot(s.target[i] - s.target[i - 2], s.target[i + 1] - s.target[i - 1]); }
-    if (last >= 0 && length + Math.hypot(s.target[last] - x, s.target[last + 1] - y) > 650) { return; } s.target.push(Math.round(x), Math.round(y));
+    if (last >= 0 && Math.hypot(s.target[last] - x, s.target[last + 1] - y) < RESCUE_MIN_SAMPLE_DISTANCE) { return; }
+    if (last >= 0 && this.lineLength(s) + Math.hypot(s.target[last] - x, s.target[last + 1] - y) > RESCUE_LINE_MAX_LENGTH) { return; } s.target.push(Math.round(x), Math.round(y));
+  }
+  private lineLength(s: ExpansionState): number {
+    let length: number = 0;
+    for (let i: number = 2; i < s.target.length; i += 2) { length += Math.hypot(s.target[i] - s.target[i - 2], s.target[i + 1] - s.target[i - 1]); }
+    return length;
   }
   private rescue(s: ExpansionState, dt: number): void {
     const dog: ExpansionPiece = s.pieces[0];
@@ -119,7 +126,7 @@ export class ExpansionBrain {
         if (d < 14) { bee.x += nx / d * (14 - d); bee.y += ny / d * (14 - d); }
       }
       if (Math.hypot(bee.x - dog.x, bee.y - dog.y) < dog.r + bee.r) { s.outcome = 2; }
-    }); if (s.time >= s.goal && s.outcome === 0) { s.outcome = 1; s.score = Math.max(100, 1500 - s.target.length * 10); }
+    }); if (s.time >= s.goal && s.outcome === 0) { s.outcome = 1; s.score = Math.round(Math.max(100, 1500 - this.lineLength(s) * 2)); }
   }
   private towers(s: ExpansionState, dt: number): void {
     if (Math.floor(s.time / 2) > s.data[2]) { s.data[0]++; s.data[2] = Math.floor(s.time / 2); }
@@ -153,7 +160,7 @@ export class ExpansionBrain {
     if (s.id === 'picturepuzzle') { return s.cols === 3 + s.level && s.rows === s.cols && s.goal === s.cols * s.cols && V.numbers(s.board, s.goal, 0, s.goal - 1) && new Set<number>(s.board).size === s.goal && s.selected < s.goal && s.target.length === 0 && s.tray.length === 0 && s.phase === 0 && s.pieces.length === 0; }
     if (s.id === 'idiom') { return s.cols === 4 && s.rows === 1 && s.goal === 8 && s.moves <= 8 && s.errors <= 3 && V.numbers(s.data, 2, 0, IDIOMS.length - 1) && s.data[1] < 4 && V.numbers(s.board, 4, 0, IDIOM_PARTS.length - 1) && V.numbers(s.target, 4, 0, IDIOM_PARTS.length - 1) && V.numbers(s.tray, IDIOMS.length, 0, IDIOMS.length - 1) && new Set<number>(s.tray).size === IDIOMS.length && s.pieces.length === 0 && s.phase === 0; }
     if (s.cols !== 6 || s.rows !== 6 || s.pieces.some((p: ExpansionPiece) => p.id >= s.serial || !p.alive || p.kind < 55 || p.kind > 58 || p.x < -20 || p.x > 380 || p.y < -20 || p.y > 460)) { return false; }
-    if (s.id === 'linerescue') { return s.goal === 10 && s.board.length === 0 && s.tray.length === 0 && s.target.length <= 48 && s.target.length % 2 === 0 && V.numbers(s.target, s.target.length, 0, 460) && s.pieces.length === 5 + s.level && s.pieces[0].kind === 55; }
+    if (s.id === 'linerescue') { return s.goal === 10 && s.board.length === 0 && s.tray.length === 0 && s.target.length <= RESCUE_MAX_COORDINATES && s.target.length % 2 === 0 && V.numbers(s.target, s.target.length, 0, 460) && s.pieces.length === 5 + s.level && s.pieces[0].kind === 55; }
     if (s.id === 'wordtower') { return s.goal === 12 + s.level * 4 && V.numbers(s.board, 6, 0, 8) && V.numbers(s.data, 3, 0, 10000) && s.data[1] <= 100 && s.cursor <= s.goal && s.moves <= s.goal && s.tray.length <= 2 && V.numbers(s.tray, s.tray.length, 0, 5) && s.target.length === 0 && V.integer(s.next, 1, 4) && s.pieces.filter((p: ExpansionPiece) => p.kind === 57).every((p: ExpansionPiece) => p.color === s.board[p.owner]); }
     if (!V.numbers(s.data, 2, 0, 10000) || s.board.length !== 0 || s.tray.length !== 0) { return false; }
     if (s.id === 'melody') { return s.goal === 5 && s.moves <= 5 && s.errors <= 3 && s.pieces.length === 0 && s.target.length >= 3 && s.target.length <= 7 && V.numbers(s.target, s.target.length, 0, 3) && s.cursor <= s.target.length && s.data[0] <= s.target.length && s.selected < 4; }

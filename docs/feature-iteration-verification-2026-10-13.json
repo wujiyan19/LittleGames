@@ -1,0 +1,204 @@
+{
+  "startedAt": "2026-10-13T02:21:13.826Z",
+  "scope": "89-game single-player desktop regression; no native/device claims",
+  "results": [
+    {
+      "script": "test-card-ai",
+      "exitCode": 0,
+      "passed": 29,
+      "total": 29,
+      "error": null
+    },
+    {
+      "script": "test-chess-ai",
+      "exitCode": 0,
+      "passed": 21,
+      "total": 21,
+      "error": null
+    },
+    {
+      "script": "test-classic-logic-audit",
+      "exitCode": 0,
+      "passed": 32,
+      "total": 32,
+      "error": null
+    },
+    {
+      "script": "test-collection",
+      "exitCode": 0,
+      "passed": 67,
+      "total": 67,
+      "error": null
+    },
+    {
+      "script": "test-computer-opponents",
+      "exitCode": 0,
+      "passed": 54,
+      "total": 54,
+      "error": null
+    },
+    {
+      "script": "test-continuation",
+      "exitCode": 0,
+      "passed": 76,
+      "total": 76,
+      "error": null
+    },
+    {
+      "script": "test-expansion",
+      "exitCode": 0,
+      "passed": 330,
+      "total": 330,
+      "error": null
+    },
+    {
+      "script": "test-expansion-art",
+      "exitCode": 0,
+      "passed": 7,
+      "total": 7,
+      "error": null
+    },
+    {
+      "script": "test-expansion-completion",
+      "exitCode": 0,
+      "passed": 190,
+      "total": 190,
+      "error": null
+    },
+    {
+      "script": "test-expansion-gameplay-audit",
+      "exitCode": 0,
+      "passed": 159,
+      "total": 159,
+      "error": null
+    },
+    {
+      "script": "test-expansion-render-audit",
+      "exitCode": 0,
+      "passed": 14,
+      "total": 14,
+      "error": null
+    },
+    {
+      "script": "test-game-settings",
+      "exitCode": 0,
+      "passed": 9,
+      "total": 9,
+      "error": null
+    },
+    {
+      "script": "test-generation-logic",
+      "exitCode": 0,
+      "passed": 26,
+      "total": 26,
+      "error": null
+    },
+    {
+      "script": "test-klotski-ui-state",
+      "exitCode": 0,
+      "passed": 3,
+      "total": 3,
+      "error": null
+    },
+    {
+      "script": "test-performance",
+      "exitCode": 0,
+      "passed": 162,
+      "total": 162,
+      "error": null
+    },
+    {
+      "script": "test-play-history",
+      "exitCode": 0,
+      "passed": 10,
+      "total": 10,
+      "error": null
+    },
+    {
+      "script": "test-play-time",
+      "exitCode": 0,
+      "passed": 34,
+      "total": 34,
+      "error": null
+    },
+    {
+      "script": "test-poker-ai",
+      "exitCode": 0,
+      "passed": 11,
+      "total": 11,
+      "error": null
+    },
+    {
+      "script": "test-single-player-catalog",
+      "exitCode": 0,
+      "passed": 17,
+      "total": 17,
+      "error": null
+    },
+    {
+      "script": "test-window-sizing",
+      "exitCode": 0,
+      "passed": 8,
+      "total": 8,
+      "error": null
+    },
+    {
+      "script": "test-world-piece-refresh",
+      "exitCode": 0,
+      "passed": 8,
+      "total": 8,
+      "error": null
+    },
+    {
+      "script": "test-local-game-saves",
+      "exitCode": 0,
+      "passed": 20,
+      "total": 20,
+      "error": null
+    },
+    {
+      "script": "test-daily-featured",
+      "exitCode": 0,
+      "passed": 11,
+      "total": 11,
+      "error": null
+    },
+    {
+      "script": "test-line-rescue",
+      "exitCode": 0,
+      "passed": 9,
+      "total": 9,
+      "error": null
+    }
+  ],
+  "completedAt": "2026-10-13T02:21:49.389Z",
+  "complete": true,
+  "passed": 1307,
+  "total": 1307,
+  "package": {
+    "type": "Debug development test HAP",
+    "path": "entry/build/default/outputs/default/entry-default-signed.hap",
+    "sha256": "76532c18a7927bdf35c020e4467d7df110a3d8a9e0c0bd49a4082844aab84272"
+  },
+  "nativeBuild": {
+    "api": 24,
+    "success": true,
+    "log": "entry/build/iteration-20261013/native-build.log"
+  },
+  "emulatorEvidence": "docs/device-acceptance/features-2026-10-13-v3/features.json",
+  "snapshotAt": "2026-10-13T02:34:22.340Z",
+  "emulator": {
+    "target": "127.0.0.1:5555",
+    "scope": "Selected feature interactions on API 24 emulator; development test package",
+    "passed": [
+      "2048-local-save-after-process-restart",
+      "sudoku-local-save-after-process-restart",
+      "daily-refresh-and-persistence",
+      "line-rescue-drawing-win-loss-restart",
+      "dark-feature-screens-and-theme-restoration"
+    ],
+    "unresolvedFailures": 0,
+    "packageSha256": "76532c18a7927bdf35c020e4467d7df110a3d8a9e0c0bd49a4082844aab84272",
+    "themeRestored": "system"
+  }
+}

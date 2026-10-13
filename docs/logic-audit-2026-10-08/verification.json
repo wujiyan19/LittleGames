@@ -1,0 +1,211 @@
+{
+  "date": "2026-10-08",
+  "nativeRendering": false,
+  "suites": 22,
+  "passed": 1305,
+  "total": 1305,
+  "results": [
+    {
+      "script": "test-classic-logic-audit",
+      "exitCode": 0,
+      "durationMs": 759,
+      "passed": 32,
+      "total": 32,
+      "summary": "32/32 classic logic audit regressions passed.",
+      "error": ""
+    },
+    {
+      "script": "test-expansion-render-audit",
+      "exitCode": 0,
+      "durationMs": 1024,
+      "passed": 14,
+      "total": 14,
+      "summary": "14/14 expansion render audit checks passed",
+      "error": ""
+    },
+    {
+      "script": "test-expansion-gameplay-audit",
+      "exitCode": 0,
+      "durationMs": 1535,
+      "passed": 159,
+      "total": 159,
+      "summary": "159/159 expansion gameplay audit checks passed",
+      "error": ""
+    },
+    {
+      "script": "test-performance",
+      "exitCode": 0,
+      "durationMs": 861,
+      "passed": 162,
+      "total": 162,
+      "summary": "162/162 passed (26 performance regressions, 11 settings regressions).",
+      "error": ""
+    },
+    {
+      "script": "test-generation-logic",
+      "exitCode": 0,
+      "durationMs": 1690,
+      "passed": 26,
+      "total": 26,
+      "summary": "26/26 generation/difficulty regressions passed.",
+      "error": ""
+    },
+    {
+      "script": "test-collection",
+      "exitCode": 0,
+      "durationMs": 854,
+      "passed": 82,
+      "total": 82,
+      "summary": "82/82 collection regressions passed.",
+      "error": ""
+    },
+    {
+      "script": "test-expansion",
+      "exitCode": 0,
+      "durationMs": 2123,
+      "passed": 336,
+      "total": 336,
+      "summary": "336/336 expansion checks passed",
+      "error": ""
+    },
+    {
+      "script": "test-expansion-completion",
+      "exitCode": 0,
+      "durationMs": 1496,
+      "passed": 190,
+      "total": 190,
+      "summary": "190/190 completion checks passed",
+      "error": ""
+    },
+    {
+      "script": "test-world-piece-refresh",
+      "exitCode": 0,
+      "durationMs": 1065,
+      "passed": 8,
+      "total": 8,
+      "summary": "8/8 world piece refresh checks passed",
+      "error": ""
+    },
+    {
+      "script": "test-continuation",
+      "exitCode": 0,
+      "durationMs": 886,
+      "passed": 76,
+      "total": 76,
+      "summary": "76/76 continuation regressions passed.",
+      "error": ""
+    },
+    {
+      "script": "test-klotski-ui-state",
+      "exitCode": 0,
+      "durationMs": 647,
+      "passed": 3,
+      "total": 3,
+      "summary": "3/3 Klotski UI-state regressions passed",
+      "error": ""
+    },
+    {
+      "script": "test-computer-opponents",
+      "exitCode": 0,
+      "durationMs": 1411,
+      "passed": 54,
+      "total": 54,
+      "summary": "54/54 computer opponent integration checks passed.",
+      "error": ""
+    },
+    {
+      "script": "test-card-ai",
+      "exitCode": 0,
+      "durationMs": 891,
+      "passed": 29,
+      "total": 29,
+      "summary": "Passed 29 card AI regression checks.",
+      "error": ""
+    },
+    {
+      "script": "test-chess-ai",
+      "exitCode": 0,
+      "durationMs": 1504,
+      "passed": 21,
+      "total": 21,
+      "summary": "21/21 chess AI regressions passed.",
+      "error": ""
+    },
+    {
+      "script": "test-poker-ai",
+      "exitCode": 0,
+      "durationMs": 1604,
+      "passed": 11,
+      "total": 11,
+      "summary": "11/11 poker AI checks passed",
+      "error": ""
+    },
+    {
+      "script": "test-game-settings",
+      "exitCode": 0,
+      "durationMs": 1170,
+      "passed": 9,
+      "total": 9,
+      "summary": "9/9 game settings regressions passed.",
+      "error": ""
+    },
+    {
+      "script": "test-play-time",
+      "exitCode": 0,
+      "durationMs": 1200,
+      "passed": 34,
+      "total": 34,
+      "summary": "34/34 play-time regressions passed.",
+      "error": ""
+    },
+    {
+      "script": "test-play-history",
+      "exitCode": 0,
+      "durationMs": 677,
+      "passed": 10,
+      "total": 10,
+      "summary": "10/10 play-history regressions passed.",
+      "error": ""
+    },
+    {
+      "script": "test-window-sizing",
+      "exitCode": 0,
+      "durationMs": 683,
+      "passed": 8,
+      "total": 8,
+      "summary": "8/8 window sizing regressions passed.",
+      "error": ""
+    },
+    {
+      "script": "test-lan-multiplayer",
+      "exitCode": 0,
+      "durationMs": 1209,
+      "passed": 22,
+      "total": 22,
+      "summary": "22/22 LAN multiplayer regressions passed.",
+      "error": ""
+    },
+    {
+      "script": "test-lan-transport",
+      "exitCode": 0,
+      "durationMs": 700,
+      "passed": 12,
+      "total": 12,
+      "summary": "12/12 LAN transport tests passed",
+      "error": ""
+    },
+    {
+      "script": "test-expansion-art",
+      "exitCode": 0,
+      "durationMs": 3520,
+      "passed": 7,
+      "total": 7,
+      "summary": "7/7 art and feedback checks passed",
+      "error": ""
+    }
+  ],
+  "packageSha256": "e14b33644f6a0f72964c96e56f0a692c70680db11437152601f9a241e4911757",
+  "packagePath": "entry/build/default/outputs/default/entry-default-signed.hap",
+  "buildStatus": "API 24 assembleHap BUILD SUCCESSFUL in 12 s 237 ms",
+  "deviceStatus": "HDC connection check was not executed: automatic approval review failed due to usage limits; not an unsafe-action determination"
+}

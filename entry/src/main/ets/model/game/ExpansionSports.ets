@@ -163,7 +163,7 @@ export class ExpansionSports {
       if (car.y >= previousGround - 1 && ground <= car.y + 3) { car.y = ground; car.vy = Math.min(0, slope * car.vx); }
       else { car.vy += 500 * dt; car.y += car.vy * dt; if (car.y >= ground) { if (car.vy > 330) { s.outcome = 2; } car.y = ground; car.vy = 0; } }
       s.data[0] = Math.max(0, 100 - Math.floor(s.time * 1.1)); s.score = Math.floor(car.x);
-      if (car.x >= s.goal) { s.outcome = 1; s.score += 500; } else if (s.data[0] === 0) { s.outcome = 2; }
+      if (s.outcome === 0 && car.x >= s.goal) { s.outcome = 1; s.score += 500; } else if (s.data[0] === 0) { s.outcome = 2; }
     }
   }
   step(s: ExpansionState, dt: number): void {

@@ -77,9 +77,13 @@ export class ExpansionAction {
     s.pieces.forEach((p: ExpansionPiece) => {
       const t: number = length === 0 ? 0 : Math.max(0, Math.min(1, ((p.x - fromX) * dx + (p.y - fromY) * dy) / length));
       if (p.alive && Math.hypot(p.x - fromX - t * dx, p.y - fromY - t * dy) < p.r + 5) {
-        p.alive = false; if (p.kind === 31) { s.outcome = 2; } else { s.moves++; s.score += 50; if (s.moves >= s.goal) { s.outcome = 1; } }
+        p.alive = false; if (p.kind === 31) { s.outcome = 2; } else { s.moves++; s.score += 50; if (s.moves >= s.goal && s.outcome !== 2) { s.outcome = 1; } }
       }
-    }); s.target = [Math.round(x), Math.round(y)];
+    });
+    // Remove cuts before rendering/exporting, including the winning fruit or bomb:
+    // terminal games stop the frame loop and cannot wait for the next physics step.
+    s.pieces = s.pieces.filter((p: ExpansionPiece) => p.alive);
+    s.target = [Math.round(x), Math.round(y)];
   }
   aim(s: ExpansionState, x: number, y: number): void {
     if (s.phase === 0) { return; }

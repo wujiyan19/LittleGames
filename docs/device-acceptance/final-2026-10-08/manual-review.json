@@ -1,0 +1,20 @@
+{
+  "packageSha256": "e14b33644f6a0f72964c96e56f0a692c70680db11437152601f9a241e4911757",
+  "target": "FMR0224521016052",
+  "reviews": [
+    {
+      "id": "fisheat",
+      "attemptId": "mv0zyxhl-0e419b-4",
+      "check": "fish-facing",
+      "status": "passed-visual-inspection",
+      "at": "2026-10-09T13:35:36.343Z",
+      "evidence": [
+        "world-fisheat-mv0zyxhl-0e419b-4-fish-left.jpeg",
+        "world-fisheat-mv0zyxhl-0e419b-4-fish-right.jpeg",
+        "fish-facing-review.png",
+        "fish-facing-review-source.json"
+      ],
+      "observed": "Actual left-gesture capture shows the eye/mouth facing left and tail on the right; right-gesture capture shows the eye/mouth facing right and tail on the left. Cropped pixels retain the captured orientation."
+    }
+  ]
+}

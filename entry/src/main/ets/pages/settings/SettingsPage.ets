@@ -10,6 +10,7 @@ import { SafeAreaInsets } from '../../common/SafeAreaInsets';
 import { SettingsHeader } from '../../components/SettingsHeader';
 import { SettingsChoice } from '../../components/SettingsChoice';
 import { SettingsSwitchRow } from '../../components/SettingsSwitchRow';
+import { GameSound, gameSound } from '../../common/GameSound';
 
 @ComponentV2
 export struct SettingsPage {
@@ -18,6 +19,7 @@ export struct SettingsPage {
   @Local themeMode: string = GameDataManager.getThemeMode();
   @Local difficulty: GameDifficulty = GameDataManager.getDefaultDifficulty();
   @Local hapticsEnabled: boolean = GameDataManager.getSetting('hapticsEnabled', true);
+  @Local sound: GameSound = gameSound;
   @Local rememberDifficulty: boolean = GameDataManager.getSetting('rememberDifficulty', false);
   @Local confirmExitEnabled: boolean = GameDataManager.getSetting('confirmExitEnabled', true);
   @Local version: string = AppInfo.version();
@@ -84,10 +86,18 @@ export struct SettingsPage {
   @Builder
   SectionTitle(title: Resource) {
     Text(title)
-      .fontFamily(FontTokens.family).fontSize(FontTokens.sizeBodySmall)
-      .fontWeight(FontTokens.weightMedium).fontColor(SemanticColors.textTertiary)
+      .fontFamily(FontTokens.family).fontSize(FontTokens.sizeBody)
+      .fontWeight(FontTokens.weightMedium).fontColor(SemanticColors.textSecondary)
       .width('100%').textAlign(TextAlign.Start)
-      .padding({ left: SpacingTokens.base, top: SpacingTokens.lg, bottom: SpacingTokens.sm })
+      .padding({ left: SpacingTokens.base, top: SpacingTokens.xl, bottom: SpacingTokens.md })
+  }
+
+  @Builder
+  GroupDivider() {
+    Row() {
+      Row().height($r('app.float.home_group_divider_height')).layoutWeight(1)
+        .backgroundColor(SemanticColors.divider)
+    }.width('100%').padding({ left: SpacingTokens.base, right: SpacingTokens.base })
   }
 
   @Builder
@@ -95,8 +105,8 @@ export struct SettingsPage {
     Column({ space: SpacingTokens.xs }) {
       Text(title).fontFamily(FontTokens.family).fontSize(FontTokens.sizeBodyLarge)
         .fontWeight(FontTokens.weightMedium).fontColor(SemanticColors.textPrimary)
-      Text(detail).fontFamily(FontTokens.family).fontSize(FontTokens.sizeBodySmall)
-        .fontColor(SemanticColors.textTertiary)
+      Text(detail).fontFamily(FontTokens.family).fontSize(FontTokens.sizeBody)
+        .fontColor(SemanticColors.textSecondary)
     }.alignItems(HorizontalAlign.Start).layoutWeight(1)
   }
 
@@ -106,15 +116,17 @@ export struct SettingsPage {
       Row({ space: SpacingTokens.md }) {
         Column({ space: SpacingTokens.xs }) {
           Text(title).fontFamily(FontTokens.family).fontSize(FontTokens.sizeBodyLarge)
+            .fontWeight(FontTokens.weightMedium)
             .fontColor(destructive ? SemanticColors.error : SemanticColors.textPrimary)
-          Text(detail).fontFamily(FontTokens.family).fontSize(FontTokens.sizeBodySmall)
-            .fontColor(SemanticColors.textTertiary)
+          Text(detail).fontFamily(FontTokens.family).fontSize(FontTokens.sizeBody)
+            .fontColor(SemanticColors.textSecondary)
         }.alignItems(HorizontalAlign.Start).layoutWeight(1)
         SymbolGlyph($r('sys.symbol.chevron_right')).fontSize(14).fontColor([SemanticColors.textTertiary])
       }.width('100%')
     }.type(ButtonType.Normal).width('100%')
+    .constraintSize({ minHeight: $r('app.float.home_settings_row_min_height') })
     .padding(SpacingTokens.base).backgroundColor(SemanticColors.surface)
-    .borderRadius(RadiusTokens.lg).onClick(action)
+    .onClick(action)
   }
 
   build() {
@@ -123,7 +135,7 @@ export struct SettingsPage {
       Scroll() {
         Column() {
           Text($r('app.string.settings_intro')).fontFamily(FontTokens.family)
-            .fontSize(FontTokens.sizeBody).fontColor(SemanticColors.textTertiary)
+            .fontSize(FontTokens.sizeBody).fontColor(SemanticColors.textSecondary)
             .width('100%').textAlign(TextAlign.Start).padding({ left: SpacingTokens.base })
 
           this.SectionTitle($r('app.string.settings_appearance'))
@@ -146,15 +158,22 @@ export struct SettingsPage {
                 SettingsChoice({ label: getDifficultyLabel(GameDifficulty.HARD), selected: this.difficulty === GameDifficulty.HARD, onChoose: () => { this.changeDifficulty(GameDifficulty.HARD); } })
               }.width('100%')
             }.width('100%').padding(SpacingTokens.base)
+            this.GroupDivider()
             SettingsSwitchRow({ title: $r('app.string.settings_remember_difficulty'), detail: $r('app.string.settings_remember_difficulty_desc'), isOn: this.rememberDifficulty, onToggle: (value: boolean) => {
               this.rememberDifficulty = value;
               GameDataManager.setSetting('rememberDifficulty', value);
             } })
+            this.GroupDivider()
+            SettingsSwitchRow({ title: $r('app.string.settings_sound'), detail: $r('app.string.settings_sound_desc'), isOn: this.sound.enabled, onToggle: (value: boolean) => {
+              GameDataManager.setSetting('soundEnabled', value);
+            } })
+            this.GroupDivider()
             SettingsSwitchRow({ title: $r('app.string.settings_haptics'), detail: $r('app.string.settings_haptics_desc'), isOn: this.hapticsEnabled, onToggle: (value: boolean) => {
               this.hapticsEnabled = value;
               GameDataManager.setSetting('hapticsEnabled', value);
               if (value) { Haptics.success(); }
             } })
+            this.GroupDivider()
             SettingsSwitchRow({ title: $r('app.string.settings_confirm_exit'), detail: $r('app.string.settings_confirm_exit_desc'), isOn: this.confirmExitEnabled, onToggle: (value: boolean) => {
               this.confirmExitEnabled = value;
               GameDataManager.setSetting('confirmExitEnabled', value);
@@ -164,23 +183,27 @@ export struct SettingsPage {
           this.SectionTitle($r('app.string.settings_data'))
           Column() {
             this.LinkRow($r('app.string.settings_reset'), $r('app.string.settings_reset_desc'), () => { this.confirmReset(); })
+            this.GroupDivider()
             this.LinkRow($r('app.string.settings_clear'), $r('app.string.settings_clear_desc'), () => { this.confirmClear(); }, true)
-          }.width('100%').backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.lg)
+          }.width('100%').backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.lg).clip(true)
 
           this.SectionTitle($r('app.string.settings_about_section'))
-          this.LinkRow($r('app.string.settings_about'), $r('app.string.settings_about_desc'), () => {
-            this.pathStack.pushPathByName('AboutPage', null);
-          })
+          Column() {
+            this.LinkRow($r('app.string.settings_about'), $r('app.string.settings_about_desc'), () => {
+              this.pathStack.pushPathByName('AboutPage', null);
+            })
+          }.width('100%').backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.lg).clip(true)
           Row({ space: SpacingTokens.md }) {
             Text($r('app.string.settings_version')).fontFamily(FontTokens.family)
-              .fontSize(FontTokens.sizeBody).fontColor(SemanticColors.textTertiary).layoutWeight(1)
+              .fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary).layoutWeight(1)
             Text(this.version.length > 0 ? this.version : $r('app.string.settings_version_unavailable'))
               .fontFamily(FontTokens.family).fontSize(FontTokens.sizeBodySmall).fontColor(SemanticColors.textTertiary)
           }.width('100%').padding(SpacingTokens.base)
-        }.width('100%')
+        }.width('100%').constraintSize({ maxWidth: $r('app.float.home_detail_max_width') })
         .padding({ left: SpacingTokens.pageHorizontal, right: SpacingTokens.pageHorizontal,
           bottom: SpacingTokens.xxl + SafeAreaInsets.bottom })
-      }.layoutWeight(1).width('100%').scrollBar(BarState.Off).edgeEffect(EdgeEffect.Spring)
+      }.layoutWeight(1).width('100%').align(Alignment.Top)
+        .scrollBar(BarState.Off).edgeEffect(EdgeEffect.Spring)
     }.width('100%').height('100%').backgroundColor(SemanticColors.bg)
   }
 }

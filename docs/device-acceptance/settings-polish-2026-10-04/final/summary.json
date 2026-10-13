@@ -1,0 +1,16 @@
+{
+  "target": "49X0224C24001554",
+  "packageSha256": "2f1520826ab6443d51b306b3a5929fe9063a6becf12b0d1058d7e604954454b0",
+  "checks": [
+    {
+      "id": "fixed-footer",
+      "evidence": [
+        "tablet-2048-settings.jpeg",
+        "tablet-sudoku-rules-fixed-footer.jpeg",
+        "tablet-fruitslice-rules-fixed-footer.jpeg"
+      ],
+      "detail": "Return stays fully visible and in the same position with rules expanded in three representative games.",
+      "at": "2026-10-03T16:36:12.956Z"
+    }
+  ]
+}

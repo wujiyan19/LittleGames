@@ -1,5 +1,49 @@
 {
   "string": [
+    { "name": "home_daily_greeting", "value": "A thought for today" },
+    { "name": "home_daily_recommendation", "value": "Today's picks" },
+    { "name": "home_daily_subtitle", "value": "New picks each day" },
+    { "name": "home_daily_refresh", "value": "Refresh" },
+    { "name": "home_daily_refresh_a11y", "value": "Refresh recommended games" },
+    { "name": "linerescue_draw_hint", "value": "Draw a protective line around the dog, then start. Keep the dog safe for 10 seconds." },
+    { "name": "daily_inspiration_01", "value": "May your day be peaceful and full of joy." },
+    { "name": "daily_inspiration_02", "value": "Take your time. Every step counts." },
+    { "name": "daily_inspiration_03", "value": "May a little surprise find you today." },
+    { "name": "daily_inspiration_04", "value": "Make a little room for rest and happiness." },
+    { "name": "daily_inspiration_05", "value": "May you have a warm drink and something to look forward to." },
+    { "name": "daily_inspiration_06", "value": "You deserve kindness today, too." },
+    { "name": "daily_inspiration_07", "value": "A little game, a little joy, just for you." },
+    { "name": "daily_inspiration_08", "value": "May good things find you, and may you see your own goodness." },
+    { "name": "daily_inspiration_09", "value": "Rest gives you energy for the next step." },
+    { "name": "daily_inspiration_10", "value": "May your efforts be rewarded and your patience bear fruit." },
+    { "name": "daily_inspiration_11", "value": "Let today begin with one small thing going well." },
+    { "name": "daily_inspiration_12", "value": "Set your worries aside for a moment and smile." },
+    { "name": "daily_inspiration_13", "value": "May life stay interesting and give you reasons to smile." },
+    { "name": "daily_inspiration_14", "value": "Enjoying the game matters as much as winning." },
+    { "name": "daily_inspiration_15", "value": "May you see possibilities and find your way forward." },
+    { "name": "daily_inspiration_16", "value": "Even a little progress is worth celebrating." },
+    { "name": "daily_inspiration_17", "value": "May today bring a breath of fresh air." },
+    { "name": "daily_inspiration_18", "value": "Pause the busy day and enjoy a moment." },
+    { "name": "daily_inspiration_19", "value": "May you find warmth and a gentle path today." },
+    { "name": "daily_inspiration_20", "value": "Allow yourself to relax for a moment." },
+    { "name": "daily_inspiration_21", "value": "May you have the courage to start again and the patience to keep going." },
+    { "name": "daily_inspiration_22", "value": "Let today bring more curiosity and less hurry." },
+    { "name": "daily_inspiration_23", "value": "May your days be filled with little joys." },
+    { "name": "daily_inspiration_24", "value": "Enjoy a game and take a gentle breath." },
+    { "name": "daily_inspiration_25", "value": "May your work be rewarding and your free time joyful." },
+    { "name": "daily_inspiration_26", "value": "You do not need a perfect day to have a good one." },
+    { "name": "daily_inspiration_27", "value": "May the things you hope for bloom in time." },
+    { "name": "daily_inspiration_28", "value": "You have something to shine about today." },
+    { "name": "daily_inspiration_29", "value": "May you enjoy good company and feel at ease on your own." },
+    { "name": "daily_inspiration_30", "value": "Save a little time for something you enjoy." },
+    { "name": "daily_inspiration_31", "value": "May every new beginning bring a little hope." },
+    { "name": "daily_inspiration_32", "value": "May happiness find you in unexpected ways today." },
+    { "name": "save_resume_title", "value": "Continue your last game?" },
+    { "name": "save_resume_desc", "value": "Your board, difficulty and progress are saved. Continue playing or replace the save with a new game." },
+    { "name": "save_continue", "value": "Continue game" },
+    { "name": "save_new_game", "value": "New game" },
+    { "name": "save_exit_desc", "value": "You can continue from your last saved progress after leaving. Exit this game?" },
+    { "name": "save_restore_failed", "value": "Your last save could not be restored. A new game has been started." },
     {
       "name": "EntryAbility_desc",
       "value": "玩趣盒 Main Entry"
@@ -37,12 +81,56 @@
       "value": "Hot Picks"
     },
     {
+      "name": "home_recent_title",
+      "value": "Recently Played"
+    },
+    {
+      "name": "home_recent_action",
+      "value": "Tap to play again"
+    },
+    {
+      "name": "home_recent_view_all",
+      "value": "View all"
+    },
+    {
+      "name": "play_history_title",
+      "value": "Play History"
+    },
+    {
+      "name": "play_history_count",
+      "value": "%1$d games · Most recent first"
+    },
+    {
+      "name": "play_history_last_played",
+      "value": "Last played: %1$s"
+    },
+    {
+      "name": "play_history_time_unknown",
+      "value": "Time not recorded"
+    },
+    {
+      "name": "play_history_total_time",
+      "value": "Total play time: %1$s"
+    },
+    {
+      "name": "play_history_empty_title",
+      "value": "No games played yet"
+    },
+    {
+      "name": "play_history_empty_desc",
+      "value": "Games you play will appear here. Start your first game!"
+    },
+    {
       "name": "home_featured_subtitle",
       "value": "Curated for you"
     },
     {
       "name": "search_placeholder",
       "value": "Search by name or description"
+    },
+    {
+      "name": "search_clear",
+      "value": "Clear search"
     },
     {
       "name": "cat_all",
@@ -481,8 +569,16 @@
       "value": "%1$s, %2$s"
     },
     {
-      "name": "card_played_count",
-      "value": "Played %1$d times"
+      "name": "card_played_time",
+      "value": "Played %1$s h"
+    },
+    {
+      "name": "play_time_hours",
+      "value": "%1$s h"
+    },
+    {
+      "name": "profile_stat_play_time",
+      "value": "Play time"
     },
     {
       "name": "profile_level_newbie",
@@ -818,11 +914,11 @@
     },
     {
       "name": "settings_clear_desc",
-      "value": "Delete high scores, play counts and recent games."
+      "value": "Delete scores, play history and local Sudoku/2048 saves."
     },
     {
       "name": "settings_clear_confirm",
-      "value": "Delete all high scores, play counts and recent games? This cannot be undone. Appearance and gameplay preferences will be kept."
+      "value": "Delete all scores, play history and local Sudoku/2048 saves? This cannot be undone. Appearance and gameplay preferences will be kept."
     },
     {
       "name": "settings_clear_action",
@@ -858,7 +954,7 @@
     },
     {
       "name": "settings_statement_content",
-      "value": "Little Games is a collection of local casual games. Scores track your personal play. Games use different scoring rules, so scores do not represent a shared competitive ranking. Enjoy games in moderation."
+      "value": "Little Games is a collection of local single-player casual games. Chinese chess and chess offer offline computer opponents. Scores track your personal play. Games use different scoring rules, so scores do not represent a shared competitive ranking. Enjoy games in moderation."
     },
     {
       "name": "settings_privacy_title",
@@ -866,7 +962,7 @@
     },
     {
       "name": "settings_privacy_content",
-      "value": "This version requires no account and does not upload play data. High scores, play counts, recent games and settings are stored on this device, with no in-app cloud sync. Clearing play data removes scores and history; restoring defaults only resets preferences. Uninstalling or clearing app data may remove local records."
+      "value": "This version requires no account and does not upload play data to servers. Scores, play history, unfinished Sudoku/2048 games and settings stay on this device, with no in-app cloud sync. Clearing play data removes scores, history and local saves; restoring defaults only resets preferences. Uninstalling or clearing app data may remove local records."
     },
     {
       "name": "settings_permission_title",
@@ -882,7 +978,7 @@
     },
     {
       "name": "settings_help_content",
-      "value": "Use the game header to change difficulty or restart. The default difficulty applies the next time you enter a game. With difficulty memory enabled, each game uses your last selection. Leaving does not save an unfinished board or level. Language and text size follow system settings."
+      "value": "Use the game header to change difficulty or restart. The default difficulty applies the next time you enter a game. With difficulty memory enabled, each game uses your last selection. Sudoku and 2048 save unfinished games automatically; choose to continue or start a new game when you return. Other games do not retain unfinished progress after leaving. Language and text size follow system settings."
     },
     {
       "name": "settings_selected",
@@ -2222,15 +2318,15 @@
     },
     {
       "name": "module_desc",
-      "value": "LittleGames - 100 offline games across six categories"
+      "value": "LittleGames - 89 single-player games across six categories"
     },
     {
       "name": "app_splash_subtitle",
-      "value": "100 mini-games. Pick one and play."
+      "value": "89 single-player mini-games. Pick one and play."
     },
     {
       "name": "settings_about_tagline",
-      "value": "100 little games across six categories"
+      "value": "89 single-player games across six categories"
     },
     {
       "name": "expansion_target",
@@ -2243,6 +2339,10 @@
     {
       "name": "expansion_errors",
       "value": "Mistakes %d / 3"
+    },
+    {
+      "name": "expansion_fruitslice_errors",
+      "value": "Mistakes %d / 5"
     },
     {
       "name": "expansion_shots",
@@ -2743,6 +2843,302 @@
     {
       "name": "expansion_tug_position",
       "value": "Rope position %d"
+    },
+    {
+      "name": "game_settings_title",
+      "value": "Game settings"
+    },
+    {
+      "name": "game_settings_difficulty",
+      "value": "Difficulty"
+    },
+    {
+      "name": "game_settings_difficulty_desc",
+      "value": "Changing difficulty starts a new game"
+    },
+    {
+      "name": "game_settings_rules",
+      "value": "How to play"
+    },
+    {
+      "name": "game_settings_page",
+      "value": "Settings"
+    },
+    {
+      "name": "game_settings_page_desc",
+      "value": "Theme, default difficulty, haptics and more"
+    },
+    {
+      "name": "game_settings_return",
+      "value": "Back to game"
+    },
+    {
+      "name": "game_settings_paused_hint",
+      "value": "Resume from settings in the top right"
+    },
+    {
+      "name": "game_snake_rules",
+      "value": "Use the direction buttons to start and steer the snake. Food earns points and makes it grow. You cannot reverse directly. Hitting a wall or yourself ends the game. Higher difficulty moves faster. Pause, resume or restart in settings."
+    },
+    {
+      "name": "game_tetris_rules",
+      "value": "Move pieces with the left and right buttons, rotate them with the rotate button, and use Drop to land immediately. Complete horizontal rows to clear them and score. The game ends when pieces reach the top. Adjust difficulty, pause or restart in settings."
+    },
+    {
+      "name": "game_2048_rules",
+      "value": "Swipe up, down, left or right. Equal tiles merge and score points. A new tile appears after each valid move. Build the largest numbers you can. The game ends when the board is full and no merges remain. Change difficulty or restart in settings."
+    },
+    {
+      "name": "game_whackmole_rules",
+      "value": "Tap moles before time runs out to score. Tapping an empty hole costs points. Moles appear and disappear faster at higher difficulty. Pause the timer, resume or restart in settings."
+    },
+    {
+      "name": "game_minesweeper_rules",
+      "value": "Tap a cell to reveal it. Numbers count mines in the eight surrounding cells. Long-press an unrevealed cell to place or remove a flag. Reveal all safe cells to win; hitting a mine loses. Adjust difficulty or restart in settings."
+    },
+    {
+      "name": "game_sudoku_rules",
+      "value": "Select an empty cell and enter 1–9. Every row, column and 3×3 box must contain each digit once. Fixed clues cannot be changed. Use Clear to erase your entry and pinch to zoom. Settings lets you change difficulty, restart the current puzzle or generate a new one."
+    },
+    {
+      "name": "game_slidepuzzle_rules",
+      "value": "Tap a numbered tile next to the empty space to move it. Arrange the numbers from left to right and top to bottom, leaving the empty space last. Try to use fewer moves. Adjust difficulty or restart in settings."
+    },
+    {
+      "name": "game_klotski_rules",
+      "value": "Tap a block to select it, then use the direction buttons to move it through empty spaces. Blocks cannot overlap or cross the board boundary. Move Cao Cao, the largest block, to the bottom exit to win. Adjust difficulty or restart in settings."
+    },
+    {
+      "name": "game_guessnumber_rules",
+      "value": "Enter distinct digits and submit. Password length and attempt limit depend on difficulty. A means the digit and position are correct; B means the digit is correct but in the wrong position. Use the clues to solve the password before attempts run out. Change difficulty or restart in settings."
+    },
+    {
+      "name": "game_memorycard_rules",
+      "value": "Flip two cards at a time. Matching cards stay face up; different cards turn back over. Remember the positions and find every pair, using as few attempts as possible. Adjust difficulty or restart in settings."
+    },
+    {
+      "name": "game_jumpjump_rules",
+      "value": "Press and hold to charge, then release to jump to the next platform. Holding longer makes the jump travel farther. Land on a platform to score; missing ends the game. Change difficulty or restart in settings."
+    },
+    {
+      "name": "game_brickbreaker_rules",
+      "value": "Tap the board to launch the ball. Drag the paddle left and right to catch it and bounce it into bricks. Clear every brick to advance. Missing a ball costs a life; losing all lives ends the game. Pause, resume or restart in settings."
+    },
+    {
+      "name": "game_match3_rules",
+      "value": "Tap two adjacent gems to swap them. Match three or more identical gems horizontally or vertically to clear them and score. Swaps without a match are undone; chain matches score more. Reach the target score before running out of moves. Restart in settings."
+    },
+    {
+      "name": "game_settings_restart_confirm",
+      "value": "Restarting clears your progress in this game. Restart?"
+    },
+    {
+      "name": "game_settings_new_game_confirm",
+      "value": "Starting a new game clears your current puzzle progress. Start a new game?"
+    },
+    {
+      "name": "game_settings_change_difficulty",
+      "value": "Change difficulty"
+    },
+    {
+      "name": "game_settings_difficulty_confirm",
+      "value": "Changing difficulty starts a new game and clears your current progress. Change difficulty?"
+    },
+    {
+      "name": "game_settings_change_action",
+      "value": "Change and restart"
+    },
+    {
+      "name": "settings_sound",
+      "value": "Sound"
+    },
+    {
+      "name": "settings_sound_desc",
+      "value": "Control game sounds and melodies; visual cues remain when muted"
+    },
+    {
+      "name": "settings_sound_muted",
+      "value": "Sound is off. Watch the highlighted keys and repeat the sequence."
+    },
+    {
+      "name": "lan_title",
+      "value": "LAN multiplayer"
+    },
+    {
+      "name": "lan_description",
+      "value": "Connect both devices to the same Wi-Fi and open the same game. With a hotspot, create the room on the device connected to it. Share the room’s IPv4 address with your opponent."
+    },
+    {
+      "name": "lan_collapse",
+      "value": "Hide"
+    },
+    {
+      "name": "lan_host",
+      "value": "Create room"
+    },
+    {
+      "name": "lan_join",
+      "value": "Join"
+    },
+    {
+      "name": "lan_address_label",
+      "value": "Host IPv4 address"
+    },
+    {
+      "name": "lan_address_placeholder",
+      "value": "For example, 192.168.1.10"
+    },
+    {
+      "name": "lan_hosting",
+      "value": "Waiting for an opponent"
+    },
+    {
+      "name": "lan_hosting_hint",
+      "value": "Ask your opponent to open the same game and join using any address below."
+    },
+    {
+      "name": "lan_connecting",
+      "value": "Connecting…"
+    },
+    {
+      "name": "lan_connected_player",
+      "value": "Connected · You are player %1$d"
+    },
+    {
+      "name": "lan_connected_hint",
+      "value": "Play your own side. Both devices share the current game."
+    },
+    {
+      "name": "lan_pending",
+      "value": "Syncing the turn…"
+    },
+    {
+      "name": "lan_cancel",
+      "value": "Cancel"
+    },
+    {
+      "name": "lan_leave",
+      "value": "Leave room"
+    },
+    {
+      "name": "lan_back_local",
+      "value": "Same device"
+    },
+    {
+      "name": "lan_disconnected",
+      "value": "Disconnected"
+    },
+    {
+      "name": "lan_disconnected_hint",
+      "value": "Create or join a room again, or return to two players on one device."
+    },
+    {
+      "name": "lan_error",
+      "value": "Connection failed"
+    },
+    {
+      "name": "lan_error_invalid_address",
+      "value": "Enter a valid IPv4 address, such as 192.168.1.10."
+    },
+    {
+      "name": "lan_error_network",
+      "value": "Check that both devices are on the same local network and the host is still waiting, then try again."
+    },
+    {
+      "name": "lan_error_mismatch",
+      "value": "The games or versions differ. Open the same game and update both apps to the same version."
+    },
+    {
+      "name": "lan_error_protocol",
+      "value": "Unexpected multiplayer data was received and the connection was closed. Create or join a room again."
+    },
+    {
+      "name": "lan_error_background",
+      "value": "The app entered the background and multiplayer ended. Create or join a room again."
+    },
+    {
+      "name": "lan_error_no_address",
+      "value": "No local IPv4 address was found. Connect to Wi-Fi. With a hotspot, create the room on the device connected to it."
+    },
+    {
+      "name": "lan_error_busy",
+      "value": "This room already has an opponent. Join another room."
+    },
+    {
+      "name": "lan_restart_request",
+      "value": "Request rematch"
+    },
+    {
+      "name": "lan_restart_waiting",
+      "value": "Rematch requested. Waiting for your opponent."
+    },
+    {
+      "name": "lan_restart_requested",
+      "value": "Your opponent wants a rematch."
+    },
+    {
+      "name": "lan_restart_accept",
+      "value": "Accept rematch"
+    },
+    {
+      "name": "lan_replay_wait",
+      "value": "Waiting for opponent"
+    },
+    {
+      "name": "lan_permission_reason",
+      "value": "Used to create or join a game room on the same Wi-Fi or hotspot."
+    },
+    {
+      "name": "computer_mode",
+      "value": "Play against computers"
+    },
+    {
+      "name": "computer_thinking",
+      "value": "Computer %d is thinking…"
+    },
+    {
+      "name": "computer_your_turn",
+      "value": "Your turn"
+    },
+    {
+      "name": "computer_mahjong_reaction",
+      "value": "Choose a claim, win, or pass"
+    },
+    {
+      "name": "computer_doudizhu",
+      "value": "You are the landlord. Two computer farmers play against you."
+    },
+    {
+      "name": "computer_guandan",
+      "value": "You partner with computer 3 against computers 2 and 4."
+    },
+    {
+      "name": "computer_mahjong",
+      "value": "You control player 1. The other three seats are computers."
+    },
+    {
+      "name": "computer_xiangqi",
+      "value": "You play red. The computer plays black."
+    },
+    {
+      "name": "computer_chess",
+      "value": "You play white. The computer plays black."
+    },
+    {
+      "name": "computer_ludo",
+      "value": "You control the four planes of player 1. The other three teams are computers."
+    },
+    {
+      "name": "computer_hand_count",
+      "value": "Computer %d: %d cards"
+    },
+    {
+      "name": "computer_last_play",
+      "value": "Computer %d played"
+    },
+    {
+      "name": "computer_your_last_play",
+      "value": "You played"
     }
   ]
 }

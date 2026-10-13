@@ -22,7 +22,7 @@ import { DisplayFrameLoop } from '../../common/DisplayFrameLoop';
 /** 平台高度（vp） */
 const PLATFORM_H = 18;
 /** 角色尺寸（vp） */
-const PLAYER_W = 30;
+const PLAYER_W = 40;
 const PLAYER_H = 40;
 /** 蓄力条轨道宽度（vp） */
 const CHARGE_BAR_W = 220;
@@ -37,10 +37,14 @@ export struct JumpJumpPage {
   @Local areaW: number = 0;
   @Local areaH: number = 0;
 
+  @Monitor('viewModel.status', 'viewModel.confirmExit')
+  playTimeStateChanged(): void { GameLifecycleBus.updatePlayTime(this.viewModel); }
+
   aboutToAppear(): void {
     this.viewModel.setFrameLoop(new DisplayFrameLoop(this.getUIContext()));
     GameLifecycleBus.attach(this.viewModel);
     if (!GameSessionTransfer.restore(this.viewModel)) { this.startGame(); }
+    this.playTimeStateChanged();
   }
 
   aboutToDisappear(): void {
@@ -92,7 +96,7 @@ export struct JumpJumpPage {
         })
 
       Column() {
-        GameHeader({
+        GameHeader({ gameId: 'jumpjump', pathStack: this.pathStack, hasProgress: (): boolean => this.viewModel.hasProgress(),
           gameTitle: $r('app.string.game_jumpjump_name'),
           showScore: false,
           difficulty: this.viewModel.difficulty,
@@ -130,6 +134,12 @@ export struct JumpJumpPage {
 
         // 游戏区：全屏长按蓄力
         Stack({ alignContent: Alignment.TopStart }) {
+          Image($r('app.media.play_jump_scene'))
+            .width('100%').height('100%')
+            .objectFit(ImageFit.Fill)
+            .hitTestBehavior(HitTestMode.None)
+            .accessibilityLevel('no')
+
           // 平台层（只渲染屏幕可见范围内的平台）
           ForEach(this.viewModel.platforms, (p: PlatformData) => {
             if (p.centerX + p.width / 2 >= -20 && p.centerX - p.width / 2 <= this.areaW + 20) {
@@ -142,12 +152,12 @@ export struct JumpJumpPage {
                   ? 'jumpjump_next_platform' : 'jumpjump_platform_' + p.id)
                 .accessibilityText(this.platformA11y(p.id))
             }
-          }, (p: PlatformData) => p.id.toString())
+          }, (p: PlatformData) => this.viewModel.platformRevision.toString() + ':' + p.id.toString())
 
           // 角色（压缩用 scale，位移用 translate）
           Image($r('app.media.play_jump_frog'))
           .width(PLAYER_W).height(PLAYER_H)
-          .objectFit(ImageFit.Fill)
+          .objectFit(ImageFit.Contain)
           .scale({ x: this.viewModel.playerScaleX, y: this.viewModel.playerScaleY })
           .translate({
             x: this.viewModel.playerX + this.viewModel.playerJumpX - PLAYER_W / 2,
@@ -209,10 +219,6 @@ export struct JumpJumpPage {
         .width('100%').height(44)
         .justifyContent(FlexAlign.Center)
 
-        Text($r('app.string.game_jumpjump_hint'))
-          .fontFamily(FontTokens.family)
-          .fontSize(FontTokens.sizeBodySmall).fontColor(SemanticColors.textTertiary)
-          .padding({ bottom: SpacingTokens.lg })
       }
       .width('100%').height('100%').padding({ bottom: this.safeBottom })
 

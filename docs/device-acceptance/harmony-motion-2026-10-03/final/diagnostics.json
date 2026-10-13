@@ -1,0 +1,9 @@
+{
+  "at": "2026-10-03T10:51:42.679Z",
+  "target": "FMR0224521016052",
+  "packageSha256": "f6ca73771e0f35f35bd786801672b2b75e92b8da2a3089e90e9de120efc4def5",
+  "model": "ALN-AL00",
+  "osFullname": "OpenHarmony-7.0.0.105",
+  "appPid": "19578",
+  "recentFaultQuery": "time                       foreground        reason               record_id                   process_name                      \r\n2026-10-03 13:33:39        False             LowMemoryKill        06007827420910961703        com.littlegames.collection        \r\n2026-10-02 18:33:32        False             LowMemoryKill        02760135490732791084        com.littlegames.collection        \r\n2026-10-01 12:50:17        False             LowMemoryKill        15590488799932278137        com.littlegames.collection"
+}

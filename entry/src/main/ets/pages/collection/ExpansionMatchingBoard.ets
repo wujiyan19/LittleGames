@@ -1,5 +1,5 @@
 import { ExpansionViewModel } from '../../viewmodel/ExpansionViewModel';
-import { ExpansionPiece } from '../../model/game/ExpansionState';
+import { ExpansionRenderPiece } from '../../viewmodel/ExpansionRenderPiece';
 import { SemanticColors, FontTokens, SpacingTokens, RadiusTokens } from '../../common/DesignTokens';
 import { range } from '../../common/Range';
 import { ExpansionArt } from '../../common/ExpansionArt';
@@ -46,16 +46,16 @@ export struct ExpansionMatchingBoard {
   @Builder
   Board() {
     Stack({ alignContent: Alignment.TopStart }) {
-      ForEach(this.vm.state.board, (value: number, index: number) => {
-        Column() { GameArtTile({ image: value === 0 ? $r('app.media.exp_empty') : ExpansionArt.tile(value - 1),
+      ForEach(range(this.vm.state.board.length), (index: number) => {
+        Column() { GameArtTile({ image: this.vm.state.board[index] === 0 ? $r('app.media.exp_empty') : ExpansionArt.tile(this.vm.state.board[index] - 1),
           selected: this.vm.state.selected === index || this.vm.state.tray.includes(index),
-          description: $r('app.string.expansion_cell', Math.floor(index / 6) + 1, index % 6 + 1, this.symbol(value)),
+          description: $r('app.string.expansion_cell', Math.floor(index / 6) + 1, index % 6 + 1, this.symbol(this.vm.state.board[index])),
           onTap: () => { this.vm.tap(this.gameId === 'slotpair' ? index % 6 : index); } }) }.width(this.unit() - 4).height(this.unit() - 4)
-          .opacity(value === 0 ? 0.2 : 1)
+          .opacity(this.vm.state.board[index] === 0 ? 0.2 : 1)
           .translate({ x: (index % 6 + (this.gameId === 'linktiles' ? 1 : 0)) * this.unit() + 2,
             y: (Math.floor(index / 6) + (this.gameId === 'linktiles' ? 1 : 0)) * this.unit() + 2 })
-          .accessibilityText($r('app.string.expansion_cell', Math.floor(index / 6) + 1, index % 6 + 1, this.symbol(value)))
-      }, (value: number, index: number) => index.toString())
+          .accessibilityText($r('app.string.expansion_cell', Math.floor(index / 6) + 1, index % 6 + 1, this.symbol(this.vm.state.board[index])))
+      }, (index: number) => index.toString())
       if (this.gameId === 'linktiles') {
         ForEach(range(Math.max(0, this.vm.state.data.length - 1)), (segment: number) => {
           Line().width('100%').height('100%').startPoint(this.pathPoint(this.vm.state.data[segment]))
@@ -68,16 +68,16 @@ export struct ExpansionMatchingBoard {
   @Builder
   Mahjong() {
     Stack({ alignContent: Alignment.TopStart }) {
-      ForEach(this.vm.state.pieces, (tile: ExpansionPiece) => {
-        if (tile.alive) {
-          Column() { GameArtTile({ image: ExpansionArt.tile(tile.color - 1), selected: this.vm.state.selected === tile.id || this.vm.state.tray.includes(tile.id),
-            description: $r('app.string.expansion_mahjong_tile', tile.id + 1, this.symbol(tile.color), tile.owner + 1), onTap: () => { this.vm.tap(tile.id); } }) }
+      ForEach(this.vm.worldPieces, (rendered: ExpansionRenderPiece) => {
+        if (rendered.piece.alive) {
+          Column() { GameArtTile({ image: ExpansionArt.tile(rendered.piece.color - 1), selected: this.vm.state.selected === rendered.id || this.vm.state.tray.includes(rendered.id),
+            description: $r('app.string.expansion_mahjong_tile', rendered.id + 1, this.symbol(rendered.piece.color), rendered.piece.owner + 1), onTap: () => { this.vm.tap(rendered.id); } }) }
             .width(this.unit() - 7).height(this.unit() - 7)
-            .opacity(this.vm.tileFree(tile.id) ? 1 : 0.5)
-            .translate({ x: tile.x * this.unit() + 2 + tile.owner * 2, y: tile.y * this.unit() + 2 + tile.owner * 2 })
-            .accessibilityText($r('app.string.expansion_mahjong_tile', tile.id + 1, this.symbol(tile.color), tile.owner + 1))
+            .opacity(this.vm.tileFree(rendered.id) ? 1 : 0.5)
+            .translate({ x: rendered.piece.x * this.unit() + 2 + rendered.piece.owner * 2, y: rendered.piece.y * this.unit() + 2 + rendered.piece.owner * 2 })
+            .accessibilityText($r('app.string.expansion_mahjong_tile', rendered.id + 1, this.symbol(rendered.piece.color), rendered.piece.owner + 1))
         }
-      }, (tile: ExpansionPiece) => tile.id.toString())
+      }, (rendered: ExpansionRenderPiece) => rendered.id.toString())
     }.width('100%').aspectRatio(6 / 4).backgroundColor(SemanticColors.boardBg).backgroundImage(ExpansionArt.board(this.gameId)).backgroundImageSize({ width: '100%', height: '100%' }).borderRadius(RadiusTokens.base)
       .onAreaChange((oldArea: Area, area: Area) => { this.measure(area); })
   }

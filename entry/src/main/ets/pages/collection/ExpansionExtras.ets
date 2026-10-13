@@ -1,4 +1,5 @@
 import { ExpansionViewModel } from '../../viewmodel/ExpansionViewModel';
+import { ExpansionRenderPiece } from '../../viewmodel/ExpansionRenderPiece';
 import { ExpansionPiece, ExpansionPile } from '../../model/game/ExpansionState';
 import { CHARACTER_PARTS, CHARACTER_RECIPES } from '../../model/game/ExpansionTable';
 import { SemanticColors, FontTokens, SpacingTokens, RadiusTokens } from '../../common/DesignTokens';
@@ -100,17 +101,17 @@ export struct ExpansionExtras {
     Column({ space: SpacingTokens.base }) {
       Text($r('app.string.expansion_money', this.vm.state.data[0])).fontColor(SemanticColors.textPrimary)
       Flex({ wrap: FlexWrap.Wrap, justifyContent: FlexAlign.Center }) {
-        ForEach(this.vm.state.pieces.filter((p: ExpansionPiece) => p.kind === 19), (p: ExpansionPiece) => {
+        ForEach(this.vm.worldPieces.filter((rendered: ExpansionRenderPiece) => rendered.piece.kind === 19), (rendered: ExpansionRenderPiece) => {
           Button({ type: ButtonType.Normal }) {
             Column({ space: SpacingTokens.sm }) {
-              Image(ExpansionArt.person(p.id % 6)).width(52).height(52).objectFit(ImageFit.Contain).accessibilityLevel('no')
-              Image(ExpansionArt.food(p.color)).width(32).height(32).objectFit(ImageFit.Contain).accessibilityLevel('no')
-              Text(this.food(p.color)).fontColor(SemanticColors.textPrimary)
-              Text($r('app.string.expansion_customer', p.id, Math.ceil(p.age))).fontSize(FontTokens.sizeCaption).fontColor(p.age < 8 ? SemanticColors.warning : SemanticColors.textSecondary)
+              Image(ExpansionArt.person(rendered.piece.id % 6)).width(52).height(52).objectFit(ImageFit.Contain).accessibilityLevel('no')
+              Image(ExpansionArt.food(rendered.piece.color)).width(32).height(32).objectFit(ImageFit.Contain).accessibilityLevel('no')
+              Text(this.food(rendered.piece.color)).fontColor(SemanticColors.textPrimary)
+              Text($r('app.string.expansion_customer', rendered.piece.id, Math.ceil(rendered.piece.age))).fontSize(FontTokens.sizeCaption).fontColor(rendered.piece.age < 8 ? SemanticColors.warning : SemanticColors.textSecondary)
             }.padding(SpacingTokens.sm)
           }.width('47%').margin(SpacingTokens.xs).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
-            .onClick(() => { this.vm.tap(100 + p.id); })
-        }, (p: ExpansionPiece) => p.id.toString())
+            .onClick(() => { this.vm.tap(100 + rendered.piece.id); })
+        }, (rendered: ExpansionRenderPiece) => rendered.id.toString())
       }.width('100%')
       Row({ space: SpacingTokens.sm }) {
         ForEach(range(3), (food: number) => {

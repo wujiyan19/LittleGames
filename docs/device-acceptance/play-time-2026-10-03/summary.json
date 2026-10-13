@@ -1,0 +1,53 @@
+{
+  "at": "2026-10-03T12:49:39.848Z",
+  "target": "FMR0224521016052",
+  "packageHash": "00013ddfd32615369bfe2990fb08753daddbeab19df0107f352e95b25a446008",
+  "checks": [
+    {
+      "mode": "light",
+      "check": "category hours after game return",
+      "passed": true
+    },
+    {
+      "mode": "light",
+      "check": "all visible recent cards show one decimal hours",
+      "passed": true
+    },
+    {
+      "mode": "light",
+      "check": "cumulative hours and legacy stats retained",
+      "passed": true
+    },
+    {
+      "mode": "dark",
+      "check": "category hours after game return",
+      "passed": true
+    },
+    {
+      "mode": "dark",
+      "check": "all visible recent cards show one decimal hours",
+      "passed": true
+    },
+    {
+      "mode": "dark",
+      "check": "cumulative hours and legacy stats retained",
+      "passed": true
+    },
+    {
+      "check": "original theme restored",
+      "passed": true
+    },
+    {
+      "check": "cold start preserves visible hours, scores, played IDs and recent order",
+      "passed": true
+    }
+  ],
+  "desktop": {
+    "playTime": 27,
+    "performanceAndSettings": 159,
+    "continuation": 72,
+    "collection": 82,
+    "expansion": 336,
+    "total": 676
+  }
+}

@@ -29,6 +29,9 @@ export struct WhackMolePage {
   @Local a11yHasMole: string = '';
   @Local a11yEmpty: string = '';
 
+  @Monitor('viewModel.status', 'viewModel.confirmExit')
+  playTimeStateChanged(): void { GameLifecycleBus.updatePlayTime(this.viewModel); }
+
   aboutToAppear(): void {
     const context = this.getUIContext().getHostContext();
     if (context) {
@@ -38,6 +41,7 @@ export struct WhackMolePage {
     }
     GameLifecycleBus.attach(this.viewModel);
     if (!GameSessionTransfer.restore(this.viewModel)) { this.viewModel.startGame(); }
+    this.playTimeStateChanged();
   }
 
   aboutToDisappear(): void {
@@ -81,7 +85,7 @@ export struct WhackMolePage {
         .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
 
       Column() {
-        GameHeader({ gameTitle: $r('app.string.game_whackmole_name'), // 得分/最高分已由下方大字指标卡展示，关闭标题栏的小字重复显示
+        GameHeader({ gameId: 'whackmole', pathStack: this.pathStack, hasProgress: (): boolean => this.viewModel.hasProgress(), gameTitle: $r('app.string.game_whackmole_name'), // 得分/最高分已由下方大字指标卡展示，关闭标题栏的小字重复显示
           showScore: false,
           isPaused: this.viewModel.status === GameStatus.PAUSED,
           difficulty: this.viewModel.difficulty,
@@ -106,6 +110,9 @@ export struct WhackMolePage {
         }.margin({ top: 12, bottom: 12 })
 
         Stack() {
+          Image($r('app.media.play_whack_scene'))
+            .width('100%').height('100%').objectFit(ImageFit.Fill)
+            .hitTestBehavior(HitTestMode.None).accessibilityLevel('no')
           Column() {
             ForEach(this.idx3, (row: number) => {
               Row() {
@@ -117,6 +124,7 @@ export struct WhackMolePage {
           }.width(this.holeWidth * 3).height(this.holeHeight * 3)
         }.layoutWeight(1).width('100%')
           .constraintSize({ maxWidth: $r('app.float.whack_board_max') })
+          .borderRadius(RadiusTokens.xl).clip(true)
           .onAreaChange((oldValue: Area, newValue: Area) => { this.updateHoleSize(newValue); })
       }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 

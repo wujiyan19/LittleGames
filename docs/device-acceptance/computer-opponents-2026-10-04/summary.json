@@ -1,0 +1,89 @@
+{
+  "date": "2026-10-04",
+  "target": "FMR0224521016052",
+  "packageSha256": "0b325419c19bc16e4d789ce4e1138b705c28359480c940a3d3c49594410eaaa7",
+  "originalDifficulty": {
+    "chess": "普通"
+  },
+  "checks": [
+    {
+      "id": "chess-easy",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-chess-easy-ready.jpeg",
+        "light-chess-easy-thinking.jpeg",
+        "light-chess-easy-replied.jpeg"
+      ],
+      "at": "2026-10-04T09:57:00.880Z"
+    },
+    {
+      "id": "chess-normal",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-chess-normal-ready.jpeg",
+        "light-chess-normal-thinking.jpeg",
+        "light-chess-normal-replied.jpeg"
+      ],
+      "at": "2026-10-04T09:57:39.805Z"
+    },
+    {
+      "id": "chess-hard",
+      "detail": "Observed real human input and automatic computer response, difficulty label and selected setting verified",
+      "evidence": [
+        "light-chess-hard-ready.jpeg",
+        "light-chess-hard-thinking.jpeg",
+        "light-chess-hard-replied.jpeg"
+      ],
+      "at": "2026-10-04T09:58:25.064Z"
+    },
+    {
+      "id": "chess-lifecycle",
+      "detail": "Pause and Home/foreground preserve the UI; Resume returns control; Undo and confirmed Restart restore a human initial turn",
+      "evidence": [
+        "lifecycle-chess-paused.jpeg",
+        "lifecycle-chess-background-return.jpeg",
+        "lifecycle-chess-resumed.jpeg",
+        "lifecycle-chess-undo.jpeg",
+        "lifecycle-chess-restart.jpeg"
+      ],
+      "at": "2026-10-04T10:01:24.779Z"
+    }
+  ],
+  "samples": [
+    {
+      "tag": "light-chess-easy",
+      "afterTouchMs": 675,
+      "sampleMs": 2595,
+      "status": "轮到你操作",
+      "moves": 2,
+      "thinkingObserved": false,
+      "disabledBoardButtons": 0
+    },
+    {
+      "tag": "light-chess-normal",
+      "afterTouchMs": 676,
+      "sampleMs": 2561,
+      "status": "轮到你操作",
+      "moves": 2,
+      "thinkingObserved": false,
+      "disabledBoardButtons": 0
+    },
+    {
+      "tag": "light-chess-hard",
+      "afterTouchMs": 667,
+      "sampleMs": 2569,
+      "status": "轮到你操作",
+      "moves": 2,
+      "thinkingObserved": false,
+      "disabledBoardButtons": 0
+    },
+    {
+      "tag": "lifecycle-chess",
+      "pendingComputerAtPause": false
+    }
+  ],
+  "model": "ALN-AL00",
+  "api": "26",
+  "os": "OpenHarmony-7.0.0.105",
+  "finishedAt": "2026-10-04T09:59:50.051Z"
+}

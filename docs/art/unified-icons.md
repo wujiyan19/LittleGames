@@ -29,6 +29,8 @@
 
 ## 维护
 
+2026-10-08起，图标与原13款/20款合集对局生成器共用 `scripts/game-art-palette.cjs`；主体构图仍由统一图标生成器管理。更新对局风格时应同时生成双主题素材，见[老游戏美术统一](legacy-gameplay-2026-10-08/README.md)。
+
 [generate-game-icons.cjs](../../scripts/generate-game-icons.cjs) 是全部图标的唯一生成来源；[清单](game-icon-manifest.json)记录游戏和资源对应关系。该脚本重用已有 `exp_*` 对局图形、统一材质，并为旧游戏及需要区分的玩法绘制专用构图。
 
 更新图标运行 `node scripts/generate-game-icons.cjs`；生成全览运行 `node scripts/preview-game-icons.cjs`，后者需提供 `sharp`。Collection / Expansion 对局美术生成器完成后同样调用统一入口，并同步清单中的图标尺寸，避免再次分成不同风格。

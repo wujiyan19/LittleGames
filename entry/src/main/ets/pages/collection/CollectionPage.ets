@@ -4,7 +4,6 @@ import { SafeAreaInsets } from '../../common/SafeAreaInsets';
 import { GameLifecycleBus } from '../../common/GameLifecycleBus';
 import { GameSessionTransfer } from '../../common/GameSessionTransfer';
 import { GameDataManager } from '../../model/GameData';
-import { collectionRules } from '../../model/CollectionCatalog';
 import { CollectionViewModel } from '../../viewmodel/CollectionViewModel';
 import { GameHeader } from '../../components/GameHeader';
 import { ExitConfirmDialog } from '../../components/ExitConfirmDialog';
@@ -18,6 +17,9 @@ export struct CollectionPage {
   @Local vm: CollectionViewModel = new CollectionViewModel();
   @Local game: GameInfo | undefined = undefined;
   private artLabels: string[] = [];
+
+  @Monitor('vm.isFinished', 'vm.confirmExit')
+  playTimeStateChanged(): void { GameLifecycleBus.updatePlayTime(this.vm); }
 
   aboutToAppear(): void {
     this.game = GameDataManager.getGameById(this.gameId); this.vm.init(this.gameId);
@@ -33,6 +35,7 @@ export struct CollectionPage {
     }
     GameLifecycleBus.attach(this.vm);
     if (!GameSessionTransfer.restore(this.vm)) { this.vm.startGame(); }
+    this.playTimeStateChanged();
   }
   aboutToDisappear(): void { GameLifecycleBus.detach(this.vm); this.vm.dispose(); }
   requestExit(): void { if (!this.vm.requestBack()) { this.pathStack.pop(); } }
@@ -106,7 +109,7 @@ export struct CollectionPage {
   build() {
     Stack() {
       Column() {
-        GameHeader({ gameTitle: this.game?.name ?? '', showScore: false, showPause: false,
+        GameHeader({ gameId: this.gameId, pathStack: this.pathStack, hasProgress: (): boolean => this.vm.hasProgress(), gameTitle: this.game?.name ?? '', showScore: false, showPause: false,
           showDifficulty: !['tictactoe', 'gomoku', 'reversi', 'fourline', 'reaction'].includes(this.gameId),
           difficulty: this.vm.difficulty, onDifficultyChange: (d: GameDifficulty) => { this.vm.changeDifficulty(d); },
           onBack: () => { this.requestExit(); }, onRestart: () => { this.vm.startGame(); } })
@@ -176,11 +179,6 @@ export struct CollectionPage {
                 Text($r('app.string.collection_check_again')).fontColor(SemanticColors.warning)
               }
             }
-            Column({ space: SpacingTokens.sm }) {
-              Text($r('app.string.collection_rules')).fontWeight(FontWeight.Bold).fontColor(SemanticColors.textPrimary)
-              Text(collectionRules(this.gameId)).fontSize(FontTokens.sizeBody).lineHeight($r('app.float.collection_rule_line')).fontColor(SemanticColors.textSecondary)
-            }.alignItems(HorizontalAlign.Start).width('100%').padding(SpacingTokens.base)
-              .backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
           }.width('100%').constraintSize({ maxWidth: $r('app.float.collection_board_max') })
             .padding({ left: SpacingTokens.base, right: SpacingTokens.base, bottom: SpacingTokens.xl })
         }.layoutWeight(1).width('100%').scrollBar(BarState.Off)

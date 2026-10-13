@@ -1,0 +1,134 @@
+{
+  "date": "2026-10-04",
+  "target": "FMR0224521016052",
+  "packageSha256": "d0e1fef47407138ff0d23956cd3b0f28d811ed7acbbaae6bed90ea8551741cfa",
+  "originalDifficulty": {},
+  "checks": [
+    {
+      "id": "doudizhu-light",
+      "detail": "Identity, status, board and controls rendered after real computer reply in light theme",
+      "evidence": [
+        "light-doudizhu-ready.jpeg",
+        "light-doudizhu-replied.jpeg"
+      ],
+      "at": "2026-10-04T11:15:50.008Z"
+    },
+    {
+      "id": "guandan-light",
+      "detail": "Identity, status, board and controls rendered after real computer reply in light theme",
+      "evidence": [
+        "light-guandan-ready.jpeg",
+        "light-guandan-replied.jpeg"
+      ],
+      "at": "2026-10-04T11:16:21.010Z"
+    },
+    {
+      "id": "mahjong-light",
+      "detail": "Identity, status, board and controls rendered after real computer reply in light theme",
+      "evidence": [
+        "light-mahjong-ready.jpeg",
+        "light-mahjong-replied.jpeg"
+      ],
+      "at": "2026-10-04T11:16:48.649Z"
+    },
+    {
+      "id": "xiangqi-light",
+      "detail": "Identity, status, board and controls rendered after real computer reply in light theme",
+      "evidence": [
+        "light-xiangqi-ready.jpeg",
+        "light-xiangqi-replied.jpeg"
+      ],
+      "at": "2026-10-04T11:17:14.470Z"
+    },
+    {
+      "id": "chess-light",
+      "detail": "Identity, status, board and controls rendered after real computer reply in light theme",
+      "evidence": [
+        "light-chess-ready.jpeg",
+        "light-chess-replied.jpeg"
+      ],
+      "at": "2026-10-04T11:17:40.537Z"
+    },
+    {
+      "id": "ludo-light",
+      "detail": "Identity, status, board and controls rendered after real computer reply in light theme",
+      "evidence": [
+        "light-ludo-ready.jpeg",
+        "light-ludo-replied.jpeg"
+      ],
+      "at": "2026-10-04T11:18:07.573Z"
+    },
+    {
+      "id": "doudizhu-dark",
+      "detail": "Identity, status, board and controls rendered after real computer reply in dark theme",
+      "evidence": [
+        "dark-doudizhu-ready.jpeg",
+        "dark-doudizhu-replied.jpeg"
+      ],
+      "at": "2026-10-04T11:18:49.984Z"
+    },
+    {
+      "id": "guandan-dark",
+      "detail": "Identity, status, board and controls rendered after real computer reply in dark theme",
+      "evidence": [
+        "dark-guandan-ready.jpeg",
+        "dark-guandan-replied.jpeg"
+      ],
+      "at": "2026-10-04T11:19:21.084Z"
+    },
+    {
+      "id": "mahjong-dark",
+      "detail": "Identity, status, board and controls rendered after real computer reply in dark theme",
+      "evidence": [
+        "dark-mahjong-ready.jpeg",
+        "dark-mahjong-replied.jpeg"
+      ],
+      "at": "2026-10-04T11:19:48.662Z"
+    },
+    {
+      "id": "xiangqi-dark",
+      "detail": "Identity, status, board and controls rendered after real computer reply in dark theme",
+      "evidence": [
+        "dark-xiangqi-ready.jpeg",
+        "dark-xiangqi-replied.jpeg"
+      ],
+      "at": "2026-10-04T11:20:13.877Z"
+    },
+    {
+      "id": "chess-dark",
+      "detail": "Identity, status, board and controls rendered after real computer reply in dark theme",
+      "evidence": [
+        "dark-chess-ready.jpeg",
+        "dark-chess-replied.jpeg"
+      ],
+      "at": "2026-10-04T11:20:40.102Z"
+    },
+    {
+      "id": "ludo-dark",
+      "detail": "Identity, status, board and controls rendered after real computer reply in dark theme",
+      "evidence": [
+        "dark-ludo-ready.jpeg",
+        "dark-ludo-replied.jpeg"
+      ],
+      "at": "2026-10-04T11:21:07.693Z"
+    }
+  ],
+  "samples": [],
+  "model": "ALN-AL00",
+  "api": "26",
+  "os": "OpenHarmony-7.0.0.105",
+  "relatedFlow": {
+    "packageSha256": "0b1df8bf9585944e14035a11f36acd7fd77e9622d420d5fa545a95dce21b49a1",
+    "evidence": "../logic-and-flow/summary.json"
+  },
+  "restoredSettings": {
+    "theme": "跟随系统",
+    "toggles": [
+      "false",
+      "true",
+      "true",
+      "true"
+    ]
+  },
+  "finishedAt": "2026-10-04T11:21:30.052Z"
+}

@@ -1,5 +1,6 @@
 import { COLLECTION_IDS } from '../model/game/CollectionModel';
 import { EXPANSION_IDS } from '../model/ExpansionCatalog';
+import { isGameAvailable } from '../common/GameAvailability';
 
 export class GameRoutes {
   /** 原有页面的游戏 ID → 路由名；新增合集由 routeName 的 COLLECTION_IDS 分支处理。 */
@@ -21,6 +22,7 @@ export class GameRoutes {
 
   /** 查路由名。未登记的 ID 返回空串，调用方应据此拒绝导航（而非静默跳错页） */
   static routeName(gameId: string): string {
+    if (!isGameAvailable(gameId)) { return ''; }
     if (EXPANSION_IDS.includes(gameId)) { return 'Expansion_' + gameId; }
     if (COLLECTION_IDS.includes(gameId)) { return 'Collection_' + gameId; }
     const name: string | undefined = GameRoutes.PATHS[gameId];
@@ -32,10 +34,10 @@ export class GameRoutes {
 
   static gameIdForRoute(route: string): string {
     for (let i = 0; i < EXPANSION_IDS.length; i++) {
-      if (route === 'Expansion_' + EXPANSION_IDS[i]) { return EXPANSION_IDS[i]; }
+      if (isGameAvailable(EXPANSION_IDS[i]) && route === 'Expansion_' + EXPANSION_IDS[i]) { return EXPANSION_IDS[i]; }
     }
     for (let i = 0; i < COLLECTION_IDS.length; i++) {
-      if (route === 'Collection_' + COLLECTION_IDS[i]) { return COLLECTION_IDS[i]; }
+      if (isGameAvailable(COLLECTION_IDS[i]) && route === 'Collection_' + COLLECTION_IDS[i]) { return COLLECTION_IDS[i]; }
     }
     const ids: string[] = ['snake', 'tetris', '2048', 'whackmole', 'minesweeper', 'sudoku',
       'slidepuzzle', 'klotski', 'guessnumber', 'memorycard', 'jumpjump', 'brickbreaker', 'match3'];
@@ -45,7 +47,27 @@ export class GameRoutes {
     return '';
   }
 
+  /** 生成当前可启动的完整游戏路由清单，不包含撤下玩法及设置页面。 */
+  static getAllGameRoutes(): string[] {
+    const ids: string[] = Object.keys(GameRoutes.PATHS).concat(COLLECTION_IDS, EXPANSION_IDS);
+    const routes: string[] = [];
+    for (let i = 0; i < ids.length; i++) {
+      const route: string = GameRoutes.routeName(ids[i]);
+      if (route.length > 0) { routes.push(route); }
+    }
+    return routes;
+  }
+
+  static isExpansionRoute(route: string): boolean {
+    return EXPANSION_IDS.includes(GameRoutes.gameIdForRoute(route));
+  }
+
+  static isCollectionRoute(route: string): boolean {
+    return COLLECTION_IDS.includes(GameRoutes.gameIdForRoute(route));
+  }
+
   static isKnownRoute(route: string): boolean {
-    return route === 'SettingsPage' || route === 'AboutPage' || GameRoutes.gameIdForRoute(route).length > 0;
+    return route === 'SettingsPage' || route === 'AboutPage' || route === 'PlayHistoryPage' ||
+      GameRoutes.gameIdForRoute(route).length > 0;
   }
 }

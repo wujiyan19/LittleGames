@@ -10,6 +10,7 @@ import { GameDataManager } from '../model/GameData';
 import { GameLifecycleObserver } from '../common/GameLifecycleBus';
 import { WhackMoleRules, WhackResult } from '../model/game/WhackMoleModel';
 import { RandomSource, RealRandom } from '../model/game/RandomSource';
+import { GameSoundEvent, gameSound } from '../common/GameSound';
 
 const GAME_ID = 'whackmole';
 
@@ -62,11 +63,12 @@ export class WhackMoleViewModel implements GameLifecycleObserver {
   }
 
   startGame(): void {
+    gameSound.stop(GAME_ID);
     if (this.score > 0) { GameDataManager.updateHighScore(GAME_ID, this.score); }
     this.stopTimers();
     this.autoPaused = false;
     this.confirmExit = false;
-    GameDataManager.incrementPlayCount(GAME_ID);
+    GameDataManager.recordGamePlayed(GAME_ID);
     this.score = 0;
     this.timeLeft = this.getGameTime();
     this.countdownRemainingMs = 1000;
@@ -109,6 +111,7 @@ export class WhackMoleViewModel implements GameLifecycleObserver {
 
   /** 手动暂停/恢复。两个定时回调都只放行 PLAYING */
   togglePause(): void {
+    gameSound.stop(GAME_ID);
     if (this.status === GameStatus.PLAYING) {
       this.status = GameStatus.PAUSED;
       this.stopTimers();
@@ -123,6 +126,7 @@ export class WhackMoleViewModel implements GameLifecycleObserver {
    * 避免倒计时在后台归零直接结算（页面 onPageHide() 仅对 @Entry 生效，不可依赖）。
    */
   onAppHidden(): void {
+    gameSound.stop(GAME_ID);
     this.appVisible = false;
     this.stopTimers();
     this.settleCurrentScore();
@@ -146,11 +150,11 @@ export class WhackMoleViewModel implements GameLifecycleObserver {
     return this.requestBack();
   }
 
-  /** 页面返回按钮与系统侧滑共用：进行中弹确认，其余放行 */
+  /** 页面返回按钮与系统侧滑共用：进行中或暂停弹确认，其余放行 */
   requestBack(): boolean {
     if (!GameDataManager.getSetting('confirmExitEnabled', true)) { return false; }
-    if (this.status === GameStatus.PLAYING) {
-      this.confirmExit = true;
+    if (this.status === GameStatus.PLAYING || this.status === GameStatus.PAUSED) {
+      gameSound.stop(GAME_ID); this.confirmExit = true;
       this.stopTimers();
       return true;
     }
@@ -167,9 +171,11 @@ export class WhackMoleViewModel implements GameLifecycleObserver {
     const result: WhackResult = this.rules.whack(this.holes, index);
     this.holes = result.holes;
     this.score = Math.max(0, this.score + result.delta);
+    if (result.delta !== 0) { gameSound.play(GAME_ID, result.delta > 0 ? GameSoundEvent.REWARD : GameSoundEvent.ERROR); }
   }
 
   private gameOver(): void {
+    gameSound.play(GAME_ID, GameSoundEvent.DRAW);
     this.status = GameStatus.OVER;
     this.stopTimers();
     if (this.score > this.highScore) { this.highScore = this.score; }
@@ -192,6 +198,10 @@ export class WhackMoleViewModel implements GameLifecycleObserver {
     this.stopTimers();
     this.settleCurrentScore();
   }
+
+  isPlayTimeActive(): boolean { return this.status === GameStatus.PLAYING && !this.confirmExit; }
+
+  hasProgress(): boolean { return this.status === GameStatus.PLAYING || this.status === GameStatus.PAUSED; }
 
   continuationGameId(): string { return GAME_ID; }
 

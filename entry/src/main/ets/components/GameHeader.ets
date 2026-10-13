@@ -1,12 +1,17 @@
 /**
  * 统一游戏头部组件 — 宇宙蓝 × 雪域灰
- * 使用系统 Symbol 图标，交互热区 ≥ 40vp
+ * 使用系统 Symbol 图标，交互热区 ≥ 44vp
  */
-import { SemanticColors, FontTokens, RadiusTokens, ShadowTokens, SpacingTokens } from '../common/DesignTokens';
-import { GameDifficulty, getDifficultyLabel } from '../common/GameConstants';
+import { SemanticColors, FontTokens, SpacingTokens } from '../common/DesignTokens';
+import { GameDifficulty } from '../common/GameConstants';
+import { HarmonyMotion } from '../common/HarmonyMotion';
+import { GameLifecycleBus } from '../common/GameLifecycleBus';
+import { GameSettingsPanel } from './GameSettingsPanel';
 
 @ComponentV2
 export struct GameHeader {
+  @Param gameId: string = '';
+  @Param pathStack: NavPathStack = new NavPathStack();
   @Param gameTitle: Resource | string = '';
   @Param subtitle: Resource | string = '';
   @Param isPaused: boolean = false;
@@ -19,36 +24,56 @@ export struct GameHeader {
   @Param onPauseToggle: () => void = () => {};
   @Param onRestart: () => void = () => {};
   @Param onNewGame: () => void = () => {};
-  // 无暂停玩法的游戏（如数独/拼图）隐藏暂停键，避免无效按钮
+  // 无暂停玩法的游戏（如数独/拼图）在设置内隐藏暂停项。
   @Param showPause: boolean = true;
   @Param showDifficulty: boolean = true;
-  // 开启后刷新按钮变为「重新开始 / 新游戏」菜单
+  // 设置内同时提供「重新开始当前题目」和「新游戏」。
   @Param enableNewGame: boolean = false;
-  @Local showRefreshMenu: boolean = false;
+  @Param hasProgress: () => boolean = (): boolean => true;
+  @Local showSettings: boolean = false;
+  @Local pausedBeforeSettings: boolean = false;
+  @Local protectProgress: boolean = false;
+  private pendingAction: () => void = () => {};
 
-  @Styles
-  pressedFeedback() {
-    .opacity(0.72)
-    .scale({ x: 0.96, y: 0.96 })
+  openSettings(): void {
+    this.protectProgress = this.hasProgress();
+    this.pausedBeforeSettings = this.isPaused;
+    this.pendingAction = () => {};
+    GameLifecycleBus.setSettingsVisible(this.gameId, true);
+    this.showSettings = true;
   }
 
-  getPauseSymbol(): Resource {
-    if (this.isPaused) { return $r('sys.symbol.play'); }
-    return $r('sys.symbol.pause');
+  closeSettings(action: () => void): void {
+    if (!this.showSettings) { return; }
+    this.pendingAction = action;
+    this.showSettings = false;
+  }
+
+  settingsDismissed(): void {
+    this.showSettings = false;
+    // 应用设置接着显示时保持暂停，避免在两层设置之间短暂恢复游戏。
+    const action: () => void = this.pendingAction;
+    this.pendingAction = () => {};
+    action();
+    GameLifecycleBus.setSettingsVisible(this.gameId, false);
+  }
+
+  aboutToDisappear(): void {
+    GameLifecycleBus.setSettingsVisible(this.gameId, false);
   }
 
   build() {
     Row({ space: SpacingTokens.md }) {
-      // 返回（40×40 热区）
+      // 返回（统一的 44vp 热区）
       Button() {
         SymbolGlyph($r('sys.symbol.arrow_left'))
           .fontSize(20)
           .fontColor([SemanticColors.textPrimary])
       }
       .type(ButtonType.Circle)
-      .width(40).height(40)
+      .width($r('app.float.home_action_min_height')).height($r('app.float.home_action_min_height'))
       .backgroundColor(SemanticColors.surface)
-      .stateStyles({ pressed: this.pressedFeedback })
+      .clickEffect(HarmonyMotion.press(this.getUIContext()))
 
       .accessibilityText($r('app.string.a11y_header_back'))
       .onClick(() => {
@@ -78,62 +103,24 @@ export struct GameHeader {
       .alignItems(HorizontalAlign.Start)
       .layoutWeight(1)
 
-      Row({ space: SpacingTokens.sm }) {
-        // 难度选择
-        if (this.showDifficulty) {
-        Button() {
-          SymbolGlyph($r('sys.symbol.gearshape'))
-            .fontSize(18)
-            .fontColor([SemanticColors.textPrimary])
-        }
-        .type(ButtonType.Circle)
-        .width(40).height(40)
-        .backgroundColor(SemanticColors.surface)
-        .stateStyles({ pressed: this.pressedFeedback })
-
-        .accessibilityText($r('app.string.a11y_header_difficulty'))
-        .bindMenu(this.difficultyMenu)
-        }
-
-        // 暂停 / 继续
-        if (this.showPause) {
-          Button() {
-            SymbolGlyph(this.getPauseSymbol())
-              .fontSize(18)
-              .fontColor([SemanticColors.textPrimary])
-          }
-          .type(ButtonType.Circle)
-          .width(40).height(40)
-          .backgroundColor(SemanticColors.surface)
-          .stateStyles({ pressed: this.pressedFeedback })
-
-          .accessibilityText(this.isPaused ? $r('app.string.a11y_header_resume') : $r('app.string.a11y_header_pause'))
-          .onClick(() => { this.onPauseToggle(); })
-        }
-
-        // 刷新：重新开始 / 新游戏
-        Button() {
-          SymbolGlyph($r('sys.symbol.arrow_clockwise'))
-            .fontSize(18)
-            .fontColor([SemanticColors.textPrimary])
-        }
-        .type(ButtonType.Circle)
-        .width(40).height(40)
-        .backgroundColor(SemanticColors.surface)
-        .stateStyles({ pressed: this.pressedFeedback })
-
-        .accessibilityText($r('app.string.a11y_header_restart'))
-        .onClick(() => {
-          if (this.enableNewGame) {
-            this.showRefreshMenu = true;
-          } else {
-            this.onRestart();
-          }
-        })
-        .bindMenu(this.showRefreshMenu, this.refreshMenu, {
-          onDisappear: () => { this.showRefreshMenu = false; }
-        })
+      Button() {
+        SymbolGlyph($r('sys.symbol.gearshape'))
+          .fontSize(20).fontColor([SemanticColors.textPrimary])
       }
+      .type(ButtonType.Circle)
+      .width($r('app.float.home_action_min_height')).height($r('app.float.home_action_min_height'))
+      .backgroundColor(SemanticColors.surface)
+      .clickEffect(HarmonyMotion.press(this.getUIContext()))
+      .accessibilityText($r('app.string.game_settings_title'))
+      .id('game-settings-button')
+      .onClick(() => { this.openSettings(); })
+      .bindSheet($$this.showSettings, this.settingsPanel, {
+        height: SheetSize.LARGE,
+        showClose: false,
+        dragBar: false,
+        backgroundColor: SemanticColors.bg,
+        onDisappear: () => { this.settingsDismissed(); }
+      })
     }
     .width('100%')
     .padding({
@@ -146,56 +133,37 @@ export struct GameHeader {
   }
 
   @Builder
-  difficultyMenu() {
-    Menu() {
-      MenuItem() {
-        Text(getDifficultyLabel(GameDifficulty.EASY))
-          .fontFamily(FontTokens.family)
-          .fontSize(FontTokens.sizeBody)
-          .fontColor(SemanticColors.textPrimary)
-      }
-      .selected(this.difficulty === GameDifficulty.EASY)
-      .onClick(() => { this.onDifficultyChange(GameDifficulty.EASY); })
-      MenuItem() {
-        Text(getDifficultyLabel(GameDifficulty.NORMAL))
-          .fontFamily(FontTokens.family)
-          .fontSize(FontTokens.sizeBody)
-          .fontColor(SemanticColors.textPrimary)
-      }
-      .selected(this.difficulty === GameDifficulty.NORMAL)
-      .onClick(() => { this.onDifficultyChange(GameDifficulty.NORMAL); })
-      MenuItem() {
-        Text(getDifficultyLabel(GameDifficulty.HARD))
-          .fontFamily(FontTokens.family)
-          .fontSize(FontTokens.sizeBody)
-          .fontColor(SemanticColors.textPrimary)
-      }
-      .selected(this.difficulty === GameDifficulty.HARD)
-      .onClick(() => { this.onDifficultyChange(GameDifficulty.HARD); })
-    }
-    .backgroundColor(SemanticColors.surface)
-    .radius(RadiusTokens.base)
-  }
-
-  @Builder
-  refreshMenu() {
-    Menu() {
-      MenuItem() {
-        Text($r('app.string.header_restart'))
-          .fontFamily(FontTokens.family)
-          .fontSize(FontTokens.sizeBody)
-          .fontColor(SemanticColors.textPrimary)
-      }
-      .onClick(() => { this.onRestart(); })
-      MenuItem() {
-        Text($r('app.string.header_new_game'))
-          .fontFamily(FontTokens.family)
-          .fontSize(FontTokens.sizeBody)
-          .fontColor(SemanticColors.textPrimary)
-      }
-      .onClick(() => { this.onNewGame(); })
-    }
-    .backgroundColor(SemanticColors.surface)
-    .radius(RadiusTokens.base)
+  settingsPanel() {
+    GameSettingsPanel({
+      gameId: this.gameId, gameTitle: this.gameTitle,
+      difficulty: this.difficulty, showDifficulty: this.showDifficulty,
+      showPause: this.showPause, isPaused: this.pausedBeforeSettings,
+      enableNewGame: this.enableNewGame,
+      hasProgress: this.protectProgress,
+      onDifficultyChange: (diff: GameDifficulty) => {
+        if (diff === this.difficulty) { return; }
+        this.closeSettings(() => {
+          GameLifecycleBus.setSettingsVisible(this.gameId, false);
+          this.onDifficultyChange(diff);
+        });
+      },
+      onPauseToggle: () => { this.closeSettings(() => {
+        GameLifecycleBus.setSettingsVisible(this.gameId, false);
+        this.onPauseToggle();
+      }); },
+      onRestart: () => { this.closeSettings(() => {
+        GameLifecycleBus.setSettingsVisible(this.gameId, false);
+        this.onRestart();
+      }); },
+      onNewGame: () => { this.closeSettings(() => {
+        GameLifecycleBus.setSettingsVisible(this.gameId, false);
+        this.onNewGame();
+      }); },
+      onAppSettings: () => { this.closeSettings(() => {
+        GameLifecycleBus.setPageVisible(this.gameId, false);
+        this.pathStack.pushPathByName('SettingsPage', null);
+      }); },
+      onClose: () => { this.closeSettings(() => {}); }
+    })
   }
 }

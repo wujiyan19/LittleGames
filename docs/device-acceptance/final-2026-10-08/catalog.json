@@ -1,0 +1,2575 @@
+{
+  "schemaVersion": 1,
+  "packageSha256": "e14b33644f6a0f72964c96e56f0a692c70680db11437152601f9a241e4911757",
+  "target": "FMR0224521016052",
+  "scope": "Real UI search, matching game title/header, screenshot, and return; not complete gameplay acceptance.",
+  "gameIds": [
+    "snake",
+    "tetris",
+    "2048",
+    "whackmole",
+    "minesweeper",
+    "sudoku",
+    "slidepuzzle",
+    "klotski",
+    "guessnumber",
+    "memorycard",
+    "jumpjump",
+    "brickbreaker",
+    "match3",
+    "tictactoe",
+    "gomoku",
+    "reversi",
+    "fourline",
+    "nim",
+    "lights",
+    "flood",
+    "maze",
+    "hanoi",
+    "peg",
+    "nonogram",
+    "arithmetic",
+    "compare",
+    "sequence",
+    "binary",
+    "targetsum",
+    "schulte",
+    "memorysequence",
+    "missing",
+    "reaction",
+    "blockfit",
+    "tilestack",
+    "bubbleshooter",
+    "fruitmerge",
+    "watersort",
+    "arrowclear",
+    "screwout",
+    "parkingjam",
+    "runner",
+    "blackhole",
+    "fisheat",
+    "sokoban",
+    "pipes",
+    "differences",
+    "roomdefense",
+    "basketball",
+    "solitaire",
+    "characters",
+    "rhythm",
+    "restaurant",
+    "linktiles",
+    "mahjongsolitaire",
+    "groupclear",
+    "slotpair",
+    "buscolor",
+    "yarn",
+    "sand",
+    "untangle",
+    "platformer",
+    "grapple",
+    "flappy",
+    "fruitslice",
+    "rollingball",
+    "shooter",
+    "tanks",
+    "fortress",
+    "survival",
+    "backpack",
+    "billiards",
+    "penalty",
+    "pingpong",
+    "bowling",
+    "golf",
+    "drift",
+    "hillclimb",
+    "airhockey",
+    "tug",
+    "dots",
+    "doudizhu",
+    "guandan",
+    "mahjong",
+    "xiangqi",
+    "chess",
+    "ludo",
+    "spider",
+    "freecell",
+    "onestroke",
+    "hiddenobjects",
+    "linerescue",
+    "picturepuzzle",
+    "idiom",
+    "wordtower",
+    "beatjump",
+    "melody",
+    "farm",
+    "decorate",
+    "fishing"
+  ],
+  "total": 100,
+  "passed": [
+    {
+      "id": "snake",
+      "name": "贪吃蛇",
+      "startedAt": "2026-10-09T12:46:45.696Z",
+      "finishedAt": "2026-10-09T12:47:05.766Z",
+      "observedTitle": "贪吃蛇",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "贪吃蛇",
+        "得分",
+        "0",
+        "最高",
+        "10",
+        "按方向键开始"
+      ],
+      "screenshots": [
+        "catalog-snake-icon.jpeg",
+        "catalog-snake-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "tetris",
+      "name": "俄罗斯方块",
+      "startedAt": "2026-10-09T12:47:05.773Z",
+      "finishedAt": "2026-10-09T12:47:26.965Z",
+      "observedTitle": "俄罗斯方块",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "俄罗斯方块",
+        "级别",
+        "1",
+        "得分",
+        "0",
+        "加速下落"
+      ],
+      "screenshots": [
+        "catalog-tetris-icon.jpeg",
+        "catalog-tetris-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "2048",
+      "name": "2048",
+      "startedAt": "2026-10-09T12:47:26.971Z",
+      "finishedAt": "2026-10-09T12:47:46.261Z",
+      "observedTitle": "2048",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "2048",
+        "得分",
+        "0",
+        "最高",
+        "388",
+        "2",
+        "2"
+      ],
+      "screenshots": [
+        "catalog-2048-icon.jpeg",
+        "catalog-2048-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "whackmole",
+      "name": "打地鼠",
+      "startedAt": "2026-10-09T12:47:46.268Z",
+      "finishedAt": "2026-10-09T12:48:06.232Z",
+      "observedTitle": "打地鼠",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "打地鼠",
+        "得分",
+        "0",
+        "时间",
+        "28s"
+      ],
+      "screenshots": [
+        "catalog-whackmole-icon.jpeg",
+        "catalog-whackmole-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "minesweeper",
+      "name": "扫雷",
+      "startedAt": "2026-10-09T12:48:06.239Z",
+      "finishedAt": "2026-10-09T12:48:27.413Z",
+      "observedTitle": "扫雷",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "扫雷",
+        "长按插旗 · 点击揭开",
+        "旗帜",
+        "0/10",
+        "时间",
+        "0s",
+        "长按插旗 · 点击揭开"
+      ],
+      "screenshots": [
+        "catalog-minesweeper-icon.jpeg",
+        "catalog-minesweeper-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "sudoku",
+      "name": "数独",
+      "startedAt": "2026-10-09T12:48:27.419Z",
+      "finishedAt": "2026-10-09T12:48:49.116Z",
+      "observedTitle": "数独",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "数独",
+        "点击格子 · 填入数字",
+        "5",
+        "8",
+        "3",
+        "7",
+        "7",
+        "5",
+        "6",
+        "1",
+        "3",
+        "3",
+        "4",
+        "8",
+        "1",
+        "9",
+        "5",
+        "9",
+        "8",
+        "2",
+        "6",
+        "8",
+        "2",
+        "3",
+        "5",
+        "7",
+        "4",
+        "8",
+        "6",
+        "9",
+        "7",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "screenshots": [
+        "catalog-sudoku-icon.jpeg",
+        "catalog-sudoku-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "slidepuzzle",
+      "name": "滑动拼图",
+      "startedAt": "2026-10-09T12:48:49.122Z",
+      "finishedAt": "2026-10-09T12:49:09.147Z",
+      "observedTitle": "滑动拼图",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "滑动拼图",
+        "移动方块还原顺序",
+        "步数",
+        "0",
+        "最佳",
+        "20",
+        "12",
+        "15",
+        "6",
+        "11",
+        "9",
+        "13",
+        "3",
+        "4",
+        "14",
+        "8",
+        "5",
+        "7",
+        "1",
+        "2",
+        "10"
+      ],
+      "screenshots": [
+        "catalog-slidepuzzle-icon.jpeg",
+        "catalog-slidepuzzle-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "klotski",
+      "name": "华容道",
+      "startedAt": "2026-10-09T12:49:09.154Z",
+      "finishedAt": "2026-10-09T12:49:30.145Z",
+      "observedTitle": "华容道",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "华容道",
+        "步数 0",
+        "曹",
+        "将",
+        "将",
+        "兵",
+        "兵",
+        "兵",
+        "兵",
+        "兵",
+        "兵",
+        "出口",
+        "移"
+      ],
+      "screenshots": [
+        "catalog-klotski-icon.jpeg",
+        "catalog-klotski-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "guessnumber",
+      "name": "猜数字",
+      "startedAt": "2026-10-09T12:49:30.150Z",
+      "finishedAt": "2026-10-09T12:49:51.360Z",
+      "observedTitle": "猜数字",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "猜数字",
+        "尝试 0 / 10",
+        "猜一个由4个不重复数字组成的密码",
+        "已尝试: 0/10",
+        "猜测记录",
+        "____",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "0",
+        "确定"
+      ],
+      "screenshots": [
+        "catalog-guessnumber-icon.jpeg",
+        "catalog-guessnumber-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "memorycard",
+      "name": "记忆翻牌",
+      "startedAt": "2026-10-09T12:49:51.366Z",
+      "finishedAt": "2026-10-09T12:50:12.201Z",
+      "observedTitle": "记忆翻牌",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "记忆翻牌",
+        "已配对 0 / 8",
+        "尝试",
+        "0",
+        "最佳",
+        "14"
+      ],
+      "screenshots": [
+        "catalog-memorycard-icon.jpeg",
+        "catalog-memorycard-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "jumpjump",
+      "name": "跳一跳",
+      "startedAt": "2026-10-09T12:50:12.213Z",
+      "finishedAt": "2026-10-09T12:50:32.434Z",
+      "observedTitle": "跳一跳",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "跳一跳",
+        "得分",
+        "0",
+        "最高",
+        "3"
+      ],
+      "screenshots": [
+        "catalog-jumpjump-icon.jpeg",
+        "catalog-jumpjump-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "brickbreaker",
+      "name": "打砖块",
+      "startedAt": "2026-10-09T12:50:32.440Z",
+      "finishedAt": "2026-10-09T12:50:53.229Z",
+      "observedTitle": "打砖块",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "打砖块",
+        "得分",
+        "0",
+        "最高",
+        "40",
+        "生命",
+        "3",
+        "关卡",
+        "1",
+        "拖动挡板或点击按钮开始"
+      ],
+      "screenshots": [
+        "catalog-brickbreaker-icon.jpeg",
+        "catalog-brickbreaker-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "match3",
+      "name": "消消乐",
+      "startedAt": "2026-10-09T12:50:53.235Z",
+      "finishedAt": "2026-10-09T12:51:13.853Z",
+      "observedTitle": "消消乐",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "消消乐",
+        "得分",
+        "0",
+        "最高",
+        "2480",
+        "步数",
+        "30"
+      ],
+      "screenshots": [
+        "catalog-match3-icon.jpeg",
+        "catalog-match3-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "tictactoe",
+      "name": "井字棋",
+      "startedAt": "2026-10-09T12:51:13.860Z",
+      "finishedAt": "2026-10-09T12:51:35.471Z",
+      "observedTitle": "井字棋",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "井字棋",
+        "同屏双人 · 玩家 1 回合"
+      ],
+      "screenshots": [
+        "catalog-tictactoe-icon.jpeg",
+        "catalog-tictactoe-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "gomoku",
+      "name": "五子棋",
+      "startedAt": "2026-10-09T12:51:35.477Z",
+      "finishedAt": "2026-10-09T12:51:56.507Z",
+      "observedTitle": "五子棋",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "五子棋",
+        "同屏双人 · 玩家 1 回合"
+      ],
+      "screenshots": [
+        "catalog-gomoku-icon.jpeg",
+        "catalog-gomoku-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "reversi",
+      "name": "翻转棋",
+      "startedAt": "2026-10-09T12:51:56.513Z",
+      "finishedAt": "2026-10-09T12:52:16.796Z",
+      "observedTitle": "翻转棋",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "翻转棋",
+        "同屏双人 · 玩家 1 回合",
+        "·",
+        "·",
+        "·",
+        "·"
+      ],
+      "screenshots": [
+        "catalog-reversi-icon.jpeg",
+        "catalog-reversi-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "fourline",
+      "name": "落子四连",
+      "startedAt": "2026-10-09T12:52:16.802Z",
+      "finishedAt": "2026-10-09T12:52:37.491Z",
+      "observedTitle": "落子四连",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "落子四连",
+        "同屏双人 · 玩家 1 回合"
+      ],
+      "screenshots": [
+        "catalog-fourline-icon.jpeg",
+        "catalog-fourline-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "nim",
+      "name": "取石子",
+      "startedAt": "2026-10-09T12:52:37.498Z",
+      "finishedAt": "2026-10-09T12:52:58.399Z",
+      "observedTitle": "取石子",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "取石子",
+        "同屏双人 · 玩家 1 回合",
+        "剩余 17 颗石子",
+        "1",
+        "2",
+        "3"
+      ],
+      "screenshots": [
+        "catalog-nim-icon.jpeg",
+        "catalog-nim-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "lights",
+      "name": "十字熄灯",
+      "startedAt": "2026-10-09T12:52:58.405Z",
+      "finishedAt": "2026-10-09T12:53:18.750Z",
+      "observedTitle": "十字熄灯",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "十字熄灯",
+        "已用 0 步"
+      ],
+      "screenshots": [
+        "catalog-lights-icon.jpeg",
+        "catalog-lights-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "flood",
+      "name": "色块归一",
+      "startedAt": "2026-10-09T12:53:18.755Z",
+      "finishedAt": "2026-10-09T12:53:39.505Z",
+      "observedTitle": "色块归一",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "色块归一",
+        "步数 0 / 11",
+        "2",
+        "4",
+        "2",
+        "2",
+        "2",
+        "1",
+        "1",
+        "2",
+        "2",
+        "2",
+        "4",
+        "2",
+        "2",
+        "4",
+        "2",
+        "3",
+        "1",
+        "1",
+        "2",
+        "4",
+        "3",
+        "3",
+        "2",
+        "3",
+        "4",
+        "2",
+        "2",
+        "4",
+        "4",
+        "3",
+        "3",
+        "2",
+        "2",
+        "1",
+        "4",
+        "3",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "screenshots": [
+        "catalog-flood-icon.jpeg",
+        "catalog-flood-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "maze",
+      "name": "迷宫寻路",
+      "startedAt": "2026-10-09T12:53:39.512Z",
+      "finishedAt": "2026-10-09T12:54:00.483Z",
+      "observedTitle": "迷宫寻路",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "迷宫寻路",
+        "已用 0 步"
+      ],
+      "screenshots": [
+        "catalog-maze-icon.jpeg",
+        "catalog-maze-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "hanoi",
+      "name": "汉诺塔",
+      "startedAt": "2026-10-09T12:54:00.490Z",
+      "finishedAt": "2026-10-09T12:54:20.554Z",
+      "observedTitle": "汉诺塔",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "汉诺塔",
+        "已用 0 步",
+        "第 1 柱",
+        "1",
+        "2",
+        "3",
+        "4",
+        "第 2 柱",
+        "第 3 柱"
+      ],
+      "screenshots": [
+        "catalog-hanoi-icon.jpeg",
+        "catalog-hanoi-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "peg",
+      "name": "跳子独留",
+      "startedAt": "2026-10-09T12:54:20.560Z",
+      "finishedAt": "2026-10-09T12:54:41.183Z",
+      "observedTitle": "跳子独留",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "跳子独留",
+        "已用 0 步"
+      ],
+      "screenshots": [
+        "catalog-peg-icon.jpeg",
+        "catalog-peg-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "nonogram",
+      "name": "数字绘格",
+      "startedAt": "2026-10-09T12:54:41.190Z",
+      "finishedAt": "2026-10-09T12:55:02.060Z",
+      "observedTitle": "数字绘格",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "数字绘格",
+        "已用 0 步",
+        "列线索（自左向右）",
+        "1: 1  /  2: 1  /  3: 5  /  4: 3  /  5: 5",
+        "行线索（自上而下）",
+        "1: 3 1  /  2: 1 1  /  3: 3  /  4: 3  /  5: 3"
+      ],
+      "screenshots": [
+        "catalog-nonogram-icon.jpeg",
+        "catalog-nonogram-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "arithmetic",
+      "name": "心算十题",
+      "startedAt": "2026-10-09T12:55:02.066Z",
+      "finishedAt": "2026-10-09T12:55:22.116Z",
+      "observedTitle": "心算十题",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "心算十题",
+        "第 1 / 10 题 · 得分 0",
+        "21 + 8 = ?",
+        "27",
+        "37",
+        "29",
+        "24"
+      ],
+      "screenshots": [
+        "catalog-arithmetic-icon.jpeg",
+        "catalog-arithmetic-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "compare",
+      "name": "算式比大小",
+      "startedAt": "2026-10-09T12:55:22.121Z",
+      "finishedAt": "2026-10-09T12:55:42.142Z",
+      "observedTitle": "算式比大小",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "算式比大小",
+        "第 1 / 10 题 · 得分 0",
+        "(1 + 3)  ?  (14 + 2)",
+        "＜",
+        "＝",
+        "＞"
+      ],
+      "screenshots": [
+        "catalog-compare-icon.jpeg",
+        "catalog-compare-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "sequence",
+      "name": "数列推演",
+      "startedAt": "2026-10-09T12:55:42.147Z",
+      "finishedAt": "2026-10-09T12:56:03.375Z",
+      "observedTitle": "数列推演",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "数列推演",
+        "第 1 / 10 题 · 得分 0",
+        "2 · 9 · 16 · 23 · ?",
+        "30",
+        "29",
+        "21",
+        "32"
+      ],
+      "screenshots": [
+        "catalog-sequence-icon.jpeg",
+        "catalog-sequence-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "binary",
+      "name": "二进制解码",
+      "startedAt": "2026-10-09T12:56:03.381Z",
+      "finishedAt": "2026-10-09T12:56:23.706Z",
+      "observedTitle": "二进制解码",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "二进制解码",
+        "第 1 / 10 题 · 得分 0",
+        "10100₂ = ?₁₀",
+        "20",
+        "25",
+        "28",
+        "11"
+      ],
+      "screenshots": [
+        "catalog-binary-icon.jpeg",
+        "catalog-binary-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "targetsum",
+      "name": "补数求和",
+      "startedAt": "2026-10-09T12:56:23.712Z",
+      "finishedAt": "2026-10-09T12:56:44.994Z",
+      "observedTitle": "补数求和",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "补数求和",
+        "第 1 / 10 题 · 得分 0",
+        "6 + 9 + ? = 23",
+        "13",
+        "14",
+        "8",
+        "4"
+      ],
+      "screenshots": [
+        "catalog-targetsum-icon.jpeg",
+        "catalog-targetsum-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "schulte",
+      "name": "数字寻序",
+      "startedAt": "2026-10-09T12:56:45.000Z",
+      "finishedAt": "2026-10-09T12:57:05.575Z",
+      "observedTitle": "数字寻序",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "数字寻序",
+        "下一个：1",
+        "6",
+        "10",
+        "12",
+        "16",
+        "5",
+        "13",
+        "9",
+        "14",
+        "8",
+        "15",
+        "2",
+        "7",
+        "4",
+        "1",
+        "11",
+        "3"
+      ],
+      "screenshots": [
+        "catalog-schulte-icon.jpeg",
+        "catalog-schulte-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "memorysequence",
+      "name": "顺序记忆",
+      "startedAt": "2026-10-09T12:57:05.582Z",
+      "finishedAt": "2026-10-09T12:57:25.830Z",
+      "observedTitle": "顺序记忆",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "顺序记忆",
+        "已复现 0 / 6",
+        "7",
+        "1",
+        "8",
+        "5",
+        "8",
+        "5",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "screenshots": [
+        "catalog-memorysequence-icon.jpeg",
+        "catalog-memorysequence-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "missing",
+      "name": "记忆缺项",
+      "startedAt": "2026-10-09T12:57:25.836Z",
+      "finishedAt": "2026-10-09T12:57:45.273Z",
+      "observedTitle": "记忆缺项",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "记忆缺项",
+        "第 1 / 10 题 · 得分 0",
+        "8",
+        "13",
+        "14",
+        "6",
+        "20"
+      ],
+      "screenshots": [
+        "catalog-missing-icon.jpeg",
+        "catalog-missing-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "reaction",
+      "name": "信号反应",
+      "startedAt": "2026-10-09T12:57:45.280Z",
+      "finishedAt": "2026-10-09T12:58:05.283Z",
+      "observedTitle": "信号反应",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "信号反应",
+        "点击开始"
+      ],
+      "screenshots": [
+        "catalog-reaction-icon.jpeg",
+        "catalog-reaction-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "blockfit",
+      "name": "方块拼填",
+      "startedAt": "2026-10-09T12:58:05.289Z",
+      "finishedAt": "2026-10-09T12:58:26.495Z",
+      "observedTitle": "方块拼填",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "方块拼填",
+        "得分 0 · 最高 0",
+        "目标分数 1200",
+        "选择拼块，再点击棋盘放置",
+        "拼块 1",
+        "拼块 2",
+        "拼块 3"
+      ],
+      "screenshots": [
+        "catalog-blockfit-icon.jpeg",
+        "catalog-blockfit-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "tilestack",
+      "name": "堆叠三消",
+      "startedAt": "2026-10-09T12:58:26.501Z",
+      "finishedAt": "2026-10-09T12:58:47.194Z",
+      "observedTitle": "堆叠三消",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "堆叠三消",
+        "得分 0 · 最高 0",
+        "剩余 75 · 步数 0",
+        "3",
+        "3",
+        "3",
+        "3",
+        "3",
+        "3",
+        "3",
+        "3",
+        "3",
+        "3",
+        "3",
+        "3",
+        "3",
+        "3",
+        "3",
+        "3",
+        "3",
+        "3",
+        "3",
+        "3",
+        "3",
+        "3",
+        "3",
+        "3",
+        "3",
+        "卡槽 0 / 7"
+      ],
+      "screenshots": [
+        "catalog-tilestack-icon.jpeg",
+        "catalog-tilestack-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "bubbleshooter",
+      "name": "泡泡龙",
+      "startedAt": "2026-10-09T12:58:47.201Z",
+      "finishedAt": "2026-10-09T12:59:07.219Z",
+      "observedTitle": "泡泡龙",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "泡泡龙",
+        "得分 0 · 最高 0",
+        "剩余炮弹 80",
+        "↑"
+      ],
+      "screenshots": [
+        "catalog-bubbleshooter-icon.jpeg",
+        "catalog-bubbleshooter-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "fruitmerge",
+      "name": "落果合成",
+      "startedAt": "2026-10-09T12:59:07.225Z",
+      "finishedAt": "2026-10-09T12:59:27.021Z",
+      "observedTitle": "落果合成",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "落果合成",
+        "得分 0 · 最高 0",
+        "下一颗水果：2",
+        "警戒线"
+      ],
+      "screenshots": [
+        "catalog-fruitmerge-icon.jpeg",
+        "catalog-fruitmerge-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "watersort",
+      "name": "倒水排序",
+      "startedAt": "2026-10-09T12:59:27.027Z",
+      "finishedAt": "2026-10-09T12:59:47.030Z",
+      "observedTitle": "倒水排序",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "倒水排序",
+        "得分 0 · 最高 0",
+        "剩余 16 · 步数 0"
+      ],
+      "screenshots": [
+        "catalog-watersort-icon.jpeg",
+        "catalog-watersort-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "arrowclear",
+      "name": "箭头清除",
+      "startedAt": "2026-10-09T12:59:47.037Z",
+      "finishedAt": "2026-10-09T13:00:07.539Z",
+      "observedTitle": "箭头清除",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "箭头清除",
+        "得分 0 · 最高 0",
+        "剩余 36 · 步数 0",
+        "失误 0 / 3"
+      ],
+      "screenshots": [
+        "catalog-arrowclear-icon.jpeg",
+        "catalog-arrowclear-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "screwout",
+      "name": "拆螺丝",
+      "startedAt": "2026-10-09T13:00:07.546Z",
+      "finishedAt": "2026-10-09T13:00:28.029Z",
+      "observedTitle": "拆螺丝",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "拆螺丝",
+        "得分 0 · 最高 0",
+        "剩余 4 · 步数 0",
+        "○",
+        "○",
+        "○"
+      ],
+      "screenshots": [
+        "catalog-screwout-icon.jpeg",
+        "catalog-screwout-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "parkingjam",
+      "name": "停车场挪车",
+      "startedAt": "2026-10-09T13:00:28.036Z",
+      "finishedAt": "2026-10-09T13:00:48.692Z",
+      "observedTitle": "停车场挪车",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "停车场挪车",
+        "得分 0 · 最高 0",
+        "剩余 13 · 步数 0",
+        "↓",
+        "↑",
+        "→",
+        "↑",
+        "↑",
+        "↓",
+        "←",
+        "→",
+        "↓",
+        "↓",
+        "↑",
+        "↑",
+        "←"
+      ],
+      "screenshots": [
+        "catalog-parkingjam-icon.jpeg",
+        "catalog-parkingjam-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "runner",
+      "name": "无尽跑酷",
+      "startedAt": "2026-10-09T13:00:48.698Z",
+      "finishedAt": "2026-10-09T13:01:08.826Z",
+      "observedTitle": "无尽跑酷",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "无尽跑酷",
+        "得分 0 · 最高 170",
+        "目标分数 900"
+      ],
+      "screenshots": [
+        "catalog-runner-icon.jpeg",
+        "catalog-runner-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "blackhole",
+      "name": "黑洞吞噬",
+      "startedAt": "2026-10-09T13:01:08.833Z",
+      "finishedAt": "2026-10-09T13:01:29.334Z",
+      "observedTitle": "黑洞吞噬",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "黑洞吞噬",
+        "得分 0 · 最高 0",
+        "进度 0 / 45",
+        "剩余时间 100 秒"
+      ],
+      "screenshots": [
+        "catalog-blackhole-icon.jpeg",
+        "catalog-blackhole-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "fisheat",
+      "name": "大鱼吃小鱼",
+      "startedAt": "2026-10-09T13:01:29.341Z",
+      "finishedAt": "2026-10-09T13:01:49.398Z",
+      "observedTitle": "大鱼吃小鱼",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "大鱼吃小鱼",
+        "得分 0 · 最高 0",
+        "进度 0 / 25"
+      ],
+      "screenshots": [
+        "catalog-fisheat-icon.jpeg",
+        "catalog-fisheat-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "sokoban",
+      "name": "推箱子",
+      "startedAt": "2026-10-09T13:01:49.404Z",
+      "finishedAt": "2026-10-09T13:02:11.003Z",
+      "observedTitle": "推箱子",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "推箱子",
+        "得分 0 · 最高 0",
+        "剩余 2 · 步数 0"
+      ],
+      "screenshots": [
+        "catalog-sokoban-icon.jpeg",
+        "catalog-sokoban-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "pipes",
+      "name": "管道连通",
+      "startedAt": "2026-10-09T13:02:11.009Z",
+      "finishedAt": "2026-10-09T13:02:31.798Z",
+      "observedTitle": "管道连通",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "管道连通",
+        "得分 20 · 最高 0",
+        "剩余 24 · 步数 0",
+        "●",
+        "●"
+      ],
+      "screenshots": [
+        "catalog-pipes-icon.jpeg",
+        "catalog-pipes-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "differences",
+      "name": "找不同",
+      "startedAt": "2026-10-09T13:02:31.805Z",
+      "finishedAt": "2026-10-09T13:02:52.904Z",
+      "observedTitle": "找不同",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "找不同",
+        "得分 0 · 最高 0",
+        "进度 0 / 4",
+        "失误 0 / 3",
+        "参考图",
+        "找出差异"
+      ],
+      "screenshots": [
+        "catalog-differences-icon.jpeg",
+        "catalog-differences-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "roomdefense",
+      "name": "房间塔防",
+      "startedAt": "2026-10-09T13:02:52.911Z",
+      "finishedAt": "2026-10-09T13:03:13.087Z",
+      "observedTitle": "房间塔防",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "房间塔防",
+        "得分 0 · 最高 0",
+        "进度 0 / 18",
+        "金币 60 · 房门 100"
+      ],
+      "screenshots": [
+        "catalog-roomdefense-icon.jpeg",
+        "catalog-roomdefense-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "basketball",
+      "name": "篮球投篮",
+      "startedAt": "2026-10-09T13:03:13.094Z",
+      "finishedAt": "2026-10-09T13:03:33.149Z",
+      "observedTitle": "篮球投篮",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "篮球投篮",
+        "得分 0 · 最高 0",
+        "进度 0 / 6"
+      ],
+      "screenshots": [
+        "catalog-basketball-icon.jpeg",
+        "catalog-basketball-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "solitaire",
+      "name": "经典纸牌",
+      "startedAt": "2026-10-09T13:03:33.155Z",
+      "finishedAt": "2026-10-09T13:03:54.249Z",
+      "observedTitle": "经典纸牌",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "经典纸牌",
+        "得分 0 · 最高 0",
+        "剩余 52 · 步数 0",
+        "○"
+      ],
+      "screenshots": [
+        "catalog-solitaire-icon.jpeg",
+        "catalog-solitaire-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "characters",
+      "name": "汉字拆组",
+      "startedAt": "2026-10-09T13:03:54.255Z",
+      "finishedAt": "2026-10-09T13:04:14.230Z",
+      "observedTitle": "汉字拆组",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "汉字拆组",
+        "得分 0 · 最高 0",
+        "进度 0 / 8",
+        "失误 0 / 3",
+        "目标汉字：休"
+      ],
+      "screenshots": [
+        "catalog-characters-icon.jpeg",
+        "catalog-characters-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "rhythm",
+      "name": "节奏落键",
+      "startedAt": "2026-10-09T13:04:14.236Z",
+      "finishedAt": "2026-10-09T13:04:34.720Z",
+      "observedTitle": "节奏落键",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "节奏落键",
+        "得分 0 · 最高 0",
+        "进度 0 / 40"
+      ],
+      "screenshots": [
+        "catalog-rhythm-icon.jpeg",
+        "catalog-rhythm-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "restaurant",
+      "name": "迷你餐厅",
+      "startedAt": "2026-10-09T13:04:34.727Z",
+      "finishedAt": "2026-10-09T13:04:55.490Z",
+      "observedTitle": "迷你餐厅",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "迷你餐厅",
+        "得分 0 · 最高 0",
+        "进度 0 / 15",
+        "金币 20",
+        "汤面",
+        "顾客 1 · 剩余 25 秒",
+        "饭团",
+        "备餐 0",
+        "汤面",
+        "备餐 0",
+        "烤串",
+        "备餐 0"
+      ],
+      "screenshots": [
+        "catalog-restaurant-icon.jpeg",
+        "catalog-restaurant-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "linktiles",
+      "name": "连连看",
+      "startedAt": "2026-10-09T13:04:55.496Z",
+      "finishedAt": "2026-10-09T13:05:15.931Z",
+      "observedTitle": "连连看",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "连连看",
+        "得分 0 · 最高 0",
+        "剩余 36 · 步数 0"
+      ],
+      "screenshots": [
+        "catalog-linktiles-icon.jpeg",
+        "catalog-linktiles-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "mahjongsolitaire",
+      "name": "麻将接龙",
+      "startedAt": "2026-10-09T13:05:15.938Z",
+      "finishedAt": "2026-10-09T13:05:36.687Z",
+      "observedTitle": "麻将接龙",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "麻将接龙",
+        "得分 0 · 最高 0",
+        "剩余 32 · 步数 0"
+      ],
+      "screenshots": [
+        "catalog-mahjongsolitaire-icon.jpeg",
+        "catalog-mahjongsolitaire-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "groupclear",
+      "name": "点击群消",
+      "startedAt": "2026-10-09T13:05:36.693Z",
+      "finishedAt": "2026-10-09T13:05:58.505Z",
+      "observedTitle": "点击群消",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "点击群消",
+        "得分 0 · 最高 0",
+        "剩余 48 · 步数 0",
+        "目标分数 450"
+      ],
+      "screenshots": [
+        "catalog-groupclear-icon.jpeg",
+        "catalog-groupclear-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "slotpair",
+      "name": "落槽配对消除",
+      "startedAt": "2026-10-09T13:05:58.512Z",
+      "finishedAt": "2026-10-09T13:06:19.103Z",
+      "observedTitle": "落槽配对消除",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "落槽配对消除",
+        "得分 0 · 最高 0",
+        "剩余 0 · 步数 0",
+        "下一块",
+        "进度 0 / 60"
+      ],
+      "screenshots": [
+        "catalog-slotpair-icon.jpeg",
+        "catalog-slotpair-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "buscolor",
+      "name": "乘客上车",
+      "startedAt": "2026-10-09T13:06:19.110Z",
+      "finishedAt": "2026-10-09T13:06:39.369Z",
+      "observedTitle": "乘客上车",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "乘客上车",
+        "得分 0 · 最高 0",
+        "进度 0 / 36",
+        "乘客队列 · 从左到右上车",
+        "候车位 0 / 3",
+        "○",
+        "○",
+        "○",
+        "轨道 1",
+        "○",
+        "○",
+        "○",
+        "○",
+        "○",
+        "○",
+        "○",
+        "○",
+        "○",
+        "○",
+        "○",
+        "○",
+        "轨道 2",
+        "○",
+        "○",
+        "○",
+        "○",
+        "○",
+        "○",
+        "○",
+        "○",
+        "○",
+        "○",
+        "○",
+        "○",
+        "轨道 3",
+        "○",
+        "○",
+        "○",
+        "○",
+        "○",
+        "○",
+        "○",
+        "○",
+        "○",
+        "○",
+        "○",
+        "○"
+      ],
+      "screenshots": [
+        "catalog-buscolor-icon.jpeg",
+        "catalog-buscolor-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "yarn",
+      "name": "毛线收卷",
+      "startedAt": "2026-10-09T13:06:39.376Z",
+      "finishedAt": "2026-10-09T13:06:58.837Z",
+      "observedTitle": "毛线收卷",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "毛线收卷",
+        "得分 0 · 最高 0",
+        "进度 0 / 5",
+        "↓",
+        "↓",
+        "↓",
+        "↓",
+        "↓",
+        "选择一个卷轴，再点击毛线柱",
+        "○",
+        "0 / 8",
+        "○",
+        "0 / 8",
+        "○",
+        "0 / 8"
+      ],
+      "screenshots": [
+        "catalog-yarn-icon.jpeg",
+        "catalog-yarn-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "sand",
+      "name": "沙画吸色",
+      "startedAt": "2026-10-09T13:06:58.843Z",
+      "finishedAt": "2026-10-09T13:07:19.065Z",
+      "observedTitle": "沙画吸色",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "沙画吸色",
+        "得分 0 · 最高 0",
+        "进度 0 / 64",
+        "选择颜色吸管，再点击同色沙粒",
+        "◆",
+        "0 / 16",
+        "●",
+        "0 / 16",
+        "★",
+        "0 / 16",
+        "▲",
+        "0 / 16"
+      ],
+      "screenshots": [
+        "catalog-sand-icon.jpeg",
+        "catalog-sand-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "untangle",
+      "name": "绳结解开",
+      "startedAt": "2026-10-09T13:07:19.072Z",
+      "finishedAt": "2026-10-09T13:07:39.130Z",
+      "observedTitle": "绳结解开",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "绳结解开",
+        "得分 0 · 最高 0",
+        "剩余交叉 14",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "screenshots": [
+        "catalog-untangle-icon.jpeg",
+        "catalog-untangle-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "platformer",
+      "name": "横版跳跃闯关",
+      "startedAt": "2026-10-09T13:07:39.137Z",
+      "finishedAt": "2026-10-09T13:07:58.933Z",
+      "observedTitle": "横版跳跃闯关",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "横版跳跃闯关",
+        "得分 0 · 最高 0",
+        "进度 50 / 1140"
+      ],
+      "screenshots": [
+        "catalog-platformer-icon.jpeg",
+        "catalog-platformer-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "grapple",
+      "name": "钩索摆荡",
+      "startedAt": "2026-10-09T13:07:58.941Z",
+      "finishedAt": "2026-10-09T13:08:19.225Z",
+      "observedTitle": "钩索摆荡",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "钩索摆荡",
+        "得分 0 · 最高 0",
+        "进度 50 / 1080"
+      ],
+      "screenshots": [
+        "catalog-grapple-icon.jpeg",
+        "catalog-grapple-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "flappy",
+      "name": "飞行穿柱",
+      "startedAt": "2026-10-09T13:08:19.232Z",
+      "finishedAt": "2026-10-09T13:08:39.383Z",
+      "observedTitle": "飞行穿柱",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "飞行穿柱",
+        "得分 0 · 最高 0",
+        "进度 0 / 12"
+      ],
+      "screenshots": [
+        "catalog-flappy-icon.jpeg",
+        "catalog-flappy-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "fruitslice",
+      "name": "切水果",
+      "startedAt": "2026-10-09T13:08:39.389Z",
+      "finishedAt": "2026-10-09T13:08:59.362Z",
+      "observedTitle": "切水果",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "切水果",
+        "得分 0 · 最高 0",
+        "进度 0 / 30",
+        "失误 0 / 5"
+      ],
+      "screenshots": [
+        "catalog-fruitslice-icon.jpeg",
+        "catalog-fruitslice-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "rollingball",
+      "name": "滚动球闯关",
+      "startedAt": "2026-10-09T13:08:59.368Z",
+      "finishedAt": "2026-10-09T13:09:19.274Z",
+      "observedTitle": "滚动球闯关",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "滚动球闯关",
+        "得分 0 · 最高 0"
+      ],
+      "screenshots": [
+        "catalog-rollingball-icon.jpeg",
+        "catalog-rollingball-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "shooter",
+      "name": "雷电战机",
+      "startedAt": "2026-10-09T13:09:19.281Z",
+      "finishedAt": "2026-10-09T13:09:39.367Z",
+      "observedTitle": "雷电战机",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "雷电战机",
+        "得分 0 · 最高 0",
+        "生命 3",
+        "进度 0 / 24"
+      ],
+      "screenshots": [
+        "catalog-shooter-icon.jpeg",
+        "catalog-shooter-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "tanks",
+      "name": "坦克对战",
+      "startedAt": "2026-10-09T13:09:39.373Z",
+      "finishedAt": "2026-10-09T13:09:59.446Z",
+      "observedTitle": "坦克对战",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "坦克对战",
+        "得分 0 · 最高 0",
+        "生命 3",
+        "进度 0 / 24"
+      ],
+      "screenshots": [
+        "catalog-tanks-icon.jpeg",
+        "catalog-tanks-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "fortress",
+      "name": "射击守城",
+      "startedAt": "2026-10-09T13:09:59.453Z",
+      "finishedAt": "2026-10-09T13:10:20.015Z",
+      "observedTitle": "射击守城",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "射击守城",
+        "得分 0 · 最高 0",
+        "生命 100",
+        "进度 0 / 24",
+        "金币 0"
+      ],
+      "screenshots": [
+        "catalog-fortress-icon.jpeg",
+        "catalog-fortress-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "survival",
+      "name": "自动攻击生存",
+      "startedAt": "2026-10-09T13:10:20.021Z",
+      "finishedAt": "2026-10-09T13:10:40.425Z",
+      "observedTitle": "自动攻击生存",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "自动攻击生存",
+        "得分 0 · 最高 0",
+        "生命 3",
+        "进度 0 / 32"
+      ],
+      "screenshots": [
+        "catalog-survival-icon.jpeg",
+        "catalog-survival-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "backpack",
+      "name": "背包战斗",
+      "startedAt": "2026-10-09T13:10:40.432Z",
+      "finishedAt": "2026-10-09T13:11:01.184Z",
+      "observedTitle": "背包战斗",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "背包战斗",
+        "得分 0 · 最高 0",
+        "金币 12 · 生命 100 · 波次 0 / 5",
+        "剑：2 × 1 · 3 金币 · 增加攻击"
+      ],
+      "screenshots": [
+        "catalog-backpack-icon.jpeg",
+        "catalog-backpack-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "billiards",
+      "name": "台球",
+      "startedAt": "2026-10-09T13:11:01.190Z",
+      "finishedAt": "2026-10-09T13:11:20.993Z",
+      "observedTitle": "台球",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "台球",
+        "得分 0 · 最高 0",
+        "进度 0 / 5",
+        "失误 0 / 3"
+      ],
+      "screenshots": [
+        "catalog-billiards-icon.jpeg",
+        "catalog-billiards-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "penalty",
+      "name": "足球点球",
+      "startedAt": "2026-10-09T13:11:20.999Z",
+      "finishedAt": "2026-10-09T13:11:40.997Z",
+      "observedTitle": "足球点球",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "足球点球",
+        "得分 0 · 最高 0",
+        "射门 0 / 8 · 进球 0 / 5"
+      ],
+      "screenshots": [
+        "catalog-penalty-icon.jpeg",
+        "catalog-penalty-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "pingpong",
+      "name": "乒乓球",
+      "startedAt": "2026-10-09T13:11:41.004Z",
+      "finishedAt": "2026-10-09T13:12:01.170Z",
+      "observedTitle": "乒乓球",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "乒乓球",
+        "得分 0 · 最高 0",
+        "己方 0 · 对方 0"
+      ],
+      "screenshots": [
+        "catalog-pingpong-icon.jpeg",
+        "catalog-pingpong-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "bowling",
+      "name": "保龄球",
+      "startedAt": "2026-10-09T13:12:01.176Z",
+      "finishedAt": "2026-10-09T13:12:20.619Z",
+      "observedTitle": "保龄球",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "保龄球",
+        "得分 0 · 最高 0",
+        "进度 0 / 9"
+      ],
+      "screenshots": [
+        "catalog-bowling-icon.jpeg",
+        "catalog-bowling-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "golf",
+      "name": "迷你高尔夫",
+      "startedAt": "2026-10-09T13:12:20.625Z",
+      "finishedAt": "2026-10-09T13:12:40.048Z",
+      "observedTitle": "迷你高尔夫",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "迷你高尔夫",
+        "得分 0 · 最高 0",
+        "杆数 0 / 20"
+      ],
+      "screenshots": [
+        "catalog-golf-icon.jpeg",
+        "catalog-golf-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "drift",
+      "name": "单键漂移",
+      "startedAt": "2026-10-09T13:12:40.059Z",
+      "finishedAt": "2026-10-09T13:13:00.392Z",
+      "observedTitle": "单键漂移",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "单键漂移",
+        "得分 0 · 最高 0",
+        "剩余时间 40 秒"
+      ],
+      "screenshots": [
+        "catalog-drift-icon.jpeg",
+        "catalog-drift-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "hillclimb",
+      "name": "爬坡越野",
+      "startedAt": "2026-10-09T13:13:00.398Z",
+      "finishedAt": "2026-10-09T13:13:20.736Z",
+      "observedTitle": "爬坡越野",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "爬坡越野",
+        "得分 0 · 最高 0",
+        "进度 35 / 1500"
+      ],
+      "screenshots": [
+        "catalog-hillclimb-icon.jpeg",
+        "catalog-hillclimb-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "airhockey",
+      "name": "空气曲棍球",
+      "startedAt": "2026-10-09T13:13:20.743Z",
+      "finishedAt": "2026-10-09T13:13:41.019Z",
+      "observedTitle": "空气曲棍球",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "空气曲棍球",
+        "得分 0 · 最高 0",
+        "己方 0 · 对方 0"
+      ],
+      "screenshots": [
+        "catalog-airhockey-icon.jpeg",
+        "catalog-airhockey-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "tug",
+      "name": "双人拔河",
+      "startedAt": "2026-10-09T13:13:41.025Z",
+      "finishedAt": "2026-10-09T13:14:01.082Z",
+      "observedTitle": "双人拔河",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "双人拔河",
+        "得分 0 · 最高 0",
+        "绳标位置 50"
+      ],
+      "screenshots": [
+        "catalog-tug-icon.jpeg",
+        "catalog-tug-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "dots",
+      "name": "点格棋",
+      "startedAt": "2026-10-09T13:14:01.089Z",
+      "finishedAt": "2026-10-09T13:14:21.366Z",
+      "observedTitle": "点格棋",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "点格棋",
+        "得分 0 · 最高 0",
+        "轮到玩家 1",
+        "●",
+        "●",
+        "●",
+        "●",
+        "●",
+        "●",
+        "●",
+        "●",
+        "●",
+        "●",
+        "●",
+        "●",
+        "●",
+        "●",
+        "●",
+        "●",
+        "●",
+        "●",
+        "●",
+        "●",
+        "●",
+        "●",
+        "●",
+        "●",
+        "●"
+      ],
+      "screenshots": [
+        "catalog-dots-icon.jpeg",
+        "catalog-dots-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "doudizhu",
+      "name": "斗地主",
+      "startedAt": "2026-10-09T13:14:21.372Z",
+      "finishedAt": "2026-10-09T13:14:41.807Z",
+      "observedTitle": "斗地主",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "斗地主",
+        "得分 0 · 最高 0",
+        "人机对战",
+        "普通",
+        "你是地主，另外两位由电脑控制。",
+        "轮到你操作",
+        "步数 0",
+        "电脑 2：17 张",
+        "电脑 3：17 张",
+        "你是地主，另外两位电脑为农民",
+        "上一手出牌",
+        "♠3",
+        "♥4",
+        "♦4",
+        "♣4",
+        "♦5",
+        "♣5",
+        "♠6",
+        "♦6",
+        "♦8",
+        "♠9",
+        "♥9",
+        "♦9",
+        "♥J",
+        "♠Q",
+        "♥K",
+        "♦A",
+        "♥2",
+        "♦2",
+        "☆",
+        "★"
+      ],
+      "screenshots": [
+        "catalog-doudizhu-icon.jpeg",
+        "catalog-doudizhu-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "guandan",
+      "name": "掼蛋",
+      "startedAt": "2026-10-09T13:14:41.813Z",
+      "finishedAt": "2026-10-09T13:15:02.574Z",
+      "observedTitle": "掼蛋",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "掼蛋",
+        "得分 0 · 最高 0",
+        "人机对战",
+        "普通",
+        "你与电脑 3 组队，对战电脑 2 和电脑 4。",
+        "轮到你操作",
+        "步数 0",
+        "电脑 2：27 张",
+        "电脑 3：27 张",
+        "电脑 4：27 张",
+        "你与玩家 3 搭档 · 本局级牌为 2",
+        "上一手出牌",
+        "♥3",
+        "♦3",
+        "♣3",
+        "♦3",
+        "♥4",
+        "♦5",
+        "♠6",
+        "♠6",
+        "♦6",
+        "♥7",
+        "♥8",
+        "♦9",
+        "♥10",
+        "♠J",
+        "♥J",
+        "♥J",
+        "♥Q",
+        "♥Q",
+        "♣Q",
+        "♠K",
+        "♥K",
+        "♣A",
+        "♠2",
+        "♥2",
+        "☆",
+        "☆",
+        "★"
+      ],
+      "screenshots": [
+        "catalog-guandan-icon.jpeg",
+        "catalog-guandan-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "mahjong",
+      "name": "四人麻将",
+      "startedAt": "2026-10-09T13:15:02.580Z",
+      "finishedAt": "2026-10-09T13:15:24.224Z",
+      "observedTitle": "四人麻将",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "四人麻将",
+        "得分 0 · 最高 0",
+        "人机对战",
+        "普通",
+        "你控制玩家 1，其余三家由电脑控制。",
+        "轮到你操作",
+        "步数 0",
+        "牌墙剩余 83 张",
+        "电脑 2：13 张",
+        "电脑 3：13 张",
+        "电脑 4：13 张",
+        "3萬",
+        "4萬",
+        "8萬",
+        "2筒",
+        "3筒",
+        "3筒",
+        "8筒",
+        "3索",
+        "5索",
+        "6索",
+        "8索",
+        "南",
+        "西",
+        "白"
+      ],
+      "screenshots": [
+        "catalog-mahjong-icon.jpeg",
+        "catalog-mahjong-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "xiangqi",
+      "name": "中国象棋",
+      "startedAt": "2026-10-09T13:15:24.231Z",
+      "finishedAt": "2026-10-09T13:15:47.198Z",
+      "observedTitle": "中国象棋",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "中国象棋",
+        "得分 0 · 最高 1855",
+        "人机对战",
+        "普通",
+        "你执红棋，电脑执黑棋。",
+        "轮到你操作",
+        "步数 0",
+        "你执下方棋子，电脑执上方棋子",
+        "車",
+        "馬",
+        "象",
+        "士",
+        "將",
+        "士",
+        "象",
+        "馬",
+        "車",
+        "砲",
+        "砲",
+        "卒",
+        "卒",
+        "卒",
+        "卒",
+        "卒",
+        "兵",
+        "兵",
+        "兵",
+        "兵",
+        "兵",
+        "炮",
+        "炮",
+        "車",
+        "馬",
+        "相",
+        "仕",
+        "帥",
+        "仕",
+        "相",
+        "馬",
+        "車"
+      ],
+      "screenshots": [
+        "catalog-xiangqi-icon.jpeg",
+        "catalog-xiangqi-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "chess",
+      "name": "国际象棋",
+      "startedAt": "2026-10-09T13:15:47.204Z",
+      "finishedAt": "2026-10-09T13:16:08.599Z",
+      "observedTitle": "国际象棋",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "国际象棋",
+        "得分 0 · 最高 0",
+        "人机对战",
+        "普通",
+        "你执白棋，电脑执黑棋。",
+        "轮到你操作",
+        "步数 0",
+        "你执下方棋子，电脑执上方棋子",
+        "兵到达底线时升变为："
+      ],
+      "screenshots": [
+        "catalog-chess-icon.jpeg",
+        "catalog-chess-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "ludo",
+      "name": "飞行棋",
+      "startedAt": "2026-10-09T13:16:08.606Z",
+      "finishedAt": "2026-10-09T13:16:29.339Z",
+      "observedTitle": "飞行棋",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "飞行棋",
+        "得分 0 · 最高 0",
+        "人机对战",
+        "普通",
+        "你控制玩家 1 的四架飞机，其余三队由电脑控制。",
+        "轮到你操作",
+        "步数 0",
+        "骰子点数 0",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "·",
+        "1",
+        "2",
+        "3",
+        "4",
+        "1",
+        "2",
+        "3",
+        "4",
+        "1",
+        "2",
+        "3",
+        "4",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "screenshots": [
+        "catalog-ludo-icon.jpeg",
+        "catalog-ludo-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "spider",
+      "name": "蜘蛛纸牌",
+      "startedAt": "2026-10-09T13:16:29.346Z",
+      "finishedAt": "2026-10-09T13:16:50.506Z",
+      "observedTitle": "蜘蛛纸牌",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "蜘蛛纸牌",
+        "得分 0 · 最高 0",
+        "步数 0",
+        "♠4",
+        "♠6",
+        "♠6",
+        "♠Q",
+        "♠2",
+        "♠2",
+        "♠10"
+      ],
+      "screenshots": [
+        "catalog-spider-icon.jpeg",
+        "catalog-spider-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "freecell",
+      "name": "空当接龙",
+      "startedAt": "2026-10-09T13:16:50.513Z",
+      "finishedAt": "2026-10-09T13:17:12.005Z",
+      "observedTitle": "空当接龙",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "空当接龙",
+        "得分 0 · 最高 0",
+        "步数 0",
+        "♦Q",
+        "♦7",
+        "♥A",
+        "♣6",
+        "♥4",
+        "♠K",
+        "♥Q",
+        "♠A",
+        "♣4",
+        "♥9",
+        "♣A",
+        "♣J",
+        "♣5",
+        "♥J",
+        "♦K",
+        "♣9",
+        "♦J",
+        "♥8",
+        "♣3",
+        "♦2",
+        "♦4",
+        "♠6",
+        "♦10",
+        "♣K",
+        "♥7",
+        "♠10",
+        "♥6",
+        "♠J",
+        "♣8",
+        "♣2",
+        "♠4",
+        "♣7",
+        "♦A",
+        "♥K",
+        "♥10",
+        "♦6",
+        "♠3",
+        "♠8",
+        "♣10",
+        "♦3",
+        "♦9",
+        "♦8",
+        "♣Q",
+        "♠5",
+        "♥2",
+        "♠2"
+      ],
+      "screenshots": [
+        "catalog-freecell-icon.jpeg",
+        "catalog-freecell-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "onestroke",
+      "name": "一笔画",
+      "startedAt": "2026-10-09T13:17:12.011Z",
+      "finishedAt": "2026-10-09T13:17:32.212Z",
+      "observedTitle": "一笔画",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "一笔画",
+        "得分 0 · 最高 0",
+        "进度 0 / 13"
+      ],
+      "screenshots": [
+        "catalog-onestroke-icon.jpeg",
+        "catalog-onestroke-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "hiddenobjects",
+      "name": "隐藏物品",
+      "startedAt": "2026-10-09T13:17:32.219Z",
+      "finishedAt": "2026-10-09T13:17:52.939Z",
+      "observedTitle": "隐藏物品",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "隐藏物品",
+        "得分 0 · 最高 0",
+        "进度 0 / 6",
+        "失误 0 / 3",
+        "寻找下方列出的物品，每种找到一个即可"
+      ],
+      "screenshots": [
+        "catalog-hiddenobjects-icon.jpeg",
+        "catalog-hiddenobjects-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "linerescue",
+      "name": "画线救援",
+      "startedAt": "2026-10-09T13:17:52.947Z",
+      "finishedAt": "2026-10-09T13:18:13.070Z",
+      "observedTitle": "画线救援",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "画线救援",
+        "得分 0 · 最高 0",
+        "进度 0 / 10",
+        "剩余时间 10 秒"
+      ],
+      "screenshots": [
+        "catalog-linerescue-icon.jpeg",
+        "catalog-linerescue-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "picturepuzzle",
+      "name": "图片拼图",
+      "startedAt": "2026-10-09T13:18:13.076Z",
+      "finishedAt": "2026-10-09T13:18:34.015Z",
+      "observedTitle": "图片拼图",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "图片拼图",
+        "得分 0 · 最高 0",
+        "进度 1 / 16"
+      ],
+      "screenshots": [
+        "catalog-picturepuzzle-icon.jpeg",
+        "catalog-picturepuzzle-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "idiom",
+      "name": "成语填字",
+      "startedAt": "2026-10-09T13:18:34.022Z",
+      "finishedAt": "2026-10-09T13:18:54.332Z",
+      "observedTitle": "成语填字",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "成语填字",
+        "得分 0 · 最高 0",
+        "进度 0 / 8",
+        "失误 0 / 3",
+        "叶公□龙"
+      ],
+      "screenshots": [
+        "catalog-idiom-icon.jpeg",
+        "catalog-idiom-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "wordtower",
+      "name": "文字合成塔防",
+      "startedAt": "2026-10-09T13:18:54.338Z",
+      "finishedAt": "2026-10-09T13:19:14.514Z",
+      "observedTitle": "文字合成塔防",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "文字合成塔防",
+        "得分 0 · 最高 0",
+        "进度 0 / 16",
+        "金币 18 · 生命 100 · 波次 0 / 16",
+        "建造一座字塔需要 6 金币"
+      ],
+      "screenshots": [
+        "catalog-wordtower-icon.jpeg",
+        "catalog-wordtower-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "beatjump",
+      "name": "节拍跳跃",
+      "startedAt": "2026-10-09T13:19:14.521Z",
+      "finishedAt": "2026-10-09T13:19:35.516Z",
+      "observedTitle": "节拍跳跃",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "节拍跳跃",
+        "得分 0 · 最高 0",
+        "进度 0 / 24",
+        "距离节拍 1200 毫秒",
+        "←   ●   →   ●"
+      ],
+      "screenshots": [
+        "catalog-beatjump-icon.jpeg",
+        "catalog-beatjump-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "melody",
+      "name": "旋律记忆",
+      "startedAt": "2026-10-09T13:19:35.523Z",
+      "finishedAt": "2026-10-09T13:19:55.993Z",
+      "observedTitle": "旋律记忆",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "旋律记忆",
+        "得分 0 · 最高 0",
+        "进度 0 / 5",
+        "失误 0 / 3",
+        "按顺序重复旋律"
+      ],
+      "screenshots": [
+        "catalog-melody-icon.jpeg",
+        "catalog-melody-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "farm",
+      "name": "迷你农场",
+      "startedAt": "2026-10-09T13:19:55.999Z",
+      "finishedAt": "2026-10-09T13:20:16.232Z",
+      "observedTitle": "迷你农场",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "迷你农场",
+        "得分 0 · 最高 0",
+        "进度 0 / 12",
+        "金币 12",
+        "第 0 天"
+      ],
+      "screenshots": [
+        "catalog-farm-icon.jpeg",
+        "catalog-farm-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "decorate",
+      "name": "家居装饰",
+      "startedAt": "2026-10-09T13:20:16.239Z",
+      "finishedAt": "2026-10-09T13:20:36.617Z",
+      "observedTitle": "家居装饰",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "家居装饰",
+        "得分 0 · 最高 0",
+        "进度 0 / 4",
+        "金币 20",
+        "放置一张沙发",
+        "放置两盆绿植",
+        "放置一盏灯",
+        "将茶几放在沙发旁"
+      ],
+      "screenshots": [
+        "catalog-decorate-icon.jpeg",
+        "catalog-decorate-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    },
+    {
+      "id": "fishing",
+      "name": "休闲钓鱼",
+      "startedAt": "2026-10-09T13:20:36.624Z",
+      "finishedAt": "2026-10-09T13:20:57.207Z",
+      "observedTitle": "休闲钓鱼",
+      "headerId": "game-settings-button",
+      "pageText": [
+        "休闲钓鱼",
+        "得分 0 · 最高 0",
+        "进度 0 / 5",
+        "失误 0 / 3",
+        "抛竿后等待鱼咬钩"
+      ],
+      "screenshots": [
+        "catalog-fishing-icon.jpeg",
+        "catalog-fishing-page.jpeg"
+      ],
+      "returnedTo": "home_category_search"
+    }
+  ],
+  "failures": [],
+  "passedCount": 100,
+  "complete": true,
+  "updatedAt": "2026-10-09T13:20:57.215Z"
+}

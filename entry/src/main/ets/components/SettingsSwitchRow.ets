@@ -12,13 +12,14 @@ export struct SettingsSwitchRow {
       Column({ space: SpacingTokens.xs }) {
         Text(this.title).fontFamily(FontTokens.family).fontSize(FontTokens.sizeBodyLarge)
           .fontWeight(FontTokens.weightMedium).fontColor(SemanticColors.textPrimary)
-        Text(this.detail).fontFamily(FontTokens.family).fontSize(FontTokens.sizeBodySmall)
-          .fontColor(SemanticColors.textTertiary)
+        Text(this.detail).fontFamily(FontTokens.family).fontSize(FontTokens.sizeBody)
+          .fontColor(SemanticColors.textSecondary)
       }.alignItems(HorizontalAlign.Start).layoutWeight(1)
       Toggle({ type: ToggleType.Switch, isOn: this.isOn })
         .selectedColor(SemanticColors.primary)
         .accessibilityText(this.title)
         .onChange((value: boolean) => { this.onToggle(value); })
-    }.width('100%').padding(SpacingTokens.base)
+    }.width('100%').constraintSize({ minHeight: $r('app.float.home_settings_row_min_height') })
+      .padding(SpacingTokens.base)
   }
 }

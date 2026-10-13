@@ -42,12 +42,16 @@ export struct TetrisGamePage {
   private rowIdx: number[] = range(ROWS);
   private colIdx: number[] = range(COLS);
 
+  @Monitor('viewModel.status', 'viewModel.confirmExit')
+  playTimeStateChanged(): void { GameLifecycleBus.updatePlayTime(this.viewModel); }
+
   aboutToAppear(): void {
     const byWidth: number = ScreenUtils.calcCell(COLS, 560, 16, 1);
     const byHeight: number = Math.floor((ScreenUtils.windowHeightVp() - 340) / ROWS);
     this.cell = Math.max(1, Math.min(byWidth, byHeight));
     GameLifecycleBus.attach(this.viewModel);
     if (!GameSessionTransfer.restore(this.viewModel)) { this.viewModel.startGame(); }
+    this.playTimeStateChanged();
   }
 
   /** 棋盘必须同时适配可用宽度和页头、操作键之外的实际高度。 */
@@ -77,7 +81,7 @@ export struct TetrisGamePage {
   getCellColor(r: number, c: number): ResourceColor {
     const mark = this.viewModel.cells[r * COLS + c].mark;
     if (mark !== 0) { return SHAPE_COLORS[mark - 1]; }
-    return SemanticColors.cellRevealed;
+    return $r('app.color.play_cell_alternate');
   }
 
   @Styles
@@ -92,7 +96,7 @@ export struct TetrisGamePage {
         .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
 
       Column() {
-        GameHeader({ gameTitle: $r('app.string.game_tetris_name'), // 得分/最高分已由下方大字指标卡展示，关闭标题栏的小字重复显示
+        GameHeader({ gameId: 'tetris', pathStack: this.pathStack, hasProgress: (): boolean => this.viewModel.hasProgress(), gameTitle: $r('app.string.game_tetris_name'), // 得分/最高分已由下方大字指标卡展示，关闭标题栏的小字重复显示
           showScore: false,
           isPaused: this.viewModel.status === GameStatus.PAUSED,
           difficulty: this.viewModel.difficulty,
@@ -105,13 +109,13 @@ export struct TetrisGamePage {
           Column() {
             Text($r('app.string.level_label')).fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
             Text('' + this.viewModel.level).fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold).fontColor(SemanticColors.warning)
-          }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
+          }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.lg)
           .alignItems(HorizontalAlign.Center).margin({ left: 16 })
 
           Column() {
             Text($r('app.string.score_label')).fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
             Text('' + this.viewModel.score).fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold).fontColor(SemanticColors.accent)
-          }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
+          }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.lg)
           .alignItems(HorizontalAlign.Center).margin({ left: 8, right: 16 })
         }.margin({ top: 12, bottom: 12 })
 
@@ -127,13 +131,14 @@ export struct TetrisGamePage {
                     }
                   }.width(this.cell).height(this.cell)
                     .backgroundColor(this.getCellColor(row, col))
-                    .border({ width: 0.5, color: SemanticColors.divider })
+                    .border({ width: $r('app.float.play_grid_line_width'), color: $r('app.color.play_piece_border') })
+                    .borderRadius(RadiusTokens.xs)
                 }, (col: number) => col.toString())
               }
             }, (row: number) => row.toString())
           }.width(this.cell * COLS).height(this.cell * ROWS)
-          .borderRadius(RadiusTokens.sm)
-          .backgroundColor(SemanticColors.boardBg)
+          .borderRadius(RadiusTokens.md)
+          .backgroundColor($r('app.color.play_board_background'))
         }.width('100%').layoutWeight(1).justifyContent(FlexAlign.Center)
           .onAreaChange((oldValue: Area, newValue: Area) => { this.updateCell(newValue); })
 

@@ -12,6 +12,7 @@ import { GameDataManager } from '../model/GameData';
 import { GameLifecycleObserver } from '../common/GameLifecycleBus';
 import { MinesweeperRules, RevealResult } from '../model/game/MinesweeperModel';
 import { RandomSource, RealRandom } from '../model/game/RandomSource';
+import { GameSoundEvent, gameSound } from '../common/GameSound';
 
 const ROWS = 9;
 const COLS = 9;
@@ -49,6 +50,8 @@ export class MinesweeperViewModel implements GameLifecycleObserver {
   private rng: RandomSource;
   private timer: number = -1;
   private startTime: number = 0;
+  private elapsedTimeMs: number = 0;
+  private appVisible: boolean = true;
   /** 计时是否已启动且尚未结束 */
   private timerRunning: boolean = false;
   private minesPlaced: boolean = false;
@@ -74,13 +77,15 @@ export class MinesweeperViewModel implements GameLifecycleObserver {
   }
 
   newGame(): void {
-    GameDataManager.incrementPlayCount(GAME_ID);
+    gameSound.stop(GAME_ID);
+    GameDataManager.recordGamePlayed(GAME_ID);
     this.board = this.rules.emptyBoard();
     this.revealed = this.rules.emptyBool();
     this.flagged = this.rules.emptyBool();
     this.status = GameStatus.PLAYING;
     this.flagCount = 0;
     this.elapsed = 0;
+    this.elapsedTimeMs = 0;
     // 雷与计时都推迟到首次点击，保证首点安全
     this.minesPlaced = false;
     this.timerRunning = false;
@@ -88,6 +93,7 @@ export class MinesweeperViewModel implements GameLifecycleObserver {
   }
 
   startGame(): void {
+    gameSound.stop(GAME_ID);
     this.newGame();
   }
 
@@ -101,29 +107,26 @@ export class MinesweeperViewModel implements GameLifecycleObserver {
   /** 首次揭开时启动计时 */
   private startTimer(): void {
     this.stopTimer();
-    this.startTime = Date.now();
     this.timerRunning = true;
-    this.timer = setInterval(() => {
-      if (this.status === GameStatus.PLAYING) {
-        this.elapsed = Math.floor((Date.now() - this.startTime) / 1000);
-      }
-    }, 1000);
+    this.resumeTimer();
   }
 
   /** 切后台：暂停计时并清理定时器，避免后台虚增用时（影响「用时越短分越高」） */
   pauseTimer(): void {
-    if (!this.timerRunning) { return; }
-    this.elapsed = Math.floor((Date.now() - this.startTime) / 1000);
+    if (!this.timerRunning || this.timer === -1) { return; }
+    this.elapsedTimeMs += Date.now() - this.startTime;
+    this.elapsed = Math.floor(this.elapsedTimeMs / 1000);
     this.stopTimer();
   }
 
-  /** 回到前台：以已计时秒数为基准恢复计时 */
+  /** 可见且没有退出确认时恢复计时，保留暂停前不足一秒的时间。 */
   resumeTimer(): void {
-    if (!this.timerRunning || this.timer !== -1) { return; }
-    this.startTime = Date.now() - this.elapsed * 1000;
+    if (!this.timerRunning || this.timer !== -1 || !this.appVisible || this.confirmExit ||
+        this.status !== GameStatus.PLAYING) { return; }
+    this.startTime = Date.now();
     this.timer = setInterval(() => {
       if (this.status === GameStatus.PLAYING) {
-        this.elapsed = Math.floor((Date.now() - this.startTime) / 1000);
+        this.elapsed = Math.floor((this.elapsedTimeMs + Date.now() - this.startTime) / 1000);
       }
     }, 1000);
   }
@@ -134,8 +137,9 @@ export class MinesweeperViewModel implements GameLifecycleObserver {
    * 原有的 onPageHide/onPageShow 钩子从未被调用——后台计时虚增曾长期存在，
    * 直接破坏「用时越短分越高」的得分口径。
    */
-  onAppHidden(): void { this.pauseTimer(); }
-  onAppShown(): void { this.resumeTimer(); }
+  onAppHidden(): void {
+    gameSound.stop(GAME_ID); this.appVisible = false; this.pauseTimer(); }
+  onAppShown(): void { this.appVisible = true; this.resumeTimer(); }
 
   /** 系统侧滑返回转发（NavDestination.onBackPressed）。进行中弹确认并拦截 */
   onBackRequested(): boolean {
@@ -146,7 +150,8 @@ export class MinesweeperViewModel implements GameLifecycleObserver {
   requestBack(): boolean {
     if (!GameDataManager.getSetting('confirmExitEnabled', true)) { return false; }
     if (this.status === GameStatus.PLAYING) {
-      this.confirmExit = true;
+      this.pauseTimer();
+      gameSound.stop(GAME_ID); this.confirmExit = true;
       return true;
     }
     return false;
@@ -154,6 +159,7 @@ export class MinesweeperViewModel implements GameLifecycleObserver {
 
   dismissExitConfirm(): void {
     this.confirmExit = false;
+    this.resumeTimer();
   }
 
   reveal(r: number, c: number): void {
@@ -167,15 +173,19 @@ export class MinesweeperViewModel implements GameLifecycleObserver {
     this.revealed = result.revealed;
     if (result.hitMine) { this.gameOver(false); return; }
     if (this.rules.allSafeRevealed(this.board, this.revealed)) { this.gameOver(true); }
+    else { gameSound.play(GAME_ID); }
   }
 
   toggleFlag(r: number, c: number): void {
     if (this.status !== GameStatus.PLAYING || this.revealed[r][c]) { return; }
     this.flagged = this.rules.toggleFlag(this.revealed, this.flagged, r, c);
     this.flagCount = this.rules.countFlags(this.flagged);
+    gameSound.play(GAME_ID);
   }
 
   private gameOver(won: boolean): void {
+    gameSound.play(GAME_ID, won ? GameSoundEvent.WIN : GameSoundEvent.LOSE);
+    this.pauseTimer();
     this.status = GameStatus.OVER;
     this.timerRunning = false;
     this.stopTimer();
@@ -195,6 +205,10 @@ export class MinesweeperViewModel implements GameLifecycleObserver {
 
   dispose(): void { this.stopTimer(); }
 
+  isPlayTimeActive(): boolean { return this.status === GameStatus.PLAYING && !this.confirmExit; }
+
+  hasProgress(): boolean { return this.status !== GameStatus.OVER && (this.elapsed > 0 || this.flagCount > 0 || this.revealed.some((row: boolean[]) => row.some((value: boolean) => value))); }
+
   continuationGameId(): string { return GAME_ID; }
 
   /** Capture only game data; exporting never pauses or mutates the source game. */
@@ -208,7 +222,7 @@ export class MinesweeperViewModel implements GameLifecycleObserver {
       status: this.status,
       flagCount: this.flagCount,
       difficulty: this.difficulty,
-      elapsed: this.timer !== -1 ? Math.floor((Date.now() - this.startTime) / 1000) : this.elapsed,
+      elapsed: this.timer !== -1 ? Math.floor((this.elapsedTimeMs + Date.now() - this.startTime) / 1000) : this.elapsed,
       gameResult: this.gameResult,
       timerRunning: this.timerRunning,
       minesPlaced: this.minesPlaced
@@ -238,6 +252,7 @@ export class MinesweeperViewModel implements GameLifecycleObserver {
       this.flagCount = s.flagCount;
       this.difficulty = s.difficulty;
       this.elapsed = s.elapsed;
+      this.elapsedTimeMs = s.elapsed * 1000;
       this.gameResult = s.gameResult;
       this.timerRunning = s.timerRunning;
       this.minesPlaced = s.minesPlaced;

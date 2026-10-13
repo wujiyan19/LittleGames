@@ -1,0 +1,43 @@
+{
+  "target": "49X0224C24001554",
+  "packageSha256": "dfb6a2863d452bb7ca2c6e48730ac0a2037433730ea53643cd5def6afab41568",
+  "checks": [
+    {
+      "id": "complete-history",
+      "evidence": [
+        "tablet-featured-entry.jpeg",
+        "tablet-history-initial.jpeg",
+        "tablet-history-bottom.jpeg"
+      ],
+      "detail": "36 distinct played games are reachable; history includes all records beyond the five home shortcuts.",
+      "at": "2026-10-04T03:43:22.517Z"
+    },
+    {
+      "id": "replay-refresh",
+      "evidence": [
+        "tablet-game-from-history.jpeg",
+        "tablet-history-replayed-first.jpeg",
+        "tablet-featured-replayed-first.jpeg"
+      ],
+      "detail": "打地鼠 opened from an older history row; return refreshes its timestamp and puts it first without duplicating it; home preview agrees.",
+      "at": "2026-10-04T03:44:11.660Z"
+    },
+    {
+      "id": "persisted-history",
+      "evidence": [
+        "tablet-history-relaunched.jpeg"
+      ],
+      "detail": "Full history count, newest game and its exact timestamp survive an application restart.",
+      "at": "2026-10-04T03:45:11.090Z"
+    },
+    {
+      "id": "dark-theme",
+      "evidence": [
+        "tablet-history-dark.jpeg",
+        "tablet-history-restored.jpeg"
+      ],
+      "detail": "History renders in dark mode; original theme is restored and the final history page remains open.",
+      "at": "2026-10-04T03:46:36.575Z"
+    }
+  ]
+}

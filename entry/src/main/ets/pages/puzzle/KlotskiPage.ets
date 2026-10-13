@@ -29,6 +29,9 @@ export struct KlotskiPage {
   // 无障碍字符串缓存
   @Local a11yBlockFormat: string = '';
 
+  @Monitor('viewModel.status', 'viewModel.confirmExit')
+  playTimeStateChanged(): void { GameLifecycleBus.updatePlayTime(this.viewModel); }
+
   aboutToAppear(): void {
     this.cell = ScreenUtils.calcCell(BW, 560, 28, 48);
     const context = this.getUIContext().getHostContext();
@@ -41,6 +44,7 @@ export struct KlotskiPage {
     if (ctx) {
       this.centerLabel = ctx.resourceManager.getStringSync($r('app.string.klotski_move'));
     }
+    this.playTimeStateChanged();
   }
 
   aboutToDisappear(): void {
@@ -77,7 +81,7 @@ export struct KlotskiPage {
         .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
 
       Column() {
-        GameHeader({
+        GameHeader({ gameId: 'klotski', pathStack: this.pathStack, hasProgress: (): boolean => this.viewModel.hasProgress(),
           gameTitle: $r('app.string.game_klotski_name'),
           showScore: false,
           showPause: false,
@@ -104,10 +108,11 @@ export struct KlotskiPage {
                 Text(piece.label)
                   .fontSize(Math.max(18, this.cell * 0.3))
                   .fontWeight(FontWeight.Bold)
-                  .fontColor(piece.kind === 4 ? $r('app.color.klotski_wood_text') : $r('app.color.tile_text_high'))
+                  .fontColor(piece.kind === 1 || piece.kind === 3 ?
+                    $r('app.color.play_color_piece_text') : $r('app.color.play_piece_text'))
               }
               .width(piece.w * this.step() - 4).height(piece.h * this.step() - 4)
-              .border({ width: piece.selected ? 3 : 0, color: SemanticColors.warning })
+              .border({ width: piece.selected ? 3 : 0, color: SemanticColors.primary })
               .borderRadius(RadiusTokens.base)
               .translate({ x: 6 + piece.x * this.step(), y: 6 + piece.y * this.step() })
               .accessibilityText(this.a11yBlockFormat.replace('%1$s', piece.label))

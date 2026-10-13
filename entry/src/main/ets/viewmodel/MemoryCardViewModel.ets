@@ -11,6 +11,7 @@ import { GameDataManager } from '../model/GameData';
 import { GameLifecycleObserver } from '../common/GameLifecycleBus';
 import { Card, MemoryCardRules } from '../model/game/MemoryCardModel';
 import { RandomSource, RealRandom } from '../model/game/RandomSource';
+import { GameSoundEvent, gameSound } from '../common/GameSound';
 
 const GAME_ID = 'memorycard';
 
@@ -63,7 +64,8 @@ export class MemoryCardViewModel implements GameLifecycleObserver {
   }
 
   startGame(): void {
-    GameDataManager.incrementPlayCount(GAME_ID);
+    gameSound.stop(GAME_ID);
+    GameDataManager.recordGamePlayed(GAME_ID);
     this.clearTimer();
     this.cards = this.rules.deal(this.getPairCount(), this.rng);
     this.flippedIdxs = [];
@@ -97,6 +99,7 @@ export class MemoryCardViewModel implements GameLifecycleObserver {
 
     const flipped = this.cloneCards();
     flipped[idx].flipped = true;
+    gameSound.play(GAME_ID);
     this.cards = flipped;
 
     const newFlipped: number[] = [];
@@ -125,6 +128,7 @@ export class MemoryCardViewModel implements GameLifecycleObserver {
       matched[b].matched = true;
       this.cards = matched;
       this.matchedCount++;
+      gameSound.play(GAME_ID, this.matchedCount === this.getPairCount() ? GameSoundEvent.WIN : GameSoundEvent.REWARD);
       if (this.matchedCount === this.getPairCount()) {
         this.status = GameStatus.OVER;
         if (this.attempts < this.bestScore) { this.bestScore = this.attempts; }
@@ -132,6 +136,7 @@ export class MemoryCardViewModel implements GameLifecycleObserver {
       }
     } else {
       const reset = this.cloneCards();
+      gameSound.play(GAME_ID, GameSoundEvent.ERROR);
       reset[a].flipped = false;
       reset[b].flipped = false;
       this.cards = reset;
@@ -163,6 +168,7 @@ export class MemoryCardViewModel implements GameLifecycleObserver {
 
   // —— GameLifecycleObserver（完成才计分；flipTimer 为亚秒级翻牌延时，切后台无需处理）——
   onAppHidden(): void {
+    gameSound.stop(GAME_ID);
   }
 
   onAppShown(): void {
@@ -177,7 +183,7 @@ export class MemoryCardViewModel implements GameLifecycleObserver {
   requestBack(): boolean {
     if (!GameDataManager.getSetting('confirmExitEnabled', true)) { return false; }
     if (this.status === GameStatus.PLAYING) {
-      this.confirmExit = true;
+      gameSound.stop(GAME_ID); this.confirmExit = true;
       return true;
     }
     return false;
@@ -189,6 +195,10 @@ export class MemoryCardViewModel implements GameLifecycleObserver {
 
   /** 页面销毁：清理翻牌结算定时器 */
   dispose(): void { this.clearTimer(); }
+
+  isPlayTimeActive(): boolean { return this.status === GameStatus.PLAYING && !this.confirmExit; }
+
+  hasProgress(): boolean { return this.status !== GameStatus.OVER && (this.attempts > 0 || this.flippedIdxs.length > 0 || this.matchedCount > 0); }
 
   continuationGameId(): string { return GAME_ID; }
 

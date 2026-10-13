@@ -1,0 +1,27 @@
+{
+  "checks": {
+    "performance": 162,
+    "continuation": 76,
+    "chess-ai": 21,
+    "computer-opponents": 54,
+    "card-ai": 29,
+    "lan-multiplayer": 22,
+    "expansion": 336,
+    "lan-transport": 12,
+    "poker-ai": 11,
+    "play-time": 34,
+    "expansion-completion": 190,
+    "game-settings": 9,
+    "expansion-art": 7
+  },
+  "total": 963,
+  "buildLog": "entry/build/computer-validation/device-hand-refresh-build.log",
+  "date": "2026-10-04",
+  "finalBuildLog": "entry/build/computer-validation/device-ludo-refresh-build.log",
+  "finalBuildMs": 10027,
+  "afterLudoRefreshFix": {
+    "computer-opponents": 54,
+    "expansion-art": 7,
+    "performance": 162
+  }
+}

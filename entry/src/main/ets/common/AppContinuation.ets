@@ -1,6 +1,7 @@
 import { GameLifecycleBus } from './GameLifecycleBus';
 import { GameSessionTransfer, ContinuationValidation } from './GameSessionTransfer';
 import { GameRoutes } from '../router/GameRouteRegistry';
+import { isGameAvailable } from './GameAvailability';
 
 export interface ContinuationNavigationState {
   tab: number;
@@ -77,8 +78,9 @@ export class AppContinuation {
     if (capture === null || AppContinuation.restoring) { throw new Error('Application page is not ready'); }
     const navigation: ContinuationNavigationState = capture();
     const paths: string[] = navigation.paths;
-    const top: string = paths.length > 0 ? paths[paths.length - 1] : '';
-    const gameId: string = GameRoutes.gameIdForRoute(top);
+    const gameIndex: number = paths.length > 0 && paths[0] === 'PlayHistoryPage' ? 1 : 0;
+    const first: string = paths.length > gameIndex ? paths[gameIndex] : '';
+    const gameId: string = GameRoutes.gameIdForRoute(first);
     const state: AppContinuationState = {
       version: 1,
       tab: navigation.tab,
@@ -113,15 +115,24 @@ export class AppContinuation {
 
   private static isValid(state: AppContinuationState): boolean {
     if (state === null || state.version !== 1 || !ContinuationValidation.integer(state.tab, 0, 2) ||
-        !Array.isArray(state.paths) || state.paths.length > 2 || typeof state.gameId !== 'string' ||
+        !Array.isArray(state.paths) || state.paths.length > 4 || typeof state.gameId !== 'string' ||
         typeof state.gamePayload !== 'string') { return false; }
+    if (state.gameId.length > 0 && !isGameAvailable(state.gameId)) { return false; }
     for (let i = 0; i < state.paths.length; i++) {
-      if (typeof state.paths[i] !== 'string' || !GameRoutes.isKnownRoute(state.paths[i])) { return false; }
+      if (typeof state.paths[i] !== 'string' || !GameRoutes.isKnownRoute(state.paths[i]) ||
+          (i > 0 && state.paths[i] === 'PlayHistoryPage')) { return false; }
     }
-    // Games have one destination; the only two-level path is Settings -> About.
-    if (state.paths.length === 2 && (state.paths[0] !== 'SettingsPage' || state.paths[1] !== 'AboutPage')) { return false; }
-    const top: string = state.paths.length > 0 ? state.paths[state.paths.length - 1] : '';
-    const gameId: string = GameRoutes.gameIdForRoute(top);
+    const gameIndex: number = state.paths.length > 0 && state.paths[0] === 'PlayHistoryPage' ? 1 : 0;
+    const pathCount: number = state.paths.length - gameIndex;
+    const first: string = pathCount > 0 ? state.paths[gameIndex] : '';
+    const gameId: string = GameRoutes.gameIdForRoute(first);
+    if (gameId.length > 0) {
+      if (pathCount > 3 || (pathCount >= 2 && state.paths[gameIndex + 1] !== 'SettingsPage')) { return false; }
+      if (pathCount === 3 && state.paths[gameIndex + 2] !== 'AboutPage') { return false; }
+    } else {
+      if (pathCount > 2 || (pathCount === 2 &&
+        (first !== 'SettingsPage' || state.paths[gameIndex + 1] !== 'AboutPage'))) { return false; }
+    }
     return state.gameId === gameId && (gameId.length > 0 ? state.gamePayload.length > 0 : state.gamePayload === '');
   }
 }

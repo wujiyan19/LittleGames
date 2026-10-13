@@ -5,11 +5,12 @@ import { DisplayFrameLoop } from '../../common/DisplayFrameLoop';
 import { GameLifecycleBus } from '../../common/GameLifecycleBus';
 import { GameSessionTransfer } from '../../common/GameSessionTransfer';
 import { GameDataManager } from '../../model/GameData';
-import { expansionRules } from '../../model/ExpansionCatalog';
 import { ExpansionPiece, ExpansionPile, BLOCK_SHAPES } from '../../model/game/ExpansionState';
 import { ExpansionViewModel } from '../../viewmodel/ExpansionViewModel';
+import { ExpansionRenderPiece } from '../../viewmodel/ExpansionRenderPiece';
 import { GameHeader } from '../../components/GameHeader';
 import { GameResultDialog } from '../../components/GameResultDialog';
+import { ComputerOpponentPanel } from '../../components/ComputerOpponentPanel';
 import { ExitConfirmDialog } from '../../components/ExitConfirmDialog';
 import { range } from '../../common/Range';
 import { ExpansionExtras } from './ExpansionExtras';
@@ -40,10 +41,14 @@ export struct ExpansionPage {
   @Local game: GameInfo | undefined = undefined;
   @Local arenaWidth: number = 320;
 
+  @Monitor('vm.isFinished', 'vm.confirmExit', 'vm.paused')
+  playTimeStateChanged(): void { GameLifecycleBus.updatePlayTime(this.vm); }
+
   aboutToAppear(): void {
     this.game = GameDataManager.getGameById(this.gameId);
     this.vm.init(this.gameId, new DisplayFrameLoop(this.getUIContext())); GameLifecycleBus.attach(this.vm);
     if (!GameSessionTransfer.restore(this.vm)) { this.vm.startGame(); }
+    this.playTimeStateChanged();
   }
   aboutToDisappear(): void { GameLifecycleBus.detach(this.vm); this.vm.dispose(); }
   requestExit(): void { if (!this.vm.requestBack()) { this.pathStack.pop(); } }
@@ -129,12 +134,17 @@ export struct ExpansionPage {
   build() {
     Stack() {
       Column() {
-        GameHeader({ gameTitle: this.game?.name ?? '', showScore: true, scoreValue: this.vm.state.score,
-          highScoreValue: this.game?.highScore ?? 0, showPause: this.vm.realtime(), isPaused: this.vm.paused,
+        GameHeader({ gameId: this.gameId, pathStack: this.pathStack, hasProgress: (): boolean => this.vm.hasProgress(), gameTitle: this.game?.name ?? '', showScore: true, scoreValue: this.vm.state.score,
+          highScoreValue: this.game?.highScore ?? 0, showPause: this.vm.realtime() || this.vm.hasComputerOpponent(), isPaused: this.vm.paused, showDifficulty: true,
           difficulty: this.vm.difficulty, onDifficultyChange: (d: GameDifficulty) => { this.vm.changeDifficulty(d); },
           onPauseToggle: () => { this.vm.togglePause(); }, onBack: () => { this.requestExit(); }, onRestart: () => { this.vm.startGame(); } })
         Scroll() {
           Column({ space: SpacingTokens.base }) {
+            if (this.vm.hasComputerOpponent() && this.vm.state.outcome === 0) {
+              ComputerOpponentPanel({ gameId: this.gameId, thinking: this.vm.computerThinking,
+                player: this.vm.computerPlayer, difficulty: this.vm.difficulty,
+                reaction: this.gameId === 'mahjong' && this.vm.state.data[0] === 1 })
+            }
             this.Status()
             if (BRAIN_IDS.includes(this.gameId)) { ExpansionBrainBoard({ gameId: this.gameId, vm: this.vm }) }
             if (LIFE_IDS.includes(this.gameId)) { ExpansionLifeBoard({ gameId: this.gameId, vm: this.vm }) }
@@ -174,11 +184,6 @@ export struct ExpansionPage {
               Button($r('app.string.expansion_undo')).enabled(this.vm.canUndo).height($r('app.float.expansion_control_height'))
                 .onClick(() => { this.vm.undo(); })
             }
-            Column({ space: SpacingTokens.sm }) {
-              Text($r('app.string.collection_rules')).fontWeight(FontWeight.Bold).fontColor(SemanticColors.textPrimary)
-              Text(expansionRules(this.gameId)).fontSize(FontTokens.sizeBody).lineHeight($r('app.float.collection_rule_line')).fontColor(SemanticColors.textSecondary)
-            }.alignItems(HorizontalAlign.Start).width('100%').padding(SpacingTokens.base)
-              .backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
           }.width('100%').constraintSize({ maxWidth: $r('app.float.expansion_board_max') })
             .padding({ left: SpacingTokens.base, right: SpacingTokens.base, bottom: SpacingTokens.xl })
         }.layoutWeight(1).width('100%').scrollBar(BarState.Off).enableScrollInteraction(!this.vm.dragging)
@@ -189,7 +194,7 @@ export struct ExpansionPage {
       if (this.vm.paused) {
         Column({ space: SpacingTokens.base }) {
           Text($r('app.string.expansion_paused')).fontSize(FontTokens.sizeTitle).fontColor(SemanticColors.textPrimary)
-          Button($r('app.string.expansion_resume')).onClick(() => { this.vm.togglePause(); })
+          Text($r('app.string.game_settings_paused_hint')).fontSize(FontTokens.sizeBody).fontColor(SemanticColors.textSecondary)
         }.padding(SpacingTokens.xl).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.xl)
       }
       if (this.vm.state.outcome !== 0) {
@@ -207,7 +212,7 @@ export struct ExpansionPage {
   Status() {
     Column({ space: SpacingTokens.sm }) {
       if (BRAIN_IDS.includes(this.gameId) || LIFE_IDS.includes(this.gameId)) {
-        Text($r('app.string.expansion_progress', this.gameId === 'picturepuzzle' ? this.vm.state.board.filter((v: number, i: number) => v === i).length : ['hiddenobjects', 'onestroke'].includes(this.gameId) ? this.vm.state.tray.length : LIFE_IDS.includes(this.gameId) || this.gameId === 'beatjump' ? this.vm.state.cursor : this.vm.state.moves, this.vm.state.goal)).fontColor(SemanticColors.textPrimary)
+        Text($r('app.string.expansion_progress', this.gameId === 'linerescue' ? Math.min(this.vm.state.goal, Math.floor(this.vm.state.time)) : this.gameId === 'picturepuzzle' ? this.vm.state.board.filter((v: number, i: number) => v === i).length : ['hiddenobjects', 'onestroke'].includes(this.gameId) ? this.vm.state.tray.length : LIFE_IDS.includes(this.gameId) || this.gameId === 'beatjump' ? this.vm.state.cursor : this.vm.state.moves, this.vm.state.goal)).fontColor(SemanticColors.textPrimary)
         if (['hiddenobjects', 'idiom', 'melody', 'fishing'].includes(this.gameId)) { Text($r('app.string.expansion_errors', this.vm.state.errors)).fontColor(SemanticColors.warning) }
         if (this.gameId === 'linerescue') { Text($r('app.string.expansion_time', Math.max(0, Math.ceil(this.vm.state.goal - this.vm.state.time)))).fontColor(SemanticColors.textSecondary) }
       } else if (CHESS_IDS.includes(this.gameId) || POKER_IDS.includes(this.gameId) || CARD_IDS.includes(this.gameId)) {
@@ -224,7 +229,8 @@ export struct ExpansionPage {
         if (['platformer', 'grapple', 'hillclimb'].includes(this.gameId)) { Text($r('app.string.expansion_progress', Math.floor(this.vm.state.pieces[0].x), this.vm.state.goal)).fontColor(SemanticColors.textPrimary) }
         if (this.gameId === 'drift') { Text($r('app.string.expansion_time', Math.max(0, Math.ceil(this.vm.state.goal - this.vm.state.time)))).fontColor(SemanticColors.textPrimary) }
         if (this.gameId === 'golf') { Text($r('app.string.expansion_strokes', this.vm.state.moves, this.vm.state.goal)).fontColor(SemanticColors.textPrimary) }
-        if (['fruitslice', 'billiards'].includes(this.gameId)) { Text($r('app.string.expansion_errors', this.vm.state.errors)).fontColor(SemanticColors.warning) }
+        if (this.gameId === 'fruitslice') { Text($r('app.string.expansion_fruitslice_errors', this.vm.state.errors)).fontColor(SemanticColors.warning) }
+        if (this.gameId === 'billiards') { Text($r('app.string.expansion_errors', this.vm.state.errors)).fontColor(SemanticColors.warning) }
       } else if (this.gameId === 'blockfit' || this.gameId === 'runner') {
         Text($r('app.string.expansion_target', this.vm.state.goal)).fontColor(SemanticColors.textPrimary)
         if (this.gameId === 'blockfit') { Text($r('app.string.expansion_controls_hint')).fontColor(SemanticColors.textSecondary) }
@@ -314,7 +320,7 @@ export struct ExpansionPage {
   @Builder
   BlockTray() {
     Row({ space: SpacingTokens.sm }) {
-      ForEach(this.vm.state.tray, (shape: number, slot: number) => {
+      ForEach(range(3), (slot: number) => {
         Button({ type: ButtonType.Normal }) {
           Column({ space: SpacingTokens.xs }) {
             Text($r('app.string.expansion_piece', slot + 1)).fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textSecondary)
@@ -323,7 +329,7 @@ export struct ExpansionPage {
                 Row({ space: 2 }) {
                   ForEach(range(3), (col: number) => {
                     Image(ExpansionArt.block(slot)).width(16).height(16).objectFit(ImageFit.Fill)
-                      .opacity(shape >= 0 && col < BLOCK_SHAPES[shape].cols && row < BLOCK_SHAPES[shape].rows && BLOCK_SHAPES[shape].cells.includes(row * BLOCK_SHAPES[shape].cols + col) ? 1 : 0)
+                      .opacity(this.vm.state.tray[slot] >= 0 && col < BLOCK_SHAPES[this.vm.state.tray[slot]].cols && row < BLOCK_SHAPES[this.vm.state.tray[slot]].rows && BLOCK_SHAPES[this.vm.state.tray[slot]].cells.includes(row * BLOCK_SHAPES[this.vm.state.tray[slot]].cols + col) ? 1 : 0)
                   }, (col: number) => col.toString())
                 }
               }, (row: number) => row.toString())
@@ -331,8 +337,8 @@ export struct ExpansionPage {
           }.padding(SpacingTokens.sm)
         }.layoutWeight(1).padding(0).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.sm)
           .border({ width: this.vm.state.selected === slot ? 2 : 0, color: SemanticColors.primary })
-          .enabled(shape >= 0).onClick(() => { this.vm.choose(slot); })
-      }, (shape: number, slot: number) => slot.toString())
+          .enabled(this.vm.state.tray[slot] >= 0).onClick(() => { this.vm.choose(slot); })
+      }, (slot: number) => slot.toString())
     }.width('100%')
   }
   @Builder
@@ -372,15 +378,15 @@ export struct ExpansionPage {
   @Builder
   Parking() {
     Stack({ alignContent: Alignment.TopStart }) {
-      ForEach(this.vm.state.pieces, (p: ExpansionPiece) => {
+      ForEach(this.vm.worldPieces, (rendered: ExpansionRenderPiece) => {
         Column() {
-          GameArtTile({ image: ExpansionArt.car(p.id % 6), label: this.arrow(p.color), textColor: SemanticColors.textOnPrimary,
-            description: $r('app.string.expansion_car', p.id + 1, this.arrow(p.color)), available: p.alive, onTap: () => { this.vm.tap(p.id); } })
+          GameArtTile({ image: ExpansionArt.car(rendered.id % 6), label: this.arrow(rendered.piece.color), textColor: SemanticColors.textOnPrimary,
+            description: $r('app.string.expansion_car', rendered.id + 1, this.arrow(rendered.piece.color)), available: rendered.piece.alive, onTap: () => { this.vm.tap(rendered.id); } })
         }
-          .width(p.w * this.arenaWidth / this.vm.state.cols - 4).height(p.h * this.arenaWidth / this.vm.state.rows - 4)
-          .translate({ x: p.x * this.arenaWidth / this.vm.state.cols + 2, y: p.y * this.arenaWidth / this.vm.state.rows + 2 })
-          .backgroundColor(this.color(p.id % 6 + 1)).borderRadius(RadiusTokens.sm).opacity(p.alive ? 1 : 0).enabled(p.alive)
-      }, (p: ExpansionPiece) => p.id.toString())
+          .width(rendered.piece.w * this.arenaWidth / this.vm.state.cols - 4).height(rendered.piece.h * this.arenaWidth / this.vm.state.rows - 4)
+          .translate({ x: rendered.piece.x * this.arenaWidth / this.vm.state.cols + 2, y: rendered.piece.y * this.arenaWidth / this.vm.state.rows + 2 })
+          .backgroundColor(this.color(rendered.id % 6 + 1)).borderRadius(RadiusTokens.sm).opacity(rendered.piece.alive ? 1 : 0).enabled(rendered.piece.alive)
+      }, (rendered: ExpansionRenderPiece) => rendered.id.toString())
     }.width('100%').aspectRatio(1).backgroundColor(SemanticColors.boardBg).backgroundImage(ExpansionArt.board(this.gameId)).backgroundImageSize({ width: '100%', height: '100%' }).borderRadius(RadiusTokens.base)
       .onAreaChange((previous: Area, current: Area) => { this.measureArena(current); })
   }
@@ -393,19 +399,19 @@ export struct ExpansionPage {
         }, (slot: number) => slot.toString())
       }
       Stack({ alignContent: Alignment.TopStart }) {
-        ForEach(this.vm.state.pieces, (p: ExpansionPiece) => {
-          if (p.kind === 0) {
+        ForEach(this.vm.worldPieces, (rendered: ExpansionRenderPiece) => {
+          if (rendered.piece.kind === 0) {
             Image($r('app.media.exp_plate')).objectFit(ImageFit.Fill)
-              .width(p.w * this.arenaScale()).height(p.h * this.arenaScale()).backgroundColor(this.color(p.color)).borderRadius(RadiusTokens.sm)
-              .translate({ x: p.x * this.arenaScale(), y: p.y * this.arenaScale() }).opacity(p.alive ? 0.9 : 0).hitTestBehavior(HitTestMode.None)
+              .width(rendered.piece.w * this.arenaScale()).height(rendered.piece.h * this.arenaScale()).backgroundColor(this.color(rendered.piece.color)).borderRadius(RadiusTokens.sm)
+              .translate({ x: rendered.piece.x * this.arenaScale(), y: rendered.piece.y * this.arenaScale() }).opacity(rendered.piece.alive ? 0.9 : 0).hitTestBehavior(HitTestMode.None)
           } else {
             Column() {
-              GameArtTile({ image: $r('app.media.exp_screw'), available: p.alive,
-                description: $r('app.string.expansion_screw', p.owner + 1), onTap: () => { this.vm.tap(p.id); } })
+              GameArtTile({ image: $r('app.media.exp_screw'), available: rendered.piece.alive,
+                description: $r('app.string.expansion_screw', rendered.piece.owner + 1), onTap: () => { this.vm.tap(rendered.id); } })
             }.width(36 * this.arenaScale()).height(36 * this.arenaScale())
-              .translate({ x: (p.x - 18) * this.arenaScale(), y: (p.y - 18) * this.arenaScale() }).opacity(p.alive ? 1 : 0).enabled(p.alive)
+              .translate({ x: (rendered.piece.x - 18) * this.arenaScale(), y: (rendered.piece.y - 18) * this.arenaScale() }).opacity(rendered.piece.alive ? 1 : 0).enabled(rendered.piece.alive)
           }
-        }, (p: ExpansionPiece) => p.id.toString())
+        }, (rendered: ExpansionRenderPiece) => rendered.id.toString())
       }.width('100%').aspectRatio(360 / 460).backgroundColor(SemanticColors.boardBg).backgroundImage(ExpansionArt.board(this.gameId)).backgroundImageSize({ width: '100%', height: '100%' }).borderRadius(RadiusTokens.base).clip(true)
         .onAreaChange((previous: Area, current: Area) => { this.measureArena(current); })
     }.width('100%')
@@ -433,12 +439,12 @@ export struct ExpansionPage {
         Text($r('app.string.expansion_warning')).width('100%').fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.warning)
           .border({ width: { bottom: 1 }, color: SemanticColors.warning }).translate({ y: 50 * this.arenaScale() }).hitTestBehavior(HitTestMode.None)
       }
-      ForEach(this.vm.state.pieces, (p: ExpansionPiece) => {
-        Image(ExpansionArt.piece(this.gameId, p)).objectFit(ImageFit.Contain)
-          .width(this.arenaRadius(p) * 2 * this.arenaScale()).height(this.arenaRadius(p) * 2 * this.arenaScale())
-          .scale({ x: (this.gameId === 'fisheat' && p.vx < 0 ? -1 : 1) * p.r / this.arenaRadius(p), y: p.r / this.arenaRadius(p) })
-          .translate({ x: (p.x - this.arenaRadius(p)) * this.arenaScale(), y: (p.y - this.arenaRadius(p)) * this.arenaScale() }).hitTestBehavior(HitTestMode.None)
-      }, (p: ExpansionPiece) => p.id.toString())
+      ForEach(this.vm.worldPieces, (rendered: ExpansionRenderPiece) => {
+        Image(ExpansionArt.piece(this.gameId, rendered.piece)).objectFit(ImageFit.Contain)
+          .width(this.arenaRadius(rendered.piece) * 2 * this.arenaScale()).height(this.arenaRadius(rendered.piece) * 2 * this.arenaScale())
+          .scale({ x: (this.gameId === 'fisheat' && rendered.piece.vx < 0 ? -1 : 1) * rendered.piece.r / this.arenaRadius(rendered.piece), y: rendered.piece.r / this.arenaRadius(rendered.piece) })
+          .translate({ x: (rendered.piece.x - this.arenaRadius(rendered.piece)) * this.arenaScale(), y: (rendered.piece.y - this.arenaRadius(rendered.piece)) * this.arenaScale() }).hitTestBehavior(HitTestMode.None)
+      }, (rendered: ExpansionRenderPiece) => rendered.id.toString())
     }.width('100%').aspectRatio(360 / 460).backgroundColor(SemanticColors.boardBg).backgroundImage(ExpansionArt.board(this.gameId)).backgroundImageSize({ width: '100%', height: '100%' }).borderRadius(RadiusTokens.base).clip(true)
       .onAreaChange((previous: Area, current: Area) => { this.measureArena(current); })
       .onTouch((event: TouchEvent) => {

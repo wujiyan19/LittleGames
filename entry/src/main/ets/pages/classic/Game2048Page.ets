@@ -67,6 +67,9 @@ export struct Game2048Page {
   // 无障碍字符串缓存
   @Local a11yTileFormat: string = '';
 
+  @Monitor('viewModel.status', 'viewModel.confirmExit', 'viewModel.resumePending')
+  playTimeStateChanged(): void { GameLifecycleBus.updatePlayTime(this.viewModel); }
+
   aboutToAppear(): void {
     this.initBoardSize();
     const context = this.getUIContext().getHostContext();
@@ -74,11 +77,14 @@ export struct Game2048Page {
       this.a11yTileFormat = context.resourceManager.getStringSync($r('app.string.a11y_2048_tile_format'));
     }
     GameLifecycleBus.attach(this.viewModel);
-    if (GameSessionTransfer.restore(this.viewModel)) {
+    const continued: boolean = GameSessionTransfer.restore(this.viewModel);
+    if (continued || this.viewModel.offerSavedGame()) {
       this.rebuildTiles(false);
+      if (continued) { this.viewModel.saveCurrentGame(); }
     } else {
       this.startGame();
     }
+    this.playTimeStateChanged();
   }
 
   aboutToDisappear(): void {
@@ -129,7 +135,6 @@ export struct Game2048Page {
   startGame(): void {
     this.clearSettleTimer();
     this.viewModel.startGame();
-    this.tileIdCounter = 0;
     // 开局两个块都做弹入
     this.rebuildTiles(true);
   }
@@ -221,7 +226,7 @@ export struct Game2048Page {
    */
   getCellBg(v: number): ResourceColor {
     switch (v) {
-      case 0: return SemanticColors.cellHidden;
+      case 0: return $r('app.color.play_cell_alternate');
       case 2: return $r('app.color.tile_2');
       case 4: return $r('app.color.tile_4');
       case 8: return $r('app.color.tile_8');
@@ -237,7 +242,7 @@ export struct Game2048Page {
     }
   }
 
-  /** 2/4 为浅底配深字，8 以上为彩底配白字；随主题切换 */
+  /** 柔和彩色方块使用深墨色数字，资源随主题提供对应玩具配色。 */
   getTileFontColor(v: number): ResourceColor {
     if (v <= 4) { return $r('app.color.tile_text_low'); }
     return $r('app.color.tile_text_high');
@@ -258,26 +263,34 @@ export struct Game2048Page {
         .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
 
       Column() {
-        GameHeader({ gameTitle: $r('app.string.game_2048_name'), // 得分/最高分已由下方大字指标卡展示，关闭标题栏的小字重复显示
+        GameHeader({ gameId: '2048', pathStack: this.pathStack, hasProgress: (): boolean => this.viewModel.hasProgress(), gameTitle: $r('app.string.game_2048_name'), // 得分/最高分已由下方大字指标卡展示，关闭标题栏的小字重复显示
           showScore: false,
           difficulty: this.viewModel.difficulty,
           showPause: false,
-          onDifficultyChange: (d: GameDifficulty) => { this.viewModel.changeDifficulty(d); },
+          onDifficultyChange: (d: GameDifficulty) => {
+            this.viewModel.changeDifficulty(d);
+            this.rebuildTiles(true);
+          },
           onBack: () => { this.requestExit(); },
           onPauseToggle: () => {},
           onRestart: () => { this.startGame(); } })
 
+        if (this.viewModel.saveRestoreFailed) {
+          Text($r('app.string.save_restore_failed'))
+            .fontSize(FontTokens.sizeBody).fontColor(SemanticColors.textSecondary)
+            .padding(SpacingTokens.md).id('2048-save-error')
+        }
         Row() {
           Column() {
             Text($r('app.string.score_label')).fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
             Text('' + this.viewModel.score).fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold).fontColor(SemanticColors.accent)
-          }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
+          }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.lg)
           .alignItems(HorizontalAlign.Center).margin({ left: 16 })
 
           Column() {
             Text($r('app.string.high_score_label')).fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
             Text('' + this.viewModel.highScore).fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold).fontColor(SemanticColors.textPrimary)
-          }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
+          }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.lg)
           .alignItems(HorizontalAlign.Center).margin({ left: 8, right: 16 })
         }.margin({ top: 12, bottom: 12 })
 
@@ -292,7 +305,7 @@ export struct Game2048Page {
                     Column()
                       .width(this.cell).height(this.cell).margin(3)
                       .borderRadius(RadiusTokens.md)
-                      .backgroundColor(SemanticColors.cellHidden)
+                      .backgroundColor($r('app.color.play_cell_alternate'))
                   }, (col: number) => col.toString())
                 }
               }, (row: number) => row.toString())
@@ -320,8 +333,8 @@ export struct Game2048Page {
             .width(this.innerSize()).height(this.innerSize())
           }
           .width(this.boardSize).height(this.boardSize)
-          .backgroundColor(SemanticColors.boardBg)
-          .borderRadius(RadiusTokens.base)
+          .backgroundColor($r('app.color.play_board_background'))
+          .borderRadius(RadiusTokens.lg)
           .padding(4)
           .gesture(PanGesture({ direction: PanDirection.All })
             .onActionStart((e: GestureEvent) => { this.sx = e.offsetX; this.sy = e.offsetY; })
@@ -338,13 +351,20 @@ export struct Game2048Page {
         .width('100%').layoutWeight(1).justifyContent(FlexAlign.Center)
         .onAreaChange((oldValue: Area, newValue: Area) => { this.updateBoardSize(newValue); })
 
-        Text($r('app.string.game_2048_hint'))
-          .fontFamily(FontTokens.family)
-          .fontSize(FontTokens.sizeBodySmall).fontColor(SemanticColors.textTertiary)
-          .padding({ bottom: SpacingTokens.lg })
       }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
-      if (this.viewModel.status !== GameStatus.PLAYING) {
+      if (this.viewModel.resumePending) {
+        ExitConfirmDialog({
+          title: $r('app.string.save_resume_title'),
+          description: $r('app.string.save_resume_desc'),
+          confirmText: $r('app.string.save_continue'),
+          cancelText: $r('app.string.save_new_game'),
+          onConfirm: () => { this.viewModel.continueSavedGame(); this.playTimeStateChanged(); },
+          onCancel: () => { this.startGame(); }
+        }).id('2048-save-prompt')
+      }
+
+      if (this.viewModel.status !== GameStatus.PLAYING && !this.viewModel.resumePending) {
         GameResultDialog({
           symbol: $r('sys.symbol.star_fill'),
           symbolColor: SemanticColors.warning,
@@ -362,6 +382,7 @@ export struct Game2048Page {
 
       if (this.viewModel.confirmExit) {
         ExitConfirmDialog({
+          description: $r('app.string.save_exit_desc'),
           onConfirm: () => {
             this.viewModel.dismissExitConfirm();
             this.pathStack.pop();

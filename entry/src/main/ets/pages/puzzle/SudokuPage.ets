@@ -36,9 +36,14 @@ export struct SudokuPage {
   private startOffsetX: number = 0;
   private startOffsetY: number = 0;
 
+  @Monitor('viewModel.status', 'viewModel.confirmExit', 'viewModel.isGenerating', 'viewModel.generationFailed', 'viewModel.resumePending')
+  playTimeStateChanged(): void { GameLifecycleBus.updatePlayTime(this.viewModel); }
+
   aboutToAppear(): void {
     this.boardPixelSize = ScreenUtils.calcCell(9, 520, 24, 28) * 9 + 8;
-    if (!GameSessionTransfer.restore(this.viewModel)) { this.viewModel.newGameAsync(); }
+    const continued: boolean = GameSessionTransfer.restore(this.viewModel);
+    if (continued) { this.viewModel.saveCurrentGame(); }
+    else if (!this.viewModel.offerSavedGame()) { this.viewModel.newGameAsync(); }
     // 预解析无障碍描述字符串
     const context = this.getUIContext().getHostContext();
     if (context) {
@@ -48,6 +53,7 @@ export struct SudokuPage {
       this.a11yRowColFormat = context.resourceManager.getStringSync($r('app.string.a11y_mine_row_col_format'));
     }
     GameLifecycleBus.attach(this.viewModel);
+    this.playTimeStateChanged();
   }
 
   aboutToDisappear(): void {
@@ -68,8 +74,8 @@ export struct SudokuPage {
   }
 
   getNumberColor(row: number, col: number): ResourceColor {
-    if (this.viewModel.isFixed(row, col)) { return SemanticColors.warning; }
-    return SemanticColors.textPrimary;
+    if (this.viewModel.isFixed(row, col)) { return $r('app.color.play_fixed_digit'); }
+    return $r('app.color.play_piece_text');
   }
 
   getNumberWeight(row: number, col: number): FontWeight {
@@ -78,9 +84,9 @@ export struct SudokuPage {
   }
 
   getCellBg(row: number, col: number): ResourceColor {
-    if (this.viewModel.selectedRow === row && this.viewModel.selectedCol === col) { return SemanticColors.accent; }
-    if ((Math.floor(row / 3) + Math.floor(col / 3)) % 2 === 0) { return SemanticColors.cellHidden; }
-    return SemanticColors.cellRevealed;
+    if (this.viewModel.selectedRow === row && this.viewModel.selectedCol === col) { return $r('app.color.play_selection_background'); }
+    if ((Math.floor(row / 3) + Math.floor(col / 3)) % 2 === 0) { return $r('app.color.play_cell_background'); }
+    return $r('app.color.play_cell_alternate');
   }
 
   getCellBorderWidth(row: number, col: number): EdgeWidths {
@@ -112,7 +118,7 @@ export struct SudokuPage {
         .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
 
       Column() {
-        GameHeader({
+        GameHeader({ gameId: 'sudoku', pathStack: this.pathStack, hasProgress: (): boolean => this.viewModel.hasProgress(),
           gameTitle: $r('app.string.game_sudoku_name'),
           showScore: false,
           showPause: false,
@@ -126,6 +132,11 @@ export struct SudokuPage {
           enableNewGame: true
         })
 
+        if (this.viewModel.saveRestoreFailed) {
+          Text($r('app.string.save_restore_failed'))
+            .fontSize(FontTokens.sizeBody).fontColor(SemanticColors.textSecondary)
+            .padding(SpacingTokens.md).id('sudoku-save-error')
+        }
         // 外层容器：fill 空间、居中，供缩放容器摆放
         Column() {
           if (this.viewModel.isGenerating) {
@@ -155,7 +166,7 @@ export struct SudokuPage {
                     .backgroundColor(this.getCellBg(row, col))
                     .border({
                       width: this.getCellBorderWidth(row, col),
-                      color: SemanticColors.boardBorder
+                      color: $r('app.color.play_piece_border')
                     })
                     .accessibilityText(this.cellA11y(row, col))
                     .stateStyles({ pressed: this.pressedFeedback }).onClick(() => { this.viewModel.selectCell(row, col); })
@@ -211,27 +222,38 @@ export struct SudokuPage {
                 .fontFamily(FontTokens.family)
                 .fontSize(18)
                 .fontWeight(FontTokens.weightMedium)
-                .fontColor(SemanticColors.textPrimary)
+                .fontColor($r('app.color.play_piece_text'))
             }
             .layoutWeight(1).height(46)
             .enabled(!this.viewModel.isGenerating && !this.viewModel.generationFailed)
-            .backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
+            .backgroundColor($r('app.color.play_cell_background')).borderRadius(RadiusTokens.base)
 
             .stateStyles({ pressed: this.pressedFeedback }).onClick(() => this.viewModel.setNumber(n))
           }, (n: number) => n.toString())
           Button() {
             SymbolGlyph($r('sys.symbol.xmark'))
-              .fontSize(18).fontColor([SemanticColors.textOnPrimary])
+              .fontSize(18).fontColor([SemanticColors.error])
           }
           .width(46).height(46)
           .enabled(!this.viewModel.isGenerating && !this.viewModel.generationFailed)
-          .backgroundColor(SemanticColors.error).borderRadius(RadiusTokens.base)
+          .backgroundColor(SemanticColors.selectionSurface).borderRadius(RadiusTokens.base)
 
           .stateStyles({ pressed: this.pressedFeedback }).onClick(() => this.viewModel.erase())
         }.width('100%').padding({ left: SpacingTokens.base, right: SpacingTokens.base, bottom: SpacingTokens.lg })
       }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
-      if (this.viewModel.status === GameStatus.OVER) {
+      if (this.viewModel.resumePending) {
+        ExitConfirmDialog({
+          title: $r('app.string.save_resume_title'),
+          description: $r('app.string.save_resume_desc'),
+          confirmText: $r('app.string.save_continue'),
+          cancelText: $r('app.string.save_new_game'),
+          onConfirm: () => { this.viewModel.continueSavedGame(); this.playTimeStateChanged(); },
+          onCancel: () => { this.viewModel.newGameAsync(); }
+        }).id('sudoku-save-prompt')
+      }
+
+      if (this.viewModel.status === GameStatus.OVER && !this.viewModel.resumePending) {
         GameResultDialog({
           symbol: $r('sys.symbol.checkmark_circle'),
           celebrate: true,
@@ -244,6 +266,7 @@ export struct SudokuPage {
 
       if (this.viewModel.confirmExit) {
         ExitConfirmDialog({
+          description: $r('app.string.save_exit_desc'),
           onConfirm: () => {
             this.viewModel.dismissExitConfirm();
             this.pathStack.pop();

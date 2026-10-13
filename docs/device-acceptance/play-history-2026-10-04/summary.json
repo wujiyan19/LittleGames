@@ -1,0 +1,34 @@
+{
+  "target": "49X0224C24001554",
+  "packageSha256": "56dd463c26e3827e79ae8c4e34148cd7a666a9ebe063d26520e3647ee68775fe",
+  "checks": [
+    {
+      "id": "complete-history",
+      "evidence": [
+        "tablet-featured-entry.jpeg",
+        "tablet-history-initial.jpeg",
+        "tablet-history-bottom.jpeg"
+      ],
+      "detail": "36 distinct played games are reachable; history includes all records beyond the five home shortcuts.",
+      "at": "2026-10-04T03:38:08.969Z"
+    },
+    {
+      "id": "replay-refresh",
+      "evidence": [
+        "tablet-game-from-history.jpeg",
+        "tablet-history-replayed-first.jpeg",
+        "tablet-featured-replayed-first.jpeg"
+      ],
+      "detail": "切水果 opened from an older history row; return refreshes its timestamp and puts it first without duplicating it; home preview agrees.",
+      "at": "2026-10-04T03:39:32.038Z"
+    },
+    {
+      "id": "dark-theme",
+      "evidence": [
+        "tablet-history-dark.jpeg"
+      ],
+      "detail": "History renders in dark mode; original theme is restored.",
+      "at": "2026-10-04T03:40:43.662Z"
+    }
+  ]
+}

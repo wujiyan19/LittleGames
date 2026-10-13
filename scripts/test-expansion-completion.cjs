@@ -14,8 +14,8 @@ const card=(rank,suit=0,deck=0)=>rank>=16?52+rank-16+deck*54:(rank===14?0:rank-1
 const cards=ranks=>ranks.map((r,i)=>card(r,i%4));
 const tiles=types=>{const counts=new Array(34).fill(0);return types.map(t=>t*4+counts[t]++);};
 
-test('the catalog contains exactly 100 unique implemented games with complete themed resources',()=>{
-  assert.equal(finalIds.length,39);assert.equal(PLAYABLE_EXPANSION_IDS.length,67);const games=f.data().getAllGames();assert.equal(games.length,100);assert.equal(new Set(games.map(g=>g.id)).size,100);
+test('the available catalog contains exactly 89 unique games with complete retained themed resources',()=>{
+  assert.equal(finalIds.length,39);assert.equal(PLAYABLE_EXPANSION_IDS.length,67);const games=f.data().getAllGames();assert.equal(games.length,89);assert.equal(new Set(games.map(g=>g.id)).size,89);
   for(const locale of ['base','zh_CN','en_US']){
     const entries=JSON.parse(fs.readFileSync(`entry/src/main/resources/${locale}/element/string.json`)).string;assert.equal(new Set(entries.map(e=>e.name)).size,entries.length);
     for(const id of PLAYABLE_EXPANSION_IDS)for(const suffix of ['name','desc','rules'])assert(entries.find(e=>e.name===`game_${id}_${suffix}`)?.value.length>0,`${locale}/${id}/${suffix}`);
@@ -61,7 +61,8 @@ test('flappy gate collision and passing the last gate give different outcomes',(
 });
 test('fruit slicing follows a segment, awards fruit, fails on bombs and forgets a released stroke',()=>{
   const m=create('fruitslice');m.activate();const fruit=new ExpansionPiece();fruit.id=m.state.serial++;fruit.kind=30;fruit.x=180;fruit.y=230;fruit.r=20;m.state.pieces=[fruit];m.aim(100,230);m.aim(250,230);assert.equal(m.state.score,50);assert.equal(m.state.moves,1);m.releaseControls();assert.equal(m.state.target.length,0);
-  fruit.alive=true;fruit.kind=31;m.aim(180,230);assert.equal(m.state.outcome,2);
+  assert.equal(m.state.pieces.length,0);assert(m.valid(m.state));
+  fruit.alive=true;fruit.kind=31;m.state.pieces=[fruit];m.aim(180,230);assert.equal(m.state.outcome,2);assert.equal(m.state.pieces.length,0);assert(m.valid(m.state));
 });
 test('rolling ball has wall response, hole loss and a reachable goal',()=>{
   const m=create('rollingball');m.activate();m.state.pieces[0].x=100;m.state.pieces[0].y=110;m.state.pieces[0].vy=100;m.step(.008);assert(m.state.pieces[0].vy<0);

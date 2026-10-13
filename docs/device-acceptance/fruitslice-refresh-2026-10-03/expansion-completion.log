@@ -1,0 +1,191 @@
+PASS the catalog contains exactly 100 unique implemented games with complete themed resources
+PASS platformer/0: real input, runtime bounds and mid-game continuation
+PASS platformer/1: real input, runtime bounds and mid-game continuation
+PASS platformer/2: real input, runtime bounds and mid-game continuation
+PASS grapple/0: real input, runtime bounds and mid-game continuation
+PASS grapple/1: real input, runtime bounds and mid-game continuation
+PASS grapple/2: real input, runtime bounds and mid-game continuation
+PASS flappy/0: real input, runtime bounds and mid-game continuation
+PASS flappy/1: real input, runtime bounds and mid-game continuation
+PASS flappy/2: real input, runtime bounds and mid-game continuation
+PASS fruitslice/0: real input, runtime bounds and mid-game continuation
+PASS fruitslice/1: real input, runtime bounds and mid-game continuation
+PASS fruitslice/2: real input, runtime bounds and mid-game continuation
+PASS rollingball/0: real input, runtime bounds and mid-game continuation
+PASS rollingball/1: real input, runtime bounds and mid-game continuation
+PASS rollingball/2: real input, runtime bounds and mid-game continuation
+PASS shooter/0: real input, runtime bounds and mid-game continuation
+PASS shooter/1: real input, runtime bounds and mid-game continuation
+PASS shooter/2: real input, runtime bounds and mid-game continuation
+PASS tanks/0: real input, runtime bounds and mid-game continuation
+PASS tanks/1: real input, runtime bounds and mid-game continuation
+PASS tanks/2: real input, runtime bounds and mid-game continuation
+PASS fortress/0: real input, runtime bounds and mid-game continuation
+PASS fortress/1: real input, runtime bounds and mid-game continuation
+PASS fortress/2: real input, runtime bounds and mid-game continuation
+PASS survival/0: real input, runtime bounds and mid-game continuation
+PASS survival/1: real input, runtime bounds and mid-game continuation
+PASS survival/2: real input, runtime bounds and mid-game continuation
+PASS backpack/0: real input, runtime bounds and mid-game continuation
+PASS backpack/1: real input, runtime bounds and mid-game continuation
+PASS backpack/2: real input, runtime bounds and mid-game continuation
+PASS billiards/0: real input, runtime bounds and mid-game continuation
+PASS billiards/1: real input, runtime bounds and mid-game continuation
+PASS billiards/2: real input, runtime bounds and mid-game continuation
+PASS penalty/0: real input, runtime bounds and mid-game continuation
+PASS penalty/1: real input, runtime bounds and mid-game continuation
+PASS penalty/2: real input, runtime bounds and mid-game continuation
+PASS pingpong/0: real input, runtime bounds and mid-game continuation
+PASS pingpong/1: real input, runtime bounds and mid-game continuation
+PASS pingpong/2: real input, runtime bounds and mid-game continuation
+PASS bowling/0: real input, runtime bounds and mid-game continuation
+PASS bowling/1: real input, runtime bounds and mid-game continuation
+PASS bowling/2: real input, runtime bounds and mid-game continuation
+PASS golf/0: real input, runtime bounds and mid-game continuation
+PASS golf/1: real input, runtime bounds and mid-game continuation
+PASS golf/2: real input, runtime bounds and mid-game continuation
+PASS drift/0: real input, runtime bounds and mid-game continuation
+PASS drift/1: real input, runtime bounds and mid-game continuation
+PASS drift/2: real input, runtime bounds and mid-game continuation
+PASS hillclimb/0: real input, runtime bounds and mid-game continuation
+PASS hillclimb/1: real input, runtime bounds and mid-game continuation
+PASS hillclimb/2: real input, runtime bounds and mid-game continuation
+PASS airhockey/0: real input, runtime bounds and mid-game continuation
+PASS airhockey/1: real input, runtime bounds and mid-game continuation
+PASS airhockey/2: real input, runtime bounds and mid-game continuation
+PASS tug/0: real input, runtime bounds and mid-game continuation
+PASS tug/1: real input, runtime bounds and mid-game continuation
+PASS tug/2: real input, runtime bounds and mid-game continuation
+PASS dots/0: real input, runtime bounds and mid-game continuation
+PASS dots/1: real input, runtime bounds and mid-game continuation
+PASS dots/2: real input, runtime bounds and mid-game continuation
+PASS doudizhu/0: real input, runtime bounds and mid-game continuation
+PASS doudizhu/1: real input, runtime bounds and mid-game continuation
+PASS doudizhu/2: real input, runtime bounds and mid-game continuation
+PASS guandan/0: real input, runtime bounds and mid-game continuation
+PASS guandan/1: real input, runtime bounds and mid-game continuation
+PASS guandan/2: real input, runtime bounds and mid-game continuation
+PASS mahjong/0: real input, runtime bounds and mid-game continuation
+PASS mahjong/1: real input, runtime bounds and mid-game continuation
+PASS mahjong/2: real input, runtime bounds and mid-game continuation
+PASS xiangqi/0: real input, runtime bounds and mid-game continuation
+PASS xiangqi/1: real input, runtime bounds and mid-game continuation
+PASS xiangqi/2: real input, runtime bounds and mid-game continuation
+PASS chess/0: real input, runtime bounds and mid-game continuation
+PASS chess/1: real input, runtime bounds and mid-game continuation
+PASS chess/2: real input, runtime bounds and mid-game continuation
+PASS ludo/0: real input, runtime bounds and mid-game continuation
+PASS ludo/1: real input, runtime bounds and mid-game continuation
+PASS ludo/2: real input, runtime bounds and mid-game continuation
+PASS spider/0: real input, runtime bounds and mid-game continuation
+PASS spider/1: real input, runtime bounds and mid-game continuation
+PASS spider/2: real input, runtime bounds and mid-game continuation
+PASS freecell/0: real input, runtime bounds and mid-game continuation
+PASS freecell/1: real input, runtime bounds and mid-game continuation
+PASS freecell/2: real input, runtime bounds and mid-game continuation
+PASS onestroke/0: real input, runtime bounds and mid-game continuation
+PASS onestroke/1: real input, runtime bounds and mid-game continuation
+PASS onestroke/2: real input, runtime bounds and mid-game continuation
+PASS hiddenobjects/0: real input, runtime bounds and mid-game continuation
+PASS hiddenobjects/1: real input, runtime bounds and mid-game continuation
+PASS hiddenobjects/2: real input, runtime bounds and mid-game continuation
+PASS linerescue/0: real input, runtime bounds and mid-game continuation
+PASS linerescue/1: real input, runtime bounds and mid-game continuation
+PASS linerescue/2: real input, runtime bounds and mid-game continuation
+PASS picturepuzzle/0: real input, runtime bounds and mid-game continuation
+PASS picturepuzzle/1: real input, runtime bounds and mid-game continuation
+PASS picturepuzzle/2: real input, runtime bounds and mid-game continuation
+PASS idiom/0: real input, runtime bounds and mid-game continuation
+PASS idiom/1: real input, runtime bounds and mid-game continuation
+PASS idiom/2: real input, runtime bounds and mid-game continuation
+PASS wordtower/0: real input, runtime bounds and mid-game continuation
+PASS wordtower/1: real input, runtime bounds and mid-game continuation
+PASS wordtower/2: real input, runtime bounds and mid-game continuation
+PASS beatjump/0: real input, runtime bounds and mid-game continuation
+PASS beatjump/1: real input, runtime bounds and mid-game continuation
+PASS beatjump/2: real input, runtime bounds and mid-game continuation
+PASS melody/0: real input, runtime bounds and mid-game continuation
+PASS melody/1: real input, runtime bounds and mid-game continuation
+PASS melody/2: real input, runtime bounds and mid-game continuation
+PASS farm/0: real input, runtime bounds and mid-game continuation
+PASS farm/1: real input, runtime bounds and mid-game continuation
+PASS farm/2: real input, runtime bounds and mid-game continuation
+PASS decorate/0: real input, runtime bounds and mid-game continuation
+PASS decorate/1: real input, runtime bounds and mid-game continuation
+PASS decorate/2: real input, runtime bounds and mid-game continuation
+PASS fishing/0: real input, runtime bounds and mid-game continuation
+PASS fishing/1: real input, runtime bounds and mid-game continuation
+PASS fishing/2: real input, runtime bounds and mid-game continuation
+PASS platform gaps require jumping and legal controls complete every difficulty
+PASS grapple attaches to anchors, constrains rope length and can finish by chaining hooks
+PASS flappy gate collision and passing the last gate give different outcomes
+PASS fruit slicing follows a segment, awards fruit, fails on bombs and forgets a released stroke
+PASS rolling ball has wall response, hole loss and a reachable goal
+PASS combat bullets damage enemies, enemies damage the defense, and upgrade spends earned coins
+PASS backpack placement respects footprint and budget, and a balanced shop strategy wins five rounds
+PASS billiards transfers momentum and pockets colored balls but scratches the cue
+PASS penalty scoring requires crossing clear of the keeper and ends at the shot limit
+PASS paddle and hockey goals update the correct side and stop at the winning score
+PASS bowling contacts knock adjacent pins and three rolls end the frame
+PASS golf cup needs a slow approach; stationary ball accepts another stroke
+PASS drift and hill climb can finish all difficulties through their actual controls
+PASS tug is symmetric and dots gives another turn only when a box closes
+PASS poker patterns enforce length, attachment, bomb hierarchy, level twos and heart wildcards
+PASS doudizhu: legal hint-driven rounds terminate with conserved decks and valid bot responses
+PASS guandan: legal hint-driven rounds terminate with conserved decks and valid bot responses
+PASS chess castling, transit attacks, en passant and each promotion obey king safety
+PASS chess distinguishes checkmate from stalemate and xiangqi applies blocking and facing restrictions
+PASS mahjong recognizes four melds and a pair, seven pairs, exposed melds and invalid hands
+PASS ludo launch, repeated six, capture and exact finish operate in complete four-player races
+PASS spider completes all eight runs and rejects stock deals with an empty column
+PASS freecell capacity depends on vacant cells and foundations complete all four suits
+PASS onestroke/0: 100 seeded complete solutions
+PASS onestroke/1: 100 seeded complete solutions
+PASS onestroke/2: 100 seeded complete solutions
+PASS picturepuzzle/0: 100 seeded complete solutions
+PASS picturepuzzle/1: 100 seeded complete solutions
+PASS picturepuzzle/2: 100 seeded complete solutions
+PASS idiom/0: 100 seeded complete solutions
+PASS idiom/1: 100 seeded complete solutions
+PASS idiom/2: 100 seeded complete solutions
+PASS hidden objects accept one instance per target, ignore repeats and reject wrong types
+PASS drawn barriers protect the dog, while an open arena loses
+PASS word towers merge three identical characters and purchasing defense can clear hard waves
+PASS beat jump and audible melody finish through correctly timed input, and wrong notes fail
+PASS farm watering, maturation and twelve harvests preserve the economy and support undo
+PASS decoration enforces footprint, gives full sale refunds and completes every design goal
+PASS fishing reacts to bites, manages tension, lands five fish and loses on three missed hooks
+PASS flappy: actual controls clear complete courses at every difficulty
+PASS rollingball: actual controls clear complete courses at every difficulty
+PASS shooter: actual controls clear complete courses at every difficulty
+PASS tanks: actual controls clear complete courses at every difficulty
+PASS fortress: actual controls clear complete courses at every difficulty
+PASS survival: actual controls clear complete courses at every difficulty
+PASS golf: actual aiming clears complete games at every difficulty
+PASS bowling: actual aiming clears complete games at every difficulty
+PASS penalty: actual aiming clears complete games at every difficulty
+PASS platformer: frame source stops on pause, background, exit and disposal; active continuation restores paused
+PASS grapple: frame source stops on pause, background, exit and disposal; active continuation restores paused
+PASS flappy: frame source stops on pause, background, exit and disposal; active continuation restores paused
+PASS fruitslice: frame source stops on pause, background, exit and disposal; active continuation restores paused
+PASS rollingball: frame source stops on pause, background, exit and disposal; active continuation restores paused
+PASS shooter: frame source stops on pause, background, exit and disposal; active continuation restores paused
+PASS tanks: frame source stops on pause, background, exit and disposal; active continuation restores paused
+PASS fortress: frame source stops on pause, background, exit and disposal; active continuation restores paused
+PASS survival: frame source stops on pause, background, exit and disposal; active continuation restores paused
+PASS billiards: frame source stops on pause, background, exit and disposal; active continuation restores paused
+PASS penalty: frame source stops on pause, background, exit and disposal; active continuation restores paused
+PASS pingpong: frame source stops on pause, background, exit and disposal; active continuation restores paused
+PASS bowling: frame source stops on pause, background, exit and disposal; active continuation restores paused
+PASS golf: frame source stops on pause, background, exit and disposal; active continuation restores paused
+PASS drift: frame source stops on pause, background, exit and disposal; active continuation restores paused
+PASS hillclimb: frame source stops on pause, background, exit and disposal; active continuation restores paused
+PASS airhockey: frame source stops on pause, background, exit and disposal; active continuation restores paused
+PASS linerescue: frame source stops on pause, background, exit and disposal; active continuation restores paused
+PASS wordtower: frame source stops on pause, background, exit and disposal; active continuation restores paused
+PASS beatjump: frame source stops on pause, background, exit and disposal; active continuation restores paused
+PASS melody: frame source stops on pause, background, exit and disposal; active continuation restores paused
+PASS fishing: frame source stops on pause, background, exit and disposal; active continuation restores paused
+PASS native note service waits for every loaded pitch, closes raw handles and cancels pending playback on background
+PASS native note service handles load failure and releases a pool created after disposal
+190/190 completion checks passed

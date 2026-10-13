@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-13",
+  "availableGames": 89,
+  "newWavFiles": 182,
+  "resourceBytes": 3695650,
+  "regressions": [
+    {
+      "total": 12,
+      "passed": 12,
+      "script": "test-game-sounds"
+    },
+    {
+      "total": 9,
+      "passed": 9,
+      "script": "test-game-settings"
+    },
+    {
+      "total": 162,
+      "passed": 162,
+      "script": "test-performance"
+    },
+    {
+      "total": 67,
+      "passed": 67,
+      "script": "test-collection"
+    },
+    {
+      "total": 330,
+      "passed": 330,
+      "script": "test-expansion"
+    },
+    {
+      "total": 76,
+      "passed": 76,
+      "script": "test-continuation"
+    },
+    {
+      "total": 34,
+      "passed": 34,
+      "script": "test-play-time"
+    }
+  ],
+  "passed": 690,
+  "total": 690,
+  "nativeBuild": "API 24 assembleHap BUILD SUCCESSFUL",
+  "buildLog": "entry/build/game-sounds-build.log",
+  "signedHap": "entry/build/default/outputs/default/entry-default-signed.hap",
+  "signedHapSha256": "a650cd68106dbf1b7827d31f560f2945d1f83e9caa3c4ca4c699292da84437dc",
+  "packagedAudioHashesVerified": 182,
+  "deviceListening": "Not performed",
+  "retiredGamesExcluded": 11
+}

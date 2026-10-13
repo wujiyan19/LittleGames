@@ -132,8 +132,12 @@ export class ExpansionAdventure {
     if (s.id === 'runner') { this.runStep(s, dt); return; }
     const p: ExpansionPiece = s.pieces[0];
     const dx: number = p.w - p.x; const dy: number = p.h - p.y; const d: number = Math.sqrt(dx * dx + dy * dy);
-    if (d > 1) { const step: number = Math.min(d, (s.id === 'blackhole' ? 145 : 180) * dt); p.x += dx / d * step; p.y += dy / d * step; }
+    if (d > 1) {
+      const step: number = Math.min(d, (s.id === 'blackhole' ? 145 : 180) * dt); p.x += dx / d * step; p.y += dy / d * step;
+      if (s.id === 'fisheat' && dx !== 0) { p.vx = dx / d * step / dt; }
+    }
     p.x = Math.max(p.r, Math.min(360 - p.r, p.x)); p.y = Math.max(p.r, Math.min(460 - p.r, p.y));
+    const playerRadius: number = p.r;
     for (let i: number = 1; i < s.pieces.length; i++) {
       const item: ExpansionPiece = s.pieces[i]; item.x += item.vx * dt;
       const ax: number = item.x - p.x; const ay: number = item.y - p.y; const distance: number = Math.sqrt(ax * ax + ay * ay);
@@ -141,15 +145,15 @@ export class ExpansionAdventure {
         if (item.r < p.r * 0.9 && distance < p.r - item.r * 0.3) { item.alive = false; s.moves++; s.score += Math.round(item.r * 10); p.r = Math.min(70, p.r + 1.3); }
       } else {
         if (item.x < -50 || item.x > 410) { item.alive = false; }
-        else if (distance < p.r + item.r * 0.7) {
-          if (item.r >= p.r + 2) { s.outcome = 2; }
+        else if (distance < playerRadius + item.r * 0.7) {
+          if (item.r >= playerRadius + 2) { s.outcome = 2; }
           else { item.alive = false; s.moves++; s.score += Math.round(item.r * 10); p.r = Math.min(50, p.r + 0.7); }
         }
       }
     }
     s.pieces = s.pieces.filter((item: ExpansionPiece) => item.alive);
     if (s.id === 'fisheat') { while (s.pieces.length < 15) { this.spawnFish(s); } }
-    if (s.moves >= s.goal) { s.outcome = 1; }
+    if (s.moves >= s.goal && s.outcome === 0) { s.outcome = 1; }
     if (s.id === 'blackhole' && s.time >= 120 - 20 * s.level) { s.outcome = 2; }
   }
   private runStep(s: ExpansionState, dt: number): void {

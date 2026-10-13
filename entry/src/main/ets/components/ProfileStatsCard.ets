@@ -12,19 +12,19 @@ export struct ProfileStatsCard {
       Text(this.value).fontFamily(FontTokens.family).fontSize(FontTokens.sizeHeadline)
         .fontWeight(FontTokens.weightBold).fontColor(SemanticColors.textPrimary)
         // 长分数与单位保持单行；统一数值区域高度，避免挤低本卡片的标题。
-        .width('100%').height(FontTokens.sizeHeadline + SpacingTokens.sm)
+        .width('100%').height($r('app.float.home_stat_value_height'))
         .minFontSize(FontTokens.sizeBody).maxFontSize(FontTokens.sizeHeadline)
         .maxLines(1).textOverflow({ overflow: TextOverflow.Ellipsis })
         .textAlign(TextAlign.Center)
         .margin({ top: SpacingTokens.xs })
-      Text(this.title).fontFamily(FontTokens.family).fontSize(FontTokens.sizeBodySmall)
-        .fontColor(SemanticColors.textTertiary).margin({ top: SpacingTokens.xs })
+      Text(this.title).fontFamily(FontTokens.family).fontSize(FontTokens.sizeBody)
+        .fontColor(SemanticColors.textSecondary).margin({ top: SpacingTokens.sm })
     }
-    .layoutWeight(1).padding({
+    .width('100%').padding({
       top: SpacingTokens.base, bottom: SpacingTokens.base,
-      left: SpacingTokens.xs, right: SpacingTokens.xs
+      left: SpacingTokens.md, right: SpacingTokens.md
     })
-    .borderRadius(RadiusTokens.base).backgroundColor(SemanticColors.surface)
+    .borderRadius(RadiusTokens.lg).backgroundColor(SemanticColors.surface)
     .alignItems(HorizontalAlign.Center)
   }
 }

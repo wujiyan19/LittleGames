@@ -23,7 +23,9 @@ const ellipse = (x,y,rx,ry,fill,opacity=1) => `<ellipse cx="${x}" cy="${y}" rx="
 const line = (d,stroke,width=3,opacity=1) => `<path d="${d}" fill="none" stroke="${stroke}" stroke-width="${width}" stroke-linecap="round" stroke-linejoin="round" opacity="${opacity}"/>`;
 const shape = (d,fill,stroke='none',sw=2) => `<path d="${d}" fill="${fill}" stroke="${stroke}" stroke-width="${sw}" stroke-linejoin="round"/>`;
 const grad = (id,a,b) => `<linearGradient id="${id}" x2="0" y2="1"><stop stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient>`;
-function generate() {
+// Pass resource suffixes to regenerate just those SVGs, without selectors or icons.
+function generate(only = []) {
+  const selected = new Set(only);
   for (const theme of ['base', 'dark']) {
     const dark = theme === 'dark';
     const p = { ink:dark?'#DAE8FF':'#304A69', edge:dark?'#516884':'#9CB7D0', paper:dark?'#30445F':'#FFFAF0', low:dark?'#1C2B42':'#DCE8F1',
@@ -33,10 +35,12 @@ function generate() {
       grad('mint','#B7EACD','#4D9E85')+grad('violet','#DCD2FA','#8470C2')+grad('cyan','#B8EDF1','#4AA3BF')+
       grad('wood',dark?'#9F7754':'#F0D1A2',p.wood)+grad('metal','#DBEAF2','#6386A8')+grad('ink','#62788E','#20364F')+grad('ivory','#FFF8E7','#C9D8E6');
     const bodyByName = new Map();
-    const put = (name,body,w=100,h=100) => {
+    const put = (name,body,w=100,h=100,resourceDefs=defs) => {
       const resource = 'exp_'+name;
-      const dir=path.join(root,'entry/src/main/resources',theme,'media'); fs.mkdirSync(dir,{recursive:true});
-      fs.writeFileSync(path.join(dir,resource+'.svg'),`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><defs>${defs}</defs>${body}</svg>\n`);
+      if (selected.size === 0 || selected.has(name)) {
+        const dir=path.join(root,'entry/src/main/resources',theme,'media'); fs.mkdirSync(dir,{recursive:true});
+        fs.writeFileSync(path.join(dir,resource+'.svg'),`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><defs>${resourceDefs}</defs>${body}</svg>\n`);
+      }
       assets.set(resource,{name:resource,width:w,height:h}); bodyByName.set(name,body);
     };
     const shadow = ellipse(50,87,32,6,'#122B45',.16);
@@ -95,8 +99,10 @@ function generate() {
     put('bullet',ellipse(50,61,14,30,'#C1E9FC',.45)+rect(43,15,14,55,7,'url(#gold)')+ellipse(50,27,4,11,'#FFFFFF'));
     put('ball',shadow+circle(50,46,37,'url(#blue)',p.ink,2)+ellipse(37,29,16,8,'#FFFFFF',.65));
     put('soccer',circle(50,50,43,'url(#paper)',p.edge,2)+shape('M50 29L70 43L62 66H38L30 43Z',p.ink)+line('M50 29V7M70 43L91 35M62 66L77 83M38 66L23 83M30 43L9 35',p.ink,4));
-    put('pin',shadow+shape('M40 13Q50 5 60 13L59 34Q54 43 65 60Q83 88 50 91Q17 88 35 60Q46 43 41 34Z','url(#paper)',p.edge)+line('M42 31H58M42 39H58',p.coral,5));
-    put('cueball',shadow+circle(50,46,39,'url(#ivory)',p.edge,2)+ellipse(34,28,12,7,'#FFFFFF',.65));
+    const sportsOutline = '#6386A8';
+    const pinPath = 'M40 13Q50 5 60 13L59 34Q54 43 65 60Q83 88 50 91Q17 88 35 60Q46 43 41 34Z';
+    put('pin',shadow+shape(pinPath,'#FFF8E7')+shape(pinPath,'none',sportsOutline,4)+line('M42 31H58M42 39H58',p.coral,5));
+    put('cueball',shadow+circle(50,46,39,'#FFF8E7')+circle(50,46,39,'none',sportsOutline,4)+ellipse(34,28,12,7,'#FFFFFF',.65));
     put('bowlingball',bodyByName.get('ball')+circle(41,33,6,p.ink)+circle(57,32,6,p.ink)+circle(49,48,6,p.ink));
     put('gate',rect(15,3,70,94,0,'url(#mint)',p.ink,2)+rect(4,74,92,21,4,'url(#mint)',p.ink,2)+line('M26 9V69','#D5F6E2',4,.6));
     put('book',shadow+shape('M8 20Q31 8 50 24Q70 8 92 20V80Q70 69 50 85Q30 69 8 80Z','url(#paper)',p.edge)+line('M50 25V80M19 31H38M19 44H38M19 57H38M63 31H82M63 44H82M63 57H82',p.blue,3));
@@ -146,15 +152,25 @@ function generate() {
     put('food_1',shadow+shape('M12 53H88Q81 90 50 92Q19 90 12 53Z','url(#coral)',p.ink)+ellipse(50,51,38,12,'#EDC785')+line('M25 48Q35 35 45 48T70 47M31 53Q42 38 53 51',p.paper,4)+line('M68 8L63 42M82 10L73 42',p.wood,4));
     put('food_2',shadow+line('M22 89L77 11',p.wood,5)+[ [31,72],[49,48],[67,25] ].map((v,i)=>circle(v[0],v[1],14,'url(#'+colors[i]+')',p.ink)).join(''));
     put('card_front',rect(3,5,94,124,10,p.edge)+rect(3,1,94,124,10,'url(#paper)',p.edge,2)+rect(11,10,78,105,7,'none',p.edge),100,132);
+    // Colored system suit glyphs remain readable on this light poker face in both themes.
+    const pokerDefs=defs.replace(grad('paper',p.paper,p.low),grad('paper','#FFFAF0','#DCE8F1'))
+      .replace(grad('wood',dark?'#9F7754':'#F0D1A2',p.wood),grad('wood','#F0D1A2','#D5AC7C'));
+    put('poker_front',rect(3,5,94,124,10,'#9CB7D0')+rect(3,1,94,124,10,'url(#paper)','#9CB7D0',2)+rect(11,10,78,105,7,'none','#9CB7D0'),100,132,pokerDefs);
     put('card_back',rect(3,5,94,124,10,p.edge)+rect(3,1,94,124,10,'url(#blue)',p.edge,2)+rect(12,10,76,105,7,'none','#D8EEFF',2)+`<g transform="translate(1 16)">${star}</g>`+line('M18 22L82 102M82 22L18 102','#DBEEFF',2,.3),100,132);
     put('mahjong',rect(3,9,94,119,10,'url(#mint)',p.ink,2)+rect(3,1,94,118,10,'url(#paper)',p.edge,2)+rect(11,10,78,98,7,'none',p.edge),100,132);
     put('chip',shadow+circle(50,47,38,'url(#wood)',p.ink,2)+circle(50,47,29,'url(#paper)',p.wood,2));
     for (const side of [0,1]) {
-      const fill=side===0?'url(#ivory)':'url(#ink)', edge=side===0?p.edge:'#A1B6CB';
-      const tops=[line('M50 5V25M42 14H58',edge,6)+shape('M28 30L34 49H66L72 30Z',fill,edge),shape('M20 24L28 49H72L80 24L61 35L50 17L39 35Z',fill,edge),
-        shape('M22 14H35V27H44V14H56V27H65V14H78V43H22Z',fill,edge),shape('M50 11Q23 33 39 49H61Q77 33 50 11Z',fill,edge)+line('M50 18L40 37',edge,4),
-        shape('M32 52L25 36L39 14L61 11L72 29L59 37L52 31L48 51Z',fill,edge)+circle(56,24,3,edge),circle(50,29,17,fill,edge,2)];
-      tops.forEach((top,i)=>put('chess_'+side+'_'+i,shadow+shape('M37 48H63L68 76H32Z',fill,edge)+rect(23,76,54,13,5,fill,edge,2)+top));
+      // Distinct silhouettes keep both sides readable on the board and promotion controls.
+      const fill=side===0?'url(#ivory)':'url(#ink)', edge=side===0?(dark?'#20364F':'#304A69'):'#A1B6CB', outline=3;
+      // Native SVG rendering draws standalone unfilled strokes consistently.
+      const pieceShape=d=>shape(d,fill)+shape(d,'none',edge,outline);
+      const pieceBase=rect(23,76,54,13,5,fill)+rect(23,76,54,13,5,'none',edge,outline);
+      const pawnHead=circle(50,29,17,fill)+circle(50,29,17,'none',edge,outline);
+      const cross=side===0?line('M50 5V25M42 14H58',edge,8)+line('M50 5V25M42 14H58','#FFF8E7',4):line('M50 5V25M42 14H58',edge,6);
+      const tops=[cross+pieceShape('M28 30L34 49H66L72 30Z'),pieceShape('M20 24L28 49H72L80 24L61 35L50 17L39 35Z'),
+        pieceShape('M22 14H35V27H44V14H56V27H65V14H78V43H22Z'),pieceShape('M50 11Q23 33 39 49H61Q77 33 50 11Z')+line('M50 18L40 37',edge,4),
+        pieceShape('M32 52L25 36L39 14L61 11L72 29L59 37L52 31L48 51Z')+circle(56,24,3,edge),pawnHead];
+      tops.forEach((top,i)=>put('chess_'+side+'_'+i,shadow+pieceShape('M37 48H63L68 76H32Z')+pieceBase+top));
     }
     put('spark',star+circle(15,20,5,p.cyan)+circle(84,77,4,p.coral)+line('M82 12V28M74 20H90',p.gold,3));
     put('ripple',circle(50,50,39,'none',p.cyan,3)+circle(50,50,27,'none',p.blue,2));
@@ -182,12 +198,18 @@ function generate() {
       if(id==='ludo')bg=rect(0,0,360,460,0,p.low)+[ [20,15],[244,15],[244,355],[20,355] ].map((v,i)=>rect(v[0],v[1],94,96,14,'url(#'+colors[i]+')')).join('')+Array.from({length:52},(_,i)=>circle(180+Math.cos(i*Math.PI*2/52-Math.PI/2)*140,230+Math.sin(i*Math.PI*2/52-Math.PI/2)*175,6,'url(#paper)',p.edge,1)).join('')+`<g transform="translate(130 180)">${star}</g>`;
       // Low contrast backdrop: game geometry and text remain native and visible above it.
       const hero=id==='arrowclear'?'arrow_1':id==='characters'?'brush':id==='idiom'?'book':heroFor[id]; if(!hero||!bodyByName.has(hero))throw new Error('Missing hero for '+id);
-      put('board_'+id,bg+`<g opacity=".06" transform="translate(246 351) scale(.9)">${bodyByName.get(hero)}</g>`,360,460);
+      const decoration = id === 'tug' ? '' : `<g opacity=".06" transform="translate(246 351) scale(.9)">${bodyByName.get(hero)}</g>`;
+      put('board_'+id,bg+decoration,360,460);
 
     });
     // Puzzle art is opaque and readable in both modes, with the same shapes and crop boundaries.
     const original=fs.readFileSync(path.join(root,'entry/src/main/resources/base/media/expansion_puzzle_scene.svg'),'utf8');
-    if(dark)fs.writeFileSync(path.join(root,'entry/src/main/resources/dark/media/expansion_puzzle_scene.svg'),original.replaceAll('#C9E8F4','#24445F').replaceAll('#83BCA1','#417567').replaceAll('#4F987F','#2D6255').replaceAll('#F3D3A5','#B48D68').replaceAll('#FFFFFF','#B9D6E7'));
+    if(dark && selected.size === 0)fs.writeFileSync(path.join(root,'entry/src/main/resources/dark/media/expansion_puzzle_scene.svg'),original.replaceAll('#C9E8F4','#24445F').replaceAll('#83BCA1','#417567').replaceAll('#4F987F','#2D6255').replaceAll('#F3D3A5','#B48D68').replaceAll('#FFFFFF','#B9D6E7'));
+  }
+  if (selected.size > 0) {
+    for (const name of selected) if (!assets.has('exp_'+name)) throw new Error('Unknown resource '+name);
+    console.log(`Generated ${selected.size} selected gameplay resources × 2 themes.`);
+    return;
   }
   const method=(name,prefix,count)=>`  static ${name}(value: number): Resource {\n    const images: Resource[] = [${Array.from({length:count},(_,i)=>`$r('app.media.exp_${prefix}_${i}')`).join(', ')}];\n    return images[Math.max(0, Math.min(${count-1}, Math.floor(value)))];\n  }`;
   const methods=[method('sportBall','sportball',6),method('water','water',6),method('arrow','arrow',4),method('pipe','pipe',16),method('tile','tile',6),method('block','block',6),method('bubble','bubble',6),method('fruit','fruit',10),method('object','object',9),method('fish','fish',6),method('bus','bus',6),method('car','car',6),method('yarn','yarn',6),method('reel','reel',6),method('sand','sand',6),method('nozzle','nozzle',6),method('person','person',6),method('food','food',3)];
@@ -203,5 +225,5 @@ function generate() {
   require('./generate-game-icons.cjs').generate();
   console.log(`Generated ${assets.size} gameplay resources × 2 themes; icons use the shared 100-game system.`);
 }
-if(require.main===module)generate();
+if(require.main===module)generate(process.argv.slice(2));
 module.exports={generate};

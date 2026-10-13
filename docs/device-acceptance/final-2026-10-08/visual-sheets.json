@@ -1,0 +1,171 @@
+{
+  "source": "Captured native UI screenshots; only cropped/resized for comparison",
+  "packageSha256": "e14b33644f6a0f72964c96e56f0a692c70680db11437152601f9a241e4911757",
+  "files": [
+    {
+      "file": "visual-01.png",
+      "games": [
+        "snake",
+        "tetris",
+        "2048",
+        "whackmole",
+        "minesweeper",
+        "sudoku",
+        "slidepuzzle",
+        "klotski"
+      ]
+    },
+    {
+      "file": "visual-02.png",
+      "games": [
+        "guessnumber",
+        "memorycard",
+        "jumpjump",
+        "brickbreaker",
+        "match3",
+        "tictactoe",
+        "gomoku",
+        "reversi"
+      ]
+    },
+    {
+      "file": "visual-03.png",
+      "games": [
+        "fourline",
+        "nim",
+        "lights",
+        "flood",
+        "maze",
+        "hanoi",
+        "peg",
+        "nonogram"
+      ]
+    },
+    {
+      "file": "visual-04.png",
+      "games": [
+        "arithmetic",
+        "compare",
+        "sequence",
+        "binary",
+        "targetsum",
+        "schulte",
+        "memorysequence",
+        "missing"
+      ]
+    },
+    {
+      "file": "visual-05.png",
+      "games": [
+        "reaction",
+        "blockfit",
+        "tilestack",
+        "bubbleshooter",
+        "fruitmerge",
+        "watersort",
+        "arrowclear",
+        "screwout"
+      ]
+    },
+    {
+      "file": "visual-06.png",
+      "games": [
+        "parkingjam",
+        "runner",
+        "blackhole",
+        "fisheat",
+        "sokoban",
+        "pipes",
+        "differences",
+        "roomdefense"
+      ]
+    },
+    {
+      "file": "visual-07.png",
+      "games": [
+        "basketball",
+        "solitaire",
+        "characters",
+        "rhythm",
+        "restaurant",
+        "linktiles",
+        "mahjongsolitaire",
+        "groupclear"
+      ]
+    },
+    {
+      "file": "visual-08.png",
+      "games": [
+        "slotpair",
+        "buscolor",
+        "yarn",
+        "sand",
+        "untangle",
+        "platformer",
+        "grapple",
+        "flappy"
+      ]
+    },
+    {
+      "file": "visual-09.png",
+      "games": [
+        "fruitslice",
+        "rollingball",
+        "shooter",
+        "tanks",
+        "fortress",
+        "survival",
+        "backpack",
+        "billiards"
+      ]
+    },
+    {
+      "file": "visual-10.png",
+      "games": [
+        "penalty",
+        "pingpong",
+        "bowling",
+        "golf",
+        "drift",
+        "hillclimb",
+        "airhockey",
+        "tug"
+      ]
+    },
+    {
+      "file": "visual-11.png",
+      "games": [
+        "dots",
+        "doudizhu",
+        "guandan",
+        "mahjong",
+        "xiangqi",
+        "chess",
+        "ludo",
+        "spider"
+      ]
+    },
+    {
+      "file": "visual-12.png",
+      "games": [
+        "freecell",
+        "onestroke",
+        "hiddenobjects",
+        "linerescue",
+        "picturepuzzle",
+        "idiom",
+        "wordtower",
+        "beatjump"
+      ]
+    },
+    {
+      "file": "visual-13.png",
+      "games": [
+        "melody",
+        "farm",
+        "decorate",
+        "fishing"
+      ]
+    }
+  ]
+}
