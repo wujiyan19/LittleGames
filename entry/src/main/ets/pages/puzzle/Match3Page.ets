@@ -1,3 +1,4 @@
+import { resolveString } from '../../common/I18nUtils';
 import { GameSessionTransfer } from '../../common/GameSessionTransfer';
 /**
  * 消消乐（Match3）—— View 层（展示与交互）
@@ -38,7 +39,7 @@ export struct Match3Page {
     this.initBoardSize();
     const context = this.getUIContext().getHostContext();
     if (context) {
-      this.a11yGemFormat = context.resourceManager.getStringSync($r('app.string.a11y_match3_gem_format'));
+      this.a11yGemFormat = resolveString($r('app.string.a11y_match3_gem_format'), context);
     }
     GameLifecycleBus.attach(this.viewModel);
     if (!GameSessionTransfer.restore(this.viewModel)) { this.viewModel.startGame(); }

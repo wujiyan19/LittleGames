@@ -252,7 +252,7 @@ export struct FeaturedTab {
           .width($r('app.float.brand_banner_icon_size'))
           .height($r('app.float.brand_banner_icon_size'))
           .objectFit(ImageFit.Contain)
-          .borderRadius(RadiusTokens.md)
+          .borderRadius($r('app.float.brand_banner_icon_radius')).clip(true)
       }
       .width('100%')
       .padding({ left: SpacingTokens.lg, right: SpacingTokens.lg, top: SpacingTokens.base, bottom: SpacingTokens.base })

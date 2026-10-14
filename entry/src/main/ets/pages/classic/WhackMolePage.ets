@@ -1,3 +1,4 @@
+import { resolveString } from '../../common/I18nUtils';
 import { GameSessionTransfer } from '../../common/GameSessionTransfer';
 /**
  * 打地鼠 —— View 层（纯展示与组装）
@@ -14,6 +15,7 @@ import { ExitConfirmDialog } from '../../components/ExitConfirmDialog';
 import { range } from '../../common/Range';
 import { GameLifecycleBus } from '../../common/GameLifecycleBus';
 import { Haptics } from '../../common/Haptics';
+import { HarmonyMotion } from '../../common/HarmonyMotion';
 import { WhackMoleViewModel } from '../../viewmodel/WhackMoleViewModel';
 
 @ComponentV2
@@ -35,9 +37,9 @@ export struct WhackMolePage {
   aboutToAppear(): void {
     const context = this.getUIContext().getHostContext();
     if (context) {
-      this.a11yHoleFormat = context.resourceManager.getStringSync($r('app.string.a11y_whack_hole_format'));
-      this.a11yHasMole = context.resourceManager.getStringSync($r('app.string.a11y_whack_has_mole'));
-      this.a11yEmpty = context.resourceManager.getStringSync($r('app.string.a11y_whack_empty'));
+      this.a11yHoleFormat = resolveString($r('app.string.a11y_whack_hole_format'), context);
+      this.a11yHasMole = resolveString($r('app.string.a11y_whack_has_mole'), context);
+      this.a11yEmpty = resolveString($r('app.string.a11y_whack_empty'), context);
     }
     GameLifecycleBus.attach(this.viewModel);
     if (!GameSessionTransfer.restore(this.viewModel)) { this.viewModel.startGame(); }
@@ -71,12 +73,6 @@ export struct WhackMolePage {
     if (cell === this.holeWidth) { return; }
     this.holeWidth = cell;
     this.holeHeight = cell / 0.92;
-  }
-
-  @Styles
-  pressedFeedback() {
-    .opacity(0.72)
-    .scale({ x: 0.96, y: 0.96 })
   }
 
   build() {
@@ -169,6 +165,9 @@ export struct WhackMolePage {
     .width(this.holeWidth).height(this.holeHeight)
     // 无障碍:读屏念出洞号与当前是否有地鼠
     .accessibilityText(this.a11yHoleFormat.replace('%1$d', '' + (index + 1)) + (this.viewModel.holes[index] ? this.a11yHasMole : this.a11yEmpty))
-    .stateStyles({ pressed: this.pressedFeedback }).onClick(() => { Haptics.tap(); this.viewModel.whack(index); })
+    // 按压仅使用原生缩放回弹，避免透明度状态残留在反复使用的洞位上。
+    .renderGroup(true)
+    .clickEffect(HarmonyMotion.press(this.getUIContext()))
+    .onClick(() => { Haptics.tap(); this.viewModel.whack(index); })
   }
 }

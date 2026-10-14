@@ -23,11 +23,12 @@ export struct ExpansionBrainBoard {
       this.vm.setToneCallbacks((note: number): void => { this.tones.play(note); }, (): void => { this.tones.stop(); });
     }
   }
-  @Monitor('sound.enabled')
+  @Monitor('sound.enabled', 'sound.volume')
   soundChanged(): void {
     if (this.gameId !== 'melody') { return; }
-    if (!this.sound.enabled) { this.tones.stop(); }
+    if (!this.sound.enabled || this.sound.volume === GameSound.MIN_VOLUME) { this.tones.stop(); }
     else if (!this.audioReady) { this.prepareAudio(); }
+    else { this.tones.setVolume(); }
   }
   prepareAudio(): void {
     this.tones.dispose(); this.tones = new ExpansionTonePlayer(); this.audioReady = false; this.audioFailed = false;

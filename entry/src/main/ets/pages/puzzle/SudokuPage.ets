@@ -1,3 +1,4 @@
+import { resolveString } from '../../common/I18nUtils';
 import { GameSessionTransfer } from '../../common/GameSessionTransfer';
 /**
  * 数独 —— View 层（展示与组装，含双指缩放）
@@ -47,10 +48,10 @@ export struct SudokuPage {
     // 预解析无障碍描述字符串
     const context = this.getUIContext().getHostContext();
     if (context) {
-      this.a11yFixed = context.resourceManager.getStringSync($r('app.string.a11y_sudoku_fixed'));
-      this.a11yBlank = context.resourceManager.getStringSync($r('app.string.a11y_sudoku_blank'));
-      this.a11yNumberFormat = context.resourceManager.getStringSync($r('app.string.a11y_sudoku_number_format'));
-      this.a11yRowColFormat = context.resourceManager.getStringSync($r('app.string.a11y_mine_row_col_format'));
+      this.a11yFixed = resolveString($r('app.string.a11y_sudoku_fixed'), context);
+      this.a11yBlank = resolveString($r('app.string.a11y_sudoku_blank'), context);
+      this.a11yNumberFormat = resolveString($r('app.string.a11y_sudoku_number_format'), context);
+      this.a11yRowColFormat = resolveString($r('app.string.a11y_mine_row_col_format'), context);
     }
     GameLifecycleBus.attach(this.viewModel);
     this.playTimeStateChanged();

@@ -193,41 +193,6 @@ export struct ProfileTab {
           .width('100%')
           .padding({ top: SpacingTokens.xl })
 
-          // 设置卡片
-          Button() {
-            Row({ space: SpacingTokens.md }) {
-              SymbolGlyph($r('sys.symbol.gearshape'))
-                .fontSize(22).fontColor([SemanticColors.primary])
-              Column() {
-                Text($r('app.string.settings_title'))
-                  .fontFamily(FontTokens.family)
-                  .fontSize(FontTokens.sizeBody)
-                  .fontWeight(FontTokens.weightMedium)
-                  .fontColor(SemanticColors.textPrimary)
-                Text($r('app.string.settings_entry_desc'))
-                  .fontFamily(FontTokens.family)
-                  .fontSize(FontTokens.sizeBody)
-                  .fontColor(SemanticColors.textSecondary)
-                  .margin({ top: SpacingTokens.xs })
-              }
-              .alignItems(HorizontalAlign.Start)
-              .layoutWeight(1)
-
-              SymbolGlyph($r('sys.symbol.chevron_right'))
-                .fontSize(14).fontColor([SemanticColors.textTertiary])
-            }
-            .width('100%')
-          }
-          .type(ButtonType.Normal)
-          .width('100%')
-          .padding(SpacingTokens.base)
-          .borderRadius(RadiusTokens.lg)
-          .backgroundColor(SemanticColors.surface)
-          .margin({ top: SpacingTokens.xl })
-          .constraintSize({ minHeight: $r('app.float.home_action_min_height') })
-          .clickEffect(HarmonyMotion.press(this.getUIContext(), true))
-          .onClick(() => { this.onSettingsClick(); })
-
           Row() {
             SymbolGlyph($r('sys.symbol.star_fill'))
               .fontSize(18)

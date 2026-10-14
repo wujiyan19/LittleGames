@@ -11,6 +11,7 @@ import { SettingsHeader } from '../../components/SettingsHeader';
 import { SettingsChoice } from '../../components/SettingsChoice';
 import { SettingsSwitchRow } from '../../components/SettingsSwitchRow';
 import { GameSound, gameSound } from '../../common/GameSound';
+import { SettingsVolumeRow } from '../../components/SettingsVolumeRow';
 
 @ComponentV2
 export struct SettingsPage {
@@ -167,6 +168,8 @@ export struct SettingsPage {
             SettingsSwitchRow({ title: $r('app.string.settings_sound'), detail: $r('app.string.settings_sound_desc'), isOn: this.sound.enabled, onToggle: (value: boolean) => {
               GameDataManager.setSetting('soundEnabled', value);
             } })
+            this.GroupDivider()
+            SettingsVolumeRow()
             this.GroupDivider()
             SettingsSwitchRow({ title: $r('app.string.settings_haptics'), detail: $r('app.string.settings_haptics_desc'), isOn: this.hapticsEnabled, onToggle: (value: boolean) => {
               this.hapticsEnabled = value;

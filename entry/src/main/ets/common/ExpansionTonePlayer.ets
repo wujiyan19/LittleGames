@@ -1,7 +1,7 @@
 import { media } from '@kit.MediaKit';
 import { audio } from '@kit.AudioKit';
 import { resourceManager } from '@kit.LocalizationKit';
-import { gameSound } from './GameSound';
+import { GameSound, gameSound } from './GameSound';
 
 export class ExpansionTonePlayer {
   onReady: (ready: boolean) => void = (ready: boolean): void => {};
@@ -11,6 +11,8 @@ export class ExpansionTonePlayer {
   private streams: number[] = [];
   private disposed: boolean = false;
   private generation: number = 0;
+  private volumeDirty: boolean = false;
+  private updatingVolume: boolean = false;
   async init(manager: resourceManager.ResourceManager): Promise<void> {
     try {
       const info: audio.AudioRendererInfo = { usage: audio.StreamUsage.STREAM_USAGE_GAME, rendererFlags: 0 };
@@ -26,13 +28,34 @@ export class ExpansionTonePlayer {
   }
   private ready(): void { if (!this.disposed && this.sounds.length === 4 && this.sounds.every((id: number) => this.loaded.includes(id))) { this.onReady(true); } }
   async play(note: number): Promise<void> {
-    if (!gameSound.enabled || this.disposed || !this.pool || note < 0 || note >= this.sounds.length || !this.loaded.includes(this.sounds[note])) { return; }
+    if (!gameSound.enabled || gameSound.volume === GameSound.MIN_VOLUME || this.disposed || !this.pool || note < 0 || note >= this.sounds.length || !this.loaded.includes(this.sounds[note])) { return; }
     const pool: media.SoundPool = this.pool; const generation: number = this.generation;
+    const volume: number = gameSound.volume;
+    const gain: number = volume / GameSound.MAX_VOLUME;
+    const options: media.PlayParameters = { leftVolume: gain, rightVolume: gain };
     try {
-      const stream: number = await pool.play(this.sounds[note]);
-      if (!gameSound.enabled || this.disposed || generation !== this.generation) { try { await pool.stop(stream); } catch (e) {} return; }
+      const stream: number = await pool.play(this.sounds[note], options);
+      if (!gameSound.enabled || gameSound.volume === GameSound.MIN_VOLUME || this.disposed || generation !== this.generation) { try { await pool.stop(stream); } catch (e) {} return; }
       this.streams.push(stream); if (this.streams.length > 8) { this.streams.shift(); }
+      if (volume !== gameSound.volume) { this.setVolume(); }
     } catch (e) {}
+  }
+  async setVolume(): Promise<void> {
+    this.volumeDirty = true;
+    if (this.updatingVolume) { return; }
+    this.updatingVolume = true;
+    try {
+      while (this.volumeDirty) {
+        this.volumeDirty = false;
+        const pool: media.SoundPool | null = this.pool;
+        if (!pool || this.disposed) { continue; }
+        const gain: number = gameSound.volume / GameSound.MAX_VOLUME;
+        const streams: number[] = this.streams.slice();
+        for (let i: number = 0; i < streams.length; i++) {
+          try { await pool.setVolume(streams[i], gain, gain); } catch (e) {}
+        }
+      }
+    } finally { this.updatingVolume = false; }
   }
   async stop(): Promise<void> {
     this.generation++;

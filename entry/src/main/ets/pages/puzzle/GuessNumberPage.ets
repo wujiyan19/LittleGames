@@ -1,3 +1,4 @@
+import { resolveString } from '../../common/I18nUtils';
 import { GameSessionTransfer } from '../../common/GameSessionTransfer';
 /**
  * 猜数字 —— View 层（纯展示与组装）
@@ -87,14 +88,14 @@ export struct GuessNumberPage {
     if (key === '⌫') {
       const context = this.getUIContext().getHostContext();
       if (context) {
-        return context.resourceManager.getStringSync($r('app.string.a11y_keypad_delete'));
+        return resolveString($r('app.string.a11y_keypad_delete'), context);
       }
       return 'Delete';
     }
     if (key === 'submit') {
       const context = this.getUIContext().getHostContext();
       if (context) {
-        return context.resourceManager.getStringSync($r('app.string.a11y_keypad_submit'));
+        return resolveString($r('app.string.a11y_keypad_submit'), context);
       }
       return 'Submit';
     }

@@ -3,7 +3,7 @@ import { audio } from '@kit.AudioKit';
 import { resourceManager } from '@kit.LocalizationKit';
 import { BusinessError } from '@kit.BasicServicesKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
-import { GameSoundEvent, gameSound } from './GameSound';
+import { GameSound, GameSoundEvent, gameSound } from './GameSound';
 
 /** Loads only the active game's two sounds plus shared result/error cues. */
 export class GameSoundPlayer {
@@ -17,11 +17,14 @@ export class GameSoundPlayer {
   private playbackGeneration: number = 0;
   private lastPlayedAt: number = -1;
   private preparing: Promise<void> = Promise.resolve();
+  private volumeDirty: boolean = false;
+  private updatingVolume: boolean = false;
 
   init(manager: resourceManager.ResourceManager): void {
     this.manager = manager;
     gameSound.connect((id: string, event: GameSoundEvent): void => { this.play(id, event); },
-      (id: string): void => { this.prepare(id); }, (): void => { this.stop(); });
+      (id: string): void => { this.prepare(id); }, (): void => { this.stop(); },
+      (): void => { this.updateVolume(); });
   }
 
   private prepare(gameId: string): void {
@@ -86,7 +89,9 @@ export class GameSoundPlayer {
     this.lastPlayedAt = now;
     const generation: number = this.generation;
     const playbackGeneration: number = this.playbackGeneration;
-    const options: media.PlayParameters = { loop: 0, leftVolume: 0.65, rightVolume: 0.65,
+    const volume: number = gameSound.volume;
+    const gain: number = 0.65 * volume / GameSound.MAX_VOLUME;
+    const options: media.PlayParameters = { loop: 0, leftVolume: gain, rightVolume: gain,
       priority: event >= GameSoundEvent.WIN ? 2 : 1 };
     try {
       const stream: number = await pool.play(soundId, options);
@@ -95,9 +100,28 @@ export class GameSoundPlayer {
         return;
       }
       this.streams.add(stream);
+      if (volume !== gameSound.volume) { this.updateVolume(); }
     } catch (e) {
       hilog.warn(0x0000, 'GameSound', 'Sound playback failed for %{public}s', gameId);
     }
+  }
+
+  private async updateVolume(): Promise<void> {
+    this.volumeDirty = true;
+    if (this.updatingVolume) { return; }
+    this.updatingVolume = true;
+    try {
+      while (this.volumeDirty) {
+        this.volumeDirty = false;
+        const pool: media.SoundPool | null = this.pool;
+        if (!pool) { continue; }
+        const gain: number = 0.65 * gameSound.volume / GameSound.MAX_VOLUME;
+        const streams: number[] = Array.from(this.streams);
+        for (let i: number = 0; i < streams.length; i++) {
+          try { await pool.setVolume(streams[i], gain, gain); } catch (e) {}
+        }
+      }
+    } finally { this.updatingVolume = false; }
   }
 
   async stop(): Promise<void> {

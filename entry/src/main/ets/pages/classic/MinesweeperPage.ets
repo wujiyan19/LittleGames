@@ -1,3 +1,4 @@
+import { resolveString } from '../../common/I18nUtils';
 import { GameSessionTransfer } from '../../common/GameSessionTransfer';
 /**
  * 扫雷 —— View 层（纯展示与组装）
@@ -40,12 +41,12 @@ export struct MinesweeperPage {
   aboutToAppear(): void {
     const context = this.getUIContext().getHostContext();
     if (context) {
-      this.a11yRowColFormat = context.resourceManager.getStringSync($r('app.string.a11y_mine_row_col_format'));
-      this.a11yFlagged = context.resourceManager.getStringSync($r('app.string.a11y_mine_flagged'));
-      this.a11yHidden = context.resourceManager.getStringSync($r('app.string.a11y_mine_hidden'));
-      this.a11yIsMine = context.resourceManager.getStringSync($r('app.string.a11y_mine_is_mine'));
-      this.a11yAroundFormat = context.resourceManager.getStringSync($r('app.string.a11y_mine_around_format'));
-      this.a11yBlank = context.resourceManager.getStringSync($r('app.string.a11y_mine_blank'));
+      this.a11yRowColFormat = resolveString($r('app.string.a11y_mine_row_col_format'), context);
+      this.a11yFlagged = resolveString($r('app.string.a11y_mine_flagged'), context);
+      this.a11yHidden = resolveString($r('app.string.a11y_mine_hidden'), context);
+      this.a11yIsMine = resolveString($r('app.string.a11y_mine_is_mine'), context);
+      this.a11yAroundFormat = resolveString($r('app.string.a11y_mine_around_format'), context);
+      this.a11yBlank = resolveString($r('app.string.a11y_mine_blank'), context);
     }
     this.cellSize = ScreenUtils.calcCell(COLS, 520, 20, 24);
     GameLifecycleBus.attach(this.viewModel);

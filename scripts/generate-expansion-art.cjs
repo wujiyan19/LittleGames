@@ -65,6 +65,7 @@ function generate(only = []) {
     });
     put('tube',shape('M23 10H77V72Q77 94 50 94Q23 94 23 72Z','none',p.edge,4)+line('M29 18V68Q29 83 41 87','#FFFFFF',3,.55)+line('M19 10H81',p.edge,5));
     put('empty',rect(9,9,82,82,16,'none',p.edge,2));
+    put('pack_slot',rect(4,8,92,88,14,p.edge)+rect(4,4,92,88,14,'url(#paper)',p.edge,2)+rect(12,12,76,72,10,p.low,p.edge,1)+line('M21 19H29M37 19H45M53 19H61M69 19H77M21 77H29M37 77H45M53 77H61M69 77H77',p.edge,1,.65));
     put('floor',rect(2,2,96,96,8,'url(#paper)',p.edge)+line('M7 24H93M7 72H93M30 3V23M70 25V72M30 74V97',p.edge,1,.4));
     put('wall',bevel('url(#metal)')+line('M10 36H90M10 61H90M32 12V35M65 37V60M34 62V82',p.ink,2,.35));
     put('crate',bevel('url(#wood)')+rect(19,19,62,55,3,'none','#876044',4)+line('M22 22L78 71M78 22L22 71','#A67349',8)+line('M26 23L78 68','#F7E0B6',2));

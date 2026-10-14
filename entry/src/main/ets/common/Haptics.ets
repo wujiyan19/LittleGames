@@ -5,6 +5,7 @@
  * 开关状态由 GameDataManager.getSetting('hapticsEnabled', true) 控制。
  */
 import { vibrator } from '@kit.SensorServiceKit';
+import { BusinessError } from '@kit.BasicServicesKit';
 import { GameDataManager } from '../model/GameData';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 
@@ -13,7 +14,10 @@ export class Haptics {
   static tap(): void {
     if (!GameDataManager.getSetting('hapticsEnabled', true)) { return; }
     try {
-      vibrator.startVibration({ type: 'time', duration: 10 }, { usage: 'touch' });
+      vibrator.startVibration({ type: 'time', duration: 10 }, { usage: 'touch' })
+        .catch((error: BusinessError): void => {
+          hilog.debug(0x0000, 'LittleGames', 'Haptics.tap failed: %{public}d', error.code);
+        });
     } catch (e) {
       // 设备不支持或权限缺失时静默跳过，不影响游戏流程
       hilog.debug(0x0000, 'LittleGames', 'Haptics.tap failed, device may not support vibration');
@@ -24,7 +28,10 @@ export class Haptics {
   static success(): void {
     if (!GameDataManager.getSetting('hapticsEnabled', true)) { return; }
     try {
-      vibrator.startVibration({ type: 'time', duration: 40 }, { usage: 'touch' });
+      vibrator.startVibration({ type: 'time', duration: 40 }, { usage: 'touch' })
+        .catch((error: BusinessError): void => {
+          hilog.debug(0x0000, 'LittleGames', 'Haptics.success failed: %{public}d', error.code);
+        });
     } catch (e) {
       hilog.debug(0x0000, 'LittleGames', 'Haptics.success failed, device may not support vibration');
     }

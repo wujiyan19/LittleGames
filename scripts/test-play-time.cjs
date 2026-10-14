@@ -22,12 +22,14 @@ function tracking(initialValues = {}) {
 }
 
 test('hours always have one decimal, including zero and rounding boundaries', () => {
-  const { playTimeHours, formatPlayTime } = fixture().load(base + 'common/PlayTime.ets');
+  const { playTimeHours, formatPlayTime } = fixture({}, () => ({ id: 1, params: [] })).load(base + 'common/PlayTime.ets');
   for (const [ms, expected] of [[0, '0.0'], [60000, '0.0'], [179999, '0.0'], [180000, '0.1'],
     [3600000, '1.0'], [4320000, '1.2'], [35999999, '10.0'], [-1, '0.0'], [NaN, '0.0'], [Infinity, '0.0']]) {
     assert.equal(playTimeHours(ms), expected);
   }
-  assert.equal(formatPlayTime(4320000, { resourceManager: { getStringSync() { return '%1$s 小时'; } } }), '1.2 小时');
+  assert.equal(formatPlayTime(4320000, { resourceManager: { getStringSync(id) {
+    assert.equal(id, 1); return '%1$s 小时';
+  } } }), '1.2 小时');
 });
 
 test('legacy counts preserve played games, scores and recent order without invented time', () => {

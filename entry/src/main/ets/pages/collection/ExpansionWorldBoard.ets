@@ -4,7 +4,9 @@ import { ExpansionPiece } from '../../model/game/ExpansionState';
 import { SemanticColors, FontTokens, SpacingTokens, RadiusTokens } from '../../common/DesignTokens';
 import { range } from '../../common/Range';
 import { ExpansionArt } from '../../common/ExpansionArt';
-import { GameArtTile } from '../../components/GameArtTile';
+import { Haptics } from '../../common/Haptics';
+import { HarmonyMotion } from '../../common/HarmonyMotion';
+import { resolveString } from '../../common/I18nUtils';
 
 @ComponentV2
 export struct ExpansionWorldBoard {
@@ -123,26 +125,73 @@ export struct ExpansionWorldBoard {
   @Builder
   Backpack() {
     Column({ space: SpacingTokens.base }) {
-      Text($r('app.string.expansion_pack_stats', this.vm.state.data[0], this.vm.state.data[1], this.vm.state.cursor, this.vm.state.goal)).fontColor(SemanticColors.textPrimary)
-      Row({ space: SpacingTokens.xs }) {
-        ForEach(range(4), (item: number) => {
-          Column() { GameArtTile({ image: ExpansionArt.equipment(item), description: this.packInfo(item), selected: this.vm.state.selected === item, onTap: () => { this.vm.choose(item); } }) }
-            .layoutWeight(1).height($r('app.float.expansion_control_height'))
-        }, (item: number) => item.toString())
+      Text($r('app.string.expansion_pack_stats', this.vm.state.data[0], this.vm.state.data[1], this.vm.state.cursor, this.vm.state.goal))
+        .fontFamily(FontTokens.family).fontSize(FontTokens.sizeBody).fontColor(SemanticColors.textPrimary)
+
+      Grid() {
+        // 直接使用当前棋盘快照；占格值改变时重建对应格子，撤销也立即刷新。
+        ForEach(this.vm.state.board, (value: number, index: number) => {
+          GridItem() {
+            Button({ type: ButtonType.Normal }) {
+              Stack() {
+                Image($r('app.media.exp_pack_slot')).width('100%').height('100%').objectFit(ImageFit.Contain)
+                  .hitTestBehavior(HitTestMode.None).accessibilityLevel('no')
+                if (value > 0) {
+                  Image(ExpansionArt.equipment(value - 1)).width('76%').height('76%').objectFit(ImageFit.Contain)
+                    .hitTestBehavior(HitTestMode.None).accessibilityLevel('no')
+                }
+              }.width('100%').height('100%').renderGroup(true)
+            }.width('100%').height('100%').padding(0).backgroundColor(Color.Transparent)
+              .borderRadius(RadiusTokens.md).enabled(this.vm.state.outcome === 0)
+              .clickEffect(HarmonyMotion.press(this.getUIContext()))
+              .accessibilityText(this.packCellDescription(index, value))
+              .onClick(() => { Haptics.tap(); this.vm.tap(index); })
+          }.width('100%').height('100%')
+        }, (value: number, index: number) => index.toString() + ':' + value.toString())
+      }.width('100%').constraintSize({ maxWidth: $r('app.float.art_backpack_board_max') }).aspectRatio(1)
+        .columnsTemplate('1fr 1fr 1fr 1fr').rowsTemplate('1fr 1fr 1fr 1fr')
+        .columnsGap(SpacingTokens.xs).rowsGap(SpacingTokens.xs)
+        .padding(SpacingTokens.sm).backgroundColor(SemanticColors.boardBg).borderRadius(RadiusTokens.lg)
+
+      Column({ space: SpacingTokens.sm }) {
+        Row({ space: SpacingTokens.sm }) {
+          ForEach(this.vm.state.tray, (value: number) => {
+            Button({ type: ButtonType.Normal }) {
+              Image(ExpansionArt.equipment(value - 1)).width('100%').height('100%').objectFit(ImageFit.Contain)
+                .hitTestBehavior(HitTestMode.None).accessibilityLevel('no')
+            }.layoutWeight(1).height($r('app.float.art_backpack_equipment_height')).padding(SpacingTokens.sm)
+              .backgroundColor(this.vm.state.selected === value - 1 ? SemanticColors.selectionSurface : SemanticColors.surface)
+              .borderRadius(RadiusTokens.md)
+              .border({ width: this.vm.state.selected === value - 1 ? $r('app.float.art_backpack_selection_border') : 0,
+                color: SemanticColors.primary })
+              .enabled(this.vm.state.outcome === 0).clickEffect(HarmonyMotion.press(this.getUIContext()))
+              .accessibilityText(this.packInfo(value - 1))
+              .accessibilityDescription(this.vm.state.selected === value - 1 ? $r('app.string.settings_selected') : $r('app.string.settings_unselected'))
+              .onClick(() => { Haptics.tap(); this.vm.choose(value - 1); })
+          }, (value: number) => value.toString() + (this.vm.state.selected === value - 1 ? ':selected' : ':idle'))
+        }.width('100%')
+        Text(this.packInfo(this.vm.state.selected)).width('100%').textAlign(TextAlign.Center)
+          .fontFamily(FontTokens.family).fontSize(FontTokens.sizeBodySmall).fontColor(SemanticColors.textSecondary)
+        Row({ space: SpacingTokens.sm }) {
+          Button($r('app.string.expansion_fight')).layoutWeight(1)
+            .constraintSize({ minHeight: $r('app.float.expansion_control_height') })
+            .fontFamily(FontTokens.family).fontSize(FontTokens.sizeBody).fontColor(SemanticColors.textOnPrimary)
+            .backgroundColor(SemanticColors.primary).enabled(this.vm.state.outcome === 0)
+            .clickEffect(HarmonyMotion.press(this.getUIContext()))
+            .onClick(() => { Haptics.tap(); this.vm.tap(100); })
+          Button($r('app.string.expansion_undo')).layoutWeight(1)
+            .constraintSize({ minHeight: $r('app.float.expansion_control_height') })
+            .fontFamily(FontTokens.family).fontSize(FontTokens.sizeBody).fontColor(SemanticColors.textPrimary)
+            .backgroundColor(SemanticColors.surface).enabled(this.vm.canUndo)
+            .clickEffect(HarmonyMotion.press(this.getUIContext()))
+            .onClick(() => { Haptics.tap(); this.vm.undo(); })
+        }.width('100%')
       }.width('100%')
-      Text(this.packInfo(this.vm.state.selected)).fontColor(SemanticColors.textSecondary)
-      Column({ space: SpacingTokens.xs }) {
-        ForEach(range(4), (row: number) => {
-          Row({ space: SpacingTokens.xs }) {
-            ForEach(range(4), (col: number) => {
-              Column() { GameArtTile({ image: this.vm.state.board[row * 4 + col] === 0 ? $r('app.media.exp_empty') : ExpansionArt.equipment(this.vm.state.board[row * 4 + col] - 1),
-                description: $r('app.string.expansion_cell', row + 1, col + 1, ['','⚔','⛨','✚','♞'][this.vm.state.board[row * 4 + col]]), onTap: () => { this.vm.tap(row * 4 + col); } }) }.layoutWeight(1).height('100%')
-            }, (col: number) => col.toString())
-          }.layoutWeight(1).width('100%')
-        }, (row: number) => row.toString())
-      }.width('100%').aspectRatio(1)
-      Button($r('app.string.expansion_fight')).onClick(() => { this.vm.tap(100); })
     }.width('100%')
+  }
+  packCellDescription(index: number, value: number): Resource {
+    const description: string = resolveString(value > 0 ? this.packInfo(value - 1) : $r('app.string.collection_empty'), this.getUIContext().getHostContext());
+    return $r('app.string.expansion_cell', Math.floor(index / 4) + 1, index % 4 + 1, description);
   }
   packInfo(item: number): Resource {
     return [$r('app.string.expansion_pack_sword'), $r('app.string.expansion_pack_shield'), $r('app.string.expansion_pack_potion'), $r('app.string.expansion_pack_boots')][Math.max(0, Math.min(3, item))];

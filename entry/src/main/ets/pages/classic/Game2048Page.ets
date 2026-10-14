@@ -1,3 +1,4 @@
+import { resolveString } from '../../common/I18nUtils';
 import { GameSessionTransfer } from '../../common/GameSessionTransfer';
 /**
  * 2048 —— View 层（展示与动画）
@@ -74,7 +75,7 @@ export struct Game2048Page {
     this.initBoardSize();
     const context = this.getUIContext().getHostContext();
     if (context) {
-      this.a11yTileFormat = context.resourceManager.getStringSync($r('app.string.a11y_2048_tile_format'));
+      this.a11yTileFormat = resolveString($r('app.string.a11y_2048_tile_format'), context);
     }
     GameLifecycleBus.attach(this.viewModel);
     const continued: boolean = GameSessionTransfer.restore(this.viewModel);

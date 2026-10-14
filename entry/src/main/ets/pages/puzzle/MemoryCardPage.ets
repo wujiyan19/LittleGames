@@ -1,3 +1,4 @@
+import { resolveString } from '../../common/I18nUtils';
 import { GameSessionTransfer } from '../../common/GameSessionTransfer';
 /**
  * 记忆翻牌 —— View 层（纯展示与组装）
@@ -40,8 +41,8 @@ export struct MemoryCardPage {
   aboutToAppear(): void {
     const context = this.getUIContext().getHostContext();
     if (context) {
-      this.a11yCardFlippedFormat = context.resourceManager.getStringSync($r('app.string.a11y_card_flipped_format'));
-      this.a11yCardHiddenFormat = context.resourceManager.getStringSync($r('app.string.a11y_card_hidden_format'));
+      this.a11yCardFlippedFormat = resolveString($r('app.string.a11y_card_flipped_format'), context);
+      this.a11yCardHiddenFormat = resolveString($r('app.string.a11y_card_hidden_format'), context);
     }
     GameLifecycleBus.attach(this.viewModel);
     if (!GameSessionTransfer.restore(this.viewModel)) { this.viewModel.startGame(); }

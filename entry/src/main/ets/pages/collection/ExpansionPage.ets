@@ -180,7 +180,7 @@ export struct ExpansionPage {
                 }, (d: number) => d.toString())
               }.width('100%')
             }
-            if (!this.vm.realtime()) {
+            if (!this.vm.realtime() && this.gameId !== 'backpack') {
               Button($r('app.string.expansion_undo')).enabled(this.vm.canUndo).height($r('app.float.expansion_control_height'))
                 .onClick(() => { this.vm.undo(); })
             }

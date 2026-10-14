@@ -1,3 +1,4 @@
+import { resolveString } from '../../common/I18nUtils';
 import { GameSessionTransfer } from '../../common/GameSessionTransfer';
 /**
  * 滑动拼图 —— View 层（纯展示与组装）
@@ -34,7 +35,7 @@ export struct SlidePuzzlePage {
   aboutToAppear(): void {
     const context = this.getUIContext().getHostContext();
     if (context) {
-      this.a11yTileFormat = context.resourceManager.getStringSync($r('app.string.a11y_slide_tile_format'));
+      this.a11yTileFormat = resolveString($r('app.string.a11y_slide_tile_format'), context);
     }
     GameLifecycleBus.attach(this.viewModel);
     if (!GameSessionTransfer.restore(this.viewModel)) { this.viewModel.startGame(); }

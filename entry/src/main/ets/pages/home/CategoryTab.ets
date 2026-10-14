@@ -162,10 +162,6 @@ export struct CategoryTab {
         top: SpacingTokens.xs, bottom: SpacingTokens.xs })
       .margin({ top: SpacingTokens.md })
 
-      Text($r('app.string.collection_count', this.categoryGames.length))
-        .fontSize(FontTokens.sizeBodySmall).fontColor(SemanticColors.textSecondary)
-        .width('100%').padding({ left: SpacingTokens.pageHorizontal, top: SpacingTokens.sm })
-
       Scroll(this.gameScroller) {
         Column() {
           GridRow({

@@ -1,3 +1,4 @@
+import { resolveString } from '../../common/I18nUtils';
 import { GameSessionTransfer } from '../../common/GameSessionTransfer';
 /**
  * 华容道 —— View 层（纯展示与组装）
@@ -36,13 +37,13 @@ export struct KlotskiPage {
     this.cell = ScreenUtils.calcCell(BW, 560, 28, 48);
     const context = this.getUIContext().getHostContext();
     if (context) {
-      this.a11yBlockFormat = context.resourceManager.getStringSync($r('app.string.a11y_klotski_block_format'));
+      this.a11yBlockFormat = resolveString($r('app.string.a11y_klotski_block_format'), context);
     }
     GameLifecycleBus.attach(this.viewModel);
     if (!GameSessionTransfer.restore(this.viewModel)) { this.viewModel.startGame(); }
     const ctx = this.getUIContext().getHostContext();
     if (ctx) {
-      this.centerLabel = ctx.resourceManager.getStringSync($r('app.string.klotski_move'));
+      this.centerLabel = resolveString($r('app.string.klotski_move'), ctx);
     }
     this.playTimeStateChanged();
   }

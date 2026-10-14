@@ -2,6 +2,7 @@
  * 统一方向控制面板 — 宇宙蓝 × 雪域灰
  * 方向键使用系统 Symbol 图标，按键高度 ≥ 48vp（热区 ≥ 40vp）
  */
+import { resolveString } from '../common/I18nUtils';
 import { SemanticColors, FontTokens, RadiusTokens, ShadowTokens, SpacingTokens } from '../common/DesignTokens';
 import { Haptics } from '../common/Haptics';
 import { HarmonyMotion } from '../common/HarmonyMotion';
@@ -29,7 +30,7 @@ export struct ControlPad {
     }
     const context = this.getUIContext().getHostContext();
     if (context) {
-      return context.resourceManager.getStringSync($r('app.string.a11y_center_action'));
+      return resolveString($r('app.string.a11y_center_action'), context);
     }
     return '';
   }

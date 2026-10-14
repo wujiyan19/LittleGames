@@ -26,7 +26,9 @@ export struct AboutPage {
       Scroll() {
         Column() {
           Column({ space: SpacingTokens.sm }) {
-            Image($r('app.media.app_icon')).width(80).height(80).borderRadius(RadiusTokens.lg)
+            Image($r('app.media.app_icon')).width($r('app.float.brand_about_icon_size'))
+              .height($r('app.float.brand_about_icon_size'))
+              .borderRadius($r('app.float.brand_about_icon_radius')).clip(true)
             Text($r('app.string.EntryAbility_label')).fontFamily(FontTokens.family)
               .fontSize(FontTokens.sizeTitle).fontWeight(FontTokens.weightBold).fontColor(SemanticColors.textPrimary)
             Text($r('app.string.settings_about_tagline')).fontFamily(FontTokens.family)

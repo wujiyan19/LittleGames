@@ -3139,6 +3139,18 @@
     {
       "name": "computer_your_last_play",
       "value": "你的出牌"
+    },
+    {
+      "name": "settings_sound_volume",
+      "value": "游戏音量"
+    },
+    {
+      "name": "settings_sound_volume_desc",
+      "value": "调整游戏音效和旋律；0% 为静音，声音关闭时也可预设音量"
+    },
+    {
+      "name": "settings_sound_volume_value",
+      "value": "%d%%"
     }
   ]
 }

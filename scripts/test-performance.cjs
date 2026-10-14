@@ -19,7 +19,7 @@ const hypium = {
   }; }
 };
 
-function fixture(initialValues = {}) {
+function fixture(initialValues = {}, resourceResolver = name => name) {
   let now = 100000;
   let wallOffset = 0;
   let nextTimer = 1;
@@ -79,7 +79,7 @@ function fixture(initialValues = {}) {
       }
     } },
     '@kit.PerformanceAnalysisKit': { hilog: { error() {}, debug() {}, info() {}, warn() {} } },
-    '@kit.SensorServiceKit': { vibrator: { startVibration(effect, usage) { vibrations.push({ effect, usage }); } } },
+    '@kit.SensorServiceKit': { vibrator: { startVibration(effect, usage) { vibrations.push({ effect, usage }); return Promise.resolve(); } } },
     '@kit.ArkUI': { display: { getDefaultDisplaySync() { return { width: 400, height: 800, densityPixels: 1 }; } } },
     '@kit.ArkTS': { taskpool: {
       Task,
@@ -123,7 +123,7 @@ function fixture(initialValues = {}) {
       'setTimeout', 'clearTimeout', 'Date', '$r', compiled.get(file))(
       localRequire, module, module.exports,
       (fn, ms) => schedule(fn, ms, true), id => timers.delete(id),
-      (fn, ms) => schedule(fn, ms, false), id => timers.delete(id), ClockDate, name => name);
+      (fn, ms) => schedule(fn, ms, false), id => timers.delete(id), ClockDate, resourceResolver);
     return module.exports;
   }
   return { load, clock, tasks, displays, store, flushes, values, vibrations, native,
@@ -423,6 +423,72 @@ test('catalog icons and original character vectors retain small resource budgets
 
 function settingsTest(name, callback) { tests.push({ name: `Settings: ${name}`, callback }); }
 
+settingsTest('both haptic feedback paths contain synchronous native failures', () => {
+  const f = fixture();
+  const { Haptics } = f.load('entry/src/main/ets/common/Haptics.ets');
+  const logs = [];
+  f.native['@kit.PerformanceAnalysisKit'].hilog.debug = (...args) => logs.push(args);
+  f.native['@kit.SensorServiceKit'].vibrator.startVibration = () => {
+    throw Object.assign(new Error('Injected capability failure'), { code: 801 });
+  };
+  assert.doesNotThrow(() => Haptics.tap());
+  assert.doesNotThrow(() => Haptics.success());
+  assert.equal(logs.length, 2);
+});
+
+settingsTest('both haptic feedback paths handle rejected native promises without unhandled errors', async () => {
+  const f = fixture();
+  const { Haptics } = f.load('entry/src/main/ets/common/Haptics.ets');
+  const logs = [], unhandled = [];
+  const capture = error => unhandled.push(error);
+  f.native['@kit.PerformanceAnalysisKit'].hilog.debug = (...args) => logs.push(args);
+  f.native['@kit.SensorServiceKit'].vibrator.startVibration = () =>
+    Promise.reject(Object.assign(new Error('Injected operation failure'), { code: 14600101 }));
+  process.on('unhandledRejection', capture);
+  try {
+    assert.equal(Haptics.tap(), undefined);
+    assert.equal(Haptics.success(), undefined);
+    await new Promise(resolve => setImmediate(resolve));
+    assert.deepEqual(unhandled, []);
+    assert.equal(logs.length, 2);
+    assert.ok(logs[0][2].includes('Haptics.tap failed'));
+    assert.ok(logs[1][2].includes('Haptics.success failed'));
+    assert.equal(logs[0][3], 14600101);
+    assert.equal(logs[1][3], 14600101);
+  } finally {
+    process.off('unhandledRejection', capture);
+  }
+});
+
+settingsTest('resource strings retain numeric IDs, formatting parameters and localized templates', () => {
+  const { resolveString, resolveFormattedString } = fixture().load('entry/src/main/ets/common/I18nUtils.ets');
+  for (const locale of ['base', 'zh_CN', 'en_US']) {
+    const entries = JSON.parse(fs.readFileSync(path.join(root,
+      `entry/src/main/resources/${locale}/element/string.json`), 'utf8')).string;
+    const strings = new Map(entries.map(entry => [entry.name, entry.value]));
+    const calls = [];
+    const context = { resourceManager: { getStringSync(id, ...args) {
+      assert.equal(typeof id, 'number'); calls.push({ id, args });
+      const template = strings.get(id === 1 ? 'expansion_cell' : 'play_time_hours');
+      return template.replace(/%(\d+)\$[ds]/g, (placeholder, index) =>
+        args.length === 0 ? placeholder : String(args[Number(index) - 1]));
+    } } };
+    const cell = { id: 1, params: [2, 3, '◆'] };
+    const expected = strings.get('expansion_cell').replace('%1$d', '2').replace('%2$d', '3').replace('%3$s', '◆');
+    assert.equal(resolveString(cell, context), expected);
+    assert.deepEqual(calls[0], { id: 1, args: [2, 3, '◆'] });
+    assert.equal(resolveFormattedString({ id: 2 }, ['1.2'], context),
+      strings.get('play_time_hours').replace('%1$s', '1.2'));
+    assert.deepEqual(calls[1], { id: 2, args: [] });
+  }
+  assert.equal(resolveString('literal', undefined), 'literal');
+  assert.equal(resolveString({ id: 1 }, undefined), '');
+  assert.equal(resolveFormattedString({ id: 1 }, ['test'], undefined), '');
+  const failed = { resourceManager: { getStringSync() { throw new Error('Missing resource'); } } };
+  assert.equal(resolveString({ id: 1 }, failed), '');
+  assert.equal(resolveFormattedString({ id: 1 }, ['test'], failed), '');
+});
+
 settingsTest('old haptics-only preferences migrate without losing scores or history', () => {
   const f = fixture({ settings: '{"hapticsEnabled":false}', highScores: '{"snake":99}',
     playCounts: '{"snake":3}', recentGames: '["snake"]' });
@@ -541,7 +607,7 @@ settingsTest('theme modes use native configuration and report application failur
 settingsTest('every settings string exists in all locales without duplicate resource names', () => {
   const source = ['pages/settings/SettingsPage', 'pages/settings/AboutPage', 'components/SettingsHeader',
     'components/SettingsChoice', 'components/SettingsSwitchRow', 'components/ProfileStatsCard', 'pages/home/ProfileTab',
-    'components/GameHeader', 'components/GameSettingsPanel', 'pages/collection/ExpansionBrainBoard', 'common/GameRules']
+    'components/GameHeader', 'components/GameSettingsPanel', 'components/SettingsVolumeRow', 'pages/collection/ExpansionBrainBoard', 'common/GameRules']
     .map(file => fs.readFileSync(path.join(root, `entry/src/main/ets/${file}.ets`), 'utf8')).join('\n');
   const names = [...source.matchAll(/\$r\('app\.string\.([^']+)'\)/g)].map(match => match[1]);
   for (const locale of ['base', 'zh_CN', 'en_US']) {

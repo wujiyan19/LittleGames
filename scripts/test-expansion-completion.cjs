@@ -83,6 +83,23 @@ test('backpack placement respects footprint and budget, and a balanced shop stra
   for(const item of [[0,4],[1,6]]){m.choose(item[0]);m.tap(item[1]);}assert.equal(m.state.data[0],0);m.tap(100);assert.equal(m.state.cursor,2);
   for(const item of [[0,14],[3,11]]){m.choose(item[0]);m.tap(item[1]);}assert.equal(m.state.board.filter(v=>v!==0).length,16);for(let i=0;i<3;i++)m.tap(100);assert.equal(m.state.outcome,1);assert(m.valid(m.state));
 });
+test('backpack view snapshots update every occupied cell and restore layout, coins and round state on undo',()=>{
+  const vm=f.vm('ExpansionViewModel');vm.init('backpack');vm.startGame();
+  const placements=[{item:0,at:0,cells:[0,1],cost:3},{item:1,at:3,cells:[3,7],cost:3},
+    {item:2,at:8,cells:[8,9,12,13],cost:4},{item:3,at:2,cells:[2],cost:2}];
+  const expected=new Array(16).fill(0);let coins=12;
+  for(const p of placements){
+    vm.choose(p.item);assert.equal(vm.state.selected,p.item);
+    const before=vm.state.board;vm.tap(p.at);coins-=p.cost;p.cells.forEach(i=>expected[i]=p.item+1);
+    assert.notEqual(vm.state.board,before);assert.deepEqual(vm.state.board,expected);assert.equal(vm.state.data[0],coins);
+    assert.equal(vm.canUndo,true);assert.deepEqual(JSON.parse(vm.exportContinuation()).state.board,expected);
+  }
+  const packed=JSON.parse(JSON.stringify(vm.state));vm.tap(100);assert.equal(vm.state.cursor,1);
+  assert.deepEqual(vm.state.board,expected);vm.undo();assert.deepEqual(vm.state,packed);
+  vm.undo();expected[2]=0;assert.deepEqual(vm.state.board,expected);assert.equal(vm.state.data[0],2);
+  vm.startGame();assert.deepEqual(vm.state.board,new Array(16).fill(0));assert.equal(vm.state.data[0],12);
+  assert.equal(vm.canUndo,false);vm.dispose();
+});
 test('billiards transfers momentum and pockets colored balls but scratches the cue',()=>{
   const m=create('billiards');const a=m.state.pieces[0],b=m.state.pieces[1];a.x=90;a.y=200;b.x=114;b.y=200;a.vx=200;m.state.phase=1;m.step(.008);assert(b.vx>0);
   b.x=25;b.y=25;b.vx=0;b.vy=0;m.step(.008);assert.equal(m.state.cursor,1);a.x=25;a.y=25;m.state.phase=1;m.step(.008);assert.equal(m.state.errors,1);assert.equal(a.x,100);

@@ -339,7 +339,7 @@ struct Index {
         .width($r('app.float.brand_status_icon_size'))
         .height($r('app.float.brand_status_icon_size'))
         .objectFit(ImageFit.Contain)
-        .borderRadius(SpacingTokens.sm)
+        .borderRadius($r('app.float.brand_status_icon_radius')).clip(true)
       Text(title)
         .fontFamily(FontTokens.family).fontSize(FontTokens.sizeTitle)
         .fontWeight(FontWeight.Bold).fontColor(SemanticColors.textPrimary)

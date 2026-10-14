@@ -72,11 +72,12 @@ test('sound preference persists, supports older settings, and resets without los
 });
 
 async function audioFixture() {
-  const f = fixture(), stopped = [], played = []; let loaded = () => {}, id = 0;
+  const f = fixture(), stopped = [], played = [], volumes = []; let loaded = () => {}, id = 0;
   const pool = {
     on(event, callback) { assert.equal(event, 'loadComplete'); loaded = callback; },
     async load() { loaded(++id); return id; },
-    play(sound) { played.push(sound); return new Promise(resolve => { pool.finish = resolve; }); },
+    play(sound, parameters) { played.push({ sound, parameters }); return new Promise(resolve => { pool.finish = resolve; }); },
+    async setVolume(stream, left, right) { volumes.push({ stream, left, right }); },
     async stop(stream) { stopped.push(stream); }, async release() {}
   };
   f.native['@kit.MediaKit'] = { media: { async createSoundPool() { return pool; } } };
@@ -85,8 +86,53 @@ async function audioFixture() {
   const player = new (f.load(base + 'common/ExpansionTonePlayer.ets').ExpansionTonePlayer)();
   let ready = false; player.onReady = value => { ready = value; };
   await player.init({ async getRawFd() { return { fd: 1, offset: 0, length: 1 }; }, async closeRawFd() {} });
-  assert(ready); return { f, player, pool, stopped, played };
+  assert(ready); return { f, player, pool, stopped, played, volumes };
 }
+
+test('volume is live, debounced during dragging, committed on release and restored after restart', () => {
+  const f = fixture(), data = f.data(); data.init({});
+  const sound = f.load(base + 'common/GameSound.ets').gameSound;
+  assert.equal(data.getSoundVolume(), 100); assert.equal(sound.volume, 100);
+  for (let volume = 80; volume >= 20; volume--) { data.setSoundVolume(volume); }
+  assert.equal(sound.volume, 20); assert.equal(f.store.writes, 0); assert.equal(f.clock.count(), 1);
+  f.clock.advance(199); assert.equal(f.store.writes, 0);
+  data.setSoundVolume(20, true); assert.equal(f.store.writes, 6); assert.equal(f.clock.count(), 0);
+  assert.equal(f.store.synchronousFlushes, 1);
+  const restarted = fixture(Object.fromEntries(f.values)); restarted.data().init({});
+  assert.equal(restarted.data().getSoundVolume(), 20);
+  assert.equal(restarted.load(base + 'common/GameSound.ets').gameSound.volume, 20);
+});
+
+test('volume validates old/corrupt settings, clamps live input and resets independently of scores', () => {
+  for (const value of [undefined, null, true, '20', {}, -1, 101, 1e300]) {
+    const f = fixture({ settings: JSON.stringify({ soundVolume: value }) }); f.data().init({});
+    assert.equal(f.data().getSoundVolume(), 100);
+  }
+  const f = fixture({ settings: JSON.stringify({ soundVolume: 42.7, soundEnabled: false }) });
+  const data = f.data(); data.init({}); const sound = f.load(base + 'common/GameSound.ets').gameSound;
+  assert.equal(sound.volume, 43); assert.equal(sound.enabled, false);
+  data.setSoundVolume(25, true); assert.equal(sound.volume, 25); assert.equal(sound.enabled, false);
+  data.setSoundVolume(NaN); data.setSoundVolume(Infinity); assert.equal(sound.volume, 25);
+  data.setSoundVolume(-10); assert.equal(sound.volume, 0);
+  data.setSoundVolume(120); assert.equal(sound.volume, 100);
+  data.updateHighScore('snake', 42); data.setSoundVolume(35, true); data.resetSettings();
+  assert.equal(sound.volume, 100); assert.equal(sound.enabled, true); assert.equal(data.getGameById('snake').highScore, 42);
+  data.setSoundVolume(65, true); data.clearPlayData(); assert.equal(sound.volume, 65);
+  assert.equal(data.getSoundVolume(), 65);
+});
+
+test('melody volume affects new, active and late-returning streams while zero stays silent', async () => {
+  const a = await audioFixture(), data = a.f.data();
+  data.setSoundVolume(60); const first = a.player.play(0);
+  assert.equal(a.played[0].parameters.leftVolume, 0.6);
+  data.setSoundVolume(30); a.pool.finish(31); await first;
+  assert.deepEqual(a.volumes.at(-1), { stream: 31, left: 0.3, right: 0.3 });
+  data.setSoundVolume(20); await a.player.setVolume();
+  assert.deepEqual(a.volumes.at(-1), { stream: 31, left: 0.2, right: 0.2 });
+  const pending = a.player.play(1); data.setSoundVolume(0); a.pool.finish(32); await pending;
+  assert(a.stopped.includes(32)); await a.player.play(2); assert.equal(a.played.length, 2);
+  await a.player.dispose();
+});
 
 test('muting blocks playback and stops a stream returned after mute', async () => {
   const a = await audioFixture(), data = a.f.data();

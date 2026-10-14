@@ -3139,6 +3139,18 @@
     {
       "name": "computer_your_last_play",
       "value": "You played"
+    },
+    {
+      "name": "settings_sound_volume",
+      "value": "Game volume"
+    },
+    {
+      "name": "settings_sound_volume_desc",
+      "value": "Adjust effects and melodies. 0% is silent; you can set the level while sound is off."
+    },
+    {
+      "name": "settings_sound_volume_value",
+      "value": "%d%%"
     }
   ]
 }

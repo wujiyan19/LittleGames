@@ -6,7 +6,7 @@ import { Context } from '@kit.AbilityKit';
 import { BusinessError } from '@kit.BasicServicesKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { GameDifficulty } from '../common/GameDifficulty';
-import { gameSound } from '../common/GameSound';
+import { GameSound, gameSound } from '../common/GameSound';
 import { isGameAvailable } from '../common/GameAvailability';
 
 const STORE_NAME = 'little_games_data';
@@ -51,8 +51,8 @@ export class GameDataManager {
   private static savedGamesDirty: boolean = false;
   private static savedGameRevision: number = 0;
   /** 用户设置（持久化） */
-  private static settings: Record<string, boolean | string> = {
-    'hapticsEnabled': true, 'soundEnabled': true, 'themeMode': 'system', 'defaultDifficulty': 'normal',
+  private static settings: Record<string, boolean | string | number> = {
+    'hapticsEnabled': true, 'soundEnabled': true, 'soundVolume': GameSound.DEFAULT_VOLUME, 'themeMode': 'system', 'defaultDifficulty': 'normal',
     'rememberDifficulty': false, 'confirmExitEnabled': true
   };
   /** 最近进入的游戏 ID，按新到旧排列。 */
@@ -207,6 +207,7 @@ export class GameDataManager {
       GameDataManager.store = null;
     }
     gameSound.setEnabled(GameDataManager.getSetting('soundEnabled', true));
+    gameSound.setVolume(GameDataManager.getSoundVolume());
   }
 
   private static restore(): void {
@@ -252,12 +253,15 @@ export class GameDataManager {
     const settingsJson = GameDataManager.store.getSync(KEY_SETTINGS, '') as string;
     if (settingsJson.length > 0) {
       try {
-        const parsed = JSON.parse(settingsJson) as Record<string, boolean | string>;
+        const parsed = JSON.parse(settingsJson) as Record<string, boolean | string | number>;
         const keys = Object.keys(parsed);
         for (let i = 0; i < keys.length; i++) {
           const value = parsed[keys[i]];
           if (typeof value === 'boolean' || typeof value === 'string') {
             GameDataManager.settings[keys[i]] = value;
+          } else if (keys[i] === 'soundVolume' && typeof value === 'number' && Number.isFinite(value) &&
+            value >= GameSound.MIN_VOLUME && value <= GameSound.MAX_VOLUME) {
+            GameDataManager.settings.soundVolume = GameSound.normalizeVolume(value);
           }
         }
       } catch (e) {
@@ -542,13 +546,31 @@ export class GameDataManager {
     GameDataManager.flushNow();
   }
 
+  static getSoundVolume(): number {
+    const value: boolean | string | number | undefined = GameDataManager.settings.soundVolume;
+    return typeof value === 'number' ? GameSound.normalizeVolume(value) : GameSound.DEFAULT_VOLUME;
+  }
+
+  /** 滑动时立即生效并合并落盘；结束交互时同步提交。 */
+  static setSoundVolume(value: number, commit: boolean = false): void {
+    if (!Number.isFinite(value)) { return; }
+    const volume: number = GameSound.normalizeVolume(value);
+    if (GameDataManager.settings.soundVolume !== volume) {
+      GameDataManager.settings.soundVolume = volume;
+      gameSound.setVolume(volume);
+      GameDataManager.markDirty();
+    }
+    if (commit) { GameDataManager.flushNow(); }
+  }
+
   /** 仅恢复偏好设置，保留战绩。页面需同时应用恢复后的主题。 */
   static resetSettings(): void {
     GameDataManager.settings = {
-      'hapticsEnabled': true, 'soundEnabled': true, 'themeMode': 'system', 'defaultDifficulty': 'normal',
+      'hapticsEnabled': true, 'soundEnabled': true, 'soundVolume': GameSound.DEFAULT_VOLUME, 'themeMode': 'system', 'defaultDifficulty': 'normal',
       'rememberDifficulty': false, 'confirmExitEnabled': true
     };
     gameSound.setEnabled(true);
+    gameSound.setVolume(GameSound.DEFAULT_VOLUME);
     GameDataManager.dirty = true;
     GameDataManager.flushNow();
   }

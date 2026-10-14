@@ -4,6 +4,7 @@ import { gameRules } from '../common/GameRules';
 import { HarmonyMotion } from '../common/HarmonyMotion';
 import { SettingsChoice } from './SettingsChoice';
 import { SettingsSwitchRow } from './SettingsSwitchRow';
+import { SettingsVolumeRow } from './SettingsVolumeRow';
 import { GameSound, gameSound } from '../common/GameSound';
 import { GameDataManager } from '../model/GameData';
 
@@ -128,12 +129,13 @@ export struct GameSettingsPanel {
               $r('app.string.header_new_game'), () => { this.onNewGame(); });
           })
         }
-        if (this.gameId === 'melody') {
-          Column() {
-            SettingsSwitchRow({ title: $r('app.string.settings_sound'), detail: $r('app.string.settings_sound_desc'),
-              isOn: this.sound.enabled, onToggle: (value: boolean) => { GameDataManager.setSetting('soundEnabled', value); } })
-          }.width('100%').backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.lg)
-        }
+        Column() {
+          SettingsSwitchRow({ title: $r('app.string.settings_sound'), detail: $r('app.string.settings_sound_desc'),
+            isOn: this.sound.enabled, onToggle: (value: boolean) => { GameDataManager.setSetting('soundEnabled', value); } })
+          Divider().color(SemanticColors.divider)
+            .margin({ left: SpacingTokens.base, right: SpacingTokens.base })
+          SettingsVolumeRow()
+        }.width('100%').backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.lg)
         Column({ space: SpacingTokens.sm }) {
           this.ActionRow($r('app.string.game_settings_rules'), '', $r('sys.symbol.list_bullet'), () => { this.showRules = !this.showRules; },
             true, true)

@@ -70,8 +70,24 @@
       "value": "56vp"
     },
     {
+      "name": "brand_banner_icon_radius",
+      "value": "14vp"
+    },
+    {
       "name": "brand_status_icon_size",
       "value": "48vp"
+    },
+    {
+      "name": "brand_status_icon_radius",
+      "value": "12vp"
+    },
+    {
+      "name": "brand_about_icon_size",
+      "value": "80vp"
+    },
+    {
+      "name": "brand_about_icon_radius",
+      "value": "20vp"
     },
     {
       "name": "home_tab_width_small",
@@ -228,6 +244,18 @@
     {
       "name": "art_tug_character",
       "value": "64vp"
+    },
+    {
+      "name": "art_backpack_board_max",
+      "value": "360vp"
+    },
+    {
+      "name": "art_backpack_equipment_height",
+      "value": "64vp"
+    },
+    {
+      "name": "art_backpack_selection_border",
+      "value": "2vp"
     },
     {
       "name": "motion_card_press_scale",

@@ -19,7 +19,7 @@ function audioFixture(options = {}) {
   let fd = 1;
   f.native['@kit.MediaKit'] = { media: { async createSoundPool(maxStreams, info) {
     assert.equal(maxStreams, 4); assert.equal(info.usage, 11);
-    const callbacks = {}, pool = { loaded: [], played: [], stopped: [], released: false,
+    const callbacks = {}, pool = { loaded: [], played: [], stopped: [], volumes: [], released: false,
       on(event, callback) { callbacks[event] = callback; },
       async load() {
         if (options.failLoad) { throw new Error('load failure'); }
@@ -34,6 +34,7 @@ function audioFixture(options = {}) {
         return pool.played.length + 100;
       },
       async stop(stream) { pool.stopped.push(stream); },
+      async setVolume(stream, left, right) { pool.volumes.push({ stream, left, right }); },
       async release() { pool.released = true; },
       complete(sound) { callbacks.loadComplete(sound); },
       finish(stream) { callbacks.playFinishedWithStreamId(stream); }
@@ -110,6 +111,43 @@ test('mute stops current and in-flight streams, and unmute permits the next acti
   a.sound.play('snake'); assert.equal(pool.played.length, 1);
   a.sound.setEnabled(true); a.sound.play('snake'); pool.finishPlay(502); await settle();
   a.sound.setEnabled(false); await settle(); assert.deepEqual(pool.stopped, [501, 502]);
+  await a.player.dispose();
+});
+
+test('volume scales new and active effects, and zero stops streams without changing the sound switch', async () => {
+  const a = audioFixture(); await settle(); const pool = a.pools[0];
+  a.f.data().setSoundVolume(80); a.sound.play('snake'); await settle();
+  assert.equal(pool.played[0].parameters.leftVolume, 0.52);
+  a.f.data().setSoundVolume(40); await settle();
+  assert.deepEqual(pool.volumes.at(-1), { stream: 101, left: 0.26, right: 0.26 });
+  a.f.data().setSoundVolume(0); await settle(); assert.deepEqual(pool.stopped, [101]);
+  assert.equal(a.sound.enabled, true); a.sound.play('snake'); assert.equal(pool.played.length, 1);
+  a.f.data().setSoundVolume(50); a.sound.play('snake'); await settle();
+  assert.equal(pool.played[1].parameters.leftVolume, 0.325);
+  await a.player.dispose();
+});
+
+test('an in-flight effect picks up the latest volume when its stream arrives', async () => {
+  const a = audioFixture({ deferPlay: true }); await settle(); const pool = a.pools[0];
+  a.f.data().setSoundVolume(80); a.sound.play('snake');
+  a.f.data().setSoundVolume(20); pool.finishPlay(801); await settle();
+  assert.deepEqual(pool.volumes.at(-1), { stream: 801, left: 0.13, right: 0.13 });
+  await a.player.dispose();
+});
+
+test('rapid volume updates are serialized and coalesce to the newest level', async () => {
+  const a = audioFixture(); await settle(); const pool = a.pools[0];
+  a.sound.play('snake'); await settle(); let release;
+  pool.setVolume = async (stream, left, right) => {
+    pool.volumes.push({ stream, left, right });
+    if (pool.volumes.length === 1) { await new Promise(resolve => { release = resolve; }); }
+  };
+  a.f.data().setSoundVolume(70); a.f.data().setSoundVolume(40); a.f.data().setSoundVolume(20);
+  assert.equal(pool.volumes.length, 1); release(); await settle();
+  assert.deepEqual(pool.volumes.at(-1), { stream: 101, left: 0.13, right: 0.13 });
+  assert.equal(pool.volumes.length, 2);
+  pool.setVolume = async () => { throw new Error('Stream already ended'); };
+  a.f.data().setSoundVolume(30); await settle();
   await a.player.dispose();
 });
 
