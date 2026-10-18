@@ -10,7 +10,7 @@
 
 项目仓库名为 LittleGames，应用名称为「玩趣盒」。
 
-**ArkTS / ArkUI** · **HarmonyOS 6.1.1（API 24）** · **手机 / 平板工程配置**
+**ArkTS / ArkUI** · **HarmonyOS API 26，最低兼容 API 24** · **手机 / 平板工程配置**
 
 </div>
 
@@ -45,6 +45,9 @@
 - **离线电脑对战**：中国象棋与国际象棋保留玩家身份、电脑回合和三档策略，支持暂停、悔棋和对局接续。电脑对手的开发及历史检查见[人机实现记录](docs/computer-opponents.md)，其中已撤下游戏不属于当前目录。
 - **每日精选**：每日寄语按本地日期轮换，内置 32 条祝福并可持续扩充；每日推荐覆盖当前游戏目录，点击“换一批”更换六款游戏，同一天重启后保留当前批次。分类页支持分类筛选，以及按名称或描述实时搜索。
 - **本地续玩**：数独和 2048 自动保存未完成的对局；再次进入时可选择继续或新开一局，保留棋盘、难度和本局进度。
+- **桌面卡片**：提供 2×2 今日推荐和 2×4 续玩卡片；续玩卡片显示 2048、数独的存档状态，点击直接恢复本地对局。
+- **成绩分享**：结算页可生成仅含游戏名与结果的图片并打开系统分享；API 26 接入碰一碰坐标选择当前成绩区域，真实两机传输仍待设备验收。
+- **API 26 光感**：游戏、设置及历史页使用原生标题栏材质和圆形操作按钮，设置 Sheet 与原生控件启用系统光感；API 24 保留兼容样式。
 - **战绩自动保存**：最高分、累计游玩时长、最近玩过顺序、完整游玩历史和用户设置通过 Preferences 保存在本机；“我的”区分游戏总数与已玩游戏数。已撤下游戏的旧记录保留在本机，不再显示或计入当前合集统计。
 - **二级设置菜单**：从“我的 → 设置”调整跟随系统 / 浅色 / 深色主题、震动反馈、默认难度、各游戏难度记忆和退出对局确认。偏好重启后保留；默认难度在下次进入支持难度的游戏时生效。
 - **数据与关于**：恢复默认设置保留战绩及未完成对局；清空游玩数据同时删除战绩和本地对局存档，保留偏好，两项操作都需要确认。关于页面提供软件声明、本地数据与权限说明、使用帮助，版本号读取当前安装包。
@@ -58,22 +61,22 @@
 
 ### 在 DevEco Studio 中
 
-1. 安装支持 **HarmonyOS 6.1.1（API 24）** 的 DevEco Studio 和 SDK。
+1. 安装 **DevEco Studio 26.0.0.851 Release（API 26）**。工程最低兼容版本仍为 **6.1.1（API 24）**；旧版 DevEco Studio 6.1.1 内置 SDK 不能用于当前工程的 API 26 构建。
 2. 打开本仓库根目录，等待工程同步完成。
 3. 启动 Local Emulator，或连接 HarmonyOS NEXT 真机。
 4. 选择设备，点击 **Run**。真机运行前需在 DevEco Studio 中配置签名。
 
 ### 命令行构建（Windows PowerShell）
 
-本项目使用 DevEco Studio 自带的 hvigor，仓库根目录没有 hvigorw。以下命令按默认安装路径编写；如安装在其他位置，请修改第一行。
+仓库根目录没有 hvigorw。构建入口默认使用 `C:/Program Files/Huawei/DevEco Studio` 中的 API 26 Node、SDK、Hvigor、ohpm 和 JBR，构建环境仅作用于子进程。本机已升级为 26.0.0.851，内置 JBR 为 25.0.2；图形版和命令行签名 HAP 构建均已通过。
 
 ~~~powershell
-$studio = 'C:\Program Files\Huawei\DevEco Studio'
-$env:DEVECO_SDK_HOME = "$studio\sdk"
-$env:JAVA_HOME = "$studio\jbr"
-$env:PATH = "$studio\tools\node;$studio\tools\ohpm\bin;$studio\jbr\bin;$env:PATH"
-& "$studio\tools\node\node.exe" "$studio\tools\hvigor\bin\hvigorw.js" assembleHap --mode module -p product=default --no-daemon
+node scripts/build-hap.cjs
+# Release 编译模式（正式分发还需相应发布签名与验收）
+node scripts/build-hap.cjs release
 ~~~
+
+独立 Command Line Tools 可通过 `LITTLEGAMES_TOOLCHAIN_ROOT` 指定到 `command-line-tools` 目录；本机原工具包仍保留于 `.local-tools/harmonyos-26.0.0.851/command-line-tools/`。其他兼容 JDK 可通过 `JAVA_HOME` 指定。默认配置为 compile/target=`26.0.0`、compatible=`6.1.1(24)`，并将高于最低兼容版本的 API 调用作为编译错误处理。图形版升级和 API 变更助手结果见[IDE 验收记录](docs/device-acceptance/api26-upgrade-2026-10-18/ide/REPORT.md)。
 
 构建产物位于 **entry/build/default/outputs/default/**。仓库共享配置不包含个人签名材料，默认生成 unsigned HAP；在 DevEco Studio 中配置本机调试签名后可生成 signed HAP 并安装到真机。验收使用的签名配置仅保存在测试电脑，不提交证书、私钥或口令。
 
@@ -85,7 +88,7 @@ $env:PATH = "$studio\tools\node;$studio\tools\ohpm\bin;$studio\jbr\bin;$env:PATH
 node scripts/run-regressions.cjs
 ~~~
 
-运行器依次执行 24 套检查，输出保存在 `entry/build/iteration-20261013/regressions/`，也可单独运行对应脚本。默认使用 DevEco Studio 自带的 TypeScript 模块；其他安装路径可通过 `ARKTS_TYPESCRIPT_PATH` 指定。测试直接运行转换后的 Model / ViewModel，替代原生服务与时钟；ArkTS 编译、设备渲染和性能需分别验证。
+运行器依次执行现有检查，默认输出保存在 `entry/build/iteration-20261013/regressions/`，也可单独运行对应脚本。用 `ARKTS_TYPESCRIPT_PATH` 指向所用工具链的 `ohpm/node_modules/typescript/lib/typescript.js`，可选择对应 TypeScript 模块；用 `LITTLEGAMES_REGRESSION_OUTPUT` 指定其他证据目录。测试直接运行转换后的 Model / ViewModel，替代原生服务与时钟；ArkTS 编译、设备渲染和性能需分别验证。API 26 迁移记录见[升级实施记录](docs/api26-upgrade-implementation-2026-10-18.md)。
 
 ## 工程结构
 
@@ -145,5 +148,7 @@ scripts/                     回归、素材生成及设备验收工具
 ## 鸿蒙应用接续与沉浸光感
 
 当前保留游戏沿用对局接续与 HDS 原生悬浮页签材质，最低 API 24；活动中的实时对局恢复后先暂停，信号反应恢复到准备状态。实现说明、官方资料与历史验证步骤见[接续与沉浸光感说明](docs/harmonyos-continuation-immersive-light.md)。
+
+API 26 桌面卡片、原生标题栏／设置光感和成绩分享的实现及实际模拟器证据见[功能验收记录](docs/device-acceptance/api26-features-2026-10-18/REPORT.md)。
 
 历史接续桌面回归与设备玩法检查按各自报告范围保留；当前单人版本需重新验证，真实系统跨设备接续及沉浸材质效果仍需专项验收。最初扩充过程保留在[游戏扩充记录](docs/game-expansion-2026-09-27.md)。

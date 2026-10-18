@@ -1,3 +1,4 @@
+import { PageDestination } from '../../components/PageDestination';
 import { resolveString } from '../../common/I18nUtils';
 import { GameSessionTransfer } from '../../common/GameSessionTransfer';
 /**
@@ -108,13 +109,9 @@ export struct GuessNumberPage {
     .scale({ x: 0.96, y: 0.96 })
   }
 
-  build() {
-    Stack() {
-      Column().width('100%').height('100%')
-        .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
-
-      Column() {
-        GameHeader({ gameId: 'guessnumber', pathStack: this.pathStack, hasProgress: (): boolean => this.viewModel.hasProgress(), gameTitle: $r('app.string.game_guessnumber_name'),
+  @Builder
+  PageHeader() {
+    GameHeader({ gameId: 'guessnumber', pathStack: this.pathStack, hasProgress: (): boolean => this.viewModel.hasProgress(), gameTitle: $r('app.string.game_guessnumber_name'),
           // subtitle 仅在 showScore 为 false 时显示，不关掉的话「尝试 N / M」永远被吃掉
           showScore: false,
           subtitle: $r('app.string.game_guessnumber_subtitle_format', this.viewModel.tries, this.viewModel.getMaxTries()),
@@ -124,7 +121,19 @@ export struct GuessNumberPage {
           showPause: false,
           onPauseToggle: () => {},
           onRestart: () => { this.viewModel.startGame(); } })
+  }
 
+  @Builder
+  PageContent() {
+    Stack() {
+      Column().width('100%').height('100%')
+        .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
+
+      Column() {
+
+
+        Scroll() {
+        Column() {
         Column() {
           Text($r('app.string.guess_hint_length_format', this.viewModel.getSecretLength()))
             .fontFamily(FontTokens.family).fontSize(FontTokens.sizeBodySmall)
@@ -159,7 +168,7 @@ export struct GuessNumberPage {
                 }.width('100%').padding({ left: SpacingTokens.sm, right: SpacingTokens.sm })
               }.height(40)
             }, (rec: GuessRecord) => rec.seq.toString())
-          }.height(Math.min(this.viewModel.records.length * 40, 240))
+          }.layoutWeight(1).constraintSize({ maxHeight: Math.min(this.viewModel.records.length * 40, 240) })
           .backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
           .margin({ left: SpacingTokens.base, right: SpacingTokens.base })
         }.layoutWeight(1)
@@ -176,10 +185,12 @@ export struct GuessNumberPage {
           this.KeyRow(['7', '8', '9'])
           this.KeyRow(['⌫', '0', 'submit'])
         }.padding({ bottom: SpacingTokens.lg })
+        }.width('100%').height('100%').constraintSize({ minHeight: $r('app.float.guess_content_min_height') })
+        }.width('100%').layoutWeight(1).id('guess-content-scroll')
       }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
       if (this.viewModel.isWin) {
-        GameResultDialog({
+        GameResultDialog({ shareGameId: 'guessnumber',
           symbol: $r('sys.symbol.checkmark_circle'),
           celebrate: true,
           symbolColor: SemanticColors.success,
@@ -192,7 +203,7 @@ export struct GuessNumberPage {
           cardStyle: true
         })
       } else if (this.viewModel.status === GameStatus.OVER) {
-        GameResultDialog({
+        GameResultDialog({ shareGameId: 'guessnumber',
           symbol: $r('sys.symbol.xmark_circle'),
           symbolColor: SemanticColors.error,
           title: $r('app.string.result_guess_fail_format', this.viewModel.getMaxTries()),
@@ -215,6 +226,10 @@ export struct GuessNumberPage {
         })
       }
     }.width('100%').height('100%')
+  }
+
+  build() {
+    PageDestination({ gameId: 'guessnumber', header: () => { this.PageHeader(); }, content: () => { this.PageContent(); } })
   }
 
   @Builder

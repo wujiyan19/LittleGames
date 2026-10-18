@@ -1,5 +1,5 @@
 import { SemanticColors, FontTokens, SpacingTokens } from '../common/DesignTokens';
-import { HarmonyMotion } from '../common/HarmonyMotion';
+import { HeaderIconButton } from './HeaderIconButton';
 
 @ComponentV2
 export struct SettingsHeader {
@@ -8,16 +8,7 @@ export struct SettingsHeader {
 
   build() {
     Row({ space: SpacingTokens.md }) {
-      Button() {
-        SymbolGlyph($r('sys.symbol.arrow_left'))
-          .fontSize($r('app.float.home_header_action_icon_size')).fontColor([SemanticColors.textPrimary])
-      }
-      .type(ButtonType.Circle)
-      .width($r('app.float.home_action_min_height')).height($r('app.float.home_action_min_height'))
-      .backgroundColor(SemanticColors.surface)
-      .clickEffect(HarmonyMotion.press(this.getUIContext()))
-      .accessibilityText($r('app.string.a11y_header_back'))
-      .onClick(() => { this.onBack(); })
+      HeaderIconButton({ label: $r('app.string.a11y_header_back'), onPress: () => { this.onBack(); } })
       Text(this.title)
         .fontFamily(FontTokens.family).fontSize($r('app.float.home_page_title_size'))
         .fontWeight(FontTokens.weightBold).fontColor(SemanticColors.textPrimary)

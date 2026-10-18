@@ -9,7 +9,7 @@ import { GameDifficulty } from '../common/GameDifficulty';
 import { GameSound, gameSound } from '../common/GameSound';
 import { isGameAvailable } from '../common/GameAvailability';
 
-const STORE_NAME = 'little_games_data';
+export const GAME_DATA_STORE_NAME: string = 'little_games_data';
 const KEY_HIGH_SCORES = 'highScores';
 const KEY_PLAY_COUNTS = 'playCounts';
 const KEY_PLAY_TIMES = 'playTimesMs';
@@ -199,7 +199,7 @@ export class GameDataManager {
 
   static init(context: Context): void {
     try {
-      GameDataManager.store = preferences.getPreferencesSync(context, { name: STORE_NAME });
+      GameDataManager.store = preferences.getPreferencesSync(context, { name: GAME_DATA_STORE_NAME });
       GameDataManager.restore();
     } catch (e) {
       // 初始化失败后 store 为 null，此后所有最高分都会静默丢失，必须留痕

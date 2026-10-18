@@ -1,3 +1,4 @@
+import { PageDestination } from '../../components/PageDestination';
 import { resolveString } from '../../common/I18nUtils';
 import { GameSessionTransfer } from '../../common/GameSessionTransfer';
 /**
@@ -116,13 +117,9 @@ export struct MemoryCardPage {
     .scale({ x: 0.96, y: 0.96 })
   }
 
-  build() {
-    Stack() {
-      Column().width('100%').height('100%')
-        .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
-
-      Column() {
-        GameHeader({ gameId: 'memorycard', pathStack: this.pathStack, hasProgress: (): boolean => this.viewModel.hasProgress(),
+  @Builder
+  PageHeader() {
+    GameHeader({ gameId: 'memorycard', pathStack: this.pathStack, hasProgress: (): boolean => this.viewModel.hasProgress(),
           gameTitle: $r('app.string.game_memorycard_name'),
           showScore: false,
           subtitle: $r('app.string.game_memorycard_subtitle_format', this.viewModel.matchedCount, this.viewModel.getPairCount()),
@@ -133,6 +130,16 @@ export struct MemoryCardPage {
           onPauseToggle: () => {},
           onRestart: () => { this.viewModel.startGame(); }
         })
+  }
+
+  @Builder
+  PageContent() {
+    Stack() {
+      Column().width('100%').height('100%')
+        .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
+
+      Column() {
+
 
         Row() {
           Column() {
@@ -189,7 +196,7 @@ export struct MemoryCardPage {
       }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
       if (this.viewModel.status === GameStatus.OVER) {
-        GameResultDialog({
+        GameResultDialog({ shareGameId: 'memorycard',
           symbol: $r('sys.symbol.star_fill'),
           symbolColor: SemanticColors.warning,
           title: $r('app.string.result_all_found'),
@@ -212,5 +219,9 @@ export struct MemoryCardPage {
         })
       }
     }.width('100%').height('100%')
+  }
+
+  build() {
+    PageDestination({ gameId: 'memorycard', header: () => { this.PageHeader(); }, content: () => { this.PageContent(); } })
   }
 }

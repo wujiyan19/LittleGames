@@ -1,6 +1,13 @@
 {
   "float": [
-    { "name": "linerescue_line_width", "value": "5vp" },
+    {
+      "name": "guess_content_min_height",
+      "value": "500vp"
+    },
+    {
+      "name": "linerescue_line_width",
+      "value": "5vp"
+    },
     {
       "name": "play_grid_line_width",
       "value": "0.5vp"
@@ -336,6 +343,38 @@
     {
       "name": "motion_celebration_duration",
       "value": "680"
+    },
+    {
+      "name": "widget_gap",
+      "value": "8vp"
+    },
+    {
+      "name": "widget_tile_gap",
+      "value": "24vp"
+    },
+    {
+      "name": "widget_padding",
+      "value": "16vp"
+    },
+    {
+      "name": "widget_icon_size",
+      "value": "44vp"
+    },
+    {
+      "name": "widget_title_size",
+      "value": "18fp"
+    },
+    {
+      "name": "widget_caption_size",
+      "value": "12fp"
+    },
+    {
+      "name": "native_header_height",
+      "value": "64vp"
+    },
+    {
+      "name": "widget_daily_icon_size",
+      "value": "36vp"
     }
   ]
 }

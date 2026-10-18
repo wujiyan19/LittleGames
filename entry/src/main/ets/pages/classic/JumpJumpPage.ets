@@ -1,3 +1,4 @@
+import { PageDestination } from '../../components/PageDestination';
 import { GameSessionTransfer } from '../../common/GameSessionTransfer';
 /**
  * 跳一跳 —— View 层（展示与动画）
@@ -83,7 +84,22 @@ export struct JumpJumpPage {
     return this.areaH * 0.35;
   }
 
-  build() {
+  @Builder
+  PageHeader() {
+    GameHeader({ gameId: 'jumpjump', pathStack: this.pathStack, hasProgress: (): boolean => this.viewModel.hasProgress(),
+          gameTitle: $r('app.string.game_jumpjump_name'),
+          showScore: false,
+          difficulty: this.viewModel.difficulty,
+          showPause: false,
+          onDifficultyChange: (d: GameDifficulty) => { this.viewModel.changeDifficulty(d); },
+          onBack: () => { this.requestExit(); },
+          onPauseToggle: () => {},
+          onRestart: () => { this.startGame(); }
+        })
+  }
+
+  @Builder
+  PageContent() {
     Stack() {
       Column().width('100%').height('100%')
         .linearGradient({
@@ -96,16 +112,7 @@ export struct JumpJumpPage {
         })
 
       Column() {
-        GameHeader({ gameId: 'jumpjump', pathStack: this.pathStack, hasProgress: (): boolean => this.viewModel.hasProgress(),
-          gameTitle: $r('app.string.game_jumpjump_name'),
-          showScore: false,
-          difficulty: this.viewModel.difficulty,
-          showPause: false,
-          onDifficultyChange: (d: GameDifficulty) => { this.viewModel.changeDifficulty(d); },
-          onBack: () => { this.requestExit(); },
-          onPauseToggle: () => {},
-          onRestart: () => { this.startGame(); }
-        })
+
 
         Row() {
           Column() {
@@ -223,7 +230,7 @@ export struct JumpJumpPage {
       .width('100%').height('100%').padding({ bottom: this.safeBottom })
 
       if (this.viewModel.status !== GameStatus.PLAYING) {
-        GameResultDialog({
+        GameResultDialog({ shareGameId: 'jumpjump',
           symbol: $r('sys.symbol.star_fill'),
           symbolColor: SemanticColors.warning,
           title: $r('app.string.result_game_over'),
@@ -247,5 +254,9 @@ export struct JumpJumpPage {
         })
       }
     }.width('100%').height('100%')
+  }
+
+  build() {
+    PageDestination({ gameId: 'jumpjump', header: () => { this.PageHeader(); }, content: () => { this.PageContent(); } })
   }
 }

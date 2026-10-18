@@ -9,6 +9,7 @@
     "**/node_modules/**/*",
     "**/oh_modules/**/*",
     "**/build/**/*",
+    "**/.local-tools/**/*",
     "**/.preview/**/*"
   ],
   "ruleSet": [
@@ -16,6 +17,7 @@
     "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
+    "@compatibility/api-compatibility-check": "error",
     "@security/no-unsafe-aes": "error",
     "@security/no-unsafe-hash": "error",
     "@security/no-unsafe-mac": "warn",

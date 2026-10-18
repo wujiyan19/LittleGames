@@ -1,0 +1,8 @@
+{
+  "target": "127.0.0.1:15526",
+  "kind": "official-emulator",
+  "apiLevel": "26",
+  "softwareVersion": "emulator 7.0.0.107(SP8DEVC00E999R4P11)",
+  "hap": "stage-b-unsigned.hap",
+  "sha256": "66f303724412c7d7b2b00bfdf37ce33461c7c812a5f773a76a214b565aa48db2"
+}

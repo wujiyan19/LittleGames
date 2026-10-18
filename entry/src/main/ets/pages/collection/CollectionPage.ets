@@ -1,3 +1,4 @@
+import { PageDestination } from '../../components/PageDestination';
 import { GameInfo, GameDifficulty } from '../../common/GameConstants';
 import { SemanticColors, FontTokens, RadiusTokens, SpacingTokens } from '../../common/DesignTokens';
 import { SafeAreaInsets } from '../../common/SafeAreaInsets';
@@ -106,13 +107,19 @@ export struct CollectionPage {
     return $r('app.string.collection_score_result', this.vm.state.score);
   }
 
-  build() {
-    Stack() {
-      Column() {
-        GameHeader({ gameId: this.gameId, pathStack: this.pathStack, hasProgress: (): boolean => this.vm.hasProgress(), gameTitle: this.game?.name ?? '', showScore: false, showPause: false,
+  @Builder
+  PageHeader() {
+    GameHeader({ gameId: this.gameId, pathStack: this.pathStack, hasProgress: (): boolean => this.vm.hasProgress(), gameTitle: this.game?.name ?? '', showScore: false, showPause: false,
           showDifficulty: !['tictactoe', 'gomoku', 'reversi', 'fourline', 'reaction'].includes(this.gameId),
           difficulty: this.vm.difficulty, onDifficultyChange: (d: GameDifficulty) => { this.vm.changeDifficulty(d); },
           onBack: () => { this.requestExit(); }, onRestart: () => { this.vm.startGame(); } })
+  }
+
+  @Builder
+  PageContent() {
+    Stack() {
+      Column() {
+
         Scroll() {
           Column({ space: SpacingTokens.base }) {
             this.StatusLine()
@@ -184,7 +191,7 @@ export struct CollectionPage {
         }.layoutWeight(1).width('100%').scrollBar(BarState.Off)
       }.width('100%').height('100%').padding({ bottom: SafeAreaInsets.bottom })
       if (this.vm.state.outcome !== 0) {
-        GameResultDialog({ title: this.resultTitle(), detail: this.resultDetail(), showDetail: true,
+        GameResultDialog({ shareGameId: this.gameId, title: this.resultTitle(), detail: this.resultDetail(), showDetail: true,
           primaryText: $r('app.string.result_play_again'), onPrimary: () => { this.vm.startGame(); },
           showSecondary: true, secondaryText: $r('app.string.exit_confirm_leave'), onSecondary: () => { this.pathStack.pop(); }, cardStyle: true,
           celebrate: this.vm.state.outcome === 1 || (this.vm.isDuel() && this.vm.state.outcome === 2) })
@@ -194,6 +201,10 @@ export struct CollectionPage {
           onCancel: () => { this.vm.dismissExitConfirm(); } })
       }
     }.width('100%').height('100%').backgroundColor(SemanticColors.bg)
+  }
+
+  build() {
+    PageDestination({ gameId: this.gameId, header: () => { this.PageHeader(); }, content: () => { this.PageContent(); } })
   }
   @Builder
   StatusLine() {

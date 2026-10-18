@@ -1,3 +1,4 @@
+import { PageDestination } from '../../components/PageDestination';
 import { GameSessionTransfer } from '../../common/GameSessionTransfer';
 /**
  * 俄罗斯方块 —— View 层（纯展示与组装）
@@ -90,13 +91,9 @@ export struct TetrisGamePage {
     .scale({ x: 0.96, y: 0.96 })
   }
 
-  build() {
-    Stack() {
-      Column().width('100%').height('100%')
-        .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
-
-      Column() {
-        GameHeader({ gameId: 'tetris', pathStack: this.pathStack, hasProgress: (): boolean => this.viewModel.hasProgress(), gameTitle: $r('app.string.game_tetris_name'), // 得分/最高分已由下方大字指标卡展示，关闭标题栏的小字重复显示
+  @Builder
+  PageHeader() {
+    GameHeader({ gameId: 'tetris', pathStack: this.pathStack, hasProgress: (): boolean => this.viewModel.hasProgress(), gameTitle: $r('app.string.game_tetris_name'), // 得分/最高分已由下方大字指标卡展示，关闭标题栏的小字重复显示
           showScore: false,
           isPaused: this.viewModel.status === GameStatus.PAUSED,
           difficulty: this.viewModel.difficulty,
@@ -104,6 +101,16 @@ export struct TetrisGamePage {
           onBack: () => { this.requestExit(); },
           onPauseToggle: () => { this.viewModel.togglePause(); },
           onRestart: () => { this.viewModel.startGame(); } })
+  }
+
+  @Builder
+  PageContent() {
+    Stack() {
+      Column().width('100%').height('100%')
+        .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
+
+      Column() {
+
 
         Row() {
           Column() {
@@ -179,7 +186,7 @@ export struct TetrisGamePage {
       }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
       if (this.viewModel.status === GameStatus.OVER) {
-        GameResultDialog({
+        GameResultDialog({ shareGameId: 'tetris',
           symbol: $r('sys.symbol.star_fill'),
           symbolColor: SemanticColors.warning,
           title: $r('app.string.result_game_over'),
@@ -203,5 +210,9 @@ export struct TetrisGamePage {
         })
       }
     }.width('100%').height('100%')
+  }
+
+  build() {
+    PageDestination({ gameId: 'tetris', header: () => { this.PageHeader(); }, content: () => { this.PageContent(); } })
   }
 }

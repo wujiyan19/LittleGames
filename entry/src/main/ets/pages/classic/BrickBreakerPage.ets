@@ -1,3 +1,4 @@
+import { PageDestination } from '../../components/PageDestination';
 import { GameSessionTransfer } from '../../common/GameSessionTransfer';
 /**
  * 打砖块 —— View 层（纯展示与组装）
@@ -66,16 +67,9 @@ export struct BrickBreakerPage {
     .scale({ x: 0.96, y: 0.96 })
   }
 
-  build() {
-    Stack() {
-      Column().width('100%').height('100%')
-        .linearGradient({
-          angle: 180,
-          colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]]
-        })
-
-      Column() {
-        GameHeader({ gameId: 'brickbreaker', pathStack: this.pathStack, hasProgress: (): boolean => this.viewModel.hasProgress(),
+  @Builder
+  PageHeader() {
+    GameHeader({ gameId: 'brickbreaker', pathStack: this.pathStack, hasProgress: (): boolean => this.viewModel.hasProgress(),
           gameTitle: $r('app.string.game_brickbreaker_name'),
           showScore: false,
           showDifficulty: false,
@@ -84,6 +78,19 @@ export struct BrickBreakerPage {
           onPauseToggle: () => { this.viewModel.togglePause(); },
           onRestart: () => { this.viewModel.startGame(); }
         })
+  }
+
+  @Builder
+  PageContent() {
+    Stack() {
+      Column().width('100%').height('100%')
+        .linearGradient({
+          angle: 180,
+          colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]]
+        })
+
+      Column() {
+
 
         // 指标卡片：得分 / 最高分 / 生命 / 关卡
         Row() {
@@ -251,7 +258,7 @@ export struct BrickBreakerPage {
 
       // 游戏结束结算弹窗
       if (this.viewModel.status === GameStatus.OVER) {
-        GameResultDialog({
+        GameResultDialog({ shareGameId: 'brickbreaker',
           symbol: $r('sys.symbol.star_fill'),
           symbolColor: SemanticColors.warning,
           title: $r('app.string.result_game_over'),
@@ -276,5 +283,9 @@ export struct BrickBreakerPage {
         })
       }
     }.width('100%').height('100%')
+  }
+
+  build() {
+    PageDestination({ gameId: 'brickbreaker', header: () => { this.PageHeader(); }, content: () => { this.PageContent(); } })
   }
 }

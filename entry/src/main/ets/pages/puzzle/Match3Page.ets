@@ -1,3 +1,4 @@
+import { PageDestination } from '../../components/PageDestination';
 import { resolveString } from '../../common/I18nUtils';
 import { GameSessionTransfer } from '../../common/GameSessionTransfer';
 /**
@@ -90,13 +91,9 @@ export struct Match3Page {
     .scale({ x: 0.96, y: 0.96 })
   }
 
-  build() {
-    Stack() {
-      Column().width('100%').height('100%')
-        .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
-
-      Column() {
-        GameHeader({ gameId: 'match3', pathStack: this.pathStack, hasProgress: (): boolean => this.viewModel.hasProgress(),
+  @Builder
+  PageHeader() {
+    GameHeader({ gameId: 'match3', pathStack: this.pathStack, hasProgress: (): boolean => this.viewModel.hasProgress(),
           gameTitle: $r('app.string.game_match3_name'),
           showScore: false,
           showPause: false,
@@ -105,6 +102,16 @@ export struct Match3Page {
           onPauseToggle: () => {},
           onRestart: () => { this.viewModel.startGame(); }
         })
+  }
+
+  @Builder
+  PageContent() {
+    Stack() {
+      Column().width('100%').height('100%')
+        .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
+
+      Column() {
+
 
         // 指标区：得分 / 最高分 / 剩余步数
         Row() {
@@ -185,7 +192,7 @@ export struct Match3Page {
 
       // 步数用尽结算弹窗
       if (this.viewModel.status === GameStatus.OVER) {
-        GameResultDialog({
+        GameResultDialog({ shareGameId: 'match3',
           symbol: $r('sys.symbol.star_fill'),
           symbolColor: SemanticColors.warning,
           title: $r('app.string.result_game_over'),
@@ -211,5 +218,9 @@ export struct Match3Page {
         })
       }
     }.width('100%').height('100%')
+  }
+
+  build() {
+    PageDestination({ gameId: 'match3', header: () => { this.PageHeader(); }, content: () => { this.PageContent(); } })
   }
 }

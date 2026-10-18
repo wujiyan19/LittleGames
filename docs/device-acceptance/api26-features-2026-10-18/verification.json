@@ -1,0 +1,84 @@
+{
+  "at": "2026-10-18T14:14:45.835Z",
+  "packages": [
+    {
+      "name": "final-debug-unsigned.hap",
+      "bytes": 11705892,
+      "sha256": "07886d57306789c7b25c5d645e3915af645aa360b6d07216a7ca9faf4d016aea"
+    },
+    {
+      "name": "final-debug-signed.hap",
+      "bytes": 11780660,
+      "sha256": "25aaabd4830b8ba16d57fbc43ff8f621a7b7a2305feb7c070b88c1c87ec86967"
+    },
+    {
+      "name": "final-release-signed.hap",
+      "bytes": 9042548,
+      "sha256": "47bb85f4d45cc902b36535b7bc240c4112517f52f277f95a6b7e6978c8226758"
+    },
+    {
+      "name": "clean-debug-unsigned.hap",
+      "bytes": 11705892,
+      "sha256": "a7cfffeb133d9ab2d747b6a63a7382c0fe1bc20515c2fea1d27b44b17fe488f6"
+    },
+    {
+      "name": "clean-debug-signed.hap",
+      "bytes": 11780661,
+      "sha256": "9b957b27a94f06228b3b6d7ebefed25e7e03cb02c3a7edada951d761f3b55f68"
+    },
+    {
+      "name": "clean-release-signed.hap",
+      "bytes": 9042549,
+      "sha256": "4d20ecf5ad6436db160f7a436d1872ece2e2f835bc35ff3ec339a7cfcb082af8"
+    }
+  ],
+  "devices": [
+    {
+      "target": "127.0.0.1:15554",
+      "kind": "official-emulator",
+      "api": "24",
+      "software": "emulator 6.1.0.126(SP1DEVC00E120R4P11)",
+      "installed": "final-debug-unsigned.hap"
+    },
+    {
+      "target": "127.0.0.1:15556",
+      "kind": "official-emulator",
+      "api": "26",
+      "software": "emulator 7.0.0.107(SP8DEVC00E999R4P11)",
+      "installed": "clean-debug-unsigned.hap"
+    },
+    {
+      "target": "127.0.0.1:15557",
+      "kind": "official-emulator",
+      "api": "26",
+      "software": "emulator 7.0.0.107(SP8DEVC00E999R4P11)",
+      "installed": "final-debug-unsigned.hap"
+    }
+  ],
+  "boardComparisons": [
+    {
+      "game": "2048",
+      "mode": "warm",
+      "visibleTiles": 4,
+      "equal": true
+    },
+    {
+      "game": "2048",
+      "mode": "cold",
+      "visibleTiles": 4,
+      "equal": true
+    },
+    {
+      "game": "sudoku",
+      "mode": "warm",
+      "visibleTiles": 81,
+      "equal": true
+    },
+    {
+      "game": "sudoku",
+      "mode": "cold",
+      "visibleTiles": 81,
+      "equal": true
+    }
+  ]
+}

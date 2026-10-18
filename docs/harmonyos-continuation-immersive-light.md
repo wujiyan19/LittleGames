@@ -2,7 +2,7 @@
 
 状态更新（2026-10-02）：仓库共享配置不含个人签名材料，测试电脑已配置本机调试签名并完成 33 款、58 组选定玩法[真机验收](device-acceptance/generation-audit-2026-10-02.md)。下文未签名产物为早期记录；72 项接续桌面回归已重新通过，真实系统跨设备接续与真机沉浸材质效果仍待专项验证。
 
-本次按华为开发者官方资料接入两项能力，保持工程 HarmonyOS 6.1.1 / API 24，不升级 SDK。
+2026-10-18 更新：工程 compile / target 已为 API 26，最低兼容仍为 API 24。主页继续使用 HDS 页签；游戏、设置和历史页另已接入 API 26 原生标题栏、按钮及设置 Sheet 材质，使用 `deviceInfo.apiAvailable('26.0.0')` 分支保留 API 24 样式。实际范围见[功能验收记录](device-acceptance/api26-features-2026-10-18/REPORT.md)。下文对局接续方案保持不变，早期构建与验证数字为历史记录。
 
 ## 官方学习资料与版本选择
 
@@ -12,9 +12,9 @@
 - [华为官方 2026 年 4 月开发者月刊](https://developer.huawei.com/consumer/cn/monthly/202604)：确认 HarmonyOS 6.1 / API 23 起提供 HDS 悬浮页签与沉浸光感能力。
 - [多设备移动支付界面](https://developer.huawei.com/consumer/cn/doc/doccenter-multi-device/bpta-multi-mobile-payment)：官方使用 `HdsTabs` 和悬浮页签样式的多设备示例。
 - [UI Design Kit API 目录](https://developer.huawei.com/consumer/cn/doc/doccenter-references/api/ui-design-arkts)：HDS 材质 API；入参、枚举和起始版本同时逐项核对了 DevEco 内置 API 24 SDK 的 `@kit.UIDesignKit`、`hdsMaterial` 和 `hdsBaseComponent` 声明。
-- [新版 ArkUI 开启沉浸光感](https://developer.huawei.com/consumer/cn/doc/HarmonyOS-Guides/arkts-immersive-light-sense-enable)：该路线要求 target SDK 不低于 26，本工程采用 API 23 已支持的 HDS 路线。
+- [新版 ArkUI 开启沉浸光感](https://developer.huawei.com/consumer/cn/doc/HarmonyOS-Guides/arkts-immersive-light-sense-enable)：要求 target SDK 不低于 26。工程已启用该配置，普通组件材质限定在原生标题栏等受支持区域使用；棋盘不叠加材质。
 
-部分华为文档网页未能返回正文；本地官方 SDK 提供的声明、API 注释及可读取的官方指南用于交叉核对。实现没有使用 API 26 的 `uiMaterial` 或全局沉浸材质配置。
+部分华为文档网页未能返回正文；本地官方 SDK 提供的声明、API 注释及可读取的官方指南用于交叉核对。当前实现使用 API 26 的 `uiMaterial.ImmersiveMaterial`，并在 module metadata 启用 `ohos.arkui.UIMaterial.state`。
 
 ## 实际行为
 

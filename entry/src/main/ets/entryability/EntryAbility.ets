@@ -9,12 +9,15 @@ import { ScreenUtils } from '../common/ScreenUtils';
 import { AppTheme } from '../common/AppTheme';
 import { AppContinuation } from '../common/AppContinuation';
 import { GameSoundPlayer } from '../common/GameSoundPlayer';
+import { GameCards } from '../widgets/GameCardData';
+import { widgetLaunch } from '../widgets/WidgetLaunch';
 
 export default class EntryAbility extends UIAbility {
   private sounds: GameSoundPlayer = new GameSoundPlayer();
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
     hilog.info(0x0000, 'LittleGames', '%{public}s', 'onCreate');
     GameDataManager.init(this.context);
+    widgetLaunch.receive(want);
     this.sounds.init(this.context.resourceManager);
     AppContinuation.setStateHandler((active: boolean) => {
       this.context.setMissionContinueState(active ? AbilityConstant.ContinueState.ACTIVE :
@@ -27,6 +30,7 @@ export default class EntryAbility extends UIAbility {
 
   onNewWant(want: Want, launchParam: AbilityConstant.LaunchParam): void {
     this.restoreContinuation(want, launchParam);
+    widgetLaunch.receive(want);
   }
 
   onContinue(wantParam: Record<string, Object>): AbilityConstant.OnContinueResult {
@@ -102,6 +106,7 @@ export default class EntryAbility extends UIAbility {
   onForeground(): void {
     hilog.info(0x0000, 'LittleGames', '%{public}s', 'onForeground');
     GameLifecycleBus.notifyShown();
+    GameCards.publish(this.context);
   }
 
   onBackground(): void {
@@ -109,5 +114,6 @@ export default class EntryAbility extends UIAbility {
     GameLifecycleBus.notifyHidden();
     // 后台切换立即同步刷盘，避免防抖窗口内的变更丢失。
     GameDataManager.flushNow();
+    GameCards.publish(this.context);
   }
 }

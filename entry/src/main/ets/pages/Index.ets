@@ -29,6 +29,7 @@ import { CategoryTab } from './home/CategoryTab';
 import { ProfileTab } from './home/ProfileTab';
 import { HarmonyMotion } from '../common/HarmonyMotion';
 import { DailyFeaturedViewModel } from '../viewmodel/DailyFeaturedViewModel';
+import { WidgetLaunch, widgetLaunch } from '../widgets/WidgetLaunch';
 
 /** 拼音排序器：构造是重操作，模块级单例，避免每次排序都新建（P2-6） */
 const PINYIN_COLLATOR: intl.Collator = new intl.Collator('zh-CN', { usage: 'sort', collation: 'pinyin' });
@@ -57,9 +58,22 @@ struct Index {
   private firstShow: boolean = true;
   private floatingTabStyle: HdsTabsFloatingStyle = ImmersiveLight.floatingTabs();
   @Local navigationGeneration: number = 0;
+  @Local cardLaunch: WidgetLaunch = widgetLaunch;
+
+  @Monitor('cardLaunch.revision')
+  openWidgetGame(): void {
+    const gameId: string = this.cardLaunch.takeGameId();
+    if (gameId.length === 0) { return; }
+    GameLifecycleBus.suspendSession();
+    GameDataManager.flushNow();
+    this.pathStack = new NavPathStack();
+    this.pathStack.pushPathByName(GameRoutes.routeName(gameId), null, false);
+    this.navigationGeneration++;
+  }
 
   aboutToAppear(): void {
     this.loadAll();
+    this.openWidgetGame();
     GameSessionTransfer.setFailureHandler(() => {
       AppContinuation.setRestoring(false);
       AppContinuation.reportFailure();
@@ -194,11 +208,8 @@ struct Index {
   PageMap(name: string) {
     if (name === 'PlayHistoryPage') {
       // 直接绑定本组件的响应式记录，避免全局 Builder 按值参数保留旧数组。
-      NavDestination() {
-        PlayHistoryPage({ pathStack: this.pathStack, records: this.playHistory })
-      }
-      .hideTitleBar(true)
-      .onShown(() => { this.refreshScores(); })
+      PlayHistoryPage({ pathStack: this.pathStack, records: this.playHistory,
+        onPageShown: () => { this.refreshScores(); } })
     } else {
       GamePageMap(name, this.pathStack, () => { this.loadAll(); })
     }

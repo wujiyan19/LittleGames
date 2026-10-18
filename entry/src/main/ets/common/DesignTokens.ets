@@ -128,8 +128,9 @@ export class FontTokens {
  * 阴影令牌：只为浮层保留轻投影。
  */
 export class ShadowTokens {
-  static card: ShadowOptions = { radius: 0, color: $r('app.color.card_shadow'), offsetX: 0, offsetY: 0 };
-  static button: ShadowOptions = { radius: 0, color: $r('app.color.button_shadow'), offsetX: 0, offsetY: 0 };
+  // API 26 将 radius=0 解释为无模糊的阴影；负值在新旧系统上均表示无阴影。
+  static card: ShadowOptions = { radius: -1, color: $r('app.color.card_shadow'), offsetX: 0, offsetY: 0 };
+  static button: ShadowOptions = { radius: -1, color: $r('app.color.button_shadow'), offsetX: 0, offsetY: 0 };
   static float: ShadowOptions = { radius: 8, color: $r('app.color.float_shadow'), offsetX: 0, offsetY: 2 };
 }
 /**

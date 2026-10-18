@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-18T08:58:23.452Z",
+  "target": "127.0.0.1:15527",
+  "kind": "official-emulator",
+  "apiLevel": "26",
+  "softwareVersion": "emulator 7.0.0.107(SP8DEVC00E999R4P11)",
+  "hap": "stage-c-unsigned.hap",
+  "sha256": "7fa619fc3768e05bcf0459117958971d55ae079dd989ba80b26e2033883114d4",
+  "installedVersions": [
+    "\"versionName\": \"\"",
+    "\"versionName\": \"\"",
+    "\"versionName\": \"\"",
+    "\"versionName\": \"1.0.0\"",
+    "\"compatibleVersion\": 60101024,",
+    "\"targetVersion\": 260000026,",
+    "\"versionName\": \"1.0.0\""
+  ]
+}

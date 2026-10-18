@@ -33,7 +33,6 @@ import { MemoryCardPage } from '../pages/puzzle/MemoryCardPage';
 import { JumpJumpPage } from '../pages/classic/JumpJumpPage';
 import { BrickBreakerPage } from '../pages/classic/BrickBreakerPage';
 import { Match3Page } from '../pages/puzzle/Match3Page';
-import { GameLifecycleBus } from '../common/GameLifecycleBus';
 import { SettingsPage } from '../pages/settings/SettingsPage';
 import { AboutPage } from '../pages/settings/AboutPage';
 
@@ -41,56 +40,41 @@ export { GameRoutes } from './GameRouteRegistry';
 
 @Builder
 export function GamePageMap(name: string, pathStack: NavPathStack, onDataChanged: () => void = () => {}) {
-  // NavDestination 与 hideTitleBar 只在这里写一次；if-else 只负责选组件
-  // （ArkTS 不支持把组件当值存表，这条链是语言限制，已尽量收窄到一行一个分支）
-  NavDestination() {
-    if (name === 'SettingsPage') {
-      SettingsPage({ pathStack: pathStack, onDataChanged: onDataChanged })
-    } else if (name === 'AboutPage') {
-      AboutPage({ pathStack: pathStack })
-    } else if (name === 'SnakeGamePage') {
-      SnakeGamePage({ pathStack: pathStack })
-    } else if (name === 'TetrisGamePage') {
-      TetrisGamePage({ pathStack: pathStack })
-    } else if (name === 'Game2048Page') {
-      Game2048Page({ pathStack: pathStack })
-    } else if (name === 'WhackMolePage') {
-      WhackMolePage({ pathStack: pathStack })
-    } else if (name === 'MinesweeperPage') {
-      MinesweeperPage({ pathStack: pathStack })
-    } else if (name === 'SudokuPage') {
-      SudokuPage({ pathStack: pathStack })
-    } else if (name === 'SlidePuzzlePage') {
-      SlidePuzzlePage({ pathStack: pathStack })
-    } else if (name === 'KlotskiPage') {
-      KlotskiPage({ pathStack: pathStack })
-    } else if (name === 'GuessNumberPage') {
-      GuessNumberPage({ pathStack: pathStack })
-    } else if (name === 'MemoryCardPage') {
-      MemoryCardPage({ pathStack: pathStack })
-    } else if (name === 'JumpJumpPage') {
-      JumpJumpPage({ pathStack: pathStack })
-    } else if (name === 'BrickBreakerPage') {
-      BrickBreakerPage({ pathStack: pathStack })
-    } else if (name === 'Match3Page') {
-      Match3Page({ pathStack: pathStack })
-    } else if (GameRoutes.isExpansionRoute(name)) {
-      ExpansionPage({ gameId: GameRoutes.gameIdForRoute(name), pathStack: pathStack })
-    } else if (GameRoutes.isCollectionRoute(name)) {
-      CollectionPage({ gameId: GameRoutes.gameIdForRoute(name), pathStack: pathStack })
-    }
+  // 各页面通过 PageDestination 共享原生标题栏和对局可见性。
+  if (name === 'SettingsPage') {
+    SettingsPage({ pathStack: pathStack, onDataChanged: onDataChanged })
+  } else if (name === 'AboutPage') {
+    AboutPage({ pathStack: pathStack })
+  } else if (name === 'SnakeGamePage') {
+    SnakeGamePage({ pathStack: pathStack })
+  } else if (name === 'TetrisGamePage') {
+    TetrisGamePage({ pathStack: pathStack })
+  } else if (name === 'Game2048Page') {
+    Game2048Page({ pathStack: pathStack })
+  } else if (name === 'WhackMolePage') {
+    WhackMolePage({ pathStack: pathStack })
+  } else if (name === 'MinesweeperPage') {
+    MinesweeperPage({ pathStack: pathStack })
+  } else if (name === 'SudokuPage') {
+    SudokuPage({ pathStack: pathStack })
+  } else if (name === 'SlidePuzzlePage') {
+    SlidePuzzlePage({ pathStack: pathStack })
+  } else if (name === 'KlotskiPage') {
+    KlotskiPage({ pathStack: pathStack })
+  } else if (name === 'GuessNumberPage') {
+    GuessNumberPage({ pathStack: pathStack })
+  } else if (name === 'MemoryCardPage') {
+    MemoryCardPage({ pathStack: pathStack })
+  } else if (name === 'JumpJumpPage') {
+    JumpJumpPage({ pathStack: pathStack })
+  } else if (name === 'BrickBreakerPage') {
+    BrickBreakerPage({ pathStack: pathStack })
+  } else if (name === 'Match3Page') {
+    Match3Page({ pathStack: pathStack })
+  } else if (GameRoutes.isExpansionRoute(name)) {
+    ExpansionPage({ gameId: GameRoutes.gameIdForRoute(name), pathStack: pathStack })
+  } else if (GameRoutes.isCollectionRoute(name)) {
+    CollectionPage({ gameId: GameRoutes.gameIdForRoute(name), pathStack: pathStack })
   }
-  .hideTitleBar(true)
-  .onShown(() => {
-    const gameId: string = GameRoutes.gameIdForRoute(name);
-    if (gameId.length > 0) { GameLifecycleBus.setPageVisible(gameId, true); }
-  })
-  .onHidden(() => {
-    const gameId: string = GameRoutes.gameIdForRoute(name);
-    if (gameId.length > 0) { GameLifecycleBus.setPageVisible(gameId, false); }
-  })
-  .onBackPressed(() => {
-    if (GameRoutes.gameIdForRoute(name).length === 0) { return false; }
-    return GameLifecycleBus.notifyBackRequested();
-  })
+
 }

@@ -1,3 +1,4 @@
+import { PageDestination } from '../../components/PageDestination';
 import { GameInfo, GameDifficulty } from '../../common/GameConstants';
 import { SemanticColors, FontTokens, RadiusTokens, SpacingTokens } from '../../common/DesignTokens';
 import { SafeAreaInsets } from '../../common/SafeAreaInsets';
@@ -131,13 +132,19 @@ export struct ExpansionPage {
       this.vm.state.board.filter((v: number) => v > 0).length;
   }
 
-  build() {
-    Stack() {
-      Column() {
-        GameHeader({ gameId: this.gameId, pathStack: this.pathStack, hasProgress: (): boolean => this.vm.hasProgress(), gameTitle: this.game?.name ?? '', showScore: true, scoreValue: this.vm.state.score,
+  @Builder
+  PageHeader() {
+    GameHeader({ gameId: this.gameId, pathStack: this.pathStack, hasProgress: (): boolean => this.vm.hasProgress(), gameTitle: this.game?.name ?? '', showScore: true, scoreValue: this.vm.state.score,
           highScoreValue: this.game?.highScore ?? 0, showPause: this.vm.realtime() || this.vm.hasComputerOpponent(), isPaused: this.vm.paused, showDifficulty: true,
           difficulty: this.vm.difficulty, onDifficultyChange: (d: GameDifficulty) => { this.vm.changeDifficulty(d); },
           onPauseToggle: () => { this.vm.togglePause(); }, onBack: () => { this.requestExit(); }, onRestart: () => { this.vm.startGame(); } })
+  }
+
+  @Builder
+  PageContent() {
+    Stack() {
+      Column() {
+
         Scroll() {
           Column({ space: SpacingTokens.base }) {
             if (this.vm.hasComputerOpponent() && this.vm.state.outcome === 0) {
@@ -198,7 +205,7 @@ export struct ExpansionPage {
         }.padding(SpacingTokens.xl).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.xl)
       }
       if (this.vm.state.outcome !== 0) {
-        GameResultDialog({ title: this.resultTitle(),
+        GameResultDialog({ shareGameId: this.gameId, title: this.resultTitle(),
           detail: $r('app.string.collection_score_result', this.vm.state.score), showDetail: true,
           primaryText: $r('app.string.result_play_again'), onPrimary: () => { this.vm.startGame(); },
           showSecondary: true, secondaryText: $r('app.string.exit_confirm_leave'), onSecondary: () => { this.pathStack.pop(); }, cardStyle: true, celebrate: this.vm.state.outcome === 1 })
@@ -207,6 +214,10 @@ export struct ExpansionPage {
         ExitConfirmDialog({ onConfirm: () => { this.vm.dismissExitConfirm(); this.pathStack.pop(); }, onCancel: () => { this.vm.dismissExitConfirm(); } })
       }
     }.width('100%').height('100%').backgroundColor(SemanticColors.bg)
+  }
+
+  build() {
+    PageDestination({ gameId: this.gameId, header: () => { this.PageHeader(); }, content: () => { this.PageContent(); } })
   }
   @Builder
   Status() {

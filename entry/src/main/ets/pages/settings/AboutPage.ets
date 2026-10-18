@@ -1,3 +1,4 @@
+import { PageDestination } from '../../components/PageDestination';
 import { SemanticColors, FontTokens, SpacingTokens, RadiusTokens } from '../../common/DesignTokens';
 import { AppInfo } from '../../common/AppInfo';
 import { SafeAreaInsets } from '../../common/SafeAreaInsets';
@@ -20,9 +21,15 @@ export struct AboutPage {
     .margin({ top: $r('app.float.home_section_gap') })
   }
 
-  build() {
+  @Builder
+  PageHeader() {
+    SettingsHeader({ title: $r('app.string.settings_about'), onBack: () => { this.pathStack.pop(); } })
+  }
+
+  @Builder
+  PageContent() {
     Column() {
-      SettingsHeader({ title: $r('app.string.settings_about'), onBack: () => { this.pathStack.pop(); } })
+
       Scroll() {
         Column() {
           Column({ space: SpacingTokens.sm }) {
@@ -48,5 +55,9 @@ export struct AboutPage {
           bottom: SpacingTokens.xxl + SafeAreaInsets.bottom })
       }.layoutWeight(1).width('100%').scrollBar(BarState.Off).align(Alignment.Top)
     }.width('100%').height('100%').alignItems(HorizontalAlign.Center).backgroundColor(SemanticColors.bg)
+  }
+
+  build() {
+    PageDestination({ gameId: '', header: () => { this.PageHeader(); }, content: () => { this.PageContent(); } })
   }
 }

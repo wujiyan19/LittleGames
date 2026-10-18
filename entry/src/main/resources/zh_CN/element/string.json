@@ -3150,7 +3150,51 @@
     },
     {
       "name": "settings_sound_volume_value",
-      "value": "%d%%"
+      "value": "%d%"
+    },
+    {
+      "name": "widget_daily_title",
+      "value": "今日推荐"
+    },
+    {
+      "name": "widget_daily_description",
+      "value": "从玩趣盒中为你挑选一款游戏，轻点即可开始。"
+    },
+    {
+      "name": "widget_continue_title",
+      "value": "继续游玩"
+    },
+    {
+      "name": "widget_continue_description",
+      "value": "回到 2048 或数独的本地存档，也可以开始新的一局。"
+    },
+    {
+      "name": "widget_play",
+      "value": "轻点开始"
+    },
+    {
+      "name": "widget_continue",
+      "value": "继续存档"
+    },
+    {
+      "name": "widget_start",
+      "value": "开始游戏"
+    },
+    {
+      "name": "widget_saved_game",
+      "value": "有未完成的对局"
+    },
+    {
+      "name": "widget_no_save",
+      "value": "随时开始新一局"
+    },
+    {
+      "name": "result_share",
+      "value": "分享成绩"
+    },
+    {
+      "name": "result_share_failed",
+      "value": "分享未完成，请重试"
     }
   ]
 }

@@ -6,7 +6,7 @@ const cp = require('node:child_process');
 const assert = require('node:assert/strict');
 const crypto = require('node:crypto');
 const target = process.env.LITTLEGAMES_ART_TARGET || 'FMR0224521016052';
-const hdc = 'C:/Program Files/Huawei/DevEco Studio/sdk/default/openharmony/toolchains/hdc.exe';
+const hdc = process.env.LITTLEGAMES_ART_HDC || 'C:/Program Files/Huawei/DevEco Studio/sdk/default/openharmony/toolchains/hdc.exe';
 const dir = path.resolve(process.env.LITTLEGAMES_ART_OUTPUT || 'docs/device-acceptance/art-review-2026-10-03');
 fs.mkdirSync(dir, { recursive: true });
 const strings = JSON.parse(fs.readFileSync('entry/src/main/resources/zh_CN/element/string.json')).string;
@@ -16,7 +16,7 @@ const ids = ['snake', 'tetris', '2048', 'whackmole', 'minesweeper', 'jumpjump', 
   'nonogram', 'arithmetic', 'compare', 'sequence', 'binary', 'targetsum', 'schulte',
   'memorysequence', 'missing', 'reaction'];
 const names = Object.fromEntries(ids.map(id => [id, strings.find(s => s.name === 'game_' + id + '_name').value]));
-const packageHash = crypto.createHash('sha256').update(fs.readFileSync('entry/build/default/outputs/default/entry-default-signed.hap')).digest('hex');
+const packageHash = crypto.createHash('sha256').update(fs.readFileSync(process.env.LITTLEGAMES_ART_HAP || 'entry/build/default/outputs/default/entry-default-signed.hap')).digest('hex');
 let root;
 let lastNodes = [];
 const sleep = ms => { assert(ms <= 2000); Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms); };

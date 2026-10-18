@@ -7,6 +7,8 @@ import { GameDifficulty } from '../common/GameConstants';
 import { HarmonyMotion } from '../common/HarmonyMotion';
 import { GameLifecycleBus } from '../common/GameLifecycleBus';
 import { GameSettingsPanel } from './GameSettingsPanel';
+import { HeaderIconButton } from './HeaderIconButton';
+import { ImmersiveLight } from '../common/ImmersiveLight';
 
 @ComponentV2
 export struct GameHeader {
@@ -65,20 +67,7 @@ export struct GameHeader {
   build() {
     Row({ space: SpacingTokens.md }) {
       // 返回（统一的 44vp 热区）
-      Button() {
-        SymbolGlyph($r('sys.symbol.arrow_left'))
-          .fontSize(20)
-          .fontColor([SemanticColors.textPrimary])
-      }
-      .type(ButtonType.Circle)
-      .width($r('app.float.home_action_min_height')).height($r('app.float.home_action_min_height'))
-      .backgroundColor(SemanticColors.surface)
-      .clickEffect(HarmonyMotion.press(this.getUIContext()))
-
-      .accessibilityText($r('app.string.a11y_header_back'))
-      .onClick(() => {
-        this.onBack();
-      })
+      HeaderIconButton({ label: $r('app.string.a11y_header_back'), onPress: () => { this.onBack(); } })
 
       Column() {
         Text(this.gameTitle)
@@ -103,24 +92,10 @@ export struct GameHeader {
       .alignItems(HorizontalAlign.Start)
       .layoutWeight(1)
 
-      Button() {
-        SymbolGlyph($r('sys.symbol.gearshape'))
-          .fontSize(20).fontColor([SemanticColors.textPrimary])
-      }
-      .type(ButtonType.Circle)
-      .width($r('app.float.home_action_min_height')).height($r('app.float.home_action_min_height'))
-      .backgroundColor(SemanticColors.surface)
-      .clickEffect(HarmonyMotion.press(this.getUIContext()))
-      .accessibilityText($r('app.string.game_settings_title'))
-      .id('game-settings-button')
-      .onClick(() => { this.openSettings(); })
-      .bindSheet($$this.showSettings, this.settingsPanel, {
-        height: SheetSize.LARGE,
-        showClose: false,
-        dragBar: false,
-        backgroundColor: SemanticColors.bg,
-        onDisappear: () => { this.settingsDismissed(); }
-      })
+      HeaderIconButton({ symbol: $r('sys.symbol.gearshape'), label: $r('app.string.game_settings_title'),
+        controlId: 'game-settings-button', onPress: () => { this.openSettings(); } })
+        .bindSheet($$this.showSettings, this.settingsPanel,
+          ImmersiveLight.settingsSheet(() => { this.settingsDismissed(); }))
     }
     .width('100%')
     .padding({
@@ -129,7 +104,7 @@ export struct GameHeader {
       top: SpacingTokens.sm,
       bottom: SpacingTokens.sm
     })
-    .backgroundColor(SemanticColors.surface)
+    .backgroundColor(Color.Transparent)
   }
 
   @Builder

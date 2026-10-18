@@ -5,6 +5,7 @@ import { resolveFormattedString, resolveString } from '../../common/I18nUtils';
 import { formatPlayTime } from '../../common/PlayTime';
 import { SafeAreaInsets } from '../../common/SafeAreaInsets';
 import { SettingsHeader } from '../../components/SettingsHeader';
+import { PageDestination } from '../../components/PageDestination';
 import { PlayedGameRecord } from '../../model/GameData';
 import { GameRoutes } from '../../router/GameRouteRegistry';
 
@@ -42,9 +43,21 @@ export struct PlayHistoryPage {
     if (route.length > 0) { this.pathStack.pushPathByName(route, null); }
   }
 
+  @Param onPageShown: () => void = () => {};
+
+  @Builder
+  PageHeader() {
+    SettingsHeader({ title: $r('app.string.play_history_title'), onBack: () => { this.pathStack.pop(); } })
+  }
+
   build() {
+    PageDestination({ header: () => { this.PageHeader(); }, content: () => { this.PageContent(); },
+      onPageShown: () => { this.onPageShown(); } })
+  }
+
+  @Builder
+  PageContent() {
     Column() {
-      SettingsHeader({ title: $r('app.string.play_history_title'), onBack: () => { this.pathStack.pop(); } })
       if (this.records.length > 0) {
         Text($r('app.string.play_history_count', this.records.length))
           .fontFamily(FontTokens.family)

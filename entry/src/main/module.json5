@@ -2,6 +2,7 @@
   "module": {
     "name": "entry",
     "type": "entry",
+    "metadata": [{ "name": "ohos.arkui.UIMaterial.state", "value": "enable" }],
     "description": "$string:module_desc",
     "mainElement": "EntryAbility",
     "deviceTypes": [
@@ -21,6 +22,16 @@
       }
     ],
     "pages": "$profile:main_pages",
+    "extensionAbilities": [
+      {
+        "name": "GameFormAbility",
+        "srcEntry": "./ets/widgets/GameFormAbility.ets",
+        "type": "form",
+        "label": "$string:app_name",
+        "description": "$string:widget_daily_description",
+        "metadata": [{ "name": "ohos.extension.form", "resource": "$profile:game_forms" }]
+      }
+    ],
     "abilities": [
       {
         "name": "EntryAbility",

@@ -1,0 +1,31 @@
+{
+  "forms": [
+    {
+      "name": "DailyGame",
+      "displayName": "$string:widget_daily_title",
+      "description": "$string:widget_daily_description",
+      "src": "./ets/widgets/pages/DailyGameCard.ets",
+      "uiSyntax": "arkts",
+      "window": { "designWidth": 320, "autoDesignWidth": true },
+      "colorMode": "auto",
+      "isDefault": true,
+      "updateEnabled": true,
+      "updateDuration": 2,
+      "defaultDimension": "2*2",
+      "supportDimensions": ["2*2"]
+    },
+    {
+      "name": "ContinueGame",
+      "displayName": "$string:widget_continue_title",
+      "description": "$string:widget_continue_description",
+      "src": "./ets/widgets/pages/ContinueGameCard.ets",
+      "uiSyntax": "arkts",
+      "window": { "designWidth": 640, "autoDesignWidth": true },
+      "colorMode": "auto",
+      "isDefault": false,
+      "updateEnabled": false,
+      "defaultDimension": "2*4",
+      "supportDimensions": ["2*4"]
+    }
+  ]
+}

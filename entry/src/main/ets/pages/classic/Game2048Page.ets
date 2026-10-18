@@ -1,5 +1,7 @@
+import { PageDestination } from '../../components/PageDestination';
 import { resolveString } from '../../common/I18nUtils';
 import { GameSessionTransfer } from '../../common/GameSessionTransfer';
+import { widgetLaunch } from '../../widgets/WidgetLaunch';
 /**
  * 2048 —— View 层（展示与动画）
  *
@@ -81,6 +83,7 @@ export struct Game2048Page {
     const continued: boolean = GameSessionTransfer.restore(this.viewModel);
     if (continued || this.viewModel.offerSavedGame()) {
       this.rebuildTiles(false);
+      if (widgetLaunch.takeResume('2048')) { this.viewModel.continueSavedGame(); }
       if (continued) { this.viewModel.saveCurrentGame(); }
     } else {
       this.startGame();
@@ -258,13 +261,9 @@ export struct Game2048Page {
     };
   }
 
-  build() {
-    Stack() {
-      Column().width('100%').height('100%')
-        .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
-
-      Column() {
-        GameHeader({ gameId: '2048', pathStack: this.pathStack, hasProgress: (): boolean => this.viewModel.hasProgress(), gameTitle: $r('app.string.game_2048_name'), // 得分/最高分已由下方大字指标卡展示，关闭标题栏的小字重复显示
+  @Builder
+  PageHeader() {
+    GameHeader({ gameId: '2048', pathStack: this.pathStack, hasProgress: (): boolean => this.viewModel.hasProgress(), gameTitle: $r('app.string.game_2048_name'), // 得分/最高分已由下方大字指标卡展示，关闭标题栏的小字重复显示
           showScore: false,
           difficulty: this.viewModel.difficulty,
           showPause: false,
@@ -275,6 +274,16 @@ export struct Game2048Page {
           onBack: () => { this.requestExit(); },
           onPauseToggle: () => {},
           onRestart: () => { this.startGame(); } })
+  }
+
+  @Builder
+  PageContent() {
+    Stack() {
+      Column().width('100%').height('100%')
+        .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
+
+      Column() {
+
 
         if (this.viewModel.saveRestoreFailed) {
           Text($r('app.string.save_restore_failed'))
@@ -366,7 +375,7 @@ export struct Game2048Page {
       }
 
       if (this.viewModel.status !== GameStatus.PLAYING && !this.viewModel.resumePending) {
-        GameResultDialog({
+        GameResultDialog({ shareGameId: '2048',
           symbol: $r('sys.symbol.star_fill'),
           symbolColor: SemanticColors.warning,
           title: $r('app.string.result_game_over'),
@@ -392,5 +401,9 @@ export struct Game2048Page {
         })
       }
     }.width('100%').height('100%')
+  }
+
+  build() {
+    PageDestination({ gameId: '2048', header: () => { this.PageHeader(); }, content: () => { this.PageContent(); } })
   }
 }

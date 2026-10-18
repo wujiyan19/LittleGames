@@ -3150,7 +3150,51 @@
     },
     {
       "name": "settings_sound_volume_value",
-      "value": "%d%%"
+      "value": "%d%"
+    },
+    {
+      "name": "widget_daily_title",
+      "value": "Today’s pick"
+    },
+    {
+      "name": "widget_daily_description",
+      "value": "A daily game from PlayBox, one tap away."
+    },
+    {
+      "name": "widget_continue_title",
+      "value": "Keep playing"
+    },
+    {
+      "name": "widget_continue_description",
+      "value": "Resume your saved 2048 or Sudoku game, or start a new one."
+    },
+    {
+      "name": "widget_play",
+      "value": "Tap to play"
+    },
+    {
+      "name": "widget_continue",
+      "value": "Resume game"
+    },
+    {
+      "name": "widget_start",
+      "value": "Start game"
+    },
+    {
+      "name": "widget_saved_game",
+      "value": "Game in progress"
+    },
+    {
+      "name": "widget_no_save",
+      "value": "Ready for a new game"
+    },
+    {
+      "name": "result_share",
+      "value": "Share result"
+    },
+    {
+      "name": "result_share_failed",
+      "value": "Unable to share. Please try again."
     }
   ]
 }

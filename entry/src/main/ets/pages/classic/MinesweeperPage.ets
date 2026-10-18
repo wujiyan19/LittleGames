@@ -1,3 +1,4 @@
+import { PageDestination } from '../../components/PageDestination';
 import { resolveString } from '../../common/I18nUtils';
 import { GameSessionTransfer } from '../../common/GameSessionTransfer';
 /**
@@ -128,13 +129,9 @@ export struct MinesweeperPage {
     .scale({ x: 0.96, y: 0.96 })
   }
 
-  build() {
-    Stack() {
-      Column().width('100%').height('100%')
-        .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
-
-      Column() {
-        GameHeader({ gameId: 'minesweeper', pathStack: this.pathStack, hasProgress: (): boolean => this.viewModel.hasProgress(),
+  @Builder
+  PageHeader() {
+    GameHeader({ gameId: 'minesweeper', pathStack: this.pathStack, hasProgress: (): boolean => this.viewModel.hasProgress(),
           gameTitle: $r('app.string.game_minesweeper_name'),
           showScore: false,
           showPause: false,
@@ -145,6 +142,16 @@ export struct MinesweeperPage {
           onPauseToggle: () => {},
           onRestart: () => { this.viewModel.startGame(); }
         })
+  }
+
+  @Builder
+  PageContent() {
+    Stack() {
+      Column().width('100%').height('100%')
+        .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
+
+      Column() {
+
 
         Row() {
           Column() {
@@ -223,7 +230,7 @@ export struct MinesweeperPage {
       }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 
       if (this.viewModel.status !== GameStatus.PLAYING) {
-        GameResultDialog({
+        GameResultDialog({ shareGameId: 'minesweeper',
           celebrate: this.viewModel.gameResult,
           symbol: this.getResultSymbol(),
           symbolColor: this.getResultColor(),
@@ -249,5 +256,9 @@ export struct MinesweeperPage {
         })
       }
     }.width('100%').height('100%')
+  }
+
+  build() {
+    PageDestination({ gameId: 'minesweeper', header: () => { this.PageHeader(); }, content: () => { this.PageContent(); } })
   }
 }

@@ -15,9 +15,20 @@ import { SemanticColors, FontTokens, RadiusTokens, ShadowTokens, SpacingTokens }
 import { Haptics } from '../common/Haptics';
 import { range } from '../common/Range';
 import { HarmonyMotion } from '../common/HarmonyMotion';
+import { common } from '@kit.AbilityKit';
+import { deviceInfo } from '@kit.BasicServicesKit';
+import { fileIo, fileUri } from '@kit.CoreFileKit';
+import { image } from '@kit.ImageKit';
+import { uniformTypeDescriptor } from '@kit.ArkData';
+import { harmonyShare, systemShare } from '@kit.ShareKit';
+import { hilog } from '@kit.PerformanceAnalysisKit';
+import { GameDataManager } from '../model/GameData';
+import { resolveString } from '../common/I18nUtils';
 
 @ComponentV2
 export struct GameResultDialog {
+  /** Only completed games supply an ID; save/resume prompts never expose sharing. */
+  @Param shareGameId: string = '';
   /** 顶部圆形图标（系统 symbol 资源） */
   @Param symbol: Resource = $r('sys.symbol.star_fill');
   /** 图标前景色：成功用 success，失败用 error，普通结算用 warning */
@@ -42,6 +53,20 @@ export struct GameResultDialog {
   @Param celebrate: boolean = false;
   @Local burst: number = 0;
   @Local actionTaken: boolean = false;
+  @Local sharing: boolean = false;
+  private shareCapability: harmonyShare.SendCapabilityRegistry | undefined = undefined;
+  private knockCallback: (target: harmonyShare.SharableTarget) => void = (target) => {
+    if (deviceInfo.apiAvailable('26.0.0')) {
+      const coordinate = target.getInfo().coordinate;
+      if (coordinate) {
+        const rect = this.getUIContext().getComponentUtils().getRectangleById('result-share-content');
+        if (coordinate.screenX < rect.screenOffset.x || coordinate.screenY < rect.screenOffset.y ||
+          coordinate.screenX > rect.screenOffset.x + rect.size.width ||
+          coordinate.screenY > rect.screenOffset.y + rect.size.height) { return; }
+      }
+    }
+    this.shareResult(target);
+  };
   private burstTimer: number = -1;
   private actionTimer: number = -1;
 
@@ -49,6 +74,13 @@ export struct GameResultDialog {
     Haptics.success();
   }
   appear(): void {
+    if (this.shareGameId.length > 0 && canIUse('SystemCapability.Collaboration.HarmonyShare')) {
+      const windowId: number | undefined = this.getUIContext().getWindowId();
+      if (windowId !== undefined) {
+        this.shareCapability = { windowId: windowId, sendOnly: true };
+        harmonyShare.on('knockShare', this.shareCapability, this.knockCallback);
+      }
+    }
     if (!this.celebrate) { return; }
     this.burstTimer = setTimeout(() => {
       this.burstTimer = -1;
@@ -59,13 +91,65 @@ export struct GameResultDialog {
     }, 16);
   }
   aboutToDisappear(): void {
+    this.stopKnockShare();
     if (this.burstTimer >= 0) { clearTimeout(this.burstTimer); this.burstTimer = -1; }
     if (this.actionTimer >= 0) { clearTimeout(this.actionTimer); this.actionTimer = -1; }
+  }
+
+  private stopKnockShare(): void {
+    if (this.shareCapability) {
+      harmonyShare.off('knockShare', this.shareCapability, this.knockCallback);
+      this.shareCapability = undefined;
+    }
+  }
+
+  private gameName(): Resource | string {
+    return GameDataManager.getGameById(this.shareGameId)?.name ?? '';
+  }
+
+  private async shareResult(target?: harmonyShare.SharableTarget): Promise<void> {
+    if (this.sharing || this.actionTaken) { return; }
+    this.sharing = true;
+    const context = this.getUIContext().getHostContext() as common.UIAbilityContext;
+    const path: string = context.cacheDir + '/result-' + Date.now().toString() + '.png';
+    let imageWritten: boolean = false;
+    try {
+      const pixels: image.PixelMap = await this.getUIContext().getComponentSnapshot().get('result-share-content');
+      const packer: image.ImagePacker = image.createImagePacker();
+      let bytes: ArrayBuffer;
+      try {
+        bytes = await packer.packToData(pixels, { format: 'image/png', quality: 100 });
+      } finally {
+        await packer.release();
+        await pixels.release();
+      }
+      const file: fileIo.File = fileIo.openSync(path, fileIo.OpenMode.CREATE | fileIo.OpenMode.WRITE_ONLY);
+      imageWritten = true;
+      try { fileIo.writeSync(file.fd, bytes); } finally { fileIo.closeSync(file); }
+      const data = new systemShare.SharedData({
+        utd: uniformTypeDescriptor.UniformDataType.PNG, uri: fileUri.getUriFromPath(path),
+        title: resolveString(this.gameName(), context), description: resolveString(this.title, context)
+      });
+      if (target) {
+        await target.share(data);
+      } else {
+        await new systemShare.ShareController(data).show(context, { anchor: 'result-share-button' });
+      }
+    } catch (error) {
+      hilog.error(0, 'ResultShare', 'Result sharing failed: %{public}s', JSON.stringify(error));
+      this.getUIContext().getPromptAction().showToast({ message: $r('app.string.result_share_failed') });
+    } finally {
+      // ShareController.show resolves when the panel opens. Keep the image available
+      // to receiving apps; this is temporary data in the system-managed app cache.
+      if (target && imageWritten) { fileIo.unlinkSync(path); }
+      this.sharing = false;
+    }
   }
 
   private choose(primary: boolean): void {
     if (this.actionTaken) { return; }
     this.actionTaken = true;
+    this.stopKnockShare();
     // 先退场但保留触摸遮罩。立即删除组件会使双击的第二次触摸穿到新棋盘。
     this.actionTimer = setTimeout(() => {
       this.actionTimer = -1;
@@ -116,6 +200,28 @@ export struct GameResultDialog {
   @Builder
   DialogContent() {
     Column() {
+      this.ResultContent()
+
+      if (this.shareGameId.length > 0) {
+        Button($r('app.string.result_share'))
+          .id('result-share-button').width('100%')
+          .constraintSize({ minHeight: $r('app.float.home_action_min_height') })
+          .backgroundColor(SemanticColors.surfaceHover).fontColor(SemanticColors.primary)
+          .margin({ bottom: SpacingTokens.md }).enabled(!this.sharing && !this.actionTaken)
+          .onClick(() => { this.shareResult(); })
+      }
+
+      this.ResultActions()
+    }.width('100%').alignItems(HorizontalAlign.Center)
+  }
+
+  @Builder
+  ResultContent() {
+    Column() {
+      if (this.shareGameId.length > 0) {
+        Text(this.gameName()).fontFamily(FontTokens.family).fontSize(FontTokens.sizeBody)
+          .fontColor(SemanticColors.textSecondary).margin({ bottom: SpacingTokens.md })
+      }
       Column() {
         if (this.celebrate) {
           Image($r('app.media.exp_trophy')).width(64).height(64).objectFit(ImageFit.Contain).accessibilityLevel('no');
@@ -149,6 +255,12 @@ export struct GameResultDialog {
           .margin({ bottom: this.cardStyle ? SpacingTokens.base : SpacingTokens.lg })
       }
 
+    }.width('100%').alignItems(HorizontalAlign.Center)
+      .padding(SpacingTokens.md).backgroundColor($r('app.color.surface')).id('result-share-content')
+  }
+
+  @Builder
+  ResultActions() {
       Row({ space: SpacingTokens.base }) {
         Button() {
           Text(this.primaryText).fontFamily(FontTokens.family).fontSize(FontTokens.sizeBody)
@@ -183,8 +295,5 @@ export struct GameResultDialog {
         }
       }
       .width('100%')
-    }
-    .width('100%')
-    .alignItems(HorizontalAlign.Center)
   }
 }

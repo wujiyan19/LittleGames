@@ -1,5 +1,7 @@
+import { PageDestination } from '../../components/PageDestination';
 import { resolveString } from '../../common/I18nUtils';
 import { GameSessionTransfer } from '../../common/GameSessionTransfer';
+import { widgetLaunch } from '../../widgets/WidgetLaunch';
 /**
  * 数独 —— View 层（展示与组装，含双指缩放）
  *
@@ -45,6 +47,7 @@ export struct SudokuPage {
     const continued: boolean = GameSessionTransfer.restore(this.viewModel);
     if (continued) { this.viewModel.saveCurrentGame(); }
     else if (!this.viewModel.offerSavedGame()) { this.viewModel.newGameAsync(); }
+    if (widgetLaunch.takeResume('sudoku')) { this.viewModel.continueSavedGame(); }
     // 预解析无障碍描述字符串
     const context = this.getUIContext().getHostContext();
     if (context) {
@@ -113,13 +116,9 @@ export struct SudokuPage {
     .scale({ x: 0.96, y: 0.96 })
   }
 
-  build() {
-    Stack() {
-      Column().width('100%').height('100%')
-        .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
-
-      Column() {
-        GameHeader({ gameId: 'sudoku', pathStack: this.pathStack, hasProgress: (): boolean => this.viewModel.hasProgress(),
+  @Builder
+  PageHeader() {
+    GameHeader({ gameId: 'sudoku', pathStack: this.pathStack, hasProgress: (): boolean => this.viewModel.hasProgress(),
           gameTitle: $r('app.string.game_sudoku_name'),
           showScore: false,
           showPause: false,
@@ -132,6 +131,16 @@ export struct SudokuPage {
           onNewGame: () => { this.viewModel.newGameAsync(); },
           enableNewGame: true
         })
+  }
+
+  @Builder
+  PageContent() {
+    Stack() {
+      Column().width('100%').height('100%')
+        .linearGradient({ angle: 180, colors: [[SemanticColors.gradientScreen[0], 0], [SemanticColors.gradientScreen[1], 0.5], [SemanticColors.gradientScreen[2], 1]] })
+
+      Column() {
+
 
         if (this.viewModel.saveRestoreFailed) {
           Text($r('app.string.save_restore_failed'))
@@ -255,7 +264,7 @@ export struct SudokuPage {
       }
 
       if (this.viewModel.status === GameStatus.OVER && !this.viewModel.resumePending) {
-        GameResultDialog({
+        GameResultDialog({ shareGameId: 'sudoku',
           symbol: $r('sys.symbol.checkmark_circle'),
           celebrate: true,
           symbolColor: SemanticColors.success,
@@ -276,5 +285,9 @@ export struct SudokuPage {
         })
       }
     }.width('100%').height('100%')
+  }
+
+  build() {
+    PageDestination({ gameId: 'sudoku', header: () => { this.PageHeader(); }, content: () => { this.PageContent(); } })
   }
 }

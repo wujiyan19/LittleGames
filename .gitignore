@@ -4,6 +4,7 @@
 /.idea
 **/build
 /.hvigor
+/.local-tools/
 .cxx
 /.clangd
 /.clang-format

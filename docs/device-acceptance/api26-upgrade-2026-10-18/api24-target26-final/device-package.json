@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-18T08:58:14.980Z",
+  "target": "127.0.0.1:15524",
+  "kind": "official-emulator",
+  "apiLevel": "24",
+  "softwareVersion": "emulator 6.1.0.126(SP1DEVC00E120R4P11)",
+  "hap": "stage-c-unsigned.hap",
+  "sha256": "7fa619fc3768e05bcf0459117958971d55ae079dd989ba80b26e2033883114d4",
+  "installedVersions": [
+    "\"versionName\": \"\"",
+    "\"versionName\": \"\"",
+    "\"versionName\": \"\"",
+    "\"versionName\": \"1.0.0\"",
+    "\"compatibleVersion\": 60101024,",
+    "\"targetVersion\": 260000026,",
+    "\"versionName\": \"1.0.0\""
+  ]
+}

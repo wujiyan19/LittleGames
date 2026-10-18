@@ -1,8 +1,38 @@
 import { hdsMaterial, HdsTabsFloatingStyle } from '@kit.UIDesignKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
+import { LengthMetrics, uiMaterial } from '@kit.ArkUI';
+import { deviceInfo } from '@kit.BasicServicesKit';
+import { SemanticColors } from './DesignTokens';
 
 /** HarmonyOS 6.1 HDS materials. The system chooses the effect level for this device. */
 export class ImmersiveLight {
+  static titleBar(): NavigationTitleOptions {
+    if (deviceInfo.apiAvailable('26.0.0')) {
+      return {
+        paddingStart: LengthMetrics.vp(0), paddingEnd: LengthMetrics.vp(0),
+        systemMaterial: new uiMaterial.ImmersiveMaterial({ style: uiMaterial.ImmersiveStyle.REGULAR })
+      };
+    }
+    return {
+      paddingStart: LengthMetrics.vp(0), paddingEnd: LengthMetrics.vp(0),
+      backgroundColor: SemanticColors.surface
+    };
+  }
+
+  static settingsSheet(onDisappear: () => void): SheetOptions {
+    if (deviceInfo.apiAvailable('26.0.0')) {
+      return {
+        height: SheetSize.LARGE, showClose: false, dragBar: false,
+        systemMaterial: new uiMaterial.ImmersiveMaterial({ style: uiMaterial.ImmersiveStyle.THICK }),
+        onDisappear: onDisappear
+      };
+    }
+    return {
+      height: SheetSize.LARGE, showClose: false, dragBar: false,
+      backgroundColor: SemanticColors.bg, onDisappear: onDisappear
+    };
+  }
+
   static floatingTabs(): HdsTabsFloatingStyle {
     let materialType: hdsMaterial.MaterialType = hdsMaterial.MaterialType.ADAPTIVE;
     try {

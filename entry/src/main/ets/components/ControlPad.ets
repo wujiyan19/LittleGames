@@ -78,7 +78,8 @@ export struct ControlPad {
               .fontWeight(FontTokens.weightMedium)
               .fontColor(SemanticColors.textPrimary)
           } else {
-            Circle({ width: 10, height: 10 }).fill(SemanticColors.textPrimary)
+            Column().width(10).height(10).borderRadius(RadiusTokens.full)
+              .backgroundColor(SemanticColors.textPrimary)
           }
         }
         .width(this.buttonSize).height(48)

@@ -1,0 +1,13 @@
+{
+  "at": "2026-10-18T14:22:12.315Z",
+  "scope": "Isolated build exported from the Git index; excludes earlier independent workspace changes",
+  "build": "debug",
+  "result": "passed",
+  "tasks": 34,
+  "elapsedSeconds": 23.13,
+  "compileSdk": "26.0.0",
+  "compatibleSdk": "6.1.1(24)",
+  "signingConfigs": 0,
+  "sha256": "693e4f34925c4d39ff9be737e666aca93b7a93a98aacc6b7c4974332dfdae08f",
+  "deviceValidation": "Existing emulator evidence uses the separately identified workspace candidate packages"
+}

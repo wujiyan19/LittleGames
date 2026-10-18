@@ -1,3 +1,4 @@
+import { PageDestination } from '../../components/PageDestination';
 import { common } from '@kit.AbilityKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { SemanticColors, FontTokens, SpacingTokens, RadiusTokens } from '../../common/DesignTokens';
@@ -130,9 +131,15 @@ export struct SettingsPage {
     .onClick(action)
   }
 
-  build() {
+  @Builder
+  PageHeader() {
+    SettingsHeader({ onBack: () => { this.pathStack.pop(); } })
+  }
+
+  @Builder
+  PageContent() {
     Column() {
-      SettingsHeader({ onBack: () => { this.pathStack.pop(); } })
+
       Scroll() {
         Column() {
           Text($r('app.string.settings_intro')).fontFamily(FontTokens.family)
@@ -208,5 +215,9 @@ export struct SettingsPage {
       }.layoutWeight(1).width('100%').align(Alignment.Top)
         .scrollBar(BarState.Off).edgeEffect(EdgeEffect.Spring)
     }.width('100%').height('100%').backgroundColor(SemanticColors.bg)
+  }
+
+  build() {
+    PageDestination({ gameId: '', header: () => { this.PageHeader(); }, content: () => { this.PageContent(); } })
   }
 }
