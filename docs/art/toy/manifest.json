@@ -1,0 +1,139 @@
+{
+  "style": "fixed camera, matte toy materials, original geometry, no external textures",
+  "dependencies": {
+    "three": "0.180.0",
+    "playwright-core": "1.56.1"
+  },
+  "assets": [
+    {
+      "name": "base/toy_screw_board.svg",
+      "bytes": 644,
+      "packaged": true
+    },
+    {
+      "name": "base/toy_parking_board.svg",
+      "bytes": 1676,
+      "packaged": true
+    },
+    {
+      "name": "dark/toy_screw_board.svg",
+      "bytes": 644,
+      "packaged": true
+    },
+    {
+      "name": "dark/toy_parking_board.svg",
+      "bytes": 1676,
+      "packaged": true
+    },
+    {
+      "name": "toy/jump.glb",
+      "bytes": 407604,
+      "nodes": 73,
+      "meshes": 17
+    },
+    {
+      "name": "toy/rolling.glb",
+      "bytes": 380584,
+      "nodes": 31,
+      "meshes": 19
+    },
+    {
+      "name": "toy/jump_dark.glb",
+      "bytes": 407604,
+      "nodes": 73,
+      "meshes": 17
+    },
+    {
+      "name": "toy/rolling_dark.glb",
+      "bytes": 380584,
+      "nodes": 31,
+      "meshes": 19
+    },
+    {
+      "name": "toy_screw.png",
+      "bytes": 3446,
+      "packaged": true
+    },
+    {
+      "name": "toy_slot.png",
+      "bytes": 1952,
+      "packaged": true
+    },
+    {
+      "name": "toy_plate_0.png",
+      "bytes": 5881,
+      "packaged": true
+    },
+    {
+      "name": "toy_plate_1.png",
+      "bytes": 5884,
+      "packaged": true
+    },
+    {
+      "name": "toy_plate_2.png",
+      "bytes": 5838,
+      "packaged": true
+    },
+    {
+      "name": "toy_plate_3.png",
+      "bytes": 5907,
+      "packaged": true
+    },
+    {
+      "name": "toy_plate_4.png",
+      "bytes": 5930,
+      "packaged": true
+    },
+    {
+      "name": "toy_car_0.png",
+      "bytes": 5499,
+      "packaged": true
+    },
+    {
+      "name": "toy_car_1.png",
+      "bytes": 5476,
+      "packaged": true
+    },
+    {
+      "name": "toy_car_2.png",
+      "bytes": 5466,
+      "packaged": true
+    },
+    {
+      "name": "toy_car_3.png",
+      "bytes": 5483,
+      "packaged": true
+    },
+    {
+      "name": "toy_car_4.png",
+      "bytes": 5440,
+      "packaged": true
+    },
+    {
+      "name": "toy_car_5.png",
+      "bytes": 5482,
+      "packaged": true
+    },
+    {
+      "name": "preview/toy_rolling_preview.png",
+      "bytes": 19404,
+      "packaged": false
+    },
+    {
+      "name": "preview/toy_jump_preview.png",
+      "bytes": 13469,
+      "packaged": false
+    },
+    {
+      "name": "preview/toy_rolling_preview_dark.png",
+      "bytes": 19497,
+      "packaged": false
+    },
+    {
+      "name": "preview/toy_jump_preview_dark.png",
+      "bytes": 13469,
+      "packaged": false
+    }
+  ],
+  "totalBytes": 1648700
+}

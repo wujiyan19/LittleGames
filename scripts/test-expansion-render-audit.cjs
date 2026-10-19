@@ -35,15 +35,19 @@ test('parking removes the driven car while retaining the other children; undo re
 });
 
 test('three removed screws drop their plate and undo restores its last screw', () => {
-  const game = model('screwout'), vm = restore(game), screws = game.state.target.slice(0, 3);
-  const owner = game.state.pieces.find(piece => piece.id === screws[0]).owner;
-  const oldPlate = rendered(vm, owner).piece;
-  for (const id of screws) { vm.tap(id); assert(!vm.worldPieces.some(piece => piece.id === id)); }
-  assert.equal(oldPlate.alive, true);
-  assert.equal(vm.state.pieces.find(piece => piece.id === owner).alive, false);
-  assert(!vm.worldPieces.some(piece => piece.id === owner)); liveChildren(vm);
-  vm.undo(); assert.equal(rendered(vm, owner).piece.alive, true);
-  assert.equal(rendered(vm, screws[2]).piece.alive, true); liveChildren(vm);
+  const game = model('screwout'), vm = restore(game);
+  for (const id of game.state.target) {
+    const owner = game.state.pieces.find(piece => piece.id === id).owner;
+    const oldPlate = rendered(vm, owner).piece;
+    vm.tap(id); assert(!vm.worldPieces.some(piece => piece.id === id)); liveChildren(vm);
+    if (!vm.state.pieces.find(piece => piece.id === owner).alive) {
+      assert.equal(oldPlate.alive, true);
+      assert(!vm.worldPieces.some(piece => piece.id === owner));
+      vm.undo(); assert.equal(rendered(vm, owner).piece.alive, true);
+      assert.equal(rendered(vm, id).piece.alive, true); liveChildren(vm); return;
+    }
+  }
+  assert.fail('no plate dropped along the complete solution');
 });
 
 test('mahjong matching removes both tiles and undo restores the pair', () => {

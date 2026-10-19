@@ -61,8 +61,8 @@ export struct WhackMolePage {
   }
 
   getTimeColor(): ResourceColor {
-    if (this.viewModel.timeLeft <= 5) { return SemanticColors.error; }
-    return SemanticColors.success;
+    if (this.viewModel.timeLeft <= 5) { return SemanticColors.errorText; }
+    return SemanticColors.successText;
   }
 
   updateHoleSize(area: Area): void {

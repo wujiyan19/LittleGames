@@ -78,7 +78,7 @@ export class MinesweeperViewModel implements GameLifecycleObserver {
 
   newGame(): void {
     gameSound.stop(GAME_ID);
-    GameDataManager.recordGamePlayed(GAME_ID);
+    GameDataManager.recordGameStarted(GAME_ID);
     this.board = this.rules.emptyBoard();
     this.revealed = this.rules.emptyBool();
     this.flagged = this.rules.emptyBool();

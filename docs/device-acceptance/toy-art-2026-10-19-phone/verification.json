@@ -1,0 +1,295 @@
+{
+  "schemaVersion": 1,
+  "completedAt": "2026-10-19T10:09:17.199Z",
+  "scope": [
+    "screwout",
+    "parkingjam",
+    "jumpjump",
+    "rollingball"
+  ],
+  "device": {
+    "target": "FMR0224521016052",
+    "model": "ALN-AL00",
+    "apiLevel": 26,
+    "os": "OpenHarmony-7.0.0.105",
+    "installedDebugSha256": "d17b17d4572edfaaaa03ae288a5b0df1737dcef179250d1d9790d82017089f52"
+  },
+  "builds": [
+    {
+      "mode": "debug",
+      "status": "passed",
+      "artifact": ".local-tools/toy-art/entry-toy-debug.hap",
+      "sha256": "d17b17d4572edfaaaa03ae288a5b0df1737dcef179250d1d9790d82017089f52",
+      "bytes": 12053748,
+      "log": ".local-tools/toy-art/build-debug.log",
+      "installedOnPhone": true
+    },
+    {
+      "mode": "release",
+      "status": "passed",
+      "artifact": ".local-tools/toy-art/entry-toy-release.hap",
+      "sha256": "4408fc9540766c1717f4d7b062263b9713f7570a60f1ef6e1fd790ebe9881fce",
+      "bytes": 9254626,
+      "log": ".local-tools/toy-art/build-release.log",
+      "installedOnPhone": false
+    }
+  ],
+  "desktopChecks": {
+    "selected": true,
+    "passed": 599,
+    "total": 599,
+    "groups": [
+      {
+        "name": "art",
+        "passed": 7,
+        "total": 7,
+        "log": ".local-tools/toy-art/art.log"
+      },
+      {
+        "name": "render-audit",
+        "passed": 14,
+        "total": 14,
+        "log": ".local-tools/toy-art/render-audit.log"
+      },
+      {
+        "name": "continuation",
+        "passed": 83,
+        "total": 83,
+        "log": ".local-tools/toy-art/continuation.log"
+      },
+      {
+        "name": "expansion",
+        "passed": 321,
+        "total": 321,
+        "log": ".local-tools/toy-art/expansion.log"
+      },
+      {
+        "name": "performance",
+        "passed": 165,
+        "total": 165,
+        "log": ".local-tools/toy-art/performance.log"
+      },
+      {
+        "name": "toy-scenes",
+        "passed": 9,
+        "total": 9,
+        "log": ".local-tools/toy-art/toy-scenes.log"
+      }
+    ]
+  },
+  "phone": {
+    "cases": [
+      {
+        "id": "screwout",
+        "status": "passed",
+        "at": "2026-10-19T10:01:14.374Z",
+        "resultText": [
+          "拆螺丝",
+          "得分 950 · 最高 950",
+          "剩余 0 · 步数 15",
+          "+30",
+          "拆螺丝",
+          "挑战完成",
+          "本局得分：950",
+          "再来一局",
+          "退出"
+        ],
+        "result": {
+          "tag": "screwout-result",
+          "at": "2026-10-19T10:01:14.374Z",
+          "image": "screwout-result.jpeg",
+          "imageSha256": "9bbd76fcd8bdbb70619ca297885a186714c6e71765847c7c529b708cdceb1a7b",
+          "layout": "screwout-result.json"
+        },
+        "steps": "15 screw removals, 5 plates cleared, natural win (950)"
+      },
+      {
+        "id": "parkingjam",
+        "status": "passed",
+        "at": "2026-10-19T10:02:07.260Z",
+        "resultText": [
+          "停车场挪车",
+          "得分 1700 · 最高 1700",
+          "剩余 0 · 步数 17",
+          "+100",
+          "停车场挪车",
+          "挑战完成",
+          "本局得分：1700",
+          "再来一局",
+          "退出"
+        ],
+        "result": {
+          "tag": "parkingjam-result",
+          "at": "2026-10-19T10:02:07.260Z",
+          "image": "parkingjam-result.jpeg",
+          "imageSha256": "82573ca88b995d16d1d01bf7d86e939346da91350fa2eeaff787b772236fd06f",
+          "layout": "parkingjam-result.json"
+        },
+        "steps": "17 cars cleared, undo restores car count, natural win (1700)"
+      },
+      {
+        "id": "jumpjump",
+        "status": "passed",
+        "at": "2026-10-19T10:02:42.295Z",
+        "resultText": [
+          "跳一跳",
+          "得分",
+          "3",
+          "最高",
+          "12",
+          "跳一跳",
+          "游戏结束",
+          "得分 3",
+          "再来一局",
+          "返回"
+        ],
+        "result": {
+          "tag": "jumpjump-result",
+          "at": "2026-10-19T10:02:42.295Z",
+          "image": "jumpjump-result.jpeg",
+          "imageSha256": "dc1edf5515fff985172eed886811580e22e2a996a34033220442c6bb69ea0a77",
+          "layout": "jumpjump-result.json"
+        },
+        "steps": "3 consecutive rendered landings; short tap produces natural loss/result (3)"
+      },
+      {
+        "id": "rollingball",
+        "status": "passed",
+        "at": "2026-10-19T10:03:45.957Z",
+        "resultText": [
+          "滚动球闯关",
+          "得分 1089 · 最高 1089",
+          "滚动球闯关",
+          "挑战完成",
+          "本局得分：1089",
+          "再来一局",
+          "退出"
+        ],
+        "result": {
+          "tag": "rollingball-result",
+          "at": "2026-10-19T10:03:45.957Z",
+          "image": "rollingball-result.jpeg",
+          "imageSha256": "07de0b2e163e93a3bef5c69e8645b5906f4c43f8723a9a5c3cf67ca3c143ff0e",
+          "layout": "rollingball-result.json"
+        },
+        "steps": "Screenshot-guided ball route around obstacles; natural win (1089); restart checked"
+      }
+    ],
+    "themes": [
+      {
+        "theme": "light",
+        "fronts": [
+          {
+            "tag": "light-screwout-ready",
+            "at": "2026-10-19T10:07:03.510Z",
+            "image": "light-screwout-ready.jpeg",
+            "imageSha256": "f3fc06b6db6f3172ec79145e8b8fad493b60359ecfaca991a1b45a62d63c59d6",
+            "layout": "light-screwout-ready.json"
+          },
+          {
+            "tag": "light-parkingjam-ready",
+            "at": "2026-10-19T10:07:21.372Z",
+            "image": "light-parkingjam-ready.jpeg",
+            "imageSha256": "7a183bdab3ad280d5e446010289e74a18da7bce7851dc066a2d32928ef586479",
+            "layout": "light-parkingjam-ready.json"
+          },
+          {
+            "tag": "light-jumpjump-ready",
+            "at": "2026-10-19T10:07:38.431Z",
+            "image": "light-jumpjump-ready.jpeg",
+            "imageSha256": "28877abe20593f7ff2330bb3895f9dd17392222de1c767196074e945ee4dc69c",
+            "layout": "light-jumpjump-ready.json"
+          },
+          {
+            "tag": "light-rollingball-ready",
+            "at": "2026-10-19T10:07:55.799Z",
+            "image": "light-rollingball-ready.jpeg",
+            "imageSha256": "f56d937d458e19b9f9e3c7ea178127eca8d034d5529048ea14af5eb576868112",
+            "layout": "light-rollingball-ready.json"
+          }
+        ],
+        "overview": "overview-light.png",
+        "overviewSha256": "4230e1c4ac9817a7aab2d591f8e56689d1b41f8fd9a9b07d0ca5a6a2fb461a65",
+        "visualReview": "passed"
+      },
+      {
+        "theme": "dark",
+        "fronts": [
+          {
+            "tag": "dark-screwout-ready",
+            "at": "2026-10-19T09:59:34.809Z",
+            "image": "dark-screwout-ready.jpeg",
+            "imageSha256": "aa6a4dc80911402e4ee5c7f6f0790fb406a50f92a64fe80aa119c94254b2beb9",
+            "layout": "dark-screwout-ready.json"
+          },
+          {
+            "tag": "dark-parkingjam-ready",
+            "at": "2026-10-19T09:59:52.501Z",
+            "image": "dark-parkingjam-ready.jpeg",
+            "imageSha256": "7eca02e5847f8ff7a8de727c52a38dae42a60e818362666e6f18110bd0ec1b76",
+            "layout": "dark-parkingjam-ready.json"
+          },
+          {
+            "tag": "dark-jumpjump-ready",
+            "at": "2026-10-19T10:00:09.662Z",
+            "image": "dark-jumpjump-ready.jpeg",
+            "imageSha256": "652b5f386c81366e45d1fb79eb9e7fd3d5182dfffe27a8ee648e8b8f2bc1c74e",
+            "layout": "dark-jumpjump-ready.json"
+          },
+          {
+            "tag": "dark-rollingball-ready",
+            "at": "2026-10-19T10:00:27.123Z",
+            "image": "dark-rollingball-ready.jpeg",
+            "imageSha256": "4b9e39f08463f79fdb60d2e1a1fb26c396662accad8a749cf6cbe115cae3865c",
+            "layout": "dark-rollingball-ready.json"
+          }
+        ],
+        "overview": "overview-dark.png",
+        "overviewSha256": "24a0cb5daa428c0651fcde18b02ab3e250bc1202e716dcb4d491b4c07f64c5e0",
+        "visualReview": "passed"
+      }
+    ],
+    "restart": {
+      "tag": "rollingball-restarted",
+      "at": "2026-10-19T10:06:35.393Z",
+      "image": "rollingball-restarted.jpeg",
+      "imageSha256": "e8cf4811e8f4ce72c4b45134757008fb8a13b7362f0cc5b783fc64c63a643fe4",
+      "layout": "rollingball-restarted.json"
+    },
+    "restoredTheme": {
+      "value": "跟随系统",
+      "at": "2026-10-19T10:08:10.377Z",
+      "evidence": {
+        "tag": "settings-restore",
+        "at": "2026-10-19T10:08:07.412Z",
+        "image": "settings-restore.jpeg",
+        "imageSha256": "af345cf6d7b4753c9abb0743dad9a778d32a5c8d45802b5494cf5b390626c6cb",
+        "layout": "settings-restore.json"
+      }
+    },
+    "finalScreen": {
+      "tag": "restored-theme-screwout-ready",
+      "at": "2026-10-19T10:08:23.448Z",
+      "image": "restored-theme-screwout-ready.jpeg",
+      "imageSha256": "6ac2f2ca8b157b212a0b6bd6c81cbe42bd29ac7e3025f6ab8a208dbd01612c07",
+      "layout": "restored-theme-screwout-ready.json"
+    }
+  },
+  "resources": {
+    "originalPackagedBytes": 1648700,
+    "meaning": "Original resource bytes, not compressed HAP increment, runtime memory or power use"
+  },
+  "provenance": {
+    "actions": "actions.jsonl",
+    "actionsSha256": "70c7c3eb6b2097b7249372e1b94e7518a1a52606fda07bbbe1b1ba3e10c22afe",
+    "selection": "Only the current debug SHA256 and explicit physical-phone target are accepted; earlier hashes in this file are historical development records",
+    "overview": "Contact sheets crop only status/gesture bars; original JPEG screenshots are retained"
+  },
+  "limitations": [
+    "Selected desktop checks only; not full-collection device acceptance",
+    "One completed interaction/result case per game on this package; not three settlements per game",
+    "Debug package installed and tested; Release built only",
+    "API 24 compatibility configured; no API 24 runtime verification in this run",
+    "No long-duration power, heat or measured FPS profiling"
+  ]
+}

@@ -103,8 +103,8 @@ export struct MinesweeperPage {
   }
 
   getResultColor(): Resource {
-    if (this.viewModel.gameResult) { return SemanticColors.success; }
-    return SemanticColors.error;
+    if (this.viewModel.gameResult) { return SemanticColors.successText; }
+    return SemanticColors.errorText;
   }
 
   getResultText(): Resource {
@@ -161,7 +161,7 @@ export struct MinesweeperPage {
               Text($r('app.string.flags_label')).fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
             }
             Text(this.viewModel.flagCount + '/' + this.viewModel.getMineCount()).fontSize(FontTokens.sizeHeadline)
-              .fontWeight(FontTokens.weightBold).fontColor(SemanticColors.warning)
+              .fontWeight(FontTokens.weightBold).fontColor(SemanticColors.warningText)
           }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface)
           .borderRadius(RadiusTokens.lg).alignItems(HorizontalAlign.Center).margin({ left: 16 })
 

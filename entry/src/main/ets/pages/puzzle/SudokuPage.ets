@@ -225,30 +225,36 @@ export struct SudokuPage {
             }
           })
 
-        Row({ space: SpacingTokens.sm }) {
-          ForEach([1, 2, 3, 4, 5, 6, 7, 8, 9], (n: number) => {
-            Button() {
-              Text('' + n)
-                .fontFamily(FontTokens.family)
-                .fontSize(18)
-                .fontWeight(FontTokens.weightMedium)
-                .fontColor($r('app.color.play_piece_text'))
-            }
-            .layoutWeight(1).height(46)
-            .enabled(!this.viewModel.isGenerating && !this.viewModel.generationFailed)
-            .backgroundColor($r('app.color.play_cell_background')).borderRadius(RadiusTokens.base)
-
-            .stateStyles({ pressed: this.pressedFeedback }).onClick(() => this.viewModel.setNumber(n))
-          }, (n: number) => n.toString())
-          Button() {
-            SymbolGlyph($r('sys.symbol.xmark'))
-              .fontSize(18).fontColor([SemanticColors.error])
-          }
-          .width(46).height(46)
-          .enabled(!this.viewModel.isGenerating && !this.viewModel.generationFailed)
-          .backgroundColor(SemanticColors.selectionSurface).borderRadius(RadiusTokens.base)
-
-          .stateStyles({ pressed: this.pressedFeedback }).onClick(() => this.viewModel.erase())
+        Column({ space: SpacingTokens.sm }) {
+          ForEach([0, 1], (row: number) => {
+            Row({ space: SpacingTokens.sm }) {
+              ForEach([1, 2, 3, 4, 5], (column: number) => {
+                if (row * 5 + column <= 9) {
+                  Button() {
+                    Text((row * 5 + column).toString())
+                      .fontFamily(FontTokens.family).fontSize($r('app.float.sudoku_key_font_size'))
+                      .fontWeight(FontTokens.weightMedium).fontColor($r('app.color.play_piece_text'))
+                  }
+                  .id('sudoku-key-' + (row * 5 + column).toString())
+                  .layoutWeight(1).constraintSize({ minHeight: $r('app.float.sudoku_key_min_size'), minWidth: $r('app.float.home_action_min_height') })
+                  .enabled(!this.viewModel.isGenerating && !this.viewModel.generationFailed && !this.viewModel.resumePending)
+                  .backgroundColor($r('app.color.play_cell_background')).borderRadius(RadiusTokens.base)
+                  .stateStyles({ pressed: this.pressedFeedback })
+                  .onClick(() => { this.viewModel.setNumber(row * 5 + column); })
+                } else {
+                  Button() {
+                    SymbolGlyph($r('sys.symbol.xmark')).fontSize(FontTokens.sizeBodyLarge).fontColor([SemanticColors.errorText])
+                  }
+                  .id('sudoku-key-erase').layoutWeight(1)
+                  .constraintSize({ minHeight: $r('app.float.sudoku_key_min_size'), minWidth: $r('app.float.home_action_min_height') })
+                  .enabled(!this.viewModel.isGenerating && !this.viewModel.generationFailed && !this.viewModel.resumePending)
+                  .backgroundColor(SemanticColors.selectionSurface).borderRadius(RadiusTokens.base)
+                  .accessibilityText($r('app.string.sudoku_erase'))
+                  .stateStyles({ pressed: this.pressedFeedback }).onClick(() => { this.viewModel.erase(); })
+                }
+              }, (column: number) => column.toString())
+            }.width('100%')
+          }, (row: number) => row.toString())
         }.width('100%').padding({ left: SpacingTokens.base, right: SpacingTokens.base, bottom: SpacingTokens.lg })
       }.width('100%').height('100%').padding({ bottom: this.safeBottom })
 

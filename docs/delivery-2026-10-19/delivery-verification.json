@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-19",
+  "timezone": "Asia/Shanghai",
+  "parentCommit": "1bec480b9004f70df3a97a4c80cd92b064f9f891",
+  "availableGames": 76,
+  "desktop": {
+    "suites": 29,
+    "passed": 1355,
+    "total": 1355
+  },
+  "nativeChecks": [
+    {
+      "name": "working-debug",
+      "successful": true,
+      "signed": true,
+      "reportedDuration": "25 s 860 ms"
+    },
+    {
+      "name": "working-release",
+      "successful": true,
+      "signed": true,
+      "reportedDuration": "23 s 575 ms"
+    },
+    {
+      "name": "staged-unsigned-debug",
+      "successful": true,
+      "signed": false,
+      "reportedDuration": "25 s 924 ms"
+    }
+  ],
+  "artifacts": {
+    "workingReleaseSha256": "bfe6748d4904c560aec05c04d671bd81d89f24dfe4f7d89901a36a70ea21d1ed",
+    "stagedUnsignedDebugSha256": "09d777ae31d047ad195b6ec228024228d1a4eee99598dc3bfad3f6539403f79f"
+  },
+  "excluded": {
+    "buildProfileLocalChanges": true,
+    "stagedBuildProfileCredentialFields": 0,
+    "rawEvidenceFiles": 2616,
+    "rawEvidenceBytes": 307904423,
+    "historicalHaps": 4
+  },
+  "installedFinalPackage": false
+}

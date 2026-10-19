@@ -9,7 +9,7 @@ import { GameCard } from '../../components/GameCard';
 import { HomeHeader } from '../../components/HomeHeader';
 import { HarmonyMotion } from '../../common/HarmonyMotion';
 import { resolveString } from '../../common/I18nUtils';
-import { playTimeHours } from '../../common/PlayTime';
+
 
 @ComponentV2
 export struct FeaturedTab {
@@ -18,6 +18,8 @@ export struct FeaturedTab {
   @Param newGames: GameInfo[] = [];
   /** 按最近游玩顺序排列，与主页和「我的」共用持久化记录。 */
   @Param recentGames: GameInfo[] = [];
+  @Param savedGames: GameInfo[] = [];
+  @Param onResumeGameClick: (game: GameInfo) => void = () => {};
   @Param onGameClick: (game: GameInfo) => void = () => {};
   @Param onHistoryClick: () => void = () => {};
   @Param onSettingsClick: () => void = () => {};
@@ -29,6 +31,7 @@ export struct FeaturedTab {
       HomeHeader({ title: $r('app.string.tab_featured'), onSettingsClick: this.onSettingsClick })
       Scroll() {
         Column() {
+          if (this.savedGames.length > 0) { this.ContinueGames() }
           this.Banner()
 
           this.RecentGames()
@@ -183,12 +186,12 @@ export struct FeaturedTab {
       Column({ space: SpacingTokens.sm }) {
         Column() {
           Image(game.icon)
-            .width($r('app.float.home_recent_icon_size'))
-            .height($r('app.float.home_recent_icon_size'))
+            .width($r('app.float.home_compact_icon_size'))
+            .height($r('app.float.home_compact_icon_size'))
             .objectFit(ImageFit.Contain)
         }
-        .width($r('app.float.home_recent_icon_container_size'))
-        .height($r('app.float.home_recent_icon_container_size'))
+        .width($r('app.float.home_continue_icon_size'))
+        .height($r('app.float.home_continue_icon_size'))
         .borderRadius(RadiusTokens.base)
         .backgroundColor(SemanticColors.gameIconBackground)
         .justifyContent(FlexAlign.Center)
@@ -202,7 +205,7 @@ export struct FeaturedTab {
           .textAlign(TextAlign.Center)
           .maxLines(2)
           .textOverflow({ overflow: TextOverflow.Ellipsis })
-        Text($r('app.string.play_time_hours', playTimeHours(game.playTimeMs)))
+        Text($r('app.string.home_replay'))
           .fontFamily(FontTokens.family)
           .fontSize(FontTokens.sizeCaption)
           .fontColor(SemanticColors.textTertiary)
@@ -214,57 +217,56 @@ export struct FeaturedTab {
     .id('recent_game_' + game.id)
     .type(ButtonType.Normal)
     .width($r('app.float.home_recent_card_width'))
-    .constraintSize({ minHeight: $r('app.float.home_recent_card_min_height') })
-    .padding(SpacingTokens.md)
+    .constraintSize({ minHeight: $r('app.float.home_compact_recent_height') })
+    .padding(SpacingTokens.sm)
     .borderRadius(RadiusTokens.lg)
     .backgroundColor(SemanticColors.surface)
     .renderGroup(true)
     .clickEffect(HarmonyMotion.press(this.getUIContext(), true))
     .accessibilityGroup(true)
     .accessibilityText(resolveString(game.name, this.getUIContext().getHostContext()))
-    .accessibilityDescription($r('app.string.home_recent_action'))
+    .accessibilityDescription($r('app.string.home_replay'))
     .onClick(() => { this.onGameClick(game); })
   }
 
-  /** 横幅使用系统卡片、文字和强调色。 */
+  @Builder
+  ContinueGames() {
+    Column({ space: SpacingTokens.sm }) {
+      Text($r('app.string.home_continue_title')).fontFamily(FontTokens.family)
+        .fontSize($r('app.float.home_section_title_size')).fontWeight(FontTokens.weightSemibold)
+        .fontColor(SemanticColors.textPrimary).width('100%')
+      Row({ space: SpacingTokens.md }) {
+        ForEach(this.savedGames, (game: GameInfo) => {
+          Button() {
+            Row({ space: SpacingTokens.sm }) {
+              Image(game.icon).width($r('app.float.home_continue_icon_size')).height($r('app.float.home_continue_icon_size'))
+                .objectFit(ImageFit.Contain).accessibilityLevel('no')
+              Column({ space: SpacingTokens.xs }) {
+                Text(game.name).fontSize(FontTokens.sizeBodyLarge).fontWeight(FontTokens.weightMedium)
+                  .fontColor(SemanticColors.textPrimary)
+                Text($r('app.string.save_continue')).fontSize(FontTokens.sizeBody).fontColor(SemanticColors.primary)
+              }.alignItems(HorizontalAlign.Start).layoutWeight(1)
+            }.width('100%')
+          }.id('featured-continue-' + game.id).type(ButtonType.Normal).layoutWeight(1)
+            .padding(SpacingTokens.md).borderRadius(RadiusTokens.base).backgroundColor(SemanticColors.selectionSurface)
+            .clickEffect(HarmonyMotion.press(this.getUIContext()))
+            .accessibilityGroup(true).accessibilityText(resolveString($r('app.string.save_continue'), this.getUIContext().getHostContext()) + ' ' + resolveString(game.name, this.getUIContext().getHostContext()))
+            .onClick(() => { this.onResumeGameClick(game); })
+        }, (game: GameInfo) => game.id)
+      }.width('100%')
+    }.width('100%').padding({ left: SpacingTokens.pageHorizontal, right: SpacingTokens.pageHorizontal, top: SpacingTokens.sm })
+  }
+
+  /** A compact greeting leaves the main screen to playable content. */
   @Builder
   Banner() {
-    Stack() {
-      Row() {
-        Column() {
-          Text($r('app.string.home_daily_greeting'))
-            .fontFamily(FontTokens.family)
-            .fontSize($r('app.float.home_section_title_size'))
-            .fontColor(SemanticColors.textPrimary)
-            .fontWeight(FontWeight.Medium)
-          Text(this.encouragement)
-            .id('featured-daily-inspiration')
-            .fontFamily(FontTokens.family)
-            .fontSize(FontTokens.sizeBody)
-            .fontColor(SemanticColors.textSecondary)
-            .fontWeight(FontWeight.Regular)
-            .margin({ top: SpacingTokens.xs })
-        }
-        .alignItems(HorizontalAlign.Start)
-        .layoutWeight(1)
-
-        Image($r('app.media.brand_start_icon'))
-          .width($r('app.float.brand_banner_icon_size'))
-          .height($r('app.float.brand_banner_icon_size'))
-          .objectFit(ImageFit.Contain)
-          .borderRadius($r('app.float.brand_banner_icon_radius')).clip(true)
-      }
-      .width('100%')
-      .padding({ left: SpacingTokens.lg, right: SpacingTokens.lg, top: SpacingTokens.base, bottom: SpacingTokens.base })
-      .borderRadius(RadiusTokens.xl)
-      .backgroundColor(SemanticColors.surface)
-
-    }
-    .width('100%')
-    .padding({
-      left: SpacingTokens.pageHorizontal,
-      right: SpacingTokens.pageHorizontal,
-      top: SpacingTokens.sm
-    })
+    Row({ space: SpacingTokens.md }) {
+      Text(this.encouragement).id('featured-daily-inspiration').layoutWeight(1)
+        .fontFamily(FontTokens.family).fontSize(FontTokens.sizeBodyLarge).fontColor(SemanticColors.textSecondary)
+      Image($r('app.media.brand_start_icon'))
+        .width($r('app.float.home_greeting_icon_size')).height($r('app.float.home_greeting_icon_size'))
+        .objectFit(ImageFit.Contain).borderRadius(RadiusTokens.sm).accessibilityLevel('no')
+    }.width('100%').padding({ left: SpacingTokens.pageHorizontal, right: SpacingTokens.pageHorizontal,
+      top: SpacingTokens.md, bottom: SpacingTokens.xs })
   }
 }

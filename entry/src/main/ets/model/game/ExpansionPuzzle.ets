@@ -1,5 +1,6 @@
 import { ExpansionState, ExpansionPiece, BLOCK_SHAPES, BlockShape } from './ExpansionState';
 import { RandomSource } from './RandomSource';
+import { ExpansionScrews } from './ExpansionScrews';
 
 /** Six different puzzle rules share state transport, never their move rules. */
 export class ExpansionPuzzle {
@@ -14,7 +15,7 @@ export class ExpansionPuzzle {
     } else if (s.id === 'tilestack') { this.makeStack(s);
     } else if (s.id === 'watersort') { this.makeWater(s);
     } else if (s.id === 'arrowclear') { this.makeArrows(s);
-    } else if (s.id === 'screwout') { this.makeScrews(s);
+    } else if (s.id === 'screwout') { ExpansionScrews.start(s, this.random);
     } else if (s.id === 'parkingjam') { this.makeParking(s); }
   }
   tap(s: ExpansionState, index: number): void {
@@ -22,7 +23,7 @@ export class ExpansionPuzzle {
     } else if (s.id === 'tilestack') { this.popTile(s, index);
     } else if (s.id === 'watersort') { this.pour(s, index);
     } else if (s.id === 'arrowclear') { this.clearArrow(s, index);
-    } else if (s.id === 'screwout') { this.unscrew(s, index);
+    } else if (s.id === 'screwout') { ExpansionScrews.tap(s, index);
     } else if (s.id === 'parkingjam') { this.drive(s, index); }
   }
   private refill(s: ExpansionState): void {
@@ -148,32 +149,8 @@ export class ExpansionPuzzle {
     if (!this.rayClear(s.board, s.cols, s.rows, index, s.board[index] - 1)) { s.errors++; if (s.errors === 3) { s.outcome = 2; } return; }
     s.board[index] = 0; s.moves++; s.score += 50; if (s.board.every((v: number) => v === 0)) { s.outcome = 1; }
   }
-  private makeScrews(s: ExpansionState): void {
-    s.cols = 3; s.rows = 3; const plates: number = 3 + s.level;
-    for (let p: number = 0; p < plates; p++) {
-      const plate: ExpansionPiece = new ExpansionPiece(); plate.id = p; plate.kind = 0; plate.x = 22 + p * 22;
-      plate.y = 48 + p * 52; plate.w = 220; plate.h = 96; plate.color = p + 1; s.pieces.push(plate);
-      for (let j: number = 0; j < 3; j++) {
-        const screw: ExpansionPiece = new ExpansionPiece(); screw.id = plates + p * 3 + j; screw.kind = 1;
-        screw.owner = p; screw.x = plate.x + 26 + j * 78; screw.y = plate.y + 30; screw.r = 16; screw.color = p + 1; s.pieces.push(screw);
-      }
-    }
-    s.target = s.pieces.filter((p: ExpansionPiece) => p.kind === 1).sort((a: ExpansionPiece, b: ExpansionPiece) => b.owner - a.owner).map((p: ExpansionPiece) => p.id);
-  }
   screwFree(s: ExpansionState, screw: ExpansionPiece): boolean {
-    return screw.alive && screw.kind === 1 && !s.pieces.some((p: ExpansionPiece) => p.kind === 0 && p.alive && p.id > screw.owner &&
-      screw.x >= p.x && screw.x <= p.x + p.w && screw.y >= p.y && screw.y <= p.y + p.h);
-  }
-  private unscrew(s: ExpansionState, id: number): void {
-    const screw: ExpansionPiece | undefined = s.pieces.find((p: ExpansionPiece) => p.id === id);
-    if (!screw || !this.screwFree(s, screw) || s.tray.length >= 3) { return; }
-    screw.alive = false; s.tray.push(screw.id); s.moves++; s.score += 30;
-    if (!s.pieces.some((p: ExpansionPiece) => p.kind === 1 && p.alive && p.owner === screw.owner)) {
-      const plate: ExpansionPiece | undefined = s.pieces.find((p: ExpansionPiece) => p.kind === 0 && p.id === screw.owner);
-      if (plate) { plate.alive = false; }
-      s.tray = s.tray.filter((parked: number) => s.pieces.find((p: ExpansionPiece) => p.id === parked)?.owner !== screw.owner); s.score += 100;
-    }
-    if (!s.pieces.some((p: ExpansionPiece) => p.kind === 0 && p.alive)) { s.outcome = 1; }
+    return ExpansionScrews.free(s, screw);
   }
   private carClear(s: ExpansionState, car: ExpansionPiece): boolean {
     const grid: number[] = new Array<number>(s.cols * s.rows).fill(0);

@@ -107,7 +107,7 @@ export class BrickBreakerViewModel implements GameLifecycleObserver {
     this.cancelLevelTransition();
     this.stopTimer();
     this.autoPaused = false;
-    GameDataManager.recordGamePlayed(GAME_ID);
+    GameDataManager.recordGameStarted(GAME_ID);
     this.score = 0;
     this.lives = 3;
     this.level = 1;

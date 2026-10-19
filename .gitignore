@@ -21,3 +21,30 @@
 .test-screenshots/
 package.json
 package-lock.json
+
+# 安装包与本地签名材料
+*.hap
+*.app
+*.p12
+*.p7b
+*.key
+*.keystore
+
+# 历史验收原始输出保留本地；提交进度、结论和选定画面
+/docs/device-acceptance/three-settlements-2026-10-14/*
+!/docs/device-acceptance/three-settlements-2026-10-14/README.md
+!/docs/device-acceptance/three-settlements-2026-10-14/REPORT.md
+!/docs/device-acceptance/three-settlements-2026-10-14/progress.json
+!/docs/device-acceptance/three-settlements-2026-10-14/visual-reviews.json
+/docs/device-acceptance/toy-art-2026-10-19/*
+!/docs/device-acceptance/toy-art-2026-10-19/README.md
+/docs/device-acceptance/toy-art-2026-10-19-phone/*
+!/docs/device-acceptance/toy-art-2026-10-19-phone/README.md
+!/docs/device-acceptance/toy-art-2026-10-19-phone/verification.json
+!/docs/device-acceptance/toy-art-2026-10-19-phone/overview-*.png
+!/docs/device-acceptance/toy-art-2026-10-19-phone/*-result.jpeg
+/docs/device-acceptance/screwout-difficulty-2026-10-19-emulator/*
+!/docs/device-acceptance/screwout-difficulty-2026-10-19-emulator/README.md
+!/docs/device-acceptance/screwout-difficulty-2026-10-19-emulator/verification.json
+!/docs/device-acceptance/screwout-difficulty-2026-10-19-emulator/*-ready.jpeg
+!/docs/device-acceptance/screwout-difficulty-2026-10-19-emulator/*-result.jpeg

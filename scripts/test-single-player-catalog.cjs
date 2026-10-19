@@ -1,4 +1,4 @@
-/* Publication boundaries for the 79-game single-player collection.
+/* Publication boundaries for the 76-game single-player collection.
  * Uses real data, route and continuation modules with controlled native services. */
 const assert = require('node:assert/strict');
 const { fixture, Frames } = require('./test-performance.cjs');
@@ -6,7 +6,8 @@ const base = 'entry/src/main/ets/';
 const retired = ['tictactoe', 'gomoku', 'reversi', 'fourline', 'nim', 'dots', 'tug',
   'doudizhu', 'guandan', 'mahjong', 'ludo',
   'hiddenobjects', 'farm', 'decorate', 'characters', 'idiom',
-  'wordtower', 'backpack', 'differences', 'onestroke', 'golf'];
+  'wordtower', 'backpack', 'differences', 'onestroke', 'golf',
+  'billiards', 'basketball', 'penalty'];
 const collectionRetired = retired.slice(0, 5);
 const oldRoute = id => (collectionRetired.includes(id) ? 'Collection_' : 'Expansion_') + id;
 const tests = [];
@@ -18,14 +19,14 @@ const restoredFixture = f => {
   return next;
 };
 
-test('published catalog contains 79 unique games and the approved six-category counts', () => {
+test('published catalog contains 76 unique games and the approved six-category counts', () => {
   const f = fixture(), data = f.data();
   const categories = f.load(base + 'common/GameConstants.ets').GameCategory;
   const games = data.getAllGames();
-  assert.equal(games.length, 79);
-  assert.equal(new Set(games.map(game => game.id)).size, 79);
-  for (const [category, count] of [['CLASSIC', 18], ['PUZZLE', 28], ['BOARD', 5],
-    ['NUMBER', 8], ['MEMORY', 5], ['REACTION', 15]]) {
+  assert.equal(games.length, 76);
+  assert.equal(new Set(games.map(game => game.id)).size, 76);
+  for (const [category, count] of [['CLASSIC', 17], ['PUZZLE', 28], ['BOARD', 5],
+    ['NUMBER', 8], ['MEMORY', 5], ['REACTION', 13]]) {
     assert.equal(data.getGamesByCategory(categories[category]).length, count, category);
   }
   for (const id of retired) { assert.equal(data.getGameById(id), undefined, id); }
@@ -48,7 +49,7 @@ test('withdrawal does not remove archived catalogs or playable model implementat
   }
 });
 
-test('direct and reverse routes reject all 21 withdrawn games and invalid identifiers', () => {
+test('direct and reverse routes reject all 24 withdrawn games and invalid identifiers', () => {
   const f = fixture(), routes = f.load(base + 'router/GameRouteRegistry.ets').GameRoutes;
   for (const id of retired) {
     assert.equal(routes.routeName(id), '', id);
@@ -66,11 +67,11 @@ test('direct and reverse routes reject all 21 withdrawn games and invalid identi
   }
 });
 
-test('generated routes contain exactly the 79 published games with reversible navigation', () => {
+test('generated routes contain exactly the 76 published games with reversible navigation', () => {
   const f = fixture(), routes = f.load(base + 'router/GameRouteRegistry.ets').GameRoutes;
   const generated = routes.getAllGameRoutes();
-  assert.equal(generated.length, 79);
-  assert.equal(new Set(generated).size, 79);
+  assert.equal(generated.length, 76);
+  assert.equal(new Set(generated).size, 76);
   assert.deepEqual(generated.map(route => routes.gameIdForRoute(route)).sort(),
     f.data().getAllGames().map(game => game.id).sort());
   for (const game of f.data().getAllGames()) {

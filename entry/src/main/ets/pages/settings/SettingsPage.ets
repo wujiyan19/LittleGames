@@ -119,7 +119,7 @@ export struct SettingsPage {
         Column({ space: SpacingTokens.xs }) {
           Text(title).fontFamily(FontTokens.family).fontSize(FontTokens.sizeBodyLarge)
             .fontWeight(FontTokens.weightMedium)
-            .fontColor(destructive ? SemanticColors.error : SemanticColors.textPrimary)
+            .fontColor(destructive ? SemanticColors.errorText : SemanticColors.textPrimary)
           Text(detail).fontFamily(FontTokens.family).fontSize(FontTokens.sizeBody)
             .fontColor(SemanticColors.textSecondary)
         }.alignItems(HorizontalAlign.Start).layoutWeight(1)

@@ -1,5 +1,6 @@
 import { ExpansionState, ExpansionPiece, ExpansionPile } from './ExpansionState';
 import { ExpansionPuzzle } from './ExpansionPuzzle';
+import { ExpansionScrews } from './ExpansionScrews';
 import { ExpansionPhysics } from './ExpansionPhysics';
 import { ExpansionAdventure } from './ExpansionAdventure';
 import { ExpansionTable, CHARACTER_PARTS, CHARACTER_RECIPES } from './ExpansionTable';
@@ -215,14 +216,7 @@ export class ExpansionModel {
     if (s.id === 'arrowclear') { return s.cols === 5 + s.level && s.rows === s.cols && V.numbers(s.board, s.cols * s.rows, 0, 4) &&
       V.numbers(s.target, s.cols * s.rows, 0, s.cols * s.rows - 1) && new Set<number>(s.target).size === s.target.length && s.errors <= 3 && s.pieces.length === 0; }
     if (s.id === 'screwout') {
-      const expected: ExpansionState = new ExpansionState(); expected.id = s.id; expected.level = s.level; this.puzzle.start(expected);
-      if (s.pieces.length !== expected.pieces.length || s.board.length !== 0 || !V.numbers(s.target, (3 + s.level) * 3, 3 + s.level, (3 + s.level) * 4 - 1) || s.tray.length > 3) { return false; }
-      for (let i: number = 0; i < s.pieces.length; i++) {
-        const p: ExpansionPiece = s.pieces[i]; const e: ExpansionPiece = expected.pieces[i];
-        if (p.id !== e.id || p.kind !== e.kind || p.x !== e.x || p.y !== e.y || p.w !== e.w || p.h !== e.h || p.r !== e.r || p.owner !== e.owner) { return false; }
-        if (p.kind === 0 && p.alive !== s.pieces.some((q: ExpansionPiece) => q.kind === 1 && q.owner === p.id && q.alive)) { return false; }
-      }
-      return new Set<number>(s.tray).size === s.tray.length && s.tray.every((id: number) => s.pieces.some((p: ExpansionPiece) => p.id === id && p.kind === 1 && !p.alive));
+      return ExpansionScrews.valid(s);
     }
     if (s.id === 'parkingjam') {
       if (s.cols !== 6 + s.level || s.rows !== s.cols || s.pieces.length < 1 || s.pieces.length > 9 + 4 * s.level || s.board.length !== 0 || s.tray.length !== 0) { return false; }

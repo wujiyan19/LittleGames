@@ -16,6 +16,9 @@ export class WidgetLaunch {
     this.revision++;
   }
 
+  /** Home navigation shares the existing saved-game resume path. */
+  prepareResume(gameId: string): void { this.resumeGameId = gameId; }
+
   takeGameId(): string {
     const gameId: string = this.pendingGameId;
     this.pendingGameId = '';

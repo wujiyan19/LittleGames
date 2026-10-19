@@ -375,6 +375,46 @@
     {
       "name": "widget_daily_icon_size",
       "value": "36vp"
+    },
+    {
+      "name": "sudoku_key_min_size",
+      "value": "48vp"
+    },
+    {
+      "name": "sudoku_key_font_size",
+      "value": "20fp"
+    },
+    {
+      "name": "home_continue_icon_size",
+      "value": "40vp"
+    },
+    {
+      "name": "home_compact_icon_size",
+      "value": "32vp"
+    },
+    {
+      "name": "home_compact_recent_height",
+      "value": "104vp"
+    },
+    {
+      "name": "home_greeting_icon_size",
+      "value": "32vp"
+    },
+    {
+      "name": "toy_board_radius",
+      "value": "18vp"
+    },
+    {
+      "name": "toy_tray_slot_size",
+      "value": "40vp"
+    },
+    {
+      "name": "toy_screw_controls_reserve",
+      "value": "228"
+    },
+    {
+      "name": "toy_screw_board_min_height",
+      "value": "260"
     }
   ]
 }

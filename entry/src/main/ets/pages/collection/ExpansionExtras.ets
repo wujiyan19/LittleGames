@@ -12,7 +12,7 @@ export struct ExpansionExtras {
   @Param vm: ExpansionViewModel = new ExpansionViewModel();
   cardText(card: number): string {
     if (this.vm.state.pieces[card].w === 0) { return '▧'; }
-    const rank: number = card % 13; return ['♠', '♥', '♦', '♣'][Math.floor(card / 13)] + ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'][rank];
+    const rank: number = card % 13; return ['♤', '♡', '♢', '♧'][Math.floor(card / 13)] + ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'][rank];
   }
   cardColor(card: number): Resource { const suit: number = Math.floor(card / 13); return suit === 1 || suit === 2 ? SemanticColors.error : SemanticColors.textPrimary; }
   top(pile: number): number { const cards: number[] = this.vm.state.piles[pile].cards; return cards.length > 0 ? cards[cards.length - 1] : -1; }
@@ -45,7 +45,12 @@ export struct ExpansionExtras {
   }
   @Builder
   Card(card: number) {
-    Button(this.cardText(card), { type: ButtonType.Normal }).width('100%').height(36).padding(0)
+    Button({ type: ButtonType.Normal }) {
+      Stack({ alignContent: Alignment.TopStart }) {
+        Text(this.cardText(card)).fontSize(FontTokens.sizeBody).fontFamily(FontTokens.family).fontColor(this.cardColor(card))
+          .padding({ top: SpacingTokens.xs, left: SpacingTokens.xs }).hitTestBehavior(HitTestMode.None)
+      }.width('100%').height('100%')
+    }.width('100%').height(36).padding(0)
       .backgroundImage(this.vm.state.pieces[card].w === 0 ? $r('app.media.exp_card_back') : $r('app.media.exp_card_front')).backgroundImageSize(ImageSize.Cover)
       .fontSize(FontTokens.sizeBody).fontColor(this.cardColor(card)).backgroundColor(SemanticColors.surface)
       .borderRadius(RadiusTokens.xs).border({ width: this.vm.state.selected === card ? 2 : 1, color: this.vm.state.selected === card ? SemanticColors.primary : SemanticColors.border })
@@ -56,13 +61,19 @@ export struct ExpansionExtras {
     Column({ space: SpacingTokens.base }) {
       Row({ space: SpacingTokens.sm }) {
         Button($r('app.string.expansion_stock', this.vm.state.piles[0].cards.length)).layoutWeight(1).onClick(() => { this.vm.tap(100); })
-        Column() { if (this.top(1) >= 0) { this.Card(this.top(1)) } else { Text('○').fontColor(SemanticColors.textSecondary) } }.layoutWeight(1)
+        Column() {
+          if (this.vm.state.piles[1].cards.length > 0) {
+            ForEach(this.vm.state.piles[1].cards.slice(-1), (card: number) => {
+              this.Card(card)
+            }, (card: number) => card.toString())
+          } else { Text('○').fontColor(SemanticColors.textSecondary) }
+        }.layoutWeight(1)
         Button($r('app.string.expansion_foundation')).layoutWeight(1).onClick(() => { this.vm.tap(101); })
       }.width('100%')
       Row({ space: SpacingTokens.sm }) {
         ForEach(range(4), (suit: number) => {
-          Button(this.top(9 + suit) >= 0 ? this.cardText(this.top(9 + suit)) : ['♠', '♥', '♦', '♣'][suit], { type: ButtonType.Normal })
-            .layoutWeight(1).height(44).fontColor(suit === 1 || suit === 2 ? SemanticColors.error : SemanticColors.textPrimary)
+          Button(this.top(9 + suit) >= 0 ? this.cardText(this.top(9 + suit)) : ['♤', '♡', '♢', '♧'][suit], { type: ButtonType.Normal })
+            .layoutWeight(1).height(44).fontFamily(FontTokens.family).fontColor(suit === 1 || suit === 2 ? SemanticColors.errorText : SemanticColors.textPrimary)
             .backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.sm).onClick(() => { this.vm.tap(109 + suit); })
         }, (suit: number) => suit.toString())
       }.width('100%')
@@ -107,7 +118,7 @@ export struct ExpansionExtras {
               Image(ExpansionArt.person(rendered.piece.id % 6)).width(52).height(52).objectFit(ImageFit.Contain).accessibilityLevel('no')
               Image(ExpansionArt.food(rendered.piece.color)).width(32).height(32).objectFit(ImageFit.Contain).accessibilityLevel('no')
               Text(this.food(rendered.piece.color)).fontColor(SemanticColors.textPrimary)
-              Text($r('app.string.expansion_customer', rendered.piece.id, Math.ceil(rendered.piece.age))).fontSize(FontTokens.sizeCaption).fontColor(rendered.piece.age < 8 ? SemanticColors.warning : SemanticColors.textSecondary)
+              Text($r('app.string.expansion_customer', rendered.piece.id, Math.ceil(rendered.piece.age))).fontSize(FontTokens.sizeCaption).fontColor(rendered.piece.age < 8 ? SemanticColors.warningText : SemanticColors.textSecondary)
             }.padding(SpacingTokens.sm)
           }.width('47%').margin(SpacingTokens.xs).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
             .onClick(() => { this.vm.tap(100 + rendered.piece.id); })

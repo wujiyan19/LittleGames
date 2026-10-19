@@ -45,8 +45,9 @@ struct Index {
   @Local newGames: GameInfo[] = [];
   @Local rankedGames: GameInfo[] = [];
   @Local totalGames: number = 0;
-  @Local bestScoreText: string = '--';
+  @Local totalStarts: number = 0;
   @Local recentGames: GameInfo[] = [];
+  @Local savedGames: GameInfo[] = [];
   @Local playHistory: PlayedGameRecord[] = [];
   @Local playedGameCount: number = 0;
   @Local totalPlayTimeMs: number = 0;
@@ -148,29 +149,24 @@ struct Index {
 
   /**
    * 刷新最近游玩、最高分与累计游玩时长影响的部分。
-   * 精选随日期与手动批次变化；排行榜沿用最高分口径。
+   * 精选随日期与手动批次变化；常玩列表按实际开局次数排序。
    */
   refreshScores(): void {
     GameLifecycleBus.flushPlayTime();
     this.dailyFeatured.update(GameDataManager.getAllGames());
     this.featuredGames = this.dailyFeatured.recommendations;
     this.scheduleDailyRefresh();
-    this.rankedGames = GameDataManager.getTopGames(6);
+    this.rankedGames = GameDataManager.getFrequentlyPlayed(6);
     this.playHistory = GameDataManager.getPlayHistory();
+    this.savedGames = GameDataManager.getAllGames().filter((game: GameInfo): boolean =>
+      (game.id === '2048' || game.id === 'sudoku') && GameDataManager.getSavedGame(game.id).length > 0);
     this.recentGames = this.playHistory.slice(0, 5).map((record: PlayedGameRecord) => record.game);
     this.playedGameCount = GameDataManager.getPlayedGameCount();
     this.totalPlayTimeMs = GameDataManager.getTotalPlayTimeMs();
     // GameInfo 是普通接口，替换数组并以时长作为卡片 key，确保返回后展示新时长。
     this.newGames = this.newGames.slice();
     this.allGamesPinyin = this.allGamesPinyin.slice();
-    const top: GameInfo[] = GameDataManager.getTopGames(1);
-    if (top.length > 0 && top[0].highScore > 0) {
-      const context = this.getUIContext().getHostContext();
-      const label = resolveString(top[0].scoreLabel, context);
-      this.bestScoreText = top[0].highScore.toString() + ' ' + label;
-    } else {
-      this.bestScoreText = '--';
-    }
+    this.totalStarts = GameDataManager.getTotalStarts();
   }
 
   // 中文按拼音排序（系统 Locale 习惯排序）
@@ -248,6 +244,8 @@ struct Index {
                 },
                 newGames: this.newGames,
                 recentGames: this.recentGames,
+                savedGames: this.savedGames,
+                onResumeGameClick: (game: GameInfo) => { widgetLaunch.prepareResume(game.id); this.navigateToGame(game); },
                 onSettingsClick: () => { this.pathStack.pushPathByName('SettingsPage', null); },
                 onHistoryClick: () => { this.pathStack.pushPathByName('PlayHistoryPage', null); },
                 onGameClick: (game: GameInfo) => { this.navigateToGame(game); }
@@ -265,7 +263,7 @@ struct Index {
             TabContent() {
               ProfileTab({
                 totalGames: this.totalGames,
-                bestScoreText: this.bestScoreText,
+                totalStarts: this.totalStarts,
                 rankedGames: this.rankedGames,
                 recentGames: this.recentGames,
                 playedGameCount: this.playedGameCount,

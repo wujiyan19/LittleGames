@@ -129,7 +129,7 @@ export struct Match3Page {
 
           Column() {
             Text($r('app.string.game_match3_moves_label')).fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
-            Text('' + this.viewModel.movesLeft).fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold).fontColor(SemanticColors.warning)
+            Text('' + this.viewModel.movesLeft).fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold).fontColor(SemanticColors.warningText)
           }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
           .alignItems(HorizontalAlign.Center).margin({ right: 16 })
         }.margin({ top: 12, bottom: 12 })

@@ -1,6 +1,8 @@
 import { ExpansionState, ExpansionPiece } from './ExpansionState';
 import { RandomSource } from './RandomSource';
 
+export const FRUIT_WARNING_Y: number = 50;
+
 /** Fixed-step native UI games. Coordinates are logical units in a 360 by 460 arena. */
 export class ExpansionPhysics {
   private random: RandomSource;
@@ -131,10 +133,11 @@ export class ExpansionPhysics {
     s.pieces = s.pieces.filter((p: ExpansionPiece) => p.alive);
     s.pieces.forEach((p: ExpansionPiece) => {
       p.x = Math.max(p.r, Math.min(360 - p.r, p.x)); p.y = Math.min(460 - p.r, p.y);
-      p.age = p.y - p.r < 50 && Math.abs(p.vy) < 35 && s.time > 2 ? p.age + dt : 0;
+      // Contact jitter does not reset a fruit that continuously stays above the line.
+      p.age = p.y - p.r < FRUIT_WARNING_Y ? p.age + dt : 0;
       if (p.age >= 2) { s.outcome = 2; }
     });
-    const resting: boolean = s.cooldown === 0 && s.pieces.every((p: ExpansionPiece) => Math.abs(p.vx) < 5 && Math.abs(p.vy) < 20 && p.y - p.r >= 50);
+    const resting: boolean = s.cooldown === 0 && s.pieces.every((p: ExpansionPiece) => Math.abs(p.vx) < 5 && Math.abs(p.vy) < 20 && p.y - p.r >= FRUIT_WARNING_Y);
     this.stillTime = resting ? this.stillTime + dt : 0;
     if (this.stillTime >= 1.2) { s.phase = 0; }
   }

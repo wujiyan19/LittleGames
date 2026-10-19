@@ -531,6 +531,50 @@
     {
       "name": "play_mine_revealed_background",
       "value": "#5B3D45"
+    },
+    {
+      "name": "success_text",
+      "value": "#70DDA8"
+    },
+    {
+      "name": "warning_text",
+      "value": "#FFD080"
+    },
+    {
+      "name": "error_text",
+      "value": "#FF9691"
+    },
+    {
+      "name": "color_cue_background",
+      "value": "#FFF8E7"
+    },
+    {
+      "name": "toy_tray_background",
+      "value": "#344653"
+    },
+    {
+      "name": "toy_direction_ink",
+      "value": "#344D58"
+    },
+    {
+      "name": "toy_screw_coral",
+      "value": "#E47F6F"
+    },
+    {
+      "name": "toy_screw_gold",
+      "value": "#E4B54C"
+    },
+    {
+      "name": "toy_screw_mint",
+      "value": "#75B69D"
+    },
+    {
+      "name": "toy_screw_blue",
+      "value": "#77A9C5"
+    },
+    {
+      "name": "toy_screw_lilac",
+      "value": "#A591C7"
     }
   ]
 }

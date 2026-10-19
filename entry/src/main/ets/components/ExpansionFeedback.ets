@@ -49,7 +49,7 @@ export struct ExpansionFeedback {
       }
       Text(this.kind === 1 ? '+' + this.gain.toString() : this.kind === 2 ? $r('app.string.art_try_again') : '')
         .fontSize(FontTokens.sizeSubtitle).fontWeight(FontWeight.Bold)
-        .fontColor(this.kind === 2 ? SemanticColors.error : SemanticColors.success)
+        .fontColor(this.kind === 2 ? SemanticColors.errorText : SemanticColors.successText)
         .padding(SpacingTokens.sm).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.full)
         .translate({ y: -this.progress * 32 }).opacity(1 - this.progress)
         .scale({ x: 0.9 + this.progress * 0.15, y: 0.9 + this.progress * 0.15 });

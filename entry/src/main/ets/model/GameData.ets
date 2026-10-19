@@ -12,6 +12,7 @@ import { isGameAvailable } from '../common/GameAvailability';
 export const GAME_DATA_STORE_NAME: string = 'little_games_data';
 const KEY_HIGH_SCORES = 'highScores';
 const KEY_PLAY_COUNTS = 'playCounts';
+const KEY_GAME_STARTS = 'gameStartCounts';
 const KEY_PLAY_TIMES = 'playTimesMs';
 const KEY_PLAYED_GAMES = 'playedGames';
 const KEY_SETTINGS = 'settings';
@@ -60,6 +61,9 @@ export class GameDataManager {
   private static playedGameIds: string[] = [];
   /** 每款游戏最近开局的 Unix 毫秒时间，保留完整历史，不随预览数量截断。 */
   private static lastPlayedAtByGame: Record<string, number> = {};
+  /** Only actual new games count; page attachment and save restoration do not. */
+  private static gameStarts: Record<string, number> = {};
+  private static gameStartsDirty: boolean = false;
   /** 完整登记目录用于保留撤下玩法的旧战绩，只有 games 对外提供上架内容。 */
   private static catalog: GameInfo[] = [
     {
@@ -217,10 +221,18 @@ export class GameDataManager {
     GameDataManager.saved2048 = typeof saved2048 === 'string' ? saved2048 : '';
     GameDataManager.savedSudoku = typeof savedSudoku === 'string' ? savedSudoku : '';
     const scoreJson = GameDataManager.store.getSync(KEY_HIGH_SCORES, '') as string;
-    GameDataManager.applyMap(scoreJson, (g: GameInfo, v: number): void => { g.highScore = v; });
+    GameDataManager.applyMap(scoreJson, (g: GameInfo, v: number): void => {
+      if (GameDataManager.validHighScore(v)) { g.highScore = v; }
+    });
     const timeJson = GameDataManager.store.getSync(KEY_PLAY_TIMES, '') as string;
     GameDataManager.applyMap(timeJson, (g: GameInfo, v: number): void => {
       if (Number.isFinite(v) && v >= 0 && v <= Number.MAX_SAFE_INTEGER) { g.playTimeMs = Math.floor(v); }
+    });
+    GameDataManager.gameStarts = {};
+    GameDataManager.gameStartsDirty = false;
+    const startsJson = GameDataManager.store.getSync(KEY_GAME_STARTS, '') as string;
+    GameDataManager.applyMap(startsJson, (g: GameInfo, v: number): void => {
+      if (Number.isSafeInteger(v) && v > 0) { GameDataManager.gameStarts[g.id] = v; }
     });
     const playedJson = GameDataManager.store.getSync(KEY_PLAYED_GAMES, '') as string;
     GameDataManager.playedGameIds = GameDataManager.restoreGameIds(playedJson);
@@ -340,6 +352,10 @@ export class GameDataManager {
         }
         GameDataManager.store.putSync(KEY_HIGH_SCORES, JSON.stringify(scores));
         GameDataManager.store.putSync(KEY_PLAY_TIMES, JSON.stringify(times));
+        if (GameDataManager.gameStartsDirty) {
+          GameDataManager.store.putSync(KEY_GAME_STARTS, JSON.stringify(GameDataManager.gameStarts));
+          GameDataManager.gameStartsDirty = false;
+        }
         GameDataManager.store.putSync(KEY_PLAYED_GAMES, JSON.stringify(GameDataManager.playedGameIds));
         GameDataManager.store.putSync(KEY_SETTINGS, JSON.stringify(GameDataManager.settings));
         GameDataManager.store.putSync(KEY_RECENT_GAMES, JSON.stringify(GameDataManager.recentGameIds));
@@ -418,11 +434,44 @@ export class GameDataManager {
   }
 
   static updateHighScore(id: string, score: number): void {
+    if (!GameDataManager.validHighScore(score)) { return; }
     const game = GameDataManager.games.find(g => g.id === id);
     if (game && score > game.highScore) {
       game.highScore = score;
       GameDataManager.markDirty();
     }
+  }
+
+  private static validHighScore(score: number): boolean {
+    return Number.isFinite(score) && score >= 0 && score <= Number.MAX_SAFE_INTEGER;
+  }
+
+  static recordGameStarted(id: string): void {
+    if (GameDataManager.getGameById(id) === undefined) { return; }
+    const count: number = GameDataManager.getPlayCount(id);
+    if (count < Number.MAX_SAFE_INTEGER) {
+      GameDataManager.gameStarts[id] = count + 1;
+      GameDataManager.gameStartsDirty = true;
+    }
+    GameDataManager.recordGamePlayed(id);
+  }
+
+  static getPlayCount(id: string): number { return GameDataManager.gameStarts[id] ?? 0; }
+
+  static getTotalStarts(): number {
+    let total: number = 0;
+    for (let i = 0; i < GameDataManager.games.length; i++) {
+      total += GameDataManager.getPlayCount(GameDataManager.games[i].id);
+    }
+    return total;
+  }
+
+  static getFrequentlyPlayed(limit: number = 5): GameInfo[] {
+    return GameDataManager.games.filter((game: GameInfo): boolean => GameDataManager.getPlayCount(game.id) > 0)
+      .sort((a: GameInfo, b: GameInfo): number => {
+        const difference: number = GameDataManager.getPlayCount(b.id) - GameDataManager.getPlayCount(a.id);
+        return difference !== 0 ? difference : (GameDataManager.lastPlayedAtByGame[b.id] ?? 0) - (GameDataManager.lastPlayedAtByGame[a.id] ?? 0);
+      }).slice(0, limit);
   }
 
   static recordGamePlayed(id: string): void {
@@ -583,6 +632,8 @@ export class GameDataManager {
     }
     GameDataManager.recentGameIds = [];
     GameDataManager.playedGameIds = [];
+    GameDataManager.gameStarts = {};
+    GameDataManager.gameStartsDirty = true;
     GameDataManager.lastPlayedAtByGame = {};
     GameDataManager.saved2048 = '';
     GameDataManager.savedSudoku = '';

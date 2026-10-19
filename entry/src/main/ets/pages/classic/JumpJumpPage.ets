@@ -19,6 +19,7 @@ import { ExitConfirmDialog } from '../../components/ExitConfirmDialog';
 import { GameLifecycleBus } from '../../common/GameLifecycleBus';
 import { JumpJumpViewModel, PlatformData } from '../../viewmodel/JumpJumpViewModel';
 import { DisplayFrameLoop } from '../../common/DisplayFrameLoop';
+import { ToyJumpStage } from '../../components/ToyJumpStage';
 
 /** 平台高度（vp） */
 const PLATFORM_H = 18;
@@ -37,6 +38,7 @@ export struct JumpJumpPage {
   /** 游戏区实测尺寸（vp） */
   @Local areaW: number = 0;
   @Local areaH: number = 0;
+  @Local sceneReady: boolean = false;
 
   @Monitor('viewModel.status', 'viewModel.confirmExit')
   playTimeStateChanged(): void { GameLifecycleBus.updatePlayTime(this.viewModel); }
@@ -141,20 +143,16 @@ export struct JumpJumpPage {
 
         // 游戏区：全屏长按蓄力
         Stack({ alignContent: Alignment.TopStart }) {
-          Image($r('app.media.play_jump_scene'))
-            .width('100%').height('100%')
-            .objectFit(ImageFit.Fill)
-            .hitTestBehavior(HitTestMode.None)
-            .accessibilityLevel('no')
+          ToyJumpStage({ vm: this.viewModel, widthVp: this.areaW, heightVp: this.areaH,
+            groundY: this.groundY(), onReady: (ready: boolean) => { this.sceneReady = ready; } })
 
           // 平台层（只渲染屏幕可见范围内的平台）
           ForEach(this.viewModel.platforms, (p: PlatformData) => {
             if (p.centerX + p.width / 2 >= -20 && p.centerX - p.width / 2 <= this.areaW + 20) {
-              Image($r('app.media.play_jump_platform'))
+              Column()
                 .width(p.width).height(PLATFORM_H)
-                .objectFit(ImageFit.Fill)
-                .opacity(this.viewModel.isCurrentPlatform(p.id) ? 1 : 0.75)
                 .translate({ x: p.centerX - p.width / 2, y: this.groundY() })
+                .hitTestBehavior(HitTestMode.None)
                 .id(this.viewModel.isNextPlatform(p.id)
                   ? 'jumpjump_next_platform' : 'jumpjump_platform_' + p.id)
                 .accessibilityText(this.platformA11y(p.id))
@@ -162,15 +160,15 @@ export struct JumpJumpPage {
           }, (p: PlatformData) => this.viewModel.platformRevision.toString() + ':' + p.id.toString())
 
           // 角色（压缩用 scale，位移用 translate）
-          Image($r('app.media.play_jump_frog'))
+          Column()
           .width(PLAYER_W).height(PLAYER_H)
-          .objectFit(ImageFit.Contain)
           .scale({ x: this.viewModel.playerScaleX, y: this.viewModel.playerScaleY })
           .translate({
             x: this.viewModel.playerX + this.viewModel.playerJumpX - PLAYER_W / 2,
             y: this.groundY() - PLAYER_H + this.viewModel.playerJumpY + this.viewModel.playerDropY
           })
           .id('jumpjump_player')
+          .hitTestBehavior(HitTestMode.None)
           .accessibilityText($r('app.string.a11y_jumpjump_player'))
 
           // 蓄力标记：仅蓄力时出现，作为「角色进入压缩态」的可观测证据
@@ -195,7 +193,7 @@ export struct JumpJumpPage {
           this.areaH = this.toNumber(newValue.height);
         })
         .onTouch((event: TouchEvent) => {
-          if (event.type === TouchType.Down) {
+          if (event.type === TouchType.Down && this.sceneReady) {
             this.viewModel.beginCharge();
           } else if (event.type === TouchType.Up) {
             this.viewModel.endCharge();

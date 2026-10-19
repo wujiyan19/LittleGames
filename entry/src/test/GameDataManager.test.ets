@@ -8,7 +8,7 @@ import { GameCategory, GAME_CATEGORIES } from '../main/ets/common/GameConstants'
 export default function gameDataManagerTest() {
   describe('GameDataManager', () => {
     it('get_all_games_includes_implemented_expansion', 0, () => {
-      expect(GameDataManager.getAllGames().length).assertEqual(79);
+      expect(GameDataManager.getAllGames().length).assertEqual(76);
     });
 
     it('get_game_by_id_works', 0, () => {
@@ -25,7 +25,7 @@ export default function gameDataManagerTest() {
         const count: number = GameDataManager.getGamesByCategory(GAME_CATEGORIES[i]).length;
         expect(count > 0).assertTrue(); total += count;
       }
-      expect(total).assertEqual(79);
+      expect(total).assertEqual(76);
       expect(classic.length > 0 && puzzle.length > 0).assertTrue();
     });
 

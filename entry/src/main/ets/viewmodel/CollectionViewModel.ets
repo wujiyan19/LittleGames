@@ -33,7 +33,7 @@ export class CollectionViewModel implements GameLifecycleObserver {
     gameSound.stop(this.id);
     this.dispose(); this.confirmExit = false; this.checked = false; this.recorded = false; this.feedback = '';
     const level: number = this.difficulty === GameDifficulty.EASY ? 0 : this.difficulty === GameDifficulty.HARD ? 2 : 1;
-    this.model.start(this.id, level); GameDataManager.recordGamePlayed(this.id); this.sync(false);
+    this.model.start(this.id, level); GameDataManager.recordGameStarted(this.id); this.sync(false);
     this.initialProgress = JSON.stringify(this.state);
   }
   changeDifficulty(d: GameDifficulty): void {

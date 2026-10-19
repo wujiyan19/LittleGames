@@ -3,6 +3,7 @@ import { RandomSource } from './RandomSource';
 import { ContinuationValidation as V } from '../../common/GameSessionTransfer';
 
 export const SPORTS_IDS: string[] = ['billiards', 'penalty', 'pingpong', 'bowling', 'golf', 'drift', 'hillclimb', 'airhockey', 'tug', 'dots'];
+export const BILLIARDS_FOUL_LIMIT: number = 4;
 export class ExpansionSports {
   private random: RandomSource;
   constructor(random: RandomSource) { this.random = random; }
@@ -90,7 +91,7 @@ export class ExpansionSports {
         if (speed > 0) { a.vx -= speed * nx; a.vy -= speed * ny; b.vx += speed * nx; b.vy += speed * ny; }
       }
     } }
-    if (s.cursor === 5) { s.outcome = 1; } else if (s.errors >= 4) { s.outcome = 2; }
+    if (s.cursor === 5) { s.outcome = 1; } else if (s.errors >= BILLIARDS_FOUL_LIMIT) { s.outcome = 2; }
     if (balls.every((p: ExpansionPiece) => !p.alive || Math.hypot(p.vx, p.vy) < 2)) { balls.forEach((p: ExpansionPiece) => { p.vx = 0; p.vy = 0; }); s.phase = 0; }
   }
   private penalty(s: ExpansionState, dt: number): void {
@@ -179,7 +180,7 @@ export class ExpansionSports {
     if (s.cols !== 6 || s.rows !== 6 || s.board.length !== 0 || !V.numbers(s.data, s.id === 'drift' ? 3 : 2, 0, 10000)) { return false; }
     if (s.id === 'tug') { return s.phase === 0 && s.goal === 100 && s.data[0] <= 100 && s.pieces.length === 0 && s.cursor <= 1; }
     if (s.pieces.length === 0 || s.pieces.some((p: ExpansionPiece) => !p.alive || p.id >= s.serial || p.kind < 26 || p.kind > 44 || p.x < -40 || p.x > 1900 || p.y < -40 || p.y > 490 || p.r < 0 || p.r > 30)) { return false; }
-    if (s.id === 'billiards') { return s.goal === 5 && s.pieces.length === 12 - s.cursor && s.cursor <= 5 && s.errors <= 4 && s.pieces[0].kind === 32 && s.pieces.filter((p: ExpansionPiece) => p.kind === 42).length === 6; }
+    if (s.id === 'billiards') { return s.goal === 5 && s.pieces.length === 12 - s.cursor && s.cursor <= 5 && s.errors <= BILLIARDS_FOUL_LIMIT && s.pieces[0].kind === 32 && s.pieces.filter((p: ExpansionPiece) => p.kind === 42).length === 6; }
     if (s.id === 'penalty') { return s.goal === 5 && s.pieces.length === 2 && s.data[0] <= 8 && s.data[1] <= s.data[0] && s.pieces[1].kind === 44; }
     if (s.id === 'pingpong' || s.id === 'airhockey') { return s.pieces.length === 3 && s.pieces[0].kind === 32 && s.pieces.slice(1).every((p: ExpansionPiece) => p.kind === 39) && s.goal === (s.id === 'pingpong' ? 7 : 5) && s.data[0] <= s.goal && s.data[1] <= s.goal; }
     if (s.id === 'bowling') { return s.goal === 8 + s.level && s.pieces.length === 11 - s.cursor && s.cursor <= 10 && s.data[0] <= 3 && s.pieces[0].kind === 32; }

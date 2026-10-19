@@ -54,7 +54,7 @@ export class Match3ViewModel implements GameLifecycleObserver {
   startGame(): void {
     gameSound.stop(GAME_ID);
     if (this.score > 0) { GameDataManager.updateHighScore(GAME_ID, this.score); }
-    GameDataManager.recordGamePlayed(GAME_ID);
+    GameDataManager.recordGameStarted(GAME_ID);
     this.board = this.rules.generateBoard(this.rng);
     this.score = 0;
     this.movesLeft = MAX_MOVES;

@@ -5,8 +5,8 @@ const manifest=JSON.parse(fs.readFileSync('docs/art/expansion-art-manifest.json'
 const f=fixture(),data=f.data(),Art=f.load('entry/src/main/ets/common/ExpansionArt.ets').ExpansionArt;
 let count=0;
 const test=(name,fn)=>{fn();count++;console.log('PASS '+name);};
-test('all 79 available game icons exist, with retained expansion gameplay resource mappings',()=>{
- const games=data.getAllGames();assert.equal(games.length,79);assert.equal(manifest.games.length,67);
+test('all 76 available game icons exist, with retained expansion gameplay resource mappings',()=>{
+ const games=data.getAllGames();assert.equal(games.length,76);assert.equal(manifest.games.length,67);
  for(const theme of ['base','dark']) {
   const icons=[];
   for(const g of games){
@@ -19,7 +19,7 @@ test('all 79 available game icons exist, with retained expansion gameplay resour
    for(const m of svg.matchAll(/url\(#([^)]+)\)/g))assert(paint.has(m[1]),`${g.id}: ${m[1]}`);
    icons.push(svg.slice(svg.indexOf('</defs>')+7));
   }
-  assert.equal(new Set(icons).size,79,'79 visibly distinct available compositions');
+  assert.equal(new Set(icons).size,76,'76 visibly distinct available compositions');
  }
  for(const theme of ['base','dark']){
   const icons=[];for(const g of manifest.games){assert.equal(Art.board(g.id),'app.media.'+g.board);const svg=fs.readFileSync(`entry/src/main/resources/${theme}/media/${g.icon}.svg`,'utf8');assert(!svg.includes('<text'));icons.push(svg);}

@@ -1,49 +1,181 @@
 {
   "string": [
-    { "name": "home_daily_greeting", "value": "A thought for today" },
-    { "name": "home_daily_recommendation", "value": "Today's picks" },
-    { "name": "home_daily_subtitle", "value": "New picks each day" },
-    { "name": "home_daily_refresh", "value": "Refresh" },
-    { "name": "home_daily_refresh_a11y", "value": "Refresh recommended games" },
-    { "name": "linerescue_draw_hint", "value": "Draw a protective line around the dog, then start. Keep the dog safe for 10 seconds." },
-    { "name": "daily_inspiration_01", "value": "May your day be peaceful and full of joy." },
-    { "name": "daily_inspiration_02", "value": "Take your time. Every step counts." },
-    { "name": "daily_inspiration_03", "value": "May a little surprise find you today." },
-    { "name": "daily_inspiration_04", "value": "Make a little room for rest and happiness." },
-    { "name": "daily_inspiration_05", "value": "May you have a warm drink and something to look forward to." },
-    { "name": "daily_inspiration_06", "value": "You deserve kindness today, too." },
-    { "name": "daily_inspiration_07", "value": "A little game, a little joy, just for you." },
-    { "name": "daily_inspiration_08", "value": "May good things find you, and may you see your own goodness." },
-    { "name": "daily_inspiration_09", "value": "Rest gives you energy for the next step." },
-    { "name": "daily_inspiration_10", "value": "May your efforts be rewarded and your patience bear fruit." },
-    { "name": "daily_inspiration_11", "value": "Let today begin with one small thing going well." },
-    { "name": "daily_inspiration_12", "value": "Set your worries aside for a moment and smile." },
-    { "name": "daily_inspiration_13", "value": "May life stay interesting and give you reasons to smile." },
-    { "name": "daily_inspiration_14", "value": "Enjoying the game matters as much as winning." },
-    { "name": "daily_inspiration_15", "value": "May you see possibilities and find your way forward." },
-    { "name": "daily_inspiration_16", "value": "Even a little progress is worth celebrating." },
-    { "name": "daily_inspiration_17", "value": "May today bring a breath of fresh air." },
-    { "name": "daily_inspiration_18", "value": "Pause the busy day and enjoy a moment." },
-    { "name": "daily_inspiration_19", "value": "May you find warmth and a gentle path today." },
-    { "name": "daily_inspiration_20", "value": "Allow yourself to relax for a moment." },
-    { "name": "daily_inspiration_21", "value": "May you have the courage to start again and the patience to keep going." },
-    { "name": "daily_inspiration_22", "value": "Let today bring more curiosity and less hurry." },
-    { "name": "daily_inspiration_23", "value": "May your days be filled with little joys." },
-    { "name": "daily_inspiration_24", "value": "Enjoy a game and take a gentle breath." },
-    { "name": "daily_inspiration_25", "value": "May your work be rewarding and your free time joyful." },
-    { "name": "daily_inspiration_26", "value": "You do not need a perfect day to have a good one." },
-    { "name": "daily_inspiration_27", "value": "May the things you hope for bloom in time." },
-    { "name": "daily_inspiration_28", "value": "You have something to shine about today." },
-    { "name": "daily_inspiration_29", "value": "May you enjoy good company and feel at ease on your own." },
-    { "name": "daily_inspiration_30", "value": "Save a little time for something you enjoy." },
-    { "name": "daily_inspiration_31", "value": "May every new beginning bring a little hope." },
-    { "name": "daily_inspiration_32", "value": "May happiness find you in unexpected ways today." },
-    { "name": "save_resume_title", "value": "Continue your last game?" },
-    { "name": "save_resume_desc", "value": "Your board, difficulty and progress are saved. Continue playing or replace the save with a new game." },
-    { "name": "save_continue", "value": "Continue game" },
-    { "name": "save_new_game", "value": "New game" },
-    { "name": "save_exit_desc", "value": "You can continue from your last saved progress after leaving. Exit this game?" },
-    { "name": "save_restore_failed", "value": "Your last save could not be restored. A new game has been started." },
+    {
+      "name": "home_daily_greeting",
+      "value": "A thought for today"
+    },
+    {
+      "name": "home_daily_recommendation",
+      "value": "Today's picks"
+    },
+    {
+      "name": "home_daily_subtitle",
+      "value": "New picks each day"
+    },
+    {
+      "name": "home_daily_refresh",
+      "value": "Refresh"
+    },
+    {
+      "name": "home_daily_refresh_a11y",
+      "value": "Refresh recommended games"
+    },
+    {
+      "name": "linerescue_draw_hint",
+      "value": "Draw a protective line around the dog, then start. Keep the dog safe for 10 seconds."
+    },
+    {
+      "name": "daily_inspiration_01",
+      "value": "May your day be peaceful and full of joy."
+    },
+    {
+      "name": "daily_inspiration_02",
+      "value": "Take your time. Every step counts."
+    },
+    {
+      "name": "daily_inspiration_03",
+      "value": "May a little surprise find you today."
+    },
+    {
+      "name": "daily_inspiration_04",
+      "value": "Make a little room for rest and happiness."
+    },
+    {
+      "name": "daily_inspiration_05",
+      "value": "May you have a warm drink and something to look forward to."
+    },
+    {
+      "name": "daily_inspiration_06",
+      "value": "You deserve kindness today, too."
+    },
+    {
+      "name": "daily_inspiration_07",
+      "value": "A little game, a little joy, just for you."
+    },
+    {
+      "name": "daily_inspiration_08",
+      "value": "May good things find you, and may you see your own goodness."
+    },
+    {
+      "name": "daily_inspiration_09",
+      "value": "Rest gives you energy for the next step."
+    },
+    {
+      "name": "daily_inspiration_10",
+      "value": "May your efforts be rewarded and your patience bear fruit."
+    },
+    {
+      "name": "daily_inspiration_11",
+      "value": "Let today begin with one small thing going well."
+    },
+    {
+      "name": "daily_inspiration_12",
+      "value": "Set your worries aside for a moment and smile."
+    },
+    {
+      "name": "daily_inspiration_13",
+      "value": "May life stay interesting and give you reasons to smile."
+    },
+    {
+      "name": "daily_inspiration_14",
+      "value": "Enjoying the game matters as much as winning."
+    },
+    {
+      "name": "daily_inspiration_15",
+      "value": "May you see possibilities and find your way forward."
+    },
+    {
+      "name": "daily_inspiration_16",
+      "value": "Even a little progress is worth celebrating."
+    },
+    {
+      "name": "daily_inspiration_17",
+      "value": "May today bring a breath of fresh air."
+    },
+    {
+      "name": "daily_inspiration_18",
+      "value": "Pause the busy day and enjoy a moment."
+    },
+    {
+      "name": "daily_inspiration_19",
+      "value": "May you find warmth and a gentle path today."
+    },
+    {
+      "name": "daily_inspiration_20",
+      "value": "Allow yourself to relax for a moment."
+    },
+    {
+      "name": "daily_inspiration_21",
+      "value": "May you have the courage to start again and the patience to keep going."
+    },
+    {
+      "name": "daily_inspiration_22",
+      "value": "Let today bring more curiosity and less hurry."
+    },
+    {
+      "name": "daily_inspiration_23",
+      "value": "May your days be filled with little joys."
+    },
+    {
+      "name": "daily_inspiration_24",
+      "value": "Enjoy a game and take a gentle breath."
+    },
+    {
+      "name": "daily_inspiration_25",
+      "value": "May your work be rewarding and your free time joyful."
+    },
+    {
+      "name": "daily_inspiration_26",
+      "value": "You do not need a perfect day to have a good one."
+    },
+    {
+      "name": "daily_inspiration_27",
+      "value": "May the things you hope for bloom in time."
+    },
+    {
+      "name": "daily_inspiration_28",
+      "value": "You have something to shine about today."
+    },
+    {
+      "name": "daily_inspiration_29",
+      "value": "May you enjoy good company and feel at ease on your own."
+    },
+    {
+      "name": "daily_inspiration_30",
+      "value": "Save a little time for something you enjoy."
+    },
+    {
+      "name": "daily_inspiration_31",
+      "value": "May every new beginning bring a little hope."
+    },
+    {
+      "name": "daily_inspiration_32",
+      "value": "May happiness find you in unexpected ways today."
+    },
+    {
+      "name": "save_resume_title",
+      "value": "Continue your last game?"
+    },
+    {
+      "name": "save_resume_desc",
+      "value": "Your board, difficulty and progress are saved. Continue playing or replace the save with a new game."
+    },
+    {
+      "name": "save_continue",
+      "value": "Continue game"
+    },
+    {
+      "name": "save_new_game",
+      "value": "New game"
+    },
+    {
+      "name": "save_exit_desc",
+      "value": "You can continue from your last saved progress after leaving. Exit this game?"
+    },
+    {
+      "name": "save_restore_failed",
+      "value": "Your last save could not be restored. A new game has been started."
+    },
     {
       "name": "EntryAbility_desc",
       "value": "玩趣盒 Main Entry"
@@ -178,7 +310,7 @@
     },
     {
       "name": "profile_ranking_title",
-      "value": "High Score Ranking"
+      "value": "Frequently played"
     },
     {
       "name": "diff_easy",
@@ -1522,11 +1654,11 @@
     },
     {
       "name": "game_screwout_desc",
-      "value": "Tap an uncovered screw to move it into one of three temporary holes"
+      "value": "Plan removals through layered plates and collect three screws of one color"
     },
     {
       "name": "game_screwout_rules",
-      "value": "Tap an uncovered screw to move it into one of three temporary holes. Removing all three screws of a plate clears that plate and its parked screws, freeing the holes. Remove every plate to win."
+      "value": "Tap a fully exposed screw to put it in the tray. Three screws of the same color and number recycle automatically. A plate falls when all its screws are removed, revealing screws below; dropping a plate alone does not clear its screws from the tray. Clear every plate to win. Filling the tray without completing a triple loses. Easy: 5 plates, 3 colors, 6 slots. Normal: 7 plates, 4 colors, 6 slots. Hard: 9 plates, 5 colors, 5 slots. Every new deal has a solution. Undo to reconsider a move before the tray fills. Previously saved rounds keep their original rules until restarted."
     },
     {
       "name": "game_parkingjam_name",
@@ -2318,15 +2450,15 @@
     },
     {
       "name": "module_desc",
-      "value": "LittleGames - 79 single-player games across six categories"
+      "value": "LittleGames - 76 single-player games across six categories"
     },
     {
       "name": "app_splash_subtitle",
-      "value": "79 single-player mini-games. Pick one and play."
+      "value": "76 single-player mini-games. Pick one and play."
     },
     {
       "name": "settings_about_tagline",
-      "value": "79 single-player games across six categories"
+      "value": "76 single-player games across six categories"
     },
     {
       "name": "expansion_target",
@@ -2335,6 +2467,10 @@
     {
       "name": "expansion_remaining",
       "value": "Remaining %d · Moves %d"
+    },
+    {
+      "name": "expansion_billiards_fouls",
+      "value": "Fouls %d / %d"
     },
     {
       "name": "expansion_errors",
@@ -3195,6 +3331,398 @@
     {
       "name": "result_share_failed",
       "value": "Unable to share. Please try again."
+    },
+    {
+      "name": "sudoku_erase",
+      "value": "Erase number"
+    },
+    {
+      "name": "home_continue_title",
+      "value": "Continue playing"
+    },
+    {
+      "name": "home_replay",
+      "value": "Play again"
+    },
+    {
+      "name": "play_time_zero",
+      "value": "0 min"
+    },
+    {
+      "name": "play_time_under_minute",
+      "value": "Under 1 min"
+    },
+    {
+      "name": "play_time_minutes",
+      "value": "%1$s min"
+    },
+    {
+      "name": "card_played_duration",
+      "value": "Played %1$s"
+    },
+    {
+      "name": "profile_frequent_empty",
+      "value": "Start a game to build your favorites"
+    },
+    {
+      "name": "profile_play_count",
+      "value": "%1$d starts"
+    },
+    {
+      "name": "profile_total_starts",
+      "value": "Games started"
+    },
+    {
+      "name": "game_2048_brief",
+      "value": "Slide and merge numbers"
+    },
+    {
+      "name": "game_snake_brief",
+      "value": "Eat fruit, avoid your tail"
+    },
+    {
+      "name": "game_tetris_brief",
+      "value": "Rotate blocks, clear rows"
+    },
+    {
+      "name": "game_whackmole_brief",
+      "value": "Tap the popping moles"
+    },
+    {
+      "name": "game_minesweeper_brief",
+      "value": "Find and flag the mines"
+    },
+    {
+      "name": "game_jumpjump_brief",
+      "value": "Charge and jump across"
+    },
+    {
+      "name": "game_brickbreaker_brief",
+      "value": "Bounce and break bricks"
+    },
+    {
+      "name": "game_sudoku_brief",
+      "value": "Solve the number grid"
+    },
+    {
+      "name": "game_slidepuzzle_brief",
+      "value": "Slide tiles into order"
+    },
+    {
+      "name": "game_klotski_brief",
+      "value": "Move blocks to the exit"
+    },
+    {
+      "name": "game_guessnumber_brief",
+      "value": "Crack the secret number"
+    },
+    {
+      "name": "game_memorycard_brief",
+      "value": "Remember and match pairs"
+    },
+    {
+      "name": "game_match3_brief",
+      "value": "Swap gems to match three"
+    },
+    {
+      "name": "game_lights_brief",
+      "value": "Toggle adjacent lights"
+    },
+    {
+      "name": "game_flood_brief",
+      "value": "Flood the board one color"
+    },
+    {
+      "name": "game_maze_brief",
+      "value": "Find a path to the exit"
+    },
+    {
+      "name": "game_hanoi_brief",
+      "value": "Move the stacked discs"
+    },
+    {
+      "name": "game_peg_brief",
+      "value": "Jump to leave one peg"
+    },
+    {
+      "name": "game_nonogram_brief",
+      "value": "Reveal the hidden pattern"
+    },
+    {
+      "name": "game_arithmetic_brief",
+      "value": "Solve ten quick sums"
+    },
+    {
+      "name": "game_compare_brief",
+      "value": "Compare the two sums"
+    },
+    {
+      "name": "game_sequence_brief",
+      "value": "Find the number pattern"
+    },
+    {
+      "name": "game_binary_brief",
+      "value": "Decode binary numbers"
+    },
+    {
+      "name": "game_targetsum_brief",
+      "value": "Complete the equation"
+    },
+    {
+      "name": "game_schulte_brief",
+      "value": "Find numbers in order"
+    },
+    {
+      "name": "game_memorysequence_brief",
+      "value": "Recall the right order"
+    },
+    {
+      "name": "game_missing_brief",
+      "value": "Recall the missing number"
+    },
+    {
+      "name": "game_reaction_brief",
+      "value": "Wait for the signal"
+    },
+    {
+      "name": "game_blockfit_brief",
+      "value": "Fit blocks to clear rows"
+    },
+    {
+      "name": "game_tilestack_brief",
+      "value": "Collect matching tiles"
+    },
+    {
+      "name": "game_bubbleshooter_brief",
+      "value": "Aim and match bubbles"
+    },
+    {
+      "name": "game_fruitmerge_brief",
+      "value": "Merge into bigger fruit"
+    },
+    {
+      "name": "game_watersort_brief",
+      "value": "Sort the colored layers"
+    },
+    {
+      "name": "game_arrowclear_brief",
+      "value": "Clear arrows in order"
+    },
+    {
+      "name": "game_screwout_brief",
+      "value": "Layered screw sorting"
+    },
+    {
+      "name": "game_parkingjam_brief",
+      "value": "Free the parked cars"
+    },
+    {
+      "name": "game_runner_brief",
+      "value": "Dodge the obstacles"
+    },
+    {
+      "name": "game_blackhole_brief",
+      "value": "Move the hungry hole"
+    },
+    {
+      "name": "game_fisheat_brief",
+      "value": "Eat small, avoid big fish"
+    },
+    {
+      "name": "game_sokoban_brief",
+      "value": "Push crates to the goals"
+    },
+    {
+      "name": "game_pipes_brief",
+      "value": "Rotate and join the pipes"
+    },
+    {
+      "name": "game_roomdefense_brief",
+      "value": "Defend your room"
+    },
+    {
+      "name": "game_basketball_brief",
+      "value": "Aim for the basket"
+    },
+    {
+      "name": "game_solitaire_brief",
+      "value": "Build alternating runs"
+    },
+    {
+      "name": "game_rhythm_brief",
+      "value": "Tap along to the beat"
+    },
+    {
+      "name": "game_restaurant_brief",
+      "value": "Prepare each food order"
+    },
+    {
+      "name": "game_linktiles_brief",
+      "value": "Connect matching tiles"
+    },
+    {
+      "name": "game_mahjongsolitaire_brief",
+      "value": "Pair and remove tiles"
+    },
+    {
+      "name": "game_groupclear_brief",
+      "value": "Tap groups of blocks"
+    },
+    {
+      "name": "game_slotpair_brief",
+      "value": "Collect tiles in pairs"
+    },
+    {
+      "name": "game_buscolor_brief",
+      "value": "Match riders to buses"
+    },
+    {
+      "name": "game_yarn_brief",
+      "value": "Collect matching yarn"
+    },
+    {
+      "name": "game_sand_brief",
+      "value": "Collect matching sand"
+    },
+    {
+      "name": "game_untangle_brief",
+      "value": "Untangle crossed lines"
+    },
+    {
+      "name": "game_platformer_brief",
+      "value": "Jump over obstacles"
+    },
+    {
+      "name": "game_grapple_brief",
+      "value": "Swing between anchors"
+    },
+    {
+      "name": "game_flappy_brief",
+      "value": "Tap to fly through gaps"
+    },
+    {
+      "name": "game_fruitslice_brief",
+      "value": "Slice fruit, avoid hazards"
+    },
+    {
+      "name": "game_rollingball_brief",
+      "value": "Guide the rolling ball"
+    },
+    {
+      "name": "game_shooter_brief",
+      "value": "Fly and dodge attacks"
+    },
+    {
+      "name": "game_tanks_brief",
+      "value": "Aim at enemy tanks"
+    },
+    {
+      "name": "game_fortress_brief",
+      "value": "Defend your fortress"
+    },
+    {
+      "name": "game_survival_brief",
+      "value": "Dodge waves of enemies"
+    },
+    {
+      "name": "game_billiards_brief",
+      "value": "Aim and pocket the balls"
+    },
+    {
+      "name": "game_penalty_brief",
+      "value": "Aim and score a goal"
+    },
+    {
+      "name": "game_pingpong_brief",
+      "value": "Return the table ball"
+    },
+    {
+      "name": "game_bowling_brief",
+      "value": "Roll to knock down pins"
+    },
+    {
+      "name": "game_drift_brief",
+      "value": "Steer through the bends"
+    },
+    {
+      "name": "game_hillclimb_brief",
+      "value": "Balance over the hills"
+    },
+    {
+      "name": "game_airhockey_brief",
+      "value": "Strike the puck to score"
+    },
+    {
+      "name": "game_xiangqi_brief",
+      "value": "Play Chinese chess"
+    },
+    {
+      "name": "game_chess_brief",
+      "value": "Plan your next chess move"
+    },
+    {
+      "name": "game_spider_brief",
+      "value": "Build same-suit runs"
+    },
+    {
+      "name": "game_freecell_brief",
+      "value": "Use free cells to sort"
+    },
+    {
+      "name": "game_linerescue_brief",
+      "value": "Draw to protect the dog"
+    },
+    {
+      "name": "game_picturepuzzle_brief",
+      "value": "Rotate to complete a scene"
+    },
+    {
+      "name": "game_beatjump_brief",
+      "value": "Jump with the beat"
+    },
+    {
+      "name": "game_melody_brief",
+      "value": "Recall the melody"
+    },
+    {
+      "name": "game_fishing_brief",
+      "value": "Cast, wait and catch"
+    },
+    {
+      "name": "profile_start_count_note",
+      "value": "Sorted by starts recorded since this update"
+    },
+    {
+      "name": "toy_scene_retry",
+      "value": "Could not load the scene. Tap to retry"
+    },
+    {
+      "name": "toy_scene_loading",
+      "value": "Preparing the game…"
+    },
+    {
+      "name": "toy_rolling_board",
+      "value": "Rolling ball board. Drag to guide the ball past holes to the flag"
+    },
+    {
+      "name": "toy_screw_slot",
+      "value": "Screw holding slot %d"
+    },
+    {
+      "name": "toy_screw_tray_count",
+      "value": "Holding %d / %d · match 3"
+    },
+    {
+      "name": "toy_screw_hint",
+      "value": "Clear matching colors and uncover the next layer. A full tray loses."
+    },
+    {
+      "name": "toy_colored_screw",
+      "value": "Color %d screw on plate %d"
+    },
+    {
+      "name": "toy_screw_slot_color",
+      "value": "Holding slot %d, color %d screw"
     }
   ]
 }

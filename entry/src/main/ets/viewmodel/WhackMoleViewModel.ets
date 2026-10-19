@@ -68,7 +68,7 @@ export class WhackMoleViewModel implements GameLifecycleObserver {
     this.stopTimers();
     this.autoPaused = false;
     this.confirmExit = false;
-    GameDataManager.recordGamePlayed(GAME_ID);
+    GameDataManager.recordGameStarted(GAME_ID);
     this.score = 0;
     this.timeLeft = this.getGameTime();
     this.countdownRemainingMs = 1000;

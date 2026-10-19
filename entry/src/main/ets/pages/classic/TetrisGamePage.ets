@@ -115,7 +115,7 @@ export struct TetrisGamePage {
         Row() {
           Column() {
             Text($r('app.string.level_label')).fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
-            Text('' + this.viewModel.level).fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold).fontColor(SemanticColors.warning)
+            Text('' + this.viewModel.level).fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold).fontColor(SemanticColors.warningText)
           }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.lg)
           .alignItems(HorizontalAlign.Center).margin({ left: 16 })
 

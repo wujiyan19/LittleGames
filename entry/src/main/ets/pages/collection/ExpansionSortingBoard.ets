@@ -1,3 +1,4 @@
+import { GameColorCue } from '../../common/GameColorCue';
 import { ExpansionViewModel } from '../../viewmodel/ExpansionViewModel';
 import { ExpansionRenderPiece } from '../../viewmodel/ExpansionRenderPiece';
 import { ExpansionPiece } from '../../model/game/ExpansionState';
@@ -15,7 +16,7 @@ export struct ExpansionSortingBoard {
       $r('app.color.expansion_color_4'), $r('app.color.expansion_color_5'), $r('app.color.expansion_color_6')];
     return value <= 0 ? SemanticColors.surface : palette[(value - 1) % 6];
   }
-  symbol(value: number): string { return value <= 0 ? '○' : ['◆', '●', '★', '▲', '♥', '✿'][(value - 1) % 6]; }
+  symbol(value: number): string { return GameColorCue.symbol(value); }
   colorName(value: number): Resource {
     const names: Resource[] = [$r('app.string.expansion_color_1'), $r('app.string.expansion_color_2'), $r('app.string.expansion_color_3'),
       $r('app.string.expansion_color_4'), $r('app.string.expansion_color_5'), $r('app.string.expansion_color_6')];
@@ -46,6 +47,8 @@ export struct ExpansionSortingBoard {
     Column({ space: SpacingTokens.xs }) {
       Image(ExpansionArt.bus(this.vm.state.pieces[parked ? this.vm.state.tray[index] : index].color - 1)).width('100%').height(55).objectFit(ImageFit.Contain)
         .accessibilityText(this.colorName(this.vm.state.pieces[parked ? this.vm.state.tray[index] : index].color))
+      Text(this.symbol(this.vm.state.pieces[parked ? this.vm.state.tray[index] : index].color))
+        .fontColor(SemanticColors.textPrimary).fontSize(FontTokens.sizeBodyLarge)
       Row({ space: SpacingTokens.xs }) {
         ForEach(range(3), (seat: number) => {
           Text(seat < this.vm.state.pieces[parked ? this.vm.state.tray[index] : index].w ? '●' : '○')
@@ -60,7 +63,10 @@ export struct ExpansionSortingBoard {
       Text($r('app.string.expansion_passenger_queue')).fontColor(SemanticColors.textSecondary)
       Row({ space: SpacingTokens.sm }) {
         ForEach(range(Math.min(9, this.vm.state.board.length - this.vm.state.cursor)), (index: number) => {
-          Image(ExpansionArt.person(this.vm.state.board[this.vm.state.cursor + index] - 1)).objectFit(ImageFit.Contain).height(40).layoutWeight(1)
+          Column({ space: SpacingTokens.xs }) {
+            Image(ExpansionArt.person(this.vm.state.board[this.vm.state.cursor + index] - 1)).objectFit(ImageFit.Contain).height(40).width('100%')
+            Text(this.symbol(this.vm.state.board[this.vm.state.cursor + index])).fontSize(FontTokens.sizeBody).fontColor(SemanticColors.textPrimary)
+          }.layoutWeight(1).accessibilityGroup(true)
             .accessibilityText(this.colorName(this.vm.state.board[this.vm.state.cursor + index]))
         }, (index: number) => index.toString())
       }.width('100%').padding(SpacingTokens.sm).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.sm)
@@ -73,7 +79,7 @@ export struct ExpansionSortingBoard {
           }.layoutWeight(1).border({ width: 1, color: SemanticColors.border }).borderRadius(RadiusTokens.sm)
         }, (slot: number) => slot.toString())
       }.width('100%')
-      if (this.vm.state.tray.length === 3) { Text($r('app.string.expansion_bus_stuck')).fontColor(SemanticColors.warning) }
+      if (this.vm.state.tray.length === 3) { Text($r('app.string.expansion_bus_stuck')).fontColor(SemanticColors.warningText) }
       Row({ space: SpacingTokens.sm }) {
         ForEach(range(3), (lane: number) => {
           Column({ space: SpacingTokens.sm }) {
@@ -101,8 +107,13 @@ export struct ExpansionSortingBoard {
           Button({ type: ButtonType.Normal }) {
             Column({ space: SpacingTokens.xs }) {
               ForEach(range(8), (row: number) => {
-                Image(ExpansionArt.yarn(this.vm.state.board[col * 8 + 7 - row] - 1)).width('100%').height(23).objectFit(ImageFit.Fill)
-                  .opacity(this.vm.state.board[col * 8 + 7 - row] > 0 ? 1 : 0)
+                Stack() {
+                  Image(ExpansionArt.yarn(this.vm.state.board[col * 8 + 7 - row] - 1)).width('100%').height('100%').objectFit(ImageFit.Fill)
+                  Text(this.symbol(this.vm.state.board[col * 8 + 7 - row]))
+                    .fontSize(FontTokens.sizeCaption).fontColor($r('app.color.play_color_piece_text'))
+                    .padding({ left: SpacingTokens.xs, right: SpacingTokens.xs })
+                    .backgroundColor($r('app.color.color_cue_background')).borderRadius(RadiusTokens.xs)
+                }.width('100%').height(24).opacity(this.vm.state.board[col * 8 + 7 - row] > 0 ? 1 : 0)
               }, (row: number) => row.toString())
               Text('↓').fontColor(SemanticColors.textPrimary)
             }.width('100%').padding(SpacingTokens.xs)
@@ -134,7 +145,12 @@ export struct ExpansionSortingBoard {
           Row({ space: 2 }) {
             ForEach(range(8), (col: number) => {
               Button({ type: ButtonType.Normal }) {
-                Image(ExpansionArt.sand(this.vm.state.board[row * 8 + col] - 1)).width('100%').height('100%').objectFit(ImageFit.Fill)
+                Stack() {
+                  Image(ExpansionArt.sand(this.vm.state.board[row * 8 + col] - 1)).width('100%').height('100%').objectFit(ImageFit.Fill)
+                  Text(this.symbol(this.vm.state.board[row * 8 + col])).fontSize(FontTokens.sizeCaption)
+                    .fontColor($r('app.color.play_color_piece_text')).padding({ left: SpacingTokens.xs, right: SpacingTokens.xs })
+                    .backgroundColor($r('app.color.color_cue_background')).borderRadius(RadiusTokens.xs)
+                }.width('100%').height('100%')
               }.layoutWeight(1).height('100%').padding(0).backgroundColor(this.color(this.vm.state.board[row * 8 + col]))
                 .opacity(this.vm.state.board[row * 8 + col] === 0 ? 0.15 : 1).borderRadius(RadiusTokens.xs)
                 .accessibilityText($r('app.string.expansion_cell', row + 1, col + 1, this.symbol(this.vm.state.board[row * 8 + col])))

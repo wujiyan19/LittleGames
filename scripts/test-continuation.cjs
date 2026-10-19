@@ -68,6 +68,35 @@ test('Snake: keeps direction, pending turn and occupancy; resumes only on player
   source.vm.stepOnce(); equalData(target.vm.snake, source.vm.snake);
 });
 
+for (const corruption of ['disconnected body', 'food on body', 'half missing food', 'missing food before completion', 'reversed turn', 'unchanged pending turn']) {
+  test(`Snake: rejects ${corruption} without replacing the active round or stopping its timer`, () => {
+    const target = game('Snake'); target.vm.turnRight();
+    const before = target.vm.exportContinuation(); const timerCount = target.f.clock.count();
+    const payload = JSON.parse(before);
+    if (corruption === 'disconnected body') { payload.snake[1].x = 0; }
+    if (corruption === 'food on body') { payload.food = payload.snake[0]; }
+    if (corruption === 'half missing food') { payload.food = { x: -1, y: 0 }; }
+    if (corruption === 'missing food before completion') { payload.food = { x: -1, y: -1 }; }
+    if (corruption === 'reversed turn') { payload.pendingTurn = 2; }
+    if (corruption === 'unchanged pending turn') { payload.pendingTurn = payload.direction; }
+    assert.equal(target.vm.importContinuation(JSON.stringify(payload)), false);
+    assert.equal(target.vm.exportContinuation(), before); assert.equal(target.f.clock.count(), timerCount);
+    target.vm.dispose();
+  });
+}
+
+test('Snake: a completed full board can transfer its no-food sentinel', () => {
+  const target = game('Snake'); const payload = JSON.parse(target.vm.exportContinuation());
+  payload.snake = [];
+  for (let y = 0; y < 20; y++) {
+    for (let i = 0; i < 20; i++) { payload.snake.push({ x: y % 2 ? 19 - i : i, y }); }
+  }
+  payload.food = { x: -1, y: -1 }; payload.status = 'over'; payload.started = true;
+  assert.equal(target.vm.importContinuation(JSON.stringify(payload)), true);
+  assert.equal(target.vm.snake.length, 400); assert.equal(target.vm.status, 'over');
+  assert.equal(target.vm.food.x, -1); assert.equal(target.vm.food.y, -1); target.vm.dispose();
+});
+
 test('Tetris: preserves the falling piece and frozen board across the pause', () => {
   const source = game('Tetris'); source.vm.drop(); source.vm.moveLeft();
   const target = game('Tetris'); assert.equal(target.vm.importContinuation(source.vm.exportContinuation()), true);

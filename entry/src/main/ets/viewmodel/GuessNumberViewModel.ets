@@ -70,7 +70,7 @@ export class GuessNumberViewModel implements GameLifecycleObserver {
 
   startGame(): void {
     gameSound.stop(GAME_ID);
-    GameDataManager.recordGamePlayed(GAME_ID);
+    GameDataManager.recordGameStarted(GAME_ID);
     this.secret = this.rules.generateSecret(this.getSecretLength(), this.rng);
     this.input = '';
     this.records = [];

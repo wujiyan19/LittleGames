@@ -128,7 +128,7 @@ export class SudokuViewModel implements GameLifecycleObserver {
   private startGame(puzzle: number[]): void {
     this.resumePending = false;
     this.confirmExit = false;
-    GameDataManager.recordGamePlayed(GAME_ID);
+    GameDataManager.recordGameStarted(GAME_ID);
     const b = this.rules.copyGrid(puzzle);
     const f: boolean[] = [];
     for (let i = 0; i < 81; i++) { f.push(puzzle[i] !== 0); }

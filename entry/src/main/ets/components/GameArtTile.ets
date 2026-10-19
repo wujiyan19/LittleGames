@@ -1,4 +1,4 @@
-import { SemanticColors, FontTokens, RadiusTokens } from '../common/DesignTokens';
+import { SemanticColors, FontTokens, SpacingTokens, RadiusTokens } from '../common/DesignTokens';
 import { resolveString } from '../common/I18nUtils';
 import { Haptics } from '../common/Haptics';
 
@@ -7,6 +7,7 @@ import { Haptics } from '../common/Haptics';
 export struct GameArtTile {
   @Param image: Resource = $r('app.media.exp_empty');
   @Param label: string = '';
+  @Param labelAtTop: boolean = false;
   @Param description: Resource | string = '';
   @Param selected: boolean = false;
   @Param available: boolean = true;
@@ -16,12 +17,18 @@ export struct GameArtTile {
 
   build() {
     Button({ type: ButtonType.Normal }) {
-      Stack() {
+      Stack({ alignContent: this.labelAtTop ? Alignment.TopStart : Alignment.Center }) {
         Image(this.image).width('100%').height('100%').objectFit(ImageFit.Fill)
           .hitTestBehavior(HitTestMode.None).accessibilityLevel('no');
         if (this.label.length > 0) {
-          Text(this.label).fontSize(FontTokens.sizeBodyLarge).fontWeight(FontWeight.Medium)
-            .fontColor(this.textColor).textAlign(TextAlign.Center).hitTestBehavior(HitTestMode.None);
+          if (this.labelAtTop) {
+            Text(this.label).fontSize(FontTokens.sizeBody).fontFamily(FontTokens.family).fontWeight(FontWeight.Medium)
+              .fontColor(this.textColor).textAlign(TextAlign.Start).padding({ top: SpacingTokens.xs, left: SpacingTokens.xs })
+              .hitTestBehavior(HitTestMode.None);
+          } else {
+            Text(this.label).fontSize(FontTokens.sizeBodyLarge).fontWeight(FontWeight.Medium)
+              .fontColor(this.textColor).textAlign(TextAlign.Center).hitTestBehavior(HitTestMode.None);
+          }
         }
       }.width('100%').height('100%').renderGroup(true);
     }.width('100%').height('100%').padding(0).backgroundColor(Color.Transparent)

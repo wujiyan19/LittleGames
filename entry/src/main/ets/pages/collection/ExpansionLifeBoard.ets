@@ -44,7 +44,7 @@ export struct ExpansionLifeBoard {
           Button($r('app.string.expansion_next_day')).onClick(() => { this.vm.tap(900); })
         } else {
           ForEach(range(4), (quest: number) => {
-            Text(this.quest(quest)).fontColor(this.vm.state.target.length > 0 && this.vm.state.target[quest] === 1 ? SemanticColors.success : SemanticColors.textSecondary)
+            Text(this.quest(quest)).fontColor(this.vm.state.target.length > 0 && this.vm.state.target[quest] === 1 ? SemanticColors.successText : SemanticColors.textSecondary)
           }, (quest: number) => quest.toString())
         }
       }
@@ -86,7 +86,7 @@ export struct ExpansionLifeBoard {
   @Builder
   Fishing() {
     Column({ space: SpacingTokens.base }) {
-      Text(this.fishingStatus()).fontSize(FontTokens.sizeSubtitle).fontColor(this.vm.state.data[0] === 2 ? SemanticColors.warning : SemanticColors.textPrimary)
+      Text(this.fishingStatus()).fontSize(FontTokens.sizeSubtitle).fontColor(this.vm.state.data[0] === 2 ? SemanticColors.warningText : SemanticColors.textPrimary)
       Stack() {
         Image(ExpansionArt.board('fishing')).width('100%').height('100%').objectFit(ImageFit.Fill).accessibilityLevel('no')
         Image(this.vm.state.data[0] === 2 ? $r('app.media.exp_bite') : this.vm.state.data[0] === 0 ? ExpansionArt.fish(3) : $r('app.media.exp_bobber'))

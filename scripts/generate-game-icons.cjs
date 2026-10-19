@@ -2,6 +2,7 @@
  * Gameplay art generators call this after updating the reusable exp_* materials. */
 const fs = require('node:fs');
 const path = require('node:path');
+const { pruneSvgDefs } = require('./svg-resource-utils.cjs');
 const assert = require('node:assert/strict');
 const artStyle = require('./game-art-palette.cjs');
 const root = path.resolve(__dirname, '..');
@@ -80,7 +81,7 @@ function generate() {
     scenes.klotski=tile(8,8,84,82,'wood',11)+tile(14,14,19,45,'gold',4)+tile(37,14,27,43,'coral',4)+tile(68,14,18,45,'gold',4)+
       tile(14,63,31,22,'wood',4)+tile(49,63,37,22,'wood',4)+line('M45 34H56M50 29V43','#FFF1C5',3);
     scenes.guessnumber=disc(47,44,32,'gold')+question(35,23,.75)+small('coin',57,59,.35)+small('coin',10,64,.28);
-    scenes.memorycard=cards(true);
+    scenes.memorycard=tile(5,17,40,60,'paper',7)+tile(55,17,40,60,'paper',7)+gems(12,33,'coral',.65)+gems(62,33,'coral',.65);
     scenes.match3=gems(3,43,'blue',1.05)+gems(32,12,'gold',1.12)+gems(60,47,'coral',.95);
 
     // The original Collection 20: the same silhouettes, now with the common palette and scale.
@@ -105,8 +106,8 @@ function generate() {
       tile(24,25,52,49,'blue',8)+digit(0,34,37,1.5,'#FFFFFF')+digit(1,55,37,1.5,'#FFF1C5');
     scenes.targetsum=notebook()+tile(39,30,35,40,'gold',6)+question(47,34,.65);
     scenes.schulte=grid(3)+[3,8,1,6,2,9,7,4,5].map((v,i)=>digit(v,19+i%3*27,21+Math.floor(i/3)*26,.8,i===4?p.coral:p.ink)).join('');
-    scenes.memorysequence=cards(false)+line('M20 84H48L40 77M48 84L40 91',p.gold,4);
-    scenes.missing=group(asset('card_front'),8,13,.7,-8)+question(32,32,.7)+group(asset('card_back'),35,18,.64,8);
+    scenes.memorysequence=[1,2,3].map((v,i)=>tile(5+i*33,20,25,43,'paper',5)+digit(v,13+i*33,31,1.1,p.ink)).join('')+line('M16 79H84L76 71M84 79L76 87',p.blue,4);
+    scenes.missing=tile(8,20,34,58,'paper',7)+digit(2,20,36,1.5,p.ink)+`<rect x="54" y="20" width="34" height="58" rx="7" fill="none" stroke="${p.edge}" stroke-width="3" stroke-dasharray="6 5"/>`+question(62,35,.7);
     scenes.reaction=tile(13,10,74,78,'ink',14)+circle(50,46,26,'url(#mint)',p.edge)+line('M37 46L47 57L65 35','#FFFFFF',6)+line('M38 79H48M56 79H66',p.mint,3);
 
     // New 67: real gameplay pieces, composed with the same materials, ground and clear silhouettes.
@@ -169,7 +170,7 @@ function generate() {
       assert(scenes[id], 'Missing miniature '+id);
       const body=ellipse(60,104,43,6,dark?'#050F21':'#193D6C',dark?.28:.16)+group(scenes[id],10,9,1);
       bodies.push(body);
-      const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120"><defs>${defs}</defs>${body}</svg>\n`;
+      const svg=pruneSvgDefs(`<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120"><defs>${defs}</defs>${body}</svg>\n`);
       writeChanged(path.join(root,`entry/src/main/resources/${theme}/media/game_${id}.svg`),svg);
     }
     assert.equal(new Set(bodies).size,100,'Every game needs its own visible composition');

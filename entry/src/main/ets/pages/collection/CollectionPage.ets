@@ -125,7 +125,7 @@ export struct CollectionPage {
             this.StatusLine()
             if (this.vm.isQuiz() && this.vm.feedback.length > 0) {
               Text(this.vm.lastCorrect ? $r('app.string.collection_correct', this.vm.feedback) : $r('app.string.collection_wrong', this.vm.feedback))
-                .fontSize(FontTokens.sizeBodySmall).fontColor(this.vm.lastCorrect ? SemanticColors.success : SemanticColors.warning)
+                .fontSize(FontTokens.sizeBodySmall).fontColor(this.vm.lastCorrect ? SemanticColors.successText : SemanticColors.warningText)
             }
             if (this.gameId === 'nonogram') {
               Column({ space: SpacingTokens.sm }) {
@@ -183,7 +183,7 @@ export struct CollectionPage {
             if (this.gameId === 'nonogram') {
               Button($r('app.string.collection_check')).onClick(() => { this.vm.action(); })
               if (this.vm.checked && this.vm.state.outcome === 0) {
-                Text($r('app.string.collection_check_again')).fontColor(SemanticColors.warning)
+                Text($r('app.string.collection_check_again')).fontColor(SemanticColors.warningText)
               }
             }
           }.width('100%').constraintSize({ maxWidth: $r('app.float.collection_board_max') })

@@ -53,7 +53,7 @@ export class ExpansionViewModel implements GameLifecycleObserver {
     this.feedbackKind = 0; this.feedbackGain = 0; this.feedbackSerial++;
     const level: number = this.difficulty === GameDifficulty.EASY ? 0 : this.difficulty === GameDifficulty.HARD ? 2 : 1;
     this.effectsEnabled = this.visible && !this.confirmExit;
-    this.model.start(this.id, level); GameDataManager.recordGamePlayed(this.id); this.sync(false);
+    this.model.start(this.id, level); GameDataManager.recordGameStarted(this.id); this.sync(false);
     this.initialProgress = JSON.stringify(this.state);
   }
   changeDifficulty(d: GameDifficulty): void {

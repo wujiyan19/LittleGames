@@ -1,3 +1,4 @@
+import { GameColorCue } from '../../common/GameColorCue';
 import { ExpansionViewModel } from '../../viewmodel/ExpansionViewModel';
 import { ExpansionRenderPiece } from '../../viewmodel/ExpansionRenderPiece';
 import { SemanticColors, FontTokens, SpacingTokens, RadiusTokens } from '../../common/DesignTokens';
@@ -15,7 +16,7 @@ export struct ExpansionMatchingBoard {
       $r('app.color.expansion_color_4'), $r('app.color.expansion_color_5'), $r('app.color.expansion_color_6')];
     return value <= 0 ? SemanticColors.surface : palette[(value - 1) % 6];
   }
-  symbol(value: number): string { return value <= 0 ? '' : ['◆', '●', '★', '▲', '♥', '✿'][(value - 1) % 6]; }
+  symbol(value: number): string { return GameColorCue.symbol(value); }
   measure(area: Area): void { const width: number = Number(area.width); if (Number.isFinite(width) && width > 0) { this.boardWidth = width; } }
   unit(): number { return this.boardWidth / (this.gameId === 'linktiles' ? 8 : 6); }
   pathPoint(cell: number): number[] { return [(cell % 8 + 0.5) * this.unit(), (Math.floor(cell / 8) + 0.5) * this.unit()]; }

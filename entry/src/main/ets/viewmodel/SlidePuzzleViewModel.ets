@@ -61,7 +61,7 @@ export class SlidePuzzleViewModel implements GameLifecycleObserver {
   startGame(): void {
     gameSound.stop(GAME_ID);
     this.rules = new SlidePuzzleRules(this.getSize());
-    GameDataManager.recordGamePlayed(GAME_ID);
+    GameDataManager.recordGameStarted(GAME_ID);
     this.board = this.rules.shuffle(this.rng);
     this.steps = 0;
     this.status = GameStatus.PLAYING;

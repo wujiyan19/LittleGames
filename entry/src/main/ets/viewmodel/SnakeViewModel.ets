@@ -167,7 +167,7 @@ export class SnakeViewModel implements GameLifecycleObserver {
     this.stopTimer();
     this.autoPaused = false;
     this.confirmExit = false;
-    GameDataManager.recordGamePlayed(GAME_ID);
+    GameDataManager.recordGameStarted(GAME_ID);
     this.snake = this.rules.initialSnake();
     this.occupied = this.rules.occupancy(this.snake);
     this.food = this.rules.spawnFoodFromOccupancy(this.occupied, this.rng);
@@ -388,10 +388,20 @@ export class SnakeViewModel implements GameLifecycleObserver {
       for (let i = 0; i < s.snake.length; i++) {
         const p: Point = s.snake[i];
         if (p === null || !V.integer(p.x, 0, COLS - 1) || !V.integer(p.y, 0, ROWS - 1)) { return false; }
+        if (i > 0) {
+          const previous: Point = s.snake[i - 1];
+          if (Math.abs(previous.x - p.x) + Math.abs(previous.y - p.y) !== 1) { return false; }
+        }
         occupied.add(p.y * COLS + p.x);
       }
       if (occupied.size !== s.snake.length || s.food === null || !V.integer(s.food.x, -1, COLS - 1) ||
           !V.integer(s.food.y, -1, ROWS - 1)) { return false; }
+      // No-food is only a completed full board. Live food must occupy a free cell.
+      if (s.food.x < 0 || s.food.y < 0) {
+        if (s.food.x !== -1 || s.food.y !== -1 || s.snake.length !== COLS * ROWS ||
+            s.status !== GameStatus.OVER) { return false; }
+      } else if (occupied.has(s.food.y * COLS + s.food.x)) { return false; }
+      if (s.pendingTurn !== null && !this.rules.turnAllowed(s.direction, s.pendingTurn)) { return false; }
       this.stopTimer();
       this.snake = s.snake;
       this.food = s.food;

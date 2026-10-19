@@ -3,6 +3,7 @@
  * Run with Node; source of truth for Collection gameplay materials; icons use generate-game-icons.cjs. */
 const fs = require('node:fs');
 const path = require('node:path');
+const { pruneSvgDefs } = require('./svg-resource-utils.cjs');
 const artStyle = require('./game-art-palette.cjs');
 const root = path.resolve(__dirname, '..');
 const ids = ['tictactoe','gomoku','reversi','fourline','nim','lights','flood','maze','hanoi','peg',
@@ -16,7 +17,7 @@ const line = (d,color,width=3,opacity=1) => `<path d="${d}" fill="none" stroke="
 const group = (body,x=0,y=0,scale=1,rotate=0) => `<g transform="translate(${x} ${y}) scale(${scale}) rotate(${rotate})">${body}</g>`;
 const ellipse = (x,y,rx,ry,color,opacity=1) => `<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="${color}" opacity="${opacity}"/>`;
 const save = (theme,name,w,h,body,defs) => {
-  const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><defs>${defs}</defs>${body}</svg>\n`;
+  const svg=pruneSvgDefs(`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><defs>${defs}</defs>${body}</svg>\n`);
   const dest=path.join(root,'entry/src/main/resources',theme,'media');fs.mkdirSync(dest,{recursive:true});fs.writeFileSync(path.join(dest,name+'.svg'),svg);
   if(theme==='base')assets.set(name,{name,width:w,height:h});
 };

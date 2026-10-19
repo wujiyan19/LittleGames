@@ -1,6 +1,7 @@
 /* Original vector artwork. No fonts, external images, filters, or runtime downloads. */
 const fs = require('node:fs');
 const path = require('node:path');
+const { pruneSvgDefs } = require('./svg-resource-utils.cjs');
 const root = path.resolve(__dirname, '..');
 const catalog = fs.readFileSync(path.join(root, 'entry/src/main/ets/model/ExpansionCatalog.ets'), 'utf8');
 const ids = [...catalog.matchAll(/\{ id: '([^']+)'/g)].map(m => m[1]);
@@ -39,7 +40,7 @@ function generate(only = []) {
       const resource = 'exp_'+name;
       if (selected.size === 0 || selected.has(name)) {
         const dir=path.join(root,'entry/src/main/resources',theme,'media'); fs.mkdirSync(dir,{recursive:true});
-        fs.writeFileSync(path.join(dir,resource+'.svg'),`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><defs>${resourceDefs}</defs>${body}</svg>\n`);
+        fs.writeFileSync(path.join(dir,resource+'.svg'),pruneSvgDefs(`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><defs>${resourceDefs}</defs>${body}</svg>\n`));
       }
       assets.set(resource,{name:resource,width:w,height:h}); bodyByName.set(name,body);
     };

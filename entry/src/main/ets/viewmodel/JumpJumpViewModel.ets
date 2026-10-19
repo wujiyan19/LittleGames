@@ -143,7 +143,7 @@ export class JumpJumpViewModel implements GameLifecycleObserver {
     gameSound.stop(GAME_ID);
     this.frames?.stop();
     this.settleCurrentScore();
-    GameDataManager.recordGamePlayed(GAME_ID);
+    GameDataManager.recordGameStarted(GAME_ID);
     this.newGame();
   }
 

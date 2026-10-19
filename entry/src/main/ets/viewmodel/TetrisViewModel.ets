@@ -89,7 +89,7 @@ export class TetrisViewModel implements GameLifecycleObserver {
     this.stopTimer();
     this.autoPaused = false;
     this.confirmExit = false;
-    GameDataManager.recordGamePlayed(GAME_ID);
+    GameDataManager.recordGameStarted(GAME_ID);
     this.board = this.rules.emptyBoard();
     this.score = 0;
     this.level = 1;

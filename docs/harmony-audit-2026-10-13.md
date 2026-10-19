@@ -1,5 +1,14 @@
 # 鸿蒙原生游戏方案合规与架构审查报告
 
+> ## ⚠️ 已部分作废，请先读更正
+>
+> 本报告是在 2026-10-18 复核后**被更正**的版本。其中 **R2（触控 Y 轴反算遗漏）与 R5（恢复首帧回弹）为误报，已撤回**，原因是我方数学推导错误（R2 将分母误用为 `arenaWidth/460`，正确应为 `arenaWidth/360`；R5 误把插值因子当作 `delta/step`，实际是 `accumulator/step`）。请**不要**依据 R2/R5 修改代码，其给出的修复方案无修复效果，按字面改反而会引入失配。
+>
+> 另有三处「通过项」需纠正：当时并非「无废弃 API」（实有 25 处 `getStringSync` 的 `Resource` 重载废弃告警）；「清理 LAN 可省约 1 MB」无依据（源文件合计约 33 KB）；「13 处页生命周期」实为 15 个游戏页。
+>
+> **以 `docs/harmony-audit-2026-10-18.md`（第二轮复核）为准。**
+> 外部核验记录见 `docs/harmony-audit-verification-2026-10-13.md`，其对本报告 R2/R5 的反驳成立。
+
 日期：2026-10-13
 
 审查对象：E:\lianxi\LittleGames（模块 `entry`，bundleName `com.littlegames.collection`）

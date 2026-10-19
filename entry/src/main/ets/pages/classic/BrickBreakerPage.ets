@@ -108,13 +108,13 @@ export struct BrickBreakerPage {
 
           Column() {
             Text($r('app.string.brickbreaker_lives_label')).fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
-            Text('' + this.viewModel.lives).fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold).fontColor(SemanticColors.error)
+            Text('' + this.viewModel.lives).fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold).fontColor(SemanticColors.errorText)
           }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
           .alignItems(HorizontalAlign.Center).margin({ left: 4, right: 4 })
 
           Column() {
             Text($r('app.string.brickbreaker_level_label')).fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textTertiary)
-            Text('' + this.viewModel.level).fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold).fontColor(SemanticColors.success)
+            Text('' + this.viewModel.level).fontSize(FontTokens.sizeHeadline).fontWeight(FontTokens.weightBold).fontColor(SemanticColors.successText)
           }.layoutWeight(1).padding(8).backgroundColor(SemanticColors.surface).borderRadius(RadiusTokens.base)
           .alignItems(HorizontalAlign.Center).margin({ right: 8 })
         }.margin({ top: 8, bottom: 8 })
@@ -183,7 +183,7 @@ export struct BrickBreakerPage {
             if (this.viewModel.levelClearMsg) {
               Column() {
                 Text($r('app.string.brickbreaker_level_clear'))
-                  .fontSize(FontTokens.sizeTitle).fontWeight(FontTokens.weightBold).fontColor(SemanticColors.success)
+                  .fontSize(FontTokens.sizeTitle).fontWeight(FontTokens.weightBold).fontColor(SemanticColors.successText)
               }
               .width(this.boardLength(this.viewModel.gameWidth()))
               .height(this.boardLength(this.viewModel.gameHeight()))

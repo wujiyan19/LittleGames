@@ -65,7 +65,7 @@ export class MemoryCardViewModel implements GameLifecycleObserver {
 
   startGame(): void {
     gameSound.stop(GAME_ID);
-    GameDataManager.recordGamePlayed(GAME_ID);
+    GameDataManager.recordGameStarted(GAME_ID);
     this.clearTimer();
     this.cards = this.rules.deal(this.getPairCount(), this.rng);
     this.flippedIdxs = [];

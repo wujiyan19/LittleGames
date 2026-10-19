@@ -1,12 +1,12 @@
+import { GameDataManager } from '../../model/GameData';
 /**
- * 我的 Tab — 用户卡片 + 最近玩过 + 数据统计 + 最高分排行
+ * 我的 Tab — 用户卡片 + 最近玩过 + 数据统计 + 常玩游戏
  * 原先是 Index.ets 内的 @Builder，抽出后成为纯展示组件：
- * 统计数据（总数 / 最高分 / 排行榜）由父组件算好通过 @Param 传入，
- * 不再在 build 过程中调用数据层。
+ * 统计总数与常玩顺序由父组件通过 @Param 传入，
+ * 各行显示已持久化的实际开局次数。
  */
 import { SemanticColors, FontTokens, RadiusTokens, SpacingTokens } from '../../common/DesignTokens';
 import { GameInfo } from '../../common/GameConstants';
-import { resolveString } from '../../common/I18nUtils';
 import { ProfileStatsCard } from '../../components/ProfileStatsCard';
 import { HomeHeader } from '../../components/HomeHeader';
 import { HarmonyMotion } from '../../common/HarmonyMotion';
@@ -16,9 +16,9 @@ import { formatPlayTime } from '../../common/PlayTime';
 export struct ProfileTab {
   /** 游戏总数（经典 + 益智） */
   @Param totalGames: number = 0;
-  /** 全站最高分（无记录时为 '--'） */
-  @Param bestScoreText: string = '--';
-  /** 按最高分排序的展示列表 */
+  /** Recorded starts since the update; never compares unrelated score units. */
+  @Param totalStarts: number = 0;
+  /** 按真实开局次数排序的展示列表 */
   @Param rankedGames: GameInfo[] = [];
   @Param recentGames: GameInfo[] = [];
   @Param playedGameCount: number = 0;
@@ -58,20 +58,6 @@ export struct ProfileTab {
     if (index === 1) { return SemanticColors.surfaceHover; }
     if (index === 2) { return SemanticColors.surfaceHover; }
     return SemanticColors.bg;
-  }
-
-  getHighScoreText(game: GameInfo): string {
-    if (game.highScore > 0) {
-      const context = this.getUIContext().getHostContext();
-      const label = resolveString(game.scoreLabel, context);
-      return '' + game.highScore + ' ' + label;
-    }
-    return '--';
-  }
-
-  getHighScoreColor(game: GameInfo): Resource {
-    if (game.highScore > 0) { return SemanticColors.primary; }
-    return SemanticColors.textDisabled;
   }
 
   build() {
@@ -187,7 +173,7 @@ export struct ProfileTab {
               ProfileStatsCard({ icon: $r('sys.symbol.clock'), title: $r('app.string.profile_stat_play_time'), value: this.getTotalPlayTimeText() })
             }
             GridCol() {
-              ProfileStatsCard({ icon: $r('sys.symbol.star_fill'), title: $r('app.string.profile_stat_best'), value: this.bestScoreText })
+              ProfileStatsCard({ icon: $r('sys.symbol.star_fill'), title: $r('app.string.profile_total_starts'), value: this.totalStarts.toString() })
             }
           }
           .width('100%')
@@ -207,7 +193,13 @@ export struct ProfileTab {
           .width('100%')
           .padding({ top: SpacingTokens.xl, bottom: SpacingTokens.md })
 
+          Text($r('app.string.profile_start_count_note')).fontFamily(FontTokens.family).fontSize(FontTokens.sizeBody)
+            .fontColor(SemanticColors.textSecondary).width('100%').padding({ bottom: SpacingTokens.sm })
           Column() {
+            if (this.rankedGames.length === 0) {
+              Text($r('app.string.profile_frequent_empty')).fontSize(FontTokens.sizeBodyLarge)
+                .fontColor(SemanticColors.textSecondary).width('100%').padding(SpacingTokens.base)
+            }
             ForEach(this.rankedGames,
               (game: GameInfo, index: number) => {
                 Row() {
@@ -242,15 +234,13 @@ export struct ProfileTab {
                     .margin({ left: SpacingTokens.sm })
                     .maxLines(2)
                     .textOverflow({ overflow: TextOverflow.Ellipsis })
-                  Text(this.getHighScoreText(game))
+                  Text($r('app.string.profile_play_count', GameDataManager.getPlayCount(game.id)))
                     .fontFamily(FontTokens.family)
                     .fontSize(FontTokens.sizeBody)
                     .fontWeight(FontTokens.weightBold)
-                    .fontColor(this.getHighScoreColor(game))
+                    .fontColor(SemanticColors.primary)
                     .layoutWeight(1)
                     .textAlign(TextAlign.End)
-                    .maxLines(2)
-                    .textOverflow({ overflow: TextOverflow.Ellipsis })
                 }
                 .width('100%')
                 .padding({ left: SpacingTokens.base, right: SpacingTokens.base,
@@ -262,7 +252,7 @@ export struct ProfileTab {
                       .layoutWeight(1).backgroundColor(SemanticColors.divider)
                   }.width('100%').padding({ left: SpacingTokens.base, right: SpacingTokens.base })
                 }
-              }, (game: GameInfo, index: number) => game.id + '_' + game.highScore.toString() + '_' + index.toString())
+              }, (game: GameInfo, index: number) => game.id + '_' + GameDataManager.getPlayCount(game.id).toString() + '_' + index.toString())
           }
           .width('100%')
           .backgroundColor(SemanticColors.surface)

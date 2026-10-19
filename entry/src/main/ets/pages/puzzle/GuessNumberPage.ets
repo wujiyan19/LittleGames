@@ -46,12 +46,12 @@ export struct GuessNumberPage {
   }
 
   getResultColor(a: number): ResourceColor {
-    if (a === this.viewModel.getSecretLength()) { return SemanticColors.success; }
-    return SemanticColors.warning;
+    if (a === this.viewModel.getSecretLength()) { return SemanticColors.successText; }
+    return SemanticColors.warningText;
   }
 
   getInputColor(): ResourceColor {
-    if (this.viewModel.isInputComplete()) { return SemanticColors.success; }
+    if (this.viewModel.isInputComplete()) { return SemanticColors.successText; }
     return SemanticColors.textPrimary;
   }
 
@@ -65,7 +65,7 @@ export struct GuessNumberPage {
       if (this.viewModel.isInputComplete()) { return SemanticColors.textOnPrimary; }
       return SemanticColors.textTertiary;
     }
-    if (key === '⌫') { return SemanticColors.error; }
+    if (key === '⌫') { return SemanticColors.errorText; }
     return $r('app.color.play_piece_text');
   }
 
@@ -140,7 +140,7 @@ export struct GuessNumberPage {
             .fontColor(SemanticColors.textTertiary).margin({ top: SpacingTokens.sm })
           Text($r('app.string.guess_tries_format', this.viewModel.tries, this.viewModel.getMaxTries()))
             .fontFamily(FontTokens.family).fontSize(FontTokens.sizeBodySmall)
-            .fontColor(SemanticColors.warning).margin({ top: SpacingTokens.xs })
+            .fontColor(SemanticColors.warningText).margin({ top: SpacingTokens.xs })
         }.alignItems(HorizontalAlign.Center).margin({ bottom: SpacingTokens.md })
 
         Column() {

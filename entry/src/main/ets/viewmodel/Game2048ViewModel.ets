@@ -76,7 +76,7 @@ export class Game2048ViewModel implements GameLifecycleObserver {
     this.resumePending = false;
     this.confirmExit = false;
     this.savedGameRevision = GameDataManager.getSavedGameRevision();
-    GameDataManager.recordGamePlayed(GAME_ID);
+    GameDataManager.recordGameStarted(GAME_ID);
     this.board = this.rules.emptyBoard();
     this.score = 0;
     this.status = GameStatus.PLAYING;

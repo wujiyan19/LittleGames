@@ -6,7 +6,8 @@ import { SemanticColors, FontTokens, RadiusTokens, SpacingTokens } from '../comm
 import { GameInfo, GameCategory } from '../common/GameConstants';
 import { resolveString } from '../common/I18nUtils';
 import { HarmonyMotion } from '../common/HarmonyMotion';
-import { playTimeHours } from '../common/PlayTime';
+import { formatPlayTime } from '../common/PlayTime';
+import { gameBrief } from '../common/GameCardCopy';
 
 const EMPTY_GAME: GameInfo = {
   id: '',
@@ -56,18 +57,16 @@ export struct GameCard {
         .margin({ top: SpacingTokens.sm })
 
       // 按行数预留空间，短简介和未游玩卡片也保持相同尺寸，并随系统字号缩放。
-      Text(this.game.description)
+      Text(gameBrief(this.game))
         .fontFamily(FontTokens.family)
-        .fontSize(FontTokens.sizeBody)
+        .fontSize(FontTokens.sizeBodyLarge)
         .fontColor(SemanticColors.textSecondary)
         .width('100%')
         .minLines(2)
         .align(Alignment.TopStart)
-        .maxLines(2)
-        .textOverflow({ overflow: TextOverflow.Ellipsis })
         .margin({ top: SpacingTokens.xs })
 
-      Text($r('app.string.card_played_time', playTimeHours(this.game.playTimeMs)))
+      Text($r('app.string.card_played_duration', formatPlayTime(this.game.playTimeMs, this.getUIContext().getHostContext())))
         .fontFamily(FontTokens.family)
         .fontSize(FontTokens.sizeCaption)
         .fontColor(SemanticColors.textTertiary)

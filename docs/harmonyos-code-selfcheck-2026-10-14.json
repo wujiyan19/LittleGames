@@ -1,0 +1,227 @@
+{
+  "startedAt": "2026-10-14T07:55:19.868Z",
+  "scope": "89-game single-player desktop regression; no native/device claims",
+  "results": [
+    {
+      "script": "test-card-ai",
+      "exitCode": 0,
+      "passed": 29,
+      "total": 29,
+      "error": null
+    },
+    {
+      "script": "test-chess-ai",
+      "exitCode": 0,
+      "passed": 21,
+      "total": 21,
+      "error": null
+    },
+    {
+      "script": "test-classic-logic-audit",
+      "exitCode": 0,
+      "passed": 32,
+      "total": 32,
+      "error": null
+    },
+    {
+      "script": "test-collection",
+      "exitCode": 0,
+      "passed": 67,
+      "total": 67,
+      "error": null
+    },
+    {
+      "script": "test-computer-opponents",
+      "exitCode": 0,
+      "passed": 54,
+      "total": 54,
+      "error": null
+    },
+    {
+      "script": "test-continuation",
+      "exitCode": 0,
+      "passed": 83,
+      "total": 83,
+      "error": null
+    },
+    {
+      "script": "test-expansion",
+      "exitCode": 0,
+      "passed": 330,
+      "total": 330,
+      "error": null
+    },
+    {
+      "script": "test-expansion-art",
+      "exitCode": 0,
+      "passed": 7,
+      "total": 7,
+      "error": null
+    },
+    {
+      "script": "test-expansion-completion",
+      "exitCode": 0,
+      "passed": 191,
+      "total": 191,
+      "error": null
+    },
+    {
+      "script": "test-expansion-gameplay-audit",
+      "exitCode": 0,
+      "passed": 159,
+      "total": 159,
+      "error": null
+    },
+    {
+      "script": "test-expansion-render-audit",
+      "exitCode": 0,
+      "passed": 14,
+      "total": 14,
+      "error": null
+    },
+    {
+      "script": "test-game-settings",
+      "exitCode": 0,
+      "passed": 12,
+      "total": 12,
+      "error": null
+    },
+    {
+      "script": "test-generation-logic",
+      "exitCode": 0,
+      "passed": 26,
+      "total": 26,
+      "error": null
+    },
+    {
+      "script": "test-klotski-ui-state",
+      "exitCode": 0,
+      "passed": 3,
+      "total": 3,
+      "error": null
+    },
+    {
+      "script": "test-performance",
+      "exitCode": 0,
+      "passed": 165,
+      "total": 165,
+      "error": null
+    },
+    {
+      "script": "test-play-history",
+      "exitCode": 0,
+      "passed": 10,
+      "total": 10,
+      "error": null
+    },
+    {
+      "script": "test-play-time",
+      "exitCode": 0,
+      "passed": 34,
+      "total": 34,
+      "error": null
+    },
+    {
+      "script": "test-poker-ai",
+      "exitCode": 0,
+      "passed": 11,
+      "total": 11,
+      "error": null
+    },
+    {
+      "script": "test-single-player-catalog",
+      "exitCode": 0,
+      "passed": 17,
+      "total": 17,
+      "error": null
+    },
+    {
+      "script": "test-window-sizing",
+      "exitCode": 0,
+      "passed": 8,
+      "total": 8,
+      "error": null
+    },
+    {
+      "script": "test-world-piece-refresh",
+      "exitCode": 0,
+      "passed": 8,
+      "total": 8,
+      "error": null
+    },
+    {
+      "script": "test-local-game-saves",
+      "exitCode": 0,
+      "passed": 20,
+      "total": 20,
+      "error": null
+    },
+    {
+      "script": "test-daily-featured",
+      "exitCode": 0,
+      "passed": 11,
+      "total": 11,
+      "error": null
+    },
+    {
+      "script": "test-line-rescue",
+      "exitCode": 0,
+      "passed": 9,
+      "total": 9,
+      "error": null
+    },
+    {
+      "script": "test-game-sounds",
+      "exitCode": 0,
+      "passed": 15,
+      "total": 15,
+      "error": null
+    },
+    {
+      "script": "test-data-recovery",
+      "exitCode": 0,
+      "passed": 3,
+      "total": 3,
+      "error": null
+    }
+  ],
+  "completedAt": "2026-10-14T07:56:01.025Z",
+  "complete": true,
+  "passed": 1339,
+  "total": 1339,
+  "date": "2026-10-14",
+  "sdk": "HarmonyOS 6.1.1 / API 24",
+  "staticChecks": {
+    "reachableArkTSFiles": 126,
+    "staticStringReferences": 764,
+    "localeDefinitions": {
+      "base": 821,
+      "zh_CN": 821,
+      "en_US": 821
+    },
+    "missingStaticStringReferences": [],
+    "reachableNetworkImports": [],
+    "diffCheck": "passed"
+  },
+  "nativeBuild": {
+    "successful": true,
+    "warningCount": 9,
+    "log": "entry/build/selfcheck-native-20261014.log",
+    "signedHap": "entry/build/default/outputs/default/entry-default-signed.hap"
+  },
+  "deviceAcceptance": {
+    "executed": false
+  },
+  "fixedIssues": [
+    "invalid high-score values",
+    "inconsistent snake continuation state"
+  ],
+  "sha256": {
+    "entry/src/main/ets/model/GameData.ets": "57d73e76bca5fcec4f599a31228d1a67cb430e9bf9f91a512b229a204c7696ce",
+    "entry/src/main/ets/viewmodel/SnakeViewModel.ets": "ebebaee5a7f81d92c85ced703e900e6c842ee3c8f064cdeeac502d89fff3f61d",
+    "scripts/test-data-recovery.cjs": "578be1bdfb2646233d17424cfa07d06286d1f4f40f663b567a5e90891310358d",
+    "scripts/test-continuation.cjs": "5c8f0b5c39292c16d0db5c1ce907eb31b85f801fe8fbe47c56799f0151b6d39c",
+    "scripts/run-regressions.cjs": "e97a0f22e2691e5f6dd329722bb4b01b227ed068eb4b1121c1a5510cdec1aa84",
+    "entry/build/default/outputs/default/entry-default-signed.hap": "29889c5f97778b5fcd8c0169053ea38ef9a9e4a59d41fbad185056ed63221db0"
+  }
+}

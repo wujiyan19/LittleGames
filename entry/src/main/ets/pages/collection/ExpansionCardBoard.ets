@@ -20,13 +20,19 @@ export struct ExpansionCardBoard {
     if (this.gameId === 'spider' && this.vm.state.pieces[card].w === 0) { return '▧'; }
     const base: number = POKER_IDS.includes(this.gameId) ? card % 54 : card;
     if (base >= 52 && POKER_IDS.includes(this.gameId)) { return base === 52 ? '☆' : '★'; }
-    return (this.gameId === 'spider' ? '♠' : ['♠', '♥', '♦', '♣'][Math.floor(base / 13)]) + ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'][base % 13];
+    return (this.gameId === 'spider' ? '♤' : ['♤', '♡', '♢', '♧'][Math.floor(base / 13)]) + ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'][base % 13];
   }
   cardColor(card: number): Resource {
+    if (this.gameId === 'spider') { return SemanticColors.textPrimary; }
     if (this.gameId === 'mahjong') { return Math.floor(card / 4) < 9 ? SemanticColors.error : Math.floor(card / 4) < 27 ? SemanticColors.primary : SemanticColors.textPrimary; }
     const suit: number = Math.floor((POKER_IDS.includes(this.gameId) ? card % 54 : card) / 13);
     if (POKER_IDS.includes(this.gameId)) { return suit === 1 || suit === 2 ? $r('app.color.playing_card_red') : $r('app.color.playing_card_ink'); }
     return suit === 1 || suit === 2 ? SemanticColors.error : SemanticColors.textPrimary;
+  }
+  slotColor(slot: number): Resource {
+    const cards: number[] = this.vm.state.piles[8 + slot].cards;
+    if (cards.length > 0) { return this.cardColor(cards[cards.length - 1]); }
+    return slot === 5 || slot === 6 ? SemanticColors.error : SemanticColors.textPrimary;
   }
   chessText(piece: number): string {
     if (piece === 0) { return ''; } const side: number = piece > 10 ? 2 : 1; const type: number = piece % 10;
@@ -54,6 +60,7 @@ export struct ExpansionCardBoard {
     Column() {
       GameArtTile({ image: this.gameId === 'mahjong' ? $r('app.media.exp_mahjong') : POKER_IDS.includes(this.gameId) ? $r('app.media.exp_poker_front') : this.gameId === 'spider' && this.vm.state.pieces[card].w === 0 ? $r('app.media.exp_card_back') : $r('app.media.exp_card_front'),
         label: this.gameId === 'spider' && this.vm.state.pieces[card].w === 0 ? '' : this.cardText(card), description: this.cardText(card), textColor: this.cardColor(card),
+        labelAtTop: this.gameId === 'spider' || this.gameId === 'freecell',
         selected: this.vm.state.selected === card || this.vm.state.tray.includes(card), onTap: () => { this.vm.tap(card); } })
     }.width(48).height(62)
   }
@@ -173,8 +180,8 @@ export struct ExpansionCardBoard {
       else {
         Row({ space: SpacingTokens.xs }) {
           ForEach(range(8), (slot: number) => {
-            Button(this.vm.state.piles[8 + slot].cards.length > 0 ? this.cardText(this.vm.state.piles[8 + slot].cards[this.vm.state.piles[8 + slot].cards.length - 1]) : slot < 4 ? '○' : ['♠', '♥', '♦', '♣'][slot - 4], { type: ButtonType.Normal })
-              .layoutWeight(1).height(48).padding(0).fontColor(SemanticColors.textPrimary).backgroundColor(SemanticColors.surface)
+            Button(this.vm.state.piles[8 + slot].cards.length > 0 ? this.cardText(this.vm.state.piles[8 + slot].cards[this.vm.state.piles[8 + slot].cards.length - 1]) : slot < 4 ? '○' : ['♤', '♡', '♢', '♧'][slot - 4], { type: ButtonType.Normal })
+              .layoutWeight(1).height(48).padding(0).fontFamily(FontTokens.family).fontColor(this.slotColor(slot)).backgroundColor(SemanticColors.surface)
               .onClick(() => { if (this.vm.state.selected >= 0) { this.vm.tap(208 + slot); } else if (slot < 4 && this.vm.state.piles[8 + slot].cards.length > 0) { this.vm.tap(this.vm.state.piles[8 + slot].cards[0]); } })
           }, (slot: number) => slot.toString())
         }.width('100%')

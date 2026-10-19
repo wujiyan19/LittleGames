@@ -159,10 +159,24 @@ test('settled fruit stops its frame loop and dropping the next fruit wakes it', 
   const resting=snapshot(m); m.step(0.008); assert.equal(snapshot(m),resting);
   m.aim(200,20); assert.equal(m.state.phase,1); assert.equal(m.state.pieces.length,2);
 });
+
+test('a continuously overflowing fruit column loses even while contact velocities keep jittering', () => {
+  for (const level of [0, 1, 2]) {
+    let next = 0;
+    const m = new ExpansionModel({ next: () => [0, 0.4, 0.8][next++ % 3] });
+    m.start('fruitmerge', level);
+    for (let drop = 0; drop < 24 && m.state.outcome === 0; drop++) {
+      m.aim(180, 20);
+      for (let tick = 0; tick < 100; tick++) m.step(0.008);
+    }
+    for (let tick = 0; tick < 1000 && m.state.outcome === 0; tick++) m.step(0.008);
+    assert.equal(m.state.outcome, 2, `persistent overflow at level ${level}`);
+  }
+});
 test('catalog and resources are complete for every registered expansion', () => {
   const ids = f.load('entry/src/main/ets/model/ExpansionCatalog.ets').EXPANSION_IDS;
   assert.deepEqual(ids, PLAYABLE_EXPANSION_IDS);
-  const games = f.data().getAllGames(); assert.equal(games.length, 79);
+  const games = f.data().getAllGames(); assert.equal(games.length, 76);
   assert.equal(new Set(games.map(g => g.id)).size, games.length);
   const routes = f.load('entry/src/main/ets/router/GameRouteRegistry.ets').GameRoutes;
   for (const id of ids.filter(id => f.data().getGameById(id) !== undefined)) assert.equal(routes.gameIdForRoute(routes.routeName(id)), id);

@@ -39,6 +39,10 @@ export class SemanticColors {
   static gameIconBackground: Resource = $r('app.color.game_icon_background');
   static accent: Resource = $r('sys.color.ohos_id_color_emphasize');
   static accentLight: Resource = $r('sys.color.ohos_id_color_component_activated');
+  /** Text-only status colors meet contrast independently from decorative accents. */
+  static successText: Resource = $r('app.color.success_text');
+  static warningText: Resource = $r('app.color.warning_text');
+  static errorText: Resource = $r('app.color.error_text');
   static success: Resource = $r('app.color.success');
   static warning: Resource = $r('app.color.warning');
   static error: Resource = $r('app.color.error');

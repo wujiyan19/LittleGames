@@ -11,7 +11,7 @@ const before = m => JSON.stringify(m.state);
 test('catalog: all games are distinct with nonempty categories, bidirectional routes and localized assets', () => {
   const games = f.data().getAllGames(); const categories = f.load('entry/src/main/ets/common/GameConstants.ets').GAME_CATEGORIES;
   const routes = f.load('entry/src/main/ets/router/GameRouteRegistry.ets').GameRoutes;
-  assert.equal(games.length, 79); assert.equal(new Set(games.map(g => g.id)).size, games.length); assert.equal(categories.length, 6);
+  assert.equal(games.length, 76); assert.equal(new Set(games.map(g => g.id)).size, games.length); assert.equal(categories.length, 6);
   for (const cat of categories) assert(games.some(g => g.category === cat));
   for (const g of games) { assert(routes.routeName(g.id)); assert.equal(routes.gameIdForRoute(routes.routeName(g.id)), g.id); }
   assert.equal(routes.routeName('invalid'), ''); assert.equal(routes.gameIdForRoute('Collection_invalid'), '');

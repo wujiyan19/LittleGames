@@ -66,7 +66,7 @@ export class KlotskiViewModel implements GameLifecycleObserver {
 
   startGame(): void {
     gameSound.stop(GAME_ID);
-    GameDataManager.recordGamePlayed(GAME_ID);
+    GameDataManager.recordGameStarted(GAME_ID);
     this.blocks = this.rules.layout(this.difficulty);
     this.grid = this.rules.buildGrid(this.blocks);
     this.stepCount = 0;

@@ -7,6 +7,7 @@ import { ExpansionArt } from '../../common/ExpansionArt';
 import { Haptics } from '../../common/Haptics';
 import { HarmonyMotion } from '../../common/HarmonyMotion';
 import { resolveString } from '../../common/I18nUtils';
+import { ToyRollingStage } from '../../components/ToyRollingStage';
 
 @ComponentV2
 export struct ExpansionWorldBoard {
@@ -54,7 +55,7 @@ export struct ExpansionWorldBoard {
     Column({ space: SpacingTokens.base }) {
       if (this.gameId === 'backpack') { this.Backpack() } else if (this.gameId === 'dots') { this.Dots() }
       else if (this.gameId === 'tug') { this.Tug() } else {
-        this.Arena()
+        if (this.gameId === 'rollingball') { ToyRollingStage({ vm: this.vm }) } else { this.Arena() }
         if (this.vm.state.phase === 0 && !['billiards', 'golf', 'bowling'].includes(this.gameId)) {
           Button($r('app.string.expansion_ready')).onClick(() => { this.vm.activate(); })
         }
@@ -226,7 +227,7 @@ export struct ExpansionWorldBoard {
           ForEach(range(this.vm.state.cols), (col: number) => {
             Text('●').fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textPrimary)
             Button('━', { type: ButtonType.Normal }).layoutWeight(1).height(26).padding(0)
-              .fontColor(this.vm.state.board[row * this.vm.state.cols + col] === 0 ? SemanticColors.border : this.vm.state.board[row * this.vm.state.cols + col] === 1 ? SemanticColors.primary : SemanticColors.error)
+              .fontColor(this.vm.state.board[row * this.vm.state.cols + col] === 0 ? SemanticColors.border : this.vm.state.board[row * this.vm.state.cols + col] === 1 ? SemanticColors.primary : SemanticColors.errorText)
               .backgroundColor(SemanticColors.boardBg).onClick(() => { this.vm.tap(row * this.vm.state.cols + col); })
           }, (col: number) => col.toString())
           Text('●').fontSize(FontTokens.sizeCaption).fontColor(SemanticColors.textPrimary)
@@ -235,7 +236,7 @@ export struct ExpansionWorldBoard {
           Row({ space: 0 }) {
             ForEach(range(this.vm.state.cols + 1), (col: number) => {
               Button('┃', { type: ButtonType.Normal }).width(20).height(48).padding(0).backgroundColor(SemanticColors.boardBg)
-                .fontColor(this.vm.state.board[this.vm.state.cols * (this.vm.state.cols + 1) + row * (this.vm.state.cols + 1) + col] === 0 ? SemanticColors.border : this.vm.state.board[this.vm.state.cols * (this.vm.state.cols + 1) + row * (this.vm.state.cols + 1) + col] === 1 ? SemanticColors.primary : SemanticColors.error)
+                .fontColor(this.vm.state.board[this.vm.state.cols * (this.vm.state.cols + 1) + row * (this.vm.state.cols + 1) + col] === 0 ? SemanticColors.border : this.vm.state.board[this.vm.state.cols * (this.vm.state.cols + 1) + row * (this.vm.state.cols + 1) + col] === 1 ? SemanticColors.primary : SemanticColors.errorText)
                 .onClick(() => { this.vm.tap(this.vm.state.cols * (this.vm.state.cols + 1) + row * (this.vm.state.cols + 1) + col); })
               if (col < this.vm.state.cols) { Text(this.vm.state.data[row * this.vm.state.cols + col] === 0 ? '' : this.vm.state.data[row * this.vm.state.cols + col].toString()).layoutWeight(1).textAlign(TextAlign.Center).fontColor(SemanticColors.primary) }
             }, (col: number) => col.toString())

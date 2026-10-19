@@ -1,49 +1,181 @@
 {
   "string": [
-    { "name": "home_daily_greeting", "value": "今日寄语" },
-    { "name": "home_daily_recommendation", "value": "今日推荐" },
-    { "name": "home_daily_subtitle", "value": "每天有新选择" },
-    { "name": "home_daily_refresh", "value": "换一批" },
-    { "name": "home_daily_refresh_a11y", "value": "换一批推荐游戏" },
-    { "name": "linerescue_draw_hint", "value": "先在小狗周围画一条保护线，再点击开始。线会固定，保护小狗10秒。" },
-    { "name": "daily_inspiration_01", "value": "愿你今天平安喜乐，万事顺意。" },
-    { "name": "daily_inspiration_02", "value": "慢慢来，每一步都算数。" },
-    { "name": "daily_inspiration_03", "value": "愿今天的小惊喜，刚好遇见你。" },
-    { "name": "daily_inspiration_04", "value": "给自己一点空闲，也给快乐留个位置。" },
-    { "name": "daily_inspiration_05", "value": "愿你手里有热茶，心里有期待。" },
-    { "name": "daily_inspiration_06", "value": "今天也值得被温柔对待。" },
-    { "name": "daily_inspiration_07", "value": "一局小快乐，送给认真生活的你。" },
-    { "name": "daily_inspiration_08", "value": "愿你遇见好事，也记得自己的好。" },
-    { "name": "daily_inspiration_09", "value": "休息不是停步，是为下一程蓄力。" },
-    { "name": "daily_inspiration_10", "value": "愿你的努力有回应，等待有结果。" },
-    { "name": "daily_inspiration_11", "value": "今天可以从一件小事的顺利开始。" },
-    { "name": "daily_inspiration_12", "value": "把烦恼放一放，给自己一个微笑。" },
-    { "name": "daily_inspiration_13", "value": "愿生活有趣，愿你常有笑意。" },
-    { "name": "daily_inspiration_14", "value": "不必急着赢，享受过程也很好。" },
-    { "name": "daily_inspiration_15", "value": "愿你眼里有光，脚下有路。" },
-    { "name": "daily_inspiration_16", "value": "小小的进步，也值得庆祝。" },
-    { "name": "daily_inspiration_17", "value": "愿今天的风，带来轻松的好心情。" },
-    { "name": "daily_inspiration_18", "value": "给忙碌按下暂停，快乐一会儿。" },
-    { "name": "daily_inspiration_19", "value": "愿你所遇皆暖，所行皆坦。" },
-    { "name": "daily_inspiration_20", "value": "这一刻，允许自己轻松一点。" },
-    { "name": "daily_inspiration_21", "value": "愿你有重新开始的勇气，也有从容的耐心。" },
-    { "name": "daily_inspiration_22", "value": "让今天多一点好奇，少一点着急。" },
-    { "name": "daily_inspiration_23", "value": "愿你的日子，藏着许多小确幸。" },
-    { "name": "daily_inspiration_24", "value": "认真玩一局，轻轻松一口气。" },
-    { "name": "daily_inspiration_25", "value": "愿你忙有所获，闲有所乐。" },
-    { "name": "daily_inspiration_26", "value": "不需要完美，也可以拥有美好的一天。" },
-    { "name": "daily_inspiration_27", "value": "愿你心里的期待，慢慢开成花。" },
-    { "name": "daily_inspiration_28", "value": "今天的你，也有属于自己的闪光点。" },
-    { "name": "daily_inspiration_29", "value": "愿你一路有伴，独处也自在。" },
-    { "name": "daily_inspiration_30", "value": "留一点时间，做让自己开心的事。" },
-    { "name": "daily_inspiration_31", "value": "愿你每次出发，都带着一点希望。" },
-    { "name": "daily_inspiration_32", "value": "新的一天，愿快乐与你不期而遇。" },
-    { "name": "save_resume_title", "value": "继续上次对局？" },
-    { "name": "save_resume_desc", "value": "上次的棋盘、难度和进度已保留。你可以继续游玩，或新开一局替换存档。" },
-    { "name": "save_continue", "value": "继续对局" },
-    { "name": "save_new_game", "value": "新开一局" },
-    { "name": "save_exit_desc", "value": "退出后可从上次保存的进度继续。确定退出吗？" },
-    { "name": "save_restore_failed", "value": "上次的存档无法恢复，已为你开始新对局。" },
+    {
+      "name": "home_daily_greeting",
+      "value": "今日寄语"
+    },
+    {
+      "name": "home_daily_recommendation",
+      "value": "今日推荐"
+    },
+    {
+      "name": "home_daily_subtitle",
+      "value": "每天有新选择"
+    },
+    {
+      "name": "home_daily_refresh",
+      "value": "换一批"
+    },
+    {
+      "name": "home_daily_refresh_a11y",
+      "value": "换一批推荐游戏"
+    },
+    {
+      "name": "linerescue_draw_hint",
+      "value": "先在小狗周围画一条保护线，再点击开始。线会固定，保护小狗10秒。"
+    },
+    {
+      "name": "daily_inspiration_01",
+      "value": "愿你今天平安喜乐，万事顺意。"
+    },
+    {
+      "name": "daily_inspiration_02",
+      "value": "慢慢来，每一步都算数。"
+    },
+    {
+      "name": "daily_inspiration_03",
+      "value": "愿今天的小惊喜，刚好遇见你。"
+    },
+    {
+      "name": "daily_inspiration_04",
+      "value": "给自己一点空闲，也给快乐留个位置。"
+    },
+    {
+      "name": "daily_inspiration_05",
+      "value": "愿你手里有热茶，心里有期待。"
+    },
+    {
+      "name": "daily_inspiration_06",
+      "value": "今天也值得被温柔对待。"
+    },
+    {
+      "name": "daily_inspiration_07",
+      "value": "一局小快乐，送给认真生活的你。"
+    },
+    {
+      "name": "daily_inspiration_08",
+      "value": "愿你遇见好事，也记得自己的好。"
+    },
+    {
+      "name": "daily_inspiration_09",
+      "value": "休息不是停步，是为下一程蓄力。"
+    },
+    {
+      "name": "daily_inspiration_10",
+      "value": "愿你的努力有回应，等待有结果。"
+    },
+    {
+      "name": "daily_inspiration_11",
+      "value": "今天可以从一件小事的顺利开始。"
+    },
+    {
+      "name": "daily_inspiration_12",
+      "value": "把烦恼放一放，给自己一个微笑。"
+    },
+    {
+      "name": "daily_inspiration_13",
+      "value": "愿生活有趣，愿你常有笑意。"
+    },
+    {
+      "name": "daily_inspiration_14",
+      "value": "不必急着赢，享受过程也很好。"
+    },
+    {
+      "name": "daily_inspiration_15",
+      "value": "愿你眼里有光，脚下有路。"
+    },
+    {
+      "name": "daily_inspiration_16",
+      "value": "小小的进步，也值得庆祝。"
+    },
+    {
+      "name": "daily_inspiration_17",
+      "value": "愿今天的风，带来轻松的好心情。"
+    },
+    {
+      "name": "daily_inspiration_18",
+      "value": "给忙碌按下暂停，快乐一会儿。"
+    },
+    {
+      "name": "daily_inspiration_19",
+      "value": "愿你所遇皆暖，所行皆坦。"
+    },
+    {
+      "name": "daily_inspiration_20",
+      "value": "这一刻，允许自己轻松一点。"
+    },
+    {
+      "name": "daily_inspiration_21",
+      "value": "愿你有重新开始的勇气，也有从容的耐心。"
+    },
+    {
+      "name": "daily_inspiration_22",
+      "value": "让今天多一点好奇，少一点着急。"
+    },
+    {
+      "name": "daily_inspiration_23",
+      "value": "愿你的日子，藏着许多小确幸。"
+    },
+    {
+      "name": "daily_inspiration_24",
+      "value": "认真玩一局，轻轻松一口气。"
+    },
+    {
+      "name": "daily_inspiration_25",
+      "value": "愿你忙有所获，闲有所乐。"
+    },
+    {
+      "name": "daily_inspiration_26",
+      "value": "不需要完美，也可以拥有美好的一天。"
+    },
+    {
+      "name": "daily_inspiration_27",
+      "value": "愿你心里的期待，慢慢开成花。"
+    },
+    {
+      "name": "daily_inspiration_28",
+      "value": "今天的你，也有属于自己的闪光点。"
+    },
+    {
+      "name": "daily_inspiration_29",
+      "value": "愿你一路有伴，独处也自在。"
+    },
+    {
+      "name": "daily_inspiration_30",
+      "value": "留一点时间，做让自己开心的事。"
+    },
+    {
+      "name": "daily_inspiration_31",
+      "value": "愿你每次出发，都带着一点希望。"
+    },
+    {
+      "name": "daily_inspiration_32",
+      "value": "新的一天，愿快乐与你不期而遇。"
+    },
+    {
+      "name": "save_resume_title",
+      "value": "继续上次对局？"
+    },
+    {
+      "name": "save_resume_desc",
+      "value": "上次的棋盘、难度和进度已保留。你可以继续游玩，或新开一局替换存档。"
+    },
+    {
+      "name": "save_continue",
+      "value": "继续对局"
+    },
+    {
+      "name": "save_new_game",
+      "value": "新开一局"
+    },
+    {
+      "name": "save_exit_desc",
+      "value": "退出后可从上次保存的进度继续。确定退出吗？"
+    },
+    {
+      "name": "save_restore_failed",
+      "value": "上次的存档无法恢复，已为你开始新对局。"
+    },
     {
       "name": "EntryAbility_desc",
       "value": "玩趣盒主入口"
@@ -178,7 +310,7 @@
     },
     {
       "name": "profile_ranking_title",
-      "value": "最高分排行"
+      "value": "常玩游戏"
     },
     {
       "name": "diff_easy",
@@ -1522,11 +1654,11 @@
     },
     {
       "name": "game_screwout_desc",
-      "value": "点击没有被上层板遮挡的螺丝，将其放入三个临时孔位"
+      "value": "观察层叠遮挡，规划拆解顺序，收齐三颗同色螺丝回收"
     },
     {
       "name": "game_screwout_rules",
-      "value": "点击没有被上层板遮挡的螺丝，将其放入三个临时孔位。某块板的三颗螺丝全部卸下后，板和对应螺丝一同移走，腾出孔位。拆完所有板获胜。"
+      "value": "点击完全露出的螺丝放入暂存槽，同色同编号凑满三颗自动回收。一块板的螺丝全部拆完后掉落，露出下层螺丝；掉板不会直接腾空暂存槽。拆完所有板获胜，槽满且未凑成三颗则失败。简单：5 块板、3 色、6 槽；普通：7 块板、4 色、6 槽；困难：9 块板、5 色、5 槽。每个新局都有解，可在槽满前撤销调整顺序。旧存档在重新开局前沿用原规则。"
     },
     {
       "name": "game_parkingjam_name",
@@ -2318,15 +2450,15 @@
     },
     {
       "name": "module_desc",
-      "value": "玩趣盒 - 六大分类，79 款单人小游戏"
+      "value": "玩趣盒 - 六大分类，76 款单人小游戏"
     },
     {
       "name": "app_splash_subtitle",
-      "value": "79 款单人小游戏，随手开一局。"
+      "value": "76 款单人小游戏，随手开一局。"
     },
     {
       "name": "settings_about_tagline",
-      "value": "六大分类，79 款单人小游戏"
+      "value": "六大分类，76 款单人小游戏"
     },
     {
       "name": "expansion_target",
@@ -2335,6 +2467,10 @@
     {
       "name": "expansion_remaining",
       "value": "剩余 %d · 步数 %d"
+    },
+    {
+      "name": "expansion_billiards_fouls",
+      "value": "犯规 %d / %d"
     },
     {
       "name": "expansion_errors",
@@ -3195,6 +3331,398 @@
     {
       "name": "result_share_failed",
       "value": "分享未完成，请重试"
+    },
+    {
+      "name": "sudoku_erase",
+      "value": "擦除数字"
+    },
+    {
+      "name": "home_continue_title",
+      "value": "继续对局"
+    },
+    {
+      "name": "home_replay",
+      "value": "再玩"
+    },
+    {
+      "name": "play_time_zero",
+      "value": "0分钟"
+    },
+    {
+      "name": "play_time_under_minute",
+      "value": "不足1分钟"
+    },
+    {
+      "name": "play_time_minutes",
+      "value": "%1$s分钟"
+    },
+    {
+      "name": "card_played_duration",
+      "value": "已玩 %1$s"
+    },
+    {
+      "name": "profile_frequent_empty",
+      "value": "玩过一局后，常玩游戏会显示在这里"
+    },
+    {
+      "name": "profile_play_count",
+      "value": "开局 %1$d 次"
+    },
+    {
+      "name": "profile_total_starts",
+      "value": "累计开局"
+    },
+    {
+      "name": "game_2048_brief",
+      "value": "滑动合成大数"
+    },
+    {
+      "name": "game_snake_brief",
+      "value": "吃果躲开蛇身"
+    },
+    {
+      "name": "game_tetris_brief",
+      "value": "旋转方块消行"
+    },
+    {
+      "name": "game_whackmole_brief",
+      "value": "看准地鼠再点"
+    },
+    {
+      "name": "game_minesweeper_brief",
+      "value": "推理标记地雷"
+    },
+    {
+      "name": "game_jumpjump_brief",
+      "value": "蓄力跳上平台"
+    },
+    {
+      "name": "game_brickbreaker_brief",
+      "value": "接球击碎砖块"
+    },
+    {
+      "name": "game_sudoku_brief",
+      "value": "推理填满九宫"
+    },
+    {
+      "name": "game_slidepuzzle_brief",
+      "value": "移动拼回顺序"
+    },
+    {
+      "name": "game_klotski_brief",
+      "value": "挪动方块脱困"
+    },
+    {
+      "name": "game_guessnumber_brief",
+      "value": "根据提示猜数"
+    },
+    {
+      "name": "game_memorycard_brief",
+      "value": "记住位置配对"
+    },
+    {
+      "name": "game_match3_brief",
+      "value": "交换宝石消除"
+    },
+    {
+      "name": "game_lights_brief",
+      "value": "翻转相邻灯光"
+    },
+    {
+      "name": "game_flood_brief",
+      "value": "连成同色棋盘"
+    },
+    {
+      "name": "game_maze_brief",
+      "value": "寻找通往出口"
+    },
+    {
+      "name": "game_hanoi_brief",
+      "value": "依序搬动圆盘"
+    },
+    {
+      "name": "game_peg_brief",
+      "value": "跳走多余棋子"
+    },
+    {
+      "name": "game_nonogram_brief",
+      "value": "依提示绘图案"
+    },
+    {
+      "name": "game_arithmetic_brief",
+      "value": "快速完成算式"
+    },
+    {
+      "name": "game_compare_brief",
+      "value": "比较算式大小"
+    },
+    {
+      "name": "game_sequence_brief",
+      "value": "发现数列规律"
+    },
+    {
+      "name": "game_binary_brief",
+      "value": "转换二进制数"
+    },
+    {
+      "name": "game_targetsum_brief",
+      "value": "补数完成等式"
+    },
+    {
+      "name": "game_schulte_brief",
+      "value": "按序找到数字"
+    },
+    {
+      "name": "game_memorysequence_brief",
+      "value": "记住数字顺序"
+    },
+    {
+      "name": "game_missing_brief",
+      "value": "找回缺失数字"
+    },
+    {
+      "name": "game_reaction_brief",
+      "value": "等信号再点击"
+    },
+    {
+      "name": "game_blockfit_brief",
+      "value": "摆放方块填行"
+    },
+    {
+      "name": "game_tilestack_brief",
+      "value": "收集同类图块"
+    },
+    {
+      "name": "game_bubbleshooter_brief",
+      "value": "瞄准同色气泡"
+    },
+    {
+      "name": "game_fruitmerge_brief",
+      "value": "合成更大水果"
+    },
+    {
+      "name": "game_watersort_brief",
+      "value": "分类同色液体"
+    },
+    {
+      "name": "game_arrowclear_brief",
+      "value": "沿箭头方向移出"
+    },
+    {
+      "name": "game_screwout_brief",
+      "value": "拆螺丝，同色收集"
+    },
+    {
+      "name": "game_parkingjam_brief",
+      "value": "按序驶离车场"
+    },
+    {
+      "name": "game_runner_brief",
+      "value": "闪避路上的障碍"
+    },
+    {
+      "name": "game_blackhole_brief",
+      "value": "移动黑洞吞物"
+    },
+    {
+      "name": "game_fisheat_brief",
+      "value": "吃小鱼避大鱼"
+    },
+    {
+      "name": "game_sokoban_brief",
+      "value": "推箱到达目标"
+    },
+    {
+      "name": "game_pipes_brief",
+      "value": "旋转接通管道"
+    },
+    {
+      "name": "game_roomdefense_brief",
+      "value": "布置防线守房"
+    },
+    {
+      "name": "game_basketball_brief",
+      "value": "瞄准篮筐投球"
+    },
+    {
+      "name": "game_solitaire_brief",
+      "value": "红黑交替理牌"
+    },
+    {
+      "name": "game_rhythm_brief",
+      "value": "跟随节奏点击"
+    },
+    {
+      "name": "game_restaurant_brief",
+      "value": "按单制作餐点"
+    },
+    {
+      "name": "game_linktiles_brief",
+      "value": "连接相同图块"
+    },
+    {
+      "name": "game_mahjongsolitaire_brief",
+      "value": "配对移除牌块"
+    },
+    {
+      "name": "game_groupclear_brief",
+      "value": "点击成组色块"
+    },
+    {
+      "name": "game_slotpair_brief",
+      "value": "收集配对图块"
+    },
+    {
+      "name": "game_buscolor_brief",
+      "value": "匹配乘客上车"
+    },
+    {
+      "name": "game_yarn_brief",
+      "value": "收集同色毛线"
+    },
+    {
+      "name": "game_sand_brief",
+      "value": "吸走同色沙粒"
+    },
+    {
+      "name": "game_untangle_brief",
+      "value": "拖动解开交叉"
+    },
+    {
+      "name": "game_platformer_brief",
+      "value": "跳跃越过障碍"
+    },
+    {
+      "name": "game_grapple_brief",
+      "value": "瞄准锚点摆荡"
+    },
+    {
+      "name": "game_flappy_brief",
+      "value": "轻点飞越空隙"
+    },
+    {
+      "name": "game_fruitslice_brief",
+      "value": "划开水果避险"
+    },
+    {
+      "name": "game_rollingball_brief",
+      "value": "控制小球过关"
+    },
+    {
+      "name": "game_shooter_brief",
+      "value": "移动战机闪避"
+    },
+    {
+      "name": "game_tanks_brief",
+      "value": "瞄准敌方坦克"
+    },
+    {
+      "name": "game_fortress_brief",
+      "value": "布置火力守城"
+    },
+    {
+      "name": "game_survival_brief",
+      "value": "走位躲避敌群"
+    },
+    {
+      "name": "game_billiards_brief",
+      "value": "瞄准击球入袋"
+    },
+    {
+      "name": "game_penalty_brief",
+      "value": "瞄准球门射门"
+    },
+    {
+      "name": "game_pingpong_brief",
+      "value": "接球反击得分"
+    },
+    {
+      "name": "game_bowling_brief",
+      "value": "投球击倒球瓶"
+    },
+    {
+      "name": "game_drift_brief",
+      "value": "控制转向漂移"
+    },
+    {
+      "name": "game_hillclimb_brief",
+      "value": "控制油门爬坡"
+    },
+    {
+      "name": "game_airhockey_brief",
+      "value": "击球攻入球门"
+    },
+    {
+      "name": "game_xiangqi_brief",
+      "value": "楚河汉界对弈"
+    },
+    {
+      "name": "game_chess_brief",
+      "value": "运筹棋子将军"
+    },
+    {
+      "name": "game_spider_brief",
+      "value": "依次整理同花"
+    },
+    {
+      "name": "game_freecell_brief",
+      "value": "借助空当理牌"
+    },
+    {
+      "name": "game_linerescue_brief",
+      "value": "画线守护小狗"
+    },
+    {
+      "name": "game_picturepuzzle_brief",
+      "value": "旋转拼合图案"
+    },
+    {
+      "name": "game_beatjump_brief",
+      "value": "跟随节拍跳跃"
+    },
+    {
+      "name": "game_melody_brief",
+      "value": "记住旋律顺序"
+    },
+    {
+      "name": "game_fishing_brief",
+      "value": "等待咬钩提竿"
+    },
+    {
+      "name": "profile_start_count_note",
+      "value": "按本次更新后记录的开局次数排序"
+    },
+    {
+      "name": "toy_scene_retry",
+      "value": "画面加载失败，点击重试"
+    },
+    {
+      "name": "toy_scene_loading",
+      "value": "正在准备游戏画面…"
+    },
+    {
+      "name": "toy_rolling_board",
+      "value": "滚动球棋盘，拖动引导小球，避开洞口到达旗帜"
+    },
+    {
+      "name": "toy_screw_slot",
+      "value": "螺丝暂存孔 %d"
+    },
+    {
+      "name": "toy_screw_tray_count",
+      "value": "暂存 %d / %d · 同色三颗回收"
+    },
+    {
+      "name": "toy_screw_hint",
+      "value": "先凑同色，再揭下层；槽满即失败"
+    },
+    {
+      "name": "toy_colored_screw",
+      "value": "%d 号色螺丝，第 %d 块板"
+    },
+    {
+      "name": "toy_screw_slot_color",
+      "value": "暂存孔 %d，%d 号色螺丝"
     }
   ]
 }
