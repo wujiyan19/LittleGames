@@ -1,0 +1,13 @@
+{
+  "baseCommit": "0cfc369d7de74b87e7bea1d31c5a7786ec4bebfc",
+  "patchSha256": "7b69208312337820cd5c8ec592d9c967679592a56d6dfbd44f1595d2ad943064",
+  "availableGames": 79,
+  "withdrawnGames": 10,
+  "validation": {
+    "suites": 25,
+    "passed": 1319,
+    "total": 1319,
+    "report": "commit-regressions/verification.json"
+  },
+  "scope": "Isolated HEAD plus only this task changes. Pre-existing fixes and local signing configuration excluded."
+}

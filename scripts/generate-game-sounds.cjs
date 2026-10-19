@@ -92,22 +92,18 @@ function writeWav(file, samples) {
 function generate() {
   const sources = ['model/GameData.ets', 'model/CollectionCatalog.ets', 'model/ExpansionCatalog.ets'];
   const registeredIds = sources.flatMap(file => [...fs.readFileSync(path.join(root, 'entry/src/main/ets', file), 'utf8').matchAll(/\bid:\s*'([^']+)'/g)].map(match => match[1]));
-  // Use the product catalog's actual availability policy, including retired-game filtering.
+  // Generate current games and preserve existing resources for withdrawn implementations.
   const ids = fixture().data().getAllGames().map(game => game.id);
+  const retainedIds = registeredIds.filter(id => !ids.includes(id) && ['action', 'reward'].every(event =>
+    fs.existsSync(path.join(output, id + '_' + event + '.wav'))));
+  const soundIds = registeredIds.filter(id => ids.includes(id) || retainedIds.includes(id));
   const profiles = new Map(Object.entries(families).flatMap(([family, games]) => games.split(' ').map(id => [id, family])));
   if (registeredIds.length !== new Set(registeredIds).size || registeredIds.some(id => !profiles.has(id)) ||
     [...profiles.keys()].some(id => !registeredIds.includes(id)) || ids.some(id => !registeredIds.includes(id))) {
     throw new Error('Every catalog entry must have exactly one sound profile.');
   }
   fs.mkdirSync(output, { recursive: true });
-  for (const id of registeredIds.filter(id => !ids.includes(id))) {
-    for (const event of ['action', 'reward']) {
-      const file = path.resolve(output, id + '_' + event + '.wav');
-      if (path.dirname(file) !== output) { throw new Error('Unexpected sound path'); }
-      if (fs.existsSync(file)) { fs.unlinkSync(file); }
-    }
-  }
-  const games = ids.map(id => {
+  const games = soundIds.map(id => {
     const family = profiles.get(id);
     return { id, family, action: writeWav(path.join(output, id + '_action.wav'), synth(family, 'action', hash(id))),
       reward: writeWav(path.join(output, id + '_reward.wav'), synth(family, 'reward', hash(id + ':reward'))) };
@@ -116,7 +112,7 @@ function generate() {
   fs.mkdirSync(path.join(root, 'docs/audio'), { recursive: true });
   const manifest = { format: 'PCM WAV', sampleRate, channels: 1, bitsPerSample: 16, source: 'Original deterministic synthesis in scripts/generate-game-sounds.cjs', games, shared };
   fs.writeFileSync(path.join(root, 'docs/audio/manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
-  const text = `# 游戏音效\n\n只覆盖当前上架的 ${games.length} 款单人游戏，每款提供独立的操作、得分音效，另有错误、胜利、结束、平局四个公共提示。保留旋律记忆原有四个音符。已撤下的 11 款不生成或打包新增音效，生成器复用 GameDataManager 的当前上架过滤策略。\n\n资源由本项目脚本原创合成，无外部音频下载和第三方素材许可要求。WAV 为 44.1 kHz / 16 bit / 单声道，带短淡入淡出并限制峰值；随 HAP 打包，离线可用。\n\n生成：\n\n\`\`\`powershell\n& 'C:/Program Files/Huawei/DevEco Studio/tools/node/node.exe' scripts/generate-game-sounds.cjs\n\`\`\`\n\n播放器使用 Media Kit SoundPool（四路并发），进入页面只加载该款游戏的两个文件和四个公共提示。普通反馈间隔至少 60 ms，结算提示优先。静音、暂停、设置遮挡、切后台与离开页面停止声音，异步返回的旧播放请求会被取消。撤销和恢复存档不会重复播放结算声音；旋律示范期间保留原音符，普通操作声避免遮盖示范。\n\n音效开关继续由 GameDataManager 持久化，无新增依赖或权限。资源对应关系、长度、大小和 SHA-256 见 [manifest.json](audio/manifest.json)。\n\n官方接口依据：[SoundPool](https://developer.huawei.com/consumer/cn/doc/harmonyos-references/js-apis-inner-multimedia-soundpool) 和 [短音播放说明](https://developer.huawei.com/consumer/cn/doc/doccenter-capabilities/using-soundpool-for-playback)，并核对 DevEco API 24 的 multimedia/soundPool.d.ts。\n\n| 游戏 ID | 操作音色 | 资源前缀 |\n| --- | --- | --- |\n`;
+  const text = `# 游戏音效\n\n当前上架的 ${ids.length} 款单人游戏均有独立的操作、得分音效，另有错误、胜利、结束、平局四个公共提示。保留旋律记忆原有四个音符。资源目录同时保留 ${retainedIds.length} 款已撤下玩法的原有音效，共 ${games.length * 2 + shared.length} 个 WAV；资源存在不代表游戏仍然上架。生成器读取 GameDataManager 的上架策略，为开放游戏生成音效并保留撤下游戏已有的资源，不为没有资源的撤下玩法新增音效。\n\n资源由本项目脚本原创合成，无外部音频下载和第三方素材许可要求。WAV 为 44.1 kHz / 16 bit / 单声道，带短淡入淡出并限制峰值；随 HAP 打包，离线可用。\n\n生成：\n\n\`\`\`powershell\n& 'C:/Program Files/Huawei/DevEco Studio/tools/node/node.exe' scripts/generate-game-sounds.cjs\n\`\`\`\n\n播放器使用 Media Kit SoundPool（四路并发），进入页面只加载该款游戏的两个文件和四个公共提示。普通反馈间隔至少 60 ms，结算提示优先。静音、暂停、设置遮挡、切后台与离开页面停止声音，异步返回的旧播放请求会被取消。撤销和恢复存档不会重复播放结算声音；旋律示范期间保留原音符，普通操作声避免遮盖示范。\n\n音效开关继续由 GameDataManager 持久化，无新增依赖或权限。资源对应关系、长度、大小和 SHA-256 见 [manifest.json](audio/manifest.json)。\n\n官方接口依据：[SoundPool](https://developer.huawei.com/consumer/cn/doc/harmonyos-references/js-apis-inner-multimedia-soundpool) 和 [短音播放说明](https://developer.huawei.com/consumer/cn/doc/doccenter-capabilities/using-soundpool-for-playback)，并核对 DevEco API 24 的 multimedia/soundPool.d.ts。\n\n| 游戏 ID | 操作音色 | 资源前缀 |\n| --- | --- | --- |\n`;
   fs.writeFileSync(path.join(root, 'docs/game-sounds.md'), text + games.map(game => `| ${game.id} | ${labels[game.family]} | sounds/${game.id}_ |`).join('\n') + '\n');
   console.log(`Generated ${games.length * 2 + shared.length} WAV resources for ${games.length} games (${games.reduce((sum, game) => sum + game.action.bytes + game.reward.bytes, shared.reduce((sum, item) => sum + item.bytes, 0))} bytes).`);
   return manifest;

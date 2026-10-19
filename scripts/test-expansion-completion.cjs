@@ -14,8 +14,8 @@ const card=(rank,suit=0,deck=0)=>rank>=16?52+rank-16+deck*54:(rank===14?0:rank-1
 const cards=ranks=>ranks.map((r,i)=>card(r,i%4));
 const tiles=types=>{const counts=new Array(34).fill(0);return types.map(t=>t*4+counts[t]++);};
 
-test('the available catalog contains exactly 89 unique games with complete retained themed resources',()=>{
-  assert.equal(finalIds.length,39);assert.equal(PLAYABLE_EXPANSION_IDS.length,67);const games=f.data().getAllGames();assert.equal(games.length,89);assert.equal(new Set(games.map(g=>g.id)).size,89);
+test('the available catalog contains exactly 79 unique games with complete retained themed resources',()=>{
+  assert.equal(finalIds.length,39);assert.equal(PLAYABLE_EXPANSION_IDS.length,67);const games=f.data().getAllGames();assert.equal(games.length,79);assert.equal(new Set(games.map(g=>g.id)).size,79);
   for(const locale of ['base','zh_CN','en_US']){
     const entries=JSON.parse(fs.readFileSync(`entry/src/main/resources/${locale}/element/string.json`)).string;assert.equal(new Set(entries.map(e=>e.name)).size,entries.length);
     for(const id of PLAYABLE_EXPANSION_IDS)for(const suffix of ['name','desc','rules'])assert(entries.find(e=>e.name===`game_${id}_${suffix}`)?.value.length>0,`${locale}/${id}/${suffix}`);

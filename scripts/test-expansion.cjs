@@ -162,7 +162,7 @@ test('settled fruit stops its frame loop and dropping the next fruit wakes it', 
 test('catalog and resources are complete for every registered expansion', () => {
   const ids = f.load('entry/src/main/ets/model/ExpansionCatalog.ets').EXPANSION_IDS;
   assert.deepEqual(ids, PLAYABLE_EXPANSION_IDS);
-  const games = f.data().getAllGames(); assert.equal(games.length, 89);
+  const games = f.data().getAllGames(); assert.equal(games.length, 79);
   assert.equal(new Set(games.map(g => g.id)).size, games.length);
   const routes = f.load('entry/src/main/ets/router/GameRouteRegistry.ets').GameRoutes;
   for (const id of ids.filter(id => f.data().getGameById(id) !== undefined)) assert.equal(routes.gameIdForRoute(routes.routeName(id)), id);

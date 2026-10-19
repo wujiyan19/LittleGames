@@ -55,16 +55,23 @@ function audioFixture(options = {}) {
   return { f, sound, E, player, pools, opened, closed, requested };
 }
 
-test('only the 89 available games have sound resources; retired games are absent', () => {
+test('all 79 available games have sounds and the ten newly withdrawn games retain their resources', () => {
   const f = fixture();
+  const withdrawnWithSounds = ['hiddenobjects', 'farm', 'decorate', 'characters', 'idiom',
+    'wordtower', 'backpack', 'differences', 'onestroke', 'golf'];
   assert.equal(manifest.games.length, 89);
   const ids = new Set(manifest.games.map(game => game.id));
   assert.equal(ids.size, 89);
   for (const game of f.data().getAllGames()) { assert(ids.has(game.id), game.id); }
   const availableIds = f.data().getAllGames().map(game => game.id);
-  assert.deepEqual([...ids].sort(), [...availableIds].sort());
+  assert.equal(availableIds.length, 79);
+  assert.deepEqual([...ids].sort(), availableIds.concat(withdrawnWithSounds).sort());
   assert.equal(fs.readdirSync('entry/src/main/resources/rawfile/sounds').length, 182);
   const available = f.load(base + 'common/GameAvailability.ets').isGameAvailable;
+  for (const id of withdrawnWithSounds) {
+    assert.equal(available(id), false); assert(ids.has(id));
+    for (const event of ['action', 'reward']) { assert(fs.existsSync('entry/src/main/resources/rawfile/sounds/' + id + '_' + event + '.wav')); }
+  }
   for (const id of ['tictactoe', 'gomoku', 'reversi', 'fourline', 'nim', 'dots', 'tug', 'doudizhu', 'guandan', 'mahjong', 'ludo']) {
     assert.equal(available(id), false); assert(!ids.has(id));
     for (const event of ['action', 'reward']) { assert(!fs.existsSync('entry/src/main/resources/rawfile/sounds/' + id + '_' + event + '.wav')); }

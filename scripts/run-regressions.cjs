@@ -7,7 +7,7 @@ const suites = JSON.parse(fs.readFileSync(path.join(root, 'docs/single-player-va
   .results.map(result => result.script).concat('test-local-game-saves', 'test-daily-featured', 'test-line-rescue', 'test-game-sounds');
 const directory = process.env.LITTLEGAMES_REGRESSION_OUTPUT || path.join(root, 'entry/build/iteration-20261013/regressions');
 fs.mkdirSync(directory, { recursive: true });
-const report = { startedAt: new Date().toISOString(), scope: '89-game single-player desktop regression; no native/device claims', results: [] };
+const report = { startedAt: new Date().toISOString(), scope: '79-game single-player desktop regression; no native/device claims', results: [] };
 for (const script of suites) {
   const result = cp.spawnSync(process.execPath, [path.join(__dirname, script + '.cjs')], {
     cwd: root, encoding: 'utf8', timeout: 120000

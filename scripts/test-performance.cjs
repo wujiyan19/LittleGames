@@ -402,7 +402,7 @@ test('catalog icons and original character vectors retain small resource budgets
     assert(!character.includes('<image'), 'Character must remain vector geometry');
     assert(Buffer.byteLength(character) < 24 * 1024);
   }
-  const games=fixture().data().getAllGames(); assert.equal(games.length,89);
+  const games=fixture().data().getAllGames(); assert.equal(games.length,79);
   for (const theme of ['base','dark']) {
     let vectorBytes=0;
     for (const game of games) {

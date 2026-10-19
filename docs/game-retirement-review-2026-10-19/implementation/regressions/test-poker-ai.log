@@ -1,0 +1,12 @@
+PASS deferred human play stops at the first computer seat and each computer call performs one action
+PASS doudizhu: automatic seeded rounds finish at every difficulty with legal moves and a conserved deck
+PASS doudizhu: deferred seeded rounds finish at every difficulty with legal moves and a conserved deck
+PASS guandan: automatic seeded rounds finish at every difficulty with legal moves and a conserved deck
+PASS guandan: deferred seeded rounds finish at every difficulty with legal moves and a conserved deck
+PASS normal and hard bots leave a partner lead intact, while a finishing hand can still play
+PASS difficulty changes decisions: combinations, group preservation, and public short-hand blocking
+PASS candidate responses cover airplane wings, four-with-two, and rocket without rejecting a legal bomb
+PASS guandan finds low-A runs, suited flushes, missing ranks with either wildcard count, and wild full houses
+PASS hard choice uses only its own cards, played pattern and public counts
+PASS invalid actions, finished games, human-turn computer calls and illegal selected hands make no changes
+11/11 poker AI checks passed

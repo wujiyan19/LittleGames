@@ -1,0 +1,85 @@
+> hvigor Finished :entry:default@PreBuild... after 92 ms
+> hvigor Finished :entry:default@CreateModuleInfo... after 1 ms
+> hvigor Finished :entry:default@GenerateMetadata... after 1 ms
+> hvigor Finished :entry:default@ConfigureCmake... after 1 ms
+> hvigor Finished :entry:default@MergeProfile... after 21 ms
+> hvigor Finished :entry:default@CreateBuildProfile... after 1 ms
+> hvigor Finished :entry:default@PreCheckSyscap... after 1 ms
+> hvigor Finished :entry:default@GeneratePkgContextInfo... after 5 ms
+> hvigor Finished :entry:default@GeneratePkgSdkInfo... after 2 ms
+> hvigor Finished :entry:default@ProcessIntegratedHsp... after 1 ms
+> hvigor Finished :entry:default@BuildNativeWithCmake... after 1 ms
+> hvigor Finished :entry:default@MakePackInfo... after 2 ms
+> hvigor Finished :entry:default@SyscapTransform... after 1 ms
+> hvigor Finished :entry:default@ProcessProfile... after 58 ms
+> hvigor Finished :entry:default@ProcessRouterMap... after 2 ms
+> hvigor Finished :entry:default@ProcessShareConfig... after 1 ms
+> hvigor Finished :entry:default@ProcessStartupConfig... after 1 ms
+> hvigor Finished :entry:default@BuildNativeWithNinja... after 1 ms
+> hvigor Finished :entry:default@ProcessResource... after 2 ms
+> hvigor Finished :entry:default@GenerateLoaderJson... after 7 ms
+> hvigor Finished :entry:default@ProcessLibs... after 3 ms
+> hvigor Finished :entry:default@CompileResource... after 526 ms
+> hvigor Finished :entry:default@DoNativeStrip... after 2 ms
+> hvigor Finished :entry:default@BuildJS... after 3 ms
+> hvigor Finished :entry:default@CacheNativeLibs... after 6 ms
+> hvigor WARN: WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/model/GameData.ets:215:45
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/model/GameData.ets:216:47
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/model/GameData.ets:219:45
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/model/GameData.ets:223:44
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/model/GameData.ets:227:46
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/model/GameData.ets:231:47
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/model/GameData.ets:236:46
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/model/GameData.ets:247:50
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/model/GameData.ets:255:48
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/common/GameSoundPlayer.ets:46:54
+ The system capacity of this api 'audio' is not supported on all devices
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/common/GameSoundPlayer.ets:47:43
+ The system capacity of this api 'media' is not supported on all devices
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/widgets/GameFormAbility.ets:12:17
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/components/GameResultDialog.ets:140:45
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/components/GameResultDialog.ets:144:44
+ Function may throw exceptions. Special handling is required.
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/common/ExpansionTonePlayer.ets:18:54
+ The system capacity of this api 'audio' is not supported on all devices
+
+WARN: ArkTS:WARN File: E:/lianxi/LittleGames/entry/src/main/ets/common/ExpansionTonePlayer.ets:19:43
+ The system capacity of this api 'media' is not supported on all devices
+
+
+> hvigor Finished :entry:default@CompileArkTS... after 3 s 64 ms
+> hvigor Finished :entry:default@GeneratePkgModuleJson... after 2 ms
+> hvigor Finished :entry:default@ProcessCompiledResources... after 1 ms
+> hvigor Finished :entry:default@PackageHap... after 3 s 846 ms
+> hvigor Finished :entry:default@PackingCheck... after 7 ms
+> hvigor Finished :entry:default@SignHap... after 1 s 794 ms
+> hvigor Finished :entry:default@CollectDebugSymbol... after 12 ms
+> hvigor Finished :entry:assembleHap... after 1 ms
+> hvigor BUILD SUCCESSFUL in 12 s 106 ms
+
+33 tasks in total: 33 executed, 0 up-to-date

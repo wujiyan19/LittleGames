@@ -23,13 +23,13 @@ test('first batch has six different categories and refresh changes all six games
   vm.refresh(catalog, day); assert.equal(ids(vm).length, 6); assert.equal(new Set(ids(vm)).size, 6);
   assert.ok(ids(vm).every(id => !first.includes(id)));
 });
-test('refresh can reach all 89 published games without bringing back withdrawn games', () => {
+test('refresh can reach all 79 published games without bringing back withdrawn games', () => {
   const { vm, catalog } = create(); const seen = new Set(); vm.update(catalog, day);
   for (let i = 0; i < 20; i++) {
     for (const id of ids(vm)) seen.add(id); const before = ids(vm); vm.refresh(catalog, day);
     assert.ok(ids(vm).every(id => !before.includes(id)));
   }
-  assert.equal(seen.size, 89); assert.deepEqual([...seen].sort(), catalog.map(game => game.id).sort());
+  assert.equal(seen.size, 79); assert.deepEqual([...seen].sort(), catalog.map(game => game.id).sort());
 });
 test('refreshed recommendations survive process restart and ordinary score updates', () => {
   const { f, vm, catalog } = create(); vm.update(catalog, day); vm.refresh(catalog, day); const expected = ids(vm);

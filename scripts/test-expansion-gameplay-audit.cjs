@@ -27,6 +27,8 @@ for (const id of auditedIds) for (const level of [0, 1, 2]) test(`${id}/${level}
   const f = fixture();
   const frames = new Frames();
   const vm = f.vm('ExpansionViewModel');
+  // Lifecycle assertions require a repeatable, non-terminal opening after activate().
+  vm.model = new (f.rules('Expansion').ExpansionModel)(f.rng(8));
   const { GameDifficulty } = f.load('entry/src/main/ets/common/GameConstants.ets');
   vm.init(id, frames);
   vm.difficulty = [GameDifficulty.EASY, GameDifficulty.NORMAL, GameDifficulty.HARD][level];

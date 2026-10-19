@@ -18,8 +18,8 @@ const gameIds = ['GameData', 'CollectionCatalog', 'ExpansionCatalog'].flatMap(fi
   return [...source.matchAll(/\bid:\s*'([a-z0-9]+)'\s*,\s*name:\s*\$r\('app\.string\.game_[a-z0-9]+_name'\)/g)]
     .map(match => match[1]);
 }).filter(id => !retiredIds.includes(id));
-c.assert.equal(gameIds.length, 89, 'Expected the current 89-game catalog');
-c.assert.equal(new Set(gameIds).size, 89, 'Duplicate catalog ID');
+c.assert.equal(gameIds.length, 79, 'Expected the current 79-game catalog');
+c.assert.equal(new Set(gameIds).size, 79, 'Duplicate catalog ID');
 for (const id of gameIds) c.assert(c.names[id], 'Chinese name missing for ' + id);
 
 const argv = process.argv.slice(2);
@@ -27,7 +27,7 @@ if (argv.includes('--help')) {
   console.log('node scripts/device-final-catalog.cjs [--limit 10] [--list]\n' +
     'LITTLEGAMES_ART_TARGET selects the device; LITTLEGAMES_ART_OUTPUT selects the evidence directory.\n' +
     'Each run checks the next unpassed games and checkpoints catalog.json. Start on 分类 / 全部.\n' +
-    '--list prints the 89 catalog IDs without operating the device. Unknown dialogs stop the run.');
+    '--list prints the 79 catalog IDs without operating the device. Unknown dialogs stop the run.');
   process.exit(0);
 }
 if (argv.includes('--list')) {

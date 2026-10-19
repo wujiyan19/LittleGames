@@ -1,0 +1,15 @@
+PASS parking removes the driven car while retaining the other children; undo restores it
+PASS three removed screws drop their plate and undo restores its last screw
+PASS mahjong matching removes both tiles and undo restores the pair
+PASS mahjong rearrange updates every retained tile snapshot; restart also refreshes them
+PASS untangle drag updates the retained node, matches the edges and supports undo
+PASS rescue bees move in their existing children; pause freezes and resume updates them
+PASS word tower enemies move without replacing their render identity
+PASS beat jump moves the retained player after a correctly timed beat
+PASS block tray snapshots record consumed slots and refill after three placements
+PASS link tiles clear their actual board cells; undo restores them
+PASS slot pair drops into an initially empty child and the next drop clears it
+PASS group clear changes surviving cell colors as they settle, without changing cell identity
+PASS bus FIFO and filled seats change after legal launches
+PASS sand collection changes the selected can counter while preserving the other counts
+14/14 expansion render audit checks passed

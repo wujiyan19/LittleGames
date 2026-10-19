@@ -1,0 +1,160 @@
+PASS platformer/0: pause, background, exit and restart keep one coherent session
+PASS platformer/1: pause, background, exit and restart keep one coherent session
+PASS platformer/2: pause, background, exit and restart keep one coherent session
+PASS grapple/0: pause, background, exit and restart keep one coherent session
+PASS grapple/1: pause, background, exit and restart keep one coherent session
+PASS grapple/2: pause, background, exit and restart keep one coherent session
+PASS flappy/0: pause, background, exit and restart keep one coherent session
+PASS flappy/1: pause, background, exit and restart keep one coherent session
+PASS flappy/2: pause, background, exit and restart keep one coherent session
+PASS fruitslice/0: pause, background, exit and restart keep one coherent session
+PASS fruitslice/1: pause, background, exit and restart keep one coherent session
+PASS fruitslice/2: pause, background, exit and restart keep one coherent session
+PASS rollingball/0: pause, background, exit and restart keep one coherent session
+PASS rollingball/1: pause, background, exit and restart keep one coherent session
+PASS rollingball/2: pause, background, exit and restart keep one coherent session
+PASS shooter/0: pause, background, exit and restart keep one coherent session
+PASS shooter/1: pause, background, exit and restart keep one coherent session
+PASS shooter/2: pause, background, exit and restart keep one coherent session
+PASS tanks/0: pause, background, exit and restart keep one coherent session
+PASS tanks/1: pause, background, exit and restart keep one coherent session
+PASS tanks/2: pause, background, exit and restart keep one coherent session
+PASS fortress/0: pause, background, exit and restart keep one coherent session
+PASS fortress/1: pause, background, exit and restart keep one coherent session
+PASS fortress/2: pause, background, exit and restart keep one coherent session
+PASS survival/0: pause, background, exit and restart keep one coherent session
+PASS survival/1: pause, background, exit and restart keep one coherent session
+PASS survival/2: pause, background, exit and restart keep one coherent session
+PASS backpack/0: pause, background, exit and restart keep one coherent session
+PASS backpack/1: pause, background, exit and restart keep one coherent session
+PASS backpack/2: pause, background, exit and restart keep one coherent session
+PASS runner/0: pause, background, exit and restart keep one coherent session
+PASS runner/1: pause, background, exit and restart keep one coherent session
+PASS runner/2: pause, background, exit and restart keep one coherent session
+PASS blackhole/0: pause, background, exit and restart keep one coherent session
+PASS blackhole/1: pause, background, exit and restart keep one coherent session
+PASS blackhole/2: pause, background, exit and restart keep one coherent session
+PASS fisheat/0: pause, background, exit and restart keep one coherent session
+PASS fisheat/1: pause, background, exit and restart keep one coherent session
+PASS fisheat/2: pause, background, exit and restart keep one coherent session
+PASS sokoban/0: pause, background, exit and restart keep one coherent session
+PASS sokoban/1: pause, background, exit and restart keep one coherent session
+PASS sokoban/2: pause, background, exit and restart keep one coherent session
+PASS pipes/0: pause, background, exit and restart keep one coherent session
+PASS pipes/1: pause, background, exit and restart keep one coherent session
+PASS pipes/2: pause, background, exit and restart keep one coherent session
+PASS differences/0: pause, background, exit and restart keep one coherent session
+PASS differences/1: pause, background, exit and restart keep one coherent session
+PASS differences/2: pause, background, exit and restart keep one coherent session
+PASS roomdefense/0: pause, background, exit and restart keep one coherent session
+PASS roomdefense/1: pause, background, exit and restart keep one coherent session
+PASS roomdefense/2: pause, background, exit and restart keep one coherent session
+PASS basketball/0: pause, background, exit and restart keep one coherent session
+PASS basketball/1: pause, background, exit and restart keep one coherent session
+PASS basketball/2: pause, background, exit and restart keep one coherent session
+PASS rhythm/0: pause, background, exit and restart keep one coherent session
+PASS rhythm/1: pause, background, exit and restart keep one coherent session
+PASS rhythm/2: pause, background, exit and restart keep one coherent session
+PASS restaurant/0: pause, background, exit and restart keep one coherent session
+PASS restaurant/1: pause, background, exit and restart keep one coherent session
+PASS restaurant/2: pause, background, exit and restart keep one coherent session
+PASS bubbleshooter/0: pause, background, exit and restart keep one coherent session
+PASS bubbleshooter/1: pause, background, exit and restart keep one coherent session
+PASS bubbleshooter/2: pause, background, exit and restart keep one coherent session
+PASS fruitmerge/0: pause, background, exit and restart keep one coherent session
+PASS fruitmerge/1: pause, background, exit and restart keep one coherent session
+PASS fruitmerge/2: pause, background, exit and restart keep one coherent session
+PASS billiards/0: pause, background, exit and restart keep one coherent session
+PASS billiards/1: pause, background, exit and restart keep one coherent session
+PASS billiards/2: pause, background, exit and restart keep one coherent session
+PASS penalty/0: pause, background, exit and restart keep one coherent session
+PASS penalty/1: pause, background, exit and restart keep one coherent session
+PASS penalty/2: pause, background, exit and restart keep one coherent session
+PASS pingpong/0: pause, background, exit and restart keep one coherent session
+PASS pingpong/1: pause, background, exit and restart keep one coherent session
+PASS pingpong/2: pause, background, exit and restart keep one coherent session
+PASS bowling/0: pause, background, exit and restart keep one coherent session
+PASS bowling/1: pause, background, exit and restart keep one coherent session
+PASS bowling/2: pause, background, exit and restart keep one coherent session
+PASS golf/0: pause, background, exit and restart keep one coherent session
+PASS golf/1: pause, background, exit and restart keep one coherent session
+PASS golf/2: pause, background, exit and restart keep one coherent session
+PASS drift/0: pause, background, exit and restart keep one coherent session
+PASS drift/1: pause, background, exit and restart keep one coherent session
+PASS drift/2: pause, background, exit and restart keep one coherent session
+PASS hillclimb/0: pause, background, exit and restart keep one coherent session
+PASS hillclimb/1: pause, background, exit and restart keep one coherent session
+PASS hillclimb/2: pause, background, exit and restart keep one coherent session
+PASS airhockey/0: pause, background, exit and restart keep one coherent session
+PASS airhockey/1: pause, background, exit and restart keep one coherent session
+PASS airhockey/2: pause, background, exit and restart keep one coherent session
+PASS tug/0: pause, background, exit and restart keep one coherent session
+PASS tug/1: pause, background, exit and restart keep one coherent session
+PASS tug/2: pause, background, exit and restart keep one coherent session
+PASS dots/0: pause, background, exit and restart keep one coherent session
+PASS dots/1: pause, background, exit and restart keep one coherent session
+PASS dots/2: pause, background, exit and restart keep one coherent session
+PASS bubbleshooter: retained render identity follows the next snapshot
+PASS fruitmerge: retained render identity follows the next snapshot
+PASS runner: retained render identity follows the next snapshot
+PASS blackhole: retained render identity follows the next snapshot
+PASS fisheat: retained render identity follows the next snapshot
+PASS roomdefense: retained render identity follows the next snapshot
+PASS basketball: retained render identity follows the next snapshot
+PASS rhythm: retained render identity follows the next snapshot
+PASS restaurant: retained render identity follows the next snapshot
+PASS fruitslice/0: a bomb and the winning fruit in one stroke always fail (bomb first)
+PASS fruitslice/0: a bomb and the winning fruit in one stroke always fail (fruit first)
+PASS fruitslice/1: a bomb and the winning fruit in one stroke always fail (bomb first)
+PASS fruitslice/1: a bomb and the winning fruit in one stroke always fail (fruit first)
+PASS fruitslice/2: a bomb and the winning fruit in one stroke always fail (bomb first)
+PASS fruitslice/2: a bomb and the winning fruit in one stroke always fail (fruit first)
+PASS fruitslice: the final fruit without a bomb still wins
+PASS fisheat/0: growth and a fatal contact in one frame cannot override a loss (radius 16, big first)
+PASS fisheat/0: growth and a fatal contact in one frame cannot override a loss (radius 16, small first)
+PASS fisheat/0: growth and a fatal contact in one frame cannot override a loss (radius 18, big first)
+PASS fisheat/0: growth and a fatal contact in one frame cannot override a loss (radius 18, small first)
+PASS fisheat/1: growth and a fatal contact in one frame cannot override a loss (radius 16, big first)
+PASS fisheat/1: growth and a fatal contact in one frame cannot override a loss (radius 16, small first)
+PASS fisheat/1: growth and a fatal contact in one frame cannot override a loss (radius 18, big first)
+PASS fisheat/1: growth and a fatal contact in one frame cannot override a loss (radius 18, small first)
+PASS fisheat/2: growth and a fatal contact in one frame cannot override a loss (radius 16, big first)
+PASS fisheat/2: growth and a fatal contact in one frame cannot override a loss (radius 16, small first)
+PASS fisheat/2: growth and a fatal contact in one frame cannot override a loss (radius 18, big first)
+PASS fisheat/2: growth and a fatal contact in one frame cannot override a loss (radius 18, small first)
+PASS fisheat: growth applies to a later frame and the final safe bite still wins
+PASS fisheat: a terminal 8 ms frame publishes growth and loss before the frame source stops
+PASS hillclimb/0: crossing the finish during a fatal landing keeps the loss
+PASS hillclimb/1: crossing the finish during a fatal landing keeps the loss
+PASS hillclimb/2: crossing the finish during a fatal landing keeps the loss
+PASS hillclimb: a safe landing across the finish still receives the victory bonus
+PASS fisheat: real aim input updates facing and vertical motion preserves the last horizontal direction
+PASS fisheat: retained render snapshot exposes left and right facing after real aim input
+PASS runner/0: a generated complete game reaches its goal through actual controls
+PASS runner/1: a generated complete game reaches its goal through actual controls
+PASS runner/2: a generated complete game reaches its goal through actual controls
+PASS blackhole/0: a generated complete game reaches its goal through actual controls
+PASS blackhole/1: a generated complete game reaches its goal through actual controls
+PASS blackhole/2: a generated complete game reaches its goal through actual controls
+PASS fisheat/0: a generated complete game reaches its goal through actual controls
+PASS fisheat/1: a generated complete game reaches its goal through actual controls
+PASS fisheat/2: a generated complete game reaches its goal through actual controls
+PASS roomdefense/0: a generated complete game reaches its goal through actual controls
+PASS roomdefense/1: a generated complete game reaches its goal through actual controls
+PASS roomdefense/2: a generated complete game reaches its goal through actual controls
+PASS basketball/0: a generated complete game reaches its goal through actual controls
+PASS basketball/1: a generated complete game reaches its goal through actual controls
+PASS basketball/2: a generated complete game reaches its goal through actual controls
+PASS rhythm/0: a generated complete game reaches its goal through actual controls
+PASS rhythm/1: a generated complete game reaches its goal through actual controls
+PASS rhythm/2: a generated complete game reaches its goal through actual controls
+PASS restaurant/0: a generated complete game reaches its goal through actual controls
+PASS restaurant/1: a generated complete game reaches its goal through actual controls
+PASS restaurant/2: a generated complete game reaches its goal through actual controls
+PASS bubbleshooter/0: a generated complete game reaches its goal through actual controls
+PASS bubbleshooter/1: a generated complete game reaches its goal through actual controls
+PASS bubbleshooter/2: a generated complete game reaches its goal through actual controls
+PASS fruitmerge/0: a generated complete game reaches its goal through actual controls
+PASS fruitmerge/1: a generated complete game reaches its goal through actual controls
+PASS fruitmerge/2: a generated complete game reaches its goal through actual controls
+159/159 expansion gameplay audit checks passed

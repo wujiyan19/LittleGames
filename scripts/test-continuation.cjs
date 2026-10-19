@@ -334,6 +334,7 @@ test('UIAbility: native handoff captures data and handles both cold and warm con
   f.native['@kit.MediaKit'] = {};
   f.native['@kit.AudioKit'] = {};
   f.native['@kit.LocalizationKit'] = {};
+  f.native['@kit.FormKit'] = {};
   const ability = f.native['@kit.AbilityKit'];
   ability.UIAbility = class { constructor() { this.context = { setMissionContinueState() { return Promise.resolve(); } }; } };
   ability.AbilityConstant = { LaunchReason: { CONTINUATION: 1 }, ContinueState: { ACTIVE: 1, INACTIVE: 0 },

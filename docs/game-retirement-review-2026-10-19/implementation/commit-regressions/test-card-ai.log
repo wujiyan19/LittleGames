@@ -1,0 +1,30 @@
+PASS mahjong/0: deferred input waits for one visible computer action
+PASS mahjong/0: complete deferred games conserve all tiles
+PASS mahjong/0: wall exhaustion is a terminal draw
+PASS ludo/0: a computer step makes one move or one legal pass
+PASS ludo/0: deferred races reach a winner
+PASS ludo/0: the last computer token finishes the race
+PASS mahjong/1: deferred input waits for one visible computer action
+PASS mahjong/1: complete deferred games conserve all tiles
+PASS mahjong/1: wall exhaustion is a terminal draw
+PASS ludo/1: a computer step makes one move or one legal pass
+PASS ludo/1: deferred races reach a winner
+PASS ludo/1: the last computer token finishes the race
+PASS mahjong/2: deferred input waits for one visible computer action
+PASS mahjong/2: complete deferred games conserve all tiles
+PASS mahjong/2: wall exhaustion is a terminal draw
+PASS ludo/2: a computer step makes one move or one legal pass
+PASS ludo/2: deferred races reach a winner
+PASS ludo/2: the last computer token finishes the race
+PASS mahjong: claim windows suspend computers and pong preserves ownership
+PASS mahjong: passing the preceding computer discard draws the human tile immediately
+PASS mahjong: a claimed kong replaces its tile without starting a computer turn
+PASS mahjong: a computer wins on a human discard before drawing
+PASS mahjong: stronger levels retain complete groups instead of a random discard
+PASS mahjong: changing hidden opponent hands cannot change a hard discard choice
+PASS ludo: normal advances while hard takes a visible capture
+PASS ludo: hard avoids a visible capture threat
+PASS ludo: constant sixes perform one deferred action and bounded automatic work
+PASS card computers: invalid input and unsupported or terminal games do nothing
+PASS card computers: default automatic turns preserve immediate model callers
+Passed 29 card AI regression checks.

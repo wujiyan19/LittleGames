@@ -1,0 +1,192 @@
+{
+  "startedAt": "2026-10-19T04:04:17.567Z",
+  "scope": "79-game single-player desktop regression; no native/device claims",
+  "results": [
+    {
+      "script": "test-card-ai",
+      "exitCode": 0,
+      "passed": 29,
+      "total": 29,
+      "error": null
+    },
+    {
+      "script": "test-chess-ai",
+      "exitCode": 0,
+      "passed": 21,
+      "total": 21,
+      "error": null
+    },
+    {
+      "script": "test-classic-logic-audit",
+      "exitCode": 0,
+      "passed": 32,
+      "total": 32,
+      "error": null
+    },
+    {
+      "script": "test-collection",
+      "exitCode": 0,
+      "passed": 67,
+      "total": 67,
+      "error": null
+    },
+    {
+      "script": "test-computer-opponents",
+      "exitCode": 0,
+      "passed": 54,
+      "total": 54,
+      "error": null
+    },
+    {
+      "script": "test-continuation",
+      "exitCode": 1,
+      "passed": 82,
+      "total": 83,
+      "error": null
+    },
+    {
+      "script": "test-expansion",
+      "exitCode": 0,
+      "passed": 321,
+      "total": 321,
+      "error": null
+    },
+    {
+      "script": "test-expansion-art",
+      "exitCode": 0,
+      "passed": 7,
+      "total": 7,
+      "error": null
+    },
+    {
+      "script": "test-expansion-completion",
+      "exitCode": 0,
+      "passed": 191,
+      "total": 191,
+      "error": null
+    },
+    {
+      "script": "test-expansion-gameplay-audit",
+      "exitCode": 0,
+      "passed": 159,
+      "total": 159,
+      "error": null
+    },
+    {
+      "script": "test-expansion-render-audit",
+      "exitCode": 0,
+      "passed": 14,
+      "total": 14,
+      "error": null
+    },
+    {
+      "script": "test-game-settings",
+      "exitCode": 0,
+      "passed": 12,
+      "total": 12,
+      "error": null
+    },
+    {
+      "script": "test-generation-logic",
+      "exitCode": 0,
+      "passed": 26,
+      "total": 26,
+      "error": null
+    },
+    {
+      "script": "test-klotski-ui-state",
+      "exitCode": 0,
+      "passed": 3,
+      "total": 3,
+      "error": null
+    },
+    {
+      "script": "test-performance",
+      "exitCode": 0,
+      "passed": 165,
+      "total": 165,
+      "error": null
+    },
+    {
+      "script": "test-play-history",
+      "exitCode": 0,
+      "passed": 10,
+      "total": 10,
+      "error": null
+    },
+    {
+      "script": "test-play-time",
+      "exitCode": 0,
+      "passed": 34,
+      "total": 34,
+      "error": null
+    },
+    {
+      "script": "test-poker-ai",
+      "exitCode": 0,
+      "passed": 11,
+      "total": 11,
+      "error": null
+    },
+    {
+      "script": "test-single-player-catalog",
+      "exitCode": 0,
+      "passed": 17,
+      "total": 17,
+      "error": null
+    },
+    {
+      "script": "test-window-sizing",
+      "exitCode": 0,
+      "passed": 8,
+      "total": 8,
+      "error": null
+    },
+    {
+      "script": "test-world-piece-refresh",
+      "exitCode": 0,
+      "passed": 8,
+      "total": 8,
+      "error": null
+    },
+    {
+      "script": "test-local-game-saves",
+      "exitCode": 0,
+      "passed": 20,
+      "total": 20,
+      "error": null
+    },
+    {
+      "script": "test-daily-featured",
+      "exitCode": 0,
+      "passed": 11,
+      "total": 11,
+      "error": null
+    },
+    {
+      "script": "test-line-rescue",
+      "exitCode": 0,
+      "passed": 9,
+      "total": 9,
+      "error": null
+    },
+    {
+      "script": "test-game-sounds",
+      "exitCode": 0,
+      "passed": 15,
+      "total": 15,
+      "error": null
+    },
+    {
+      "script": "test-data-recovery",
+      "exitCode": 0,
+      "passed": 3,
+      "total": 3,
+      "error": null
+    }
+  ],
+  "completedAt": "2026-10-19T04:04:45.773Z",
+  "complete": false,
+  "passed": 1329,
+  "total": 1330
+}

@@ -1,0 +1,49 @@
+{
+  "completedAt": "2026-10-19T04:08:39.110Z",
+  "withdrawnGameIds": [
+    "hiddenobjects",
+    "farm",
+    "decorate",
+    "characters",
+    "idiom",
+    "wordtower",
+    "backpack",
+    "differences",
+    "onestroke",
+    "golf"
+  ],
+  "availableGames": 79,
+  "categoryCounts": {
+    "classic": 18,
+    "puzzle": 28,
+    "board": 5,
+    "number": 8,
+    "memory": 5,
+    "reaction": 15
+  },
+  "modelsAndResourcesRetained": true,
+  "historicalRecordsRetained": true,
+  "regressions": {
+    "suites": 26,
+    "passed": 1330,
+    "total": 1330,
+    "report": "regressions/verification.json",
+    "scope": "Desktop logic, route, catalog, persistence and continuation; includes retained withdrawn-game models. No native UI or phone acceptance claims."
+  },
+  "build": {
+    "api": 26,
+    "minimumApi": 24,
+    "mode": "debug",
+    "signed": true,
+    "hap": "E:\\lianxi\\LittleGames\\entry\\build\\default\\outputs\\default\\entry-default-signed.hap",
+    "bytes": 11780608,
+    "sha256": "08f8adc5a692d047bd008b3eb941f93d778d430af671abdc5f25ba753aa6fb9d",
+    "log": "build-retry.log",
+    "scope": "Built from the current working tree, including pre-existing local changes."
+  },
+  "device": {
+    "connected": false,
+    "installed": false,
+    "verified": false
+  }
+}

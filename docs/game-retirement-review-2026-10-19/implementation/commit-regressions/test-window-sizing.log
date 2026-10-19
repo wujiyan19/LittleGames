@@ -1,0 +1,9 @@
+PASS snake: board fits every tested area and remains width-capped
+PASS minesweeper: board fits every tested area and remains width-capped
+PASS sudoku: board fits every tested area and remains width-capped
+PASS slide-3: board fits every tested area and remains width-capped
+PASS slide-5: board fits every tested area and remains width-capped
+PASS klotski: board fits every tested area and remains width-capped
+PASS match3: board fits every tested area and remains width-capped
+PASS unavailable area returns a finite positive fallback
+8/8 window sizing regressions passed.
